@@ -1,0 +1,1017 @@
+# Test for .getMappingForTimeprofiles function
+test_that("It constructs mapping correctly for time profiles", {
+  # Mock plot data
+  mockPlotData <- data.table(
+    xValues = c(1, 2, 3, 4, 5),
+    yValues = c(10, 20, 15, 25, 30),
+    group = rep("A", 5),
+    name = LETTERS[seq(1, 5)],
+    dataType = rep("observed", 5),
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  mockPlotDataNoGroup <- copy(mockPlotData)[, group := NA]
+
+  # Mock metadata
+  mockMetaData <- list(
+    xValues = list(dimension = "Time", unit = "h"),
+    yValues = list(dimension = "Concentration", unit = "mg/l")
+  )
+
+  # Test without user mapping for data with group
+  mapping <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotData,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "observed"
+  )
+  expect_true("uneval" %in% class(mapping))
+  expect_equal(rlang::as_label(mapping$x), 'xValues')
+  expect_equal(rlang::as_label(mapping$y), 'yValues')
+  expect_equal(rlang::as_label(mapping$groupby), "group")
+  expect_equal(rlang::as_label(mapping$group), "interaction(group, name)")
+
+  # Test without user mapping for data without group
+  mapping <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotDataNoGroup,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "observed"
+  )
+  expect_equal(rlang::as_label(mapping$groupby), "name")
+  expect_false('group' %in% names(mapping))
+
+  # Test with user mapping for data with group
+  userMapping <- ggplot2::aes(color = group, groupby = dataType)
+  mappingWithUser <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotData,
+    metaData = mockMetaData,
+    userMapping = userMapping,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "observed"
+  )
+  expect_equal(rlang::as_label(mappingWithUser$colour), 'group')
+  expect_equal(rlang::as_label(mappingWithUser$groupby), "dataType")
+
+  # Test with yErrorType present
+  mockPlotDataError <- data.table(
+    xValues = c(1, 2, 3, 4, 5),
+    yValues = c(10, 20, 15, 25, 30),
+    group = rep("A", 5),
+    name = LETTERS[seq(1, 5)],
+    dataType = rep("observed", 5),
+    xUnit = "h",
+    yUnit = "mg/l",
+    yErrorType = rep("ArithmeticStdDev", 5),
+    yErrorValues = c(1, 2, 1.5, 2.5, 3)
+  )
+
+  mappingWithError <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotDataError,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "observed"
+  )
+  expect_true("error" %in% names(mappingWithError))
+
+  # Test with yMin and yMax present
+  mockPlotDataMinMax <- data.table(
+    xValues = c(1, 2, 3, 4, 5),
+    yValues = c(10, 20, 15, 25, 30),
+    group = rep("A", 5),
+    name = LETTERS[seq(1, 5)],
+    dataType = rep("observed", 5),
+    xUnit = "h",
+    yUnit = "mg/l",
+    yMin = c(8, 18, 12, 22, 28),
+    yMax = c(12, 22, 18, 28, 32)
+  )
+
+  mappingMinMax <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotDataMinMax,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "observed"
+  )
+  expect_true("ymin" %in% names(mappingMinMax))
+  expect_true("ymax" %in% names(mappingMinMax))
+
+  # Mock plot data with a secondary y-axis (y2)
+  mockPlotDataWithY2 <- data.table(
+    xValues = c(1, 2, 3, 1, 2),
+    yValues = c(10, 20, 15, 0.1, 0.2),
+    group = rep("A", 5),
+    name = LETTERS[seq(1, 5)],
+    dataType = rep("observed", 5),
+    xUnit = "h",
+    yUnit = c(rep("mg/l", 3), rep("ml", 2))
+  )
+
+  # Mock metadata indicating presence of secondary y-axis
+  mockMetaDataWithY2 <- list(
+    xValues = list(dimension = "Time", unit = "h"),
+    yValues = list(dimension = "Concentration", unit = "mg/l"),
+    y2 = list(dimension = "Volume", unit = "ml")
+  )
+
+  # Test mapping with y2
+  mappingWithY2 <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotDataWithY2,
+    metaData = mockMetaDataWithY2,
+    userMapping = NULL,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "observed"
+  )
+  expect_contains(names(mappingWithY2), 'y2axis')
+
+  # Test showLegendPerDataset for observed data
+  mappingObservedAll <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotData,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "all",
+    dataTypeFilter = "observed"
+  )
+  expect_equal(rlang::as_label(mappingObservedAll$shape), "name")
+
+  mappingObservedObserved <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotData,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "observed",
+    dataTypeFilter = "observed"
+  )
+  expect_equal(rlang::as_label(mappingObservedObserved$shape), "name")
+
+  # Test showLegendPerDataset for simulated data
+  mockPlotDataSim <- copy(mockPlotData)[, dataType := "simulated"]
+
+  mappingSimulatedAll <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotDataSim,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "all",
+    dataTypeFilter = "simulated"
+  )
+  expect_equal(rlang::as_label(mappingSimulatedAll$linetype), "name")
+
+  mappingSimulatedSimulated <- ospsuite:::.getMappingForTimeprofiles(
+    plotData = mockPlotDataSim,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "simulated",
+    dataTypeFilter = "simulated"
+  )
+  expect_equal(rlang::as_label(mappingSimulatedSimulated$linetype), "name")
+
+  # Test warning when showLegendPerDataset doesn't match data
+  expect_warning(
+    ospsuite:::.getMappingForTimeprofiles(
+      plotData = mockPlotData,
+      metaData = mockMetaData,
+      userMapping = NULL,
+      showLegendPerDataset = "simulated",
+      dataTypeFilter = "simulated"
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
+  )
+
+  # Test warning for unusual aesthetic
+  expect_warning(
+    ospsuite:::.getMappingForTimeprofiles(
+      plotData = mockPlotData,
+      metaData = mockMetaData,
+      userMapping = ggplot2::aes(linetype = name),
+      showLegendPerDataset = "none",
+      dataTypeFilter = "observed"
+    ),
+    "linetype"
+  )
+
+  expect_warning(
+    ospsuite:::.getMappingForTimeprofiles(
+      plotData = mockPlotDataSim,
+      metaData = mockMetaData,
+      userMapping = ggplot2::aes(shape = name),
+      showLegendPerDataset = "none",
+      dataTypeFilter = "simulated"
+    ),
+    "shape"
+  )
+})
+
+# getMostFrequentUnit ----
+
+# Sample data for testing
+sampleData <- data.table(
+  group = c("A", "B", "B"),
+  name = c("Sample1", "Sample1", "Sample2"),
+  yUnit = c("mg", "g", "g"),
+  xUnit = c("h", "min", "min"),
+  dataType = c("observed", "simulated", "simulated")
+)
+
+test_that("It returns the most frequent observed unit", {
+  result <- .getMostFrequentUnit(sampleData, "yUnit")
+  expect_equal(result, "mg")
+})
+
+test_that("It returns the most frequent simulated unit when no observed units are present", {
+  dataNoObserved <- data.table(
+    group = c("A", "B"),
+    name = c("Sample1", "Sample2"),
+    yUnit = c("g", "g"),
+    xUnit = c("min", "min"),
+    dataType = c("simulated", "simulated")
+  )
+
+  result <- .getMostFrequentUnit(dataNoObserved, "xUnit")
+  expect_equal(result, "min") # Expected to return "min" as the only available unit
+})
+
+test_that("It handles all NA values", {
+  naData <- data.table::data.table(
+    group = c("A", "B"),
+    name = c("Sample1", "Sample2"),
+    yUnit = c(NA_character_, NA_character_),
+    xUnit = c("h", "h"),
+    dataType = c("observed", "observed")
+  )
+
+  expect_no_error(result <- .getMostFrequentUnit(naData, "yUnit"))
+  expect_true(is.na(result))
+})
+
+test_that("It prioritizes observed when frequencies are tied", {
+  mixedData <- data.table(
+    group = c("A", "B", "C", "D"),
+    name = c("Obs1", "Obs2", "Sim1", "Sim2"),
+    yUnit = c("mg", "mg", "g", "g"),
+    xUnit = c("h", "h", "h", "h"),
+    dataType = c("observed", "observed", "simulated", "simulated")
+  )
+
+  result <- .getMostFrequentUnit(mixedData, "yUnit")
+
+  expect_equal(result, "mg")
+})
+
+# .constructMetDataForTimeProfile ---------
+
+test_that("It constructs metadata correctly for single y-unit", {
+  plotData <- data.table(
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    xUnit = "h",
+    yUnit = "mg/l",
+    xDimension = "Time",
+    yDimension = "Concentration (mass)"
+  )
+
+  result <- .constructMetDataForTimeProfile(plotData, nYunit = 1)
+
+  expect_equal(result$xValues$dimension, "Time")
+  expect_equal(result$xValues$unit, "h")
+  expect_equal(result$yValues$dimension, "Concentration (mass)")
+  expect_equal(result$yValues$unit, "mg/l")
+  expect_null(result$y2)
+})
+
+test_that("It constructs metadata with secondary y-axis", {
+  plotData <- data.table(
+    xValues = c(1, 2, 3, 4),
+    yValues = c(10, 20, 0.5, 0.8),
+    xUnit = "h",
+    yUnit = c("mg/l", "mg/l", "%", "%"),
+    xDimension = "Time",
+    yDimension = c(
+      "Concentration (mass)",
+      "Concentration (mass)",
+      "Fraction",
+      "Fraction"
+    )
+  )
+
+  result <- .constructMetDataForTimeProfile(plotData, nYunit = 2)
+
+  expect_equal(result$xValues$unit, "h")
+  expect_equal(result$yValues$unit, "mg/l")
+  expect_equal(result$y2$unit, "%")
+  expect_equal(result$y2$dimension, "Fraction")
+})
+
+test_that("It throws error for inconsistent x units", {
+  plotData <- data.table(
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    xUnit = c("h", "min", "h"),
+    yUnit = "mg/l"
+  )
+
+  expect_error(
+    .constructMetDataForTimeProfile(plotData),
+    messages$plotUnitConsistency()
+  )
+})
+
+# .convertInconsistentErrorTypes ----------
+
+test_that("It handles missing yErrorType gracefully", {
+  plotData <- data.table(yValues = c(1, 2, 3), yErrorValues = c(0.1, 0.2, 0.3))
+  result <- .convertInconsistentErrorTypes(plotData)
+  expect_equal(result, plotData)
+})
+
+
+test_that("It calculates yMin and yMax correctly", {
+  plotData <- data.table(
+    yValues = c(10, 20, 10, 20),
+    yErrorValues = c(2, 4, 2, 4),
+    yErrorType = c(
+      DataErrorType$GeometricStdDev,
+      DataErrorType$GeometricStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev
+    )
+  )
+  result <- .convertInconsistentErrorTypes(plotData)
+  expect_equal(result$yMin, c(5, 5, 8, 16))
+  expect_equal(result$yMax, c(20, 80, 12, 24))
+  expect_true(all(is.na(result$yErrorValues)))
+  expect_true(all(is.na(result$yErrorType)))
+})
+
+# validateAndConvertData ---------
+
+test_that("It handles data without error types end-to-end", {
+  set.seed(2801)
+  testData <- data.table(
+    xValues = c(1, 2, 3, 4, 5, 6),
+    yValues = c(10, 20, 30, 15, 25, 35),
+    group = c("A", "A", "A", "B", "B", "B"),
+    name = c("Obs1", "Obs1", "Obs1", "Obs2", "Obs2", "Obs2"),
+    dataType = rep("observed", 6),
+    xUnit = rep("h", 6),
+    yUnit = rep("mg/l", 6),
+    xDimension = rep("Time", 6),
+    yDimension = rep("Concentration (mass)", 6),
+    molWeight = rep(100, 6)
+  )
+
+  result <- .validateAndConvertData(
+    plotData = testData,
+    predictedIsNeeded = FALSE
+  )
+
+  # check data should be unchanged
+  expect_equal(result, testData)
+})
+
+
+test_that("It handles data with consistent error types end-to-end", {
+  testData <- data.table(
+    xValues = c(1, 2, 3, 4, 5, 6),
+    yValues = c(10, 20, 30, 15, 25, 35),
+    group = c("A", "A", "A", "B", "B", "B"),
+    name = c("Obs1", "Obs1", "Obs1", "Obs2", "Obs2", "Obs2"),
+    dataType = rep("observed", 6),
+    xUnit = rep("h", 6),
+    yUnit = rep("mg/l", 6),
+    xDimension = rep("Time", 6),
+    yDimension = rep("Concentration (mass)", 6),
+    yErrorType = rep(DataErrorType$ArithmeticStdDev, 6),
+    yErrorValues = c(2, 4, 6, 1.5, 1.5, 2),
+    molWeight = rep(100, 6)
+  )
+
+  result <- .validateAndConvertData(
+    plotData = testData,
+    predictedIsNeeded = FALSE
+  )
+
+  # check if yError Unit is calculated correct
+  expect_equal(result$yErrorUnit, testData$yUnit)
+})
+
+
+test_that("It handles mixed error types end-to-end", {
+  testData <- data.table(
+    xValues = c(1, 2, 3, 4, 5, 6),
+    yValues = c(10, 20, 30, 15, 25, 35),
+    yMin = c(NA, NA, NA, NA, NA, 2),
+    yMax = c(NA, NA, NA, NA, NA, 10),
+    group = c("A", "A", "A", "B", "B", "B"),
+    name = c("Obs1", "Obs1", "Obs1", "Obs2", "Obs2", "Obs2"),
+    dataType = rep("observed", 6),
+    xUnit = rep("h", 6),
+    yUnit = rep("mg/l", 6),
+    xDimension = rep("Time", 6),
+    yDimension = rep("Concentration (mass)", 6),
+
+    yErrorType = c(
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$GeometricStdDev,
+      NA_character_,
+      "minMax Range"
+    ),
+    yErrorValues = c(2, 4, 6, 1.5, 1.5, NA),
+    molWeight = rep(100, 6)
+  )
+
+  result <- .validateAndConvertData(
+    plotData = testData,
+    predictedIsNeeded = FALSE
+  )
+
+  # check if the known DataErrorType are changed and the others are kept as is
+  expect_equal(result$yErrorType, c(NA, NA, NA, NA, NA, "minMax Range"))
+  expect_equal(result$yMin, c(8, 16, 24, 10, NA, 2))
+  expect_equal(result$yErrorValues, c(NA, NA, NA, NA, 1.5, NA))
+})
+
+
+test_that("It requires yErrorValues when yErrorType is present and valid", {
+  testData <- data.table(
+    xValues = c(1, 2, 3, 4),
+    yValues = c(10, 20, 30, 15),
+    group = c("A", "A", "A", "B"),
+    name = c("Obs1", "Obs1", "Obs1", "Obs2"),
+    dataType = rep("observed", 4),
+    xUnit = rep("h", 4),
+    yUnit = rep("mg/l", 4),
+    xDimension = rep("Time", 4),
+    yDimension = rep("Concentration (mass)", 4),
+
+    yErrorType = c(
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$GeometricStdDev
+    ),
+    molWeight = rep(100, 4)
+  )
+
+  expect_error(
+    .validateAndConvertData(
+      plotData = testData,
+      predictedIsNeeded = FALSE
+    ),
+    'Names must include'
+  )
+})
+
+test_that("It requires yMin and yMax columns for custom error types", {
+  testData <- data.table(
+    xValues = c(1, 2, 3, 4, 5, 6),
+    yValues = c(10, 20, 30, 15, 25, 35),
+    group = c("A", "A", "A", "B", "B", "B"),
+    name = c("Obs1", "Obs1", "Obs1", "Obs2", "Obs2", "Obs2"),
+    dataType = rep("observed", 6),
+    xUnit = rep("h", 6),
+    yUnit = rep("mg/l", 6),
+    xDimension = rep("Time", 6),
+    yDimension = rep("Concentration (mass)", 6),
+
+    yErrorType = c(
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$GeometricStdDev,
+      NA_character_,
+      "minMax Range"
+    ),
+    yErrorValues = c(2, 4, 6, 1.5, 1.5, NA),
+    molWeight = rep(100, 6)
+  )
+
+  expect_error(
+    .validateAndConvertData(
+      plotData = testData,
+      predictedIsNeeded = FALSE
+    ),
+    messages$plotWrongColumnsForCustomErrorType(testData$yErrorType[6]),
+    fixed = TRUE
+  )
+})
+
+test_that("It requires yMin and yMax values (not NA) for custom error types", {
+  testData <- data.table(
+    xValues = c(1, 2, 3, 4, 5, 6),
+    yValues = c(10, 20, 30, 15, 25, 35),
+    yMin = rep(NA, 6),
+    yMax = rep(NA, 6),
+    group = c("A", "A", "A", "B", "B", "B"),
+    name = c("Obs1", "Obs1", "Obs1", "Obs2", "Obs2", "Obs2"),
+    dataType = rep("observed", 6),
+    xUnit = rep("h", 6),
+    yUnit = rep("mg/l", 6),
+    xDimension = rep("Time", 6),
+    yDimension = rep("Concentration (mass)", 6),
+
+    yErrorType = c(
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$ArithmeticStdDev,
+      DataErrorType$GeometricStdDev,
+      NA_character_,
+      "minMax Range"
+    ),
+    yErrorValues = c(2, 4, 6, 1.5, 1.5, 1.5),
+    molWeight = rep(100, 6)
+  )
+
+  expect_error(
+    .validateAndConvertData(
+      plotData = testData,
+      predictedIsNeeded = FALSE
+    ),
+    messages$plotWrongColumnsForCustomErrorType(testData$yErrorType[6]),
+    fixed = TRUE
+  )
+
+  # Only yMax is NA for custom error type
+  testData$yMin[6] <- 2
+  testData$yMax[6] <- NA
+
+  expect_error(
+    .validateAndConvertData(
+      plotData = testData,
+      predictedIsNeeded = FALSE
+    ),
+    messages$plotWrongColumnsForCustomErrorType(testData$yErrorType[6]),
+    fixed = TRUE
+  )
+})
+
+# .convertUnitsForPlot ----------------
+
+test_that("It handles empty data correctly", {
+  emptyData <- data.frame()
+  result <- .convertUnitsForPlot(emptyData, 2)
+  expect_equal(result, emptyData)
+})
+
+test_that("It checks for data.frame input", {
+  expect_error(.convertUnitsForPlot(matrix(1:10, nrow = 5), 2), 'is of type')
+})
+
+
+test_that("It checks maxAllowedYDimensions is an integer", {
+  validData <- data.frame(
+    yDimension = c("Concentration (mass)", "Concentration (molar)"),
+    xUnit = c("mg/L", "mol/L"),
+    yUnit = c("mg/L", "mol/L"),
+    value = c(10, 0.1)
+  )
+
+  expect_error(.convertUnitsForPlot(validData, "two"), "is of type")
+})
+
+test_that("It merges dimensions correctly", {
+  validData <- data.frame(
+    yDimension = c("Concentration (mass)", "Concentration (molar)"),
+    xUnit = c("h", "min"),
+    xDimension = 'Time',
+    yUnit = c("mg/l", "mol/l"),
+    group = c('group', 'group'),
+    name = c('A', 'B'),
+    dataType = c('observed', 'simulated'),
+    xValues = c(1, 1),
+    yValues = c(10, 0.1),
+    molWeight = 2
+  )
+
+  result <- .convertUnitsForPlot(validData, 2)
+  expect_equal(nrow(result), 2)
+  expect_true(all(result$yDimension %in% "Concentration (mass)"))
+  expect_true(all(result$yUnit %in% "mg/l"))
+})
+
+test_that("It raises error for too many Y dimensions", {
+  validData <- data.frame(
+    yDimension = c("Concentration (mass)", "Fraction"),
+    xUnit = c("h", "min"),
+    xDimension = 'Time',
+    yUnit = c("mg/l", ""),
+    group = c('group', 'group'),
+    name = c('A', 'B'),
+    dataType = c('observed', 'simulated'),
+    xValues = c(1, 1),
+    yValues = c(10, 0.1),
+    molWeight = 2
+  )
+
+  expect_error(
+    .convertUnitsForPlot(validData, 1),
+    substr(messages$plotTooManyYDimension(validData$yDimension), 1, 10)
+  )
+})
+
+test_that("It uses the xUnit override instead of auto-detection", {
+  validData <- data.frame(
+    yDimension = rep("Concentration (mass)", 2),
+    xUnit = c("h", "h"),
+    xDimension = rep("Time", 2),
+    yUnit = c("mg/l", "mg/l"),
+    group = c("group", "group"),
+    name = c("A", "A"),
+    dataType = c("observed", "observed"),
+    xValues = c(1, 2),
+    yValues = c(10, 20),
+    molWeight = 100
+  )
+
+  result <- .convertUnitsForPlot(validData, 1, xUnit = "min")
+  # x values should be converted from h to min (multiply by 60)
+  expect_true(all(result$xUnit == "min"))
+  expect_equal(result$xValues, c(60, 120))
+})
+
+test_that("It uses the yUnit override instead of auto-detection", {
+  validData <- data.frame(
+    yDimension = rep("Concentration (mass)", 2),
+    xUnit = c("h", "h"),
+    xDimension = rep("Time", 2),
+    yUnit = c("mg/l", "mg/l"),
+    group = c("group", "group"),
+    name = c("A", "A"),
+    dataType = c("observed", "observed"),
+    xValues = c(1, 2),
+    yValues = c(1000, 2000),
+    molWeight = 100
+  )
+
+  result <- .convertUnitsForPlot(validData, 1, yUnit = "µg/l")
+  # y values should be converted from mg/l to µg/l (multiply by 1000)
+  expect_true(all(result$yUnit == "µg/l"))
+  expect_equal(result$yValues, c(1e6, 2e6))
+})
+
+test_that("It uses the y2Unit override for the secondary y-axis dimension", {
+  validData <- data.frame(
+    yDimension = c(
+      "Concentration (mass)",
+      "Concentration (mass)",
+      "Fraction",
+      "Fraction"
+    ),
+    xUnit = rep("h", 4),
+    xDimension = rep("Time", 4),
+    yUnit = c("mg/l", "mg/l", "", ""),
+    group = rep("group", 4),
+    name = c("A", "A", "B", "B"),
+    dataType = rep("observed", 4),
+    xValues = c(1, 2, 1, 2),
+    yValues = c(10, 20, 0.1, 0.2),
+    molWeight = rep(100, 4)
+  )
+
+  # Without override: auto-detected secondary unit should be ""
+  resultDefault <- .convertUnitsForPlot(validData, 2)
+  fractionRows <- resultDefault[resultDefault$yDimension == "Fraction", ]
+  expect_true(all(fractionRows$yUnit == ""))
+
+  # With y2Unit override
+  result <- .convertUnitsForPlot(validData, 2, y2Unit = "%")
+  fractionRowsOverride <- result[result$yDimension == "Fraction", ]
+  expect_true(all(fractionRowsOverride$yUnit == "%"))
+})
+
+test_that("It throws error for unkown units", {
+  validData <- data.frame(
+    yDimension = c(
+      "Concentration (mass)",
+      "Concentration (mass)",
+      "Fraction",
+      "Fraction"
+    ),
+    xUnit = rep("h", 4),
+    xDimension = rep("Time", 4),
+    yUnit = c("mg/l", "mg/l", "", ""),
+    group = rep("group", 4),
+    name = c("A", "A", "B", "B"),
+    dataType = rep("observed", 4),
+    xValues = c(1, 2, 1, 2),
+    yValues = c(10, 20, 0.1, 0.2),
+    molWeight = rep(100, 4)
+  )
+
+  expect_error(
+    .convertUnitsForPlot(validData, 2, xUnit = "%"),
+    'Must be element of set'
+  )
+  expect_error(
+    .convertUnitsForPlot(validData, 2, yUnit = "day(s)"),
+    'Must be element of set'
+  )
+  expect_error(
+    .convertUnitsForPlot(validData[validData$yDimension != "Fraction", ], 2, y2Unit = "%"),
+    'Must be element of set'
+  )
+})
+
+# .calculateResidualsForPlot ----------------
+
+test_that("It handles unpaired data in residual calculation", {
+  unpairedData <- data.table::data.table(
+    xValues = c(1, 2, 3, 4),
+    yValues = c(10, 20, 30, 40),
+    group = c("A", "B", "C", "D"),
+    name = c("Obs1", "Obs2", "Sim1", "Sim2"),
+    nameSimulated = c("Sim1", "Sim2", "Sim3", "Sim4"),
+    dataType = c("observed", "observed", "simulated", "simulated"),
+    yUnit = rep("mg/l", 4),
+    xUnit = rep("h", 4),
+    yDimension = rep("Concentration (mass)", 4),
+    xDimension = rep("Time", 4),
+    molWeight = rep(100, 4)
+  )
+
+  expect_warning(
+    result <- .calculateResidualsForPlot(unpairedData, scaling = "log"),
+    regexp = "residuals"
+  )
+  expect_true(is.null(result))
+})
+
+test_that("It calculates residuals correctly without lloq column", {
+  plotData <- data.table(
+    xValues = c(1, 2, 1, 2),
+    yValues = c(10, 20, 9, 19),
+    group = c("A", "A", "A", "A"),
+    name = c("Obs", "Obs", "Sim", "Sim"),
+    nameSimulated = c("Sim", "Sim", "Sim", "Sim"),
+    dataType = c("observed", "observed", "simulated", "simulated"),
+    yUnit = c("mg/l", "mg/l", "mg/l", "mg/l"),
+    xUnit = c("h", "h", "h", "h"),
+    yDimension = c(
+      "Concentration (mass)",
+      "Concentration (mass)",
+      "Concentration (mass)",
+      "Concentration (mass)"
+    ),
+    xDimension = c("Time", "Time", "Time", "Time"),
+    molWeight = c(100, 100, 100, 100)
+  )
+
+  result <- .calculateResidualsForPlot(plotData, scaling = "log")
+
+  expect_contains(names(result), 'residualValues')
+  expect_equal(result$residualValues, c(log(9) - log(10), log(19) - log(20)))
+})
+
+# .getMappingForResiduals --------------
+
+test_that("It allows user mapping to override defaults", {
+  xMapping <- ggplot2::aes(x = xValues)
+  userMapping <- ggplot2::aes(groupby = name, color = group)
+
+  result <- .getMappingForResiduals(xMapping, userMapping)
+
+  expect_equal(rlang::as_label(result$groupby), "name")
+  expect_equal(rlang::as_label(result$colour), "group")
+})
+
+test_that("It works with empty x mapping for histogram", {
+  xMapping <- ggplot2::aes()
+  userMapping <- ggplot2::aes()
+
+  result <- .getMappingForResiduals(xMapping, userMapping)
+
+  expect_false("x" %in% names(result))
+  expect_equal(rlang::as_label(result$predicted), "predicted")
+  expect_equal(rlang::as_label(result$observed), "yValues")
+})
+
+# .getMappingForPredictedVsObserved
+
+test_that("It creates pred vs obs mapping with lloq", {
+  plotData <- data.table(
+    predicted = c(10, 20, 30),
+    yValues = c(12, 18, 32),
+    group = c("A", "A", "A"),
+    lloq = c(5, 5, 5)
+  )
+
+  result <- .getMappingForPredictedVsObserved(
+    plotData,
+    userMapping = ggplot2::aes()
+  )
+
+  expect_equal(rlang::as_label(result$x), "predicted")
+  expect_equal(rlang::as_label(result$y), "yValues")
+  expect_equal(rlang::as_label(result$groupby), "group")
+  expect_equal(rlang::as_label(result$lloq), "lloq")
+})
+
+test_that("It adds error bars for arithmetic error type", {
+  plotData <- data.table(
+    predicted = c(10, 20, 30),
+    yValues = c(12, 18, 32),
+    group = c("A", "A", "A"),
+    yErrorType = rep(DataErrorType$ArithmeticStdDev, 3),
+    yErrorValues = c(1, 2, 3)
+  )
+
+  result <- .getMappingForPredictedVsObserved(
+    plotData,
+    userMapping = ggplot2::aes()
+  )
+
+  expect_true("error" %in% names(result))
+})
+
+test_that("It adds error_relative for geometric error type", {
+  plotData <- data.table(
+    predicted = c(10, 20, 30),
+    yValues = c(12, 18, 32),
+    group = c("A", "A", "A"),
+    yErrorType = rep(DataErrorType$GeometricStdDev, 3),
+    yErrorValues = c(1.5, 2, 1.8)
+  )
+
+  result <- .getMappingForPredictedVsObserved(
+    plotData,
+    userMapping = ggplot2::aes()
+  )
+
+  expect_true("error_relative" %in% names(result))
+})
+
+# .aggregateSimulatedData ----------------
+
+test_that("It aggregates population data with quantiles", {
+  set.seed(123)
+  plotData <- data.table(
+    xValues = rep(c(1, 2), each = 10),
+    yValues = c(rnorm(10, 10, 2), rnorm(10, 20, 3)),
+    group = rep("A", 20),
+    name = rep("Sim1", 20),
+    dataType = rep("simulated", 20),
+    IndividualId = rep(1:10, 2),
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "quantiles",
+    quantiles = c(0.1, 0.5, 0.9)
+  )
+
+  expect_equal(nrow(result), 2)
+  expect_true("yMin" %in% colnames(result))
+  expect_true("yMax" %in% colnames(result))
+
+  time1Values <- plotData[xValues == 1, yValues]
+  time2Values <- plotData[xValues == 2, yValues]
+
+  expect_equal(
+    result[xValues == 1, yMin],
+    quantile(time1Values, 0.1, names = FALSE),
+    tolerance = 1e-6
+  )
+  expect_equal(
+    result[xValues == 1, yValues],
+    quantile(time1Values, 0.5, names = FALSE),
+    tolerance = 1e-6
+  )
+  expect_equal(
+    result[xValues == 1, yMax],
+    quantile(time1Values, 0.9, names = FALSE),
+    tolerance = 1e-6
+  )
+
+  expect_equal(
+    result[xValues == 2, yMin],
+    quantile(time2Values, 0.1, names = FALSE),
+    tolerance = 1e-6
+  )
+  expect_equal(
+    result[xValues == 2, yValues],
+    quantile(time2Values, 0.5, names = FALSE),
+    tolerance = 1e-6
+  )
+  expect_equal(
+    result[xValues == 2, yMax],
+    quantile(time2Values, 0.9, names = FALSE),
+    tolerance = 1e-6
+  )
+})
+
+test_that("It aggregates with arithmetic mean and SD", {
+  set.seed(2203)
+  plotData <- data.table(
+    xValues = rep(1, 10),
+    yValues = rnorm(10, mean = 100, sd = 10),
+    group = rep("A", 10),
+    name = rep("Sim1", 10),
+    dataType = rep("simulated", 10),
+    IndividualId = 1:10,
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "arithmetic",
+    quantiles = NULL,
+    nsd = 1
+  )
+
+  expect_equal(nrow(result), 1)
+  expectedMean <- mean(plotData$yValues)
+  expectedSD <- sd(plotData$yValues)
+
+  expect_equal(result$yValues, expectedMean, tolerance = 0.01)
+  expect_equal(result$yMin, expectedMean - expectedSD, tolerance = 0.01)
+  expect_equal(result$yMax, expectedMean + expectedSD, tolerance = 0.01)
+})
+
+test_that("It aggregates with geometric mean and SD", {
+  set.seed(2203)
+  plotData <- data.table(
+    xValues = rep(1, 10),
+    yValues = exp(rnorm(10, mean = log(100), sd = 0.5)),
+    group = rep("A", 10),
+    name = rep("Sim1", 10),
+    dataType = rep("simulated", 10),
+    IndividualId = 1:10,
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "geometric",
+    quantiles = NULL,
+    nsd = 1
+  )
+
+  expect_equal(nrow(result), 1)
+  gm <- exp(mean(log(plotData$yValues)))
+  gsd <- exp(sd(log(plotData$yValues)))
+
+  expect_equal(result$yValues, gm, tolerance = 0.01)
+  expect_equal(result$yMin, exp(log(gm) - log(gsd)), tolerance = 0.01)
+  expect_equal(result$yMax, exp(log(gm) + log(gsd)), tolerance = 0.01)
+})
+
+test_that("It preserves observed data during aggregation", {
+  plotData <- data.table(
+    xValues = c(1, 2, rep(1, 10), rep(2, 10)),
+    yValues = c(15, 25, rnorm(10, 10, 2), rnorm(10, 20, 3)),
+    group = rep("A", 22),
+    name = c("Obs", "Obs", rep("Sim", 20)),
+    dataType = c("observed", "observed", rep("simulated", 20)),
+    IndividualId = c(NA, NA, rep(1:10, 2)),
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "quantiles",
+    quantiles = c(0.1, 0.5, 0.9)
+  )
+
+  expect_equal(nrow(result), 4)
+  expect_equal(sum(result$dataType == "observed"), 2)
+})
+
+test_that("It supports nsd = 2 for wider intervals", {
+  set.seed(2203)
+  plotData <- data.table(
+    xValues = rep(1, 10),
+    yValues = rnorm(10, mean = 100, sd = 10),
+    group = rep("A", 10),
+    name = rep("Sim1", 10),
+    dataType = rep("simulated", 10),
+    IndividualId = 1:10,
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result1sd <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "arithmetic",
+    quantiles = NULL,
+    nsd = 1
+  )
+  result2sd <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "arithmetic",
+    quantiles = NULL,
+    nsd = 2
+  )
+
+  expect_true(result2sd$yMin < result1sd$yMin)
+  expect_true(result2sd$yMax > result1sd$yMax)
+})

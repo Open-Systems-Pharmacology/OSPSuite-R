@@ -1,5 +1,19 @@
 # ospsuite (development version)
 
+## Major changes
+
+- Added five new plotting functions powered by `{ospsuite.plots}`:
+  `plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`,
+  `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()`.
+  These functions accept `DataCombined` objects or data frames and handle mixed
+  error types and unit conversion directly, without requiring data preprocessing.
+
+- The `{tlf}`-based plotting functions `plotIndividualTimeProfile()`,
+  `plotPopulationTimeProfile()`, `plotObservedVsSimulated()`,
+  `plotResidualsVsTime()`, and `plotResidualsVsSimulated()` are now soft-deprecated
+  in favor of the `{ospsuite.plots}`-based equivalents and will be removed in
+  version 14.0. (\#1739)
+
 ## Minor improvements and bug fixes
 
 - `loadDataSetsFromExcel()` now accepts a `sheets` parameter to specify which sheets to load. When `sheets = NULL` (default), the function uses sheets defined in the importer configuration. If the configuration has no sheets defined, all sheets are loaded. When `sheets` is a character vector, those specific sheets are loaded, overriding any sheets in the configuration. The `importAllSheets` parameter is now deprecated and will be removed in version 14.
