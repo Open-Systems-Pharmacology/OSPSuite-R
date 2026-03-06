@@ -699,6 +699,31 @@ test_that("It shouldn't convert geometric error values or units, only `yValues`"
   )
 })
 
+dfMixedError <- dplyr::tibble(
+  xValues     = c(1, 2, 3, 4),
+  xUnit       = "min",
+  xDimension  = "Time",
+  yValues     = c(0.1, 0.2, 0.3, 0.4),
+  yUnit       = "",
+  yDimension  = "Fraction",
+  yErrorValues = c(0.01, 0.02, 1.5, 2.0),
+  yErrorUnit  = "",
+  yErrorType  = c(
+    DataErrorType$ArithmeticStdDev,
+    DataErrorType$ArithmeticStdDev,
+    DataErrorType$GeometricStdDev,
+    DataErrorType$GeometricStdDev
+  ),
+  molWeight   = NA_real_
+)
+
+dfMixedErrorConvert <- .unitConverter(dfMixedError, yUnit = ospUnits$Fraction$`%`)
+
+test_that(".unitConverter converts ArithmeticStdDev error rows but leaves GeometricStdDev rows unchanged when both share the same group", {
+  expect_equal(dfMixedErrorConvert$yErrorValues[1:2], dfMixedError$yErrorValues[1:2] * 100)
+  expect_equal(dfMixedErrorConvert$yErrorValues[3:4], dfMixedError$yErrorValues[3:4])
+})
+
 # multiple concentration dims present --------------------------------
 
 concDims <- c(
@@ -735,5 +760,13 @@ test_that("ospUnits$Fraction$Unitless returns empty string", {
 })
 
 test_that("Unit conversion works with unitless as empty string", {
-  expect_equal(toUnit("Fraction", 0.12, ospUnits$Fraction$`%`, sourceUnit = ospUnits$Fraction$Unitless), 12)
+  expect_equal(
+    toUnit(
+      "Fraction",
+      0.12,
+      ospUnits$Fraction$`%`,
+      sourceUnit = ospUnits$Fraction$Unitless
+    ),
+    12
+  )
 })

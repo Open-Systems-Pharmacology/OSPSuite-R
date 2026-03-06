@@ -442,14 +442,14 @@ test_that("it loads all sheets when sheets = NULL and no sheets in configuration
   # Use configuration with no sheets defined
   configPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
   xlsPath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
-  
+
   # With sheets = NULL, should load all sheets (new behavior)
   dataSets <- loadDataSetsFromExcel(
     xlsFilePath = xlsPath,
     importerConfigurationOrPath = configPath,
     sheets = NULL
   )
-  
+
   # Should load data (not empty)
   expect_true(length(dataSets) > 0)
   expect_true(isOfType(dataSets, "DataSet"))
@@ -457,20 +457,20 @@ test_that("it loads all sheets when sheets = NULL and no sheets in configuration
 
 test_that("it uses configuration sheets when sheets = NULL and sheets are in configuration", {
   xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
-  
+
   # Create configuration with specific sheet
   importConfig <- createImporterConfigurationForFile(
     filePath = xlsPath,
     sheet = "TestSheet_1"
   )
-  
+
   # sheets = NULL should use configuration sheets
   dataSets <- loadDataSetsFromExcel(
     xlsFilePath = xlsPath,
     importerConfigurationOrPath = importConfig,
     sheets = NULL
   )
-  
+
   # Should load data from TestSheet_1
   expect_true(length(dataSets) > 0)
   expect_true(isOfType(dataSets, "DataSet"))
@@ -478,20 +478,20 @@ test_that("it uses configuration sheets when sheets = NULL and sheets are in con
 
 test_that("it overrides configuration sheets when sheets parameter is provided", {
   xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
-  
+
   # Create configuration with one sheet
   importConfig <- createImporterConfigurationForFile(
     filePath = xlsPath,
     sheet = "TestSheet_1"
   )
-  
+
   # Override with different sheet
   dataSets <- loadDataSetsFromExcel(
     xlsFilePath = xlsPath,
     importerConfigurationOrPath = importConfig,
     sheets = "TestSheet_1_withMW"
   )
-  
+
   # Should load data from TestSheet_1_withMW, not TestSheet_1
   expect_true(length(dataSets) > 0)
   expect_true(isOfType(dataSets, "DataSet"))
@@ -499,20 +499,20 @@ test_that("it overrides configuration sheets when sheets parameter is provided",
 
 test_that("it can load multiple sheets using sheets parameter", {
   xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
-  
+
   # Create configuration without specific sheets
   importConfig <- createImporterConfigurationForFile(
     filePath = xlsPath,
     sheet = "TestSheet_1"
   )
-  
+
   # Load multiple specific sheets
   dataSets <- loadDataSetsFromExcel(
     xlsFilePath = xlsPath,
     importerConfigurationOrPath = importConfig,
     sheets = c("TestSheet_1", "TestSheet_1_withMW")
   )
-  
+
   # Should load data from both sheets
   expect_true(length(dataSets) > 0)
   expect_true(isOfType(dataSets, "DataSet"))
@@ -520,22 +520,22 @@ test_that("it can load multiple sheets using sheets parameter", {
 
 test_that("it preserves configuration sheets after using sheets parameter", {
   xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
-  
+
   # Create configuration with specific sheet
   importConfig <- createImporterConfigurationForFile(
     filePath = xlsPath,
     sheet = "TestSheet_1"
   )
-  
+
   originalSheets <- importConfig$sheets
-  
+
   # Use sheets parameter to override
   dataSets <- loadDataSetsFromExcel(
     xlsFilePath = xlsPath,
     importerConfigurationOrPath = importConfig,
     sheets = "TestSheet_1_withMW"
   )
-  
+
   # Configuration sheets should be unchanged
   expect_equal(importConfig$sheets, originalSheets)
 })
@@ -543,7 +543,7 @@ test_that("it preserves configuration sheets after using sheets parameter", {
 test_that("importAllSheets parameter is deprecated", {
   xlsPath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
   configPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
-  
+
   # Test that using importAllSheets = TRUE triggers deprecation warning
   expect_snapshot({
     dataSets <- loadDataSetsFromExcel(
