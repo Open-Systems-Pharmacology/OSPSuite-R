@@ -1,14 +1,15 @@
 #' Set or add initial conditions to an existing Initial Conditions building block.
 #'
-#' This functions allows adding or modifying initial condition entries.
+#' This functions allows adding or modifying initial condition entries. Only constant values are allowed. For setting or adding initial conditions defined by formulas, use the `setInitialConditionsFormulas` function.
 #'
 #' @param initialConditionsBuildingBlock A `BuildingBlock` object of type `Initial Conditions`.
 #' The entries will be added to or set in this building block.
 #' @param quantityPaths A list of full paths of the quantities (usually molecules). Should contain
 #' all path elements and the molecule name, separated by `|`.
-#' @param quantityValues A list of values for the quantities. Should be `NULL` if
-#' the argument `formulas` is provided. If not `NULL`, the length of this list should be equal to the length of `quantityPaths`.
-#' @param scaleDivisors Either a single value or a list of scale divisors for the quantities.
+#' @param quantityValues A list of values for the quantities. If no value is provided (i.e., `NULL`),
+#' the entry will be created with the value defined in the Molecules building block.
+#' The length of this list should be equal to the length of `quantityPaths`.
+#' @param scaleDivisors Either a single value or a list of scale divisors for the quantities. By default, the value is set to 1 for all quantities.
 #' If only single value is provided, the value will be set for all quantities.
 #' If a list is provided, the length of this list should be equal to the length of `quantityPaths`.
 #' @param isPresent Either a single value (`TRUE` or `FALSE`) or a list of boolean
@@ -17,10 +18,6 @@
 #' @param negativeValuesAllowed A single boolean value or a list of boolean values
 #' indicating whether negative values are allowed for the quantities. If a list is provided,
 #' the length of this list should be equal to the length of `quantityPaths`.
-#'
-#' @param formulas A list of `Formula` objects that will be set for the quantities.
-#' Mixing of `formulas` and `quantityValues` is not allowed. If `formulas` is provided,
-#' `quantityValues` should be `NULL`. If not `NULL`, the length of this list should be equal to the length of `quantityPaths`.
 #'
 #' @returns The updated `initialConditionsBuildingBlock` object.
 #' TBD: no return? To be consistent (or not confusing) with the extend functions?
@@ -33,8 +30,40 @@ setInitialConditions <- function(
   quantityValues,
   scaleDivisors = 1,
   isPresent = TRUE,
-  negativeValuesAllowed = FALSE,
-  formulas = NULL
+  negativeValuesAllowed = FALSE
+) {
+  return(initialConditionsBuildingBlock)
+}
+
+
+#' Set or add initial conditions to an existing Initial Conditions building block with values defined by formulas.
+#'
+#' @param initialConditionsBuildingBlock A `BuildingBlock` object of type `Initial Conditions`.
+#' The entries will be added to or set in this building block.
+#' @param quantityPaths A list of full paths of the quantities (usually molecules). Should contain
+#' all path elements and the molecule name, separated by `|`.
+#' @param formulas A list of `Formula` objects that will be set for the quantities. The length of this list should be equal to the length of `quantityPaths`.
+#' @param scaleDivisors Either a single value or a list of scale divisors for the quantities. By default, the value is set to 1 for all quantities.
+#' If only single value is provided, the value will be set for all quantities.
+#' If a list is provided, the length of this list should be equal to the length of `quantityPaths`.
+#' @param isPresent Either a single value (`TRUE` or `FALSE`) or a list of boolean
+#' values indicating whether the quantity is present or not. If a list is provided,
+#' the length of this list should be equal to the length of `quantityPaths`.
+#' @param negativeValuesAllowed A single boolean value or a list of boolean values indicating whether negative values are
+#' allowed for the quantities. If a list is provided, the length of this list should be equal to the length of `quantityPaths`.
+#'
+#' @returns The updated `initialConditionsBuildingBlock` object.
+#' TBD: no return? To be consistent (or not confusing) with the extend functions?
+#'
+#' @export
+#' @examples
+setInitialConditionsFormulas <- function(
+  initialConditionsBuildingBlock,
+  quantityPaths,
+  formulas,
+  scaleDivisors = 1,
+  isPresent = TRUE,
+  negativeValuesAllowed = FALSE
 ) {
   return(initialConditionsBuildingBlock)
 }
@@ -84,20 +113,17 @@ extendInitialConditions <- function(
 
 #' Set or add parameter values to an existing Parameter Values building block.
 #'
-#' This functions allows adding or modifying parameter values entries.
+#' This functions allows adding or modifying parameter values entries. Only constant values are allowed. For setting or adding parameter values defined by formulas, use the `setParameterValuesFormulas` function.
 #'
 #' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values`.
 #' The entries will be added to or set in this building block.
 #' @param quantityPaths A list of full paths of the quantities (usually parameters). Should contain
 #' all path elements and the parameter name, separated by `|`.
-#' @param formulas A list of `Formula` objects that will be set for the quantities.
-#' Mixing of `formulas` and `quantityValues` is not allowed. If `formulas` is provided,
-#' `quantityValues` should be `NULL`. The length of this list should be equal to the length of `quantityPaths`.
 #' @param dimensions A single dimension or a list of dimensions (string names)
 #' of parameter values. Supported dimensions are listed in `ospDimension`. By default,
 #' new entries get the `Dimensionless` dimension.
-#' @param quantityValues A list of values for the quantities. Should be `NULL` if
-#' the argument `formulas` is provided. If not `NULL`, the length of this list should be equal to the length of `quantityPaths`.
+#' @param quantityValues A list of values for the quantities.
+#' The length of this list should be equal to the length of `quantityPaths`.
 #'
 #' @export
 #'
@@ -106,8 +132,30 @@ setParameterValues <- function(
   parameterValuesBuildingBlock,
   quantityPaths,
   quantityValues,
-  dimensions = ospDimensions$Dimensionless,
-  formulas = NULL
+  dimensions = ospDimensions$Dimensionless
+) {
+  return(parameterValuesBuildingBlock)
+}
+
+
+#' Set or add parameter values to an existing Parameter Values building block with values defined by formulas.
+#'
+#' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values`.
+#' The entries will be added to or set in this building block.
+#' @param quantityPaths A list of full paths of the quantities (usually parameters). Should contain
+#' all path elements and the parameter name, separated by `|`.
+#' @param formulas A list of `Formula` objects that will be set for the quantities. The length of this list should be equal to the length of `quantityPaths`.
+#' The dimension of the parameter will be set to the dimension of the formula.
+#' @param quantityValues
+#'
+#' @returns
+#'
+#' @export
+#' @examples
+setParameterValuesFormulas <- function(
+  parameterValuesBuildingBlock,
+  quantityPaths,
+  formulas
 ) {
   return(parameterValuesBuildingBlock)
 }
