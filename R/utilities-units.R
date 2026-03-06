@@ -637,49 +637,44 @@ ospUnits <- NULL
   }
   data[, yUnit := yTargetUnit]
 
-  # yError: convert yErrorValues and update yErrorUnit in-place,
-  # grouped by (yDimension, yErrorUnit, molWeight)
+  # yError: convert yErrorValues and update yErrorUnit in-place, grouped by
+  # (yDimension, yErrorUnit, molWeight).
+  # GeometricStdDev error values are dimensionless ratios and must be skipped.
   if ("yErrorValues" %in% colnames(data)) {
-    hasErrorType <- "yErrorType" %in% colnames(data)
-    if (hasErrorType) {
-      # When error type information is present, geometric std dev groups must
-      # be skipped (their error values and units remain unchanged).
-      data[, c("yErrorValues", "yErrorUnit") := {
-        if (!is.na(yErrorType[[1L]]) &&
-          yErrorType[[1L]] == DataErrorType$GeometricStdDev) {
-          list(yErrorValues, yErrorUnit)
-        } else {
-          list(
-            toUnit(
-              quantityOrDimension = yDimension[[1L]],
-              values = yErrorValues,
-              targetUnit = yTargetUnit,
-              sourceUnit = yErrorUnit[[1L]],
-              molWeight = molWeight[[1L]],
-              molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
-            ),
-            rep(yTargetUnit, .N)
-          )
-        }
-      }, by = .(yDimension, yErrorUnit, molWeight)]
-    } else {
-      # No error type column: convert all groups unconditionally.
-      data[, c("yErrorValues", "yErrorUnit") := list(
-        toUnit(
-          quantityOrDimension = yDimension[[1L]],
-          values = yErrorValues,
-          targetUnit = yTargetUnit,
-          sourceUnit = yErrorUnit[[1L]],
-          molWeight = molWeight[[1L]],
-          molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+    if ("yErrorType" %in% colnames(data)) {
+      data[
+        is.na(yErrorType) | yErrorType != DataErrorType$GeometricStdDev,
+        c("yErrorValues", "yErrorUnit") := list(
+          toUnit(
+            quantityOrDimension = yDimension[[1L]],
+            values = yErrorValues,
+            targetUnit = yTargetUnit,
+            sourceUnit = yErrorUnit[[1L]],
+            molWeight = molWeight[[1L]],
+            molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+          ),
+          rep(yTargetUnit, .N)
         ),
-        rep(yTargetUnit, .N)
-      ), by = .(yDimension, yErrorUnit, molWeight)]
+        by = .(yDimension, yErrorUnit, molWeight)
+      ]
+    } else {
+      data[,
+        c("yErrorValues", "yErrorUnit") := list(
+          toUnit(
+            quantityOrDimension = yDimension[[1L]],
+            values = yErrorValues,
+            targetUnit = yTargetUnit,
+            sourceUnit = yErrorUnit[[1L]],
+            molWeight = molWeight[[1L]],
+            molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+          ),
+          rep(yTargetUnit, .N)
+        ),
+        by = .(yDimension, yErrorUnit, molWeight)
+      ]
     }
   } else {
-    # For some reason, if the user dataset doesn't have error values, but
-    # still have columns about error units, update them as well. The quantity
-    # and its error should always have the same unit in the final data frame.
+    # No error values, but sync yErrorUnit to yUnit if the column exists.
     if ("yErrorUnit" %in% colnames(data)) {
       data[, yErrorUnit := yUnit]
     }
