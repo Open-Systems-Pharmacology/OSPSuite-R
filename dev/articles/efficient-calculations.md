@@ -183,21 +183,21 @@ performance.
 # now setting some parameter run values (the size of the array should match
 # the number of parameters to vary for each batch
 simBatch1$addRunValues(parameterValues = c(1, 2))
-#> [1] "49e2bf8c-a665-4fdb-96ef-aa545971d62b"
+#> [1] "d03779d2-e918-4729-ba07-12c7d5a31058"
 simBatch1$addRunValues(parameterValues = c(3, 4))
-#> [1] "4c97d422-21ec-470a-9084-bdd448e600bd"
+#> [1] "09240d46-270d-4103-948f-41432a819255"
 simBatch1$addRunValues(parameterValues = c(5, 6))
-#> [1] "b275fa97-3cd6-4433-8ffe-45a7d24d4b22"
+#> [1] "3c1dcb88-839e-4a25-b20b-80d1353f70f3"
 
 # We only have one parameter to vary for simBatch2, therefore only one value to set
 simBatch2$addRunValues(parameterValues = 150)
-#> [1] "8678bb5a-a13b-4b86-b1a6-a3664c1fa151"
+#> [1] "516be6a6-e24b-4100-b777-9912a271fd7c"
 simBatch2$addRunValues(parameterValues = 200)
-#> [1] "3549a9c5-a782-4de7-abac-9b4cc0a357f6"
+#> [1] "2338f91b-cee4-487e-add8-2a0bd7e48e2e"
 simBatch2$addRunValues(parameterValues = 300)
-#> [1] "c267c1d2-e709-436b-968c-89e011de997a"
+#> [1] "fe5e6793-2976-4566-8d82-a17b4a031067"
 simBatch2$addRunValues(parameterValues = 400)
-#> [1] "a860f368-9531-480b-996c-a6034a4081ed"
+#> [1] "c03869e5-e5d8-4282-84c0-f3adaf8bc52c"
 ```
 
 So far, we created 2 simulation batches, one with 3 parameter sets and
@@ -213,13 +213,13 @@ simulated set of parameters.
 # The resulting output is a named list, where the names are the ids of the enqueued runs.
 results <- runSimulationBatches(simulationBatches)
 print(names(unlist(results)))
-#> [1] "4d35e530-b384-4fdc-940d-5666d1dc76ad.49e2bf8c-a665-4fdb-96ef-aa545971d62b"
-#> [2] "4d35e530-b384-4fdc-940d-5666d1dc76ad.4c97d422-21ec-470a-9084-bdd448e600bd"
-#> [3] "4d35e530-b384-4fdc-940d-5666d1dc76ad.b275fa97-3cd6-4433-8ffe-45a7d24d4b22"
-#> [4] "53724126-fbbd-4322-be50-8cf20c0c636a.8678bb5a-a13b-4b86-b1a6-a3664c1fa151"
-#> [5] "53724126-fbbd-4322-be50-8cf20c0c636a.3549a9c5-a782-4de7-abac-9b4cc0a357f6"
-#> [6] "53724126-fbbd-4322-be50-8cf20c0c636a.c267c1d2-e709-436b-968c-89e011de997a"
-#> [7] "53724126-fbbd-4322-be50-8cf20c0c636a.a860f368-9531-480b-996c-a6034a4081ed"
+#> [1] "a3ef8ca9-8c6c-4274-b2c1-cd901c7b088c.d03779d2-e918-4729-ba07-12c7d5a31058"
+#> [2] "a3ef8ca9-8c6c-4274-b2c1-cd901c7b088c.09240d46-270d-4103-948f-41432a819255"
+#> [3] "a3ef8ca9-8c6c-4274-b2c1-cd901c7b088c.3c1dcb88-839e-4a25-b20b-80d1353f70f3"
+#> [4] "2b217aeb-6eb0-47ec-9c73-32e66abe27a8.516be6a6-e24b-4100-b777-9912a271fd7c"
+#> [5] "2b217aeb-6eb0-47ec-9c73-32e66abe27a8.2338f91b-cee4-487e-add8-2a0bd7e48e2e"
+#> [6] "2b217aeb-6eb0-47ec-9c73-32e66abe27a8.fe5e6793-2976-4566-8d82-a17b4a031067"
+#> [7] "2b217aeb-6eb0-47ec-9c73-32e66abe27a8.c03869e5-e5d8-4282-84c0-f3adaf8bc52c"
 ```
 
 The enqueued run values are cleared after calling
@@ -233,13 +233,13 @@ is called.
 
 ``` r
 simBatch1$addRunValues(parameterValues = c(10, 20))
-#> [1] "9ece1401-13e0-43a0-a909-97619ee35251"
+#> [1] "841fbeaf-fd8d-4078-89ea-7d2741cda11e"
 simBatch1$addRunValues(parameterValues = c(30, 40))
-#> [1] "d599312a-9b26-425f-a626-48058ba87e2e"
+#> [1] "16c58633-7726-46d0-a892-89b8a2e6a244"
 simBatch2$addRunValues(parameterValues = 500)
-#> [1] "550048ca-5df9-4b6e-af31-6243dcc7df84"
+#> [1] "7c0924e8-a78e-48dd-804c-ba83ad611d22"
 simBatch2$addRunValues(parameterValues = 200)
-#> [1] "b27c03a8-44e3-4546-9c2f-7aeb61082bd7"
+#> [1] "f4a294c1-c791-4079-8b48-70de40cfded9"
 
 # this run will be much faster as the simulation won't be initialized again.
 # Only the new value will be set as specified when adding new run values with addRunValues
