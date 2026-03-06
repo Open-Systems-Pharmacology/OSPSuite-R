@@ -265,7 +265,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' Initialize a new instance of the class
     #' @return A new `DataImporterConfiguration` object.
     initialize = function(netObject = NULL) {
-      importerTask <- .getNetTaskFromCache("DataImporterTask")
+      importerTask <- .getCoreTaskFromCache("DataImporterTask")
       if (is.null(netObject)) {
         netObject <- importerTask$call("CreateConfiguration")
       }
