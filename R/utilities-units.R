@@ -563,24 +563,15 @@ ospUnits <- NULL
 
   # Strategy --------------------------
 
-  # The strategy is to split the data frame (using `split()`) for each source
-  # unit and carry out conversion separately per data frame. This is the most
-  # performant option since there can only be as many expensive calls to
-  # `toUnit()`/`{rSharp}` as there are source units.
+  # Use data.table for efficient in-place grouped operations. By grouping rows
+  # with the same source unit and molecular weight, we make exactly as many
+  # calls to `toUnit()`/`{rSharp}` as there are distinct source-unit groups,
+  # while modifying columns in-place without reorganizing the data frame.
   #
-  # The problem occurs when source units are missing (`NA`). The `toUnit()`
-  # function can handle them but not `split()`, which would drop the entire
-  # section of the data frame corresponding to `NA` and thus there will be loss
-  # of data when a data frame is split into a list of data frames.
-  #
-  # The trick is to create copies of source unit and molecular weight columns
-  # and fill in the missing values with something other than `NA`. Using these
-  # new columns with `split()` makes sure that the parts of a data frame where
-  # source units are missing won't be dropped. Note that the original columns
-  # containing source units remain unchanged.
-  #
-  # These newly created columns are removed before the converted data frame is
-  # returned to the user.
+  # data.table's `:=` by-group assignment preserves the original row order and
+  # handles NA values in grouping variables naturally (NAs form their own
+  # group), so there is no need for temporary sentinel columns or a row-order
+  # identifier.
 
   # internal --------------------------
 
@@ -596,91 +587,100 @@ ospUnits <- NULL
     data <- dplyr::mutate(data, yErrorUnit = yUnit)
   }
 
-  # Add suffix `Split` to the following columns:
-  # `xUnit`, `yUnit`, `yErrorUnit`, `molWeight`
-  data <- dplyr::mutate(
-    data,
-    dplyr::across(
-      .cols = dplyr::matches("Unit$|Weight$"), # use pattern matching to select columns
-      .fns = as.character,
-      .names = "{.col}Split" # = original column name + Split suffix
-    )
-  )
+  # unit conversions --------------------------
 
-  # Replace missing values in these new columns with `"missing"`, so that
-  # `split()` won't remove the corresponding portion of the data frame.
-  data <- dplyr::mutate(
-    data,
-    dplyr::across(
-      .cols = dplyr::matches("Split$"), # use pattern matching to select columns
-      .fns = function(x) tidyr::replace_na(x, "missing")
-    )
-  )
+  # Convert to data.table for efficient in-place grouped operations.
+  # `as.data.table()` creates a copy when the input is a tibble/data.frame,
+  # so the caller's object is never modified by reference.
+  data <- as.data.table(data)
 
-  # `split()` will change the row order of the data frame depending on the
-  # alphabetical order of the levels of the variable used to split the data
-  # frame into a list.
-  #
-  # Therefore, an internal row identifier is kept to restore the original
-  # data frame row order before the data is returned.
-  data <- dplyr::mutate(data, .rowidInternal = dplyr::row_number())
+  # xUnit: convert xValues in-place, grouped by (xDimension, xUnit)
+  data[, xValues := toUnit(
+    quantityOrDimension = xDimension[[1L]],
+    values = xValues,
+    targetUnit = xTargetUnit,
+    sourceUnit = xUnit[[1L]]
+  ), by = .(xDimension, xUnit)]
+  data[, xUnit := xTargetUnit]
 
-  # splitting data frames and unit conversions --------------------------
-
-  # Split data frame to a list, mutate the unit column using the corresponding
-  # `*UnitConverter()`, and then rebind.
-  #
-  # The `_dfr` variant of `purrr::map()` signals this intent:
-  # It will return a single data frame. This data frame is created by binding
-  # row-wise resulting data frames from mapping the given function `.f` to each
-  # element data frame in the list provided to `.x`.
-
-  # xUnit
-  xDataList <- .removeEmptyDataFrame(split(data, data$xUnitSplit))
-  data <- purrr::map_dfr(
-    .x = xDataList,
-    .f = function(data) .xUnitConverter(data, xTargetUnit)
-  )
-
-  # yUnit
-  yDataList <- .removeEmptyDataFrame(split(
-    data,
-    list(data$yUnitSplit, data$molWeightSplit)
-  ))
-  data <- purrr::map_dfr(
-    .x = yDataList,
-    .f = function(data) .yUnitConverter(data, yTargetUnit)
-  )
-
-  # yUnit error
-  if (any(colnames(data) == "yErrorValues")) {
-    yErrorDataList <- .removeEmptyDataFrame(split(
-      data,
-      list(data$yErrorUnitSplit, data$molWeightSplit)
-    ))
-
-    data <- purrr::map_dfr(
-      .x = yErrorDataList,
-      .f = function(data) .yErrorUnitConverter(data, yTargetUnit)
-    )
+  # yUnit: convert yValues (and lloq if present) in-place,
+  # grouped by (yDimension, yUnit, molWeight)
+  if ("lloq" %in% colnames(data)) {
+    data[, c("yValues", "lloq") := list(
+      toUnit(
+        quantityOrDimension = yDimension[[1L]],
+        values = yValues,
+        targetUnit = yTargetUnit,
+        sourceUnit = yUnit[[1L]],
+        molWeight = molWeight[[1L]],
+        molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+      ),
+      toUnit(
+        quantityOrDimension = yDimension[[1L]],
+        values = lloq,
+        targetUnit = yTargetUnit,
+        sourceUnit = yUnit[[1L]],
+        molWeight = molWeight[[1L]],
+        molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+      )
+    ), by = .(yDimension, yUnit, molWeight)]
   } else {
-    # For some reason, if the user dataset doesn't have error values, but
-    # still have columns about error units, update them as well. The quantity
-    # and its error should always have the same unit in the final data frame.
-    if (any(colnames(data) == "yErrorUnit")) {
-      data <- dplyr::mutate(data, yErrorUnit = yUnit)
+    data[, yValues := toUnit(
+      quantityOrDimension = yDimension[[1L]],
+      values = yValues,
+      targetUnit = yTargetUnit,
+      sourceUnit = yUnit[[1L]],
+      molWeight = molWeight[[1L]],
+      molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+    ), by = .(yDimension, yUnit, molWeight)]
+  }
+  data[, yUnit := yTargetUnit]
+
+  # yError: convert yErrorValues and update yErrorUnit in-place, grouped by
+  # (yDimension, yErrorUnit, molWeight).
+  # GeometricStdDev error values are dimensionless ratios and must be skipped.
+  if ("yErrorValues" %in% colnames(data)) {
+    if ("yErrorType" %in% colnames(data)) {
+      data[
+        is.na(yErrorType) | yErrorType != DataErrorType$GeometricStdDev,
+        c("yErrorValues", "yErrorUnit") := list(
+          toUnit(
+            quantityOrDimension = yDimension[[1L]],
+            values = yErrorValues,
+            targetUnit = yTargetUnit,
+            sourceUnit = yErrorUnit[[1L]],
+            molWeight = molWeight[[1L]],
+            molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+          ),
+          rep(yTargetUnit, .N)
+        ),
+        by = .(yDimension, yErrorUnit, molWeight)
+      ]
+    } else {
+      data[,
+        c("yErrorValues", "yErrorUnit") := list(
+          toUnit(
+            quantityOrDimension = yDimension[[1L]],
+            values = yErrorValues,
+            targetUnit = yTargetUnit,
+            sourceUnit = yErrorUnit[[1L]],
+            molWeight = molWeight[[1L]],
+            molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+          ),
+          rep(yTargetUnit, .N)
+        ),
+        by = .(yDimension, yErrorUnit, molWeight)
+      ]
+    }
+  } else {
+    # No error values, but sync yErrorUnit to yUnit if the column exists.
+    if ("yErrorUnit" %in% colnames(data)) {
+      data[, yErrorUnit := yUnit]
     }
   }
 
-  # clean up and return --------------------------
-
-  # Restore the original row order using the internal row id
-  data <- dplyr::arrange(data, .rowidInternal)
-
-  # Remove all columns that were added only for internal workings of the function.
-  data <- dplyr::select(data, -dplyr::matches("Split$|.rowidInternal"))
-
-  return(data)
+  # Convert back to tibble.
+  return(dplyr::as_tibble(data))
 }
 
 #' Remove empty data frames from a list of data frames
