@@ -115,12 +115,10 @@ dataFrameToPopulation <- function(dataFrame) {
     )
   }
 
-  csvString <- paste(
-    utils::capture.output(
-      utils::write.csv(dataFrame, file = stdout(), row.names = FALSE)
-    ),
-    collapse = "\n"
-  )
+  con <- textConnection("csvLines", "w")
+  on.exit(close(con), add = TRUE)
+  utils::write.csv(dataFrame, file = con, row.names = FALSE)
+  csvString <- paste(csvLines, collapse = "\n")
 
   populationTask <- .getNetTask("PopulationTask")
   population <- populationTask$call("ImportPopulationFromCsvString", csvString)
