@@ -201,6 +201,93 @@ print(myTibble)
 #> #   lloq <dbl>, Molecule <chr>, Organ <chr>
 ```
 
+The inverse operation - creating `DataSet` objects from a `data.frame` -
+is performed by
+[`dataSetsFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetsFromDataFrame.md).
+The function accepts a `data.frame` with the same structure as returned
+by
+[`dataSetToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md)
+and returns a named list of `DataSet` objects. This is useful for
+constructing `DataSet` objects programmatically or after manipulating
+data in a `data.frame`:
+
+``` r
+# Create a data set and convert to data.frame
+dsOriginal <- DataSet$new(name = "Aciclovir")
+dsOriginal$setValues(
+  xValues = c(1, 2, 3, 4),
+  yValues = c(0.5, 1.2, 0.8, 0.3),
+  yErrorValues = c(0.05, 0.1, 0.08, 0.03)
+)
+dsOriginal$addMetaData(name = "Organ", value = "Blood")
+
+# Convert to data.frame for further processing
+df <- dataSetToDataFrame(dsOriginal)
+print(df)
+#>        name xValues yValues yErrorValues xDimension xUnit           yDimension
+#> 1 Aciclovir       1     0.5         0.05       Time     h Concentration (mass)
+#> 2 Aciclovir       2     1.2         0.10       Time     h Concentration (mass)
+#> 3 Aciclovir       3     0.8         0.08       Time     h Concentration (mass)
+#> 4 Aciclovir       4     0.3         0.03       Time     h Concentration (mass)
+#>   yUnit       yErrorType yErrorUnit molWeight lloq Organ
+#> 1  mg/l ArithmeticStdDev       mg/l        NA   NA Blood
+#> 2  mg/l ArithmeticStdDev       mg/l        NA   NA Blood
+#> 3  mg/l ArithmeticStdDev       mg/l        NA   NA Blood
+#> 4  mg/l ArithmeticStdDev       mg/l        NA   NA Blood
+
+# Reconstruct DataSet objects from the data.frame
+dataSetsFromDf <- dataSetsFromDataFrame(df)
+print(dataSetsFromDf[["Aciclovir"]])
+#> <DataSet>
+#>   • Name: Aciclovir
+#>   • X dimension: Time
+#>   • X unit: h
+#>   • Y dimension: Concentration (mass)
+#>   • Y unit: mg/l
+#>   • Error type: ArithmeticStdDev
+#>   • Error unit: mg/l
+#>   • Molecular weight: NULL
+#>   • LLOQ: NULL
+#> Meta data:
+#>   • Organ: Blood
+```
+
+[`dataSetsFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetsFromDataFrame.md)
+can also be used to create `DataSet` objects from a `data.frame` that
+was not produced by
+[`dataSetToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md),
+for example when observed data is provided as a plain table. The
+required columns are `name`, `xValues`, and `yValues`. All other
+standard columns are optional, and any additional columns are
+interpreted as meta data.
+
+``` r
+# Construct a data.frame manually and create DataSet objects from it
+observedDf <- data.frame(
+  name = c("Study A", "Study A", "Study B", "Study B"),
+  xValues = c(0, 1, 0, 1),
+  yValues = c(0, 10, 0, 5),
+  Organ = c("Liver", "Liver", "Kidney", "Kidney")
+)
+
+dataSetsFromObserved <- dataSetsFromDataFrame(observedDf)
+print(names(dataSetsFromObserved))
+#> [1] "Study A" "Study B"
+print(dataSetsFromObserved[["Study A"]])
+#> <DataSet>
+#>   • Name: Study A
+#>   • X dimension: Time
+#>   • X unit: h
+#>   • Y dimension: Concentration (mass)
+#>   • Y unit: mg/l
+#>   • Error type: NULL
+#>   • Error unit: NULL
+#>   • Molecular weight: NULL
+#>   • LLOQ: NULL
+#> Meta data:
+#>   • Organ: Liver
+```
+
 ## Importing data
 
 Creating `DataSet` objects from scratch is a rather advanced use case.

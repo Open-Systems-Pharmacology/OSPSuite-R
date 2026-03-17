@@ -33,6 +33,16 @@
 ### Minor improvements and bug fixes
 
 - Added
+  [`dataSetsFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetsFromDataFrame.md)
+  function that creates a list of `DataSet` objects from a `data.frame`
+  with the same structure as returned by
+  [`dataSetToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md).
+  This is the inverse operation of
+  [`dataSetToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md)
+  and allows creating `DataSet` objects from data frames without
+  requiring an Excel file.
+  ([\#1495](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1495))
+- Added
   [`populationFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/populationFromDataFrame.md)
   function to create a `Population` object from a data.frame, the
   reverse of

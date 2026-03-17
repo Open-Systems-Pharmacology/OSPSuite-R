@@ -246,6 +246,11 @@
 
   Converts a list of `DataSet` objects to a data.frame
 
+- [`dataSetsFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetsFromDataFrame.md)
+  :
+
+  Creates a list of `DataSet` objects from a `data.frame`
+
 - [`.expandPath()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-expandPath.md)
   :
 

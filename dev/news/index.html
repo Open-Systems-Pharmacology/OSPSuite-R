@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9025</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9026</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
-<ul><li>Added <code><a href="../reference/populationFromDataFrame.html">populationFromDataFrame()</a></code> function to create a <code>Population</code> object from a data.frame, the reverse of <code><a href="../reference/populationToDataFrame.html">populationToDataFrame()</a></code>. If no <code>IndividualId</code> column is present, sequential IDs are automatically generated. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/425" class="external-link">#425</a>)</li>
+<ul><li>Added <code><a href="../reference/dataSetsFromDataFrame.html">dataSetsFromDataFrame()</a></code> function that creates a list of <code>DataSet</code> objects from a <code>data.frame</code> with the same structure as returned by <code><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame()</a></code>. This is the inverse operation of <code><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame()</a></code> and allows creating <code>DataSet</code> objects from data frames without requiring an Excel file. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1495" class="external-link">#1495</a>)</li>
+<li>Added <code><a href="../reference/populationFromDataFrame.html">populationFromDataFrame()</a></code> function to create a <code>Population</code> object from a data.frame, the reverse of <code><a href="../reference/populationToDataFrame.html">populationToDataFrame()</a></code>. If no <code>IndividualId</code> column is present, sequential IDs are automatically generated. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/425" class="external-link">#425</a>)</li>
 <li>
 <code><a href="../reference/loadDataSetsFromExcel.html">loadDataSetsFromExcel()</a></code> now accepts a <code>sheets</code> parameter to specify which sheets to load. When <code>sheets = NULL</code> (default), the function uses sheets defined in the importer configuration. If the configuration has no sheets defined, all sheets are loaded. When <code>sheets</code> is a character vector, those specific sheets are loaded, overriding any sheets in the configuration. The <code>importAllSheets</code> parameter is now deprecated and will be removed in version 14.</li>
 <li>
