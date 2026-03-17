@@ -16,6 +16,7 @@
 
 ## Minor improvements and bug fixes
 
+- Added `dataSetsFromDataFrame()` function that creates a list of `DataSet` objects from a `data.frame` with the same structure as returned by `dataSetToDataFrame()`. This is the inverse operation of `dataSetToDataFrame()` and allows creating `DataSet` objects from data frames without requiring an Excel file. (\#1495)
 - Added `populationFromDataFrame()` function to create a `Population` object from a data.frame, the reverse of `populationToDataFrame()`. If no `IndividualId` column is present, sequential IDs are automatically generated. (#425)
 - `loadDataSetsFromExcel()` now accepts a `sheets` parameter to specify which sheets to load. When `sheets = NULL` (default), the function uses sheets defined in the importer configuration. If the configuration has no sheets defined, all sheets are loaded. When `sheets` is a character vector, those specific sheets are loaded, overriding any sheets in the configuration. The `importAllSheets` parameter is now deprecated and will be removed in version 14.
 - `toDisplayUnit()` now accepts an optional `unit` parameter to specify the source unit of the values, consistent with `toUnit()` and `toBaseUnit()` functions. When not specified, values are assumed to be in base unit (maintaining backward compatibility). (#1755)
@@ -23,7 +24,7 @@
 - `ospUnits$Dimensionless$Unitless` and `ospUnits$Fraction$Unitless` now return an empty string `""` instead of the literal string `"Unitless"`.
 - Added read-only `valueOrigin` property to `Quantity` class (including `Parameter` and other derived classes) to access the value origin from the underlying .NET object. This is useful for generating automated reports that track parameter value provenance.
 - `createImporterConfigurationForFile()` now automatically sets the `sheets` attribute when a `sheet` parameter is provided, eliminating the need to manually set it before using `loadDataSetsFromExcel()`.
-- Fixed `getSteadyState()` to correctly apply `lowerThreshold` for both positive and negative values. The threshold now filters values in the interval `[-lowerThreshold, lowerThreshold]` instead of only values below the threshold. (\#1348)
+- Fixed `getSteadyState()` to correctly apply `lowerThreshold` for both positive and negative values. The threshold now filters values in the interval `[-lowerThreshold, lowerThreshold]` instead of only values below the threshold. (#1348)
 - `runSimulations()` now throws an error if any simulation has no output selections defined, instead of silently returning empty results. (#1404)
 - `exportResultsToCSV()` now validates that the input is a single `SimulationResults` object and rejects lists of results, preventing downstream .NET interop failures. (#1249)
 
