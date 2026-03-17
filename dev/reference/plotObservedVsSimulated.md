@@ -1,6 +1,6 @@
 # Observed versus predicted/simulated scatter plot
 
-Observed versus predicted/simulated scatter plot
+**\[deprecated\]**
 
 ## Usage
 
@@ -82,4 +82,7 @@ myPlotConfiguration$caption <- "My Sources"
 
 # plot
 plotObservedVsSimulated(myDataCombined, myPlotConfiguration)
+#> Warning: `plotObservedVsSimulated()` was deprecated in ospsuite 12.4.2.
+#> ℹ Please use `plotPredictedVsObserved()` instead.
+#> ℹ It will be removed in version 14.0.
 ```

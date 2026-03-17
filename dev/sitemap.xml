@@ -11,6 +11,7 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/observed-data.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/ospsuite.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/pk-analysis.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/plotting-with-ospsuite-plots.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/run-simulation.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/sensitivity-analysis.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/set-values.html</loc></url>
@@ -198,8 +199,13 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotIndividualTimeProfile.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotObservedVsSimulated.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPopulationTimeProfile.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotQuantileQuantilePlot.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsAsHistogram.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsSimulated.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsTime.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/populationFromDataFrame.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/populationToDataFrame.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/potentialVariableParameterPathsFor.html</loc></url>

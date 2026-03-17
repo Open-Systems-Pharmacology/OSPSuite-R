@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9024</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9025</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,7 @@
     <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
     <li><a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a></li>
     <li><a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a></li>
+    <li><a class="dropdown-item" href="../articles/plotting-with-ospsuite-plots.html">Plotting with ospsuite.plots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a></li>
@@ -58,6 +59,11 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="ospsuite-development-version">ospsuite (development version)<a class="anchor" aria-label="anchor" href="#ospsuite-development-version"></a></h2>
+<div class="section level3">
+<h3 id="major-changes-development-version">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-development-version"></a></h3>
+<ul><li><p>Added five new plotting functions powered by <a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">ospsuite.plots</a>: <code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code>, <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code>, <code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>, <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code>, and <code><a href="../reference/plotQuantileQuantilePlot.html">plotQuantileQuantilePlot()</a></code>. These functions accept <code>DataCombined</code> objects or data frames and handle mixed error types and unit conversion directly, without requiring data preprocessing.</p></li>
+<li><p>The <a href="https://github.com/open-systems-pharmacology/tlf-library" class="external-link">tlf</a>-based plotting functions <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code>, <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code>, <code><a href="../reference/plotObservedVsSimulated.html">plotObservedVsSimulated()</a></code>, <code><a href="../reference/plotResidualsVsTime.html">plotResidualsVsTime()</a></code>, and <code><a href="../reference/plotResidualsVsSimulated.html">plotResidualsVsSimulated()</a></code> are now soft-deprecated in favor of the <a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">ospsuite.plots</a>-based equivalents and will be removed in version 14.0. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1739" class="external-link">#1739</a>)</p></li>
+</ul></div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
 <ul><li>Added <code><a href="../reference/populationFromDataFrame.html">populationFromDataFrame()</a></code> function to create a <code>Population</code> object from a data.frame, the reverse of <code><a href="../reference/populationToDataFrame.html">populationToDataFrame()</a></code>. If no <code>IndividualId</code> column is present, sequential IDs are automatically generated. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/425" class="external-link">#425</a>)</li>

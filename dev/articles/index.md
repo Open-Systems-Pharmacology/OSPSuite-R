@@ -29,6 +29,8 @@ How to create standard figures
   class](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/data-combined.md):
 - [Visualizations with
   \`DataCombined\`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/data-combined-plotting.md):
+- [Plotting with
+  ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/plotting-with-ospsuite-plots.md):
 
 ### Miscellaneous
 

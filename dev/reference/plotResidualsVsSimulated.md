@@ -1,6 +1,6 @@
 # Residuals versus time scatter plot
 
-Residuals versus time scatter plot
+**\[deprecated\]**
 
 ## Usage
 
@@ -79,5 +79,8 @@ plotResidualsVsSimulated(myDataCombined,
   scaling = "log",
   defaultPlotConfiguration = myPlotConfiguration
 )
+#> Warning: `plotResidualsVsSimulated()` was deprecated in ospsuite 12.4.2.
+#> ℹ Please use `plotResidualsVsCovariate()` instead.
+#> ℹ It will be removed in version 14.0.
 
 ```

@@ -2,6 +2,34 @@
 
 ## ospsuite (development version)
 
+### Major changes
+
+- Added five new plotting functions powered by
+  [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/):
+  [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md),
+  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md),
+  [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md),
+  [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsAsHistogram.md),
+  and
+  [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotQuantileQuantilePlot.md).
+  These functions accept `DataCombined` objects or data frames and
+  handle mixed error types and unit conversion directly, without
+  requiring data preprocessing.
+
+- The
+  [tlf](https://github.com/open-systems-pharmacology/tlf-library)-based
+  plotting functions
+  [`plotIndividualTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotIndividualTimeProfile.md),
+  [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPopulationTimeProfile.md),
+  [`plotObservedVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotObservedVsSimulated.md),
+  [`plotResidualsVsTime()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsTime.md),
+  and
+  [`plotResidualsVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsSimulated.md)
+  are now soft-deprecated in favor of the
+  [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)-based
+  equivalents and will be removed in version 14.0.
+  ([\#1739](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1739))
+
 ### Minor improvements and bug fixes
 
 - Added

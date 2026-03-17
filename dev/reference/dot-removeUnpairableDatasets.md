@@ -74,7 +74,7 @@ df
 
 # transformed
 ospsuite:::.removeUnpairableDatasets(df)
-#> Following datasets were specified to be grouped but not found:
+#> Following non-grouped or unpairable datasets have been removed:
 #> Sim1
 #> Sim2
 #> Obs1

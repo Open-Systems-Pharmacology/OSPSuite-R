@@ -12,12 +12,13 @@ articles:
   ospsuite: ospsuite.html
   pk-analysis: pk-analysis.html
   PKSim-installation: PKSim-installation.html
+  plotting-with-ospsuite-plots: plotting-with-ospsuite-plots.html
   run-simulation: run-simulation.html
   sensitivity-analysis: sensitivity-analysis.html
   set-values: set-values.html
   table-parameters: table-parameters.html
   unit-conversion: unit-conversion.html
-last_built: 2026-03-06T21:05Z
+last_built: 2026-03-17T17:29Z
 urls:
   reference: https://www.open-systems-pharmacology.org/OSPSuite-R/reference
   article: https://www.open-systems-pharmacology.org/OSPSuite-R/articles

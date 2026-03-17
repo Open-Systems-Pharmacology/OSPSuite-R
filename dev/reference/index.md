@@ -506,19 +506,35 @@
   parameter by name is not found
 
 - [`plotIndividualTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotIndividualTimeProfile.md)
-  : Time-profile plot of individual data
+  **\[deprecated\]** : Time-profile plot of individual data
 
 - [`plotObservedVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotObservedVsSimulated.md)
-  : Observed versus predicted/simulated scatter plot
+  **\[deprecated\]** : Observed versus predicted/simulated scatter plot
 
 - [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPopulationTimeProfile.md)
-  : Time-values profile plot for population simulations
+  **\[deprecated\]** : Time-values profile plot for population
+  simulations
+
+- [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md)
+  : Plot Predicted vs Observed Values
+
+- [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotQuantileQuantilePlot.md)
+  : Plot Quantile-Quantile Plot
+
+- [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsAsHistogram.md)
+  : Plot Residuals Histogram
+
+- [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md)
+  : Plot Residuals vs Covariate
 
 - [`plotResidualsVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsSimulated.md)
-  : Residuals versus time scatter plot
+  **\[deprecated\]** : Residuals versus time scatter plot
 
 - [`plotResidualsVsTime()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsTime.md)
-  : Residuals versus time scatter plot
+  **\[deprecated\]** : Residuals versus time scatter plot
+
+- [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md)
+  : Create Time Profile Plot
 
 - [`populationFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/populationFromDataFrame.md)
   :
