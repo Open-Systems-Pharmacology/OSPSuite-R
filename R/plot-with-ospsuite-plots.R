@@ -868,6 +868,7 @@ plotQuantileQuantilePlot <- function(
     } else {
       dt <- .unitConverter(data = dt, xUnit = xUnitStr, yUnit = yUnitStr)
     }
+    data.table::setDT(dt)
     dt[, yUnit := yUnitStr]
     dt[, yDimension := ospsuite::getDimensionForUnit(yUnitStr)]
     return(dt)
