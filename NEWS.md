@@ -1,5 +1,19 @@
 # ospsuite (development version)
 
+## Major changes
+
+- Added five new plotting functions powered by `{ospsuite.plots}`:
+  `plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`,
+  `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()`.
+  These functions accept `DataCombined` objects or data frames and handle mixed
+  error types and unit conversion directly, without requiring data preprocessing.
+
+- The `{tlf}`-based plotting functions `plotIndividualTimeProfile()`,
+  `plotPopulationTimeProfile()`, `plotObservedVsSimulated()`,
+  `plotResidualsVsTime()`, and `plotResidualsVsSimulated()` are now soft-deprecated
+  in favor of the `{ospsuite.plots}`-based equivalents and will be removed in
+  version 14.0. (\#1739)
+
 ## Minor improvements and bug fixes
 
 - Added `dataSetsFromDataFrame()` function that creates a list of `DataSet` objects from a `data.frame` with the same structure as returned by `dataSetToDataFrame()`. This is the inverse operation of `dataSetToDataFrame()` and allows creating `DataSet` objects from data frames without requiring an Excel file. (\#1495)
