@@ -35,7 +35,8 @@ addOutputs <- function(quantitiesOrPaths, simulation, stopIfNotFound = TRUE) {
     task$call(
       "AddQuantitiesToSimulationOutputByPath",
       simulation,
-      path
+      path,
+      stopIfNotFound
     )
   }
 }
