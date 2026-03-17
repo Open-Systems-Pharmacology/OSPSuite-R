@@ -27,7 +27,7 @@ is defined as all simulated values within the range between \code{x}-fold
 can be interpreted as the \code{1}-fold range.}
 }
 \description{
-Observed versus predicted/simulated scatter plot
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \examples{
 # simulated data
