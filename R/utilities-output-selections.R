@@ -32,7 +32,12 @@ addOutputs <- function(quantitiesOrPaths, simulation, stopIfNotFound = TRUE) {
 
   task <- .getCoreTaskFromCache("ContainerTask")
   for (path in paths) {
-    task$call("AddQuantitiesToSimulationOutputByPath", simulation, path, FALSE)
+    task$call(
+      "AddQuantitiesToSimulationOutputByPath",
+      simulation,
+      path,
+      stopIfNotFound
+    )
   }
 }
 

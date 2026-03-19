@@ -16,6 +16,17 @@ messages$errorOneOfNameAndPathMustBeSpecified <- function() {
   "One of the `parameterName` or `parameterPath` must be specified, but not both."
 }
 
+messages$errorMissingColumns <- function(cols) {
+  paste0(
+    "The following required columns are missing from the data frame: ",
+    paste(cols, collapse = ", ")
+  )
+}
+
+messages$errorInvalidDataSetNames <- function() {
+  "The 'name' column must not contain NA or empty string values."
+}
+
 messages$noDatasetsToGroup <- function() {
   "There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods."
 }
@@ -148,6 +159,59 @@ messages$forbiddenSimulationName <- function(name, sim) {
     "'."
   )
 }
+
+messages$plotNoDataAvailable <- function() {
+  "No data for this plot available."
+}
+
+messages$plotUnitConsistency <- function() {
+  "Units have to be consistent within one datatype."
+}
+
+
+messages$plotMissingColumnPredicted <- function() {
+  "No column available for 'predicted'. Please use combinedData format or a data.frame with column 'predicted'."
+}
+
+
+messages$plotTooManyYDimension <- function(yDimensions) {
+  paste0(
+    "Data contains too many yDimensions: '",
+    paste(yDimensions, collapse = "', '"),
+    "'. Automatic y-Unit conversion failed."
+  )
+}
+
+messages$plotWrongColumnsForCustomErrorType <- function(errorTypes) {
+  paste0(
+    "The error values for custom errorTypes '",
+    paste(unique(errorTypes), collapse = "', '"),
+    "' must be provided in 'yMin' and 'yMax' columns. ",
+    "Only 'ArithmeticStdDev' and 'GeometricStdDev' can use 'yErrorValues'."
+  )
+}
+
+messages$plotShowLegendPerDatasetHasNoEffect <- function(dataType) {
+  paste0(
+    "showLegendPerDataset = '",
+    dataType,
+    "' but no ",
+    dataType,
+    " data present. ",
+    "This setting will have no effect."
+  )
+}
+
+messages$plotUntypicalAesthetic <- function(aesthetic, dataType) {
+  sprintf(
+    "aesthetic '%s' is set to mapping for %s data.
+      This aesthetic is usually only used for %s data mapping.",
+    aesthetic,
+    dataType,
+    setdiff(c('simulated', 'observed'), dataType)
+  )
+}
+
 
 messages$errorParameterValuesCountMismatch <- function(
   parameterPath,

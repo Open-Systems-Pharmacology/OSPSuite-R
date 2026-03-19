@@ -49,6 +49,7 @@ articles:
     - observed-data
     - data-combined
     - data-combined-plotting
+    - plotting-with-ospsuite-plots
 
   - title: Miscellaneous
     navbar: Miscellaneous

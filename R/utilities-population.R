@@ -90,6 +90,42 @@ populationToTibble <- function(population) {
   return(dplyr::as_tibble(popData))
 }
 
+#' Creates a `Population` object from a data.frame
+#'
+#' @param dataFrame A data.frame containing population data. Each column represents
+#' a parameter path or covariate, with one row per individual. If no `IndividualId`
+#' column is present, one will be automatically generated with 0-based sequential IDs.
+#'
+#' @return A `Population` object
+#'
+#' @examples
+#' csvPath <- system.file("extdata", "pop.csv", package = "ospsuite")
+#'
+#' population <- loadPopulation(csvPath)
+#' df <- populationToDataFrame(population)
+#' populationFromDf <- populationFromDataFrame(df)
+#' @export
+populationFromDataFrame <- function(dataFrame) {
+  validateIsOfType(dataFrame, "data.frame")
+
+  if (!"IndividualId" %in% names(dataFrame)) {
+    dataFrame <- cbind(
+      IndividualId = seq(0, nrow(dataFrame) - 1),
+      dataFrame
+    )
+  }
+
+  con <- textConnection("csvLines", "w")
+  on.exit(close(con), add = TRUE)
+  utils::write.csv(dataFrame, file = con, row.names = FALSE)
+  csvString <- paste(csvLines, collapse = "\n")
+
+  populationTask <- .getNetTask("PopulationTask")
+  population <- populationTask$call("ImportPopulationFromCsvString", csvString)
+  Population$new(population)
+}
+
+
 #' Saves the population to csv file
 #'
 #' @param population Population to export to csv (typically imported from file using `loadPopulation`)
