@@ -120,7 +120,7 @@ populationFromDataFrame <- function(dataFrame) {
   utils::write.csv(dataFrame, file = con, row.names = FALSE)
   csvString <- paste(csvLines, collapse = "\n")
 
-  populationTask <- .getNetTask("PopulationTask")
+  populationTask <- .getCoreTask("PopulationTask")
   population <- populationTask$call("ImportPopulationFromCsvString", csvString)
   Population$new(population)
 }
