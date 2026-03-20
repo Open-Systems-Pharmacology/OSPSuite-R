@@ -26,7 +26,22 @@ createMoBiExpressionProfileBuildingBlock <- function(
   moleculeName,
   speciesName
 ) {
-  # ...existing code...
+  validateIsString(category)
+  validateIsString(moleculeName)
+  validateIsString(speciesName)
+
+  netTask <- .getMoBiTaskFromCache("ExpressionProfileTask")
+  netObject <- netTask$call(
+    "CreateExpressionProfile",
+    category,
+    moleculeName,
+    speciesName
+  )
+
+  return(BuildingBlock$new(
+    netObject,
+    type = BuildingBlockTypes$ExpressionProfile
+  ))
 }
 
 #' Set Parameters of a MoBi Expression Profile Building Block
@@ -65,5 +80,18 @@ setMoBiExpressionProfileParameters <- function(
   quantityPaths,
   quantityValues
 ) {
-  # ...existing code...
+  validateIsOfType(expressionProfileBuildingBlock, "BuildingBlock")
+  validateIsString(quantityPaths)
+  validateIsNumeric(quantityValues)
+  validateIsSameLength(quantityPaths, quantityValues)
+
+  netTask <- .getMoBiTaskFromCache("ExpressionProfileTask")
+  netTask$call(
+    "SetExpressionParameter",
+    expressionProfileBuildingBlock,
+    quantityPaths,
+    quantityValues
+  )
+
+  invisible(expressionProfileBuildingBlock)
 }
