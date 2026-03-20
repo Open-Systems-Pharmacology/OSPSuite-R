@@ -221,6 +221,20 @@ test_that("addResidualColumn sets NaN and warns for log of zero values", {
   expect_equal(result$residualValues[3], log(2) - log(2), tolerance = 1e-6)
 })
 
+test_that("addResidualColumn sets NaN and warns for log of zero values", {
+  paired <- data.frame(
+    yValuesObserved = c(3, 1, 2),
+    yValuesSimulated = c(1, 0, -1)
+  )
+  expect_warning(
+    result <- addResidualColumn(paired, scaling = "ratio"),
+    regexp = "NaN"
+  )
+  expect_true(is.nan(result$residualValues[2]))
+  expect_equal(result$residualValues[3], -2, tolerance = 1e-6)
+})
+
+
 test_that("addResidualColumn adds ratio residuals correctly", {
   paired <- data.frame(
     yValuesObserved = c(2, 4, 8),

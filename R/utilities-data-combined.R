@@ -169,7 +169,7 @@ addResidualColumn <- function(
   if (scaling %in% c("linear", "lin", "identity")) {
     residualVals <- predVals - obsVals
     label <- "residuals\npredicted - observed"
-  } else if (scaling %in% c("log")) {
+  } else if (scaling == "log") {
     nonPositive <- (!is.na(obsVals) & obsVals <= 0) |
       (!is.na(predVals) & predVals <= 0)
     nNonPositive <- sum(nonPositive, na.rm = TRUE)
@@ -183,7 +183,7 @@ addResidualColumn <- function(
     label <- "residuals\nlog(predicted) - log(observed)"
   } else {
     # ratio
-    nonPositivePred <- !is.na(predVals) & predVals <= 0
+    nonPositivePred <- !is.na(predVals) & predVals == 0
     nNonPositive <- sum(nonPositivePred, na.rm = TRUE)
     residualVals <- obsVals / predVals
     residualVals[nonPositivePred] <- NaN
