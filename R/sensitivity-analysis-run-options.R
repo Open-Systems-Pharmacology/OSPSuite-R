@@ -11,7 +11,8 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class
     #' @param numberOfCores Number of cores to use for the simulation. Default value is `getOSPSuiteSetting("numberOfCores")`
-    #' @param showProgress Should a progress information be displayed. Default value is `getOSPSuiteSetting("showProgress")`
+    #' @param showProgress Should a progress bar be displayed during sensitivity analysis. If `TRUE`, a progress bar is shown in the console,
+    #'   indicating the progress of the sensitivity analysis calculations. Default value is `getOSPSuiteSetting("showProgress")`
     #' @return A new `SensitivityAnalysisRunOptions` object.
     initialize = function(numberOfCores = NULL, showProgress = NULL) {
       netObject <- rSharp::newObjectFromName(
@@ -39,7 +40,8 @@ SensitivityAnalysisRunOptions <- R6::R6Class(
     numberOfCores = function(value) {
       private$.wrapProperty("NumberOfCoresToUse", value, asInteger = TRUE)
     },
-    #' @field showProgress  Specifies whether progress bar should be shown during sensitivity analysis run. Default is `getOSPSuiteSetting("showProgress")`.
+    #' @field showProgress  Specifies whether a progress bar should be shown during sensitivity analysis. If `TRUE`, a progress bar is shown in the console,
+    #'   indicating the progress of the sensitivity analysis calculations. Default is `getOSPSuiteSetting("showProgress")`.
     showProgress = function(value) {
       private$.wrapProperty("ShowProgress", value)
     }

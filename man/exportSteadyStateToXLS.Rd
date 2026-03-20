@@ -40,9 +40,10 @@ time based on the last application.}
 initial values defined by a formula are not included.}
 
 \item{lowerThreshold}{Numerical value (in default unit of the output).
-Any steady-state values below this value are considered as numerical noise
-and replaced by 0. If \code{lowerThreshold} is \code{NULL}, no cut-off is applied.
-Default value is 1e-15.}
+Any steady-state values with absolute value below this threshold are considered
+as numerical noise and replaced by 0 (i.e., values in the interval
+\verb{[-lowerThreshold, lowerThreshold]}). If \code{lowerThreshold} is \code{NULL}, no cut-off
+is applied. Default value is 1e-15.}
 
 \item{simulationRunOptions}{Optional instance of a \code{SimulationRunOptions}
 used during the simulation run.}

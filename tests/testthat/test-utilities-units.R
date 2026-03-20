@@ -155,6 +155,14 @@ test_that("It can convert from a value in base unit to display unit", {
   expect_equal(toDisplayUnit(par, 1), 1)
 })
 
+test_that("It can convert from a value in a non-base unit to display unit", {
+  expect_equal(toDisplayUnit(par, 1000, "ml"), 1)
+})
+
+test_that("It can convert from an array of values in a non-base unit to display unit", {
+  expect_equal(toDisplayUnit(par, c(1000, 2000, 3000), "ml"), c(1, 2, 3))
+})
+
 # allAvailableDimensions
 test_that("It should be able to return the name of all dimensions defined in the system", {
   expect_gt(length(allAvailableDimensions()), 0)
@@ -691,6 +699,31 @@ test_that("It shouldn't convert geometric error values or units, only `yValues`"
   )
 })
 
+dfMixedError <- dplyr::tibble(
+  xValues     = c(1, 2, 3, 4),
+  xUnit       = "min",
+  xDimension  = "Time",
+  yValues     = c(0.1, 0.2, 0.3, 0.4),
+  yUnit       = "",
+  yDimension  = "Fraction",
+  yErrorValues = c(0.01, 0.02, 1.5, 2.0),
+  yErrorUnit  = "",
+  yErrorType  = c(
+    DataErrorType$ArithmeticStdDev,
+    DataErrorType$ArithmeticStdDev,
+    DataErrorType$GeometricStdDev,
+    DataErrorType$GeometricStdDev
+  ),
+  molWeight   = NA_real_
+)
+
+dfMixedErrorConvert <- .unitConverter(dfMixedError, yUnit = ospUnits$Fraction$`%`)
+
+test_that(".unitConverter converts ArithmeticStdDev error rows but leaves GeometricStdDev rows unchanged when both share the same group", {
+  expect_equal(dfMixedErrorConvert$yErrorValues[1:2], dfMixedError$yErrorValues[1:2] * 100)
+  expect_equal(dfMixedErrorConvert$yErrorValues[3:4], dfMixedError$yErrorValues[3:4])
+})
+
 # multiple concentration dims present --------------------------------
 
 concDims <- c(
@@ -714,4 +747,26 @@ dfConcConvert <- .unitConverter(dfConc)
 
 test_that("it retains multiple concentration dimensions", {
   expect_equal(unique(dfConcConvert$yDimension), concDims)
+})
+
+# Unitless unit tests -------------------
+
+test_that("ospUnits$Dimensionless$Unitless returns empty string", {
+  expect_equal(ospUnits$Dimensionless$Unitless, "")
+})
+
+test_that("ospUnits$Fraction$Unitless returns empty string", {
+  expect_equal(ospUnits$Fraction$Unitless, "")
+})
+
+test_that("Unit conversion works with unitless as empty string", {
+  expect_equal(
+    toUnit(
+      "Fraction",
+      0.12,
+      ospUnits$Fraction$`%`,
+      sourceUnit = ospUnits$Fraction$Unitless
+    ),
+    12
+  )
 })

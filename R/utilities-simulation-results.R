@@ -58,16 +58,7 @@ getOutputValues <- function(
   }
 
   # If quantities are provided, get their paths
-  paths <- vector("character", length(quantitiesOrPaths))
-  if (isOfType(quantitiesOrPaths, "Quantity")) {
-    for (idx in seq_along(quantitiesOrPaths)) {
-      paths[[idx]] <- quantitiesOrPaths[[idx]]$path
-    }
-  } else {
-    paths <- quantitiesOrPaths
-  }
-  paths <- unique(paths)
-
+  paths <- .entitiesToPaths(quantitiesOrPaths)
   # If no specific individual ids are passed, iterate through all individuals
   individualIds <- ifNotNull(
     individualIds,
@@ -80,6 +71,29 @@ getOutputValues <- function(
   valueLength <- length(timeValues)
   covariateNames <- ifNotNull(population, population$allCovariateNames, NULL)
 
+  # Batch-fetch all covariate values upfront to reduce .NET calls from O(n*m) to O(m)
+  allCovariateValues <- if (!is.null(population)) {
+    stats::setNames(
+      lapply(covariateNames, population$getCovariateValues),
+      covariateNames
+    )
+  } else {
+    NULL
+  }
+
+  # Pre-compute the index of each requested individualId in the population for O(1) lookup
+  popIndices <- if (!is.null(population)) {
+    match(individualIds, population$allIndividualIds)
+  } else {
+    NULL
+  }
+
+  # Fail fast if any requested individualId is not found in the population
+  if (!is.null(popIndices) && anyNA(popIndices)) {
+    missingIds <- individualIds[is.na(popIndices)]
+    stop(messages$errorIndividualIdsNotFoundInPopulation(missingIds))
+  }
+
   individualPropertiesCache <- vector("list", length(individualIds))
   # create a cache of all individual values that are constant independent from the path
   for (individualIndex in seq_along(individualIds)) {
@@ -87,10 +101,9 @@ getOutputValues <- function(
     individualProperties <- list(IndividualId = rep(individualId, valueLength))
 
     for (covariateName in covariateNames) {
-      covariateValue <- population$getCovariateValue(
-        covariateName,
-        individualId
-      )
+      covariateValue <- allCovariateValues[[covariateName]][popIndices[
+        individualIndex
+      ]]
       individualProperties[[covariateName]] <- rep(covariateValue, valueLength)
     }
 
@@ -100,9 +113,9 @@ getOutputValues <- function(
   }
 
   # Cache of all individual properties over all individual that will be duplicated in all resulting data.frame
-  allIndividualProperties <- do.call(
-    rbind.data.frame,
-    c(individualPropertiesCache, stringsAsFactors = FALSE)
+  allIndividualProperties <- data.table::rbindlist(
+    individualPropertiesCache,
+    use.names = TRUE
   )
   values <- lapply(paths, function(path) {
     simulationResults$getValuesByPath(path, individualIds, stopIfNotFound)
@@ -170,6 +183,9 @@ getOutputValues <- function(
 #' @export
 exportResultsToCSV <- function(results, filePath) {
   validateIsOfType(results, "SimulationResults")
+  if (is.list(results)) {
+    stop(messages$errorExportResultsOnlyOneObject())
+  }
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
   simulationResultsTask <- .getCoreTask("SimulationResultsTask")

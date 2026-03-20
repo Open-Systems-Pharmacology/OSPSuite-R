@@ -7,6 +7,10 @@
         * Quantity Type: Parameter
         * Path: Organism|Liver|Volume
         * Value: 2.38 [l]
+        * Value Origin: Publication-Schlender J-F, Meyer M, et al. Development of a
+        Whole-Body Physiologically Based Pharmacokinetic Approach to Assess the
+        Pharmacokinetics of Drugs in Elderly Individuals. Clinical Pharmacokinetics.
+        2016;55(12):1573-1589. doi:10.1007/s40262-016-0422-3
       
       -- Formula --
       

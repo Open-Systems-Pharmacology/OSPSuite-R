@@ -12,7 +12,10 @@ SimulationRunOptions <- R6::R6Class(
     #' Initialize a new instance of the class
     #' @param numberOfCores Number of cores to use for the simulation. Default value is `getOSPSuiteSetting("numberOfCores")`
     #' @param checkForNegativeValues `r lifecycle::badge("deprecated")` Use `sim$solver$checkForNegativeValues` instead.
-    #' @param showProgress Should a progress information be displayed. Default value is `getOSPSuiteSetting("showProgress")`
+    #' @param showProgress Should a progress bar be displayed during population simulations. If `TRUE`, a progress bar is shown in the console,
+    #'   indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
+    #'   of a single simulation. This option only applies to population simulations and has no effect on individual simulations.
+    #'   Default value is `getOSPSuiteSetting("showProgress")`
     #' @return A new `SimulationRunOptions` object.
     initialize = function(
       numberOfCores = NULL,
@@ -63,7 +66,10 @@ SimulationRunOptions <- R6::R6Class(
     numberOfCores = function(value) {
       private$.wrapProperty("NumberOfCoresToUse", value, asInteger = TRUE)
     },
-    #' @field showProgress  Specifies whether progress bar should be shown during simulation run. Default is `getOSPSuiteSetting("showProgress")`
+    #' @field showProgress  Specifies whether a progress bar should be shown during population simulations. If `TRUE`, a progress bar is shown in the console,
+    #'   indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
+    #'   of a single simulation. This option only applies to population simulations and has no effect on individual simulations.
+    #'   Default is `getOSPSuiteSetting("showProgress")`
     showProgress = function(value) {
       private$.wrapProperty("ShowProgress", value)
     }

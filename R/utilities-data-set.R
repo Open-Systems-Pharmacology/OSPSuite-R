@@ -203,9 +203,18 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 #' @param xlsFilePath Path to the excel file with the data
 #' @param importerConfigurationOrPath An object of type `DataImporterConfiguration` that is valid
 #'  for the excel file or a path to a XML file with stored configuration
-#' @param importAllSheets If `FALSE` (default), only sheets specified in the
-#' `importerConfiguration` will be loaded. If `TRUE`, an attempt to load all sheets
-#' is performed. If any sheet does not comply with the configuration, an error is thrown.
+#' @param importAllSheets `r lifecycle::badge("deprecated")` If `FALSE` (default), only sheets specified in the
+#' `importerConfiguration` or in the `sheets` parameter will be loaded. If `TRUE`,
+#' an attempt to load all sheets is performed. If any sheet does not comply with the
+#' configuration, an error is thrown. When set to `TRUE`, this parameter takes priority
+#' over the `sheets` parameter and configuration sheets.
+#'
+#' **Deprecated**: Use `sheets = NULL` instead. This parameter will be removed in version 14.
+#' @param sheets Character vector of sheet names to load, or `NULL` (default).
+#' If `NULL` and `importAllSheets` is `FALSE`, the sheets defined in the `importerConfiguration` will be used.
+#' If the configuration has no sheets defined and `sheets` is `NULL` and `importAllSheets` is `FALSE`, all sheets
+#' will be loaded. If a character vector is provided, only the specified sheets
+#' will be loaded, overriding any sheets defined in the `importerConfiguration` (unless `importAllSheets = TRUE`).
 #'
 #' @return A named set of `DataSet` objects. The naming is defined by the property
 #' `importerConfiguration$namingPattern`.
@@ -218,29 +227,38 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 #'   package = "ospsuite"
 #' )
 #'
-#' importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
-#' importerConfiguration$sheets <- "TestSheet_1"
+#' # When sheet is specified, it is automatically added to the configuration
+#' importerConfiguration <- createImporterConfigurationForFile(
+#'   xlsFilePath,
+#'   sheet = "TestSheet_1"
+#' )
 #'
+#' dataSets <- loadDataSetsFromExcel(
+#'   xlsFilePath = xlsFilePath,
+#'   importerConfigurationOrPath = importerConfiguration
+#' )
+#'
+#' # Load specific sheets using the sheets parameter
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
 #'   importerConfigurationOrPath = importerConfiguration,
-#'   importAllSheets = FALSE
+#'   sheets = c("TestSheet_1", "TestSheet_2")
 #' )
 #'
-#' importerConfigurationFilePath <- system.file(
-#'   "extdata", "dataImporterConfiguration.xml",
-#'   package = "ospsuite"
-#' )
-#'
+#' \dontrun{
+#' # Load all sheets by setting sheets to NULL and no sheets in configuration
+#' importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
 #' dataSets <- loadDataSetsFromExcel(
 #'   xlsFilePath = xlsFilePath,
-#'   importerConfigurationOrPath = importerConfigurationFilePath,
-#'   importAllSheets = FALSE
+#'   importerConfigurationOrPath = importerConfiguration,
+#'   sheets = NULL
 #' )
+#' }
 loadDataSetsFromExcel <- function(
   xlsFilePath,
   importerConfigurationOrPath,
-  importAllSheets = FALSE
+  importAllSheets = FALSE,
+  sheets = NULL
 ) {
   validateIsString(xlsFilePath)
   importerConfiguration <- importerConfigurationOrPath
@@ -250,15 +268,57 @@ loadDataSetsFromExcel <- function(
     )
   }
   validateIsOfType(importerConfiguration, "DataImporterConfiguration")
+
+  # Deprecation warning for importAllSheets parameter
+  if (!missing(importAllSheets) && importAllSheets != FALSE) {
+    lifecycle::deprecate_soft(
+      when = "12.4.2",
+      what = "loadDataSetsFromExcel(importAllSheets)",
+      with = "loadDataSetsFromExcel(sheets)",
+      details = "Use `sheets = NULL` to load all sheets. This parameter will be removed in version 14."
+    )
+  }
+
   validateIsLogical(importAllSheets)
 
   dataImporterTask <- .getCoreTaskFromCache("DataImporterTask")
-  dataImporterTask$set("IgnoreSheetNamesAtImport", importAllSheets)
+  # Validate sheets parameter
+  if (!is.null(sheets)) {
+    validateIsString(sheets)
+  }
+
+  # Determine which sheets to use and whether to import all
+  # Priority: importAllSheets > sheets parameter > configuration sheets
+  originalSheets <- NULL
+  if (importAllSheets) {
+    # If importAllSheets is TRUE, import all sheets
+    shouldImportAll <- TRUE
+  } else if (!is.null(sheets)) {
+    # If sheets parameter is provided, use it and override configuration
+    # Store original sheets from configuration to restore later
+    originalSheets <- importerConfiguration$sheets
+    importerConfiguration$sheets <- sheets
+    shouldImportAll <- FALSE
+  } else {
+    # Use sheets from configuration
+    # If configuration has no sheets defined, import all
+    configSheets <- importerConfiguration$sheets
+    shouldImportAll <- length(configSheets) == 0
+  }
+
+  dataImporterTask <- .getCoreTaskFromCache("DataImporterTask")
+  dataImporterTask$set("IgnoreSheetNamesAtImport", shouldImportAll)
   dataRepositories <- dataImporterTask$call(
     "ImportExcelFromConfiguration",
     importerConfiguration,
     xlsFilePath
   )
+
+  # Restore original sheets if they were overridden
+  if (!is.null(originalSheets)) {
+    importerConfiguration$sheets <- originalSheets
+  }
+
   dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)
     DataSet$new(dataRepository = repository)
@@ -267,5 +327,159 @@ loadDataSetsFromExcel <- function(
     x$name
   })
 
+  return(dataSets)
+}
+
+#' Creates a list of `DataSet` objects from a `data.frame`
+#'
+#' @details Creates `DataSet` objects from a `data.frame` with the same structure
+#' as returned by [dataSetToDataFrame()]. Each unique value in the `name` column
+#' results in one `DataSet` object.
+#' Any columns beyond the standard columns (`name`, `xValues`, `yValues`,
+#' `yErrorValues`, `xDimension`, `xUnit`, `yDimension`, `yUnit`, `yErrorType`,
+#' `yErrorUnit`, `molWeight`, `lloq`) will be added as meta data.
+#'
+#' @param data A `data.frame` with at minimum the columns `name`, `xValues`,
+#'   and `yValues`. Optional standard columns: `yErrorValues`, `xDimension`,
+#'   `xUnit`, `yDimension`, `yUnit`, `yErrorType`, `yErrorUnit`, `molWeight`,
+#'   `lloq`. Any additional columns are treated as meta data entries.
+#'
+#' @return A named list of `DataSet` objects, named by the `name` column.
+#' @export
+#'
+#' @examples
+#' dataSet <- DataSet$new(name = "MyData")
+#' dataSet$setValues(xValues = c(1, 2, 3), yValues = c(10, 20, 30))
+#' df <- dataSetToDataFrame(dataSet)
+#' dataSets <- dataSetsFromDataFrame(df)
+dataSetsFromDataFrame <- function(data) {
+  validateIsOfType(data, "data.frame")
+
+  # Validate required columns
+  requiredCols <- c("name", "xValues", "yValues")
+  missingCols <- setdiff(requiredCols, names(data))
+  if (length(missingCols) > 0) {
+    stop(messages$errorMissingColumns(missingCols))
+  }
+
+  # Standard columns that correspond to DataSet properties
+  standardCols <- c(
+    "name",
+    "xValues",
+    "yValues",
+    "yErrorValues",
+    "xDimension",
+    "xUnit",
+    "yDimension",
+    "yUnit",
+    "yErrorType",
+    "yErrorUnit",
+    "molWeight",
+    "lloq"
+  )
+
+  # Columns that are treated as meta data
+  metaDataCols <- setdiff(names(data), standardCols)
+
+  # Validate that all name values are non-NA and non-empty
+  if (any(is.na(data$name) | data$name == "")) {
+    stop(messages$errorInvalidDataSetNames())
+  }
+
+  # Create one DataSet per unique name
+  dataSetNames <- unique(data$name)
+
+  dataSets <- lapply(dataSetNames, function(dsName) {
+    subset <- data[data$name == dsName, ]
+    .getSingleNonNaValue <- function(columnName) {
+      vals <- unique(subset[[columnName]])
+      vals <- vals[!is.na(vals)]
+      if (length(vals) > 1) {
+        stop(
+          sprintf(
+            "Column '%s' has conflicting values within dataset '%s'.",
+            columnName,
+            dsName
+          )
+        )
+      }
+      if (length(vals) == 1) {
+        return(vals[[1]])
+      }
+      # Return NULL when no values are set
+      NULL
+    }
+    ds <- DataSet$new(name = dsName)
+
+    if ("xDimension" %in% names(data)) {
+      val <- .getSingleNonNaValue("xDimension")
+      if (!is.null(val)) ds$xDimension <- val
+    }
+    if ("xUnit" %in% names(data)) {
+      val <- .getSingleNonNaValue("xUnit")
+      if (!is.null(val)) {
+        ds$xUnit <- val
+      }
+    }
+    if ("yDimension" %in% names(data)) {
+      val <- .getSingleNonNaValue("yDimension")
+      if (!is.null(val)) ds$yDimension <- val
+    }
+    if ("yUnit" %in% names(data)) {
+      val <- .getSingleNonNaValue("yUnit")
+      if (!is.null(val)) ds$yUnit <- val
+    }
+
+    # Determine yErrorValues (NULL if column absent or all NA)
+    yErrorValues <- NULL
+    if ("yErrorValues" %in% names(data) && !all(is.na(subset$yErrorValues))) {
+      yErrorValues <- subset$yErrorValues
+    }
+
+    # Set xValues, yValues, and optional yErrorValues
+    ds$setValues(
+      xValues = subset$xValues,
+      yValues = subset$yValues,
+      yErrorValues = yErrorValues
+    )
+
+    # Set error type and unit AFTER setValues (error column must exist first)
+    if (!is.null(yErrorValues)) {
+      if ("yErrorType" %in% names(data)) {
+        val <- .getSingleNonNaValue("yErrorType")
+        if (!is.null(val)) {
+          ds$yErrorType <- val
+        }
+      }
+      if ("yErrorUnit" %in% names(data)) {
+        val <- .getSingleNonNaValue("yErrorUnit")
+        if (!is.null(val)) {
+          ds$yErrorUnit <- val
+        }
+      }
+    }
+
+    # Set molWeight
+    if ("molWeight" %in% names(data)) {
+      val <- .getSingleNonNaValue("molWeight")
+      if (!is.null(val)) ds$molWeight <- val
+    }
+
+    # Set LLOQ
+    if ("lloq" %in% names(data)) {
+      val <- .getSingleNonNaValue("lloq")
+      if (!is.null(val)) ds$LLOQ <- val
+    }
+
+    # Add meta data from extra columns
+    for (col in metaDataCols) {
+      val <- .getSingleNonNaValue(col)
+      if (!is.null(val)) ds$addMetaData(col, val)
+    }
+
+    return(ds)
+  })
+
+  names(dataSets) <- dataSetNames
   return(dataSets)
 }

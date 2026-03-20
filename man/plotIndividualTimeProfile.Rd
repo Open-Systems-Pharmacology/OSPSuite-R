@@ -23,7 +23,7 @@ may not work reliably when both observed and simulated datasets > 1. Defaults
 to \code{FALSE}.}
 }
 \description{
-Time-profile plot of individual data
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \examples{
 # simulated data

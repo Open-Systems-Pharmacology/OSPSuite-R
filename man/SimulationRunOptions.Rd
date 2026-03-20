@@ -16,7 +16,10 @@ Options to be passed to the simulation engine
 \item{\code{numberOfCores}}{(Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
 Default is \code{getOSPSuiteSetting("numberOfCores")}.}
 
-\item{\code{showProgress}}{Specifies whether progress bar should be shown during simulation run. Default is \code{getOSPSuiteSetting("showProgress")}}
+\item{\code{showProgress}}{Specifies whether a progress bar should be shown during population simulations. If \code{TRUE}, a progress bar is shown in the console,
+indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
+of a single simulation. This option only applies to population simulations and has no effect on individual simulations.
+Default is \code{getOSPSuiteSetting("showProgress")}}
 }
 \if{html}{\out{</div>}}
 }
@@ -66,7 +69,10 @@ Initialize a new instance of the class
 
 \item{\code{checkForNegativeValues}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{sim$solver$checkForNegativeValues} instead.}
 
-\item{\code{showProgress}}{Should a progress information be displayed. Default value is \code{getOSPSuiteSetting("showProgress")}}
+\item{\code{showProgress}}{Should a progress bar be displayed during population simulations. If \code{TRUE}, a progress bar is shown in the console,
+indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
+of a single simulation. This option only applies to population simulations and has no effect on individual simulations.
+Default value is \code{getOSPSuiteSetting("showProgress")}}
 }
 \if{html}{\out{</div>}}
 }

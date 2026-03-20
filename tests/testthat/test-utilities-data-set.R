@@ -218,22 +218,16 @@ configurationPath <- getTestDataFilePath(
 xlsFilePath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
 importerConfiguration <- loadDataImporterConfiguration(configurationPath)
 
-test_that("it returns an empty list when loading from file with one sheet without
-          sheet definition in configuration and importAllSheets == FALSE", {
-  expect_named(
-    loadDataSetsFromExcel(
-      xlsFilePath = xlsFilePath,
-      importerConfigurationOrPath = importerConfiguration
-    ),
-    character()
+test_that("it loads all sheets when no sheets in configuration and sheets = NULL (new default behavior)", {
+  # This test validates the new default behavior: when sheets = NULL and
+  # no sheets are defined in configuration, all sheets should be loaded
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsFilePath,
+    importerConfigurationOrPath = importerConfiguration,
+    sheets = NULL
   )
-  expect_named(
-    loadDataSetsFromExcel(
-      xlsFilePath = xlsFilePath,
-      importerConfigurationOrPath = configurationPath
-    ),
-    character()
-  )
+  expect_true(isOfType(dataSets, "DataSet"))
+  expect_equal(length(dataSets), 4)
 })
 
 test_that("it can load when loading from file with one sheet without
@@ -440,4 +434,255 @@ test_that("dataSetToTibble preserves data integrity with custom names", {
   expect_equal(result$xValues, c(1, 2, 3))
   expect_equal(result$yValues, c(10, 20, 30), tolerance = 1e-6)
   expect_equal(result$yErrorValues, c(1, 2, 3), tolerance = 1e-6)
+})
+
+# Tests for new sheets parameter in loadDataSetsFromExcel
+
+test_that("it loads all sheets when sheets = NULL and no sheets in configuration", {
+  # Use configuration with no sheets defined
+  configPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+  xlsPath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
+
+  # With sheets = NULL, should load all sheets (new behavior)
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsPath,
+    importerConfigurationOrPath = configPath,
+    sheets = NULL
+  )
+
+  # Should load data (not empty)
+  expect_true(length(dataSets) > 0)
+  expect_true(isOfType(dataSets, "DataSet"))
+})
+
+test_that("it uses configuration sheets when sheets = NULL and sheets are in configuration", {
+  xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
+
+  # Create configuration with specific sheet
+  importConfig <- createImporterConfigurationForFile(
+    filePath = xlsPath,
+    sheet = "TestSheet_1"
+  )
+
+  # sheets = NULL should use configuration sheets
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsPath,
+    importerConfigurationOrPath = importConfig,
+    sheets = NULL
+  )
+
+  # Should load data from TestSheet_1
+  expect_true(length(dataSets) > 0)
+  expect_true(isOfType(dataSets, "DataSet"))
+})
+
+test_that("it overrides configuration sheets when sheets parameter is provided", {
+  xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
+
+  # Create configuration with one sheet
+  importConfig <- createImporterConfigurationForFile(
+    filePath = xlsPath,
+    sheet = "TestSheet_1"
+  )
+
+  # Override with different sheet
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsPath,
+    importerConfigurationOrPath = importConfig,
+    sheets = "TestSheet_1_withMW"
+  )
+
+  # Should load data from TestSheet_1_withMW, not TestSheet_1
+  expect_true(length(dataSets) > 0)
+  expect_true(isOfType(dataSets, "DataSet"))
+})
+
+test_that("it can load multiple sheets using sheets parameter", {
+  xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
+
+  # Create configuration without specific sheets
+  importConfig <- createImporterConfigurationForFile(
+    filePath = xlsPath,
+    sheet = "TestSheet_1"
+  )
+
+  # Load multiple specific sheets
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsPath,
+    importerConfigurationOrPath = importConfig,
+    sheets = c("TestSheet_1", "TestSheet_1_withMW")
+  )
+
+  # Should load data from both sheets
+  expect_true(length(dataSets) > 0)
+  expect_true(isOfType(dataSets, "DataSet"))
+})
+
+test_that("it preserves configuration sheets after using sheets parameter", {
+  xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
+
+  # Create configuration with specific sheet
+  importConfig <- createImporterConfigurationForFile(
+    filePath = xlsPath,
+    sheet = "TestSheet_1"
+  )
+
+  originalSheets <- importConfig$sheets
+
+  # Use sheets parameter to override
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsPath,
+    importerConfigurationOrPath = importConfig,
+    sheets = "TestSheet_1_withMW"
+  )
+
+  # Configuration sheets should be unchanged
+  expect_equal(importConfig$sheets, originalSheets)
+})
+
+test_that("importAllSheets parameter is deprecated", {
+  xlsPath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
+  configPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+
+  # Test that using importAllSheets = TRUE triggers deprecation warning
+  expect_snapshot({
+    dataSets <- loadDataSetsFromExcel(
+      xlsFilePath = xlsPath,
+      importerConfigurationOrPath = configPath,
+      importAllSheets = TRUE
+    )
+  })
+})
+
+# dataSetsFromDataFrame
+
+test_that("dataSetsFromDataFrame errors when input is not a data.frame", {
+  expect_error(dataSetsFromDataFrame("not a data frame"))
+})
+test_that("dataSetsFromDataFrame errors when required columns are missing", {
+  df <- data.frame(xValues = 1, yValues = 2)
+  expect_error(
+    dataSetsFromDataFrame(df),
+    regexp = "The following required columns are missing from the data frame: name"
+  )
+})
+
+test_that("dataSetsFromDataFrame errors when name column contains NA", {
+  df <- data.frame(
+    name = c("ValidName", NA_character_),
+    xValues = c(1, 2),
+    yValues = c(10, 20),
+    stringsAsFactors = FALSE
+  )
+  expect_error(
+    dataSetsFromDataFrame(df),
+    regexp = "The 'name' column must not contain NA or empty string values."
+  )
+})
+
+test_that("dataSetsFromDataFrame errors when name column contains empty strings", {
+  df <- data.frame(
+    name = c("ValidName", ""),
+    xValues = c(1, 2),
+    yValues = c(10, 20),
+    stringsAsFactors = FALSE
+  )
+  expect_error(
+    dataSetsFromDataFrame(df),
+    regexp = "The 'name' column must not contain NA or empty string values."
+  )
+})
+
+test_that("dataSetsFromDataFrame can create a DataSet from minimal data.frame", {
+  df <- data.frame(
+    name = "MyData",
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    stringsAsFactors = FALSE
+  )
+  dataSets <- dataSetsFromDataFrame(df)
+  expect_equal(length(dataSets), 1)
+  expect_true(isOfType(dataSets, "DataSet"))
+  expect_equal(dataSets[["MyData"]]$name, "MyData")
+  expect_equal(dataSets[["MyData"]]$xValues, c(1, 2, 3))
+  expect_equal(dataSets[["MyData"]]$yValues, c(10, 20, 30), tolerance = 1e-6)
+})
+
+test_that("dataSetsFromDataFrame round-trips dataSetToDataFrame", {
+  ds <- DataSet$new(name = "RoundTrip")
+  ds$setValues(
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    yErrorValues = c(1, 2, 3)
+  )
+  ds$molWeight <- 123
+  ds$LLOQ <- 0.5
+  ds$addMetaData("Organ", "Blood")
+
+  df <- dataSetToDataFrame(ds)
+  dataSets <- dataSetsFromDataFrame(df)
+
+  restored <- dataSets[["RoundTrip"]]
+  expect_equal(restored$name, ds$name)
+  expect_equal(restored$xValues, ds$xValues)
+  expect_equal(restored$yValues, ds$yValues)
+  expect_equal(restored$yErrorValues, ds$yErrorValues)
+  expect_equal(restored$xDimension, ds$xDimension)
+  expect_equal(restored$xUnit, ds$xUnit)
+  expect_equal(restored$yDimension, ds$yDimension)
+  expect_equal(restored$yUnit, ds$yUnit)
+  expect_equal(restored$yErrorType, ds$yErrorType)
+  expect_equal(restored$yErrorUnit, ds$yErrorUnit)
+  expect_equal(restored$molWeight, ds$molWeight)
+  expect_equal(restored$LLOQ, ds$LLOQ)
+  expect_equal(restored$metaData[["Organ"]], ds$metaData[["Organ"]])
+})
+
+test_that("dataSetsFromDataFrame creates multiple DataSets from a data.frame", {
+  df <- data.frame(
+    name = c("DataA", "DataA", "DataB"),
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    stringsAsFactors = FALSE
+  )
+  dataSets <- dataSetsFromDataFrame(df)
+  expect_equal(length(dataSets), 2)
+  expect_equal(sort(names(dataSets)), c("DataA", "DataB"))
+  expect_equal(dataSets[["DataA"]]$xValues, c(1, 2))
+  expect_equal(dataSets[["DataB"]]$xValues, c(3))
+})
+
+test_that("dataSetsFromDataFrame handles NA yErrorValues as absent error", {
+  df <- data.frame(
+    name = "NoError",
+    xValues = c(1, 2),
+    yValues = c(10, 20),
+    yErrorValues = c(NA_real_, NA_real_),
+    stringsAsFactors = FALSE
+  )
+  dataSets <- dataSetsFromDataFrame(df)
+  expect_null(dataSets[["NoError"]]$yErrorValues)
+})
+
+test_that("dataSetsFromDataFrame round-trips DataSets loaded from Excel", {
+  xlsPath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
+  configPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+  originalDataSets <- loadDataSetsFromExcel(
+    xlsFilePath = xlsPath,
+    importerConfigurationOrPath = configPath
+  )
+  df <- dataSetToDataFrame(originalDataSets)
+  restoredDataSets <- dataSetsFromDataFrame(df)
+
+  expect_equal(length(restoredDataSets), length(originalDataSets))
+  for (dsName in names(originalDataSets)) {
+    orig <- originalDataSets[[dsName]]
+    restored <- restoredDataSets[[dsName]]
+    expect_equal(restored$xValues, orig$xValues, tolerance = 1e-6)
+    expect_equal(restored$yValues, orig$yValues, tolerance = 1e-6)
+    expect_equal(restored$xDimension, orig$xDimension)
+    expect_equal(restored$xUnit, orig$xUnit)
+    expect_equal(restored$yDimension, orig$yDimension)
+    expect_equal(restored$yUnit, orig$yUnit)
+  }
 })
