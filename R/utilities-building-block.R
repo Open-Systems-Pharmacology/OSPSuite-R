@@ -55,7 +55,7 @@ initialConditionsToDataFrame <- function(initialConditionsBuildingBlock) {
     initialConditionsBuildingBlock,
     paths
   )
-  units <- ""
+  units <- replicate(length(paths), "µmol") # TODO: get units from the IC BB when the method is available in MoBi, for now we return empty units
   # units <- icTask$call(
   #   "AllUnitsFrom",
   #   initialConditionsBuildingBlock,
@@ -95,9 +95,8 @@ initialConditionsToDataFrame <- function(initialConditionsBuildingBlock) {
 #' The entries will be added to or set in this building block.
 #' @param quantityPaths A list of full paths of the quantities (usually molecules). Should contain
 #' all path elements and the molecule name, separated by `|`.
-#' @param quantityValues A list of values for the quantities. If no value is provided (i.e., `NULL`),
-#' the entry will be created with the value defined in the Molecules building block.
-#' The length of this list should be equal to the length of `quantityPaths`.
+#' @param quantityValues A list of values for the quantities.
+#' The length of this list should be equal to the length of `quantityPaths`. The values must be in base unit (µmol).
 #' @param scaleDivisors Either a single value or a list of scale divisors for the quantities. By default, the value is set to 1 for all quantities.
 #' If only single value is provided, the value will be set for all quantities.
 #' If a list is provided, the length of this list should be equal to the length of `quantityPaths`.
@@ -107,12 +106,22 @@ initialConditionsToDataFrame <- function(initialConditionsBuildingBlock) {
 #' @param negativeValuesAllowed A single boolean value or a list of boolean values
 #' indicating whether negative values are allowed for the quantities. If a list is provided,
 #' the length of this list should be equal to the length of `quantityPaths`.
-#'
-#' @returns The updated `initialConditionsBuildingBlock` object.
-#' TBD: no return? To be consistent (or not confusing) with the extend functions?
+#' @returns Invisibly returns the updated `initialConditionsBuildingBlock` object.
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' module <- loadModuleFromPKML("path/to/module.pkml")
+#' icBB <- module$getInitialConditionsBBs()[[1]]
+#' setInitialConditions(
+#'   icBB,
+#'   quantityPaths = c("Organ|Tissue|Molecule1", "Organ|Tissue|Molecule2"),
+#'   quantityValues = c(1, 0),
+#'   scaleDivisors = c(1, 10),
+#'   isPresent = c(TRUE, FALSE),
+#'   negativeValuesAllowed = c(TRUE, FALSE)
+#' )
+#' }
 setInitialConditions <- function(
   initialConditionsBuildingBlock,
   quantityPaths,
@@ -121,7 +130,56 @@ setInitialConditions <- function(
   isPresent = TRUE,
   negativeValuesAllowed = FALSE
 ) {
-  return(initialConditionsBuildingBlock)
+  .validateBuildingBlockType(
+    initialConditionsBuildingBlock,
+    BuildingBlockTypes$`Initial Conditions`
+  )
+
+  #Exit early if no quantity paths are provided
+  if (length(quantityPaths) == 0) {
+    return(invisible(initialConditionsBuildingBlock))
+  }
+  # if the scaleDivisors, isPresent or negativeValuesAllowed are provided as single values, replicate them to match the length of quantityPaths
+  if (!is.null(scaleDivisors) && length(scaleDivisors) == 1) {
+    scaleDivisors <- rep(scaleDivisors, length(quantityPaths))
+  }
+
+  if (!is.null(isPresent) && length(isPresent) == 1) {
+    isPresent <- rep(isPresent, length(quantityPaths))
+  }
+
+  if (!is.null(negativeValuesAllowed) && length(negativeValuesAllowed) == 1) {
+    negativeValuesAllowed <- rep(negativeValuesAllowed, length(quantityPaths))
+  }
+
+  if (
+    length(quantityPaths) != length(quantityValues) ||
+      (!is.null(scaleDivisors) &&
+        length(quantityPaths) != length(scaleDivisors)) ||
+      (!is.null(isPresent) && length(quantityPaths) != length(isPresent)) ||
+      (!is.null(negativeValuesAllowed) &&
+        length(quantityPaths) != length(negativeValuesAllowed))
+  ) {
+    stop(
+      "The length of quantityPaths should be equal to the length of quantityValues, scaleDivisors, isPresent and negativeValuesAllowed (if they are provided as lists)."
+    )
+  }
+
+  dimensionNames <- rep(ospDimensions$Amount, length(quantityPaths))
+  icTask <- .getMoBiTaskFromCache("InitialConditionsTask")
+
+  icTask$call(
+    "SetInitialConditions",
+    initialConditionsBuildingBlock,
+    as.vector(quantityPaths, mode = "character"),
+    as.vector(dimensionNames, mode = "character"),
+    as.vector(quantityValues, mode = "numeric"),
+    as.vector(scaleDivisors, mode = "numeric"),
+    as.vector(isPresent, mode = "logical"),
+    as.vector(negativeValuesAllowed, mode = "logical")
+  )
+
+  return(invisible(initialConditionsBuildingBlock))
 }
 
 
