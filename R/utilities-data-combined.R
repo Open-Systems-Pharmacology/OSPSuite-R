@@ -162,38 +162,38 @@ addResidualColumn <- function(
     stop(messages$residualsColumnNotFound(predicted))
   }
 
-  obs_vals <- pairedData[[observed]]
-  pred_vals <- pairedData[[predicted]]
+  obsVals <- pairedData[[observed]]
+  predVals <- pairedData[[predicted]]
 
   # identity is needed as long as tlf based plot functions are part of the package
   if (scaling %in% c("linear", "lin", "identity")) {
-    residual_vals <- pred_vals - obs_vals
+    residualVals <- predVals - obsVals
     label <- "residuals\npredicted - observed"
   } else if (scaling %in% c("log")) {
-    non_positive <- (!is.na(obs_vals) & obs_vals <= 0) |
-      (!is.na(pred_vals) & pred_vals <= 0)
-    n_non_positive <- sum(non_positive, na.rm = TRUE)
-    log_obs <- log(obs_vals)
-    log_pred <- log(pred_vals)
-    residual_vals <- log_pred - log_obs
-    residual_vals[non_positive] <- NaN
-    if (n_non_positive > 0) {
-      warning(messages$residualsLogNonPositive(n_non_positive))
+    nonPositive <- (!is.na(obsVals) & obsVals <= 0) |
+      (!is.na(predVals) & predVals <= 0)
+    nNonPositive <- sum(nonPositive, na.rm = TRUE)
+    logObs <- log(obsVals)
+    logPred <- log(predVals)
+    residualVals <- logPred - logObs
+    residualVals[nonPositive] <- NaN
+    if (nNonPositive > 0) {
+      warning(messages$residualsLogNonPositive(nNonPositive))
     }
     label <- "residuals\nlog(predicted) - log(observed)"
   } else {
     # ratio
-    non_positive_pred <- !is.na(pred_vals) & pred_vals <= 0
-    n_non_positive <- sum(non_positive_pred, na.rm = TRUE)
-    residual_vals <- obs_vals / pred_vals
-    residual_vals[non_positive_pred] <- NaN
-    if (n_non_positive > 0) {
-      warning(messages$residualsRatioPredNonPositive(n_non_positive))
+    nonPositivePred <- !is.na(predVals) & predVals <= 0
+    nNonPositive <- sum(nonPositivePred, na.rm = TRUE)
+    residualVals <- obsVals / predVals
+    residualVals[nonPositivePred] <- NaN
+    if (nNonPositive > 0) {
+      warning(messages$residualsRatioPredNonPositive(nNonPositive))
     }
     label <- "residuals\nobserved / predicted"
   }
 
-  pairedData[[residuals]] <- residual_vals
+  pairedData[[residuals]] <- residualVals
   attr(pairedData[[residuals]], "label") <- label
 
   return(pairedData)
