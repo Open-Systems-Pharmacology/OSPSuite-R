@@ -712,7 +712,11 @@ test_that("It throws error for unkown units", {
     'Must be element of set'
   )
   expect_error(
-    .convertUnitsForPlot(validData[validData$yDimension != "Fraction", ], 2, y2Unit = "%"),
+    .convertUnitsForPlot(
+      validData[validData$yDimension != "Fraction", ],
+      2,
+      y2Unit = "%"
+    ),
     'Must be element of set'
   )
 })
@@ -764,7 +768,10 @@ test_that("It calculates residuals correctly without lloq column", {
   result <- .calculateResidualsForPlot(plotData, scaling = "log")
 
   expect_contains(names(result), 'residualValues')
-  expect_equal(result$residualValues, c(log(9) - log(10), log(19) - log(20)))
+  expect_equal(
+    as.vector(result$residualValues),
+    c(log(9) - log(10), log(19) - log(20))
+  )
 })
 
 # .getMappingForResiduals --------------
