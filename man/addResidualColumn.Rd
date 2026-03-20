@@ -27,15 +27,13 @@ Default is \code{"yValuesObserved"}.}
 to be added. Default is \code{"residualValues"}.}
 
 \item{scaling}{A character string specifying the scaling method.  One of
-\code{"log"} (default), \code{"linear"} (or \code{"lin"} / \code{"identity"}), or \code{"ratio"}.
-The \code{tlf::Scaling} constants \code{tlf::Scaling$log}, \code{tlf::Scaling$ln},
-\code{tlf::Scaling$lin}, and \code{tlf::Scaling$identity} are also accepted.}
+\code{"log"} (default), \code{"linear"} (or \code{"lin"} / \code{"identity"}), or \code{"ratio"}.}
 }
 \value{
 The input \code{pairedData} with an additional column named according to
 the \code{residuals} argument.  The column carries a \code{"label"} attribute
 describing how residuals were computed (e.g.
-\code{"residuals\nlog(predicted) - log(observed)"}), which can be used as a
+\code{"residuals\\nlog(predicted) - log(observed)"}), which can be used as a
 y-axis label in plots.
 }
 \description{

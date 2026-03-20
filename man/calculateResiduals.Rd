@@ -14,8 +14,7 @@ observed and simulated datasets to be compared.}
 calculation.  Accepted values are \code{"lin"} / \code{"linear"} for linear residuals
 (simulated - observed), \code{"log"} for logarithmic residuals
 (log(simulated) - log(observed)), or \code{"ratio"} for the ratio of observed
-to simulated (observed / simulated).  The \code{tlf::Scaling$lin} and
-\code{tlf::Scaling$log} constants are also accepted.}
+to simulated (observed / simulated).}
 
 \item{xUnit, yUnit}{Target units for \code{xValues} and \code{yValues}, respectively. If
 not specified (\code{NULL}), the first existing unit in the respective
@@ -126,7 +125,7 @@ myDataCombined$addSimulationResults(
 # Add observed data set
 myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 
-calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)
+calculateResiduals(myDataCombined, scaling = "linear")
 }
 \seealso{
 Other data-combined: 
