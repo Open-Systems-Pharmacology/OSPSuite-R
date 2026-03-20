@@ -90,6 +90,32 @@ icBBs <- module$getInitialConditionsBBs()
 pvBBs <- module$getParameterValuesBBs()
 ```
 
+You can easily convert the retrieved initial conditions, parameter values, individuals, and expression profiles to data frames for further processing:
+
+```{r convertBBsToDataFrames}
+icBBDf <- initialConditionsToDataFrame(icBBs[[1]])
+# Print the first few rows of the data frame
+head(icBBDf)
+
+# pvBBDf <- parameterValuesToDataFrame(pvBBs[["Rat"]])
+# # Print the first few rows of the data frame
+# head(pvBBDf)
+
+# individual <- myProject$getIndividual("Rat")
+# individualDf <- individualToDataFrame(individual)
+# # Print the individual data frame
+# print(individualDf)
+
+# expProfiles <- myProject$getExpressionProfiles()
+# expProfilesDf <- expressionProfilesToDataFrame(expProfiles)
+# # Print the first few rows of the data frame
+# head(expProfilesDf)
+```
+
+
+
+
+
 ## Simulation configurations
 
 Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, the Individual, the Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation. Additionally, it can contain settings for the simulation time, output settings, and solver settings.
@@ -160,16 +186,16 @@ An alternative to creating simulation configurations from modules from a project
 
 ```{r extractModulesAndCreateIndividual}
 # # Get modules from the project
-# modules <- myProject$getModules()
-# # Get the expression profiles from the project
-# expressionProfiles <- myProject$getExpressionProfiles(
-#   names = c(
-#     "UDPGT1|Human|Healthy",
-#     "DIO1|Human|Healthy",
-#     "DIO3|Human|Healthy",
-#     "UDPGT2|Human|Healthy"
-#   )
-# )
+modules <- myProject$getModules()
+# Get the expression profiles from the project
+expressionProfiles <- myProject$getExpressionProfiles(
+  names = c(
+    "UDPGT1|Human|Healthy",
+    "DIO1|Human|Healthy",
+    "DIO3|Human|Healthy",
+    "UDPGT2|Human|Healthy"
+  )
+)
 # # Create an individual building block
 # myIndividual <- createIndividualBuildingBlock(
 #   species = Species$Human,

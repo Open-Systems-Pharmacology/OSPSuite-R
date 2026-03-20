@@ -80,7 +80,7 @@ loadModuleFromPKML <- function(path) {
 #' @param bbType Type of Building Block to retrieve, either "Parameter Values" or "Initial Conditions".
 #' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
 #' BB is not present in the project.
-#' @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
+#' @returns A named list of `BuildingBlock` objects, with names being the names of the PV or IC BBs.
 #' @noRd
 .getICPVBBsFromModule <- function(
   module,

@@ -712,7 +712,11 @@ test_that("It throws error for unkown units", {
     'Must be element of set'
   )
   expect_error(
-    .convertUnitsForPlot(validData[validData$yDimension != "Fraction", ], 2, y2Unit = "%"),
+    .convertUnitsForPlot(
+      validData[validData$yDimension != "Fraction", ],
+      2,
+      y2Unit = "%"
+    ),
     'Must be element of set'
   )
 })

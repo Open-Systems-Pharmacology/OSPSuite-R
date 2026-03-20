@@ -8,8 +8,6 @@
 A named list of \code{BuildingBlock} objects, with names being the names of the PV BBs.
 
 A named list of \code{BuildingBlock} objects, with names being the names of the IC BBs.
-
-A named list of \code{BuildingBlock} objects, with names being the names of the PV BBs.
 }
 \description{
 A MoBi module, either loaded from a project or from a pkml file
@@ -127,12 +125,15 @@ initial conditions BB is not present in the project.}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$print(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$print(printClassProperties = FALSE, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{printClassProperties}}{Logical, whether to print class properties (default: \code{FALSE}). If \code{TRUE}, calls first the \code{print} method of the parent class.
+Useful for debugging.}
+
 \item{\code{...}}{Rest arguments.}
 }
 \if{html}{\out{</div>}}

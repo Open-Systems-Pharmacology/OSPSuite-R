@@ -5,7 +5,7 @@
 \alias{BuildingBlockTypes}
 \title{Types of building blocks supported.}
 \format{
-An object of class \code{list} of length 4.
+An object of class \code{list} of length 10.
 }
 \usage{
 BuildingBlockTypes

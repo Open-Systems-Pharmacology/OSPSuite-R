@@ -7,24 +7,24 @@ from a molecules BB in all physical containers of a spatial structure BB.}
 \usage{
 extendInitialConditions(
   initialConditionsBuildingBlock,
-  spatialStructureBB,
-  moleculesBB,
+  spatialStructureModule,
+  moleculesModule,
   moleculeNames = NULL
 )
 }
 \arguments{
 \item{initialConditionsBuildingBlock}{A \code{BuildingBlock} object of type \verb{Initial Conditions}.}
 
-\item{spatialStructureBB}{A \code{BuildingBlock} object of type \verb{Spatial Structure}.
-Entries will be created for the selected molecules in all physical containers of this
+\item{spatialStructureModule}{A module with a spatial structure building block.
+Entries will be created for the selected molecules in all physical containers of the
 spatial structure.}
-
-\item{moleculesBB}{A \code{BuildingBlock} object of type \code{Molecules}. The entries will be
-created for all molecules from this building block, or for a subset of molecules
-defined in the \code{moleculeNames} argument.}
 
 \item{moleculeNames}{Optional list of molecule names. If provided, only the molecules
 with these names will be added to the \code{initialConditionsBuildingBlock}.}
+
+\item{moleculesBB}{A module with a molecules building block. The entries will be
+created for all molecules from this building block, or for a subset of molecules
+defined in the \code{moleculeNames} argument.}
 }
 \value{
 Paths of entries added to the building block.

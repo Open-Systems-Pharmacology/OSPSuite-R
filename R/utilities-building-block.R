@@ -1,3 +1,92 @@
+#' Convert an Initial Conditions Building Block to a data frame.
+#'
+#' @param initialConditionsBuildingBlock A `BuildingBlock` object of type `Initial Conditions`.
+#'
+#' @returns A data frame with the following columns:
+#' - `Container Path`: Full path to the container where the molecule is located.
+#' - `Molecule Name`: Name of the molecule.
+#' - `Is Present`: Boolean indicating if the molecule is present.
+#' - `Value`: Initial value of the molecule.
+#' - `Unit`: Unit of the initial value.
+#' - `Scale Divisor`: Scale divisor for the initial value.
+#' - `Neg. Values Allowed`: Boolean indicating if negative values are allowed.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' module <- loadModuleFromPKML("path/to/module.pkml")
+#' icBB <- module$getInitialConditionsBBs()[[1]]
+#' df <- initialConditionsToDataFrame(icBB)
+#' }
+initialConditionsToDataFrame <- function(initialConditionsBuildingBlock) {
+  .validateBuildingBlockType(
+    initialConditionsBuildingBlock,
+    BuildingBlockTypes$`Initial Conditions`
+  )
+
+  icTask <- .getMoBiTaskFromCache("InitialConditionsTask")
+  # Call the task method to get the data frame from the IC BB
+
+  paths <- icTask$call("AllPathsFrom", initialConditionsBuildingBlock)
+  containerPaths <- vapply(
+    paths,
+    function(path) {
+      .getParentPath(path)
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
+  moleculeNames <- vapply(
+    paths,
+    function(path) {
+      tail(toPathArray(path), 1)
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
+  isPresent <- icTask$call(
+    "AllIsPresentFrom",
+    initialConditionsBuildingBlock,
+    paths
+  )
+  values <- icTask$call(
+    "AllValuesFrom",
+    initialConditionsBuildingBlock,
+    paths
+  )
+  units <- ""
+  # units <- icTask$call(
+  #   "AllUnitsFrom",
+  #   initialConditionsBuildingBlock,
+  #   paths
+  # )
+  scaleDivisors <- icTask$call(
+    "AllScaleDivisorsFrom",
+    initialConditionsBuildingBlock,
+    paths
+  )
+  negativeValuesAllowed <- icTask$call(
+    "AllNegativeValuesAllowedFrom",
+    initialConditionsBuildingBlock,
+    paths
+  )
+
+  df <- data.frame(
+    "Container Path" = containerPaths,
+    "Molecule Name" = moleculeNames,
+    "Is Present" = isPresent,
+    "Value" = values,
+    "Unit" = units,
+    "Scale Divisor" = scaleDivisors,
+    "Neg. Values Allowed" = negativeValuesAllowed,
+    check.names = FALSE,
+    stringsAsFactors = FALSE
+  )
+
+  return(df)
+}
+
 #' Set or add initial conditions to an existing Initial Conditions building block.
 #'
 #' This functions allows adding or modifying initial condition entries. Only constant values are allowed. For setting or adding initial conditions defined by formulas, use the `setInitialConditionsFormulas` function.
