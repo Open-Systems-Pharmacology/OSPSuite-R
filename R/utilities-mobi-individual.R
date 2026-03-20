@@ -1,4 +1,8 @@
-#' Create a MoBi Individual Building Block
+#' @title Create a MoBi Individual Building Block
+#'
+#' @description
+#' Creates an individual building block in MoBi for a given species and
+#' optional demographic characteristics by calling the MoBi `IndividualTask`.
 #'
 #' @param species Species of the individual as defined in PK-Sim (see `Species` enum).
 #' @param population Population to use to create the individual. Required when
@@ -15,7 +19,7 @@
 #' @param gestationalAgeUnit Unit of the gestational age value. Default is `"week(s)"`.
 #' @param seed Optional seed for the individual creation algorithm.
 #'
-#' @returns An object of type `BuildingBlock` representing an individual.
+#' @return A `BuildingBlock` object representing the created individual.
 #' @export
 #'
 #' @examples
@@ -66,15 +70,20 @@ createMoBiIndividualBuildingBlock <- function(
   return(BuildingBlock$new(netObject, type = BuildingBlockTypes$Individual))
 }
 
-#' Set parameters of a MoBi Individual Building Block
+#' @title Set Parameters of a MoBi Individual Building Block
 #'
-#' @param individualBuildingBlock An `IndividualBuildingBlock` object as
-#'   returned by `createMoBiIndividualBuildingBlock()`.
+#' @description
+#' Sets one or more parameter values in an individual building block by
+#' providing the corresponding quantity paths and values. The number of
+#' paths and values must be equal.
+#'
+#' @param individualBuildingBlock A `BuildingBlock` object as returned
+#'   by `createMoBiIndividualBuildingBlock()`.
 #' @param quantityPaths A character vector of quantity paths to set.
 #' @param quantityValues A numeric vector of values to assign. Must have the
 #'   same length as `quantityPaths`.
 #'
-#' @returns `individualBuildingBlock`, invisibly.
+#' @return `individualBuildingBlock`, invisibly.
 #' @export
 #'
 #' @examples
