@@ -131,6 +131,7 @@ Collate:
     'utilities-entity.R'
     'utilities-file.R'
     'utilities-individual.R'
+    'utilities-mobi-expression-profile.R'
     'utilities-mobi-individual.R'
     'utilities-mobi-module.R'
     'utilities-mobi-project.R'

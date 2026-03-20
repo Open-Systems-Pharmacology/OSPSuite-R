@@ -63,5 +63,49 @@ createMoBiIndividualBuildingBlock <- function(
     individualCharacteristics
   )
 
-  return(BuildingBlock$new(netObject))
+  return(BuildingBlock$new(netObject, type = BuildingBlockTypes$Individual))
+}
+
+#' Set parameters of a MoBi Individual Building Block
+#'
+#' @param individualBuildingBlock An `IndividualBuildingBlock` object as
+#'   returned by `createMoBiIndividualBuildingBlock()`.
+#' @param quantityPaths A character vector of quantity paths to set.
+#' @param quantityValues A numeric vector of values to assign. Must have the
+#'   same length as `quantityPaths`.
+#'
+#' @returns `individualBuildingBlock`, invisibly.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' individual <- createMoBiIndividualBuildingBlock(
+#'   species = Species$Human,
+#'   population = HumanPopulation$European_ICRP_2002
+#' )
+#' setMoBiIndividualParameters(
+#'   individual,
+#'   quantityPaths = c("Organism|Age", "Organism|Weight"),
+#'   quantityValues = c(30, 73)
+#' )
+#' }
+setMoBiIndividualParameters <- function(
+  individualBuildingBlock,
+  quantityPaths,
+  quantityValues
+) {
+  validateIsOfType(individualBuildingBlock, "BuildingBlock")
+  validateIsString(quantityPaths)
+  validateIsNumeric(quantityValues)
+  validateIsSameLength(quantityPaths, quantityValues)
+
+  netTask <- .getMoBiTaskFromCache("IndividualTask")
+  netTask$call(
+    "SetIndividualParameter",
+    individualBuildingBlock,
+    quantityPaths,
+    quantityValues
+  )
+
+  invisible(individualBuildingBlock)
 }
