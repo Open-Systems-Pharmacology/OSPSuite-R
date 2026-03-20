@@ -152,7 +152,7 @@ addResidualColumn <- function(
 
   scaling <- match.arg(
     scaling,
-    choices = c("log", "ln", "linear", "lin", "identity", "ratio")
+    choices = c("log", "linear", "lin", "identity", "ratio")
   )
 
   if (!observed %in% names(pairedData)) {
