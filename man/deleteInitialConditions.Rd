@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-building-block.R
 \name{deleteInitialConditions}
 \alias{deleteInitialConditions}
-\title{Delete entries from an Initial Conditions Building Block}
+\title{Set or add initial conditions to an existing Initial Conditions building block with values defined by formulas.}
 \usage{
 deleteInitialConditions(initialConditionsBuildingBlock, quantityPaths)
 }
@@ -12,7 +12,31 @@ deleteInitialConditions(initialConditionsBuildingBlock, quantityPaths)
 \item{quantityPaths}{A list of full paths of the quantities (usually molecules) that
 will be deleted. Entries not present in the provided BB are ignored. Should contain
 all path elements and the molecule name, separated by \code{|}.}
+
+\item{formulas}{A list of \code{Formula} objects that will be set for the quantities. The length of this list should be equal to the length of \code{quantityPaths}.}
+
+\item{scaleDivisors}{Either a single value or a list of scale divisors for the quantities. By default, the value is set to 1 for all quantities.
+If only single value is provided, the value will be set for all quantities.
+If a list is provided, the length of this list should be equal to the length of \code{quantityPaths}.}
+
+\item{isPresent}{Either a single value (\code{TRUE} or \code{FALSE}) or a list of boolean
+values indicating whether the quantity is present or not. If a list is provided,
+the length of this list should be equal to the length of \code{quantityPaths}.}
+
+\item{negativeValuesAllowed}{A single boolean value or a list of boolean values indicating whether negative values are
+allowed for the quantities. If a list is provided, the length of this list should be equal to the length of \code{quantityPaths}.}
+}
+\value{
+The updated \code{initialConditionsBuildingBlock} object.
+TBD: no return? To be consistent (or not confusing) with the extend functions?
+TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1815
+
+Invisibly returns the updated \code{initialConditionsBuildingBlock} object.
 }
 \description{
+Set or add initial conditions to an existing Initial Conditions building block with values defined by formulas.
+}
+\examples{
 Delete entries from an Initial Conditions Building Block
+
 }

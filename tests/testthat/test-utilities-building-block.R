@@ -151,3 +151,61 @@ test_that("setInitialConditions adds new entries correctly", {
   expect_equal(liverEntry$Value, 30)
   expect_equal(heartEntry$Value, 40)
 })
+
+test_that("deleteInitialConditions throws an error if the building block is not of type Initial Conditions", {
+  pvBB <- simulation$configuration$modules[[1]]$getParameterValuesBBs()[[1]]
+  expect_error(
+    deleteInitialConditions(pvBB, "Organism|Brain|Intracellular|Aciclovir"),
+    regexp = "Initial Conditions"
+  )
+})
+
+test_that("deleteInitialConditions removes existing entries correctly", {
+  # Get initial count
+  dfBefore <- initialConditionsToDataFrame(icBB)
+  pathToDelete <- "Organism|Brain|Intracellular|Aciclovir"
+
+  # Ensure the path exists before deletion
+  expect_true(any(
+    paste0(dfBefore$`Container Path`, "|", dfBefore$`Molecule Name`) ==
+      pathToDelete
+  ))
+
+  # Delete the entry
+  deleteInitialConditions(icBB, pathToDelete)
+
+  # Check after deletion
+  dfAfter <- initialConditionsToDataFrame(icBB)
+  expect_false(any(
+    paste0(dfAfter$`Container Path`, "|", dfAfter$`Molecule Name`) ==
+      pathToDelete
+  ))
+  expect_equal(nrow(dfAfter), nrow(dfBefore) - 1)
+})
+
+test_that("deleteInitialConditions removes multiple entries correctly", {
+  dfBefore <- initialConditionsToDataFrame(icBB)
+  pathsToDelete <- c(
+    "Organism|Kidney|Intracellular|Aciclovir",
+    "Organism|Muscle|Intracellular|Aciclovir"
+  )
+
+  deleteInitialConditions(icBB, pathsToDelete)
+
+  dfAfter <- initialConditionsToDataFrame(icBB)
+  currentPaths <- paste0(dfAfter$`Container Path`, "|", dfAfter$`Molecule Name`)
+
+  expect_false(any(currentPaths %in% pathsToDelete))
+  expect_equal(nrow(dfAfter), nrow(dfBefore) - 2)
+})
+
+test_that("deleteInitialConditions ignores paths that do not exist", {
+  dfBefore <- initialConditionsToDataFrame(icBB)
+  nonExistentPath <- "Non|Existent|Path|Molecule"
+
+  # Should not throw an error
+  expect_silent(deleteInitialConditions(icBB, nonExistentPath))
+
+  dfAfter <- initialConditionsToDataFrame(icBB)
+  expect_equal(dfAfter, dfBefore)
+})

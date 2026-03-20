@@ -200,19 +200,20 @@ setInitialConditions <- function(
 #'
 #' @returns The updated `initialConditionsBuildingBlock` object.
 #' TBD: no return? To be consistent (or not confusing) with the extend functions?
+#' TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1815
 #'
 #' @export
 #' @examples
-setInitialConditionsFormulas <- function(
-  initialConditionsBuildingBlock,
-  quantityPaths,
-  formulas,
-  scaleDivisors = 1,
-  isPresent = TRUE,
-  negativeValuesAllowed = FALSE
-) {
-  return(initialConditionsBuildingBlock)
-}
+# setInitialConditionsFormulas <- function(
+#   initialConditionsBuildingBlock,
+#   quantityPaths,
+#   formulas,
+#   scaleDivisors = 1,
+#   isPresent = TRUE,
+#   negativeValuesAllowed = FALSE
+# ) {
+#   return(initialConditionsBuildingBlock)
+# }
 
 #' Delete entries from an Initial Conditions Building Block
 #'
@@ -221,13 +222,33 @@ setInitialConditionsFormulas <- function(
 #' will be deleted. Entries not present in the provided BB are ignored. Should contain
 #' all path elements and the molecule name, separated by `|`.
 #'
+#' @returns Invisibly returns the updated `initialConditionsBuildingBlock` object.
 #' @export
 #'
 #' @examples
 deleteInitialConditions <- function(
   initialConditionsBuildingBlock,
   quantityPaths
-) {}
+) {
+  .validateBuildingBlockType(
+    initialConditionsBuildingBlock,
+    BuildingBlockTypes$`Initial Conditions`
+  )
+
+  # Exit early if no quantity paths are provided
+  if (length(quantityPaths) == 0) {
+    return(invisible(initialConditionsBuildingBlock))
+  }
+
+  icTask <- .getMoBiTaskFromCache("InitialConditionsTask")
+  icTask$call(
+    "DeleteInitialConditions",
+    initialConditionsBuildingBlock,
+    as.vector(quantityPaths, mode = "character")
+  )
+
+  return(invisible(initialConditionsBuildingBlock))
+}
 
 #' Extend an Initial Conditions Building Block (BB) with new entries for molecules
 #' from a molecules BB in all physical containers of a spatial structure BB.

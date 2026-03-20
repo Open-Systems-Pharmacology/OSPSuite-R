@@ -20,9 +20,8 @@ The entries will be added to or set in this building block.}
 \item{quantityPaths}{A list of full paths of the quantities (usually molecules). Should contain
 all path elements and the molecule name, separated by \code{|}.}
 
-\item{quantityValues}{A list of values for the quantities. If no value is provided (i.e., \code{NULL}),
-the entry will be created with the value defined in the Molecules building block.
-The length of this list should be equal to the length of \code{quantityPaths}.}
+\item{quantityValues}{A list of values for the quantities.
+The length of this list should be equal to the length of \code{quantityPaths}. The values must be in base unit (µmol).}
 
 \item{scaleDivisors}{Either a single value or a list of scale divisors for the quantities. By default, the value is set to 1 for all quantities.
 If only single value is provided, the value will be set for all quantities.
@@ -37,9 +36,22 @@ indicating whether negative values are allowed for the quantities. If a list is 
 the length of this list should be equal to the length of \code{quantityPaths}.}
 }
 \value{
-The updated \code{initialConditionsBuildingBlock} object.
-TBD: no return? To be consistent (or not confusing) with the extend functions?
+Invisibly returns the updated \code{initialConditionsBuildingBlock} object.
 }
 \description{
 This functions allows adding or modifying initial condition entries. Only constant values are allowed. For setting or adding initial conditions defined by formulas, use the \code{setInitialConditionsFormulas} function.
+}
+\examples{
+\dontrun{
+module <- loadModuleFromPKML("path/to/module.pkml")
+icBB <- module$getInitialConditionsBBs()[[1]]
+setInitialConditions(
+  icBB,
+  quantityPaths = c("Organ|Tissue|Molecule1", "Organ|Tissue|Molecule2"),
+  quantityValues = c(1, 0),
+  scaleDivisors = c(1, 10),
+  isPresent = c(TRUE, FALSE),
+  negativeValuesAllowed = c(TRUE, FALSE)
+)
+}
 }
