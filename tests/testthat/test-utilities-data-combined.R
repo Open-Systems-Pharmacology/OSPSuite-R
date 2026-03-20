@@ -98,20 +98,22 @@ test_that("calculateResiduals returns a correct vector of linear residuals on ex
 })
 
 test_that("calculateResiduals returns a correct vector of log residuals on example data", {
-  pairedData <- calculateResiduals(myDC, scaling = "log")
-  expectedResiduals <- sapply(
-    seq_along(pairedData$yValuesObserved),
-    function(idx) {
-      ospsuite.utils::logSafe(pairedData$yValuesSimulated[[idx]]) -
-        ospsuite.utils::logSafe(pairedData$yValuesObserved[[idx]])
-    }
+  # With the new implementation, log(0) produces NaN (not epsilon-based values).
+  # The test data has sim=0 at t=0 and t=5, so those 2 rows are excluded with a warning.
+  pairedData <- expect_warning(
+    calculateResiduals(myDC, scaling = "log"),
+    regexp = "NaN"
   )
 
-  expect_equal(
-    calculateResiduals(myDC, scaling = "log")$residualValues,
-    expectedResiduals,
-    tolerance = 1e-5
-  )
+  # Only rows where both observed and simulated are strictly positive remain.
+  # t=0 (sim=0, obs=0) and t=5 (sim=0, obs=1) are excluded.
+  expect_equal(nrow(pairedData), 4)
+
+  # For strictly positive values, log() and logSafe() agree.
+  expectedResiduals <- log(pairedData$yValuesSimulated) -
+    log(pairedData$yValuesObserved)
+
+  expect_equal(pairedData$residualValues, expectedResiduals, tolerance = 1e-5)
 })
 
 test_that("calculateResiduals computes all observed, simulated data pairs correctly", {
@@ -175,4 +177,86 @@ test_that("calculateResiduals drops points when simulated dataset contains a
   residuals <- calculateResiduals(myDC, scaling = tlf::Scaling$lin)
 
   expect_equal(nrow(residuals), 0)
+})
+
+# addResidualColumn ----------------
+
+test_that("addResidualColumn adds linear residuals correctly", {
+  paired <- data.frame(
+    yValuesObserved  = c(1, 2, 4),
+    yValuesSimulated = c(1.1, 1.9, 3.8)
+  )
+  result <- addResidualColumn(paired, scaling = "linear")
+  expect_equal(result$residualValues, c(0.1, -0.1, -0.2), tolerance = 1e-6)
+})
+
+test_that("addResidualColumn adds log residuals correctly for positive values", {
+  paired <- data.frame(
+    yValuesObserved  = c(1, 2, 4),
+    yValuesSimulated = c(1.1, 1.9, 3.8)
+  )
+  result <- addResidualColumn(paired, scaling = "log")
+  expected <- log(c(1.1, 1.9, 3.8)) - log(c(1, 2, 4))
+  expect_equal(result$residualValues, expected, tolerance = 1e-6)
+})
+
+test_that("addResidualColumn sets NaN and warns for log of zero values", {
+  paired <- data.frame(
+    yValuesObserved  = c(0, 1, 2),
+    yValuesSimulated = c(1, 0, 2)
+  )
+  expect_warning(
+    result <- addResidualColumn(paired, scaling = "log"),
+    regexp = "NaN"
+  )
+  expect_true(is.nan(result$residualValues[1]))
+  expect_true(is.nan(result$residualValues[2]))
+  expect_equal(result$residualValues[3], log(2) - log(2), tolerance = 1e-6)
+})
+
+test_that("addResidualColumn adds ratio residuals correctly", {
+  paired <- data.frame(
+    yValuesObserved  = c(2, 4, 8),
+    yValuesSimulated = c(1, 2, 4)
+  )
+  result <- addResidualColumn(paired, scaling = "ratio")
+  expect_equal(result$residualValues, c(2, 2, 2), tolerance = 1e-6)
+})
+
+test_that("addResidualColumn supports 'lin' alias for linear scaling", {
+  paired <- data.frame(
+    yValuesObserved  = c(1, 2),
+    yValuesSimulated = c(2, 4)
+  )
+  result <- addResidualColumn(paired, scaling = "lin")
+  expect_equal(result$residualValues, c(1, 2))
+})
+
+test_that("addResidualColumn errors when observed column is missing", {
+  paired <- data.frame(yValuesSimulated = c(1, 2))
+  expect_error(
+    addResidualColumn(paired, observed = "yValuesObserved", scaling = "log"),
+    regexp = "Column 'yValuesObserved' not found"
+  )
+})
+
+test_that("addResidualColumn errors when predicted column is missing", {
+  paired <- data.frame(yValuesObserved = c(1, 2))
+  expect_error(
+    addResidualColumn(paired, predicted = "yValuesSimulated", scaling = "log"),
+    regexp = "Column 'yValuesSimulated' not found"
+  )
+})
+
+test_that("addResidualColumn respects custom column names", {
+  paired <- data.frame(obs = c(1, 2), pred = c(1.1, 1.9))
+  result <- addResidualColumn(
+    paired,
+    observed = "obs",
+    predicted = "pred",
+    residuals = "res",
+    scaling = "linear"
+  )
+  expect_true("res" %in% names(result))
+  expect_equal(result$res, c(0.1, -0.1), tolerance = 1e-6)
 })

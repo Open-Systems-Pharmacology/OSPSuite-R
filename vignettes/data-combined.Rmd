@@ -281,14 +281,18 @@ results interpolated if no simulated value is available for a certain observed
 time point. Observed data beyond simulated time is ignored, i.e., no *extrapolation* 
 is performed.
 
-There are two ways to calculate the distance (residuals) - linear and logarithmic - 
-specified by the `scaling` argument. For linear scaling (`scaling = tlf::Scaling$lin`):
+There are three ways to calculate the distance (residuals) - linear, logarithmic,
+and ratio - specified by the `scaling` argument. For linear scaling (`scaling = tlf::Scaling$lin`):
 
 > Residuals are calculated as: Simulation value - Observed value. This means that the residuals are defined by absolute differences.
 
 For logarithmic scaling (`scaling = tlf::Scaling$log`):
 
-> Residuals are calculated as: log(Simulation value) - log(Observed value) = log (Simulation Value / Observed Value). This means that the ratio of values is considered which is independent of the magnitude of the value. But for very small observed values, in particular close to 0 values, this can lead to problems, because log(10E-N) = -N can becomes large.
+> Residuals are calculated as: log(Simulation value) - log(Observed value) = log(Simulation Value / Observed Value). Data points where the observed or predicted value is zero or negative cannot be log-transformed; these points are excluded from the output and a warning is issued.
+
+For ratio scaling (`scaling = "ratio"`):
+
+> Residuals are calculated as: Observed value / Simulation value.
 
 
 ```{r}

@@ -16,6 +16,15 @@
 
 ## Minor improvements and bug fixes
 
+- Added `addResidualColumn()`, a new exported function that computes residuals
+  between observed and predicted columns in a `data.frame` or `data.table` and
+  appends the result as a new column.  Supports `"log"`, `"linear"` (or `"lin"`),
+  and `"ratio"` scaling.  For log scaling, data points with zero or negative
+  observed or predicted values are set to `NaN` (with a warning) instead of
+  being replaced by an epsilon-based approximation.  This function is used
+  internally by `calculateResiduals()` and the residual plot functions to ensure
+  consistent residual computation across the package. (\#1743)
+
 - Added `dataSetsFromDataFrame()` function that creates a list of `DataSet` objects from a `data.frame` with the same structure as returned by `dataSetToDataFrame()`. This is the inverse operation of `dataSetToDataFrame()` and allows creating `DataSet` objects from data frames without requiring an Excel file. (\#1495)
 - Added `populationFromDataFrame()` function to create a `Population` object from a data.frame, the reverse of `populationToDataFrame()`. If no `IndividualId` column is present, sequential IDs are automatically generated. (#425)
 - `loadDataSetsFromExcel()` now accepts a `sheets` parameter to specify which sheets to load. When `sheets = NULL` (default), the function uses sheets defined in the importer configuration. If the configuration has no sheets defined, all sheets are loaded. When `sheets` is a character vector, those specific sheets are loaded, overriding any sheets in the configuration. The `importAllSheets` parameter is now deprecated and will be removed in version 14.
