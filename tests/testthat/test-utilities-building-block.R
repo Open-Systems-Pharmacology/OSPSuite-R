@@ -117,3 +117,37 @@ test_that("setInitialConditions updates multiple entries correctly", {
   expect_equal(kidneyEntry$`Is Present`, TRUE)
   expect_equal(kidneyEntry$`Neg. Values Allowed`, TRUE)
 })
+
+# It can add new entries if the paths do not exist in the BB
+test_that("setInitialConditions adds new entries correctly", {
+  quantityPaths <- c(
+    "Organism|Intracellular|Aciclovir",
+    "Organism|Heart|New|Aciclovir"
+  )
+  quantityValues <- c(30, 40)
+
+  # Set initial conditions
+  setInitialConditions(
+    icBB,
+    quantityPaths = quantityPaths,
+    quantityValues = quantityValues,
+    scaleDivisors = 1,
+    isPresent = TRUE,
+    negativeValuesAllowed = FALSE
+  )
+
+  df <- initialConditionsToDataFrame(icBB)
+  liverEntry <- df[
+    df$`Container Path` == "Organism|Intracellular" &
+      df$`Molecule Name` == "Aciclovir",
+  ]
+  heartEntry <- df[
+    df$`Container Path` == "Organism|Heart|New" &
+      df$`Molecule Name` == "Aciclovir",
+  ]
+
+  expect_equal(nrow(liverEntry), 1)
+  expect_equal(nrow(heartEntry), 1)
+  expect_equal(liverEntry$Value, 30)
+  expect_equal(heartEntry$Value, 40)
+})
