@@ -55,12 +55,11 @@ initialConditionsToDataFrame <- function(initialConditionsBuildingBlock) {
     initialConditionsBuildingBlock,
     paths
   )
-  units <- replicate(length(paths), "µmol") # TODO: get units from the IC BB when the method is available in MoBi, for now we return empty units
-  # units <- icTask$call(
-  #   "AllUnitsFrom",
-  #   initialConditionsBuildingBlock,
-  #   paths
-  # )
+  units <- icTask$call(
+    "AllUnitsFrom",
+    initialConditionsBuildingBlock,
+    paths
+  )
   scaleDivisors <- icTask$call(
     "AllScaleDivisorsFrom",
     initialConditionsBuildingBlock,
