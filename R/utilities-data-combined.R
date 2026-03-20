@@ -117,8 +117,6 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #'   to be added. Default is `"residualValues"`.
 #' @param scaling A character string specifying the scaling method.  One of
 #'   `"log"` (default), `"linear"` (or `"lin"` / `"identity"`), or `"ratio"`.
-#'   The `tlf::Scaling` constants `tlf::Scaling$log`, `tlf::Scaling$ln`,
-#'   `tlf::Scaling$lin`, and `tlf::Scaling$identity` are also accepted.
 #'
 #' @return The input `pairedData` with an additional column named according to
 #'   the `residuals` argument.  The column carries a `"label"` attribute
@@ -167,10 +165,11 @@ addResidualColumn <- function(
   obs_vals <- pairedData[[observed]]
   pred_vals <- pairedData[[predicted]]
 
+  # identity is needed as long as tlf based plot functions are part of the package
   if (scaling %in% c("linear", "lin", "identity")) {
     residual_vals <- pred_vals - obs_vals
     label <- "residuals\npredicted - observed"
-  } else if (scaling %in% c("log", "ln")) {
+  } else if (scaling %in% c("log")) {
     non_positive <- (!is.na(obs_vals) & obs_vals <= 0) |
       (!is.na(pred_vals) & pred_vals <= 0)
     n_non_positive <- sum(non_positive, na.rm = TRUE)
@@ -255,8 +254,7 @@ addResidualColumn <- function(
 #'   calculation.  Accepted values are `"lin"` / `"linear"` for linear residuals
 #'   (simulated - observed), `"log"` for logarithmic residuals
 #'   (log(simulated) - log(observed)), or `"ratio"` for the ratio of observed
-#'   to simulated (observed / simulated).  The `tlf::Scaling$lin` and
-#'   `tlf::Scaling$log` constants are also accepted.
+#'   to simulated (observed / simulated).
 #' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
 #'   not specified (`NULL`), the first existing unit in the respective
 #'   columns will be selected as the common unit. For available dimensions
@@ -316,7 +314,7 @@ addResidualColumn <- function(
 #' # Add observed data set
 #' myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 #'
-#' calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)
+#' calculateResiduals(myDataCombined, scaling = "linear")
 #' @export
 calculateResiduals <- function(
   dataCombined,

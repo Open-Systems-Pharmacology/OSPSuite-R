@@ -282,11 +282,11 @@ time point. Observed data beyond simulated time is ignored, i.e., no *extrapolat
 is performed.
 
 There are three ways to calculate the distance (residuals) - linear, logarithmic,
-and ratio - specified by the `scaling` argument. For linear scaling (`scaling = tlf::Scaling$lin`):
+and ratio - specified by the `scaling` argument. For linear scaling (`scaling = "linear"`):
 
 > Residuals are calculated as: Simulation value - Observed value. This means that the residuals are defined by absolute differences.
 
-For logarithmic scaling (`scaling = tlf::Scaling$log`):
+For logarithmic scaling (`scaling = "log"`):
 
 > Residuals are calculated as: log(Simulation value) - log(Observed value) = log(Simulation Value / Observed Value). Data points where the observed or predicted value is zero or negative cannot be log-transformed; these points are excluded from the output and a warning is issued.
 
@@ -297,10 +297,12 @@ For ratio scaling (`scaling = "ratio"`):
 
 ```{r}
 # Linear residuals
-calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues
+calculateResiduals(myDataCombined, scaling = "linear")$residualValues
 
 # Logarithmic residuals
-calculateResiduals(myDataCombined, scaling = tlf::Scaling$log)$residualValues
+calculateResiduals(myDataCombined, scaling = "log")$residualValues
+
+
 ```
 
 To quickly calculate the total error of the `DataCombined`, one can sum up the 
