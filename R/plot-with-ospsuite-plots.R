@@ -224,6 +224,8 @@ plotTimeProfile <- function(
 #' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale
 #'   yScaleArgs groupAesthetics addRegression geomPointAttributes
 #'   geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
+#'   addGuestLimits deltaGuest labelGuestCriteria geomGuestLineAttributes
+#'   lloqOnBothAxes
 #'
 #'
 #' @return A `ggplot2` plot object representing predicted vs observed values,
@@ -455,7 +457,7 @@ plotResidualsVsCovariate <- function(
 #'   `ospsuite::ospUnits`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
 #' @inheritDotParams ospsuite.plots::plotHistogram xScale xScaleArgs yScale
-#'   yScaleArgs plotAsFrequency meanFunction geomHistAttributes
+#'   yScaleArgs plotAsFrequency meanFunction geomHistAttributes asBarPlot
 #'
 #' @return A `ggplot2` plot object representing the histogram of residuals.
 #' @export
