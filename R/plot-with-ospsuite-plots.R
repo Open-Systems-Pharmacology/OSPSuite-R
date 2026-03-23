@@ -221,8 +221,8 @@ plotTimeProfile <- function(
 #'   `ospsuite.plots::getFoldDistanceList`. This list contains fold distances,
 #'   where each entry represents a fold and its reciprocal. The identity fold
 #'   (1) will be included if specified in `getFoldDistanceList`.
-#' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale
-#'   yScaleArgs groupAesthetics addRegression geomPointAttributes
+#' @inheritDotParams ospsuite.plots::plotYVsX xScaleArgs yScaleArgs
+#'   groupAesthetics addRegression geomPointAttributes
 #'   geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
 #'   addGuestLimits deltaGuest labelGuestCriteria geomGuestLineAttributes
 #'   lloqOnBothAxes
