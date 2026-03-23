@@ -60,7 +60,7 @@ sim <- loadSimulation(system.file("extdata", "Aciclovir.pkml", package = "ospsui
 
 # looking at a reference to `.NET` simulation object
 sim$pointer
-#> <pointer: 0x557444dd2010>
+#> <pointer: 0x55dfa0664510>
 
 # create a new instance of `DotNetWrapper` class using this reference
 DotNetWrapper$new(sim)
@@ -78,7 +78,6 @@ DotNetWrapper$new(sim)
 #>   • `Equals()`
 #>   • `get_Analyses()`
 #>   • `get_BodyWeight()`
-#>   • `get_BuildConfiguration()`
 #>   • `get_Charts()`
 #>   • `get_ComesFromPKSim()`
 #>   • `get_CompoundNames()`
@@ -129,7 +128,6 @@ DotNetWrapper$new(sim)
 #> ── Available Properties 
 #>   • Analyses
 #>   • BodyWeight
-#>   • BuildConfiguration
 #>   • Charts
 #>   • ComesFromPKSim
 #>   • CompoundNames

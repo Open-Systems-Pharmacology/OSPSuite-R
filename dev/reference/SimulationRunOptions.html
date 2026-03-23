@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9026</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,10 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -54,7 +57,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>SimulationRunOptions</h1>
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/R/simulation-run-options.R" class="external-link"><code>R/simulation-run-options.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/R/simulation-run-options.R" class="external-link"><code>R/simulation-run-options.R</code></a></small>
       <div class="d-none name"><code>SimulationRunOptions.Rd</code></div>
     </div>
 
@@ -74,10 +77,6 @@
 Default is <code>getOSPSuiteSetting("numberOfCores")</code>.</p></dd>
 
 
-<dt><code>checkForNegativeValues</code></dt>
-<dd><p>Specifies whether negative values check is on or off. Default is <code>TRUE</code></p></dd>
-
-
 <dt><code>showProgress</code></dt>
 <dd><p>Specifies whether a progress bar should be shown during population simulations. If <code>TRUE</code>, a progress bar is shown in the console,
 indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
@@ -95,6 +94,7 @@ Default is <code>getOSPSuiteSetting("showProgress")</code></p></dd>
 
 <ul><li><p><a href="#method-SimulationRunOptions-new"><code>SimulationRunOptions$new()</code></a></p></li>
 <li><p><a href="#method-SimulationRunOptions-print"><code>SimulationRunOptions$print()</code></a></p></li>
+<li><p><a href="#method-SimulationRunOptions-.getCheckForNegativeValues"><code>SimulationRunOptions$.getCheckForNegativeValues()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href="../../rSharp/html/NetObject.html#method-NetObject-.printClass"><code>rSharp::NetObject$.printClass()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="../../rSharp/html/NetObject.html#method-NetObject-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="../../rSharp/html/NetObject.html#method-NetObject-call"><code>rSharp::NetObject$call()</code></a></span></li>
@@ -125,7 +125,7 @@ Default is <code>getOSPSuiteSetting("showProgress")</code></p></dd>
 
 
 <dt><code>checkForNegativeValues</code></dt>
-<dd><p>Should the solver check for negative values. Default is <code>TRUE</code></p></dd>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Use <code>sim$solver$checkForNegativeValues</code> instead.</p></dd>
 
 
 <dt><code>showProgress</code></dt>
@@ -156,6 +156,18 @@ Default value is <code>getOSPSuiteSetting("showProgress")</code></p></dd>
 
 
 </dl><p></p></div>
+</div>
+
+</div><p></p><hr><a id="method-SimulationRunOptions-.getCheckForNegativeValues"></a><div class="section">
+<h3 id="method-getcheckfornegativevalues-">Method <code>.getCheckForNegativeValues()</code><a class="anchor" aria-label="anchor" href="#method-getcheckfornegativevalues-"></a></h3>
+<p>Get the checkForNegativeValues property (deprecated)</p><div class="section">
+<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">SimulationRunOptions</span><span class="op">$</span><span class="fu">.getCheckForNegativeValues</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
+<p>The value of checkForNegativeValues from the solver</p>
 </div>
 
 </div>

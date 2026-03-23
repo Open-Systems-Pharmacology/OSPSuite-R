@@ -1,10 +1,12 @@
-# Set values of parameters
+# Set or add parameter values to an existing Parameter Values building block.
 
-Set values of parameters
+This functions allows adding or modifying parameter values entries.
 
 ## Usage
 
 ``` r
+setParameterValues(parameters, values, units = NULL)
+
 setParameterValues(parameters, values, units = NULL)
 ```
 
@@ -27,6 +29,35 @@ setParameterValues(parameters, values, units = NULL)
   A string or a list of strings defining the units of the `values`. If
   `NULL` (default), values are assumed to be in base units. If not
   `NULL`, must have the same length as `quantities`.
+
+- parameterValuesBuildingBlock:
+
+  A `BuildingBlock` object of type `Parameter Values`. The entries will
+  be added to or set in this building block.
+
+- quantityPaths:
+
+  A list of full paths of the quantities (usually parameters). Should
+  contain all path elements and the parameter name, separated by `|`.
+
+- formulas:
+
+  A list of `Formula` objects that will be set for the quantities.
+  Mixing of `formulas` and `quantityValues` is not allowed. If
+  `formulas` is provided, `quantityValues` should be `NULL`. The length
+  of this list should be equal to the length of `quantityPaths`.
+
+- dimensions:
+
+  A single dimension or a list of dimensions (string names) of parameter
+  values. Supported dimensions are listed in `ospDimension`. By default,
+  new entries get the `Dimensionless` dimension.
+
+- quantityValues:
+
+  A list of values for the quantities. Should be `NULL` if the argument
+  `formulas` is provided. If not `NULL`, the length of this list should
+  be equal to the length of `quantityPaths`.
 
 ## See also
 

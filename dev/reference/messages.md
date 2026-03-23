@@ -11,4 +11,4 @@ messages
 
 ## Format
 
-An object of class `list` of length 80.
+An object of class `list` of length 96.

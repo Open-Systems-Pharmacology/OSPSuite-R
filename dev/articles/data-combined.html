@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9026</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,10 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -81,7 +84,7 @@
       <h1>Working with `DataCombined` class</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/vignettes/data-combined.Rmd" class="external-link"><code>vignettes/data-combined.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/vignettes/data-combined.Rmd" class="external-link"><code>vignettes/data-combined.Rmd</code></a></small>
       <div class="d-none name"><code>data-combined.Rmd</code></div>
     </div>
 
@@ -467,15 +470,15 @@ large.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Linear residuals</span></span>
 <span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">Scaling</a></span><span class="op">$</span><span class="va">lin</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span></span>
-<span><span class="co">#&gt;  [1]  9.49304275 -0.14538952  0.17965548  1.84599976  3.52552442  3.64160094</span></span>
-<span><span class="co">#&gt;  [7]  3.15654735  2.38392729  1.48703530  0.50532597  0.08009793 -0.14892803</span></span>
-<span><span class="co">#&gt; [13] -0.29395086</span></span>
+<span><span class="co">#&gt;  [1]  9.49305261 -0.14538952  0.17965556  1.84599917  3.52552728  3.64159999</span></span>
+<span><span class="co">#&gt;  [7]  3.15654830  2.38392765  1.48703530  0.50532597  0.08009781 -0.14892813</span></span>
+<span><span class="co">#&gt; [13] -0.29395087</span></span>
 <span></span>
 <span><span class="co"># Logarithmic residuals</span></span>
 <span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">Scaling</a></span><span class="op">$</span><span class="va">log</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span></span>
-<span><span class="co">#&gt;  [1]  0.239719620 -0.007286928  0.012618336  0.155242835  0.384912455</span></span>
-<span><span class="co">#&gt;  [6]  0.482210178  0.578799737  0.577914238  0.647582143  0.457679775</span></span>
-<span><span class="co">#&gt; [11]  0.137321647 -0.418715711 -2.305882655</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1]  0.239719842 -0.007286928  0.012618343  0.155242789  0.384912714</span></span>
+<span><span class="co">#&gt;  [6]  0.482210078  0.578799870  0.577914304  0.647582143  0.457679775</span></span>
+<span><span class="co">#&gt; [11]  0.137321456 -0.418716062 -2.305883113</span></span></code></pre></div>
 <p>To quickly calculate the total error of the
 <code>DataCombined</code>, one can sum up the absolute values of the
 residuals:</p>
@@ -484,7 +487,7 @@ residuals:</p>
 <span><span class="va">totalError</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">Scaling</a></span><span class="op">$</span><span class="va">lin</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">totalError</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 26.88703</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 26.88704</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visualizations-with-datacombined">Visualizations with <code>DataCombined</code><a class="anchor" aria-label="anchor" href="#visualizations-with-datacombined"></a>

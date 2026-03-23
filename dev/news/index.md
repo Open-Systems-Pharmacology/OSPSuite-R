@@ -2,6 +2,19 @@
 
 ## ospsuite (development version)
 
+### Breaking changes
+
+- [`createIndividual()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividual.md)
+  and
+  [`createPopulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createPopulation.md)
+  will not work with models developed prior to version 13. The reason is
+  that in v13, the absorption model has been refined, adding new
+  parameters. To be able to use creation of individuals or populations
+  with earlier models, the user has to re-create the models from
+  snapshot with the latest PK-Sim version. If no original PK-Sim project
+  or snapshot are available, the user should use the latest version 12
+  of the R package.
+
 ### Major changes
 
 - Added five new plotting functions powered by
@@ -125,6 +138,14 @@
 
 - Added support for macOS (both Intel and Apple Silicon architectures).
   ([\#1621](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1621))
+
+### Deprecations
+
+- `checkForNegativeValues` parameter in `SimulationRunOptions$new()` is
+  deprecated. Use `sim$solver$checkForNegativeValues` instead. The
+  parameter is still accepted but will issue a deprecation warning. The
+  property has moved from `SimulationRunOptions` to `SolverSettings` to
+  align with .NET binaries changes.
 
 ### Minor improvements and bug fixes
 

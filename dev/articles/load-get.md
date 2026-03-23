@@ -115,13 +115,13 @@ molecules <- getAllMoleculesMatching(c(
 print(molecules)
 #> [[1]]
 #> <Molecule>
-#>   • Path: Organism|Liver|Periportal|Intracellular|Aciclovir
+#>   • Path: Organism|VenousBlood|Plasma|Aciclovir
 #>   • Scale Divisor: 1
 #>   • Initial Value: 0.00e+00 [µmol]
 #> 
 #> [[2]]
 #> <Molecule>
-#>   • Path: Organism|VenousBlood|Plasma|Aciclovir
+#>   • Path: Organism|Liver|Periportal|Intracellular|Aciclovir
 #>   • Scale Divisor: 1
 #>   • Initial Value: 0.00e+00 [µmol]
 ```
@@ -217,11 +217,6 @@ simTree$Organism$Weight
 # Getting all entities located under "Organism|Liver|Periportal|Intracellular"
 entitiesList <- simTree$Organism$Liver$Periportal$Intracellular
 entitiesList
-#> $`Volume of protein container`
-#> $`Volume of protein container`$path
-#> [1] "Organism|Liver|Periportal|Intracellular|Volume of protein container"
-#> 
-#> 
 #> $Volume
 #> $Volume$path
 #> [1] "Organism|Liver|Periportal|Intracellular|Volume"

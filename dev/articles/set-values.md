@@ -99,24 +99,11 @@ values.
 ``` r
 # Get the parameter defined by a table.
 tableParam <- getParameter("Organism|TableParameter", sim)
+#> Error in `.getEntity()`:
+#> ! `tryCatch()`: no entity exists for path "Organism|TableParameter" located under container <Vergin 1995 IV>!
 print(tableParam)
-#> <Parameter>
-#>   • Quantity Type: Parameter
-#>   • Path: Organism|TableParameter
-#>   • Value: 0.00e+00
-#> 
-#> ── Formula ──
-#> 
-#>   • isTable: TRUE
-#>   • XDimension: Time
-#>   • UseDerivedValues: FALSE
-#> 
-#> ── Table values ────────────────────────────────────────────────────────────────
-#>   x= 0, y= 0, restartSolver= FALSE
-#>   x= 60, y= 1, restartSolver= FALSE
-#>   x= 120, y= 2, restartSolver= FALSE
-#>   x= 180, y= 3, restartSolver= FALSE
-#>   • Value overrides formula: FALSE
+#> Error:
+#> ! object 'tableParam' not found
 ```
 
 Additionally, some parameters are modeled as *state variables*. In this
@@ -126,32 +113,20 @@ formula, both of which can be any formula type.
 ``` r
 # Get the parameter defined by a state variable.
 stateVariableParam <- getParameter("Organism|StateVariable_Parameter", sim)
+#> Error in `.getEntity()`:
+#> ! `tryCatch()`: no entity exists for path "Organism|StateVariable_Parameter" located under container <Vergin 1995 IV>!
 print(stateVariableParam)
-#> <Parameter>
-#>   • Quantity Type: Parameter
-#>   • Path: Organism|StateVariable_Parameter
-#>   • Value: 0.00e+00
-#> 
-#> ── Formula ──
-#> 
-#>   • isConstant: TRUE
-#> 
-#> ── State variable ──
-#> 
-#>   • isStateVariable: TRUE
-#> 
-#> ── RHSFormula 
-#>   • isExplicit: TRUE
-#>   • formula: Time * 2
+#> Error:
+#> ! object 'stateVariableParam' not found
 
 # `value` refers to the initial value of the parameter
 stateVariableParam$value
-#> [1] 0
+#> Error:
+#> ! object 'stateVariableParam' not found
 # `rhsFormula` is the right hand side of the parameter
 stateVariableParam$rhsFormula
-#> <Formula>
-#>   • isExplicit: TRUE
-#>   • formula: Time * 2
+#> Error:
+#> ! object 'stateVariableParam' not found
 ```
 
 ### Changing parameters and molecules initial values
@@ -164,28 +139,22 @@ respectively.
 # Get the parameter Dose
 doseParamPath <- "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"
 doseParam <- getParameter(doseParamPath, sim)
+#> Error in `.getEntity()`:
+#> ! `tryCatch()`: no entity exists for path "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose" located under container <Vergin 1995 IV>!
 print(doseParam)
-#> <Parameter>
-#>   • Quantity Type: Parameter
-#>   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
-#>   • Value: 2.50e-04 [kg]
-#> 
-#> ── Formula ──
-#> 
-#>   • isConstant: TRUE
+#> Error:
+#> ! object 'doseParam' not found
 
 # Change the dose to 350mg. The value has to be converted to base unit, first
 newValue <- toBaseUnit(quantity = doseParam, values = 350, unit = "mg")
+#> Error:
+#> ! object 'doseParam' not found
 setParameterValues(parameters = doseParam, values = newValue)
+#> Error:
+#> ! object 'doseParam' not found
 print(doseParam)
-#> <Parameter>
-#>   • Quantity Type: Parameter
-#>   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
-#>   • Value: 3.50e-04 [kg]
-#> 
-#> ── Formula ──
-#> 
-#>   • isConstant: TRUE
+#> Error:
+#> ! object 'doseParam' not found
 ```
 
 Another way to change parameter values is to scale them. The scaling is
@@ -194,39 +163,27 @@ always performed relative to the current value:
 ``` r
 doseParamPath <- "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"
 doseParam <- getParameter(doseParamPath, sim)
+#> Error in `.getEntity()`:
+#> ! `tryCatch()`: no entity exists for path "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose" located under container <Vergin 1995 IV>!
 print(doseParam)
-#> <Parameter>
-#>   • Quantity Type: Parameter
-#>   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
-#>   • Value: 3.50e-04 [kg]
-#> 
-#> ── Formula ──
-#> 
-#>   • isConstant: TRUE
+#> Error:
+#> ! object 'doseParam' not found
 
 # Double the dose
 scaleParameterValues(doseParam, factor = 2)
+#> Error:
+#> ! object 'doseParam' not found
 print(doseParam)
-#> <Parameter>
-#>   • Quantity Type: Parameter
-#>   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
-#>   • Value: 7.00e-04 [kg]
-#> 
-#> ── Formula ──
-#> 
-#>   • isConstant: TRUE
+#> Error:
+#> ! object 'doseParam' not found
 
 # Half the dose
 scaleParameterValues(doseParam, factor = 0.5)
+#> Error:
+#> ! object 'doseParam' not found
 print(doseParam)
-#> <Parameter>
-#>   • Quantity Type: Parameter
-#>   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
-#>   • Value: 3.50e-04 [kg]
-#> 
-#> ── Formula ──
-#> 
-#>   • isConstant: TRUE
+#> Error:
+#> ! object 'doseParam' not found
 ```
 
 Only constant values can be set. If the parameters value is defined by a
@@ -334,60 +291,32 @@ formula after switching it off.
 ``` r
 # Get the parameter defined by a state variable.
 stateVariableParam <- getParameter("Organism|StateVariable_Parameter", sim)
+#> Error in `.getEntity()`:
+#> ! `tryCatch()`: no entity exists for path "Organism|StateVariable_Parameter" located under container <Vergin 1995 IV>!
 print(stateVariableParam)
-#> <Parameter>
-#>   • Quantity Type: Parameter
-#>   • Path: Organism|StateVariable_Parameter
-#>   • Value: 0.00e+00
-#> 
-#> ── Formula ──
-#> 
-#>   • isConstant: TRUE
-#> 
-#> ── State variable ──
-#> 
-#>   • isStateVariable: TRUE
-#> 
-#> ── RHSFormula 
-#>   • isExplicit: TRUE
-#>   • formula: Time * 2
+#> Error:
+#> ! object 'stateVariableParam' not found
 
 # Setting its value only changes the initial value
 setParameterValues(stateVariableParam, 10)
+#> Error:
+#> ! object 'stateVariableParam' not found
 print(stateVariableParam)
-#> <Parameter>
-#>   • Quantity Type: Parameter
-#>   • Path: Organism|StateVariable_Parameter
-#>   • Value: 10.00
-#> 
-#> ── Formula ──
-#> 
-#>   • isConstant: TRUE
-#> 
-#> ── State variable ──
-#> 
-#>   • isStateVariable: TRUE
-#> 
-#> ── RHSFormula 
-#>   • isExplicit: TRUE
-#>   • formula: Time * 2
+#> Error:
+#> ! object 'stateVariableParam' not found
 
 # Switching the RHS formula off
 stateVariableParam$isStateVariable <- FALSE
+#> Error:
+#> ! object 'stateVariableParam' not found
 print(stateVariableParam)
-#> <Parameter>
-#>   • Quantity Type: Parameter
-#>   • Path: Organism|StateVariable_Parameter
-#>   • Value: 10.00
-#> 
-#> ── Formula ──
-#> 
-#>   • isConstant: TRUE
+#> Error:
+#> ! object 'stateVariableParam' not found
 
 # Switching it on is not supported
 stateVariableParam$isStateVariable <- TRUE
 #> Error:
-#> ! Creating a RHS Formula is not supported at the moment. This should be done in MoBi.
+#> ! object 'stateVariableParam' not found
 ```
 
 An example how to set the initial values of molecules in all containers

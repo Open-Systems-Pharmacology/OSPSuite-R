@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9026</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,10 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -81,7 +84,7 @@
       <h1>Getting Started with ospsuite</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/vignettes/ospsuite.Rmd" class="external-link"><code>vignettes/ospsuite.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/vignettes/ospsuite.Rmd" class="external-link"><code>vignettes/ospsuite.Rmd</code></a></small>
       <div class="d-none name"><code>ospsuite.Rmd</code></div>
     </div>
 
@@ -179,7 +182,7 @@ from PK-Sim or MoBi):</p>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
 <span><span class="co">#&gt;   • Value: 2.50e-04 [kg]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
@@ -189,7 +192,7 @@ from PK-Sim or MoBi):</p>
 <span><span class="co">#&gt; [[2]]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg</span></span>
 <span><span class="co">#&gt;   10min|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea</span></span>
 <span><span class="co">#&gt;   • Value: 0.00e+00 [kg/dm²]</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -200,7 +203,7 @@ from PK-Sim or MoBi):</p>
 <span><span class="co">#&gt; [[3]]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg</span></span>
 <span><span class="co">#&gt;   10min|Application_1|ProtocolSchemaItem|DosePerBodyWeight</span></span>
 <span><span class="co">#&gt;   • Value: 0.00e+00 [kg/kg]</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -210,9 +213,9 @@ from PK-Sim or MoBi):</p>
 <span></span>
 <span><span class="co"># Or search for specific terms</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"Dose"</span>, <span class="fu"><a href="../reference/getAllParameterPathsIn.html">getAllParameterPathsIn</a></span><span class="op">(</span>container <span class="op">=</span> <span class="va">sim</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"                  </span></span>
-<span><span class="co">#&gt; [2] "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea"</span></span>
-<span><span class="co">#&gt; [3] "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodyWeight"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"                  </span></span>
+<span><span class="co">#&gt; [2] "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea"</span></span>
+<span><span class="co">#&gt; [3] "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodyWeight"</span></span></code></pre></div>
 <p><strong>Note:</strong> Parameter paths in ospsuite match those
 displayed in PK-Sim or MoBi. Starting with MoBi 12.0, parameter paths
 can be copied by right-clicking the parameter in the simulation tree and
@@ -225,13 +228,13 @@ selecting “Copy Path”.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get a specific parameter</span></span>
 <span><span class="va">dose</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span></span>
-<span>  path <span class="op">=</span> <span class="st">"Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"</span>,</span>
+<span>  path <span class="op">=</span> <span class="st">"Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"</span>,</span>
 <span>  <span class="va">sim</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
 <span><span class="co">#&gt;   • Value: 2.50e-04 [kg]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
@@ -243,7 +246,7 @@ selecting “Copy Path”.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
 <span><span class="co">#&gt;   • Value: 4.00e-03 [kg]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
@@ -255,7 +258,7 @@ selecting “Copy Path”.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
 <span><span class="co">#&gt;   • Value: 8.00e-03 [kg]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
@@ -267,7 +270,7 @@ selecting “Copy Path”.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
 <span><span class="co">#&gt;   • Value: 2.50e-04 [kg]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
@@ -279,8 +282,7 @@ selecting “Copy Path”.</p>
 </h3>
 <p>Adjust simulation outputs and solver settings:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># Originally, the simulation outputs plasma concentrations</span></span>
+<code class="sourceCode R"><span><span class="co"># Originally, the simulation outputs plasma concentrations</span></span>
 <span><span class="va">sim</span><span class="op">$</span><span class="va">outputSelections</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;OutputSelections&gt;</span></span></span>
 <span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood):</span></span>
@@ -306,7 +308,7 @@ selecting “Copy Path”.</p>
 <span>  startTime <span class="op">=</span> <span class="fl">1440</span>, <span class="co"># 1 day</span></span>
 <span>  endTime <span class="op">=</span> <span class="fl">3000</span>, <span class="co"># ~2 days</span></span>
 <span>  resolution <span class="op">=</span> <span class="fl">10</span>, <span class="co"># Every 10 minutes</span></span>
-<span>  intervalName <span class="op">=</span> <span class="st">"highRes"</span></span>
+<span>  intervalName <span class="op">=</span> <span class="st">"HighRes"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Check current output schema</span></span>
@@ -316,22 +318,22 @@ selecting “Copy Path”.</p>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Output intervals</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
-<span><span class="co">#&gt;   • Name: Simulation interval high resolution</span></span>
+<span><span class="co">#&gt;   • Name: Simulation Interval 1</span></span>
 <span><span class="co">#&gt;   • Start time: 0.00e+00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 15.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 1.00 [pts/min]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
-<span><span class="co">#&gt;   • Name: Simulation Interval 1</span></span>
+<span><span class="co">#&gt;   • Name: Simulation Interval 2</span></span>
 <span><span class="co">#&gt;   • Start time: 15.00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 1440.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 0.33 [pts/min]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
-<span><span class="co">#&gt;   • Name: Simulation Interval 2</span></span>
+<span><span class="co">#&gt;   • Name: Simulation Interval 3</span></span>
 <span><span class="co">#&gt;   • Start time: 120.00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 1440.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 0.07 [pts/min]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
-<span><span class="co">#&gt;   • Name: highRes</span></span>
+<span><span class="co">#&gt;   • Name: HighRes</span></span>
 <span><span class="co">#&gt;   • Start time: 1440.00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 3000.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 10.00 [pts/min]</span></span></code></pre></div>
@@ -431,7 +433,7 @@ selecting “Copy Path”.</p>
 <span></span>
 <span><span class="co"># 2. Modify parameters (e.g., change dose)</span></span>
 <span><span class="va">dose</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span></span>
-<span>  path <span class="op">=</span> <span class="st">"Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"</span>,</span>
+<span>  path <span class="op">=</span> <span class="st">"Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"</span>,</span>
 <span>  <span class="va">sim</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/setParameterValues.html">setParameterValues</a></span><span class="op">(</span><span class="va">dose</span>, <span class="fl">0.006</span><span class="op">)</span> <span class="co"># 6 mg/kg dose</span></span>
