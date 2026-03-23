@@ -76,7 +76,7 @@
 
 ## Breaking changes
 
-- ´{ospsuite}`now requires`{ospsuite.utils}` version \>= 1.7.0.
+- `{ospsuite}` now requires `{ospsuite.utils}` version \>= 1.7.0.
 - Classes `SimulationBatchRunValues` and `SimulationBatchOptions` are not exported any more.
   They should not be used directly.
 
@@ -91,7 +91,7 @@
 ## Minor improvements and bug fixes
 
 - Added `showLegendPerDataset` parameter to `plotIndividualTimeProfile()` and
-  `plotPupulationTimeProfile()` to optionally display separate legend entries for
+  `plotPopulationTimeProfile()` to optionally display separate legend entries for
   each dataset. This is experimental.
 - Improved print outputs for all classes
 - Classes do not inherit from the deprecated `Printable` class from the `{ospsuite.utils}` package.
@@ -137,7 +137,7 @@
 
 ## Major Changes
 
-- The package gains `{openxlsx}` and `{lifecyle}` dependencies.
+- The package gains `{openxlsx}` and `{lifecycle}` dependencies.
 - Added a function `getSteadyState()` to calculate steady state values for
   simulations. This function is of particular use for models of endogenous
   substrates, where changing a parameter value (e.g., the production rate)
@@ -193,8 +193,8 @@
   deprecated and replaced by `xAxisLimits` and `yAxisLimits`. Use them to zoom
   in the plot while preserving all data points. Use `xValuesLimits` and
   `yValuesLimits` to filter out data point outside of these range. More
-  detailed explanations
-  [here](https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples).
+  detailed explanations in the
+  [ggplot2 coord_cartesian documentation](https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples).
 - `addSimulationResults` and `addDataSets` methods of the `DataCombined` class
   now support an optional `silent` argument which silences the checks for data
   set names. If you expect to replace data sets in `DataCombined` objects
