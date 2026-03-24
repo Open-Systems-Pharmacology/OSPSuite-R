@@ -221,9 +221,11 @@ plotTimeProfile <- function(
 #'   `ospsuite.plots::getFoldDistanceList`. This list contains fold distances,
 #'   where each entry represents a fold and its reciprocal. The identity fold
 #'   (1) will be included if specified in `getFoldDistanceList`.
-#' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale
-#'   yScaleArgs groupAesthetics addRegression geomPointAttributes
+#' @inheritDotParams ospsuite.plots::plotYVsX xScaleArgs yScaleArgs
+#'   groupAesthetics addRegression geomPointAttributes
 #'   geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
+#'   addGuestLimits deltaGuest labelGuestCriteria geomGuestLineAttributes
+#'   lloqOnBothAxes
 #'
 #'
 #' @return A `ggplot2` plot object representing predicted vs observed values,
@@ -455,7 +457,7 @@ plotResidualsVsCovariate <- function(
 #'   `ospsuite::ospUnits`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
 #' @inheritDotParams ospsuite.plots::plotHistogram xScale xScaleArgs yScale
-#'   yScaleArgs plotAsFrequency meanFunction geomHistAttributes
+#'   yScaleArgs plotAsFrequency meanFunction geomHistAttributes asBarPlot
 #'
 #' @return A `ggplot2` plot object representing the histogram of residuals.
 #' @export
