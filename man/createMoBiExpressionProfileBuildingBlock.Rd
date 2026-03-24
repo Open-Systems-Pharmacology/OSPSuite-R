@@ -14,9 +14,13 @@ createMoBiExpressionProfileBuildingBlock(category, moleculeName, speciesName)
 \item{speciesName}{Name of the species.}
 }
 \value{
-An object of type \code{BuildingBlock} representing an expression profile.
+A \code{BuildingBlock} object representing the created expression profile.
 }
 \description{
+Creates an expression profile building block in MoBi for a given molecule,
+species, and category by calling the MoBi \code{ExpressionProfileTask}.
+}
+\details{
 Create a MoBi Expression Profile Building Block
 }
 \examples{

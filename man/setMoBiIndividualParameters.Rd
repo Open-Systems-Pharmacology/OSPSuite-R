@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-mobi-individual.R
 \name{setMoBiIndividualParameters}
 \alias{setMoBiIndividualParameters}
-\title{Set parameters of a MoBi Individual Building Block}
+\title{Set Parameters of a MoBi Individual Building Block}
 \usage{
 setMoBiIndividualParameters(
   individualBuildingBlock,
@@ -11,8 +11,8 @@ setMoBiIndividualParameters(
 )
 }
 \arguments{
-\item{individualBuildingBlock}{An \code{IndividualBuildingBlock} object as
-returned by \code{createMoBiIndividualBuildingBlock()}.}
+\item{individualBuildingBlock}{A \code{BuildingBlock} object as returned
+by \code{createMoBiIndividualBuildingBlock()}.}
 
 \item{quantityPaths}{A character vector of quantity paths to set.}
 
@@ -23,7 +23,9 @@ same length as \code{quantityPaths}.}
 \code{individualBuildingBlock}, invisibly.
 }
 \description{
-Set parameters of a MoBi Individual Building Block
+Sets one or more parameter values in an individual building block by
+providing the corresponding quantity paths and values. The number of
+paths and values must be equal.
 }
 \examples{
 \dontrun{

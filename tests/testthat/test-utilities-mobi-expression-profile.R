@@ -39,3 +39,34 @@ test_that("createMoBiExpressionProfileBuildingBlock throws an error when species
     )
   )
 })
+
+test_that("createMoBiExpressionProfileBuildingBlock throws an error when category is empty", {
+  expect_error(
+    createMoBiExpressionProfileBuildingBlock(
+      category = "",
+      moleculeName = "CYP3A4",
+      speciesName = "Human"
+    ),
+    "The `category` argument must not be an empty string."
+  )
+})
+
+test_that("createMoBiExpressionProfileBuildingBlock throws an error when moleculeName is empty", {
+  expect_error(
+    createMoBiExpressionProfileBuildingBlock(
+      category = "Metabolizing Enzyme",
+      moleculeName = "",
+      speciesName = "Human"
+    ),
+    "The `moleculeName` argument must not be an empty string."
+  )
+})
+test_that("createMoBiExpressionProfileBuildingBlock throws an error when speciesName is not in the Species enumeration", {
+  expect_error(
+    createMoBiExpressionProfileBuildingBlock(
+      category = "Metabolizing Enzyme",
+      moleculeName = "CYP3A4",
+      speciesName = "InvalidSpecies"
+    )
+  )
+})

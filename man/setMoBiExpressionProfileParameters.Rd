@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-mobi-expression-profile.R
 \name{setMoBiExpressionProfileParameters}
 \alias{setMoBiExpressionProfileParameters}
-\title{Set parameters of a MoBi Expression Profile Building Block}
+\title{Set Parameters of a MoBi Expression Profile Building Block}
 \usage{
 setMoBiExpressionProfileParameters(
   expressionProfileBuildingBlock,
@@ -23,7 +23,12 @@ same length as \code{quantityPaths}.}
 \code{expressionProfileBuildingBlock}, invisibly.
 }
 \description{
-Set parameters of a MoBi Expression Profile Building Block
+Sets one or more parameter values in an expression profile building block
+by providing the corresponding quantity paths and values. The number of
+paths and values must be equal.
+}
+\details{
+Set Parameters of a MoBi Expression Profile Building Block
 }
 \examples{
 \dontrun{

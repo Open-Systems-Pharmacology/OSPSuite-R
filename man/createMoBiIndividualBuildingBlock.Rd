@@ -47,10 +47,11 @@ Default is 40.}
 \item{seed}{Optional seed for the individual creation algorithm.}
 }
 \value{
-An object of type \code{BuildingBlock} representing an individual.
+A \code{BuildingBlock} object representing the created individual.
 }
 \description{
-Create a MoBi Individual Building Block
+Creates an individual building block in MoBi for a given species and
+optional demographic characteristics by calling the MoBi \code{IndividualTask}.
 }
 \examples{
 \dontrun{

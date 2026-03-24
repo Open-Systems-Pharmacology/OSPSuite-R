@@ -162,3 +162,24 @@ validateIsNamedList <- function(x, varName) {
 
   return(invisible(TRUE))
 }
+
+#' Validate that a string argument is not empty
+#'
+#' @description
+#' Checks that the given character value is not an empty string (`""`).
+#' Throws an error using `messages$errorEmptyString` if it is.
+#'
+#' @param value A character string to validate.
+#' @param varName Name of the variable being validated (used in error message).
+#'
+#' @return Invisibly returns `TRUE` if validation passes.
+#'
+#' @keywords internal
+validateIsNonEmptyString <- function(value, varName) {
+  validateIsString(value)
+  if (nchar(value) == 0) {
+    stop(messages$errorEmptyString(varName), call. = FALSE)
+  }
+
+  return(invisible(TRUE))
+}
