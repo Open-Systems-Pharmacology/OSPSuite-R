@@ -214,24 +214,26 @@ test_that("addResidualColumn sets NaN and warns for log of zero values", {
   )
   expect_warning(
     result <- addResidualColumn(paired, scaling = "log"),
-    regexp = "NaN"
+    regexp = messages$residualsLogNonPositive(2),
+    fixed = TRUE
   )
   expect_true(is.nan(result$residualValues[1]))
   expect_true(is.nan(result$residualValues[2]))
   expect_equal(result$residualValues[3], log(2) - log(2), tolerance = 1e-6)
 })
 
-test_that("addResidualColumn sets NaN and warns for log of zero values", {
+test_that("addResidualColumn sets NaN and warns for ratio with non-positive predicted values", {
   paired <- data.frame(
     yValuesObserved = c(3, 1, 2),
     yValuesSimulated = c(1, 0, -1)
   )
   expect_warning(
     result <- addResidualColumn(paired, scaling = "ratio"),
-    regexp = "NaN"
+    regexp = messages$residualsRatioPredNonPositive(2),
+    fixed = TRUE
   )
   expect_true(is.nan(result$residualValues[2]))
-  expect_equal(result$residualValues[3], -2, tolerance = 1e-6)
+  expect_true(is.nan(result$residualValues[3]))
 })
 
 

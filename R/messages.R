@@ -79,7 +79,7 @@ messages$residualsRatioPredNonPositive <- function(n) {
   paste0(
     n,
     " residual value(s) could not be computed because the predicted value is",
-    " zero or NA (division by zero or undefined denominator).",
+    " zero or negative (division by zero or undefined denominator).",
     " These data points are set to NaN and excluded from the output."
   )
 }
