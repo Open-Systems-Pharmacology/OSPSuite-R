@@ -14,8 +14,7 @@ plotTimeProfile(
   y2Unit = NULL,
   aggregation = "quantiles",
   quantiles =
-    ospsuite.plots::getOspsuite.plots.option(ospsuite.plots::OptionKeys$Percentiles)[c(1,
-    3, 5)],
+    ospsuite.plots::getOspsuite.plots.option(ospsuite.plots::OptionKeys$DefaultPercentiles),
   nsd = 1,
   showLegendPerDataset = "none",
   ...
