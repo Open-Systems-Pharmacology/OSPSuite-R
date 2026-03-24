@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9027</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,10 +36,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
-    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -84,7 +81,7 @@
       <h1>Running a simulation</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/vignettes/run-simulation.Rmd" class="external-link"><code>vignettes/run-simulation.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/vignettes/run-simulation.Rmd" class="external-link"><code>vignettes/run-simulation.Rmd</code></a></small>
       <div class="d-none name"><code>run-simulation.Rmd</code></div>
     </div>
 
@@ -226,11 +223,11 @@ correct results for the specific simulation</p>
 <code class="sourceCode R"><span><span class="co"># Get the id of the second simulation</span></span>
 <span><span class="va">id</span> <span class="op">&lt;-</span> <span class="va">sim2</span><span class="op">$</span><span class="va">id</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "UOHN6P_9h0ywgt4uhelP1g"</span></span>
+<span><span class="co">#&gt; [1] "L0z4DMLErECh-7BVM8wbjg"</span></span>
 <span><span class="co"># get the corresponding result</span></span>
 <span><span class="va">sim2Results</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">[[</span><span class="va">id</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim2Results</span><span class="op">$</span><span class="va">simulation</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "UOHN6P_9h0ywgt4uhelP1g"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "L0z4DMLErECh-7BVM8wbjg"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="adding-new-outputs">Adding new outputs<a class="anchor" aria-label="anchor" href="#adding-new-outputs"></a>
@@ -290,17 +287,17 @@ are stored) are stored as the property <code>$outputSchema</code> of a
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Output intervals</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
-<span><span class="co">#&gt;   • Name: Simulation Interval 1</span></span>
+<span><span class="co">#&gt;   • Name: Simulation interval high resolution</span></span>
 <span><span class="co">#&gt;   • Start time: 0.00e+00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 15.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 1.00 [pts/min]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
-<span><span class="co">#&gt;   • Name: Simulation Interval 2</span></span>
+<span><span class="co">#&gt;   • Name: Simulation Interval 1</span></span>
 <span><span class="co">#&gt;   • Start time: 15.00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 1440.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 0.33 [pts/min]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
-<span><span class="co">#&gt;   • Name: Simulation Interval 3</span></span>
+<span><span class="co">#&gt;   • Name: Simulation Interval 2</span></span>
 <span><span class="co">#&gt;   • Start time: 120.00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 1440.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 0.07 [pts/min]</span></span></code></pre></div>
@@ -405,8 +402,7 @@ of a <code>Simulation</code> object.</p>
 <span><span class="co">#&gt;   • hMax: 60</span></span>
 <span><span class="co">#&gt;   • mxStep: 100000</span></span>
 <span><span class="co">#&gt;   • relTol: 1e-05</span></span>
-<span><span class="co">#&gt;   • absTol: 1e-10</span></span>
-<span><span class="co">#&gt;   • checkForNegativeValues: TRUE</span></span></code></pre></div>
+<span><span class="co">#&gt;   • absTol: 1e-10</span></span></code></pre></div>
 <p>In some cases, a simulation may fail to run successfully due to
 numerical instability or convergence issues. One common approach to
 resolve such issues is to reduce the solver tolerances, which makes the

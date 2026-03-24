@@ -41,12 +41,6 @@ An OSPSuite simulation
 
   Name of the simulation
 
-- `configuration`:
-
-  An object of the type `SimulationConfiguration`, describing the
-  modules used for the simulation, selected Parameter Values (PV) and
-  Initial Conditions (IC).
-
 ## Methods
 
 ### Public methods
@@ -197,15 +191,9 @@ Print the object to the console
 
 #### Usage
 
-    Simulation$print(printClassProperties = FALSE, ...)
+    Simulation$print(...)
 
 #### Arguments
-
-- `printClassProperties`:
-
-  Logical, whether to print class properties (default: `FALSE`). If
-  `TRUE`, calls first the `print` method of the parent class. Useful for
-  debugging.
 
 - `...`:
 

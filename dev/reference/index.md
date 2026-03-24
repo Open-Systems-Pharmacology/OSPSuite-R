@@ -8,16 +8,6 @@
 - [`Application`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Application.md)
   : Application
 
-- [`BuildingBlock`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/BuildingBlock.md)
-  : Building block \# ONLY MOBI BBs, or should we consider having PK-Sim
-  BBs as pkml export in the future?
-
-- [`BuildingBlockTypes`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/BuildingBlockTypes.md)
-  : Types of building blocks supported.
-
-- [`CellularPermeabilityMethods`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/CellularPermeabilityMethods.md)
-  : Available methods for calculation of cellular permeabilities.
-
 - [`CompareBy`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/CompareBy.md)
   : How should comparison of entities be performed
 
@@ -66,15 +56,6 @@
 - [`IndividualCharacteristics`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/IndividualCharacteristics.md)
   : IndividualCharacteristics
 
-- [`IndividualDiseaseStates`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/IndividualDiseaseStates.md)
-  : Available disease states
-
-- [`MoBiModule`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/MoBiModule.md)
-  : MoBi Module \# OR SHOULD WE CALL IT AN OspModule ?
-
-- [`MoBiProject`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/MoBiProject.md)
-  : MoBi Project
-
 - [`MoleculeOntogeny`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/MoleculeOntogeny.md)
   : MoleculeOntogeny
 
@@ -99,9 +80,6 @@
 
 - [`ParameterRange`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ParameterRange.md)
   : ParameterRange
-
-- [`PartitionCoefficientMethods`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/PartitionCoefficientMethods.md)
-  : Available methods for calculation of partition coefficients.
 
 - [`Population`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Population.md)
   : Population
@@ -138,9 +116,6 @@
 
 - [`SimulationBatchRunValues`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/SimulationBatchRunValues.md)
   : SimulationBatchRunValues
-
-- [`SimulationConfiguration`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/SimulationConfiguration.md)
-  : Simulation configuration
 
 - [`SimulationPKAnalyses`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/SimulationPKAnalyses.md)
   : SimulationPKAnalyses
@@ -182,11 +157,6 @@
 - [`ValuePoint`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ValuePoint.md)
   : ValuePoint
 
-- [`addLocalMoleculeParameters()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addLocalMoleculeParameters.md)
-  : Extend a Parameter Values Building Block (BB) with local molecule
-  parameters for molecules from a molecules BB in all physical
-  containers of a spatial structure BB.
-
 - [`addOutputInterval()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addOutputInterval.md)
   : Adds an interval to the output schema of the simulation
 
@@ -195,11 +165,6 @@
 
   Adds the quantities as output into the `simulation`. The quantities
   can either be specified using explicit instances or using paths.
-
-- [`addProteinExpressionToParameterValuesBB()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addProteinExpressionToParameterValuesBB.md)
-  : Extend a Parameter Values Building Block (BB) with protein
-  expression parameters for selected protein molecules in the selected
-  organs.
 
 - [`addUserDefinedPKParameter()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addUserDefinedPKParameter.md)
   : Adds and returns a User-Defined PK-Parameter to the managed list of
@@ -260,9 +225,6 @@
 - [`createIndividual()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividual.md)
   : Creates an individual using the PK-Sim Database
 
-- [`createIndividualBuildingBlock()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividualBuildingBlock.md)
-  : Create an Individual Building Block
-
 - [`createIndividualCharacteristics()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividualCharacteristics.md)
   : Creates an individual using the PK-Sim Database.
 
@@ -272,17 +234,11 @@
 - [`createPopulationCharacteristics()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createPopulationCharacteristics.md)
   : Creates the population characteristics used to create a population
 
-- [`createSimulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulation.md)
-  : Create a new simulation from a simulation configuration
-
 - [`createSimulationBatch()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulationBatch.md)
   :
 
   Creates and returns an instance of a `SimulationBatch` that can be
   used to efficiently vary parameters and initial values in a simulation
-
-- [`createSimulationConfiguration()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulationConfiguration.md)
-  : Create a simulation configuration from modules.
 
 - [`dataSetToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md)
   [`dataSetToTibble()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md)
@@ -294,12 +250,6 @@
   :
 
   Creates a list of `DataSet` objects from a `data.frame`
-
-- [`deleteInitialConditions()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/deleteInitialConditions.md)
-  : Delete entries from an Initial Conditions Building Block
-
-- [`deleteParameterValues()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/deleteParameterValues.md)
-  : Delete entries from a Parameter Values Building Block
 
 - [`.expandPath()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-expandPath.md)
   :
@@ -380,11 +330,6 @@
 - [`exportSteadyStateToXLS()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportSteadyStateToXLS.md)
   : Export steady-state to Excel in the format that can be imported in
   MoBi.
-
-- [`extendInitialConditions()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/extendInitialConditions.md)
-  : Extend an Initial Conditions Building Block (BB) with new entries
-  for molecules from a molecules BB in all physical containers of a
-  spatial structure BB.
 
 - [`getAllContainerPathsIn()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getAllContainerPathsIn.md)
   : Retrieves the path of all containers defined in the container and
@@ -529,12 +474,6 @@
 - [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
   : Load data sets from excel
 
-- [`loadMoBiProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadMoBiProject.md)
-  : Load a MoBi project
-
-- [`loadModuleFromPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadModuleFromPKML.md)
-  : Load a MoBi module from pkml.
-
 - [`loadPopulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadPopulation.md)
   : Loads a population from a csv file and returns the population.
 
@@ -650,10 +589,6 @@
 - [`scaleParameterValues()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/scaleParameterValues.md)
   : Scale current values of parameters using a factor
 
-- [`setInitialConditions()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setInitialConditions.md)
-  : Set or add initial conditions to an existing Initial Conditions
-  building block.
-
 - [`setMoleculeInitialValues()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setMoleculeInitialValues.md)
   : Set molecule start values
 
@@ -670,8 +605,7 @@
   : Set outputs of a simulation
 
 - [`setParameterValues()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setParameterValues.md)
-  : Set or add parameter values to an existing Parameter Values building
-  block.
+  : Set values of parameters
 
 - [`setParameterValuesByPath()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setParameterValuesByPath.md)
   : Set the values of parameters in the simulation by path
@@ -717,9 +651,6 @@
 
 - [`validateDimension()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateDimension.md)
   : Validate dimension
-
-- [`validateIsNamedList()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateIsNamedList.md)
-  : Validate that an object is a named list
 
 - [`validateUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateUnit.md)
   : Validate unit

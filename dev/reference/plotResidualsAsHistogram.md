@@ -85,6 +85,13 @@ plotResidualsAsHistogram(
   Arguments passed on to
   [`ospsuite.plots::plotHistogram`](https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/plotHistogram.html)
 
+  `asBarPlot`
+
+  :   A `logical` indicating if `geom_histogram` should be used (for
+      continuous data) or `geom_bar` (for categorical data). If TRUE,
+      the variables `distribution`, `meanFunction`, `xScale`, and
+      `xScaleArgs` are ignored.
+
   `geomHistAttributes`
 
   :   A `list` of arguments passed to

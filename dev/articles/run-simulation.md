@@ -145,11 +145,11 @@ for the specific simulation
 # Get the id of the second simulation
 id <- sim2$id
 print(id)
-#> [1] "UOHN6P_9h0ywgt4uhelP1g"
+#> [1] "L0z4DMLErECh-7BVM8wbjg"
 # get the corresponding result
 sim2Results <- simulationResults[[id]]
 print(sim2Results$simulation$id)
-#> [1] "UOHN6P_9h0ywgt4uhelP1g"
+#> [1] "L0z4DMLErECh-7BVM8wbjg"
 ```
 
 ## Adding new outputs
@@ -214,17 +214,17 @@ print(sim$outputSchema)
 #> ── Output intervals ──
 #> 
 #> <Interval>
-#>   • Name: Simulation Interval 1
+#>   • Name: Simulation interval high resolution
 #>   • Start time: 0.00e+00 [min]
 #>   • End time: 15.00 [min]
 #>   • Resolution: 1.00 [pts/min]
 #> <Interval>
-#>   • Name: Simulation Interval 2
+#>   • Name: Simulation Interval 1
 #>   • Start time: 15.00 [min]
 #>   • End time: 1440.00 [min]
 #>   • Resolution: 0.33 [pts/min]
 #> <Interval>
-#>   • Name: Simulation Interval 3
+#>   • Name: Simulation Interval 2
 #>   • Start time: 120.00 [min]
 #>   • End time: 1440.00 [min]
 #>   • Resolution: 0.07 [pts/min]
@@ -335,7 +335,6 @@ print(sim$solver)
 #>   • mxStep: 100000
 #>   • relTol: 1e-05
 #>   • absTol: 1e-10
-#>   • checkForNegativeValues: TRUE
 ```
 
 In some cases, a simulation may fail to run successfully due to

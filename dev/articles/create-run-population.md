@@ -123,6 +123,7 @@ simRunOptions <- SimulationRunOptions$new()
 print(simRunOptions)
 #> <SimulationRunOptions>
 #>   • numberOfCores: 3
+#>   • checkForNegativeValues: TRUE
 #>   • showProgress: FALSE
 
 # Change the maximal number of cores to use and show a progress bar during simulation

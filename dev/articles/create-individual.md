@@ -43,13 +43,13 @@ library(ospsuite)
 
 # If no unit is specified, the default units are used. For "weight" it is "kg", for "age" it is "year(s)".
 individualCharacteristics <- createIndividualCharacteristics(
-  species = Species$Human,
+  species    = Species$Human,
   population = HumanPopulation$Japanese_Population,
-  gender = Gender$Female,
-  weight = 75,
-  height = 1.75,
+  gender     = Gender$Female,
+  weight     = 75,
+  height     = 1.75,
   heightUnit = "m",
-  age = 43
+  age        = 43
 )
 print(individualCharacteristics)
 #> <IndividualCharacteristics>
@@ -61,9 +61,7 @@ print(individualCharacteristics)
 #>   • Weight: 75.00 [kg]
 #>   • Height: 1.75 [m]
 
-individual <- createIndividual(
-  individualCharacteristics = individualCharacteristics
-)
+individual <- createIndividual(individualCharacteristics = individualCharacteristics)
 
 # we will not be printing this given the long length of the output, but you can
 # see the details by running:
@@ -83,6 +81,8 @@ parameter values can be conveniently applied using the
 `setParameterValuesByPath` method:
 
 ``` r
+library(ospsuite)
+
 # Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 print(simFilePath)
@@ -92,8 +92,8 @@ sim <- loadSimulation(simFilePath)
 # Apply individual parameters
 setParameterValuesByPath(
   parameterPaths = individual$distributedParameters$paths,
-  values = individual$distributedParameters$values,
-  simulation = sim
+  values         = individual$distributedParameters$values,
+  simulation     = sim
 )
 ```
 
@@ -163,10 +163,7 @@ print(StandardOntogeny)
 #> [1] "UGT2B7"
 
 # Create the ontogeny for the protein "MyProtein" based on ontology of CYP3A4
-myProteinOntogeny <- MoleculeOntogeny$new(
-  molecule = "MyProtein",
-  ontogeny = StandardOntogeny$CYP3A4
-)
+myProteinOntogeny <- MoleculeOntogeny$new(molecule = "MyProtein", ontogeny = StandardOntogeny$CYP3A4)
 print(myProteinOntogeny)
 #> <MoleculeOntogeny>
 #>   • Molecule: MyProtein
@@ -174,13 +171,13 @@ print(myProteinOntogeny)
 
 # Add this ontogeny to the individual characteristics used to create the individual parameters set
 individualCharacterstics <- createIndividualCharacteristics(
-  species = Species$Human,
-  population = HumanPopulation$Japanese_Population,
-  gender = Gender$Female,
-  weight = 75,
-  height = 1.75,
-  heightUnit = "m",
-  age = 43,
+  species            = Species$Human,
+  population         = HumanPopulation$Japanese_Population,
+  gender             = Gender$Female,
+  weight             = 75,
+  height             = 1.75,
+  heightUnit         = "m",
+  age                = 43,
   moleculeOntogenies = myProteinOntogeny
 )
 print(individualCharacterstics)
@@ -197,7 +194,5 @@ print(individualCharacterstics)
 #> 
 #> [1] "Molecule 'MyProtein' with ontogeny 'CYP3A4'"
 
-individual <- createIndividual(
-  individualCharacteristics = individualCharacterstics
-)
+individual <- createIndividual(individualCharacteristics = individualCharacterstics)
 ```

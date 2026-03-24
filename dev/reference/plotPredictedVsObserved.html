@@ -11,7 +11,7 @@ values, allowing for easy identification of discrepancies.'><meta name="robots" 
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9027</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,10 +24,7 @@ values, allowing for easy identification of discrepancies.'><meta name="robots" 
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
-    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -61,7 +58,7 @@ values, allowing for easy identification of discrepancies.'><meta name="robots" 
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Plot Predicted vs Observed Values</h1>
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/R/plot-with-ospsuite-plots.R" class="external-link"><code>R/plot-with-ospsuite-plots.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/R/plot-with-ospsuite-plots.R" class="external-link"><code>R/plot-with-ospsuite-plots.R</code></a></small>
       <div class="d-none name"><code>plotPredictedVsObserved.Rd</code></div>
     </div>
 
@@ -146,28 +143,29 @@ where each entry represents a fold and its reciprocal. The identity fold
 <dd><p>Arguments passed on to <code><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/plotYVsX.html" class="external-link">ospsuite.plots::plotYVsX</a></code></p><dl><dt><code>geomPointAttributes</code></dt>
 <dd><p>A <code>list</code> with arguments which are passed on to the call <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">ggplot2::geom_point</a></code></p></dd>
 
+    <dt><code>geomGuestLineAttributes</code></dt>
+<dd><p>A <code>list</code> of arguments passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">ggplot2::geom_function</a></code> to display guest criteria.</p></dd>
+
     <dt><code>geomComparisonLineAttributes</code></dt>
 <dd><p>A <code>list</code> of arguments passed to <code>ggplot2::hline</code> or <code>ggplot2::abline</code> to display comparison lines.</p></dd>
 
     <dt><code>geomLLOQAttributes</code></dt>
 <dd><p>A <code>list</code> with arguments which are passed on to the call <code><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">ggplot2::geom_hline</a></code></p></dd>
 
-    <dt><code>groupAesthetics</code></dt>
-<dd><p>A character vector of aesthetic names used for grouping data points when calculating
-comparison statistics. Data will be grouped by combinations of these aesthetics before computing counts
-and proportions within comparison lines. Common grouping aesthetics include <code>"colour"</code>, <code>"fill"</code>, <code>"shape"</code>.</p></dd>
-
     <dt><code>addRegression</code></dt>
 <dd><p>A boolean that activates the insertion of a regression line.</p></dd>
 
-    <dt><code>xScale</code></dt>
-<dd><p>either 'linear' then <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_x_continuous()</a></code> or 'log' then <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_x_log10()</a></code> is used</p></dd>
+    <dt><code>deltaGuest</code></dt>
+<dd><p>Numeric value parameter for the Guest function.</p></dd>
+
+    <dt><code>labelGuestCriteria</code></dt>
+<dd><p>Label used in the legend for guest criteria (default: "guest criteria").</p></dd>
 
     <dt><code>xScaleArgs</code></dt>
 <dd><p>list of arguments passed to <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_x_continuous()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_x_log10()</a></code></p></dd>
 
-    <dt><code>yScale</code></dt>
-<dd><p>either 'linear' then <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_continuous()</a></code> or 'log' then <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_log10()</a></code> is used</p></dd>
+    <dt><code>yScaleArgs</code></dt>
+<dd><p>list of arguments passed to <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_continuous()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_log10()</a></code></p></dd>
 
 
 </dl></dd>

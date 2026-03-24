@@ -418,15 +418,15 @@ For logarithmic scaling (`scaling = tlf::Scaling$log`):
 ``` r
 # Linear residuals
 calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues
-#>  [1]  9.49305261 -0.14538952  0.17965556  1.84599917  3.52552728  3.64159999
-#>  [7]  3.15654830  2.38392765  1.48703530  0.50532597  0.08009781 -0.14892813
-#> [13] -0.29395087
+#>  [1]  9.49304275 -0.14538952  0.17965548  1.84599976  3.52552442  3.64160094
+#>  [7]  3.15654735  2.38392729  1.48703530  0.50532597  0.08009793 -0.14892803
+#> [13] -0.29395086
 
 # Logarithmic residuals
 calculateResiduals(myDataCombined, scaling = tlf::Scaling$log)$residualValues
-#>  [1]  0.239719842 -0.007286928  0.012618343  0.155242789  0.384912714
-#>  [6]  0.482210078  0.578799870  0.577914304  0.647582143  0.457679775
-#> [11]  0.137321456 -0.418716062 -2.305883113
+#>  [1]  0.239719620 -0.007286928  0.012618336  0.155242835  0.384912455
+#>  [6]  0.482210178  0.578799737  0.577914238  0.647582143  0.457679775
+#> [11]  0.137321647 -0.418715711 -2.305882655
 ```
 
 To quickly calculate the total error of the `DataCombined`, one can sum
@@ -437,7 +437,7 @@ up the absolute values of the residuals:
 totalError <- sum(abs(calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues))
 
 print(totalError)
-#> [1] 26.88704
+#> [1] 26.88703
 ```
 
 ## Visualizations with `DataCombined`

@@ -61,22 +61,16 @@ doseParameter <- getAllParametersMatching(toPathString("Applications", "**", "Do
 
 # run for dose 100mg
 doseParameter$value <- toBaseUnit(doseParameter, 100, "mg")
-#> Error in `validateIsOfType()`:
-#> ! `tryCatch()`: argument "quantityOrDimension" is of type <NULL>, but expected <Quantity/character>!
 result100 <- runSimulations(simulations = sim)
 
 # run for dose 200mg
 doseParameter$value <- toBaseUnit(doseParameter, 200, "mg")
-#> Error in `validateIsOfType()`:
-#> ! `tryCatch()`: argument "quantityOrDimension" is of type <NULL>, but expected <Quantity/character>!
 result200 <- runSimulations(simulations = sim)
 
 # ...
 
 # run for dose 500mg
 doseParameter$value <- toBaseUnit(doseParameter, 500, "mg")
-#> Error in `validateIsOfType()`:
-#> ! `tryCatch()`: argument "quantityOrDimension" is of type <NULL>, but expected <Quantity/character>!
 result500 <- runSimulations(simulations = sim)
 ```
 
@@ -111,26 +105,14 @@ loadSimulationWithDose <- function(doseInMg) {
 
 # Creates 5 instances of a simulation (This is very fast for typical simulations)
 sim100 <- loadSimulationWithDose(doseInMg = 100)
-#> Error in `validateIsOfType()`:
-#> ! `tryCatch()`: argument "quantityOrDimension" is of type <NULL>, but expected <Quantity/character>!
 sim200 <- loadSimulationWithDose(doseInMg = 200)
-#> Error in `validateIsOfType()`:
-#> ! `tryCatch()`: argument "quantityOrDimension" is of type <NULL>, but expected <Quantity/character>!
 sim300 <- loadSimulationWithDose(doseInMg = 300)
-#> Error in `validateIsOfType()`:
-#> ! `tryCatch()`: argument "quantityOrDimension" is of type <NULL>, but expected <Quantity/character>!
 sim400 <- loadSimulationWithDose(doseInMg = 400)
-#> Error in `validateIsOfType()`:
-#> ! `tryCatch()`: argument "quantityOrDimension" is of type <NULL>, but expected <Quantity/character>!
 sim500 <- loadSimulationWithDose(doseInMg = 500)
-#> Error in `validateIsOfType()`:
-#> ! `tryCatch()`: argument "quantityOrDimension" is of type <NULL>, but expected <Quantity/character>!
 
 
 # Runs the simulation in parallel
 results <- runSimulations(simulations = list(sim100, sim200, sim300, sim400, sim500))
-#> Error:
-#> ! object 'sim100' not found
 
 # Results in now a list of SimulationResults
 ```
@@ -201,21 +183,21 @@ performance.
 # now setting some parameter run values (the size of the array should match
 # the number of parameters to vary for each batch
 simBatch1$addRunValues(parameterValues = c(1, 2))
-#> [1] "19877ace-1812-4144-a0b0-59eb097a760f"
+#> [1] "fb9e0f12-a8bc-482a-9efc-ec219820cde5"
 simBatch1$addRunValues(parameterValues = c(3, 4))
-#> [1] "a2da0297-1247-4547-be58-518aa27deaac"
+#> [1] "271cb78f-e0c3-46b3-8689-9ccad8bc9947"
 simBatch1$addRunValues(parameterValues = c(5, 6))
-#> [1] "eb8825e6-a2cd-4917-9742-523703c7edc3"
+#> [1] "39d22e90-ecf8-4519-934d-486c63a80b9f"
 
 # We only have one parameter to vary for simBatch2, therefore only one value to set
 simBatch2$addRunValues(parameterValues = 150)
-#> [1] "f1ccb665-1d43-4709-9114-da20c2496f0a"
+#> [1] "a1c220bc-200e-45f7-8f5a-9bd2f8106062"
 simBatch2$addRunValues(parameterValues = 200)
-#> [1] "57bdcde4-ce23-4911-b446-bff2f0ab0b36"
+#> [1] "e81b1a9f-1e34-4342-9b79-e480e1482c40"
 simBatch2$addRunValues(parameterValues = 300)
-#> [1] "1ddef54d-beef-4ac2-b2bd-32109fdeac05"
+#> [1] "3faab899-1834-4c17-8d89-78ff00b00dba"
 simBatch2$addRunValues(parameterValues = 400)
-#> [1] "e668d689-fdf1-467d-a42e-12a7e4bfbc92"
+#> [1] "80d17d0a-36ee-4e31-b9a5-a5cb14fa4678"
 ```
 
 So far, we created 2 simulation batches, one with 3 parameter sets and
@@ -231,13 +213,13 @@ simulated set of parameters.
 # The resulting output is a named list, where the names are the ids of the enqueued runs.
 results <- runSimulationBatches(simulationBatches)
 print(names(unlist(results)))
-#> [1] "800f4da5-43cb-4b14-8064-acf3ce2506b4.19877ace-1812-4144-a0b0-59eb097a760f"
-#> [2] "800f4da5-43cb-4b14-8064-acf3ce2506b4.a2da0297-1247-4547-be58-518aa27deaac"
-#> [3] "800f4da5-43cb-4b14-8064-acf3ce2506b4.eb8825e6-a2cd-4917-9742-523703c7edc3"
-#> [4] "896707fc-8190-47e4-8446-28b58ae63c01.f1ccb665-1d43-4709-9114-da20c2496f0a"
-#> [5] "896707fc-8190-47e4-8446-28b58ae63c01.57bdcde4-ce23-4911-b446-bff2f0ab0b36"
-#> [6] "896707fc-8190-47e4-8446-28b58ae63c01.1ddef54d-beef-4ac2-b2bd-32109fdeac05"
-#> [7] "896707fc-8190-47e4-8446-28b58ae63c01.e668d689-fdf1-467d-a42e-12a7e4bfbc92"
+#> [1] "8ef91537-9a24-495a-9fc5-99ebe23a2811.fb9e0f12-a8bc-482a-9efc-ec219820cde5"
+#> [2] "8ef91537-9a24-495a-9fc5-99ebe23a2811.271cb78f-e0c3-46b3-8689-9ccad8bc9947"
+#> [3] "8ef91537-9a24-495a-9fc5-99ebe23a2811.39d22e90-ecf8-4519-934d-486c63a80b9f"
+#> [4] "157be2e5-ef73-40e6-bbd4-723b42cfe509.a1c220bc-200e-45f7-8f5a-9bd2f8106062"
+#> [5] "157be2e5-ef73-40e6-bbd4-723b42cfe509.e81b1a9f-1e34-4342-9b79-e480e1482c40"
+#> [6] "157be2e5-ef73-40e6-bbd4-723b42cfe509.3faab899-1834-4c17-8d89-78ff00b00dba"
+#> [7] "157be2e5-ef73-40e6-bbd4-723b42cfe509.80d17d0a-36ee-4e31-b9a5-a5cb14fa4678"
 ```
 
 The enqueued run values are cleared after calling
@@ -251,13 +233,13 @@ is called.
 
 ``` r
 simBatch1$addRunValues(parameterValues = c(10, 20))
-#> [1] "bba30b99-f40d-48ae-a0de-e59bc0cabe88"
+#> [1] "cb1d5011-ad45-48ae-87b6-50e0a3fe5f07"
 simBatch1$addRunValues(parameterValues = c(30, 40))
-#> [1] "d4a1dd2d-271e-4f20-b725-2a59b2189918"
+#> [1] "7ba0f6b1-3c0b-41db-95b8-7ca3e3d111d2"
 simBatch2$addRunValues(parameterValues = 500)
-#> [1] "1585af47-4466-4201-998e-b7a82b78469a"
+#> [1] "3325a712-13eb-4d57-8872-d947678a1cd5"
 simBatch2$addRunValues(parameterValues = 200)
-#> [1] "4ef83841-f688-4c54-9c90-3c39d3666dbc"
+#> [1] "f1915113-ac25-4ec0-816f-e83430baac67"
 
 # this run will be much faster as the simulation won't be initialized again.
 # Only the new value will be set as specified when adding new run values with addRunValues

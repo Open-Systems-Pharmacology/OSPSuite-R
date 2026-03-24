@@ -100,6 +100,12 @@ plotPredictedVsObserved(
   :   A `list` with arguments which are passed on to the call
       [`ggplot2::geom_point`](https://ggplot2.tidyverse.org/reference/geom_point.html)
 
+  `geomGuestLineAttributes`
+
+  :   A `list` of arguments passed to
+      [`ggplot2::geom_function`](https://ggplot2.tidyverse.org/reference/geom_function.html)
+      to display guest criteria.
+
   `geomComparisonLineAttributes`
 
   :   A `list` of arguments passed to `ggplot2::hline` or
@@ -110,25 +116,18 @@ plotPredictedVsObserved(
   :   A `list` with arguments which are passed on to the call
       [`ggplot2::geom_hline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)
 
-  `groupAesthetics`
-
-  :   A character vector of aesthetic names used for grouping data
-      points when calculating comparison statistics. Data will be
-      grouped by combinations of these aesthetics before computing
-      counts and proportions within comparison lines. Common grouping
-      aesthetics include `"colour"`, `"fill"`, `"shape"`.
-
   `addRegression`
 
   :   A boolean that activates the insertion of a regression line.
 
-  `xScale`
+  `deltaGuest`
 
-  :   either 'linear' then
-      [`ggplot2::scale_x_continuous()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
-      or 'log' then
-      [`ggplot2::scale_x_log10()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
-      is used
+  :   Numeric value parameter for the Guest function.
+
+  `labelGuestCriteria`
+
+  :   Label used in the legend for guest criteria (default: "guest
+      criteria").
 
   `xScaleArgs`
 
@@ -137,13 +136,12 @@ plotPredictedVsObserved(
       or
       [`ggplot2::scale_x_log10()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
 
-  `yScale`
+  `yScaleArgs`
 
-  :   either 'linear' then
+  :   list of arguments passed to
       [`ggplot2::scale_y_continuous()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
-      or 'log' then
+      or
       [`ggplot2::scale_y_log10()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
-      is used
 
 ## Value
 

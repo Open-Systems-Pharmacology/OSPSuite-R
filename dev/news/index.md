@@ -2,19 +2,6 @@
 
 ## ospsuite (development version)
 
-### Breaking changes
-
-- [`createIndividual()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividual.md)
-  and
-  [`createPopulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createPopulation.md)
-  will not work with models developed prior to version 13. The reason is
-  that in v13, the absorption model has been refined, adding new
-  parameters. To be able to use creation of individuals or populations
-  with earlier models, the user has to re-create the models from
-  snapshot with the latest PK-Sim version. If no original PK-Sim project
-  or snapshot are available, the user should use the latest version 12
-  of the R package.
-
 ### Major changes
 
 - Added five new plotting functions powered by
@@ -45,6 +32,12 @@
 
 ### Minor improvements and bug fixes
 
+- Plotting functions now document all passable `...` arguments via
+  `@inheritDotParams`, improving IDE autocompletion for
+  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md)
+  and
+  [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsAsHistogram.md)
+  ([\#1817](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1817)).
 - Added
   [`dataSetsFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetsFromDataFrame.md)
   function that creates a list of `DataSet` objects from a `data.frame`
@@ -139,14 +132,6 @@
 - Added support for macOS (both Intel and Apple Silicon architectures).
   ([\#1621](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1621))
 
-### Deprecations
-
-- `checkForNegativeValues` parameter in `SimulationRunOptions$new()` is
-  deprecated. Use `sim$solver$checkForNegativeValues` instead. The
-  parameter is still accepted but will issue a deprecation warning. The
-  property has moved from `SimulationRunOptions` to `SolverSettings` to
-  align with .NET binaries changes.
-
 ### Minor improvements and bug fixes
 
 - Added optional `names` parameter to
@@ -183,7 +168,10 @@
 
 ### Breaking changes
 
-- ´{ospsuite}`now requires`{ospsuite.utils}\` version \>= 1.7.0.
+- [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
+  now requires
+  [ospsuite.utils](https://github.com/open-systems-pharmacology/OSPSuite.RUtils)
+  version \>= 1.7.0.
 - Classes `SimulationBatchRunValues` and `SimulationBatchOptions` are
   not exported any more. They should not be used directly.
 
@@ -201,8 +189,10 @@
 
 - Added `showLegendPerDataset` parameter to
   [`plotIndividualTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotIndividualTimeProfile.md)
-  and `plotPupulationTimeProfile()` to optionally display separate
-  legend entries for each dataset. This is experimental.
+  and
+  [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPopulationTimeProfile.md)
+  to optionally display separate legend entries for each dataset. This
+  is experimental.
 - Improved print outputs for all classes
 - Classes do not inherit from the deprecated `Printable` class from the
   [ospsuite.utils](https://github.com/open-systems-pharmacology/OSPSuite.RUtils)
@@ -270,7 +260,7 @@
 
 - The package gains
   [openxlsx](https://ycphs.github.io/openxlsx/index.html) and
-  `{lifecyle}` dependencies.
+  [lifecycle](https://lifecycle.r-lib.org/) dependencies.
 - Added a function
   [`getSteadyState()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getSteadyState.md)
   to calculate steady state values for simulations. This function is of
@@ -324,7 +314,7 @@
 - `DataCombined$toDataFrame()` shows the data in the order as the data
   sets were added and not alphabetically sorted.
 - `DataCombined$removeGroupAssignment()` does not show a warning if
-  specified name is not present in the `DataCombined`.  
+  specified name is not present in the `DataCombined`.
 - `DataCombined$removeGroupAssignment()` does not produce an error if
   specified names are not unique.
 - Fixed Passing font size options from plotConfiguration objects to tlf
@@ -343,8 +333,9 @@
   deprecated and replaced by `xAxisLimits` and `yAxisLimits`. Use them
   to zoom in the plot while preserving all data points. Use
   `xValuesLimits` and `yValuesLimits` to filter out data point outside
-  of these range. More detailed explanations
-  [here](https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples).
+  of these range. More detailed explanations in the [ggplot2
+  coord_cartesian
+  documentation](https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples).
 - `addSimulationResults` and `addDataSets` methods of the `DataCombined`
   class now support an optional `silent` argument which silences the
   checks for data set names. If you expect to replace data sets in

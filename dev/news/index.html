@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9027</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,10 +20,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
-    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -57,16 +54,11 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="ospsuite-development-version">ospsuite (development version)<a class="anchor" aria-label="anchor" href="#ospsuite-development-version"></a></h2>
-<div class="section level3">
-<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
-<ul><li>
-<code><a href="../reference/createIndividual.html">createIndividual()</a></code> and <code><a href="../reference/createPopulation.html">createPopulation()</a></code> will not work with models developed prior to version 13. The reason is that in v13, the absorption model has been refined, adding new parameters. To be able to use creation of individuals or populations with earlier models, the user has to re-create the models from snapshot with the latest PK-Sim version. If no original PK-Sim project or snapshot are available, the user should use the latest version 12 of the R package.</li>
-</ul></div>
 <div class="section level3">
 <h3 id="major-changes-development-version">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-development-version"></a></h3>
 <ul><li><p>Added five new plotting functions powered by <a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">ospsuite.plots</a>: <code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code>, <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code>, <code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>, <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code>, and <code><a href="../reference/plotQuantileQuantilePlot.html">plotQuantileQuantilePlot()</a></code>. These functions accept <code>DataCombined</code> objects or data frames and handle mixed error types and unit conversion directly, without requiring data preprocessing.</p></li>
@@ -74,7 +66,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
-<ul><li>Added <code><a href="../reference/dataSetsFromDataFrame.html">dataSetsFromDataFrame()</a></code> function that creates a list of <code>DataSet</code> objects from a <code>data.frame</code> with the same structure as returned by <code><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame()</a></code>. This is the inverse operation of <code><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame()</a></code> and allows creating <code>DataSet</code> objects from data frames without requiring an Excel file. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1495" class="external-link">#1495</a>)</li>
+<ul><li>Plotting functions now document all passable <code>...</code> arguments via <code>@inheritDotParams</code>, improving IDE autocompletion for <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code> and <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code> (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1817" class="external-link">#1817</a>).</li>
+<li>Added <code><a href="../reference/dataSetsFromDataFrame.html">dataSetsFromDataFrame()</a></code> function that creates a list of <code>DataSet</code> objects from a <code>data.frame</code> with the same structure as returned by <code><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame()</a></code>. This is the inverse operation of <code><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame()</a></code> and allows creating <code>DataSet</code> objects from data frames without requiring an Excel file. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1495" class="external-link">#1495</a>)</li>
 <li>Added <code><a href="../reference/populationFromDataFrame.html">populationFromDataFrame()</a></code> function to create a <code>Population</code> object from a data.frame, the reverse of <code><a href="../reference/populationToDataFrame.html">populationToDataFrame()</a></code>. If no <code>IndividualId</code> column is present, sequential IDs are automatically generated. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/425" class="external-link">#425</a>)</li>
 <li>
 <code><a href="../reference/loadDataSetsFromExcel.html">loadDataSetsFromExcel()</a></code> now accepts a <code>sheets</code> parameter to specify which sheets to load. When <code>sheets = NULL</code> (default), the function uses sheets defined in the importer configuration. If the configuration has no sheets defined, all sheets are loaded. When <code>sheets</code> is a character vector, those specific sheets are loaded, overriding any sheets in the configuration. The <code>importAllSheets</code> parameter is now deprecated and will be removed in version 14.</li>
@@ -118,11 +111,6 @@
 <ul><li>Added support for macOS (both Intel and Apple Silicon architectures). (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1621" class="external-link">#1621</a>)</li>
 </ul></div>
 <div class="section level3">
-<h3 id="deprecations-12-4-0">Deprecations<a class="anchor" aria-label="anchor" href="#deprecations-12-4-0"></a></h3>
-<ul><li>
-<code>checkForNegativeValues</code> parameter in <code>SimulationRunOptions$new()</code> is deprecated. Use <code>sim$solver$checkForNegativeValues</code> instead. The parameter is still accepted but will issue a deprecation warning. The property has moved from <code>SimulationRunOptions</code> to <code>SolverSettings</code> to align with .NET binaries changes.</li>
-</ul></div>
-<div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-12-4-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-12-4-0"></a></h3>
 <ul><li>Added optional <code>names</code> parameter to <code><a href="../reference/dataSetToDataFrame.html">dataSetToTibble()</a></code> function to support custom naming of datasets. This is particularly useful when multiple datasets have the same original name. The naming logic has been moved from the private <code>.dataSetToDataFrame()</code> method in <code>DataCombined</code> to <code><a href="../reference/dataSetToDataFrame.html">dataSetToTibble()</a></code> for better code reuse and maintainability. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1627" class="external-link">#1627</a>)</li>
 </ul></div>
@@ -146,7 +134,8 @@
 <h2 class="pkg-version" data-toc-text="12.3.0" id="ospsuite-1230">ospsuite 12.3.0<a class="anchor" aria-label="anchor" href="#ospsuite-1230"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-12-3-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-12-3-0"></a></h3>
-<ul><li>´{ospsuite}<code>now requires</code>{ospsuite.utils}` version &gt;= 1.7.0.</li>
+<ul><li>
+<a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> now requires <a href="https://github.com/open-systems-pharmacology/OSPSuite.RUtils" class="external-link">ospsuite.utils</a> version &gt;= 1.7.0.</li>
 <li>Classes <code>SimulationBatchRunValues</code> and <code>SimulationBatchOptions</code> are not exported any more. They should not be used directly.</li>
 </ul></div>
 <div class="section level3">
@@ -156,7 +145,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-12-3-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-12-3-0"></a></h3>
-<ul><li>Added <code>showLegendPerDataset</code> parameter to <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code>plotPupulationTimeProfile()</code> to optionally display separate legend entries for each dataset. This is experimental.</li>
+<ul><li>Added <code>showLegendPerDataset</code> parameter to <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code> to optionally display separate legend entries for each dataset. This is experimental.</li>
 <li>Improved print outputs for all classes</li>
 <li>Classes do not inherit from the deprecated <code>Printable</code> class from the <a href="https://github.com/open-systems-pharmacology/OSPSuite.RUtils" class="external-link">ospsuite.utils</a> package.</li>
 <li>Print methods for all classes are now implemented using the <code>ospPrint\*</code> functions introduced in version 1.6.2. of the <a href="https://github.com/open-systems-pharmacology/OSPSuite.RUtils" class="external-link">ospsuite.utils</a> package.</li>
@@ -199,7 +188,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="major-changes-12-0-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-12-0-0"></a></h3>
-<ul><li>The package gains <a href="https://ycphs.github.io/openxlsx/index.html" class="external-link">openxlsx</a> and <code>{lifecyle}</code> dependencies.</li>
+<ul><li>The package gains <a href="https://ycphs.github.io/openxlsx/index.html" class="external-link">openxlsx</a> and <a href="https://lifecycle.r-lib.org/" class="external-link">lifecycle</a> dependencies.</li>
 <li>Added a function <code><a href="../reference/getSteadyState.html">getSteadyState()</a></code> to calculate steady state values for simulations. This function is of particular use for models of endogenous substrates, where changing a parameter value (e.g., the production rate) will change the steady-state values of the substrate. The steady-state is considered to be the last values of the molecules amounts and state variable parameters in the simulation with sufficiently long simulation time, i.e., where the rates of the processes do not (significantly) change. The steady-state is NOT analytically calculated or estimated in any other way than simulating for the given time.</li>
 <li>Added a function <code><a href="../reference/exportSteadyStateToXLS.html">exportSteadyStateToXLS()</a></code> to export steady state values calculated for one simulation using the <code><a href="../reference/getSteadyState.html">getSteadyState()</a></code> to an Excel file that can be imported in MoBi.</li>
 <li>Lower limit of quantification (LLOQ) is plotted as dotted lines for <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code>.</li>
@@ -216,7 +205,7 @@
 <li>
 <code>DataCombined$toDataFrame()</code> shows the data in the order as the data sets were added and not alphabetically sorted.</li>
 <li>
-<code>DataCombined$removeGroupAssignment()</code> does not show a warning if specified name is not present in the <code>DataCombined</code>.<br></li>
+<code>DataCombined$removeGroupAssignment()</code> does not show a warning if specified name is not present in the <code>DataCombined</code>.</li>
 <li>
 <code>DataCombined$removeGroupAssignment()</code> does not produce an error if specified names are not unique.</li>
 <li>Fixed Passing font size options from plotConfiguration objects to tlf objects (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1198" class="external-link">#1198</a>)</li>
@@ -226,7 +215,7 @@
 <li>
 <code>DefaultPlotConfiguration</code> has a new setting: <code>displayLLOQ</code> (default TRUE) to control plotting of LLOQ lines.</li>
 <li>
-<code>DefaultPlotConfiguration</code>’s <code>xLimits</code> and <code>yLimits</code> arguments are deprecated and replaced by <code>xAxisLimits</code> and <code>yAxisLimits</code>. Use them to zoom in the plot while preserving all data points. Use <code>xValuesLimits</code> and <code>yValuesLimits</code> to filter out data point outside of these range. More detailed explanations <a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples" class="external-link">here</a>.</li>
+<code>DefaultPlotConfiguration</code>’s <code>xLimits</code> and <code>yLimits</code> arguments are deprecated and replaced by <code>xAxisLimits</code> and <code>yAxisLimits</code>. Use them to zoom in the plot while preserving all data points. Use <code>xValuesLimits</code> and <code>yValuesLimits</code> to filter out data point outside of these range. More detailed explanations in the <a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples" class="external-link">ggplot2 coord_cartesian documentation</a>.</li>
 <li>
 <code>addSimulationResults</code> and <code>addDataSets</code> methods of the <code>DataCombined</code> class now support an optional <code>silent</code> argument which silences the checks for data set names. If you expect to replace data sets in <code>DataCombined</code> objects repeatedly, consider switching the parameter from the default <code>FALSE</code> value to <code>TRUE</code>.</li>
 <li>

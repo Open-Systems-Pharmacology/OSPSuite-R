@@ -217,6 +217,11 @@ simTree$Organism$Weight
 # Getting all entities located under "Organism|Liver|Periportal|Intracellular"
 entitiesList <- simTree$Organism$Liver$Periportal$Intracellular
 entitiesList
+#> $`Volume of protein container`
+#> $`Volume of protein container`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|Volume of protein container"
+#> 
+#> 
 #> $Volume
 #> $Volume$path
 #> [1] "Organism|Liver|Periportal|Intracellular|Volume"

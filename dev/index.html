@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9027</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,10 +38,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
-    <li><a class="dropdown-item" href="articles/mobi-projects.html">Working with MoBi projects</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
     <li><a class="dropdown-item" href="articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="articles/run-simulation.html">Running a simulation</a></li>
@@ -205,7 +202,7 @@
 <p>In <a href="https://www.rstudio.com/" class="external-link">RStudio IDE</a>, use the <em>Install</em> option in the <em>Packages</em> pane and select <em>Install from -&gt; Package Archive File</em> to install packages from binary files.</p>
 <p><strong>Note</strong>: CRAN dependencies for <a href="https://github.com/Open-Systems-Pharmacology/rsharp/" class="external-link">rSharp</a>, <code>{ospuite.utils}</code>, and <a href="https://github.com/open-systems-pharmacology/tlf-library" class="external-link">tlf</a> were installed in the previous step.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Install rSharp from local file</span></span>
+<code class="sourceCode R"><span><span class="co"># Install rSharp from local file </span></span>
 <span><span class="co"># Replace pathTo_rSharp.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">pathTo_rSharp.zip</span>, repos <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
@@ -248,30 +245,21 @@
 <h1 id="development">Development<a class="anchor" aria-label="anchor" href="#development"></a>
 </h1>
 <div class="section level2">
+<h2 id="development-setup">Development Setup<a class="anchor" aria-label="anchor" href="#development-setup"></a>
+</h2>
+<p>When developing the <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package, you need to prepare platform-specific library files before using <code><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">devtools::load_all()</a></code>. The package uses configure scripts during installation to rename platform-specific DLLs, but <code><a href="https://devtools.r-lib.org/reference/load_all.html" class="external-link">devtools::load_all()</a></code> bypasses this process.</p>
+<p><strong>Run the development setup script:</strong></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">"tools/setup_dev.R"</span><span class="op">)</span></span>
+<span><span class="fu">setup_dev</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><strong>When to run <code>setup_dev()</code>:</strong> - After cloning the repository for the first time - After switching to a different branch - After pulling changes that might affect library files</p>
+<p>The script automatically detects your operating system and renames the appropriate DLL: - <strong>Windows</strong>: Renames <code>System.Data.SQLite.windows_linux.dll</code> → <code>System.Data.SQLite.dll</code> - <strong>Linux</strong>: Renames <code>System.Data.SQLite.windows_linux.dll</code> → <code>System.Data.SQLite.dll</code> - <strong>macOS</strong>: Renames <code>System.Data.SQLite.mac.dll</code> → <code>System.Data.SQLite.dll</code></p>
+</div>
+<div class="section level2">
 <h2 id="embedded-binaries">Embedded binaries<a class="anchor" aria-label="anchor" href="#embedded-binaries"></a>
 </h2>
-<p>The <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package requires shared libraries (binary files) to access PK-Sim and MoBi functionalities.</p>
-<p><strong>Note</strong>: Because <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> contains binary files, it is classified as a binary package and cannot be submitted to CRAN.</p>
-<div class="section level3">
-<h3 id="updating-embedded-binaries">Updating embedded binaries<a class="anchor" aria-label="anchor" href="#updating-embedded-binaries"></a>
-</h3>
-<p>The embedded binaries are built from NuGet packages specified in the DependencyManager project. To update the binaries to a new version:</p>
-<ol style="list-style-type: decimal">
-<li>Open <code>shared/DependencyManager/src/DependencyManager.csproj</code>.</li>
-<li>Update the <code>Version</code> attribute in the <code>PackageReference</code> elements to the desired version numbers.</li>
-<li>Commit and push the changes to a branch.</li>
-<li>The GitHub Actions workflow defined in <code>.github/workflows/build-libraries.yaml</code> automatically:
-<ul>
-<li>Builds the DependencyManager project, which downloads the specified NuGet packages</li>
-<li>Extracts the required binary files and dependencies</li>
-<li>Copies them to the <code>inst/lib/</code> directory</li>
-<li>Commits the updated binaries to the branch</li>
-</ul>
-</li>
-</ol>
-<p>No manual build steps are required. The workflow handles the entire process automatically when changes to the <code>.csproj</code> file are pushed.</p>
-<p><strong>Note:</strong> If the <code>DependencyManager.csproj</code> file is not modified, the build-libraries workflow step is automatically skipped.</p>
-</div>
+<p>The <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> package requires shared libraries to access PK-Sim functionality. To obtain the latest libraries (<strong>.dll</strong> on Windows or <strong>.so</strong> on Linux), run the <code>update_core_files.R</code> script included with this package.</p>
+<p>Because <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> contains binary files, it is classified as a binary package and cannot be submitted to CRAN.</p>
 </div>
 <div class="section level2">
 <h2 id="versioning">Versioning<a class="anchor" aria-label="anchor" href="#versioning"></a>

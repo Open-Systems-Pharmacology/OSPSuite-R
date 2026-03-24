@@ -224,7 +224,7 @@ print(sensitivities)
 #>   • PK-Parameter: AUC_inf
 #>   • Output path: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral
 #>   Venous Blood)
-#>   • Value: 0.00465402182994968
+#>   • Value: 0.00470852808265833
 ```
 
 The value `-1` for the sensitivity of “AUC_inf” of the output
