@@ -183,7 +183,7 @@ addResidualColumn <- function(
     label <- "residuals\nlog(predicted) - log(observed)"
   } else {
     # ratio
-    nonPositivePred <- !is.na(predVals) & predVals == 0
+    nonPositivePred <- !is.na(predVals) & predVals <= 0
     nNonPositive <- sum(nonPositivePred, na.rm = TRUE)
     residualVals <- obsVals / predVals
     residualVals[nonPositivePred] <- NaN
