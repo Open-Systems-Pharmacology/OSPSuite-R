@@ -2761,7 +2761,7 @@
     },
     "ospsuite.plots": {
       "Package": "ospsuite.plots",
-      "Version": "1.0.1.9012",
+      "Version": "1.0.1.9013",
       "Source": "git",
       "Type": "Package",
       "Title": "Library for standardized graphs",
@@ -2821,7 +2821,7 @@
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "OSPSuite.Plots",
       "RemoteRef": "main",
-      "RemoteSha": "36b72afc12e7c04612209e3d87f67dc972346487",
+      "RemoteSha": "541e91680ed71dcf71d3afcbc8fdbb55ae676ebe",
       "Remotes": "ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils"
     },
     "ospsuite.utils": {
@@ -3628,7 +3628,7 @@
     },
     "ragg": {
       "Package": "ragg",
-      "Version": "1.5.1",
+      "Version": "1.5.2",
       "Source": "Repository",
       "Type": "Package",
       "Title": "Graphic Devices Based on AGG",
