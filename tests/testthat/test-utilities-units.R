@@ -770,3 +770,51 @@ test_that("Unit conversion works with unitless as empty string", {
     12
   )
 })
+
+# .extractMostFrequentUnit ----
+
+test_that(".extractMostFrequentUnit returns the most frequent observed unit", {
+  d <- data.table::data.table(
+    group = c("A", "B", "B"),
+    name = c("Sample1", "Sample1", "Sample2"),
+    yUnit = c("mg", "g", "g"),
+    xUnit = c("h", "min", "min"),
+    dataType = c("observed", "simulated", "simulated")
+  )
+  expect_equal(.extractMostFrequentUnit(d, "yUnit"), "mg")
+})
+
+test_that(".extractMostFrequentUnit falls back to simulated when no observed", {
+  d <- data.table::data.table(
+    group = c("A", "B"), name = c("Sample1", "Sample2"),
+    yUnit = c("g", "g"), xUnit = c("min", "min"),
+    dataType = c("simulated", "simulated")
+  )
+  expect_equal(.extractMostFrequentUnit(d, "xUnit"), "min")
+})
+
+test_that(".extractMostFrequentUnit handles all NA units", {
+  d <- data.table::data.table(
+    group = c("A", "B"), name = c("Sample1", "Sample2"),
+    yUnit = c(NA_character_, NA_character_), xUnit = c("h", "h"),
+    dataType = c("observed", "observed")
+  )
+  expect_no_error(result <- .extractMostFrequentUnit(d, "yUnit"))
+  expect_true(is.na(result))
+})
+
+test_that(".extractMostFrequentUnit prioritizes observed when frequencies are tied", {
+  d <- data.table::data.table(
+    group = c("A", "B", "C", "D"),
+    name = c("Obs1", "Obs2", "Sim1", "Sim2"),
+    yUnit = c("mg", "mg", "g", "g"),
+    xUnit = c("h", "h", "h", "h"),
+    dataType = c("observed", "observed", "simulated", "simulated")
+  )
+  expect_equal(.extractMostFrequentUnit(d, "yUnit"), "mg")
+})
+
+test_that(".extractMostFrequentUnit uses naive count without dataType column", {
+  d <- data.frame(xUnit = c("min", "min", "h"), yUnit = c("mg", "g", "g"))
+  expect_equal(.extractMostFrequentUnit(d, "yUnit"), "g")
+})

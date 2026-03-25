@@ -205,62 +205,6 @@ test_that("It constructs mapping correctly for time profiles", {
   )
 })
 
-# getMostFrequentUnit ----
-
-# Sample data for testing
-sampleData <- data.table(
-  group = c("A", "B", "B"),
-  name = c("Sample1", "Sample1", "Sample2"),
-  yUnit = c("mg", "g", "g"),
-  xUnit = c("h", "min", "min"),
-  dataType = c("observed", "simulated", "simulated")
-)
-
-test_that("It returns the most frequent observed unit", {
-  result <- .getMostFrequentUnit(sampleData, "yUnit")
-  expect_equal(result, "mg")
-})
-
-test_that("It returns the most frequent simulated unit when no observed units are present", {
-  dataNoObserved <- data.table(
-    group = c("A", "B"),
-    name = c("Sample1", "Sample2"),
-    yUnit = c("g", "g"),
-    xUnit = c("min", "min"),
-    dataType = c("simulated", "simulated")
-  )
-
-  result <- .getMostFrequentUnit(dataNoObserved, "xUnit")
-  expect_equal(result, "min") # Expected to return "min" as the only available unit
-})
-
-test_that("It handles all NA values", {
-  naData <- data.table::data.table(
-    group = c("A", "B"),
-    name = c("Sample1", "Sample2"),
-    yUnit = c(NA_character_, NA_character_),
-    xUnit = c("h", "h"),
-    dataType = c("observed", "observed")
-  )
-
-  expect_no_error(result <- .getMostFrequentUnit(naData, "yUnit"))
-  expect_true(is.na(result))
-})
-
-test_that("It prioritizes observed when frequencies are tied", {
-  mixedData <- data.table(
-    group = c("A", "B", "C", "D"),
-    name = c("Obs1", "Obs2", "Sim1", "Sim2"),
-    yUnit = c("mg", "mg", "g", "g"),
-    xUnit = c("h", "h", "h", "h"),
-    dataType = c("observed", "observed", "simulated", "simulated")
-  )
-
-  result <- .getMostFrequentUnit(mixedData, "yUnit")
-
-  expect_equal(result, "mg")
-})
-
 # .constructMetDataForTimeProfile ---------
 
 test_that("It constructs metadata correctly for single y-unit", {
