@@ -814,6 +814,17 @@ test_that(".extractMostFrequentUnit prioritizes observed when frequencies are ti
   expect_equal(.extractMostFrequentUnit(d, "yUnit"), "mg")
 })
 
+test_that(".extractMostFrequentUnit counts per dataset, not per time point", {
+  d <- data.table::data.table(
+    group = rep(c("A", "A"), c(3, 100)),
+    name = rep(c("obs1", "sim1"), c(3, 100)),
+    dataType = rep(c("observed", "simulated"), c(3, 100)),
+    yUnit = rep(c("mg/l", "µmol/l"), c(3, 100)),
+    xUnit = "h"
+  )
+  expect_equal(.extractMostFrequentUnit(d, "yUnit"), "mg/l")
+})
+
 test_that(".extractMostFrequentUnit uses naive count without dataType column", {
   d <- data.frame(xUnit = c("min", "min", "h"), yUnit = c("mg", "g", "g"))
   expect_equal(.extractMostFrequentUnit(d, "yUnit"), "g")
