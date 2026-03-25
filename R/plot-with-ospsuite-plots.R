@@ -138,6 +138,9 @@ plotTimeProfile <- function(
     quantiles = quantiles,
     nsd = nsd
   )
+  if (is.null(plotData)) {
+    return(NULL)
+  }
   # validate field used only for timeprofile
   checkmate::assertNames(names(plotData), must.include = c("xUnit"))
 
@@ -261,6 +264,9 @@ plotPredictedVsObserved <- function(
     yUnit = yUnit,
     scaling = xyScale
   )
+  if (is.null(plotData)) {
+    return(NULL)
+  }
 
   # Capture additional arguments
   additionalArgs <- list(...)
@@ -398,6 +404,9 @@ plotResidualsVsCovariate <- function(
     yUnit = yUnit,
     scaling = residualScale
   )
+  if (is.null(plotData)) {
+    return(NULL)
+  }
 
   # Capture additional arguments
   additionalArgs <- list(...)
@@ -486,6 +495,9 @@ plotResidualsAsHistogram <- function(
     yUnit = yUnit,
     scaling = residualScale
   )
+  if (is.null(plotData)) {
+    return(NULL)
+  }
 
   # Capture additional arguments
   additionalArgs <- list(...)
@@ -563,6 +575,9 @@ plotQuantileQuantilePlot <- function(
     yUnit = yUnit,
     scaling = residualScale
   )
+  if (is.null(plotData)) {
+    return(NULL)
+  }
 
   # Capture additional arguments
   additionalArgs <- list(...)
@@ -630,7 +645,8 @@ plotQuantileQuantilePlot <- function(
       data.table::setDT()
 
     if (nrow(plotData) == 0) {
-      stop(messages$plotNoDataAvailable())
+      warning(messages$plotNoDataAvailable())
+      return(NULL)
     }
   } else {
     validateIsOfType(plotData, "data.frame", nullAllowed = FALSE)
@@ -663,7 +679,8 @@ plotQuantileQuantilePlot <- function(
       scaling = scaling
     )
     if (is.null(plotData) || nrow(plotData) == 0) {
-      stop(messages$plotNoDataAvailable())
+      warning(messages$plotNoDataAvailable())
+      return(NULL)
     }
     plotData <- data.table::setDT(plotData)
     plotData <- plotData |>
@@ -708,7 +725,8 @@ plotQuantileQuantilePlot <- function(
   }
 
   if (nrow(plotData) == 0) {
-    stop(messages$plotNoDataAvailable())
+    warning(messages$plotNoDataAvailable())
+    return(NULL)
   }
 
   return(plotData)
