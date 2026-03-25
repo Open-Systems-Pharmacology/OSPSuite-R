@@ -792,8 +792,9 @@ ospUnits <- NULL
 .extractMostFrequentUnit <- function(data, unitColumn) {
   dt <- data.table::as.data.table(data)
 
-  if ("dataType" %in% names(dt)) {
-    dedup <- unique(dt, by = c("group", "name", "dataType", unitColumn))
+  dedupCols <- c("group", "name", "dataType")
+  if (all(dedupCols %in% names(dt))) {
+    dedup <- unique(dt, by = c(dedupCols, unitColumn))
 
     observedUnits <- dedup[dataType == "observed", .N, by = c(unitColumn)]
     if (nrow(observedUnits) > 0) {
@@ -806,8 +807,8 @@ ospUnits <- NULL
     return(simulatedUnits[[unitColumn]][1])
   }
 
-  # Fallback: no dataType column — count rows, pick the most frequent unit.
+  # Fallback: naive row count with alphabetical tiebreaker.
   unitCounts <- dt[, .N, by = c(unitColumn)]
-  data.table::setorderv(unitCounts, "N", order = -1)
+  data.table::setorderv(unitCounts, c("N", unitColumn), order = c(-1, 1))
   return(unitCounts[[unitColumn]][1])
 }
