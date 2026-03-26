@@ -80,6 +80,7 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ValuePoint.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addOutputInterval.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addOutputs.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addResidualColumn.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addUserDefinedPKParameter.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/allAvailableDimensions.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/allPKParameterNames.html</loc></url>
@@ -107,7 +108,6 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-encodeUnit.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-expandPath.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-extractAggregatedSimulatedData.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-extractMostFrequentUnit.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-extractResidualsToTibble.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-gatherFiles.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-geoRange.html</loc></url>

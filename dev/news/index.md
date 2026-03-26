@@ -32,6 +32,20 @@
 
 ### Minor improvements and bug fixes
 
+- Updated
+  [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)
+  option key references to match camelCase naming convention (e.g.,
+  `watermarkEnabled`, `defaultPercentiles`)
+  ([\#1818](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1818)).
+- Added
+  [`addResidualColumn()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addResidualColumn.md)
+  to unify residual computation across
+  [`calculateResiduals()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/calculateResiduals.md)
+  and the residual plot functions. Supports `"log"`, `"linear"` (or
+  `"lin"`), and `"ratio"` scaling. For log scaling, zero or negative
+  values now produce `NaN` with a warning instead of an epsilon-based
+  approximation
+  ([\#1713](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1713)).
 - Plotting functions now document all passable `...` arguments via
   `@inheritDotParams`, improving IDE autocompletion for
   [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md)

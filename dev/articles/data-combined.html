@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9027</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9029</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -447,35 +447,41 @@ simulated results. Simulation results interpolated if no simulated value
 is available for a certain observed time point. Observed data beyond
 simulated time is ignored, i.e., no <em>extrapolation</em> is
 performed.</p>
-<p>There are two ways to calculate the distance (residuals) - linear and
-logarithmic - specified by the <code>scaling</code> argument. For linear
-scaling (<code>scaling = tlf::Scaling$lin</code>):</p>
+<p>There are three ways to calculate the distance (residuals) - linear,
+logarithmic, and ratio - specified by the <code>scaling</code> argument.
+For linear scaling (<code>scaling = "linear"</code>):</p>
 <blockquote>
 <p>Residuals are calculated as: Simulation value - Observed value. This
 means that the residuals are defined by absolute differences.</p>
 </blockquote>
-<p>For logarithmic scaling
-(<code>scaling = tlf::Scaling$log</code>):</p>
+<p>For logarithmic scaling (<code>scaling = "log"</code>):</p>
 <blockquote>
 <p>Residuals are calculated as: log(Simulation value) - log(Observed
-value) = log (Simulation Value / Observed Value). This means that the
-ratio of values is considered which is independent of the magnitude of
-the value. But for very small observed values, in particular close to 0
-values, this can lead to problems, because log(10E-N) = -N can becomes
-large.</p>
+value) = log(Simulation Value / Observed Value). Data points where the
+observed or predicted value is zero or negative cannot be
+log-transformed; these points are excluded from the output and a warning
+is issued.</p>
+</blockquote>
+<p>For ratio scaling (<code>scaling = "ratio"</code>):</p>
+<blockquote>
+<p>Residuals are calculated as: Observed value / Simulation value.</p>
 </blockquote>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Linear residuals</span></span>
-<span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">Scaling</a></span><span class="op">$</span><span class="va">lin</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span></span>
-<span><span class="co">#&gt;  [1]  9.49304275 -0.14538952  0.17965548  1.84599976  3.52552442  3.64160094</span></span>
-<span><span class="co">#&gt;  [7]  3.15654735  2.38392729  1.48703530  0.50532597  0.08009793 -0.14892803</span></span>
-<span><span class="co">#&gt; [13] -0.29395086</span></span>
+<span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span></span>
+<span><span class="co">#&gt;  [1]  2.13792816 -0.03274317  0.04046021  0.41573761  0.79398335  0.82012495</span></span>
+<span><span class="co">#&gt;  [7]  0.71088603  0.53688426  0.33489522  0.11380446  0.01803885 -0.03354008</span></span>
+<span><span class="co">#&gt; [13] -0.06620067</span></span>
+<span><span class="co">#&gt; attr(,"label")</span></span>
+<span><span class="co">#&gt; [1] "residuals\npredicted - observed"</span></span>
 <span></span>
 <span><span class="co"># Logarithmic residuals</span></span>
-<span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">Scaling</a></span><span class="op">$</span><span class="va">log</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span></span>
+<span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span></span>
 <span><span class="co">#&gt;  [1]  0.239719620 -0.007286928  0.012618336  0.155242835  0.384912455</span></span>
 <span><span class="co">#&gt;  [6]  0.482210178  0.578799737  0.577914238  0.647582143  0.457679775</span></span>
-<span><span class="co">#&gt; [11]  0.137321647 -0.418715711 -2.305882655</span></span></code></pre></div>
+<span><span class="co">#&gt; [11]  0.137321647 -0.418715711 -2.305882655</span></span>
+<span><span class="co">#&gt; attr(,"label")</span></span>
+<span><span class="co">#&gt; [1] "residuals\nlog(predicted) - log(observed)"</span></span></code></pre></div>
 <p>To quickly calculate the total error of the
 <code>DataCombined</code>, one can sum up the absolute values of the
 residuals:</p>
@@ -484,7 +490,7 @@ residuals:</p>
 <span><span class="va">totalError</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">Scaling</a></span><span class="op">$</span><span class="va">lin</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">totalError</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 26.88703</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 6.055227</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visualizations-with-datacombined">Visualizations with <code>DataCombined</code><a class="anchor" aria-label="anchor" href="#visualizations-with-datacombined"></a>

@@ -54,6 +54,7 @@ these dimension, the unit conversion will fail.
 
 Other data-combined:
 [`DataCombined`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DataCombined.md),
+[`addResidualColumn()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addResidualColumn.md),
 [`calculateResiduals()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/calculateResiduals.md)
 
 ## Examples

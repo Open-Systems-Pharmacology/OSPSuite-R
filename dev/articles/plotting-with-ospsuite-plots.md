@@ -40,8 +40,8 @@ steps:
 1.  **Set default plotting options** using
     [`ospsuite.plots::setDefaults()`](https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/setDefaults.html)
 2.  **Configure the watermark option** using
-    `options(ospsuite.plots.watermark_enabled = TRUE)` or
-    `options(ospsuite.plots.watermark_enabled = FALSE)`
+    `options(ospsuite.plots.watermarkEnabled = TRUE)` or
+    `options(ospsuite.plots.watermarkEnabled = FALSE)`
 
 ``` r
 library(ospsuite)
@@ -51,7 +51,7 @@ library(ospsuite)
 ospsuite.plots::setDefaults()
 
 # Enable watermark for plots (optional)
-options(ospsuite.plots.watermark_enabled = TRUE)
+options(ospsuite.plots.watermarkEnabled = TRUE)
 ```
 
 The `setDefaults()` function initializes various plotting defaults that

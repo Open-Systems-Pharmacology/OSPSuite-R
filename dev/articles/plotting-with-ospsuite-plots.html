@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9027</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9029</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,8 +132,8 @@ two key steps:</p>
 </li>
 <li>
 <strong>Configure the watermark option</strong> using
-<code>options(ospsuite.plots.watermark_enabled = TRUE)</code> or
-<code>options(ospsuite.plots.watermark_enabled = FALSE)</code>
+<code>options(ospsuite.plots.watermarkEnabled = TRUE)</code> or
+<code>options(ospsuite.plots.watermarkEnabled = FALSE)</code>
 </li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -144,7 +144,7 @@ two key steps:</p>
 <span><span class="fu">ospsuite.plots</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/setDefaults.html" class="external-link">setDefaults</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Enable watermark for plots (optional)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ospsuite.plots.watermark_enabled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ospsuite.plots.watermarkEnabled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>setDefaults()</code> function initializes various plotting
 defaults that ensure consistent appearance across all plots. The
 watermark option allows you to add a watermark to your plots.<br>

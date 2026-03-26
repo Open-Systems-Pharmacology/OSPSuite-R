@@ -20,9 +20,10 @@ calculateResiduals(dataCombined, scaling, xUnit = NULL, yUnit = NULL)
 - scaling:
 
   A character specifying the scaling method for residual calculation.
-  Must be either `tlf::Scaling$lin` for linear residuals (simulated -
-  observed) or `tlf::Scaling$log` for logarithmic residuals
-  (log(simulated) - log(observed)).
+  Accepted values are `"lin"` / `"linear"` for linear residuals
+  (simulated - observed), `"log"` for logarithmic residuals
+  (log(simulated) - log(observed)), or `"ratio"` for the ratio of
+  observed to simulated (observed / simulated).
 
 - xUnit, yUnit:
 
@@ -131,13 +132,18 @@ The function performs the following steps to calculate residuals:
 4.  **Residual Calculation**: Residuals are computed based on the
     scaling method:
 
-    - **Linear scaling** (`tlf::Scaling$lin`): \$\$residual =
+    - **Linear scaling** (`"lin"` / `"linear"`): \$\$residual =
       y\_{simulated} - y\_{observed}\$\$
 
-    - **Logarithmic scaling** (`tlf::Scaling$log`): \$\$residual =
-      \log(y\_{simulated}) - \log(y\_{observed})\$\$ Note: For log
-      scaling, a small epsilon value is used to handle zero or near-zero
-      values safely.
+    - **Logarithmic scaling** (`"log"`): \$\$residual =
+      \log(y\_{simulated}) - \log(y\_{observed})\$\$ Data points where
+      the observed or predicted value is zero or negative produce
+      undefined logarithms. These residuals are set to `NaN` and a
+      warning is emitted reporting the number of such points. The
+      affected rows are excluded from the returned data frame.
+
+    - **Ratio scaling** (`"ratio"`): \$\$residual = y\_{observed} /
+      y\_{simulated}\$\$
 
 ### Important Notes
 
@@ -147,7 +153,7 @@ The function performs the following steps to calculate residuals:
 - Interpolation does not extrapolate beyond the range of simulated data
   (returns NA for observed points outside simulated time range)
 
-- NA residual values are automatically filtered from the output
+- NA and NaN residual values are automatically filtered from the output
 
 - When multiple observed/simulated datasets exist in a group, all
   possible pairs are evaluated
@@ -156,6 +162,7 @@ The function performs the following steps to calculate residuals:
 
 Other data-combined:
 [`DataCombined`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DataCombined.md),
+[`addResidualColumn()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addResidualColumn.md),
 [`convertUnits()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/convertUnits.md)
 
 ## Examples
@@ -188,23 +195,23 @@ myDataCombined$addSimulationResults(
 # Add observed data set
 myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 
-calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)
+calculateResiduals(myDataCombined, scaling = "linear")
 #> # A tibble: 13 × 15
 #>    group      name  nameSimulated xValues xUnit xDimension yValuesObserved yUnit
 #>    <chr>      <chr> <chr>           <dbl> <chr> <chr>                <dbl> <chr>
-#>  1 Aciclovir… Verg… Organism|Per…    13.4 min   Time                35.0   µmol…
-#>  2 Aciclovir… Verg… Organism|Per…    29.1 min   Time                20.0   µmol…
-#>  3 Aciclovir… Verg… Organism|Per…    44.7 min   Time                14.1   µmol…
-#>  4 Aciclovir… Verg… Organism|Per…    58.1 min   Time                11.0   µmol…
-#>  5 Aciclovir… Verg… Organism|Per…    87.2 min   Time                 7.51  µmol…
-#>  6 Aciclovir… Verg… Organism|Per…   119.  min   Time                 5.88  µmol…
-#>  7 Aciclovir… Verg… Organism|Per…   179.  min   Time                 4.03  µmol…
-#>  8 Aciclovir… Verg… Organism|Per…   239.  min   Time                 3.05  µmol…
-#>  9 Aciclovir… Verg… Organism|Per…   360   min   Time                 1.63  µmol…
-#> 10 Aciclovir… Verg… Organism|Per…   541.  min   Time                 0.871 µmol…
-#> 11 Aciclovir… Verg… Organism|Per…   720   min   Time                 0.544 µmol…
-#> 12 Aciclovir… Verg… Organism|Per…   901.  min   Time                 0.435 µmol…
-#> 13 Aciclovir… Verg… Organism|Per…  1440   min   Time                 0.326 µmol…
+#>  1 Aciclovir… Verg… Organism|Per…   0.224 h     Time                7.89   mg/l 
+#>  2 Aciclovir… Verg… Organism|Per…   0.484 h     Time                4.51   mg/l 
+#>  3 Aciclovir… Verg… Organism|Per…   0.745 h     Time                3.19   mg/l 
+#>  4 Aciclovir… Verg… Organism|Per…   0.969 h     Time                2.48   mg/l 
+#>  5 Aciclovir… Verg… Organism|Per…   1.45  h     Time                1.69   mg/l 
+#>  6 Aciclovir… Verg… Organism|Per…   1.98  h     Time                1.32   mg/l 
+#>  7 Aciclovir… Verg… Organism|Per…   2.98  h     Time                0.907  mg/l 
+#>  8 Aciclovir… Verg… Organism|Per…   3.99  h     Time                0.686  mg/l 
+#>  9 Aciclovir… Verg… Organism|Per…   6     h     Time                0.368  mg/l 
+#> 10 Aciclovir… Verg… Organism|Per…   9.02  h     Time                0.196  mg/l 
+#> 11 Aciclovir… Verg… Organism|Per…  12     h     Time                0.123  mg/l 
+#> 12 Aciclovir… Verg… Organism|Per…  15.0   h     Time                0.0980 mg/l 
+#> 13 Aciclovir… Verg… Organism|Per…  24     h     Time                0.0735 mg/l 
 #> # ℹ 7 more variables: yDimension <chr>, yErrorValues <dbl>, yErrorType <chr>,
 #> #   yErrorUnit <chr>, lloq <dbl>, yValuesSimulated <dbl>, residualValues <dbl>
 ```

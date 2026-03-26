@@ -17,6 +17,7 @@ The molecular weight (in `molWeight` column) is in `g/mol` units.
 ## See also
 
 Other data-combined:
+[`addResidualColumn()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addResidualColumn.md),
 [`calculateResiduals()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/calculateResiduals.md),
 [`convertUnits()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/convertUnits.md)
 

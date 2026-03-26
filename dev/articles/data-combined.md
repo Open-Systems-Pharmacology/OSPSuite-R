@@ -399,34 +399,41 @@ results interpolated if no simulated value is available for a certain
 observed time point. Observed data beyond simulated time is ignored,
 i.e., no *extrapolation* is performed.
 
-There are two ways to calculate the distance (residuals) - linear and
-logarithmic - specified by the `scaling` argument. For linear scaling
-(`scaling = tlf::Scaling$lin`):
+There are three ways to calculate the distance (residuals) - linear,
+logarithmic, and ratio - specified by the `scaling` argument. For linear
+scaling (`scaling = "linear"`):
 
 > Residuals are calculated as: Simulation value - Observed value. This
 > means that the residuals are defined by absolute differences.
 
-For logarithmic scaling (`scaling = tlf::Scaling$log`):
+For logarithmic scaling (`scaling = "log"`):
 
 > Residuals are calculated as: log(Simulation value) - log(Observed
-> value) = log (Simulation Value / Observed Value). This means that the
-> ratio of values is considered which is independent of the magnitude of
-> the value. But for very small observed values, in particular close to
-> 0 values, this can lead to problems, because log(10E-N) = -N can
-> becomes large.
+> value) = log(Simulation Value / Observed Value). Data points where the
+> observed or predicted value is zero or negative cannot be
+> log-transformed; these points are excluded from the output and a
+> warning is issued.
+
+For ratio scaling (`scaling = "ratio"`):
+
+> Residuals are calculated as: Observed value / Simulation value.
 
 ``` r
 # Linear residuals
-calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues
-#>  [1]  9.49304275 -0.14538952  0.17965548  1.84599976  3.52552442  3.64160094
-#>  [7]  3.15654735  2.38392729  1.48703530  0.50532597  0.08009793 -0.14892803
-#> [13] -0.29395086
+calculateResiduals(myDataCombined, scaling = "linear")$residualValues
+#>  [1]  2.13792816 -0.03274317  0.04046021  0.41573761  0.79398335  0.82012495
+#>  [7]  0.71088603  0.53688426  0.33489522  0.11380446  0.01803885 -0.03354008
+#> [13] -0.06620067
+#> attr(,"label")
+#> [1] "residuals\npredicted - observed"
 
 # Logarithmic residuals
-calculateResiduals(myDataCombined, scaling = tlf::Scaling$log)$residualValues
+calculateResiduals(myDataCombined, scaling = "log")$residualValues
 #>  [1]  0.239719620 -0.007286928  0.012618336  0.155242835  0.384912455
 #>  [6]  0.482210178  0.578799737  0.577914238  0.647582143  0.457679775
 #> [11]  0.137321647 -0.418715711 -2.305882655
+#> attr(,"label")
+#> [1] "residuals\nlog(predicted) - log(observed)"
 ```
 
 To quickly calculate the total error of the `DataCombined`, one can sum
@@ -437,7 +444,7 @@ up the absolute values of the residuals:
 totalError <- sum(abs(calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues))
 
 print(totalError)
-#> [1] 26.88703
+#> [1] 6.055227
 ```
 
 ## Visualizations with `DataCombined`

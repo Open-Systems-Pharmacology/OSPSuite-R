@@ -166,6 +166,9 @@
   Adds the quantities as output into the `simulation`. The quantities
   can either be specified using explicit instances or using paths.
 
+- [`addResidualColumn()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addResidualColumn.md)
+  : Add a residual column to paired observed/predicted data
+
 - [`addUserDefinedPKParameter()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addUserDefinedPKParameter.md)
   : Adds and returns a User-Defined PK-Parameter to the managed list of
   PK-Parameters
