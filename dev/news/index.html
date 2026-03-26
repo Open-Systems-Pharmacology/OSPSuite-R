@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9029</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.1.9030</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
-<ul><li>Updated <a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">ospsuite.plots</a> option key references to match camelCase naming convention (e.g., <code>watermarkEnabled</code>, <code>defaultPercentiles</code>) (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1818" class="external-link">#1818</a>).</li>
+<ul><li>Plotting functions based on {ospsuite.plots} now produce a warning and return <code>NULL</code> when <code>DataCombined</code> has no plottable entries (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1709" class="external-link">#1709</a>).</li>
+<li>Updated <a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">ospsuite.plots</a> option key references to match camelCase naming convention (e.g., <code>watermarkEnabled</code>, <code>defaultPercentiles</code>) (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1818" class="external-link">#1818</a>).</li>
 <li>Added <code><a href="../reference/addResidualColumn.html">addResidualColumn()</a></code> to unify residual computation across <code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code> and the residual plot functions. Supports <code>"log"</code>, <code>"linear"</code> (or <code>"lin"</code>), and <code>"ratio"</code> scaling. For log scaling, zero or negative values now produce <code>NaN</code> with a warning instead of an epsilon-based approximation (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1713" class="external-link">#1713</a>).</li>
 <li>Plotting functions now document all passable <code>...</code> arguments via <code>@inheritDotParams</code>, improving IDE autocompletion for <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code> and <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code> (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1817" class="external-link">#1817</a>).</li>
 <li>Added <code><a href="../reference/dataSetsFromDataFrame.html">dataSetsFromDataFrame()</a></code> function that creates a list of <code>DataSet</code> objects from a <code>data.frame</code> with the same structure as returned by <code><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame()</a></code>. This is the inverse operation of <code><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame()</a></code> and allows creating <code>DataSet</code> objects from data frames without requiring an Excel file. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1495" class="external-link">#1495</a>)</li>
