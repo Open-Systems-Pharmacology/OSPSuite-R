@@ -77,6 +77,7 @@ convertUnits(
 \seealso{
 Other data-combined: 
 \code{\link{DataCombined}},
+\code{\link{addResidualColumn}()},
 \code{\link{calculateResiduals}()}
 }
 \concept{data-combined}
