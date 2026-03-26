@@ -10,10 +10,11 @@ calculateResiduals(dataCombined, scaling, xUnit = NULL, yUnit = NULL)
 \item{dataCombined}{A single instance of \code{DataCombined} class containing both
 observed and simulated datasets to be compared.}
 
-\item{scaling}{A character specifying the scaling method for residual calculation.
-Must be either \code{tlf::Scaling$lin} for linear residuals
-(simulated - observed) or \code{tlf::Scaling$log} for logarithmic residuals
-(log(simulated) - log(observed)).}
+\item{scaling}{A character specifying the scaling method for residual
+calculation.  Accepted values are \code{"lin"} / \code{"linear"} for linear residuals
+(simulated - observed), \code{"log"} for logarithmic residuals
+(log(simulated) - log(observed)), or \code{"ratio"} for the ratio of observed
+to simulated (observed / simulated).}
 
 \item{xUnit, yUnit}{Target units for \code{xValues} and \code{yValues}, respectively. If
 not specified (\code{NULL}), the first existing unit in the respective
@@ -70,12 +71,16 @@ where observations exist:
 }
 \item \strong{Residual Calculation}: Residuals are computed based on the scaling method:
 \itemize{
-\item \strong{Linear scaling} (\code{tlf::Scaling$lin}):
+\item \strong{Linear scaling} (\code{"lin"} / \code{"linear"}):
 \deqn{residual = y_{simulated} - y_{observed}}
-\item \strong{Logarithmic scaling} (\code{tlf::Scaling$log}):
+\item \strong{Logarithmic scaling} (\code{"log"}):
 \deqn{residual = \log(y_{simulated}) - \log(y_{observed})}
-Note: For log scaling, a small epsilon value is used to handle zero or
-near-zero values safely.
+Data points where the observed or predicted value is zero or negative
+produce undefined logarithms.  These residuals are set to \code{NaN} and a
+warning is emitted reporting the number of such points.  The affected
+rows are excluded from the returned data frame.
+\item \strong{Ratio scaling} (\code{"ratio"}):
+\deqn{residual = y_{observed} / y_{simulated}}
 }
 }
 }
@@ -86,7 +91,7 @@ near-zero values safely.
 for the same group
 \item Interpolation does not extrapolate beyond the range of simulated data
 (returns NA for observed points outside simulated time range)
-\item NA residual values are automatically filtered from the output
+\item NA and NaN residual values are automatically filtered from the output
 \item When multiple observed/simulated datasets exist in a group, all possible
 pairs are evaluated
 }
@@ -120,11 +125,12 @@ myDataCombined$addSimulationResults(
 # Add observed data set
 myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 
-calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)
+calculateResiduals(myDataCombined, scaling = "linear")
 }
 \seealso{
 Other data-combined: 
 \code{\link{DataCombined}},
+\code{\link{addResidualColumn}()},
 \code{\link{convertUnits}()}
 }
 \concept{data-combined}

@@ -84,6 +84,121 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
   return(combinedData)
 }
 
+#' Add a residual column to paired observed/predicted data
+#'
+#' @description
+#' Calculates residuals between observed and predicted values and adds them as
+#' a new column to the provided data frame or data table. The calculation
+#' supports three scaling methods: `"log"`, `"linear"` (alias `"lin"`), and
+#' `"ratio"`.
+#'
+#' @details
+#' ## Scaling Methods
+#'
+#' - **`"linear"` / `"lin"`**: Absolute residuals as
+#'   \eqn{residual = predicted - observed}.
+#' - **`"log"`**: Log-scale residuals as
+#'   \eqn{residual = \log(predicted) - \log(observed)}.
+#'   Data points where the observed or predicted value is zero or negative
+#'   produce undefined logarithms; these are set to `NaN` and a warning is
+#'   issued reporting the number of such points.
+#' - **`"ratio"`**: Ratio of observed to predicted as
+#'   \eqn{residual = observed / predicted}.
+#'   A warning is issued when predicted values are zero or negative.
+#'
+#' @param pairedData A `data.frame` or `data.table` containing paired observed
+#'   and predicted values. The columns specified by `observed` and `predicted`
+#'   must exist.
+#' @param observed A string specifying the column name for observed values.
+#'   Default is `"yValuesObserved"`.
+#' @param predicted A string specifying the column name for predicted
+#'   (simulated) values. Default is `"yValuesSimulated"`.
+#' @param residuals A string specifying the name for the new residuals column
+#'   to be added. Default is `"residualValues"`.
+#' @param scaling A character string specifying the scaling method.  One of
+#'   `"log"` (default), `"linear"` (or `"lin"` / `"identity"`), or `"ratio"`.
+#'
+#' @return The input `pairedData` with an additional column named according to
+#'   the `residuals` argument.  The column carries a `"label"` attribute
+#'   describing how residuals were computed (e.g.
+#'   `"residuals\nlog(predicted) - log(observed)"`), which can be used as a
+#'   y-axis label in plots.
+#'
+#' @family data-combined
+#'
+#' @examples
+#' \dontrun{
+#' paired <- data.frame(
+#'   yValuesObserved  = c(1, 2, 4),
+#'   yValuesSimulated = c(1.1, 1.9, 3.8)
+#' )
+#' addResidualColumn(paired, scaling = "log")
+#' addResidualColumn(paired, scaling = "linear")
+#' addResidualColumn(paired, scaling = "ratio")
+#' }
+#'
+#' @export
+addResidualColumn <- function(
+  pairedData,
+  observed = "yValuesObserved",
+  predicted = "yValuesSimulated",
+  residuals = "residualValues",
+  scaling = "log"
+) {
+  validateIsOfType(pairedData, "data.frame", nullAllowed = FALSE)
+  validateIsString(observed)
+  validateIsString(predicted)
+  validateIsString(residuals)
+
+  scaling <- match.arg(
+    scaling,
+    choices = c("log", "linear", "lin", "identity", "ratio")
+  )
+
+  if (!observed %in% names(pairedData)) {
+    stop(messages$residualsColumnNotFound(observed))
+  }
+  if (!predicted %in% names(pairedData)) {
+    stop(messages$residualsColumnNotFound(predicted))
+  }
+
+  obsVals <- pairedData[[observed]]
+  predVals <- pairedData[[predicted]]
+
+  # identity is needed as long as tlf based plot functions are part of the package
+  if (scaling %in% c("linear", "lin", "identity")) {
+    residualVals <- predVals - obsVals
+    label <- "residuals\npredicted - observed"
+  } else if (scaling == "log") {
+    nonPositive <- (!is.na(obsVals) & obsVals <= 0) |
+      (!is.na(predVals) & predVals <= 0)
+    nNonPositive <- sum(nonPositive, na.rm = TRUE)
+    logObs <- log(obsVals)
+    logPred <- log(predVals)
+    residualVals <- logPred - logObs
+    residualVals[nonPositive] <- NaN
+    if (nNonPositive > 0) {
+      warning(messages$residualsLogNonPositive(nNonPositive))
+    }
+    label <- "residuals\nlog(predicted) - log(observed)"
+  } else {
+    # ratio
+    nonPositivePred <- !is.na(predVals) & predVals <= 0
+    nNonPositive <- sum(nonPositivePred, na.rm = TRUE)
+    residualVals <- obsVals / predVals
+    residualVals[nonPositivePred] <- NaN
+    if (nNonPositive > 0) {
+      warning(messages$residualsRatioPredNonPositive(nNonPositive))
+    }
+    label <- "residuals\nobserved / predicted"
+  }
+
+  pairedData[[residuals]] <- residualVals
+  attr(pairedData[[residuals]], "label") <- label
+
+  return(pairedData)
+}
+
 #' Calculate residuals for datasets in `DataCombined`
 #'
 #' @description
@@ -112,12 +227,16 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #'    - With 0 simulated points: All residuals set to NA
 #'
 #' 4. **Residual Calculation**: Residuals are computed based on the scaling method:
-#'    - **Linear scaling** (`tlf::Scaling$lin`):
+#'    - **Linear scaling** (`"lin"` / `"linear"`):
 #'      \deqn{residual = y_{simulated} - y_{observed}}
-#'    - **Logarithmic scaling** (`tlf::Scaling$log`):
+#'    - **Logarithmic scaling** (`"log"`):
 #'      \deqn{residual = \log(y_{simulated}) - \log(y_{observed})}
-#'      Note: For log scaling, a small epsilon value is used to handle zero or
-#'      near-zero values safely.
+#'      Data points where the observed or predicted value is zero or negative
+#'      produce undefined logarithms.  These residuals are set to `NaN` and a
+#'      warning is emitted reporting the number of such points.  The affected
+#'      rows are excluded from the returned data frame.
+#'    - **Ratio scaling** (`"ratio"`):
+#'      \deqn{residual = y_{observed} / y_{simulated}}
 #'
 #' ## Important Notes
 #'
@@ -125,16 +244,17 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #'   for the same group
 #' - Interpolation does not extrapolate beyond the range of simulated data
 #'   (returns NA for observed points outside simulated time range)
-#' - NA residual values are automatically filtered from the output
+#' - NA and NaN residual values are automatically filtered from the output
 #' - When multiple observed/simulated datasets exist in a group, all possible
 #'   pairs are evaluated
 #'
 #' @param dataCombined A single instance of `DataCombined` class containing both
 #'   observed and simulated datasets to be compared.
-#' @param scaling A character specifying the scaling method for residual calculation.
-#'   Must be either `tlf::Scaling$lin` for linear residuals
-#'   (simulated - observed) or `tlf::Scaling$log` for logarithmic residuals
-#'   (log(simulated) - log(observed)).
+#' @param scaling A character specifying the scaling method for residual
+#'   calculation.  Accepted values are `"lin"` / `"linear"` for linear residuals
+#'   (simulated - observed), `"log"` for logarithmic residuals
+#'   (log(simulated) - log(observed)), or `"ratio"` for the ratio of observed
+#'   to simulated (observed / simulated).
 #' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
 #'   not specified (`NULL`), the first existing unit in the respective
 #'   columns will be selected as the common unit. For available dimensions
@@ -194,7 +314,7 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
 #' # Add observed data set
 #' myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 #'
-#' calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)
+#' calculateResiduals(myDataCombined, scaling = "linear")
 #' @export
 calculateResiduals <- function(
   dataCombined,
@@ -315,33 +435,18 @@ calculateResiduals <- function(
 
     pairedData$yValuesSimulated <- interpolatedYValues
 
-    # Residual computation will depend on the scaling.
-    if (scaling %in% c(tlf::Scaling$lin, tlf::Scaling$identity)) {
-      pairedData <- dplyr::mutate(
-        pairedData,
-        residualValues = yValuesSimulated - yValuesObserved
-      )
-    } else {
-      # Epsilon for safe log calculation should be converted to the units of the values
-      epsilon <- toUnit(
-        quantityOrDimension = pairedData$yDimension[[1]],
-        values = ospsuiteEnv$LOG_SAFE_EPSILON,
-        targetUnit = pairedData$yUnit[[1]],
-        molWeight = 1
-      )
-      pairedData$residualValues <- ospsuite.utils::logSafe(
-        pairedData$yValuesSimulated,
-        epsilon,
-        base = exp(1)
-      ) -
-        ospsuite.utils::logSafe(
-          pairedData$yValuesObserved,
-          epsilon,
-          base = exp(1)
-        )
-    }
+    # Residual computation uses addResidualColumn, which handles log/linear/ratio
+    # scaling. For log scaling, zero or negative values produce NaN with a warning.
+    pairedData <- addResidualColumn(
+      pairedData,
+      observed = "yValuesObserved",
+      predicted = "yValuesSimulated",
+      residuals = "residualValues",
+      scaling = scaling
+    )
 
-    # some residual values might turn out to be NA (for example, when extrapolating)
+    # some residual values might turn out to be NA/NaN (for example, when
+    # extrapolating or when log of zero/negative values is undefined)
     # they are not returned in the output tibble
     resultList[[i]] <- dplyr::filter(pairedData, !is.na(residualValues))
   }
