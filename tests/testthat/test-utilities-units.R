@@ -203,16 +203,15 @@ test_that("It throws an error if the dimension is not found", {
 # hasDimension
 test_that("It returns true for an existing dimension, false otherwise", {
   expect_true(hasDimension("Amount"))
-  expect_false(hasDimension("AAmount"))
+  expect_false(hasDimension("NotADimension"))
 })
 
 # validateDimension
-test_that("It returns NULL when the dimension exists,
-          or throws an error otherwise", {
+test_that("It returns NULL when the dimension exists, or throws an error otherwise", {
   expect_null(validateDimension("Amount"))
   expect_error(
-    validateDimension("AAmount"),
-    regexp = messages$errorDimensionNotSupported("AAmount")
+    validateDimension("NotADimension"),
+    regexp = messages$errorDimensionNotSupported("NotADimension")
   )
 })
 
