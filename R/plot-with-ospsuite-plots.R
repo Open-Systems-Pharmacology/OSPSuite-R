@@ -85,7 +85,8 @@
 #'   geomLineAttributes geomRibbonAttributes geomPointAttributes
 #'   geomErrorbarAttributes geomLLOQAttributes
 #'
-#' @return A `ggplot2` plot object representing the time profile.
+#' @return A `ggplot2` plot object representing the time profile, or `NULL`
+#'   if the data contains no plottable entries.
 #' @export
 #' @family plot functions based on ospsuite.plots
 #'
@@ -138,6 +139,9 @@ plotTimeProfile <- function(
     quantiles = quantiles,
     nsd = nsd
   )
+  if (is.null(plotData)) {
+    return(NULL)
+  }
   # validate field used only for timeprofile
   checkmate::assertNames(names(plotData), must.include = c("xUnit"))
 
@@ -229,7 +233,8 @@ plotTimeProfile <- function(
 #'
 #'
 #' @return A `ggplot2` plot object representing predicted vs observed values,
-#'   including aesthetics for the x and y axes.
+#'   including aesthetics for the x and y axes, or `NULL` if the data contains
+#'   no plottable entries.
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
@@ -261,6 +266,9 @@ plotPredictedVsObserved <- function(
     yUnit = yUnit,
     scaling = xyScale
   )
+  if (is.null(plotData)) {
+    return(NULL)
+  }
 
   # Capture additional arguments
   additionalArgs <- list(...)
@@ -355,7 +363,7 @@ plotPredictedVsObserved <- function(
 #' @inheritDotParams ospsuite.plots::plotResVsCov comparisonLineVector
 #'
 #' @return A `ggplot2` plot object representing residuals vs time, observed, or
-#'   predicted values.
+#'   predicted values, or `NULL` if the data contains no plottable entries.
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
@@ -398,6 +406,9 @@ plotResidualsVsCovariate <- function(
     yUnit = yUnit,
     scaling = residualScale
   )
+  if (is.null(plotData)) {
+    return(NULL)
+  }
 
   # Capture additional arguments
   additionalArgs <- list(...)
@@ -459,7 +470,8 @@ plotResidualsVsCovariate <- function(
 #' @inheritDotParams ospsuite.plots::plotHistogram xScale xScaleArgs yScale
 #'   yScaleArgs plotAsFrequency meanFunction geomHistAttributes asBarPlot
 #'
-#' @return A `ggplot2` plot object representing the histogram of residuals.
+#' @return A `ggplot2` plot object representing the histogram of residuals,
+#'   or `NULL` if the data contains no plottable entries.
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
@@ -486,6 +498,9 @@ plotResidualsAsHistogram <- function(
     yUnit = yUnit,
     scaling = residualScale
   )
+  if (is.null(plotData)) {
+    return(NULL)
+  }
 
   # Capture additional arguments
   additionalArgs <- list(...)
@@ -535,7 +550,8 @@ plotResidualsAsHistogram <- function(
 #' @inheritDotParams ospsuite.plots::plotQQ xScaleArgs yScaleArgs
 #'   groupAesthetics geomQQAttributes geomQQLineAttributes
 #'
-#' @return A `ggplot2` plot object representing the Q-Q plot.
+#' @return A `ggplot2` plot object representing the Q-Q plot, or `NULL` if
+#'   the data contains no plottable entries.
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
@@ -563,6 +579,9 @@ plotQuantileQuantilePlot <- function(
     yUnit = yUnit,
     scaling = residualScale
   )
+  if (is.null(plotData)) {
+    return(NULL)
+  }
 
   # Capture additional arguments
   additionalArgs <- list(...)
@@ -630,7 +649,8 @@ plotQuantileQuantilePlot <- function(
       data.table::setDT()
 
     if (nrow(plotData) == 0) {
-      stop(messages$plotNoDataAvailable())
+      warning(messages$plotNoDataAvailable())
+      return(NULL)
     }
   } else {
     validateIsOfType(plotData, "data.frame", nullAllowed = FALSE)
@@ -663,7 +683,8 @@ plotQuantileQuantilePlot <- function(
       scaling = scaling
     )
     if (is.null(plotData) || nrow(plotData) == 0) {
-      stop(messages$plotNoDataAvailable())
+      warning(messages$plotNoDataAvailable())
+      return(NULL)
     }
     plotData <- data.table::setDT(plotData)
     plotData <- plotData |>
@@ -708,7 +729,8 @@ plotQuantileQuantilePlot <- function(
   }
 
   if (nrow(plotData) == 0) {
-    stop(messages$plotNoDataAvailable())
+    warning(messages$plotNoDataAvailable())
+    return(NULL)
   }
 
   return(plotData)

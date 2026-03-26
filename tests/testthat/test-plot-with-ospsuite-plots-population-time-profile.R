@@ -196,13 +196,14 @@ test_that("It produces expected plot for multiple simulated and observed dataset
 
 # edge cases ------------------------
 
-test_that("It returns `NULL` when `DataCombined` is empty", {
+test_that("It returns `NULL` with warning when `DataCombined` is empty", {
   myCombDat <- DataCombined$new()
 
-  expect_error(
-    plotTimeProfile(myCombDat),
-    messages$plotNoDataAvailable()
+  expect_warning(
+    result <- plotTimeProfile(myCombDat),
+    regexp = messages$plotNoDataAvailable()
   )
+  expect_null(result)
 })
 
 # Aggregations ------------------------

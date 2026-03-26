@@ -153,13 +153,14 @@ test_that("It produces expected plot for Aciclovir data", {
   )
 })
 
-test_that("It throws error when `DataCombined` is empty", {
+test_that("It returns `NULL` with warning when `DataCombined` is empty", {
   myCombDat <- DataCombined$new()
 
-  expect_error(
-    plotPredictedVsObserved(myCombDat),
-    messages$plotNoDataAvailable()
+  expect_warning(
+    result <- plotPredictedVsObserved(myCombDat),
+    regexp = messages$plotNoDataAvailable()
   )
+  expect_null(result)
 })
 
 test_that("Different symbols for data sets within one group", {

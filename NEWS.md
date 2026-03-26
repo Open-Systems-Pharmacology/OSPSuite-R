@@ -16,6 +16,7 @@
 
 ## Minor improvements and bug fixes
 
+- Plotting functions based on {ospsuite.plots} now produce a warning and return `NULL` when `DataCombined` has no plottable entries (#1709).
 - Updated `{ospsuite.plots}` option key references to match camelCase naming convention (e.g., `watermarkEnabled`, `defaultPercentiles`) (\#1818).
 - Added `addResidualColumn()` to unify residual computation across `calculateResiduals()` and the residual plot functions. Supports `"log"`, `"linear"` (or `"lin"`), and `"ratio"` scaling. For log scaling, zero or negative values now produce `NaN` with a warning instead of an epsilon-based approximation (\#1713).
 - Plotting functions now document all passable `...` arguments via `@inheritDotParams`, improving IDE autocompletion for `plotPredictedVsObserved()` and `plotResidualsAsHistogram()` (\#1817).

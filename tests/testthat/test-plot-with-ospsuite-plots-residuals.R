@@ -115,16 +115,17 @@ test_that("It creates default plots as expected", {
 
 # edge cases ------------------------
 
-test_that("It throws error when `DataCombined` is empty", {
+test_that("It returns `NULL` with warning when `DataCombined` is empty", {
   myCombDat <- DataCombined$new()
 
-  expect_error(
-    plotResidualsVsCovariate(myCombDat),
-    messages$plotNoDataAvailable()
+  expect_warning(
+    result <- plotResidualsVsCovariate(myCombDat),
+    regexp = messages$plotNoDataAvailable()
   )
+  expect_null(result)
 })
 
-test_that("It throws error when `DataCombined` doesn't have any pairable datasets", {
+test_that("It returns `NULL` with warning when `DataCombined` doesn't have any pairable datasets", {
   dataSet1 <- DataSet$new(name = "Dataset1")
   dataSet1$setValues(1, 1)
   dataSet1$yDimension <- ospDimensions$`Concentration (molar)`
@@ -133,12 +134,11 @@ test_that("It throws error when `DataCombined` doesn't have any pairable dataset
   myCombDat <- DataCombined$new()
   myCombDat$addDataSets(dataSet1)
 
-  expect_error(
-    suppressMessages(
-      suppressWarnings(plotResidualsVsCovariate(myCombDat))
-    ),
-    messages$plotNoDataAvailable()
+  expect_warning(
+    result <- suppressMessages(plotResidualsVsCovariate(myCombDat)),
+    regexp = messages$plotNoDataAvailable()
   )
+  expect_null(result)
 })
 
 test_that("Different symbols for data sets within one group", {
