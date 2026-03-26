@@ -738,8 +738,8 @@ dfConc <- dplyr::tibble(
   yValues = c(0.25, 45),
   yUnit = c("mg/l", "mol/l"),
   yDimension = concDims,
-  yErrorValues = NA,
-  yErrorUnit = NA,
+  yErrorValues = NA_real_,
+  yErrorUnit = NA_character_,
   molWeight = 10
 )
 

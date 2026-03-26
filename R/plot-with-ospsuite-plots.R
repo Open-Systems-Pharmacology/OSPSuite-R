@@ -114,8 +114,8 @@ plotTimeProfile <- function(
   y2Unit = NULL,
   aggregation = "quantiles",
   quantiles = ospsuite.plots::getOspsuite.plots.option(
-    ospsuite.plots::OptionKeys$Percentiles
-  )[c(1, 3, 5)],
+    ospsuite.plots::OptionKeys$defaultPercentiles
+  ),
   nsd = 1,
   showLegendPerDataset = "none",
   ...

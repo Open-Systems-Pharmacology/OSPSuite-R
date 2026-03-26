@@ -16,6 +16,7 @@
 
 ## Minor improvements and bug fixes
 
+- Updated `{ospsuite.plots}` option key references to match camelCase naming convention (e.g., `watermarkEnabled`, `defaultPercentiles`) (\#1818).
 - Added `addResidualColumn()` to unify residual computation across `calculateResiduals()` and the residual plot functions. Supports `"log"`, `"linear"` (or `"lin"`), and `"ratio"` scaling. For log scaling, zero or negative values now produce `NaN` with a warning instead of an epsilon-based approximation (\#1713).
 - Plotting functions now document all passable `...` arguments via `@inheritDotParams`, improving IDE autocompletion for `plotPredictedVsObserved()` and `plotResidualsAsHistogram()` (\#1817).
 - Added `dataSetsFromDataFrame()` function that creates a list of `DataSet` objects from a `data.frame` with the same structure as returned by `dataSetToDataFrame()`. This is the inverse operation of `dataSetToDataFrame()` and allows creating `DataSet` objects from data frames without requiring an Excel file. (\#1495)
