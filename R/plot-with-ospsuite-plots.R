@@ -85,7 +85,8 @@
 #'   geomLineAttributes geomRibbonAttributes geomPointAttributes
 #'   geomErrorbarAttributes geomLLOQAttributes
 #'
-#' @return A `ggplot2` plot object representing the time profile.
+#' @return A `ggplot2` plot object representing the time profile, or `NULL`
+#'   if the data contains no plottable entries.
 #' @export
 #' @family plot functions based on ospsuite.plots
 #'
@@ -232,7 +233,8 @@ plotTimeProfile <- function(
 #'
 #'
 #' @return A `ggplot2` plot object representing predicted vs observed values,
-#'   including aesthetics for the x and y axes.
+#'   including aesthetics for the x and y axes, or `NULL` if the data contains
+#'   no plottable entries.
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
@@ -361,7 +363,7 @@ plotPredictedVsObserved <- function(
 #' @inheritDotParams ospsuite.plots::plotResVsCov comparisonLineVector
 #'
 #' @return A `ggplot2` plot object representing residuals vs time, observed, or
-#'   predicted values.
+#'   predicted values, or `NULL` if the data contains no plottable entries.
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
@@ -468,7 +470,8 @@ plotResidualsVsCovariate <- function(
 #' @inheritDotParams ospsuite.plots::plotHistogram xScale xScaleArgs yScale
 #'   yScaleArgs plotAsFrequency meanFunction geomHistAttributes asBarPlot
 #'
-#' @return A `ggplot2` plot object representing the histogram of residuals.
+#' @return A `ggplot2` plot object representing the histogram of residuals,
+#'   or `NULL` if the data contains no plottable entries.
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
@@ -547,7 +550,8 @@ plotResidualsAsHistogram <- function(
 #' @inheritDotParams ospsuite.plots::plotQQ xScaleArgs yScaleArgs
 #'   groupAesthetics geomQQAttributes geomQQLineAttributes
 #'
-#' @return A `ggplot2` plot object representing the Q-Q plot.
+#' @return A `ggplot2` plot object representing the Q-Q plot, or `NULL` if
+#'   the data contains no plottable entries.
 #' @export
 #'
 #' @family plot functions based on ospsuite.plots
