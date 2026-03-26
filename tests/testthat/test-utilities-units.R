@@ -738,8 +738,8 @@ dfConc <- dplyr::tibble(
   yValues = c(0.25, 45),
   yUnit = c("mg/l", "mol/l"),
   yDimension = concDims,
-  yErrorValues = NA,
-  yErrorUnit = NA,
+  yErrorValues = NA_real_,
+  yErrorUnit = NA_character_,
   molWeight = 10
 )
 
@@ -769,4 +769,63 @@ test_that("Unit conversion works with unitless as empty string", {
     ),
     12
   )
+})
+
+# .extractMostFrequentUnit ----
+
+test_that(".extractMostFrequentUnit returns the most frequent observed unit", {
+  d <- data.table::data.table(
+    group = c("A", "B", "B"),
+    name = c("Sample1", "Sample1", "Sample2"),
+    yUnit = c("mg", "g", "g"),
+    xUnit = c("h", "min", "min"),
+    dataType = c("observed", "simulated", "simulated")
+  )
+  expect_equal(.extractMostFrequentUnit(d, "yUnit"), "mg")
+})
+
+test_that(".extractMostFrequentUnit falls back to simulated when no observed", {
+  d <- data.table::data.table(
+    group = c("A", "B"), name = c("Sample1", "Sample2"),
+    yUnit = c("g", "g"), xUnit = c("min", "min"),
+    dataType = c("simulated", "simulated")
+  )
+  expect_equal(.extractMostFrequentUnit(d, "xUnit"), "min")
+})
+
+test_that(".extractMostFrequentUnit handles all NA units", {
+  d <- data.table::data.table(
+    group = c("A", "B"), name = c("Sample1", "Sample2"),
+    yUnit = c(NA_character_, NA_character_), xUnit = c("h", "h"),
+    dataType = c("observed", "observed")
+  )
+  expect_no_error(result <- .extractMostFrequentUnit(d, "yUnit"))
+  expect_true(is.na(result))
+})
+
+test_that(".extractMostFrequentUnit prioritizes observed when frequencies are tied", {
+  d <- data.table::data.table(
+    group = c("A", "B", "C", "D"),
+    name = c("Obs1", "Obs2", "Sim1", "Sim2"),
+    yUnit = c("mg", "mg", "g", "g"),
+    xUnit = c("h", "h", "h", "h"),
+    dataType = c("observed", "observed", "simulated", "simulated")
+  )
+  expect_equal(.extractMostFrequentUnit(d, "yUnit"), "mg")
+})
+
+test_that(".extractMostFrequentUnit counts per dataset, not per time point", {
+  d <- data.table::data.table(
+    group = rep(c("A", "A"), c(3, 100)),
+    name = rep(c("obs1", "sim1"), c(3, 100)),
+    dataType = rep(c("observed", "simulated"), c(3, 100)),
+    yUnit = rep(c("mg/l", "µmol/l"), c(3, 100)),
+    xUnit = "h"
+  )
+  expect_equal(.extractMostFrequentUnit(d, "yUnit"), "mg/l")
+})
+
+test_that(".extractMostFrequentUnit uses naive count without dataType column", {
+  d <- data.frame(xUnit = c("min", "min", "h"), yUnit = c("mg", "g", "g"))
+  expect_equal(.extractMostFrequentUnit(d, "yUnit"), "g")
 })

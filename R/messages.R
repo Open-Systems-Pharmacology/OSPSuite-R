@@ -62,6 +62,28 @@ messages$residualsCanNotBeComputed <- function() {
   "No residuals can be computed because the entered `DataCombined` object does not contain any observed-simulated datasets that can be paired."
 }
 
+messages$residualsColumnNotFound <- function(columnName) {
+  paste0("Column '", columnName, "' not found in pairedData.")
+}
+
+messages$residualsLogNonPositive <- function(n) {
+  paste0(
+    n,
+    " residual value(s) could not be computed because the observed or predicted",
+    " value is zero or negative (log of non-positive values is undefined).",
+    " These data points are set to NaN and excluded from the output."
+  )
+}
+
+messages$residualsRatioPredNonPositive <- function(n) {
+  paste0(
+    n,
+    " residual value(s) could not be computed because the predicted value is",
+    " zero or negative (division by zero or undefined denominator).",
+    " These data points are set to NaN and excluded from the output."
+  )
+}
+
 messages$logScaleNotAllowed <- function() {
   "The Y-axis for this plot should not be on a log scale, since the residuals are expected to be centered around 0."
 }

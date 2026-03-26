@@ -115,8 +115,8 @@ plotTimeProfile <- function(
   y2Unit = NULL,
   aggregation = "quantiles",
   quantiles = ospsuite.plots::getOspsuite.plots.option(
-    ospsuite.plots::OptionKeys$Percentiles
-  )[c(1, 3, 5)],
+    ospsuite.plots::OptionKeys$defaultPercentiles
+  ),
   nsd = 1,
   showLegendPerDataset = "none",
   ...
@@ -737,41 +737,6 @@ plotQuantileQuantilePlot <- function(
 }
 
 #' Get Most Frequent Unit
-#'
-#' This function retrieves the most frequently occurring unit from a specified
-#' column in a given dataset, prioritizing observed data types. If no observed
-#' units are available, it will return the most frequent simulated unit instead.
-#'
-#' @param data A data.table or data.frame containing the data. It must include
-#'   the columns 'group', 'name', 'yUnit', 'xUnit', and 'dataType'.
-#' @param unitColumn A character string specifying the column name from which to
-#'   extract the most frequent unit. This should be either 'yUnit' or 'xUnit'.
-#'
-#' @return The most frequent observed unit from the specified column, or the
-#'   most frequent simulated unit if no observed units are available.
-#' @keywords internal
-#' @noRd
-.getMostFrequentUnit <- function(data, unitColumn) {
-  dataType <- NULL
-
-  # count per group and not per timepoint
-  dt <- data[, c("group", "name", "dataType", unitColumn), with = FALSE] |>
-    unique()
-
-  # Filter for observed data first
-  observedUnits <- dt[dataType == "observed", .N, by = c(unitColumn)] |>
-    setorderv(cols = c("N"), order = -1)
-
-  # If no observed units, check simulated
-  if (nrow(observedUnits) == 0) {
-    simulatedUnits <- dt[dataType == "simulated", .N, by = c(unitColumn)] |>
-      setorderv(cols = c("N"), order = -1)
-    return(simulatedUnits[[unitColumn]][1])
-  }
-
-  return(observedUnits[[unitColumn]][1])
-}
-
 #' Convert Units for Plotting
 #'
 #' This function automatically converts mixed units in the provided plot data to
@@ -846,7 +811,7 @@ plotQuantileQuantilePlot <- function(
     null.ok = TRUE
   )
 
-  xUnitStr <- xUnit %||% .getMostFrequentUnit(plotData, "xUnit")
+  xUnitStr <- xUnit %||% .extractMostFrequentUnit(plotData, "xUnit")
 
   plotDataByDimensions <- split(plotData, by = "yDimension")
   dimensionsToMerge <- c("Concentration (mass)", "Concentration (molar)")
@@ -884,7 +849,7 @@ plotQuantileQuantilePlot <- function(
     dt <- plotDataByDimensions[[dimName]]
     dimIdx <- match(dimName, orderedDimNames)
     override <- userYUnits[[dimIdx]]
-    yUnitStr <- override %||% .getMostFrequentUnit(dt, "yUnit")
+    yUnitStr <- override %||% .extractMostFrequentUnit(dt, "yUnit")
     if ('yErrorType' %in% names(dt) && uniqueN(dt$yErrorType) > 1) {
       dt <- rbindlist(lapply(split(dt, by = 'yErrorType'), function(dtSplit) {
         .unitConverter(data = dtSplit, xUnit = xUnitStr, yUnit = yUnitStr)

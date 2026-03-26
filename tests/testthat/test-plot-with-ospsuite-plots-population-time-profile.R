@@ -6,8 +6,8 @@ ggplot2::theme_update(legend.position = c(0.95, 0.05))
 ggplot2::theme_update(legend.justification = c("right", "bottom"))
 
 ospsuite.plots::setOspsuite.plots.option(
-  ospsuite.plots::OptionKeys$Percentiles,
-  c(0.05, 0.25, 0.5, 0.75, 0.95)
+  ospsuite.plots::OptionKeys$defaultPercentiles,
+  c(0.05, 0.5, 0.95)
 )
 
 # only simulated ------------------------
