@@ -32,6 +32,10 @@
 
 ### Minor improvements and bug fixes
 
+- Fixed
+  [`validateDimension()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateDimension.md)
+  error message not showing the actual dimension name
+  ([\#1822](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1822)).
 - Plotting functions based on {ospsuite.plots} now produce a warning and
   return `NULL` when `DataCombined` has no plottable entries
   ([\#1709](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1709)).
