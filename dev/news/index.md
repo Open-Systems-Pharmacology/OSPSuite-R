@@ -2,6 +2,8 @@
 
 ## ospsuite (development version)
 
+## ospsuite 12.4.2
+
 ### Major changes
 
 - Added five new plotting functions powered by
@@ -15,7 +17,6 @@
   These functions accept `DataCombined` objects or data frames and
   handle mixed error types and unit conversion directly, without
   requiring data preprocessing.
-
 - The
   [tlf](https://github.com/open-systems-pharmacology/tlf-library)-based
   plotting functions
@@ -76,7 +77,7 @@
   [`populationToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/populationToDataFrame.md).
   If no `IndividualId` column is present, sequential IDs are
   automatically generated.
-  ([\#425](https://github.com/open-systems-pharmacology/ospsuite-r/issues/425))
+  ([\#1807](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1807))
 - [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
   now accepts a `sheets` parameter to specify which sheets to load. When
   `sheets = NULL` (default), the function uses sheets defined in the
@@ -84,7 +85,8 @@
   all sheets are loaded. When `sheets` is a character vector, those
   specific sheets are loaded, overriding any sheets in the
   configuration. The `importAllSheets` parameter is now deprecated and
-  will be removed in version 14.
+  will be removed in version 14
+  ([\#1760](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1760)).
 - [`toDisplayUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/toDisplayUnit.md)
   now accepts an optional `unit` parameter to specify the source unit of
   the values, consistent with
@@ -93,30 +95,33 @@
   [`toBaseUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/toBaseUnit.md)
   functions. When not specified, values are assumed to be in base unit
   (maintaining backward compatibility).
-  ([\#1755](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1755))
+  ([\#1762](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1762))
 - [`addOutputs()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addOutputs.md)
   and
   [`setOutputs()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setOutputs.md)
   now throw an error by default when the provided path is not found.
-  This behavior can be disabled by setting `stopIfNotFound = FALSE`.
+  This behavior can be disabled by setting `stopIfNotFound = FALSE`
+  ([\#1734](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1734)).
 - `ospUnits$Dimensionless$Unitless` and `ospUnits$Fraction$Unitless` now
-  return an empty string `""` instead of the literal string
-  `"Unitless"`.
+  return an empty string `""` instead of the literal string `"Unitless"`
+  ([\#1754](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1754)).
 - Added read-only `valueOrigin` property to `Quantity` class (including
   `Parameter` and other derived classes) to access the value origin from
   the underlying .NET object. This is useful for generating automated
-  reports that track parameter value provenance.
+  reports that track parameter value provenance
+  ([\#1751](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1751)).
 - [`createImporterConfigurationForFile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createImporterConfigurationForFile.md)
   now automatically sets the `sheets` attribute when a `sheet` parameter
   is provided, eliminating the need to manually set it before using
-  [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md).
+  [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
+  ([\#1755](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1755)).
 - Fixed
   [`getSteadyState()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getSteadyState.md)
   to correctly apply `lowerThreshold` for both positive and negative
   values. The threshold now filters values in the interval
   `[-lowerThreshold, lowerThreshold]` instead of only values below the
-  threshold.
-  ([\#1348](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1348))
+  threshold
+  ([\#1792](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1792)).
 - [`runSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulations.md)
   now throws an error if any simulation has no output selections
   defined, instead of silently returning empty results.
@@ -124,8 +129,8 @@
 - [`exportResultsToCSV()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportResultsToCSV.md)
   now validates that the input is a single `SimulationResults` object
   and rejects lists of results, preventing downstream .NET interop
-  failures.
-  ([\#1249](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1249))
+  failures
+  ([\#1752](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1752)).
 
 ## ospsuite 12.4.1
 
