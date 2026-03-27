@@ -6,7 +6,7 @@ either be specified using explicit instances or using paths.
 ## Usage
 
 ``` r
-addOutputs(quantitiesOrPaths, simulation)
+addOutputs(quantitiesOrPaths, simulation, stopIfNotFound = TRUE)
 ```
 
 ## Arguments
@@ -21,13 +21,18 @@ addOutputs(quantitiesOrPaths, simulation)
 
   Instance of a simulation for which output selection should be updated.
 
+- stopIfNotFound:
+
+  Boolean. If `TRUE` (default) and no quantity exists for the given
+  path, an error is thrown. If `FALSE`, `NULL` is returned.
+
 ## Examples
 
 ``` r
-simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
-paths <- c("Organism|VenousBlood|Plasma|Caffeine", "Organism|ArterialBlood|**|Caffeine")
+paths <- c("Organism|VenousBlood|Plasma|Aciclovir", "Organism|ArterialBlood|**|Aciclovir")
 addOutputs(paths, sim)
 
 parameter <- getParameter("Organism|Liver|Volume", sim)

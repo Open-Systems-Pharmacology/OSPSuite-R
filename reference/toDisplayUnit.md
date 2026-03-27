@@ -6,7 +6,7 @@ of a quantity
 ## Usage
 
 ``` r
-toDisplayUnit(quantity, values)
+toDisplayUnit(quantity, values, unit = NULL)
 ```
 
 ## Arguments
@@ -17,7 +17,13 @@ toDisplayUnit(quantity, values)
 
 - values:
 
-  Value in base unit (single or vector)
+  Value (single or vector). If `unit` is not specified, values are
+  assumed to be in base unit
+
+- unit:
+
+  Optional Name of the unit to convert from. If `NULL` (default), the
+  values are assumed to be in base unit.
 
 ## Examples
 
@@ -30,4 +36,7 @@ par <- getParameter("Organism|Liver|Volume", sim)
 valueInMl <- toDisplayUnit(par, 1)
 
 valuesInDisplayUnit <- toDisplayUnit(par, c(1, 5, 5))
+
+# Converts the value in ml to display unit
+valueInDisplayUnit <- toDisplayUnit(par, 1000, "ml")
 ```

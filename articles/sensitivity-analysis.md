@@ -25,6 +25,26 @@ parameters of the simulation will be varied. The list of such parameters
 paths for a simulation can be accessed with the method
 `potentialVariableParameterPathsFor(simulation)`.
 
+### Understanding `numberOfSteps` and `variationRange`
+
+The `numberOfSteps` parameter specifies the number of steps in one
+direction (either positive or negative) from the reference parameter
+value. Since parameters are varied in both directions, the total number
+of variations per parameter is `2 * numberOfSteps`.
+
+The `variationRange` parameter defines the total relative range of
+variation (e.g., `0.1` means ±10%). The range is divided into equal
+intervals based on the number of steps.
+
+**Example:** With `numberOfSteps = 2` and `variationRange = 0.1`
+(default values): - Each parameter is tested at **four points**: 90%,
+95%, 105%, and 110% of its reference value - Total number of
+simulations: `2 * numberOfSteps * number_of_parameters`
+
+**Example:** With `numberOfSteps = 1` and `variationRange = 0.1`: - Each
+parameter is tested at **two points**: 90% and 110% of its reference
+value
+
 ``` r
 library(ospsuite)
 
@@ -136,6 +156,26 @@ impactful parameters. A threshold of `0.9` means that only parameters
 participating to a total of 90 percent of the sensitivity would be
 returned. A value of `1` would return the sensitivity for all
 parameters. If no value is provided, a default value is used.
+
+### Customizing sensitivity analysis settings
+
+The default values for `numberOfSteps`, `variationRange`, and
+`totalSensitivityThreshold` can be retrieved using
+`getOSPSuiteSetting("sensitivityAnalysisConfig")`. These values can be
+changed for a session by directly setting the values in `ospsuiteEnv`:
+
+``` r
+# View current defaults
+getOSPSuiteSetting("sensitivityAnalysisConfig")
+
+# Change the defaults for the current R session
+ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps <- 3
+ospsuiteEnv$sensitivityAnalysisConfig$variationRange <- 0.2
+ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold <- 0.95
+```
+
+Note that these changes only affect new `SensitivityAnalysis` objects
+created after the change. Existing objects retain their original values.
 
 ``` r
 # Load simulation

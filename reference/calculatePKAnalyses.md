@@ -22,10 +22,10 @@ An instance of `SimulationPKAnalyses` class.
 ## Examples
 
 ``` r
-simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
-addOutputs("Organism|VenousBlood|*|Caffeine", sim)
+addOutputs("Organism|VenousBlood|*|Aciclovir", sim)
 results <- runSimulations(sim)[[1]]
 pkAnalyses <- calculatePKAnalyses(results)
 ```

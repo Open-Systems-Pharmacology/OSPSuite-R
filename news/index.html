@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,7 @@
     <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
     <li><a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a></li>
     <li><a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a></li>
+    <li><a class="dropdown-item" href="../articles/plotting-with-ospsuite-plots.html">Plotting with ospsuite.plots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a></li>
@@ -56,6 +57,40 @@
       <small>Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="12.4.2" id="ospsuite-1242">ospsuite 12.4.2<a class="anchor" aria-label="anchor" href="#ospsuite-1242"></a></h2>
+<div class="section level3">
+<h3 id="major-changes-12-4-2">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-12-4-2"></a></h3>
+<ul><li>Added five new plotting functions powered by <a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">ospsuite.plots</a>: <code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code>, <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code>, <code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>, <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code>, and <code><a href="../reference/plotQuantileQuantilePlot.html">plotQuantileQuantilePlot()</a></code>. These functions accept <code>DataCombined</code> objects or data frames and handle mixed error types and unit conversion directly, without requiring data preprocessing.</li>
+<li>The <a href="https://github.com/open-systems-pharmacology/tlf-library" class="external-link">tlf</a>-based plotting functions <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code>, <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code>, <code><a href="../reference/plotObservedVsSimulated.html">plotObservedVsSimulated()</a></code>, <code><a href="../reference/plotResidualsVsTime.html">plotResidualsVsTime()</a></code>, and <code><a href="../reference/plotResidualsVsSimulated.html">plotResidualsVsSimulated()</a></code> are now soft-deprecated in favor of the <a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">ospsuite.plots</a>-based equivalents and will be removed in version 14.0. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1739" class="external-link">#1739</a>)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-improvements-and-bug-fixes-12-4-2">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-12-4-2"></a></h3>
+<ul><li>Fixed <code><a href="../reference/validateDimension.html">validateDimension()</a></code> error message not showing the actual dimension name (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1822" class="external-link">#1822</a>).</li>
+<li>Plotting functions based on {ospsuite.plots} now produce a warning and return <code>NULL</code> when <code>DataCombined</code> has no plottable entries (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1709" class="external-link">#1709</a>).</li>
+<li>Updated <a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">ospsuite.plots</a> option key references to match camelCase naming convention (e.g., <code>watermarkEnabled</code>, <code>defaultPercentiles</code>) (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1818" class="external-link">#1818</a>).</li>
+<li>Added <code><a href="../reference/addResidualColumn.html">addResidualColumn()</a></code> to unify residual computation across <code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code> and the residual plot functions. Supports <code>"log"</code>, <code>"linear"</code> (or <code>"lin"</code>), and <code>"ratio"</code> scaling. For log scaling, zero or negative values now produce <code>NaN</code> with a warning instead of an epsilon-based approximation (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1713" class="external-link">#1713</a>).</li>
+<li>Plotting functions now document all passable <code>...</code> arguments via <code>@inheritDotParams</code>, improving IDE autocompletion for <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code> and <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code> (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1817" class="external-link">#1817</a>).</li>
+<li>Added <code><a href="../reference/dataSetsFromDataFrame.html">dataSetsFromDataFrame()</a></code> function that creates a list of <code>DataSet</code> objects from a <code>data.frame</code> with the same structure as returned by <code><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame()</a></code>. This is the inverse operation of <code><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame()</a></code> and allows creating <code>DataSet</code> objects from data frames without requiring an Excel file. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1495" class="external-link">#1495</a>)</li>
+<li>Added <code><a href="../reference/populationFromDataFrame.html">populationFromDataFrame()</a></code> function to create a <code>Population</code> object from a data.frame, the reverse of <code><a href="../reference/populationToDataFrame.html">populationToDataFrame()</a></code>. If no <code>IndividualId</code> column is present, sequential IDs are automatically generated. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1807" class="external-link">#1807</a>)</li>
+<li>
+<code><a href="../reference/loadDataSetsFromExcel.html">loadDataSetsFromExcel()</a></code> now accepts a <code>sheets</code> parameter to specify which sheets to load. When <code>sheets = NULL</code> (default), the function uses sheets defined in the importer configuration. If the configuration has no sheets defined, all sheets are loaded. When <code>sheets</code> is a character vector, those specific sheets are loaded, overriding any sheets in the configuration. The <code>importAllSheets</code> parameter is now deprecated and will be removed in version 14 (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1760" class="external-link">#1760</a>).</li>
+<li>
+<code><a href="../reference/toDisplayUnit.html">toDisplayUnit()</a></code> now accepts an optional <code>unit</code> parameter to specify the source unit of the values, consistent with <code><a href="../reference/toUnit.html">toUnit()</a></code> and <code><a href="../reference/toBaseUnit.html">toBaseUnit()</a></code> functions. When not specified, values are assumed to be in base unit (maintaining backward compatibility). (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1762" class="external-link">#1762</a>)</li>
+<li>
+<code><a href="../reference/addOutputs.html">addOutputs()</a></code> and <code><a href="../reference/setOutputs.html">setOutputs()</a></code> now throw an error by default when the provided path is not found. This behavior can be disabled by setting <code>stopIfNotFound = FALSE</code> (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1734" class="external-link">#1734</a>).</li>
+<li>
+<code>ospUnits$Dimensionless$Unitless</code> and <code>ospUnits$Fraction$Unitless</code> now return an empty string <code>""</code> instead of the literal string <code>"Unitless"</code> (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1754" class="external-link">#1754</a>).</li>
+<li>Added read-only <code>valueOrigin</code> property to <code>Quantity</code> class (including <code>Parameter</code> and other derived classes) to access the value origin from the underlying .NET object. This is useful for generating automated reports that track parameter value provenance (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1751" class="external-link">#1751</a>).</li>
+<li>
+<code><a href="../reference/createImporterConfigurationForFile.html">createImporterConfigurationForFile()</a></code> now automatically sets the <code>sheets</code> attribute when a <code>sheet</code> parameter is provided, eliminating the need to manually set it before using <code><a href="../reference/loadDataSetsFromExcel.html">loadDataSetsFromExcel()</a></code> (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1755" class="external-link">#1755</a>).</li>
+<li>Fixed <code><a href="../reference/getSteadyState.html">getSteadyState()</a></code> to correctly apply <code>lowerThreshold</code> for both positive and negative values. The threshold now filters values in the interval <code>[-lowerThreshold, lowerThreshold]</code> instead of only values below the threshold (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1792" class="external-link">#1792</a>).</li>
+<li>
+<code><a href="../reference/runSimulations.html">runSimulations()</a></code> now throws an error if any simulation has no output selections defined, instead of silently returning empty results. (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1404" class="external-link">#1404</a>)</li>
+<li>
+<code><a href="../reference/exportResultsToCSV.html">exportResultsToCSV()</a></code> now validates that the input is a single <code>SimulationResults</code> object and rejects lists of results, preventing downstream .NET interop failures (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1752" class="external-link">#1752</a>).</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="12.4.1" id="ospsuite-1241">ospsuite 12.4.1<a class="anchor" aria-label="anchor" href="#ospsuite-1241"></a></h2>
 <div class="section level3">
@@ -103,7 +138,8 @@
 <h2 class="pkg-version" data-toc-text="12.3.0" id="ospsuite-1230">ospsuite 12.3.0<a class="anchor" aria-label="anchor" href="#ospsuite-1230"></a></h2>
 <div class="section level3">
 <h3 id="breaking-changes-12-3-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-12-3-0"></a></h3>
-<ul><li>´{ospsuite}<code>now requires</code>{ospsuite.utils}` version &gt;= 1.7.0.</li>
+<ul><li>
+<a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> now requires <a href="https://github.com/open-systems-pharmacology/OSPSuite.RUtils" class="external-link">ospsuite.utils</a> version &gt;= 1.7.0.</li>
 <li>Classes <code>SimulationBatchRunValues</code> and <code>SimulationBatchOptions</code> are not exported any more. They should not be used directly.</li>
 </ul></div>
 <div class="section level3">
@@ -113,7 +149,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-12-3-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-12-3-0"></a></h3>
-<ul><li>Added <code>showLegendPerDataset</code> parameter to <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code>plotPupulationTimeProfile()</code> to optionally display separate legend entries for each dataset. This is experimental.</li>
+<ul><li>Added <code>showLegendPerDataset</code> parameter to <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code> to optionally display separate legend entries for each dataset. This is experimental.</li>
 <li>Improved print outputs for all classes</li>
 <li>Classes do not inherit from the deprecated <code>Printable</code> class from the <a href="https://github.com/open-systems-pharmacology/OSPSuite.RUtils" class="external-link">ospsuite.utils</a> package.</li>
 <li>Print methods for all classes are now implemented using the <code>ospPrint\*</code> functions introduced in version 1.6.2. of the <a href="https://github.com/open-systems-pharmacology/OSPSuite.RUtils" class="external-link">ospsuite.utils</a> package.</li>
@@ -156,7 +192,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="major-changes-12-0-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-12-0-0"></a></h3>
-<ul><li>The package gains <a href="https://ycphs.github.io/openxlsx/index.html" class="external-link">openxlsx</a> and <code>{lifecyle}</code> dependencies.</li>
+<ul><li>The package gains <a href="https://ycphs.github.io/openxlsx/index.html" class="external-link">openxlsx</a> and <a href="https://lifecycle.r-lib.org/" class="external-link">lifecycle</a> dependencies.</li>
 <li>Added a function <code><a href="../reference/getSteadyState.html">getSteadyState()</a></code> to calculate steady state values for simulations. This function is of particular use for models of endogenous substrates, where changing a parameter value (e.g., the production rate) will change the steady-state values of the substrate. The steady-state is considered to be the last values of the molecules amounts and state variable parameters in the simulation with sufficiently long simulation time, i.e., where the rates of the processes do not (significantly) change. The steady-state is NOT analytically calculated or estimated in any other way than simulating for the given time.</li>
 <li>Added a function <code><a href="../reference/exportSteadyStateToXLS.html">exportSteadyStateToXLS()</a></code> to export steady state values calculated for one simulation using the <code><a href="../reference/getSteadyState.html">getSteadyState()</a></code> to an Excel file that can be imported in MoBi.</li>
 <li>Lower limit of quantification (LLOQ) is plotted as dotted lines for <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code>.</li>
@@ -173,7 +209,7 @@
 <li>
 <code>DataCombined$toDataFrame()</code> shows the data in the order as the data sets were added and not alphabetically sorted.</li>
 <li>
-<code>DataCombined$removeGroupAssignment()</code> does not show a warning if specified name is not present in the <code>DataCombined</code>.<br></li>
+<code>DataCombined$removeGroupAssignment()</code> does not show a warning if specified name is not present in the <code>DataCombined</code>.</li>
 <li>
 <code>DataCombined$removeGroupAssignment()</code> does not produce an error if specified names are not unique.</li>
 <li>Fixed Passing font size options from plotConfiguration objects to tlf objects (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1198" class="external-link">#1198</a>)</li>
@@ -183,7 +219,7 @@
 <li>
 <code>DefaultPlotConfiguration</code> has a new setting: <code>displayLLOQ</code> (default TRUE) to control plotting of LLOQ lines.</li>
 <li>
-<code>DefaultPlotConfiguration</code>’s <code>xLimits</code> and <code>yLimits</code> arguments are deprecated and replaced by <code>xAxisLimits</code> and <code>yAxisLimits</code>. Use them to zoom in the plot while preserving all data points. Use <code>xValuesLimits</code> and <code>yValuesLimits</code> to filter out data point outside of these range. More detailed explanations <a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples" class="external-link">here</a>.</li>
+<code>DefaultPlotConfiguration</code>’s <code>xLimits</code> and <code>yLimits</code> arguments are deprecated and replaced by <code>xAxisLimits</code> and <code>yAxisLimits</code>. Use them to zoom in the plot while preserving all data points. Use <code>xValuesLimits</code> and <code>yValuesLimits</code> to filter out data point outside of these range. More detailed explanations in the <a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples" class="external-link">ggplot2 coord_cartesian documentation</a>.</li>
 <li>
 <code>addSimulationResults</code> and <code>addDataSets</code> methods of the <code>DataCombined</code> class now support an optional <code>silent</code> argument which silences the checks for data set names. If you expect to replace data sets in <code>DataCombined</code> objects repeatedly, consider switching the parameter from the default <code>FALSE</code> value to <code>TRUE</code>.</li>
 <li>

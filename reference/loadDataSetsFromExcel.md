@@ -8,7 +8,8 @@ Load data sets from excel
 loadDataSetsFromExcel(
   xlsFilePath,
   importerConfigurationOrPath,
-  importAllSheets = FALSE
+  importAllSheets = FALSE,
+  sheets = NULL
 )
 ```
 
@@ -25,10 +26,26 @@ loadDataSetsFromExcel(
 
 - importAllSheets:
 
-  If `FALSE` (default), only sheets specified in the
-  `importerConfiguration` will be loaded. If `TRUE`, an attempt to load
-  all sheets is performed. If any sheet does not comply with the
-  configuration, an error is thrown.
+  **\[deprecated\]** If `FALSE` (default), only sheets specified in the
+  `importerConfiguration` or in the `sheets` parameter will be loaded.
+  If `TRUE`, an attempt to load all sheets is performed. If any sheet
+  does not comply with the configuration, an error is thrown. When set
+  to `TRUE`, this parameter takes priority over the `sheets` parameter
+  and configuration sheets.
+
+  **Deprecated**: Use `sheets = NULL` instead. This parameter will be
+  removed in version 14.
+
+- sheets:
+
+  Character vector of sheet names to load, or `NULL` (default). If
+  `NULL` and `importAllSheets` is `FALSE`, the sheets defined in the
+  `importerConfiguration` will be used. If the configuration has no
+  sheets defined and `sheets` is `NULL` and `importAllSheets` is
+  `FALSE`, all sheets will be loaded. If a character vector is provided,
+  only the specified sheets will be loaded, overriding any sheets
+  defined in the `importerConfiguration` (unless
+  `importAllSheets = TRUE`).
 
 ## Value
 
@@ -47,23 +64,31 @@ xlsFilePath <- system.file(
   package = "ospsuite"
 )
 
-importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
-importerConfiguration$sheets <- "TestSheet_1"
+# When sheet is specified, it is automatically added to the configuration
+importerConfiguration <- createImporterConfigurationForFile(
+  xlsFilePath,
+  sheet = "TestSheet_1"
+)
 
+dataSets <- loadDataSetsFromExcel(
+  xlsFilePath = xlsFilePath,
+  importerConfigurationOrPath = importerConfiguration
+)
+
+# Load specific sheets using the sheets parameter
 dataSets <- loadDataSetsFromExcel(
   xlsFilePath = xlsFilePath,
   importerConfigurationOrPath = importerConfiguration,
-  importAllSheets = FALSE
+  sheets = c("TestSheet_1", "TestSheet_2")
 )
 
-importerConfigurationFilePath <- system.file(
-  "extdata", "dataImporterConfiguration.xml",
-  package = "ospsuite"
-)
-
+if (FALSE) { # \dontrun{
+# Load all sheets by setting sheets to NULL and no sheets in configuration
+importerConfiguration <- createImporterConfigurationForFile(xlsFilePath)
 dataSets <- loadDataSetsFromExcel(
   xlsFilePath = xlsFilePath,
-  importerConfigurationOrPath = importerConfigurationFilePath,
-  importAllSheets = FALSE
+  importerConfigurationOrPath = importerConfiguration,
+  sheets = NULL
 )
+} # }
 ```

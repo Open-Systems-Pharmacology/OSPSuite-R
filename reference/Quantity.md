@@ -75,6 +75,10 @@ Amount
   Returns `TRUE` if the formula was overridden by a constant value,
   otherwise `FALSE`
 
+- `valueOrigin`:
+
+  The value origin of the quantity (Read-Only)
+
 ## Methods
 
 ### Public methods

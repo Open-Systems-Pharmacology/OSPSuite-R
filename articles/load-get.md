@@ -54,6 +54,10 @@ print(livParam)
 #>   • Quantity Type: Parameter
 #>   • Path: Organism|Liver|Interstitial|Volume
 #>   • Value: 0.35 [l]
+#>   • Value Origin: Publication-Willmann S, Lippert J, Sevestre M, Solodenko J,
+#>   Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic
+#>   ‘whole-body’ model. Biosilico. 2003; 1 (4): 121-124.
+#>   http://dx.doi.org/10.1016/S1478-5382%2803%2902342-4
 #> 
 #> ── Formula ──
 #> 
@@ -111,13 +115,13 @@ molecules <- getAllMoleculesMatching(c(
 print(molecules)
 #> [[1]]
 #> <Molecule>
-#>   • Path: Organism|Liver|Periportal|Intracellular|Aciclovir
+#>   • Path: Organism|VenousBlood|Plasma|Aciclovir
 #>   • Scale Divisor: 1
 #>   • Initial Value: 0.00e+00 [µmol]
 #> 
 #> [[2]]
 #> <Molecule>
-#>   • Path: Organism|VenousBlood|Plasma|Aciclovir
+#>   • Path: Organism|Liver|Periportal|Intracellular|Aciclovir
 #>   • Scale Divisor: 1
 #>   • Initial Value: 0.00e+00 [µmol]
 ```

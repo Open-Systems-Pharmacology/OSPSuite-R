@@ -1,6 +1,6 @@
 # Time-values profile plot for population simulations
 
-Time-values profile plot for population simulations
+**\[deprecated\]**
 
 ## Usage
 
@@ -97,6 +97,9 @@ myDataComb$addSimulationResults(populationResults)
 
 # plot
 plotPopulationTimeProfile(myDataComb)
+#> Warning: `plotPopulationTimeProfile()` was deprecated in ospsuite 12.4.2.
+#> ℹ Please use `plotTimeProfile()` instead.
+#> ℹ It will be removed in version 14.0.
 
 
 # plot with other quantiles

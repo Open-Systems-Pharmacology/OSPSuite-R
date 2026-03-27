@@ -166,6 +166,9 @@
   Adds the quantities as output into the `simulation`. The quantities
   can either be specified using explicit instances or using paths.
 
+- [`addResidualColumn()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/addResidualColumn.md)
+  : Add a residual column to paired observed/predicted data
+
 - [`addUserDefinedPKParameter()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/addUserDefinedPKParameter.md)
   : Adds and returns a User-Defined PK-Parameter to the managed list of
   PK-Parameters
@@ -245,6 +248,11 @@
   :
 
   Converts a list of `DataSet` objects to a data.frame
+
+- [`dataSetsFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dataSetsFromDataFrame.md)
+  :
+
+  Creates a list of `DataSet` objects from a `data.frame`
 
 - [`.expandPath()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-expandPath.md)
   :
@@ -506,19 +514,40 @@
   parameter by name is not found
 
 - [`plotIndividualTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotIndividualTimeProfile.md)
-  : Time-profile plot of individual data
+  **\[deprecated\]** : Time-profile plot of individual data
 
 - [`plotObservedVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotObservedVsSimulated.md)
-  : Observed versus predicted/simulated scatter plot
+  **\[deprecated\]** : Observed versus predicted/simulated scatter plot
 
 - [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotPopulationTimeProfile.md)
-  : Time-values profile plot for population simulations
+  **\[deprecated\]** : Time-values profile plot for population
+  simulations
+
+- [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotPredictedVsObserved.md)
+  : Plot Predicted vs Observed Values
+
+- [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotQuantileQuantilePlot.md)
+  : Plot Quantile-Quantile Plot
+
+- [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsAsHistogram.md)
+  : Plot Residuals Histogram
+
+- [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsCovariate.md)
+  : Plot Residuals vs Covariate
 
 - [`plotResidualsVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsSimulated.md)
-  : Residuals versus time scatter plot
+  **\[deprecated\]** : Residuals versus time scatter plot
 
 - [`plotResidualsVsTime()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsTime.md)
-  : Residuals versus time scatter plot
+  **\[deprecated\]** : Residuals versus time scatter plot
+
+- [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotTimeProfile.md)
+  : Create Time Profile Plot
+
+- [`populationFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/populationFromDataFrame.md)
+  :
+
+  Creates a `Population` object from a data.frame
 
 - [`populationToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/populationToDataFrame.md)
   [`populationToTibble()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/populationToDataFrame.md)
@@ -576,7 +605,7 @@
   : Clears the output interval from the simulation and adds a new one.
 
 - [`setOutputs()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/setOutputs.md)
-  : Set outputs
+  : Set outputs of a simulation
 
 - [`setParameterValues()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/setParameterValues.md)
   : Set values of parameters
@@ -614,7 +643,7 @@
   '\|'
 
 - [`toUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/toUnit.md)
-  : Converts a value given in base unit of a quantity into a target unit
+  : Converts values from one unit to another
 
 - [`uniqueEntities()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/uniqueEntities.md)
   : Extract Unique Elements of type 'Entity'

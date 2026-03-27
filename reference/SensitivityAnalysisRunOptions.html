@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,7 @@
     <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
     <li><a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a></li>
     <li><a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a></li>
+    <li><a class="dropdown-item" href="../articles/plotting-with-ospsuite-plots.html">Plotting with ospsuite.plots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a></li>
@@ -73,7 +74,8 @@
 
 
 <dt><code>showProgress</code></dt>
-<dd><p>Specifies whether progress bar should be shown during sensitivity analysis run. Default is <code>getOSPSuiteSetting("showProgress")</code>.</p></dd>
+<dd><p>Specifies whether a progress bar should be shown during sensitivity analysis. If <code>TRUE</code>, a progress bar is shown in the console,
+indicating the progress of the sensitivity analysis calculations. Default is <code>getOSPSuiteSetting("showProgress")</code>.</p></dd>
 
 
 </dl><p></p></div>
@@ -112,7 +114,8 @@
 
 
 <dt><code>showProgress</code></dt>
-<dd><p>Should a progress information be displayed. Default value is <code>getOSPSuiteSetting("showProgress")</code></p></dd>
+<dd><p>Should a progress bar be displayed during sensitivity analysis. If <code>TRUE</code>, a progress bar is shown in the console,
+indicating the progress of the sensitivity analysis calculations. Default value is <code>getOSPSuiteSetting("showProgress")</code></p></dd>
 
 
 </dl><p></p></div>

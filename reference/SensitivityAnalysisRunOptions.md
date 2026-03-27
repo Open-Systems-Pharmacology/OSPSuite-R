@@ -18,8 +18,10 @@ Options to be passed to the sensitivity analysis engine
 
 - `showProgress`:
 
-  Specifies whether progress bar should be shown during sensitivity
-  analysis run. Default is `getOSPSuiteSetting("showProgress")`.
+  Specifies whether a progress bar should be shown during sensitivity
+  analysis. If `TRUE`, a progress bar is shown in the console,
+  indicating the progress of the sensitivity analysis calculations.
+  Default is `getOSPSuiteSetting("showProgress")`.
 
 ## Methods
 
@@ -63,7 +65,9 @@ Initialize a new instance of the class
 
 - `showProgress`:
 
-  Should a progress information be displayed. Default value is
+  Should a progress bar be displayed during sensitivity analysis. If
+  `TRUE`, a progress bar is shown in the console, indicating the
+  progress of the sensitivity analysis calculations. Default value is
   `getOSPSuiteSetting("showProgress")`
 
 #### Returns

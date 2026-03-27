@@ -668,8 +668,8 @@ ospsuite:::.getUnitsEnum()
 #> 
 #> 
 #> $Dimensionless
-#> $Dimensionless$Unitless
-#> [1] "Unitless"
+#> $Dimensionless[[1]]
+#> [1] ""
 #> 
 #> 
 #> $`Dose per body surface area`
@@ -837,8 +837,8 @@ ospsuite:::.getUnitsEnum()
 #> 
 #> 
 #> $Fraction
-#> $Fraction$Unitless
-#> [1] "Unitless"
+#> $Fraction[[1]]
+#> [1] ""
 #> 
 #> $Fraction$`%`
 #> [1] "%"

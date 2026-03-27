@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,7 @@
     <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
     <li><a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a></li>
     <li><a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a></li>
+    <li><a class="dropdown-item" href="../articles/plotting-with-ospsuite-plots.html">Plotting with ospsuite.plots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a></li>
@@ -431,6 +432,13 @@
 
         <dt>
 
+          <code><a href="addResidualColumn.html">addResidualColumn()</a></code>
+
+        </dt>
+        <dd>Add a residual column to paired observed/predicted data</dd>
+
+        <dt>
+
           <code><a href="addUserDefinedPKParameter.html">addUserDefinedPKParameter()</a></code>
 
         </dt>
@@ -554,6 +562,13 @@
 
         </dt>
         <dd>Converts a list of <code>DataSet</code> objects to a data.frame</dd>
+
+        <dt>
+
+          <code><a href="dataSetsFromDataFrame.html">dataSetsFromDataFrame()</a></code>
+
+        </dt>
+        <dd>Creates a list of <code>DataSet</code> objects from a <code>data.frame</code></dd>
 
         <dt>
 
@@ -1048,37 +1063,79 @@
         <dt>
 
           <code><a href="plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code>
-
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
         </dt>
         <dd>Time-profile plot of individual data</dd>
 
         <dt>
 
           <code><a href="plotObservedVsSimulated.html">plotObservedVsSimulated()</a></code>
-
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
         </dt>
         <dd>Observed versus predicted/simulated scatter plot</dd>
 
         <dt>
 
           <code><a href="plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code>
-
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
         </dt>
         <dd>Time-values profile plot for population simulations</dd>
 
         <dt>
 
-          <code><a href="plotResidualsVsSimulated.html">plotResidualsVsSimulated()</a></code>
+          <code><a href="plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code>
 
+        </dt>
+        <dd>Plot Predicted vs Observed Values</dd>
+
+        <dt>
+
+          <code><a href="plotQuantileQuantilePlot.html">plotQuantileQuantilePlot()</a></code>
+
+        </dt>
+        <dd>Plot Quantile-Quantile Plot</dd>
+
+        <dt>
+
+          <code><a href="plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code>
+
+        </dt>
+        <dd>Plot Residuals Histogram</dd>
+
+        <dt>
+
+          <code><a href="plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>
+
+        </dt>
+        <dd>Plot Residuals vs Covariate</dd>
+
+        <dt>
+
+          <code><a href="plotResidualsVsSimulated.html">plotResidualsVsSimulated()</a></code>
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
         </dt>
         <dd>Residuals versus time scatter plot</dd>
 
         <dt>
 
           <code><a href="plotResidualsVsTime.html">plotResidualsVsTime()</a></code>
-
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
         </dt>
         <dd>Residuals versus time scatter plot</dd>
+
+        <dt>
+
+          <code><a href="plotTimeProfile.html">plotTimeProfile()</a></code>
+
+        </dt>
+        <dd>Create Time Profile Plot</dd>
+
+        <dt>
+
+          <code><a href="populationFromDataFrame.html">populationFromDataFrame()</a></code>
+
+        </dt>
+        <dd>Creates a <code>Population</code> object from a data.frame</dd>
 
         <dt>
 
@@ -1197,7 +1254,7 @@
           <code><a href="setOutputs.html">setOutputs()</a></code>
 
         </dt>
-        <dd>Set outputs</dd>
+        <dd>Set outputs of a simulation</dd>
 
         <dt>
 
@@ -1267,7 +1324,7 @@
           <code><a href="toUnit.html">toUnit()</a></code>
 
         </dt>
-        <dd>Converts a value given in base unit of a quantity into a target unit</dd>
+        <dd>Converts values from one unit to another</dd>
 
         <dt>
 

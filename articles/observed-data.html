@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,6 +48,7 @@
     <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
     <li><a class="dropdown-item" href="../articles/data-combined.html">Working with `DataCombined` class</a></li>
     <li><a class="dropdown-item" href="../articles/data-combined-plotting.html">Visualizations with `DataCombined`</a></li>
+    <li><a class="dropdown-item" href="../articles/plotting-with-ospsuite-plots.html">Plotting with ospsuite.plots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Miscellaneous</h6></li>
     <li><a class="dropdown-item" href="../articles/efficient-calculations.html">Efficient calculation</a></li>
@@ -197,7 +198,7 @@ change the error type:</p>
 <span></span>
 <span><span class="co"># Change error type to geometric</span></span>
 <span><span class="va">dataSet</span><span class="op">$</span><span class="va">yErrorType</span> <span class="op">&lt;-</span> <span class="va">DataErrorType</span><span class="op">$</span><span class="va">GeometricStdDev</span></span>
-<span><span class="co"># Error unit is "Unitless" for dimension "Fraction".</span></span>
+<span><span class="co"># Error unit is "" (empty string) for dimension "Fraction".</span></span>
 <span><span class="va">dataSet</span><span class="op">$</span><span class="va">yErrorUnit</span></span>
 <span><span class="co">#&gt; [1] ""</span></span>
 <span></span>
@@ -267,6 +268,85 @@ processed in downstream analysis and visualization workflows:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> Second data set       5   0.100    <span style="color: #BB0000;">NA</span>        Time       h     Concentra… mg/l </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more variables: yErrorType &lt;chr&gt;, yErrorUnit &lt;chr&gt;, molWeight &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   lloq &lt;dbl&gt;, Molecule &lt;chr&gt;, Organ &lt;chr&gt;</span></span></span></code></pre></div>
+<p>The inverse operation - creating <code>DataSet</code> objects from a
+<code>data.frame</code> - is performed by
+<code><a href="../reference/dataSetsFromDataFrame.html">dataSetsFromDataFrame()</a></code>. The function accepts a
+<code>data.frame</code> with the same structure as returned by
+<code><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame()</a></code> and returns a named list of
+<code>DataSet</code> objects. This is useful for constructing
+<code>DataSet</code> objects programmatically or after manipulating data
+in a <code>data.frame</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create a data set and convert to data.frame</span></span>
+<span><span class="va">dsOriginal</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/DataSet.html">DataSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Aciclovir"</span><span class="op">)</span></span>
+<span><span class="va">dsOriginal</span><span class="op">$</span><span class="fu">setValues</span><span class="op">(</span></span>
+<span>  xValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>,</span>
+<span>  yValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1.2</span>, <span class="fl">0.8</span>, <span class="fl">0.3</span><span class="op">)</span>,</span>
+<span>  yErrorValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.08</span>, <span class="fl">0.03</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">dsOriginal</span><span class="op">$</span><span class="fu">addMetaData</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Organ"</span>, value <span class="op">=</span> <span class="st">"Blood"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Convert to data.frame for further processing</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame</a></span><span class="op">(</span><span class="va">dsOriginal</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        name xValues yValues yErrorValues xDimension xUnit           yDimension</span></span>
+<span><span class="co">#&gt; 1 Aciclovir       1     0.5         0.05       Time     h Concentration (mass)</span></span>
+<span><span class="co">#&gt; 2 Aciclovir       2     1.2         0.10       Time     h Concentration (mass)</span></span>
+<span><span class="co">#&gt; 3 Aciclovir       3     0.8         0.08       Time     h Concentration (mass)</span></span>
+<span><span class="co">#&gt; 4 Aciclovir       4     0.3         0.03       Time     h Concentration (mass)</span></span>
+<span><span class="co">#&gt;   yUnit       yErrorType yErrorUnit molWeight lloq Organ</span></span>
+<span><span class="co">#&gt; 1  mg/l ArithmeticStdDev       mg/l        NA   NA Blood</span></span>
+<span><span class="co">#&gt; 2  mg/l ArithmeticStdDev       mg/l        NA   NA Blood</span></span>
+<span><span class="co">#&gt; 3  mg/l ArithmeticStdDev       mg/l        NA   NA Blood</span></span>
+<span><span class="co">#&gt; 4  mg/l ArithmeticStdDev       mg/l        NA   NA Blood</span></span>
+<span></span>
+<span><span class="co"># Reconstruct DataSet objects from the data.frame</span></span>
+<span><span class="va">dataSetsFromDf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dataSetsFromDataFrame.html">dataSetsFromDataFrame</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dataSetsFromDf</span><span class="op">[[</span><span class="st">"Aciclovir"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;DataSet&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: Aciclovir</span></span>
+<span><span class="co">#&gt;   • X dimension: Time</span></span>
+<span><span class="co">#&gt;   • X unit: h</span></span>
+<span><span class="co">#&gt;   • Y dimension: Concentration (mass)</span></span>
+<span><span class="co">#&gt;   • Y unit: mg/l</span></span>
+<span><span class="co">#&gt;   • Error type: ArithmeticStdDev</span></span>
+<span><span class="co">#&gt;   • Error unit: mg/l</span></span>
+<span><span class="co">#&gt;   • Molecular weight: NULL</span></span>
+<span><span class="co">#&gt;   • LLOQ: NULL</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Meta data</span>:</span></span>
+<span><span class="co">#&gt;   • Organ: Blood</span></span></code></pre></div>
+<p><code><a href="../reference/dataSetsFromDataFrame.html">dataSetsFromDataFrame()</a></code> can also be used to create
+<code>DataSet</code> objects from a <code>data.frame</code> that was not
+produced by <code><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame()</a></code>, for example when observed
+data is provided as a plain table. The required columns are
+<code>name</code>, <code>xValues</code>, and <code>yValues</code>. All
+other standard columns are optional, and any additional columns are
+interpreted as meta data.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Construct a data.frame manually and create DataSet objects from it</span></span>
+<span><span class="va">observedDf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Study A"</span>, <span class="st">"Study A"</span>, <span class="st">"Study B"</span>, <span class="st">"Study B"</span><span class="op">)</span>,</span>
+<span>  xValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  yValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>  Organ <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Liver"</span>, <span class="st">"Liver"</span>, <span class="st">"Kidney"</span>, <span class="st">"Kidney"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dataSetsFromObserved</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dataSetsFromDataFrame.html">dataSetsFromDataFrame</a></span><span class="op">(</span><span class="va">observedDf</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dataSetsFromObserved</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Study A" "Study B"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dataSetsFromObserved</span><span class="op">[[</span><span class="st">"Study A"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;DataSet&gt;</span></span></span>
+<span><span class="co">#&gt;   • Name: Study A</span></span>
+<span><span class="co">#&gt;   • X dimension: Time</span></span>
+<span><span class="co">#&gt;   • X unit: h</span></span>
+<span><span class="co">#&gt;   • Y dimension: Concentration (mass)</span></span>
+<span><span class="co">#&gt;   • Y unit: mg/l</span></span>
+<span><span class="co">#&gt;   • Error type: NULL</span></span>
+<span><span class="co">#&gt;   • Error unit: NULL</span></span>
+<span><span class="co">#&gt;   • Molecular weight: NULL</span></span>
+<span><span class="co">#&gt;   • LLOQ: NULL</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Meta data</span>:</span></span>
+<span><span class="co">#&gt;   • Organ: Liver</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="importing-data">Importing data<a class="anchor" aria-label="anchor" href="#importing-data"></a>
@@ -279,7 +359,7 @@ from the <code>*.pkml</code> file. Complementary to this function is the
 function <code><a href="../reference/saveDataSetToPKML.html">saveDataSetToPKML()</a></code> that allows to export any
 <code>DataSet</code> to a <code>*.pkml</code> that can be loaded e.g. in
 MoBi.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load a data set from PKML</span></span>
 <span><span class="va">filePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ObsDataAciclovir_1.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span></span>
@@ -325,7 +405,7 @@ the x values) or meta data (e.g., description of the applied dose). One
 way to obtain such configuration is to create it in PK-Sim or MoBi, save
 it (as an <code>*.xml</code>) file, and load it in R with the
 <code><a href="../reference/loadDataImporterConfiguration.html">loadDataImporterConfiguration()</a></code> function:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load a configuration from xml file</span></span>
 <span><span class="va">filePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"dataImporterConfiguration.xml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">importerConfiguration</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadDataImporterConfiguration.html">loadDataImporterConfiguration</a></span><span class="op">(</span>configurationFilePath <span class="op">=</span> <span class="va">filePath</span><span class="op">)</span></span>
@@ -351,12 +431,13 @@ it (as an <code>*.xml</code>) file, and load it in R with the
 <p>A data importer configuration can also be created from scratch and
 has to be manually populated by the user. Alternatively, the user can
 let the software “guess” the configuration for a given excel sheet:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Excel file</span></span>
 <span><span class="va">excelFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CompiledDataSet.xlsx"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">sheetName</span> <span class="op">&lt;-</span> <span class="st">"TestSheet_1"</span></span>
 <span></span>
 <span><span class="co"># Create importer configuration for the excel sheet</span></span>
+<span><span class="co"># The sheet name is automatically added to the configuration</span></span>
 <span><span class="va">importerConfiguration_guessed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createImporterConfigurationForFile.html">createImporterConfigurationForFile</a></span><span class="op">(</span></span>
 <span>  filePath <span class="op">=</span> <span class="va">excelFilePath</span>,</span>
 <span>  sheet <span class="op">=</span> <span class="va">sheetName</span></span>
@@ -386,17 +467,18 @@ automated configuration recognition cannot cover all possible cases.</p>
 can be specified in the <code>ImporterConfiguration</code>. The
 following example loads the sheets <code>TestSheet_1</code> and
 <code>TestSheet_1_withMW</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Excel file</span></span>
 <span><span class="va">excelFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CompiledDataSet.xlsx"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">sheetName</span> <span class="op">&lt;-</span> <span class="st">"TestSheet_1"</span></span>
 <span></span>
 <span><span class="co"># Create importer configuration for the excel sheet</span></span>
+<span><span class="co"># The sheet name is automatically added to the configuration</span></span>
 <span><span class="va">importerConfiguration_guessed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createImporterConfigurationForFile.html">createImporterConfigurationForFile</a></span><span class="op">(</span></span>
 <span>  filePath <span class="op">=</span> <span class="va">excelFilePath</span>,</span>
 <span>  sheet <span class="op">=</span> <span class="va">sheetName</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co"># Add sheet names to the configuration</span></span>
+<span><span class="co"># To load multiple sheets, override the sheets property</span></span>
 <span><span class="va">importerConfiguration_guessed</span><span class="op">$</span><span class="va">sheets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TestSheet_1"</span>, <span class="st">"TestSheet_1_withMW"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load data</span></span>

@@ -12,6 +12,7 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/observed-data.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/pk-analysis.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/plotting-with-ospsuite-plots.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/run-simulation.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/sensitivity-analysis.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/articles/set-values.html</loc></url>
@@ -23,8 +24,6 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/index.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/news/index.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/AgingData.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/AllMatchingMethod.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/AllPathsInMethod.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/ApiConfig.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Application.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/Cache.html</loc></url>
@@ -82,6 +81,7 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/ValuePoint.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/addOutputInterval.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/addOutputs.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/addResidualColumn.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/addUserDefinedPKParameter.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/allAvailableDimensions.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/allPKParameterNames.html</loc></url>
@@ -100,6 +100,7 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/createPopulationCharacteristics.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/createSimulationBatch.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dataSetToDataFrame.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dataSetsFromDataFrame.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-ImporterErrorTypeToDataSetErrorType.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-addMissingGroupings.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-cleanVectorArgs.html</loc></url>
@@ -108,15 +109,11 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-encodeUnit.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-expandPath.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-extractAggregatedSimulatedData.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-extractMostFrequentUnit.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-extractResidualsToTibble.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-gatherFiles.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-geoRange.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getAllEntitiesMatching.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getAllEntityPathsIn.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getConcurrentSimulationRunnerResults.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getDimensionsEnum.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getEntity.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getNetTask.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getNetTaskFromCache.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/dot-getOspDimensions.html</loc></url>
@@ -204,8 +201,14 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotIndividualTimeProfile.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotObservedVsSimulated.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotPopulationTimeProfile.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotPredictedVsObserved.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotQuantileQuantilePlot.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsAsHistogram.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsCovariate.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsSimulated.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsTime.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotTimeProfile.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/populationFromDataFrame.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/populationToDataFrame.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/potentialVariableParameterPathsFor.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/reference/reexports.html</loc></url>
