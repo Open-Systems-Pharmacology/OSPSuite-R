@@ -2761,7 +2761,7 @@
     },
     "ospsuite.plots": {
       "Package": "ospsuite.plots",
-      "Version": "1.0.1.9014",
+      "Version": "1.1.0",
       "Source": "git",
       "Type": "Package",
       "Title": "Library for standardized graphs",
@@ -2821,7 +2821,7 @@
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "OSPSuite.Plots",
       "RemoteRef": "main",
-      "RemoteSha": "e6d8faac0b9092614667204f9c95b781d980d121",
+      "RemoteSha": "e70f239441a65656fe683050453d866ae526a32e",
       "Remotes": "ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils"
     },
     "ospsuite.utils": {
