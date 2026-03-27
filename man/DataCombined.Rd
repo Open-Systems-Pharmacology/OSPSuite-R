@@ -57,6 +57,7 @@ myDataCombined$toDataFrame()
 }
 \seealso{
 Other data-combined: 
+\code{\link{addResidualColumn}()},
 \code{\link{calculateResiduals}()},
 \code{\link{convertUnits}()}
 }

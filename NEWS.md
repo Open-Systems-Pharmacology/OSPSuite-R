@@ -2,20 +2,16 @@
 
 ## Major changes
 
-- Added five new plotting functions powered by `{ospsuite.plots}`:
-  `plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`,
-  `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()`.
-  These functions accept `DataCombined` objects or data frames and handle mixed
-  error types and unit conversion directly, without requiring data preprocessing.
-
-- The `{tlf}`-based plotting functions `plotIndividualTimeProfile()`,
-  `plotPopulationTimeProfile()`, `plotObservedVsSimulated()`,
-  `plotResidualsVsTime()`, and `plotResidualsVsSimulated()` are now soft-deprecated
-  in favor of the `{ospsuite.plots}`-based equivalents and will be removed in
-  version 14.0. (\#1739)
+- Added five new plotting functions powered by `{ospsuite.plots}`: `plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()`. These functions accept `DataCombined` objects or data frames and handle mixed error types and unit conversion directly, without requiring data preprocessing.
+- The `{tlf}`-based plotting functions `plotIndividualTimeProfile()`, `plotPopulationTimeProfile()`, `plotObservedVsSimulated()`, `plotResidualsVsTime()`, and `plotResidualsVsSimulated()` are now soft-deprecated in favor of the `{ospsuite.plots}`-based equivalents and will be removed in version 14.0. (\#1739)
 
 ## Minor improvements and bug fixes
 
+- Fixed `validateDimension()` error message not showing the actual dimension name (#1822).
+- Plotting functions based on {ospsuite.plots} now produce a warning and return `NULL` when `DataCombined` has no plottable entries (#1709).
+- Updated `{ospsuite.plots}` option key references to match camelCase naming convention (e.g., `watermarkEnabled`, `defaultPercentiles`) (\#1818).
+- Added `addResidualColumn()` to unify residual computation across `calculateResiduals()` and the residual plot functions. Supports `"log"`, `"linear"` (or `"lin"`), and `"ratio"` scaling. For log scaling, zero or negative values now produce `NaN` with a warning instead of an epsilon-based approximation (\#1713).
+- Plotting functions now document all passable `...` arguments via `@inheritDotParams`, improving IDE autocompletion for `plotPredictedVsObserved()` and `plotResidualsAsHistogram()` (\#1817).
 - Added `dataSetsFromDataFrame()` function that creates a list of `DataSet` objects from a `data.frame` with the same structure as returned by `dataSetToDataFrame()`. This is the inverse operation of `dataSetToDataFrame()` and allows creating `DataSet` objects from data frames without requiring an Excel file. (\#1495)
 - Added `populationFromDataFrame()` function to create a `Population` object from a data.frame, the reverse of `populationToDataFrame()`. If no `IndividualId` column is present, sequential IDs are automatically generated. (\#1807)
 - `loadDataSetsFromExcel()` now accepts a `sheets` parameter to specify which sheets to load. When `sheets = NULL` (default), the function uses sheets defined in the importer configuration. If the configuration has no sheets defined, all sheets are loaded. When `sheets` is a character vector, those specific sheets are loaded, overriding any sheets in the configuration. The `importAllSheets` parameter is now deprecated and will be removed in version 14 (\#1760).
@@ -75,7 +71,7 @@
 
 ## Breaking changes
 
-- ´{ospsuite}`now requires`{ospsuite.utils}` version \>= 1.7.0.
+- `{ospsuite}` now requires `{ospsuite.utils}` version \>= 1.7.0.
 - Classes `SimulationBatchRunValues` and `SimulationBatchOptions` are not exported any more.
   They should not be used directly.
 
@@ -89,9 +85,7 @@
 
 ## Minor improvements and bug fixes
 
-- Added `showLegendPerDataset` parameter to `plotIndividualTimeProfile()` and
-  `plotPupulationTimeProfile()` to optionally display separate legend entries for
-  each dataset. This is experimental.
+- Added `showLegendPerDataset` parameter to `plotIndividualTimeProfile()` and `plotPupulationTimeProfile()` to optionally display separate legend entries for each dataset. This is experimental.
 - Improved print outputs for all classes
 - Classes do not inherit from the deprecated `Printable` class from the `{ospsuite.utils}` package.
 - Print methods for all classes are now implemented using the `ospPrint\*` functions
@@ -136,7 +130,8 @@
 
 ## Major Changes
 
-- The package gains `{openxlsx}` and `{lifecyle}` dependencies.
+- # The package gains `{openxlsx}` and `{lifecyle}` dependencies.
+- The package gains `{openxlsx}` and `{lifecycle}` dependencies.
 - Added a function `getSteadyState()` to calculate steady state values for
   simulations. This function is of particular use for models of endogenous
   substrates, where changing a parameter value (e.g., the production rate)
@@ -192,8 +187,8 @@
   deprecated and replaced by `xAxisLimits` and `yAxisLimits`. Use them to zoom
   in the plot while preserving all data points. Use `xValuesLimits` and
   `yValuesLimits` to filter out data point outside of these range. More
-  detailed explanations
-  [here](https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples).
+  detailed explanations in the
+  [ggplot2 coord_cartesian documentation](https://ggplot2.tidyverse.org/reference/coord_cartesian.html#ref-examples).
 - `addSimulationResults` and `addDataSets` methods of the `DataCombined` class
   now support an optional `silent` argument which silences the checks for data
   set names. If you expect to replace data sets in `DataCombined` objects
