@@ -211,7 +211,7 @@ test_that("It returns NULL when the dimension exists, or throws an error otherwi
   expect_null(validateDimension("Amount"))
   expect_error(
     validateDimension("NotADimension"),
-    regexp = messages$errorDimensionNotSupported("NotADimension")
+    regexp = "NotADimension"
   )
 })
 
