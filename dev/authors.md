@@ -15,9 +15,8 @@
 - **[Juri Solodenko](https://github.com/Yuri05)**. Author.
   [](https://orcid.org/0000-0001-6922-588X)
 
-- **[Indrajeet
-  Patil](https://sites.google.com/site/indrajeetspatilmorality/)**.
-  Author. [](https://orcid.org/0000-0003-1995-6531)  
+- **[Indrajeet Patil](https://indrajeetpatil.github.io/)**. Author.
+  [](https://orcid.org/0000-0003-1995-6531)  
   @patilindrajeets
 
 - **Felix MIL**. Author.
