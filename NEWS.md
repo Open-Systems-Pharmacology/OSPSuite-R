@@ -1,10 +1,14 @@
 # ospsuite (development version)
 
+## Minor improvements and bug fixes
+
+- `DataSet$setValues()` and plotting functions (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, `plotQuantileQuantilePlot()`) now warn and replace negative `yErrorValues` with `NA` instead of silently accepting them (#1756).
+
 # ospsuite 12.4.2
 
 ## Major changes
 
-- Added five new plotting functions powered by `{ospsuite.plots}`: `plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()`. These functions accept `DataCombined` objects or data frames and handle mixed error types and unit conversion directly, without requiring data preprocessing.
+- Added five new plotting functions powered by `{ospsuite.plots}`: `plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()`. These functions accept `DataCombined` objects or data frames and handle mixed error types and unit conversion directly, without requiring data preprocessing (#1652).
 - The `{tlf}`-based plotting functions `plotIndividualTimeProfile()`, `plotPopulationTimeProfile()`, `plotObservedVsSimulated()`, `plotResidualsVsTime()`, and `plotResidualsVsSimulated()` are now soft-deprecated in favor of the `{ospsuite.plots}`-based equivalents and will be removed in version 14.0. (\#1739)
 
 ## Minor improvements and bug fixes
@@ -131,7 +135,6 @@
   function.
 
 ## Major Changes
-
 
 - The package gains `{openxlsx}` and `{lifecycle}` dependencies.
 - Added a function `getSteadyState()` to calculate steady state values for
