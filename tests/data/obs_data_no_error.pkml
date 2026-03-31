@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<McDataRepository id="9e1e18a6-06ee-43a9-a0da-a8d86bf44797" name="ObservedData_noError" icon="ObservedData" version="14">
+  <Columns>
+    <McBaseGrid id="5dd0637f-79dc-4134-a3df-7ea82d35e111" name="Time " dimension="Time" isInternal="0" baseGrid="5dd0637f-79dc-4134-a3df-7ea82d35e111">
+      <DataInfo origin="BaseGrid" auxiliaryType="Undefined" displayUnitName="min" date="-8585740306547745134" source="ObservedData.ObservedData.Time [min]" />
+      <QuantityInfo name="Time " type="Time" orderIndex="0" Path="ObservedData_noError|Time " />
+      <Values>AAEAAAD/////AQAAAAAAAAAPAQAAAAcAAAALZmbmPwrXm0AzMyNBAADwQQAAcEIAAPBCAABwQws=</Values>
+      <RelatedColumnsCache />
+    </McBaseGrid>
+    <McDataColumn id="5e4b3c52-526f-4c61-8b6b-8c23d25844c2" name="Measurement " dimension="Concentration (mass)" isInternal="0" baseGrid="5dd0637f-79dc-4134-a3df-7ea82d35e111">
+      <DataInfo origin="Observation" auxiliaryType="Undefined" displayUnitName="mg/l" date="-8585740306547745134" source="ObservedData.ObservedData.Measurement [mg/l]" />
+      <QuantityInfo name="Measurement " type="Undefined" orderIndex="0" Path="ObservedData_noError|Measurement " />
+      <Values>AAEAAAD/////AQAAAAAAAAAPAQAAAAcAAAALN9CKMA8mZDAvqUgwf+6ZL//wAy/yIwYusaTQLAs=</Values>
+      <RelatedColumnsCache />
+    </McDataColumn>
+  </Columns>
+  <ExtendedProperties>
+    <StringExtendedProperty name="Source" readOnly="0" value="C:\Users\PavelBalazki\Desktop\ObservedData.xlsx.ObservedData" />
+    <StringExtendedProperty name="File" readOnly="0" value="ObservedData" />
+    <StringExtendedProperty name="Sheet" readOnly="0" value="ObservedData" />
+  </ExtendedProperties>
+</McDataRepository>

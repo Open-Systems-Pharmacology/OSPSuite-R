@@ -1360,9 +1360,8 @@ test_that("sequential update when first and second datasets have same names but 
 
 test_that("data frame is as expected when `Population` objects are used", {
   # Load simulation
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
   sim_immutable <- loadSimulation(
-    simFilePath,
+    aciclovirSimulationPath,
     loadFromCache = TRUE,
     addToCache = TRUE
   )

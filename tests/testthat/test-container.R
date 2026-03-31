@@ -1,7 +1,7 @@
 # Container
 
-sim_immutable <- loadTestSimulation(
-  "S1",
+sim_immutable <- loadSimulation(
+  aciclovirSimulationPath,
   loadFromCache = TRUE,
   addToCache = TRUE
 )
@@ -34,7 +34,10 @@ test_that("It can retrieve the path of a container", {
 
 test_that("It can retrieve the fullPath of a container", {
   container <- getContainer(liverPath, sim_immutable)
-  expect_equal(container$fullPath, paste("S1", liverPath, sep = "|"))
+  expect_equal(
+    container$fullPath,
+    paste(sim_immutable$name, liverPath, sep = "|")
+  )
 })
 
 test_that("It throws an error when trying to set the path of a container", {

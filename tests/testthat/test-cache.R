@@ -1,6 +1,6 @@
 #  Cache
-sim <- loadTestSimulation(
-  "S1",
+sim <- loadSimulation(
+  aciclovirSimulationPath,
   loadFromCache = TRUE,
   addToCache = TRUE
 )
