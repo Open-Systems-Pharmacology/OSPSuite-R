@@ -14,6 +14,13 @@ testPVBB <- getSimulation()$configuration$modules[[1]]$getParameterValuesBBs()[[
   1
 ]]
 
+testProject <- loadMoBiProject(system.file(
+  "extdata",
+  "TH_QST_Platform.mbp3",
+  package = "ospsuite"
+))
+minimalTestProject <- loadMoBiProject(getTestDataFilePath("Test_Project.mbp3"))
+
 # Test initialConditionsToDataFrame with no paths
 # Test initialConditionsToDataFrame with one path
 # Test initialConditionsToDataFrame with multiple paths
@@ -220,74 +227,88 @@ test_that("deleteInitialConditions ignores paths that do not exist", {
 
 # extendInitialConditions
 test_that("extendInitialConditions extends with all molecules if moleculeNames is NULL", {
-  # Setup fresh simulation and modules for this test
-  simulation <- getSimulation()
-  icBB <- simulation$configuration$modules[[1]]$getInitialConditionsBBs()[[1]]
+  module <- testProject$getModules("Thyroid_QST")[[1]]
+  icBB <- module$getInitialConditionsBBs()[[1]]
   spatialStructureModule <- thyroidModule <- loadModuleFromPKML(system.file(
     "extdata",
     "Thyroid.pkml",
     package = "ospsuite"
   ))
-  moleculesModule <- simulation$configuration$modules[[1]]
 
   newPaths <- extendInitialConditions(
     initialConditionsBuildingBlock = icBB,
     spatialStructureModule = spatialStructureModule,
-    moleculesModule = moleculesModule
+    moleculesModule = module
   )
 
-  paths_after <- getAllQuantityPathsIn(icBB)
+  icBB_df <- initialConditionsToDataFrame(icBB)
+  # Select only the new paths
+  newPaths_df <- icBB_df[
+    paste0(icBB_df$`Container Path`, "|", icBB_df$`Molecule Name`) %in%
+      newPaths,
+  ]
 
-  # Check that new paths were added
-  expect_gt(length(newPaths), 0)
-  expect_true(all(newPaths %in% paths_after))
+  expect_snapshot(newPaths_df)
+})
 
-  # Check that new paths for the new molecule are present
-  expect_true(any(grepl("new-molecule", newPaths, fixed = TRUE)))
+test_that("extendInitialConditions does not add new entries for existing molecules and compartments", {
+  module <- testProject$getModules("Thyroid_QST")[[1]]
+  icBB <- module$getInitialConditionsBBs()[[1]]
 
-  # Check that paths for existing molecules were not added again
-  existing_paths_in_newPaths <- newPaths[newPaths %in% paths_before]
-  expect_equal(length(existing_paths_in_newPaths), 0)
+  newPaths <- extendInitialConditions(
+    initialConditionsBuildingBlock = icBB,
+    spatialStructureModule = module,
+    moleculesModule = module,
+    moleculeNames = c("T3", "T4")
+  )
+
+  # New entries are still added , specifically for the "EndogenousIgG" compartment. This is expected.
+  icBB_df <- initialConditionsToDataFrame(icBB)
+  # Select only the new paths
+  newPaths_df <- icBB_df[
+    paste0(icBB_df$`Container Path`, "|", icBB_df$`Molecule Name`) %in%
+      newPaths,
+  ]
+
+  expect_snapshot(newPaths_df)
 })
 
 test_that("extendInitialConditions extends only with specified molecules", {
-  # Setup fresh simulation and modules for this test
-  simulation <- getSimulation()
-  icBB <- simulation$configuration$modules[[1]]$getInitialConditionsBBs()[[1]]
-  spatialStructureModule <- simulation$configuration$modules[[1]]
-  moleculesModule <- simulation$configuration$modules[[1]]
-
-  # Add two molecules but only extend one
-  mol1 <- createMolecule(
-    name = "mol-to-extend",
-    templateMoleculeName = "Aciclovir"
-  )
-  mol2 <- createMolecule(
-    name = "mol-not-to-extend",
-    templateMoleculeName = "Aciclovir"
-  )
-  moleculesModule$add(mol1)
-  moleculesModule$add(mol2)
+  testProject <- loadMoBiProject(system.file(
+    "extdata",
+    "TH_QST_Platform.mbp3",
+    package = "ospsuite"
+  ))
+  module <- testProject$getModules("Thyroid_QST")[[1]]
+  icBB <- module$getInitialConditionsBBs()[[1]]
+  spatialStructureModule <- thyroidModule <- loadModuleFromPKML(system.file(
+    "extdata",
+    "Thyroid.pkml",
+    package = "ospsuite"
+  ))
 
   newPaths <- extendInitialConditions(
-    icBB,
-    spatialStructureModule,
-    moleculesModule,
-    moleculeNames = "mol-to-extend"
+    initialConditionsBuildingBlock = icBB,
+    spatialStructureModule = spatialStructureModule,
+    moleculesModule = module,
+    moleculeNames = c("T3", "T4")
   )
 
-  # Check that new paths for "mol-to-extend" are present
-  expect_true(any(grepl("mol-to-extend", newPaths, fixed = TRUE)))
-  # Check that new paths for "mol-not-to-extend" are NOT present
-  expect_false(any(grepl("mol-not-to-extend", newPaths, fixed = TRUE)))
+  icBB_df <- initialConditionsToDataFrame(icBB)
+  # Select only the new paths
+  newPaths_df <- icBB_df[
+    paste0(icBB_df$`Container Path`, "|", icBB_df$`Molecule Name`) %in%
+      newPaths,
+  ]
+
+  expect_snapshot(newPaths_df)
 })
 
 test_that("extendInitialConditions throws error for wrong spatial structure module", {
   icBB <- getFreshICBB()
   moleculesModule <- getSimulation()$configuration$modules[[1]]
   # A module without a spatial structure BB is needed.
-  # Let's create an empty module.
-  emptyModule <- MoBiModule$new("empty")
+  emptyModule <- minimalTestProject$getModules("ExtModule_noIC_noPV")[[1]]
 
   expect_error(
     extendInitialConditions(icBB, emptyModule, moleculesModule),
@@ -298,7 +319,7 @@ test_that("extendInitialConditions throws error for wrong spatial structure modu
 test_that("extendInitialConditions throws error for wrong molecules module", {
   icBB <- getFreshICBB()
   spatialStructureModule <- getSimulation()$configuration$modules[[1]]
-  emptyModule <- MoBiModule$new("empty")
+  emptyModule <- minimalTestProject$getModules("ExtModule_noIC_noPV")[[1]]
 
   expect_error(
     extendInitialConditions(icBB, spatialStructureModule, emptyModule),

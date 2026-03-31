@@ -240,6 +240,8 @@ newPaths <- extendInitialConditions(
   moleculesModule = modules[["Thyroid_QST"]],
   moleculeNames = c("DIO1", "T3", "T4", "TSH")
 )
+
+print(newPaths)
 ```
 
 The molecule "DIO1" that has been added to the IC BB in the previous step is a protein. As the module "Thyroid" adds a new organ for which no protein expression is defined in the Expression Profiles, parameters defining the expression must be added to the PV BB of the new module using the `addProteinExpressionToParameterValuesBB()` function:

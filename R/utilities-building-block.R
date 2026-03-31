@@ -6,7 +6,7 @@
 #' - `Container Path`: Full path to the container where the molecule is located.
 #' - `Molecule Name`: Name of the molecule.
 #' - `Is Present`: Boolean indicating if the molecule is present.
-#' - `Value`: Initial value of the molecule.
+#' - `Value`: Initial value of the molecule. For values that are defined by a formula, the return value can be `NaN`.
 #' - `Unit`: Unit of the initial value.
 #' - `Scale Divisor`: Scale divisor for the initial value.
 #' - `Neg. Values Allowed`: Boolean indicating if negative values are allowed.

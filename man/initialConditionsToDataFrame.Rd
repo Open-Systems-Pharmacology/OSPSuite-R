@@ -15,7 +15,7 @@ A data frame with the following columns:
 \item \verb{Container Path}: Full path to the container where the molecule is located.
 \item \verb{Molecule Name}: Name of the molecule.
 \item \verb{Is Present}: Boolean indicating if the molecule is present.
-\item \code{Value}: Initial value of the molecule.
+\item \code{Value}: Initial value of the molecule. For values that are defined by a formula, the return value can be \code{NaN}.
 \item \code{Unit}: Unit of the initial value.
 \item \verb{Scale Divisor}: Scale divisor for the initial value.
 \item \verb{Neg. Values Allowed}: Boolean indicating if negative values are allowed.
