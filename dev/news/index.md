@@ -4,6 +4,15 @@
 
 ### Minor improvements and bug fixes
 
+- `DataSet$setValues()` and plotting functions
+  ([`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md),
+  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md),
+  [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md),
+  [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsAsHistogram.md),
+  [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotQuantileQuantilePlot.md))
+  now warn and replace negative `yErrorValues` with `NA` instead of
+  silently accepting them
+  ([\#1756](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1756)).
 - Fixed
   [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md)
   error bar mapping: when `predictedAxis = "x"`, error bars are now
@@ -24,7 +33,8 @@
   [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotQuantileQuantilePlot.md).
   These functions accept `DataCombined` objects or data frames and
   handle mixed error types and unit conversion directly, without
-  requiring data preprocessing.
+  requiring data preprocessing
+  ([\#1652](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1652)).
 - The
   [tlf](https://github.com/open-systems-pharmacology/tlf-library)-based
   plotting functions
