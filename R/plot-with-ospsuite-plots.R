@@ -1352,8 +1352,14 @@ plotQuantileQuantilePlot <- function(
     }
   } else if (any(c("yMin", "yMax") %in% names(plotData))) {
     checkmate::assertNames(names(plotData), must.include = c("yMin", "yMax"))
+    observedAxis <- setdiff(c("x", "y"), predictedAxis)
+    errorAes <- if (observedAxis == "x") {
+      ggplot2::aes(xmin = yMin, xmax = yMax)
+    } else {
+      ggplot2::aes(ymin = yMin, ymax = yMax)
+    }
     mapping <- structure(
-      c(mapping, ggplot2::aes(xmin = yMin, xmax = yMax)),
+      c(mapping, errorAes),
       class = "uneval"
     )
   }
