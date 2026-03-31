@@ -328,7 +328,6 @@ test_that("extendInitialConditions throws error for wrong molecules module", {
 })
 
 test_that("extendInitialConditions should handle wrong type of initialConditionsBuildingBlock", {
-  pvBB <- getPVBB()
   simulation <- getSimulation()
   spatialStructureModule <- simulation$configuration$modules[[1]]
   moleculesModule <- simulation$configuration$modules[[1]]
@@ -336,6 +335,6 @@ test_that("extendInitialConditions should handle wrong type of initialConditions
   # I am not sure if this should throw an error on the R side, as there is no validation
   # but the underlying .NET code might throw.
   expect_error(
-    extendInitialConditions(pvBB, spatialStructureModule, moleculesModule)
+    extendInitialConditions(testPVBB, spatialStructureModule, moleculesModule)
   )
 })
