@@ -1,5 +1,9 @@
 # ospsuite (development version)
 
+## Minor improvements and bug fixes
+
+- Fixed `plotPredictedVsObserved()` error bar mapping: when `predictedAxis = "x"`, error bars are now correctly placed on the y-axis (#1715).
+
 # ospsuite 12.4.2
 
 ## Major changes
@@ -131,7 +135,6 @@
   function.
 
 ## Major Changes
-
 
 - The package gains `{openxlsx}` and `{lifecycle}` dependencies.
 - Added a function `getSteadyState()` to calculate steady state values for
