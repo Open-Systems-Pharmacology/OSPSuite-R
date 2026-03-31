@@ -248,6 +248,103 @@ test_that("LLOQ is plotted", {
   )
 })
 
+test_that("plotPredictedVsObserved does not error with LLOQ and predictedAxis x", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  simData <- withr::with_tempdir({
+    df <- dplyr::tibble(
+      IndividualId = c(0, 0, 0),
+      `Time [min]` = c(0, 2, 4),
+      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
+        0,
+        4,
+        8
+      )
+    )
+    readr::write_csv(df, "SimResults.csv")
+    importResultsFromCSV(sim, "SimResults.csv")
+  })
+
+  obsData <- DataSet$new(name = "Observed")
+  obsData$setValues(
+    xValues = c(1, 3, 3.5, 4, 5),
+    yValues = c(1.9, 6.1, 7, 8.2, 1)
+  )
+  obsData$xUnit <- "min"
+  obsData$yDimension <- ospDimensions$`Concentration (molar)`
+  obsData$LLOQ <- 3
+
+  myDC <- DataCombined$new()
+  myDC$addSimulationResults(simData, groups = "myGroup")
+  myDC$addDataSets(obsData, groups = "myGroup")
+
+  expect_no_error(
+    plotPredictedVsObserved(
+      myDC,
+      comparisonLineVector = ospsuite.plots::getFoldDistanceList(
+        2,
+        includeIdentity = TRUE
+      ),
+      predictedAxis = "x"
+    )
+  )
+})
+
+test_that("plotPredictedVsObserved maps error bars to correct axis with predictedAxis x", {
+  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+  sim <- loadSimulation(simFilePath)
+
+  simData <- withr::with_tempdir({
+    df <- dplyr::tibble(
+      IndividualId = c(0, 0, 0),
+      `Time [min]` = c(0, 2, 4),
+      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
+        0,
+        4,
+        8
+      )
+    )
+    readr::write_csv(df, "SimResults.csv")
+    importResultsFromCSV(sim, "SimResults.csv")
+  })
+
+  obsData <- DataSet$new(name = "Observed")
+  obsData$setValues(
+    xValues = c(1, 3, 3.5, 4, 5),
+    yValues = c(1.9, 6.1, 7, 8.2, 1),
+    yErrorValues = c(0.2, 0.5, 0.3, 0.4, 0.1)
+  )
+  obsData$xUnit <- "min"
+  obsData$yDimension <- ospDimensions$`Concentration (molar)`
+
+  # Two datasets with different error types to trigger yMin/yMax path
+  obsData$yErrorType <- DataErrorType$ArithmeticStdDev
+
+  obsData2 <- DataSet$new(name = "Observed 2")
+  obsData2$setValues(
+    xValues = c(1, 3, 4),
+    yValues = c(2.5, 5.5, 7.5),
+    yErrorValues = c(1.2, 1.3, 1.1)
+  )
+  obsData2$xUnit <- "min"
+  obsData2$yDimension <- ospDimensions$`Concentration (molar)`
+  obsData2$yErrorType <- DataErrorType$GeometricStdDev
+
+  myDC <- DataCombined$new()
+  myDC$addSimulationResults(simData, groups = "myGroup")
+  myDC$addDataSets(obsData, groups = "myGroup")
+  myDC$addDataSets(obsData2, groups = "myGroup")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "mixed errors predicted on x-axis",
+    fig = suppressWarnings(
+      plotPredictedVsObserved(myDC, predictedAxis = "x", xyScale = "linear")
+    )
+  )
+})
+
 # Test predictedAxis parameter ----
 test_that("It swaps axes when predictedAxis is 'x'", {
   set.seed(123)
