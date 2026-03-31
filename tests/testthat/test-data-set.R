@@ -253,6 +253,32 @@ test_that("it can update x and y values and remove y error", {
   expect_equal(dataSet$yErrorValues, c(0, 1, 2, 3, 0), tolerance = tolerance)
 })
 
+test_that("setValues warns and replaces negative yErrorValues with NA", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expect_warning(
+    dataSet$setValues(
+      xValues = c(1, 2, 3),
+      yValues = c(10, 20, 30),
+      yErrorValues = c(1, -0.5, 2)
+    ),
+    messages$yErrorValuesNegative(1),
+    fixed = TRUE
+  )
+  expect_equal(dataSet$yErrorValues, c(1, NA, 2), tolerance = tolerance)
+})
+
+test_that("setValues does not warn when yErrorValues are non-negative", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expect_no_warning(
+    dataSet$setValues(
+      xValues = c(1, 2, 3),
+      yValues = c(10, 20, 30),
+      yErrorValues = c(0, 1, 2)
+    )
+  )
+  expect_equal(dataSet$yErrorValues, c(0, 1, 2), tolerance = tolerance)
+})
+
 test_that("it can add a new meta data", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$addMetaData("Meta", "Value")
