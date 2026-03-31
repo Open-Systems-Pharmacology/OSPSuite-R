@@ -14,6 +14,19 @@ aciclovirSim <- loadSimulation(
   loadFromCache = TRUE,
   addToCache = TRUE
 )
+aciclovirSimData <- withr::with_tempdir({
+  df <- dplyr::tibble(
+    IndividualId = c(0, 0, 0),
+    `Time [min]` = c(0, 2, 4),
+    `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
+      0,
+      4,
+      8
+    )
+  )
+  readr::write_csv(df, "SimResults.csv")
+  importResultsFromCSV(aciclovirSim, "SimResults.csv")
+})
 
 # import observed data (will return a list of `DataSet` objects)
 dataSet <- loadDataSetsFromExcel(
@@ -223,20 +236,6 @@ test_that("It returns `NULL` when `DataCombined` is empty", {
 })
 
 test_that("It doesn't extrapolate past maximum simulated time point", {
-  simData <- withr::with_tempdir({
-    df <- dplyr::tibble(
-      IndividualId = c(0, 0, 0),
-      `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
-        0,
-        4,
-        8
-      )
-    )
-    readr::write_csv(df, "SimResults.csv")
-    importResultsFromCSV(aciclovirSim, "SimResults.csv")
-  })
-
   obsData <- DataSet$new(name = "Observed")
   obsData$setValues(
     xValues = c(1, 3, 3.5, 4, 5),
@@ -245,7 +244,7 @@ test_that("It doesn't extrapolate past maximum simulated time point", {
   obsData$xUnit <- "min"
 
   myDC <- DataCombined$new()
-  myDC$addSimulationResults(simData, groups = "myGroup")
+  myDC$addSimulationResults(aciclovirSimData, groups = "myGroup")
   myDC$addDataSets(obsData, groups = "myGroup")
 
   set.seed(123)
@@ -272,20 +271,6 @@ test_that("It returns `NULL` when `DataCombined` doesn't have any pairable datas
 })
 
 test_that("Different symbols for data sets within one group", {
-  simData <- withr::with_tempdir({
-    df <- dplyr::tibble(
-      IndividualId = c(0, 0, 0),
-      `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
-        0,
-        4,
-        8
-      )
-    )
-    readr::write_csv(df, "SimResults.csv")
-    importResultsFromCSV(aciclovirSim, "SimResults.csv")
-  })
-
   obsData <- DataSet$new(name = "Observed")
   obsData$setValues(
     xValues = c(1, 3, 3.5, 4, 5),
@@ -295,7 +280,7 @@ test_that("Different symbols for data sets within one group", {
   obsData$yDimension <- ospDimensions$`Concentration (molar)`
 
   myDC <- DataCombined$new()
-  myDC$addSimulationResults(simData, groups = "myGroup")
+  myDC$addSimulationResults(aciclovirSimData, groups = "myGroup")
   myDC$addDataSets(obsData, groups = "myGroup")
 
   # Add second obs data
@@ -316,20 +301,6 @@ test_that("Different symbols for data sets within one group", {
 })
 
 test_that("LLOQ is plotted", {
-  simData <- withr::with_tempdir({
-    df <- dplyr::tibble(
-      IndividualId = c(0, 0, 0),
-      `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
-        0,
-        4,
-        8
-      )
-    )
-    readr::write_csv(df, "SimResults.csv")
-    importResultsFromCSV(aciclovirSim, "SimResults.csv")
-  })
-
   obsData <- DataSet$new(name = "Observed")
   obsData$setValues(
     xValues = c(1, 3, 3.5, 4, 5),
@@ -340,7 +311,7 @@ test_that("LLOQ is plotted", {
   obsData$LLOQ <- 3
 
   myDC <- DataCombined$new()
-  myDC$addSimulationResults(simData, groups = "myGroup")
+  myDC$addSimulationResults(aciclovirSimData, groups = "myGroup")
   myDC$addDataSets(obsData, groups = "myGroup")
 
   set.seed(123)

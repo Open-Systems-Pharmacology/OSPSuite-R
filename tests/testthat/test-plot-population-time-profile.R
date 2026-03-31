@@ -5,6 +5,14 @@ aciclovirSim <- loadSimulation(
   loadFromCache = TRUE,
   addToCache = TRUE
 )
+populationResults <- importResultsFromCSV(
+  simulation = aciclovirSim,
+  filePaths = system.file(
+    "extdata",
+    "SimResults_pop.csv",
+    package = "ospsuite"
+  )
+)
 
 obsData <- lapply(
   c(
@@ -23,15 +31,6 @@ names(obsData) <- lapply(obsData, function(x) x$name)
 # only simulated ------------------------
 
 test_that("It respects custom plot configuration", {
-  populationResults <- importResultsFromCSV(
-    simulation = aciclovirSim,
-    filePaths = system.file(
-      "extdata",
-      "SimResults_pop.csv",
-      package = "ospsuite"
-    )
-  )
-
   myDataComb <- DataCombined$new()
   myDataComb$addSimulationResults(populationResults)
 
@@ -55,21 +54,12 @@ test_that("It produces expected plot for both observed and simulated datasets", 
     "Organism|Muscle|Intracellular|Aciclovir|Concentration"
   )
 
-  simResults <- importResultsFromCSV(
-    simulation = aciclovirSim,
-    filePaths = system.file(
-      "extdata",
-      "SimResults_pop.csv",
-      package = "ospsuite"
-    )
-  )
-
   outputPaths <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
   myDataCombined <- DataCombined$new()
 
   # Add simulated results
   myDataCombined$addSimulationResults(
-    simulationResults = simResults,
+    simulationResults = populationResults,
     quantitiesOrPaths = outputPaths,
     groups = "Aciclovir PVB"
   )
@@ -101,19 +91,10 @@ test_that("It produces expected plot for multple simulated datasets per group", 
     "Organism|Muscle|Intracellular|Aciclovir|Concentration"
   )
 
-  simResults <- importResultsFromCSV(
-    simulation = aciclovirSim,
-    filePaths = system.file(
-      "extdata",
-      "SimResults_pop.csv",
-      package = "ospsuite"
-    )
-  )
-
   myDataCombined <- DataCombined$new()
 
   myDataCombined$addSimulationResults(
-    simulationResults = simResults,
+    simulationResults = populationResults,
     quantitiesOrPaths = outputPaths,
     groups = "Aciclovir PVB"
   )
@@ -137,19 +118,10 @@ test_that("It produces expected plot for multple simulated and observed datasets
     "Organism|Muscle|Intracellular|Aciclovir|Concentration"
   )
 
-  simResults <- importResultsFromCSV(
-    simulation = aciclovirSim,
-    filePaths = system.file(
-      "extdata",
-      "SimResults_pop.csv",
-      package = "ospsuite"
-    )
-  )
-
   myDataCombined <- DataCombined$new()
 
   myDataCombined$addSimulationResults(
-    simulationResults = simResults,
+    simulationResults = populationResults,
     quantitiesOrPaths = outputPaths,
     groups = "Aciclovir PVB"
   )
@@ -178,15 +150,6 @@ test_that("It returns `NULL` when `DataCombined` is empty", {
 # Aggregations ------------------------
 
 test_that("Aggregations are computed and displayed correctly", {
-  populationResults <- importResultsFromCSV(
-    simulation = aciclovirSim,
-    filePaths = system.file(
-      "extdata",
-      "SimResults_pop.csv",
-      package = "ospsuite"
-    )
-  )
-
   myDataComb <- DataCombined$new()
   myDataComb$addSimulationResults(populationResults)
 
