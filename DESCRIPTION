@@ -30,7 +30,7 @@ Imports:
     ggplot2,
     rlang,
     tlf (>= 1.6.0),
-    ospsuite.plots,
+    ospsuite.plots (>= 1.1.0),
     data.table,
     xml2,
     openxlsx,
