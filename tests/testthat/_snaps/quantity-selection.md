@@ -3,6 +3,5 @@
     Code
       quantitySelection$print()
     Output
-        * Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood):
-        Drug, Observer
+        * Organism|B: Drug
 
