@@ -1,8 +1,7 @@
 #  Cache
-
-sim <- loadTestSimulation("S1")
+sim <- get_sim_s1_immutable()
 cache <- ospsuiteEnv$loadedSimulationsCache
 
 test_that("It can print simulation cache", {
-  expect_error(capture.output(cache$print()), NA)
+  expect_snapshot(cache)
 })

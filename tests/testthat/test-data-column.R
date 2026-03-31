@@ -7,14 +7,6 @@ createBaseGrid <- function() {
     getDimensionByName(ospDimensions$Time)
   ))
 }
-createColumn <- function(baseGrid) {
-  DataColumn$new(rSharp::newObjectFromName(
-    "OSPSuite.Core.Domain.Data.DataColumn",
-    "column",
-    getDimensionByName(ospDimensions$`Concentration (mass)`),
-    baseGrid
-  ))
-}
 
 test_that("It can print a DataColumn", {
   baseGrid <- createBaseGrid()

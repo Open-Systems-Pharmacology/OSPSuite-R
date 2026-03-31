@@ -3,9 +3,13 @@
 # `loadDataSetsFromExcel()` does not work for non-Windows platforms
 
 # load the simulation
-sim <- loadTestSimulation("MinimalModel")
+sim_immutable <- loadTestSimulation(
+  "MinimalModel",
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
 simResults <- importResultsFromCSV(
-  simulation = sim,
+  simulation = sim_immutable,
   filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
 )
 
@@ -1357,10 +1361,14 @@ test_that("sequential update when first and second datasets have same names but 
 test_that("data frame is as expected when `Population` objects are used", {
   # Load simulation
   simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
+  sim_immutable <- loadSimulation(
+    simFilePath,
+    loadFromCache = TRUE,
+    addToCache = TRUE
+  )
 
   populationResults <- importResultsFromCSV(
-    simulation = sim,
+    simulation = sim_immutable,
     filePaths = system.file(
       "extdata",
       "SimResults_pop.csv",
