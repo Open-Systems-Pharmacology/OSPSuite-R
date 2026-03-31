@@ -158,6 +158,13 @@ messages$valueNotPositive <- function(value, propertyName) {
   )
 }
 
+messages$yErrorValuesNegative <- function(n) {
+  paste0(
+    n, " negative yErrorValue(s) found. ",
+    "Negative values have been set to NA."
+  )
+}
+
 messages$molWeightErrorMessage <- function(quantityPath) {
   paste0("Unable to retrieve the molecular weight for: ", quantityPath)
 }
