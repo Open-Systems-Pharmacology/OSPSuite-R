@@ -4,15 +4,15 @@
 
 # load the simulation
 sim <- loadTestSimulation("simple", loadFromCache = TRUE, addToCache = TRUE)
+simResults <- importResultsFromCSV(
+  simulation = sim,
+  filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
+)
+
 aciclovirSim <- loadSimulation(
   aciclovirSimulationPath,
   loadFromCache = TRUE,
   addToCache = TRUE
-)
-
-simResults <- importResultsFromCSV(
-  simulation = sim,
-  filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
 )
 
 # import observed data (will return a list of `DataSet` objects)

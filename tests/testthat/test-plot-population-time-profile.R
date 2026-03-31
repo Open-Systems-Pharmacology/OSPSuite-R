@@ -1,16 +1,30 @@
 # data to be used ---------------------------------------
 
+aciclovirSim <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
+
+obsData <- lapply(
+  c(
+    "ObsDataAciclovir_1.pkml",
+    "ObsDataAciclovir_2.pkml",
+    "ObsDataAciclovir_3.pkml"
+  ),
+  function(x) {
+    loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+  }
+)
+names(obsData) <- lapply(obsData, function(x) x$name)
+
 # plotPopulationTimeProfile
 
 # only simulated ------------------------
 
 test_that("It respects custom plot configuration", {
-  # Load simulation
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
   populationResults <- importResultsFromCSV(
-    simulation = sim,
+    simulation = aciclovirSim,
     filePaths = system.file(
       "extdata",
       "SimResults_pop.csv",
@@ -36,34 +50,19 @@ test_that("It respects custom plot configuration", {
 # both observed and simulated ------------------------
 
 test_that("It produces expected plot for both observed and simulated datasets", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
   outputPaths <- c(
     "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
     "Organism|Muscle|Intracellular|Aciclovir|Concentration"
   )
 
   simResults <- importResultsFromCSV(
-    simulation = sim,
+    simulation = aciclovirSim,
     filePaths = system.file(
       "extdata",
       "SimResults_pop.csv",
       package = "ospsuite"
     )
   )
-
-  obsData <- lapply(
-    c(
-      "ObsDataAciclovir_1.pkml",
-      "ObsDataAciclovir_2.pkml",
-      "ObsDataAciclovir_3.pkml"
-    ),
-    function(x) {
-      loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
-    }
-  )
-  names(obsData) <- lapply(obsData, function(x) x$name)
 
   outputPaths <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
   myDataCombined <- DataCombined$new()
@@ -97,31 +96,19 @@ test_that("It produces expected plot for both observed and simulated datasets", 
 # multiple datasets per group ---------------------
 
 test_that("It produces expected plot for multple simulated datasets per group", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
   outputPaths <- c(
     "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
     "Organism|Muscle|Intracellular|Aciclovir|Concentration"
   )
 
   simResults <- importResultsFromCSV(
-    simulation = sim,
+    simulation = aciclovirSim,
     filePaths = system.file(
       "extdata",
       "SimResults_pop.csv",
       package = "ospsuite"
     )
   )
-
-  obsData <- lapply(
-    c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_3.pkml"),
-    function(x) {
-      loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
-    }
-  )
-
-  names(obsData) <- lapply(obsData, function(x) x$name)
 
   myDataCombined <- DataCombined$new()
 
@@ -145,31 +132,19 @@ test_that("It produces expected plot for multple simulated datasets per group", 
 })
 
 test_that("It produces expected plot for multple simulated and observed datasets per group", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
   outputPaths <- c(
     "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
     "Organism|Muscle|Intracellular|Aciclovir|Concentration"
   )
 
   simResults <- importResultsFromCSV(
-    simulation = sim,
+    simulation = aciclovirSim,
     filePaths = system.file(
       "extdata",
       "SimResults_pop.csv",
       package = "ospsuite"
     )
   )
-
-  obsData <- lapply(
-    c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_3.pkml"),
-    function(x) {
-      loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
-    }
-  )
-
-  names(obsData) <- lapply(obsData, function(x) x$name)
 
   myDataCombined <- DataCombined$new()
 
@@ -179,7 +154,7 @@ test_that("It produces expected plot for multple simulated and observed datasets
     groups = "Aciclovir PVB"
   )
 
-  myDataCombined$addDataSets(obsData, groups = "Aciclovir observed")
+  myDataCombined$addDataSets(obsData[1 - 3], groups = "Aciclovir observed")
 
   set.seed(123)
   vdiffr::expect_doppelganger(
@@ -203,12 +178,8 @@ test_that("It returns `NULL` when `DataCombined` is empty", {
 # Aggregations ------------------------
 
 test_that("Aggregations are computed and displayed correctly", {
-  # Load simulation
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
   populationResults <- importResultsFromCSV(
-    simulation = sim,
+    simulation = aciclovirSim,
     filePaths = system.file(
       "extdata",
       "SimResults_pop.csv",
