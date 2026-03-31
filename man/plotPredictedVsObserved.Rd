@@ -75,7 +75,8 @@ where each entry represents a fold and its reciprocal. The identity fold
 }
 \value{
 A \code{ggplot2} plot object representing predicted vs observed values,
-including aesthetics for the x and y axes.
+including aesthetics for the x and y axes, or \code{NULL} if the data contains
+no plottable entries.
 }
 \description{
 Plots predicted vs observed data, grouped by "group".
