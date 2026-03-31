@@ -1,7 +1,7 @@
 #  DotNetWrapper
 
 sim <- loadTestSimulation(
-  "MinimalModel",
+  "simple",
   loadFromCache = TRUE,
   addToCache = TRUE
 )

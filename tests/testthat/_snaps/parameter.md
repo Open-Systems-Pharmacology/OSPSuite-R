@@ -6,15 +6,11 @@
       <Parameter>
         * Quantity Type: Parameter
         * Path: Organism|Liver|Volume
-        * Value: 2.38 [l]
-        * Value Origin: Publication-Schlender J-F, Meyer M, et al. Development of a
-        Whole-Body Physiologically Based Pharmacokinetic Approach to Assess the
-        Pharmacokinetics of Drugs in Elderly Individuals. Clinical Pharmacokinetics.
-        2016;55(12):1573-1589. doi:10.1007/s40262-016-0422-3
+        * Value: 10.00 [l]
       
       -- Formula --
       
-        * isDistributed: TRUE
+        * isConstant: TRUE
 
 ---
 
@@ -23,13 +19,13 @@
     Output
       <Parameter>
         * Quantity Type: Parameter
-        * Path: Organism|Weight
-        * Value: 73.00 [kg]
+        * Path: Organism|FormulaParameter
+        * Value: 2.00 [l/min]
       
       -- Formula --
       
         * isExplicit: TRUE
-        * formula: Weight_blood + Weight_tissue
+        * formula: 1*2
         * Value overrides formula: FALSE
 
 ---
@@ -39,8 +35,8 @@
     Output
       <Parameter>
         * Quantity Type: Parameter
-        * Path: Organism|Age
-        * Value: 30.00 [year(s)]
+        * Path: Organism|Q
+        * Value: 10.00 [(l/min)²]
       
       -- Formula --
       

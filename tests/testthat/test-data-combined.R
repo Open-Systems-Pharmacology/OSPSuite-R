@@ -4,7 +4,7 @@
 
 # load the simulation
 sim_immutable <- loadTestSimulation(
-  "MinimalModel",
+  "simple",
   loadFromCache = TRUE,
   addToCache = TRUE
 )

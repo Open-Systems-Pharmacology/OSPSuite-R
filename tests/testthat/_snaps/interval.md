@@ -6,6 +6,6 @@
       <Interval>
         * Name: Output interval
         * Start time: 0.00e+00 [min]
-        * End time: 250.00 [min]
-        * Resolution: 1.00 [pts/min]
+        * End time: 300.00 [min]
+        * Resolution: 0.07 [pts/min]
 
