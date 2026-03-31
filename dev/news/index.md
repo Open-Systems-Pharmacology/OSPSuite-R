@@ -2,6 +2,14 @@
 
 ## ospsuite (development version)
 
+### Minor improvements and bug fixes
+
+- Fixed
+  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md)
+  error bar mapping: when `predictedAxis = "x"`, error bars are now
+  correctly placed on the y-axis
+  ([\#1715](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1715)).
+
 ## ospsuite 12.4.2
 
 ### Major changes
