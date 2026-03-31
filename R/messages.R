@@ -159,9 +159,9 @@ messages$valueNotPositive <- function(value, propertyName) {
 }
 
 messages$yErrorValuesNegative <- function(n) {
-  paste0(
-    n, " negative yErrorValue(s) found. ",
-    "Negative values have been set to NA."
+  cliFormat(
+    "{.val {n}} negative yErrorValue(s) found.",
+    "Negative values have been set to {.val NA}."
   )
 }
 

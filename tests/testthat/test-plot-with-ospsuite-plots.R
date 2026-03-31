@@ -515,7 +515,8 @@ test_that(".validateAndConvertData warns and replaces negative yErrorValues with
       plotData = testData,
       predictedIsNeeded = FALSE
     ),
-    "negative"
+    messages$yErrorValuesNegative(1),
+    fixed = TRUE
   )
   expect_equal(result$yErrorValues, c(2, NA, 4))
 })

@@ -261,7 +261,8 @@ test_that("setValues warns and replaces negative yErrorValues with NA", {
       yValues = c(10, 20, 30),
       yErrorValues = c(1, -0.5, 2)
     ),
-    "negative"
+    messages$yErrorValuesNegative(1),
+    fixed = TRUE
   )
   expect_equal(dataSet$yErrorValues, c(1, NA, 2), tolerance = tolerance)
 })
