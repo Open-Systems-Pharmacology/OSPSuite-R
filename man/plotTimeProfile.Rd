@@ -106,7 +106,8 @@ differentiation.}
   }}
 }
 \value{
-A \code{ggplot2} plot object representing the time profile.
+A \code{ggplot2} plot object representing the time profile, or \code{NULL}
+if the data contains no plottable entries.
 }
 \description{
 Creates a time profile plot for given data.

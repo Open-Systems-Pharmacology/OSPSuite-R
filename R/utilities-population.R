@@ -10,7 +10,7 @@
 loadPopulation <- function(csvPopulationFile) {
   validateIsString(csvPopulationFile)
   csvPopulationFile <- .expandPath(csvPopulationFile)
-  populationTask <- .getNetTask("PopulationTask")
+  populationTask <- .getCoreTask("PopulationTask")
   population <- populationTask$call("ImportPopulation", csvPopulationFile)
   Population$new(population)
 }
@@ -40,7 +40,7 @@ splitPopulationFile <- function(
   validateIsString(outputFolder)
   validateIsString(outputFileName)
   csvPopulationFile <- .expandPath(csvPopulationFile)
-  populationTask <- .getNetTask("PopulationTask")
+  populationTask <- .getCoreTask("PopulationTask")
   populationTask$call(
     "SplitPopulation",
     csvPopulationFile,
@@ -120,7 +120,7 @@ populationFromDataFrame <- function(dataFrame) {
   utils::write.csv(dataFrame, file = con, row.names = FALSE)
   csvString <- paste(csvLines, collapse = "\n")
 
-  populationTask <- .getNetTask("PopulationTask")
+  populationTask <- .getCoreTask("PopulationTask")
   population <- populationTask$call("ImportPopulationFromCsvString", csvString)
   Population$new(population)
 }

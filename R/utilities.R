@@ -139,3 +139,47 @@ clearMemory <- function(clearSimulationsCache = FALSE) {
   # Add the keyword `MoleculeProperties` to the list of illegal names
   illegalNames <- c(illegalNames, "MoleculeProperties")
 }
+
+
+#' Validate that an object is a named list
+#'
+#' @param x Object to validate as a named list.
+#' @param varName Name of the variable being validated (used in error message).
+#'
+#' @returns invisible TRUE if the validation passed, otherwise an error is thrown.
+#'
+#' @export
+#' @examples
+#' validateIsNamedList(list(a = 1, b = 2), "myVar") # passes
+#' # validateIsNamedList(list(1, 2), "myVar") # throws an error
+validateIsNamedList <- function(x, varName) {
+  if (!(is.list(x) && !is.null(names(x)) && all(nzchar(names(x))))) {
+    stop(
+      sprintf("The parameter '%s' must be a named list.", varName),
+      call. = FALSE
+    )
+  }
+
+  return(invisible(TRUE))
+}
+
+#' Validate that a string argument is not empty
+#'
+#' @description
+#' Checks that the given character value is not an empty string (`""`).
+#' Throws an error using `messages$errorEmptyString` if it is.
+#'
+#' @param value A character string to validate.
+#' @param varName Name of the variable being validated (used in error message).
+#'
+#' @return Invisibly returns `TRUE` if validation passes.
+#'
+#' @keywords internal
+validateIsNonEmptyString <- function(value, varName) {
+  validateIsString(value)
+  if (nchar(value) == 0) {
+    stop(messages$errorEmptyString(varName), call. = FALSE)
+  }
+
+  return(invisible(TRUE))
+}

@@ -64,7 +64,8 @@ residuals. Default is \code{log}.}
   }}
 }
 \value{
-A \code{ggplot2} plot object representing the Q-Q plot.
+A \code{ggplot2} plot object representing the Q-Q plot, or \code{NULL} if
+the data contains no plottable entries.
 }
 \description{
 Plots a Quantile-Quantile plot, grouped by "group".
