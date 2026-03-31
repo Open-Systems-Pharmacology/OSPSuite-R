@@ -112,10 +112,6 @@ head(icBBDf)
 # head(expProfilesDf)
 ```
 
-
-
-
-
 ## Simulation configurations
 
 Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, the Individual, the Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation. Additionally, it can contain settings for the simulation time, output settings, and solver settings.
