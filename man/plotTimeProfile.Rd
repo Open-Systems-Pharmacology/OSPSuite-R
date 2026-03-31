@@ -14,8 +14,7 @@ plotTimeProfile(
   y2Unit = NULL,
   aggregation = "quantiles",
   quantiles =
-    ospsuite.plots::getOspsuite.plots.option(ospsuite.plots::OptionKeys$Percentiles)[c(1,
-    3, 5)],
+    ospsuite.plots::getOspsuite.plots.option(ospsuite.plots::OptionKeys$defaultPercentiles),
   nsd = 1,
   showLegendPerDataset = "none",
   ...
@@ -107,7 +106,8 @@ differentiation.}
   }}
 }
 \value{
-A \code{ggplot2} plot object representing the time profile.
+A \code{ggplot2} plot object representing the time profile, or \code{NULL}
+if the data contains no plottable entries.
 }
 \description{
 Creates a time profile plot for given data.

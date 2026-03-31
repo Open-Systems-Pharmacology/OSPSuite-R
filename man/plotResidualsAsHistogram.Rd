@@ -55,6 +55,8 @@ residuals. Default is \code{log}.}
 \item{...}{
   Arguments passed on to \code{\link[ospsuite.plots:plotHistogram]{ospsuite.plots::plotHistogram}}
   \describe{
+    \item{\code{asBarPlot}}{A \code{logical} indicating if \code{geom_histogram} should be used (for continuous data) or \code{geom_bar} (for categorical data).
+If TRUE, the variables \code{distribution}, \code{meanFunction}, \code{xScale}, and \code{xScaleArgs} are ignored.}
     \item{\code{geomHistAttributes}}{A \code{list} of arguments passed to \code{ggplot2::geom_histogram} (or \code{geom_bar} if \code{asBarPlot} = TRUE).}
     \item{\code{plotAsFrequency}}{A \code{logical} indicating if the histogram displays frequency on the y-axis.}
     \item{\code{xScale}}{either 'linear' then \code{ggplot2::scale_x_continuous()} or 'log' then \code{ggplot2::scale_x_log10()} is used}
@@ -65,7 +67,8 @@ residuals. Default is \code{log}.}
   }}
 }
 \value{
-A \code{ggplot2} plot object representing the histogram of residuals.
+A \code{ggplot2} plot object representing the histogram of residuals,
+or \code{NULL} if the data contains no plottable entries.
 }
 \description{
 Plots residuals as a histogram, grouped by "group".
