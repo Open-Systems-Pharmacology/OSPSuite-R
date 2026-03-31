@@ -785,56 +785,39 @@ ospUnits <- NULL
 }
 
 
-#' Find the most common units
+#' Find the most frequent unit in the data
 #'
-#' @inheritParams .unitConverter
-#' @param unitColumn The name of the column containing units (e.g. `xUnit`).
+#' When a `dataType` column is present, counts are done per dataset (not per
+#' time point) and observed data is preferred over simulated. This ensures that
+#' a sparse observed dataset is not outvoted by a dense simulation time grid.
+#' Without `dataType`, falls back to a plain row count.
 #'
-#' @examples
+#' @param data A data.frame or data.table.
+#' @param unitColumn Character string: column name containing units (e.g. `"xUnit"`).
 #'
-#' df <- dplyr::tibble(
-#'   xValues = c(15, 30, 60),
-#'   xUnit = "min",
-#'   xDimension = "Time",
-#'   yValues = c(0.25, 45, 78),
-#'   yUnit = c("", "%", "%"),
-#'   yErrorUnit = c("", "%", "%"),
-#'   yDimension = "Fraction",
-#'   molWeight = 10
-#' )
-#'
-#' ospsuite:::.extractMostFrequentUnit(df, unitColumn = "xUnit")
-#' ospsuite:::.extractMostFrequentUnit(df, unitColumn = "yUnit")
-#'
+#' @return A single character scalar — the most frequent unit.
 #' @keywords internal
+#' @noRd
 .extractMostFrequentUnit <- function(data, unitColumn) {
-  # Converting to argument to symbol makes sure that both ways of specifying
-  # arguments will be treated the same way:
-  # - unquoted (`unitColumn = xUnit`)
-  # - quoted (`unitColumn = "xUnit"`)
-  unitColumn <- rlang::ensym(unitColumn)
+  dt <- data.table::as.data.table(data)
 
-  # Create a new data frame with frequency for each unit
-  unitUsageFrequency <- data %>%
-    # The embrace operator (`{{`) captures the user input and evaluates it in
-    # the current data frame.
-    dplyr::group_by({{ unitColumn }}) %>%
-    dplyr::tally(name = "unitFrequency")
+  dedupCols <- c("group", "name", "dataType")
+  if (all(dedupCols %in% names(dt))) {
+    dedup <- unique(dt, by = c(dedupCols, unitColumn))
 
-  mostFrequentUnit <- unitUsageFrequency %>%
-    # Select only the row(s) with maximum frequency.
-    #
-    # In case of ties, there can be more than one row. In such cases, setting
-    # `with_ties = FALSE` make sure that only the first row (and the
-    # corresponding) unit will be selected.
-    #
-    # Do *not* select randomly as that would introduce randomness in plotting
-    # functions with each run of the plotting function defaulting to a different
-    # unit.
-    dplyr::slice_max(unitFrequency, n = 1L, with_ties = FALSE) %>%
-    # Remove the frequency column, which is not useful outside the context of
-    # this function.
-    dplyr::select(-unitFrequency)
+    observedUnits <- dedup[dataType == "observed", .N, by = c(unitColumn)]
+    if (nrow(observedUnits) > 0) {
+      data.table::setorderv(observedUnits, "N", order = -1)
+      return(observedUnits[[unitColumn]][1])
+    }
 
-  return(mostFrequentUnit[[1]])
+    simulatedUnits <- dedup[dataType == "simulated", .N, by = c(unitColumn)]
+    data.table::setorderv(simulatedUnits, "N", order = -1)
+    return(simulatedUnits[[unitColumn]][1])
+  }
+
+  # Fallback: naive row count with alphabetical tiebreaker.
+  unitCounts <- dt[, .N, by = c(unitColumn)]
+  data.table::setorderv(unitCounts, c("N", unitColumn), order = c(-1, 1))
+  return(unitCounts[[unitColumn]][1])
 }

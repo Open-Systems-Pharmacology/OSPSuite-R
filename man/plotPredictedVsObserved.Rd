@@ -63,20 +63,20 @@ where each entry represents a fold and its reciprocal. The identity fold
   Arguments passed on to \code{\link[ospsuite.plots:plotYVsX]{ospsuite.plots::plotYVsX}}
   \describe{
     \item{\code{geomPointAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_point}}
+    \item{\code{geomGuestLineAttributes}}{A \code{list} of arguments passed to \code{ggplot2::geom_function} to display guest criteria.}
     \item{\code{geomComparisonLineAttributes}}{A \code{list} of arguments passed to \code{ggplot2::hline} or \code{ggplot2::abline} to display comparison lines.}
     \item{\code{geomLLOQAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_hline}}
-    \item{\code{groupAesthetics}}{A character vector of aesthetic names used for grouping data points when calculating
-comparison statistics. Data will be grouped by combinations of these aesthetics before computing counts
-and proportions within comparison lines. Common grouping aesthetics include \code{"colour"}, \code{"fill"}, \code{"shape"}.}
     \item{\code{addRegression}}{A boolean that activates the insertion of a regression line.}
-    \item{\code{xScale}}{either 'linear' then \code{ggplot2::scale_x_continuous()} or 'log' then \code{ggplot2::scale_x_log10()} is used}
+    \item{\code{deltaGuest}}{Numeric value parameter for the Guest function.}
+    \item{\code{labelGuestCriteria}}{Label used in the legend for guest criteria (default: "guest criteria").}
     \item{\code{xScaleArgs}}{list of arguments passed to \code{ggplot2::scale_x_continuous()} or \code{ggplot2::scale_x_log10()}}
-    \item{\code{yScale}}{either 'linear' then \code{ggplot2::scale_y_continuous()} or 'log' then \code{ggplot2::scale_y_log10()} is used}
+    \item{\code{yScaleArgs}}{list of arguments passed to \code{ggplot2::scale_y_continuous()} or \code{ggplot2::scale_y_log10()}}
   }}
 }
 \value{
 A \code{ggplot2} plot object representing predicted vs observed values,
-including aesthetics for the x and y axes.
+including aesthetics for the x and y axes, or \code{NULL} if the data contains
+no plottable entries.
 }
 \description{
 Plots predicted vs observed data, grouped by "group".

@@ -27,6 +27,10 @@ messages$errorInvalidDataSetNames <- function() {
   "The 'name' column must not contain NA or empty string values."
 }
 
+messages$errorEmptyString <- function(varName) {
+  paste0("The `", varName, "` argument must not be an empty string.")
+}
+
 messages$noDatasetsToGroup <- function() {
   "There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods."
 }
@@ -60,6 +64,28 @@ messages$plottingWithEmptyDataCombined <- function() {
 
 messages$residualsCanNotBeComputed <- function() {
   "No residuals can be computed because the entered `DataCombined` object does not contain any observed-simulated datasets that can be paired."
+}
+
+messages$residualsColumnNotFound <- function(columnName) {
+  paste0("Column '", columnName, "' not found in pairedData.")
+}
+
+messages$residualsLogNonPositive <- function(n) {
+  paste0(
+    n,
+    " residual value(s) could not be computed because the observed or predicted",
+    " value is zero or negative (log of non-positive values is undefined).",
+    " These data points are set to NaN and excluded from the output."
+  )
+}
+
+messages$residualsRatioPredNonPositive <- function(n) {
+  paste0(
+    n,
+    " residual value(s) could not be computed because the predicted value is",
+    " zero or negative (division by zero or undefined denominator).",
+    " These data points are set to NaN and excluded from the output."
+  )
 }
 
 messages$logScaleNotAllowed <- function() {

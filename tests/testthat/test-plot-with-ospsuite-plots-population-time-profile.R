@@ -6,8 +6,8 @@ ggplot2::theme_update(legend.position = c(0.95, 0.05))
 ggplot2::theme_update(legend.justification = c("right", "bottom"))
 
 ospsuite.plots::setOspsuite.plots.option(
-  ospsuite.plots::OptionKeys$Percentiles,
-  c(0.05, 0.25, 0.5, 0.75, 0.95)
+  ospsuite.plots::OptionKeys$defaultPercentiles,
+  c(0.05, 0.5, 0.95)
 )
 
 # only simulated ------------------------
@@ -196,13 +196,14 @@ test_that("It produces expected plot for multiple simulated and observed dataset
 
 # edge cases ------------------------
 
-test_that("It returns `NULL` when `DataCombined` is empty", {
+test_that("It returns `NULL` with warning when `DataCombined` is empty", {
   myCombDat <- DataCombined$new()
 
-  expect_error(
-    plotTimeProfile(myCombDat),
-    messages$plotNoDataAvailable()
+  expect_warning(
+    result <- plotTimeProfile(myCombDat),
+    regexp = messages$plotNoDataAvailable()
   )
+  expect_null(result)
 })
 
 # Aggregations ------------------------
