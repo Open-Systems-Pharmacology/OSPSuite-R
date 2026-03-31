@@ -3,7 +3,13 @@
 # plotObservedVsSimulated
 
 # load the simulation
-sim <- loadTestSimulation("MinimalModel")
+sim <- loadTestSimulation("simple", loadFromCache = TRUE, addToCache = TRUE)
+aciclovirSim <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
+
 simResults <- importResultsFromCSV(
   simulation = sim,
   filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
@@ -169,10 +175,7 @@ test_that("It respects custom plot configuration", {
 })
 
 test_that("It produces expected plot for Aciclovir data", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
-  simResults <- runSimulations(sim)[[1]]
+  simResults <- runSimulations(aciclovirSim)[[1]]
 
   obsData <- lapply(
     c(
@@ -220,9 +223,6 @@ test_that("It returns `NULL` when `DataCombined` is empty", {
 })
 
 test_that("It doesn't extrapolate past maximum simulated time point", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
   simData <- withr::with_tempdir({
     df <- dplyr::tibble(
       IndividualId = c(0, 0, 0),
@@ -234,7 +234,7 @@ test_that("It doesn't extrapolate past maximum simulated time point", {
       )
     )
     readr::write_csv(df, "SimResults.csv")
-    importResultsFromCSV(sim, "SimResults.csv")
+    importResultsFromCSV(aciclovirSim, "SimResults.csv")
   })
 
   obsData <- DataSet$new(name = "Observed")
@@ -272,9 +272,6 @@ test_that("It returns `NULL` when `DataCombined` doesn't have any pairable datas
 })
 
 test_that("Different symbols for data sets within one group", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
   simData <- withr::with_tempdir({
     df <- dplyr::tibble(
       IndividualId = c(0, 0, 0),
@@ -286,7 +283,7 @@ test_that("Different symbols for data sets within one group", {
       )
     )
     readr::write_csv(df, "SimResults.csv")
-    importResultsFromCSV(sim, "SimResults.csv")
+    importResultsFromCSV(aciclovirSim, "SimResults.csv")
   })
 
   obsData <- DataSet$new(name = "Observed")
@@ -319,9 +316,6 @@ test_that("Different symbols for data sets within one group", {
 })
 
 test_that("LLOQ is plotted", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
   simData <- withr::with_tempdir({
     df <- dplyr::tibble(
       IndividualId = c(0, 0, 0),
@@ -333,7 +327,7 @@ test_that("LLOQ is plotted", {
       )
     )
     readr::write_csv(df, "SimResults.csv")
-    importResultsFromCSV(sim, "SimResults.csv")
+    importResultsFromCSV(aciclovirSim, "SimResults.csv")
   })
 
   obsData <- DataSet$new(name = "Observed")
