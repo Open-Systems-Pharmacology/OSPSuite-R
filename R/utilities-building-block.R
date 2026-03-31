@@ -274,6 +274,10 @@ extendInitialConditions <- function(
   moleculesModule,
   moleculeNames = NULL
 ) {
+  .validateBuildingBlockType(
+    initialConditionsBuildingBlock,
+    BuildingBlockTypes$`Initial Conditions`
+  )
   # Get the spatial structure BB from the provided module
   spatialStructureBB <- .getBBFromModule(
     spatialStructureModule,
