@@ -13,7 +13,7 @@ values <- c(1:10) * 2.5
 # Immutable tests
 
 test_that("has worsk with parameter object", {
-  simulation <- loadTestSimulation("simple")
+  simulation <- loadTestSimulation("simple", loadFromCache = TRUE)
   parameter <- getParameter("Organism|Liver|Volume", simulation)
   expect_true(population$has(parameter))
 })
