@@ -2,6 +2,12 @@
 #'
 #' @export
 BuildingBlockTypes <- enum(c(
+  "SpatialStructure",
+  "Molecules",
+  "Reactions",
+  "Passive Transports",
+  "Observers",
+  "EventGroups",
   "Initial Conditions",
   "Parameter Values",
   "Expression Profile",

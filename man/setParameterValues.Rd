@@ -26,19 +26,15 @@ The entries will be added to or set in this building block.}
 \item{quantityPaths}{A list of full paths of the quantities (usually parameters). Should contain
 all path elements and the parameter name, separated by \code{|}.}
 
-\item{formulas}{A list of \code{Formula} objects that will be set for the quantities.
-Mixing of \code{formulas} and \code{quantityValues} is not allowed. If \code{formulas} is provided,
-\code{quantityValues} should be \code{NULL}. The length of this list should be equal to the length of \code{quantityPaths}.}
-
 \item{dimensions}{A single dimension or a list of dimensions (string names)
 of parameter values. Supported dimensions are listed in \code{ospDimension}. By default,
 new entries get the \code{Dimensionless} dimension.}
 
-\item{quantityValues}{A list of values for the quantities. Should be \code{NULL} if
-the argument \code{formulas} is provided. If not \code{NULL}, the length of this list should be equal to the length of \code{quantityPaths}.}
+\item{quantityValues}{A list of values for the quantities.
+The length of this list should be equal to the length of \code{quantityPaths}.}
 }
 \description{
-This functions allows adding or modifying parameter values entries.
+This functions allows adding or modifying parameter values entries. Only constant values are allowed. For setting or adding parameter values defined by formulas, use the \code{setParameterValuesFormulas} function.
 }
 \examples{
 

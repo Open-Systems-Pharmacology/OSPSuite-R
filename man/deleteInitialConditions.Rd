@@ -13,6 +13,9 @@ deleteInitialConditions(initialConditionsBuildingBlock, quantityPaths)
 will be deleted. Entries not present in the provided BB are ignored. Should contain
 all path elements and the molecule name, separated by \code{|}.}
 }
+\value{
+Invisibly returns the updated \code{initialConditionsBuildingBlock} object.
+}
 \description{
 Delete entries from an Initial Conditions Building Block
 }
