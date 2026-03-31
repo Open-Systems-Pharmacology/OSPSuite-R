@@ -182,28 +182,28 @@ setInitialConditions <- function(
 }
 
 
-#' Set or add initial conditions to an existing Initial Conditions building block with values defined by formulas.
-#'
-#' @param initialConditionsBuildingBlock A `BuildingBlock` object of type `Initial Conditions`.
-#' The entries will be added to or set in this building block.
-#' @param quantityPaths A list of full paths of the quantities (usually molecules). Should contain
-#' all path elements and the molecule name, separated by `|`.
-#' @param formulas A list of `Formula` objects that will be set for the quantities. The length of this list should be equal to the length of `quantityPaths`.
-#' @param scaleDivisors Either a single value or a list of scale divisors for the quantities. By default, the value is set to 1 for all quantities.
-#' If only single value is provided, the value will be set for all quantities.
-#' If a list is provided, the length of this list should be equal to the length of `quantityPaths`.
-#' @param isPresent Either a single value (`TRUE` or `FALSE`) or a list of boolean
-#' values indicating whether the quantity is present or not. If a list is provided,
-#' the length of this list should be equal to the length of `quantityPaths`.
-#' @param negativeValuesAllowed A single boolean value or a list of boolean values indicating whether negative values are
-#' allowed for the quantities. If a list is provided, the length of this list should be equal to the length of `quantityPaths`.
-#'
-#' @returns The updated `initialConditionsBuildingBlock` object.
-#' TBD: no return? To be consistent (or not confusing) with the extend functions?
-#' TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1815
-#'
-#' @export
-#' @examples
+# ' Set or add initial conditions to an existing Initial Conditions building block with values defined by formulas.
+# '
+# ' @param initialConditionsBuildingBlock A `BuildingBlock` object of type `Initial Conditions`.
+# ' The entries will be added to or set in this building block.
+# ' @param quantityPaths A list of full paths of the quantities (usually molecules). Should contain
+# ' all path elements and the molecule name, separated by `|`.
+# ' @param formulas A list of `Formula` objects that will be set for the quantities. The length of this list should be equal to the length of `quantityPaths`.
+# ' @param scaleDivisors Either a single value or a list of scale divisors for the quantities. By default, the value is set to 1 for all quantities.
+# ' If only single value is provided, the value will be set for all quantities.
+# ' If a list is provided, the length of this list should be equal to the length of `quantityPaths`.
+# ' @param isPresent Either a single value (`TRUE` or `FALSE`) or a list of boolean
+# ' values indicating whether the quantity is present or not. If a list is provided,
+# ' the length of this list should be equal to the length of `quantityPaths`.
+# ' @param negativeValuesAllowed A single boolean value or a list of boolean values indicating whether negative values are
+# ' allowed for the quantities. If a list is provided, the length of this list should be equal to the length of `quantityPaths`.
+# '
+# ' @returns The updated `initialConditionsBuildingBlock` object.
+# ' TBD: no return? To be consistent (or not confusing) with the extend functions?
+# ' TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1815
+# '
+# ' @export
+# ' @examples
 # setInitialConditionsFormulas <- function(
 #   initialConditionsBuildingBlock,
 #   quantityPaths,
@@ -253,7 +253,7 @@ deleteInitialConditions <- function(
 #' Extend an Initial Conditions Building Block (BB) with new entries for molecules
 #' from a molecules BB in all physical containers of a spatial structure BB.
 #'
-#' If an initial condition for the combination {container, molecule} already exists
+#' If an initial condition for the combination <container, molecule> already exists
 #' in the IC-BB, the value will be kept AS IS.
 #'
 #' @param initialConditionsBuildingBlock A `BuildingBlock` object of type `Initial Conditions`.
@@ -268,8 +268,6 @@ deleteInitialConditions <- function(
 #'
 #' @returns Paths of entries added to the building block.
 #' @export
-#'
-#' @examples
 extendInitialConditions <- function(
   initialConditionsBuildingBlock,
   spatialStructureModule,
@@ -346,27 +344,27 @@ setParameterValues <- function(
 }
 
 
-#' Set or add parameter values to an existing Parameter Values building block with values defined by formulas.
-#'
-#' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values`.
-#' The entries will be added to or set in this building block.
-#' @param quantityPaths A list of full paths of the quantities (usually parameters). Should contain
-#' all path elements and the parameter name, separated by `|`.
-#' @param formulas A list of `Formula` objects that will be set for the quantities. The length of this list should be equal to the length of `quantityPaths`.
-#' The dimension of the parameter will be set to the dimension of the formula.
-#' @param quantityValues
-#'
-#' @returns
-#'
-#' @export
-#' @examples
-setParameterValuesFormulas <- function(
-  parameterValuesBuildingBlock,
-  quantityPaths,
-  formulas
-) {
-  return(parameterValuesBuildingBlock)
-}
+# #' Set or add parameter values to an existing Parameter Values building block with values defined by formulas.
+# #'
+# #' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values`.
+# #' The entries will be added to or set in this building block.
+# #' @param quantityPaths A list of full paths of the quantities (usually parameters). Should contain
+# #' all path elements and the parameter name, separated by `|`.
+# #' @param formulas A list of `Formula` objects that will be set for the quantities. The length of this list should be equal to the length of `quantityPaths`.
+# #' The dimension of the parameter will be set to the dimension of the formula.
+# #' @param quantityValues
+# #'
+# #' @returns
+# #'
+# #' @export
+# #' @examples
+# setParameterValuesFormulas <- function(
+#   parameterValuesBuildingBlock,
+#   quantityPaths,
+#   formulas
+# ) {
+#   return(parameterValuesBuildingBlock)
+# }
 
 #' Delete entries from a Parameter Values Building Block
 #'

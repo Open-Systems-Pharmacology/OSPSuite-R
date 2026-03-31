@@ -30,6 +30,6 @@ defined in the \code{moleculeNames} argument.}
 Paths of entries added to the building block.
 }
 \description{
-If an initial condition for the combination {container, molecule} already exists
+If an initial condition for the combination <container, molecule> already exists
 in the IC-BB, the value will be kept AS IS.
 }
