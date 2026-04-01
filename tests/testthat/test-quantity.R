@@ -19,10 +19,6 @@ test_that("It can retrieve the parent of an entity", {
 
 
 test_that("It prints the Scientific value of the Quantity", {
-  quantity <- getQuantity(
-    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    sim
-  )
   quantity$value <- 0.001
   expect_snapshot(print(quantity))
   quantity$value <- 2
@@ -34,15 +30,11 @@ test_that("It prints the Scientific value of the Quantity", {
 })
 
 test_that("It prints the NaN value of the Quantity", {
-  quantity <- getQuantity("AADAC|Lipophilicity", sim)
+  quantity <- getQuantity("A|Molecular weight", sim)
   expect_snapshot(quantity$print())
 })
 
 test_that("It can access valueOrigin property", {
-  quantity <- getQuantity(
-    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    sim
-  )
   valueOrigin <- quantity$valueOrigin
   expect_true(is.character(valueOrigin) || is.null(valueOrigin))
   # If not NULL, should be a non-empty string
@@ -52,9 +44,5 @@ test_that("It can access valueOrigin property", {
 })
 
 test_that("valueOrigin property is read-only", {
-  quantity <- getQuantity(
-    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    sim
-  )
   expect_error(quantity$valueOrigin <- "new value", regexp = "read.?only")
 })
