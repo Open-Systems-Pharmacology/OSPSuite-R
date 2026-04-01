@@ -1,5 +1,11 @@
 # loadDataSetFromPKML
 
+defaultDataSetFile <- system.file(
+  "extdata",
+  "CompiledDataSet.xlsx",
+  package = "ospsuite"
+)
+
 test_that("It can load a valid observed data file and create a DataSet object", {
   file <- getTestDataFilePath("obs_data.pkml")
   dataSet <- loadDataSetFromPKML(file)
@@ -9,11 +15,7 @@ test_that("It can load a valid observed data file and create a DataSet object", 
 
 
 test_that("It correctly gets the yValues column for a certain type of DataRepository", {
-  file <- system.file(
-    "extdata",
-    "ObsDataAciclovir_2.pkml",
-    package = "ospsuite"
-  )
+  file <- getTestDataFilePath("obs_data.pkml")
   dataSet <- loadDataSetFromPKML(file)
 
   expect_equal(dataSet$yDimension, ospDimensions$`Concentration (mass)`)
@@ -456,17 +458,15 @@ test_that("it loads all sheets when sheets = NULL and no sheets in configuration
 })
 
 test_that("it uses configuration sheets when sheets = NULL and sheets are in configuration", {
-  xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
-
   # Create configuration with specific sheet
   importConfig <- createImporterConfigurationForFile(
-    filePath = xlsPath,
+    filePath = defaultDataSetFile,
     sheet = "TestSheet_1"
   )
 
   # sheets = NULL should use configuration sheets
   dataSets <- loadDataSetsFromExcel(
-    xlsFilePath = xlsPath,
+    xlsFilePath = defaultDataSetFile,
     importerConfigurationOrPath = importConfig,
     sheets = NULL
   )
@@ -477,17 +477,15 @@ test_that("it uses configuration sheets when sheets = NULL and sheets are in con
 })
 
 test_that("it overrides configuration sheets when sheets parameter is provided", {
-  xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
-
   # Create configuration with one sheet
   importConfig <- createImporterConfigurationForFile(
-    filePath = xlsPath,
+    filePath = defaultDataSetFile,
     sheet = "TestSheet_1"
   )
 
   # Override with different sheet
   dataSets <- loadDataSetsFromExcel(
-    xlsFilePath = xlsPath,
+    xlsFilePath = defaultDataSetFile,
     importerConfigurationOrPath = importConfig,
     sheets = "TestSheet_1_withMW"
   )
@@ -498,17 +496,15 @@ test_that("it overrides configuration sheets when sheets parameter is provided",
 })
 
 test_that("it can load multiple sheets using sheets parameter", {
-  xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
-
   # Create configuration without specific sheets
   importConfig <- createImporterConfigurationForFile(
-    filePath = xlsPath,
+    filePath = defaultDataSetFile,
     sheet = "TestSheet_1"
   )
 
   # Load multiple specific sheets
   dataSets <- loadDataSetsFromExcel(
-    xlsFilePath = xlsPath,
+    xlsFilePath = defaultDataSetFile,
     importerConfigurationOrPath = importConfig,
     sheets = c("TestSheet_1", "TestSheet_1_withMW")
   )
@@ -519,11 +515,9 @@ test_that("it can load multiple sheets using sheets parameter", {
 })
 
 test_that("it preserves configuration sheets after using sheets parameter", {
-  xlsPath <- getTestDataFilePath("CompiledDataSet.xlsx")
-
   # Create configuration with specific sheet
   importConfig <- createImporterConfigurationForFile(
-    filePath = xlsPath,
+    filePath = defaultDataSetFile,
     sheet = "TestSheet_1"
   )
 
@@ -531,7 +525,7 @@ test_that("it preserves configuration sheets after using sheets parameter", {
 
   # Use sheets parameter to override
   dataSets <- loadDataSetsFromExcel(
-    xlsFilePath = xlsPath,
+    xlsFilePath = defaultDataSetFile,
     importerConfigurationOrPath = importConfig,
     sheets = "TestSheet_1_withMW"
   )
