@@ -71,3 +71,14 @@ test_that("It throws an error when trying to set a new name with illegal charact
     messages$illegalCharactersInName(newName)
   )
 })
+
+test_that("It throws an error when trying to change the name of the simulation to a forbidden name", {
+  expect_error(
+    mutableSim$name <- "MoleculeProperties",
+    regexp = messages$forbiddenSimulationName("MoleculeProperties", mutableSim)
+  )
+  expect_error(
+    mutableSim$name <- "CYP3A4",
+    regexp = messages$forbiddenSimulationName("CYP3A4", mutableSim)
+  )
+})
