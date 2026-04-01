@@ -1,6 +1,10 @@
 # TableFormula
 
-simple <- loadTestSimulation("simple")
+simple <- loadTestSimulation(
+  "simple",
+  loadFromCache = FALSE,
+  addToCache = FALSE
+)
 tableParameter <- getParameter("Organism|TableParameter", simple)
 tableFormula <- tableParameter$formula
 
