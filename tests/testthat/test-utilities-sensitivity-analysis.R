@@ -1,10 +1,9 @@
-sim <- loadTestSimulation("simple")
+sim <- loadTestSimulation("simple", loadFromCache = TRUE, addToCache = TRUE)
 sensitivity <- SensitivityAnalysis$new(sim)
 sensitivityAnalysisOptions <- SensitivityAnalysisRunOptions$new(
   showProgress = FALSE
 )
 results <- runSensitivityAnalysis(sensitivity, sensitivityAnalysisOptions)
-
 
 # potentialVariableParameterPathsFor
 test_that("It returns an array of parameter path that can potentially be varied in the simulation", {
@@ -46,7 +45,7 @@ test_that("It can import valid simulation results from multiple CSV files", {
 })
 
 test_that("It throws an exception if the file imported are not valid results file", {
-  junkFile <- getTestDataFilePath("pop.csv")
+  junkFile <- getTestDataFilePath("junk.csv")
   expect_error(importSensitivityAnalysisResultsFromCSV(sim, junkFile))
 })
 
