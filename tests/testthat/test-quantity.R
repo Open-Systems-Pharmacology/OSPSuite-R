@@ -1,25 +1,20 @@
 # Quantity
 
-sim <- loadTestSimulation("S1")
+sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+quantity <- getQuantity(
+  toPathString(c("Organism", "Liver", "Volume")),
+  sim
+)
 
 test_that("It can print Quantity", {
-  quantity <- getQuantity(
-    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    sim
-  )
   expect_snapshot(quantity$print())
 })
 
 test_that("It can retrieve the parent of an entity", {
-  quantity <- getQuantity(
-    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    sim
-  )
   parent <- quantity$parentContainer
   expect_false(is.null(parent))
-  expect_equal(parent$name, "Intracellular")
-  expect_equal(parent$parentContainer$name, "Liver")
-  expect_equal(parent$parentContainer$parentContainer$name, "Organism")
+  expect_equal(parent$name, "Liver")
+  expect_equal(parent$parentContainer$name, "Organism")
 })
 
 

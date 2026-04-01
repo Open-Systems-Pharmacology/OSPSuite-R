@@ -1,8 +1,11 @@
 #  Cache
-
-sim <- loadTestSimulation("S1")
+sim <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
 cache <- ospsuiteEnv$loadedSimulationsCache
 
 test_that("It can print simulation cache", {
-  expect_error(capture.output(cache$print()), NA)
+  expect_snapshot(cache)
 })
