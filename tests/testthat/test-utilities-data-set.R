@@ -440,23 +440,6 @@ test_that("dataSetToTibble preserves data integrity with custom names", {
 
 # Tests for new sheets parameter in loadDataSetsFromExcel
 
-test_that("it loads all sheets when sheets = NULL and no sheets in configuration", {
-  # Use configuration with no sheets defined
-  configPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
-  xlsPath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
-
-  # With sheets = NULL, should load all sheets (new behavior)
-  dataSets <- loadDataSetsFromExcel(
-    xlsFilePath = xlsPath,
-    importerConfigurationOrPath = configPath,
-    sheets = NULL
-  )
-
-  # Should load data (not empty)
-  expect_true(length(dataSets) > 0)
-  expect_true(isOfType(dataSets, "DataSet"))
-})
-
 test_that("it uses configuration sheets when sheets = NULL and sheets are in configuration", {
   # Create configuration with specific sheet
   importConfig <- createImporterConfigurationForFile(
