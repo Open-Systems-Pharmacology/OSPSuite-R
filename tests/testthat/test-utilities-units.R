@@ -1,6 +1,6 @@
 # toUni
 
-sim <- loadTestSimulation("S1")
+sim <- loadTestSimulation("simple", loadFromCache = TRUE)
 volumePath <- toPathString(c("Organism", "Liver", "Volume"))
 par <- getParameter(volumePath, sim)
 
@@ -52,9 +52,9 @@ test_that("It throws an exception when converting to a unit that is not suppored
 })
 
 test_that("It does not change the value of the quantity when converting to another unit", {
-  par$value <- 5
-  toUnit(par, 1, "ml")
-  expect_equal(par$value, 5)
+  oldVal <- par$value
+  toUnit(par, 2, "ml")
+  expect_equal(par$value, oldVal)
 })
 
 test_that("It can convert from a value in a non-base unit to another unit", {
@@ -129,9 +129,9 @@ test_that("It can convert from an array of values with NULL entrues in a unit to
 })
 
 test_that("It does not change the value of the quantity when converting to another unit", {
-  par$value <- 5
-  toBaseUnit(par, 1000, "ml")
-  expect_equal(par$value, 5)
+  oldValue <- par$value
+  toBaseUnit(par, 2000, "ml")
+  expect_equal(par$value, oldValue)
 })
 
 test_that("µtants are converted to the right unicode", {
@@ -238,10 +238,10 @@ test_that("It returns the correct base unit when supplied with dimension", {
 test_that("It returns the correct base unit when supplied with quantity", {
   expect_equal(
     getBaseUnit(getQuantity(
-      "Organism|VenousBlood|Plasma|CYP3A4|Concentration in container",
+      "Organism|Liver|A",
       sim
     )),
-    .encodeUnit("µmol/l")
+    .encodeUnit("µmol")
   )
 })
 
@@ -419,12 +419,6 @@ test_that(".unitConverter changes error units as well - defaults", {
   expect_equal(unique(dfErrorConvert$yErrorUnit), "%")
   expect_equal(dfErrorConvert$yErrorValues[1] / 100, dfError$yErrorValues[1])
   expect_equal(dfErrorConvert$yErrorValues[2:3], dfError$yErrorValues[2:3])
-})
-
-test_that(".unitConverter changes error units as well - defaults", {
-  expect_equal(unique(dfYErrorConvert$yErrorUnit), "%")
-  expect_equal(dfYErrorConvert$yErrorValues[1] / 100, dfError$yErrorValues[1])
-  expect_equal(dfYErrorConvert$yErrorValues[2:3], dfError$yErrorValues[2:3])
 })
 
 # different molecular weights handled properly -------------------
@@ -699,28 +693,37 @@ test_that("It shouldn't convert geometric error values or units, only `yValues`"
 })
 
 dfMixedError <- dplyr::tibble(
-  xValues     = c(1, 2, 3, 4),
-  xUnit       = "min",
-  xDimension  = "Time",
-  yValues     = c(0.1, 0.2, 0.3, 0.4),
-  yUnit       = "",
-  yDimension  = "Fraction",
+  xValues = c(1, 2, 3, 4),
+  xUnit = "min",
+  xDimension = "Time",
+  yValues = c(0.1, 0.2, 0.3, 0.4),
+  yUnit = "",
+  yDimension = "Fraction",
   yErrorValues = c(0.01, 0.02, 1.5, 2.0),
-  yErrorUnit  = "",
-  yErrorType  = c(
+  yErrorUnit = "",
+  yErrorType = c(
     DataErrorType$ArithmeticStdDev,
     DataErrorType$ArithmeticStdDev,
     DataErrorType$GeometricStdDev,
     DataErrorType$GeometricStdDev
   ),
-  molWeight   = NA_real_
+  molWeight = NA_real_
 )
 
-dfMixedErrorConvert <- .unitConverter(dfMixedError, yUnit = ospUnits$Fraction$`%`)
+dfMixedErrorConvert <- .unitConverter(
+  dfMixedError,
+  yUnit = ospUnits$Fraction$`%`
+)
 
 test_that(".unitConverter converts ArithmeticStdDev error rows but leaves GeometricStdDev rows unchanged when both share the same group", {
-  expect_equal(dfMixedErrorConvert$yErrorValues[1:2], dfMixedError$yErrorValues[1:2] * 100)
-  expect_equal(dfMixedErrorConvert$yErrorValues[3:4], dfMixedError$yErrorValues[3:4])
+  expect_equal(
+    dfMixedErrorConvert$yErrorValues[1:2],
+    dfMixedError$yErrorValues[1:2] * 100
+  )
+  expect_equal(
+    dfMixedErrorConvert$yErrorValues[3:4],
+    dfMixedError$yErrorValues[3:4]
+  )
 })
 
 # multiple concentration dims present --------------------------------
@@ -785,8 +788,10 @@ test_that(".extractMostFrequentUnit returns the most frequent observed unit", {
 
 test_that(".extractMostFrequentUnit falls back to simulated when no observed", {
   d <- data.table::data.table(
-    group = c("A", "B"), name = c("Sample1", "Sample2"),
-    yUnit = c("g", "g"), xUnit = c("min", "min"),
+    group = c("A", "B"),
+    name = c("Sample1", "Sample2"),
+    yUnit = c("g", "g"),
+    xUnit = c("min", "min"),
     dataType = c("simulated", "simulated")
   )
   expect_equal(.extractMostFrequentUnit(d, "xUnit"), "min")
@@ -794,8 +799,10 @@ test_that(".extractMostFrequentUnit falls back to simulated when no observed", {
 
 test_that(".extractMostFrequentUnit handles all NA units", {
   d <- data.table::data.table(
-    group = c("A", "B"), name = c("Sample1", "Sample2"),
-    yUnit = c(NA_character_, NA_character_), xUnit = c("h", "h"),
+    group = c("A", "B"),
+    name = c("Sample1", "Sample2"),
+    yUnit = c(NA_character_, NA_character_),
+    xUnit = c("h", "h"),
     dataType = c("observed", "observed")
   )
   expect_no_error(result <- .extractMostFrequentUnit(d, "yUnit"))

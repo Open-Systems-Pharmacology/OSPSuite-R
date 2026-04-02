@@ -78,7 +78,7 @@ test_that("It throws an error when trying to change the name of the simulation t
     regexp = messages$forbiddenSimulationName("MoleculeProperties", mutableSim)
   )
   expect_error(
-    mutableSim$name <- "CYP3A4",
-    regexp = messages$forbiddenSimulationName("CYP3A4", mutableSim)
+    mutableSim$name <- "Metformin",
+    regexp = messages$forbiddenSimulationName("Metformin", mutableSim)
   )
 })

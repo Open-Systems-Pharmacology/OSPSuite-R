@@ -7,11 +7,7 @@ aciclovirSim <- loadSimulation(
 )
 populationResults <- importResultsFromCSV(
   simulation = aciclovirSim,
-  filePaths = system.file(
-    "extdata",
-    "SimResults_pop.csv",
-    package = "ospsuite"
-  )
+  filePaths = getTestDataFilePath("SimResults_pop.csv")
 )
 
 obsData <- lapply(

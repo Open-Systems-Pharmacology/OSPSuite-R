@@ -1,5 +1,5 @@
 tolerance <- 0.0001
-sim <- loadTestSimulation("simple", loadFromCache = TRUE)
+sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
 # Get the paths of all molecules in the simulation
 moleculePaths <- getAllMoleculePathsIn(container = sim)
 # Get the paths of all parameters

@@ -19,10 +19,8 @@ sim <- loadSimulation(
 
 populationResults <- importResultsFromCSV(
   simulation = sim,
-  filePaths = system.file(
-    "extdata",
-    "SimResults_pop.csv",
-    package = "ospsuite"
+  filePaths = getTestDataFilePath(
+    "SimResults_pop.csv"
   )
 )
 

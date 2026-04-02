@@ -14,6 +14,7 @@
         * Organism|DistributedParameter
         * Organism|FormulaParameter
         * Organism|Liver|Volume
+        * Organism|Liver|paré
         * Organism|Liver|A|Concentration
         * Organism|Liver|B|Concentration
         * Organism|Liver|Dapagliflozin|Concentration
@@ -28,6 +29,7 @@
         * Organism|B|Concentration
         * Organism|Dapagliflozin|Concentration
         * Organism|Metformin|Concentration
+        * B|Molecular weight
         * Dapagliflozin|Molecular weight
         * Metformin|Molecular weight
         * R1|k1

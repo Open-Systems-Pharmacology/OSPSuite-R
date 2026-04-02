@@ -1368,11 +1368,7 @@ test_that("data frame is as expected when `Population` objects are used", {
 
   populationResults <- importResultsFromCSV(
     simulation = sim_immutable,
-    filePaths = system.file(
-      "extdata",
-      "SimResults_pop.csv",
-      package = "ospsuite"
-    )
+    filePaths = getTestDataFilePath("SimResults_pop.csv")
   )
 
   myDataComb <- DataCombined$new()
