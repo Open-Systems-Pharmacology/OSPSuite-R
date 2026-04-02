@@ -77,7 +77,7 @@ and proportions within comparison lines. Common grouping aesthetics include \cod
 }
 \value{
 A \code{ggplot2} plot object representing residuals vs time, observed, or
-predicted values.
+predicted values, or \code{NULL} if the data contains no plottable entries.
 }
 \description{
 Plots residuals vs a covariate (time, observed, or predicted
