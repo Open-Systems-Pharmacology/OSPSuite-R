@@ -1,7 +1,7 @@
 #  Cache
-sim <- loadSimulation(
-  aciclovirSimulationPath,
-  loadFromCache = TRUE,
+sim <- loadTestSimulation(
+  "simple",
+  loadFromCache = FALSE,
   addToCache = TRUE
 )
 cache <- ospsuiteEnv$loadedSimulationsCache
