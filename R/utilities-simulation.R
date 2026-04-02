@@ -678,7 +678,7 @@ getAllStateVariableParametersPaths <- function(simulation) {
 #' @return An array containing the path of all exported simulations.
 #'
 #' @examples
-#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
 #' popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
