@@ -1,9 +1,6 @@
 # SimulationPKAnalyses
 
-sim <- loadTestSimulation("S1")
-clearOutputs(sim)
-outputs <- "Organism|VenousBlood|*|Caffeine"
-addOutputs(outputs, sim)
+sim <- loadTestSimulation("simple", loadFromCache = TRUE, addToCache = TRUE)
 results <- runSimulations(sim)[[1]]
 pkAnalyses <- calculatePKAnalyses(results)
 

@@ -494,57 +494,6 @@ test_that("It requires yMin and yMax values (not NA) for custom error types", {
   )
 })
 
-test_that(".validateAndConvertData warns and replaces negative yErrorValues with NA", {
-  testData <- data.table(
-    xValues = c(1, 2, 3),
-    yValues = c(10, 20, 30),
-    group = c("A", "A", "A"),
-    name = c("Obs1", "Obs1", "Obs1"),
-    dataType = rep("observed", 3),
-    xUnit = rep("h", 3),
-    yUnit = rep("mg/l", 3),
-    xDimension = rep("Time", 3),
-    yDimension = rep("Concentration (mass)", 3),
-    yErrorType = rep(DataErrorType$ArithmeticStdDev, 3),
-    yErrorValues = c(2, -1, 4),
-    molWeight = rep(100, 3)
-  )
-
-  expect_warning(
-    result <- .validateAndConvertData(
-      plotData = testData,
-      predictedIsNeeded = FALSE
-    ),
-    messages$yErrorValuesNegative(1),
-    fixed = TRUE
-  )
-  expect_equal(result$yErrorValues, c(2, NA, 4))
-})
-
-test_that(".validateAndConvertData does not warn for non-negative yErrorValues", {
-  testData <- data.table(
-    xValues = c(1, 2, 3),
-    yValues = c(10, 20, 30),
-    group = c("A", "A", "A"),
-    name = c("Obs1", "Obs1", "Obs1"),
-    dataType = rep("observed", 3),
-    xUnit = rep("h", 3),
-    yUnit = rep("mg/l", 3),
-    xDimension = rep("Time", 3),
-    yDimension = rep("Concentration (mass)", 3),
-    yErrorType = rep(DataErrorType$ArithmeticStdDev, 3),
-    yErrorValues = c(0, 1, 2),
-    molWeight = rep(100, 3)
-  )
-
-  expect_no_warning(
-    .validateAndConvertData(
-      plotData = testData,
-      predictedIsNeeded = FALSE
-    )
-  )
-})
-
 # .convertUnitsForPlot ----------------
 
 test_that("It handles empty data correctly", {

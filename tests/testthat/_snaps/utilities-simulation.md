@@ -1,7 +1,7 @@
 # `runSimulation()` is deprecated
 
     Code
-      sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+      sim <- loadTestSimulation("simple", loadFromCache = TRUE)
       results <- runSimulation(sim)
     Condition
       Warning:

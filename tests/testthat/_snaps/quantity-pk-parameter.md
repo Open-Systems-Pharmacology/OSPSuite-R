@@ -5,7 +5,8 @@
     Output
       <QuantityPKParameter>
         * Name: C_max
-        * QuantityPath: Organism|VenousBlood|Plasma|Caffeine
+        * QuantityPath: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral
+        Venous Blood)
         * Dimension: Concentration (molar)
         * Unit: µmol/l
 

@@ -1,7 +1,10 @@
 #  DotNetWrapper
 
-sim <- loadTestSimulation("S1")
-sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+sim <- loadTestSimulation(
+  "simple",
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
 
 test_that("It can retrieve the pointer for an object loaded", {
   expect_false(is.null(sim$pointer))

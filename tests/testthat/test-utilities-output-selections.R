@@ -1,4 +1,4 @@
-sim <- loadTestSimulation("S1")
+sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
 outputSelections <- sim$outputSelections
 
 # addOutputs
@@ -6,15 +6,15 @@ outputSelections <- sim$outputSelections
 test_that("It can add multiple outputs by path", {
   outputSelections$clear()
   addOutputs(
-    c("Organism|Liver|Volume", "Organism|ArterialBlood|Plasma|Caffeine"),
+    c("Organism|Liver|Volume", "Organism|Liver|A"),
     sim
   )
-  expect_equal(length(sim$outputSelections$allOutputs), 2)
+  expect_snapshot(sim$outputSelections$allOutputs)
 })
 
 test_that("It can add single output by path", {
   outputSelections$clear()
-  path <- "Organism|ArterialBlood|Plasma|Caffeine"
+  path <- "Organism|Liver|A"
   addOutputs(path, sim)
   expect_equal(length(sim$outputSelections$allOutputs), 1)
   expect_equal(sim$outputSelections$allOutputs[[1]]$path, path)
@@ -24,22 +24,21 @@ test_that("It can add multiple outputs by reference", {
   outputSelections$clear()
   parameter <- getParameter("Organism|Liver|Volume", sim)
   quantity <- getAllQuantitiesMatching(
-    "Organism|ArterialBlood|Plasma|Caffeine",
+    "Organism|Liver|A",
     sim
   )[[1]]
   addOutputs(c(parameter, quantity), sim)
-  expect_equal(length(sim$outputSelections$allOutputs), 2)
+  expect_snapshot(sim$outputSelections$allOutputs)
 })
 
 test_that("It can add single output by reference", {
   outputSelections$clear()
   parameter <- getParameter("Organism|Liver|Volume", sim)
   addOutputs(parameter, sim)
-  expect_equal(length(sim$outputSelections$allOutputs), 1)
-  expect_equal(sim$outputSelections$allOutputs[[1]]$path, parameter$path)
+  expect_snapshot(sim$outputSelections$allOutputs)
 })
 
-test_that("It throws an exception if the parameters do not have the expect type", {
+test_that("It throws an exception if the parameters do not have the expected type", {
   parameter <- getParameter("Organism|Liver|Volume", sim)
   container <- getContainer("Organism|Liver", sim)
   expect_error(addOutputs(sim, parameter))
@@ -100,7 +99,7 @@ test_that("It can clear all outputs of a given simulation", {
 
 test_that("It can set outputs of a given simulation", {
   addOutputs(
-    c("Organism|Liver|Volume", "Organism|ArterialBlood|Plasma|Caffeine"),
+    c("Organism|Liver|Volume", "Organism|Liver|A"),
     sim
   )
   setOutputs(c("Organism|Liver|Volume"), sim)
@@ -121,7 +120,7 @@ test_that("setOutputs throws an error for invalid path when stopIfNotFound is TR
 
 test_that("setOutputs clears existing outputs and silently ignores invalid paths when stopIfNotFound is FALSE", {
   oldLength <- length(sim$outputSelections$allOutputs)
-  addOutputs("Organism|Pancreas|Volume", sim)
+  addOutputs("Organism|Lumen|Stomach|Volume", sim)
   expect_equal(length(outputSelections$allOutputs), oldLength + 1)
   invalidPath <- "InvalidPath|DoesNotExist"
   expect_no_error(setOutputs(invalidPath, sim, stopIfNotFound = FALSE))

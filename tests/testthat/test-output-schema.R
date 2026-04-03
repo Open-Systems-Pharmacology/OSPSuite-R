@@ -1,4 +1,8 @@
-sim <- loadTestSimulation("S1")
+sim <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = FALSE,
+  addToCache = FALSE
+)
 outputSchema <- sim$outputSchema
 
 # OutputSchema
@@ -47,29 +51,39 @@ test_that(".setEndSimulationTime adds a new time point outside of the current sc
 
 
 test_that(".setEndSimulationTime adds a new time point smaller than the current end time without time points", {
-  sim <- loadTestSimulation("S1")
+  sim <- loadSimulation(
+    aciclovirSimulationPath,
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
   outputSchema <- sim$outputSchema
   .setEndSimulationTime(sim, 1430)
 
   expect_equal(outputSchema$intervals[[1]]$startTime$value, 0)
-  expect_equal(outputSchema$intervals[[1]]$endTime$value, 120)
-  expect_equal(outputSchema$intervals[[2]]$startTime$value, 120)
+  expect_equal(outputSchema$intervals[[1]]$endTime$value, 15)
+  expect_equal(outputSchema$intervals[[2]]$startTime$value, 15)
   expect_equal(outputSchema$intervals[[2]]$endTime$value, 1430)
+  expect_equal(outputSchema$intervals[[3]]$endTime$value, 1430)
   expect_equal(outputSchema$timePoints, 1430)
 
   expect_equal(outputSchema$endTime, 1430)
 })
 
 test_that(".setEndSimulationTime adds a new time point smaller than the current end time with time points", {
-  sim <- loadTestSimulation("S1")
+  sim <- loadSimulation(
+    aciclovirSimulationPath,
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
   outputSchema <- sim$outputSchema
   outputSchema$addTimePoints(c(1, 2, 121))
   .setEndSimulationTime(sim, 119)
 
   expect_equal(outputSchema$intervals[[1]]$startTime$value, 0)
-  expect_equal(outputSchema$intervals[[1]]$endTime$value, 119)
-  # Second interval is removed
-  expect_length(outputSchema$intervals, 1)
+  expect_equal(outputSchema$intervals[[1]]$endTime$value, 15)
+  expect_equal(outputSchema$intervals[[2]]$endTime$value, 119)
+  # Third interval is removed
+  expect_length(outputSchema$intervals, 2)
   expect_equal(outputSchema$timePoints, c(1, 2, 119))
 
   expect_equal(outputSchema$endTime, 119)
@@ -77,7 +91,11 @@ test_that(".setEndSimulationTime adds a new time point smaller than the current 
 
 
 test_that(".setEndSimulationTime sets the end time when the provided value is smaller than the only defined interval", {
-  sim <- loadTestSimulation("S1")
+  sim <- loadSimulation(
+    aciclovirSimulationPath,
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
   outputSchema <- sim$outputSchema
   # Remove the first interval
   oldIntervals <- outputSchema$intervals

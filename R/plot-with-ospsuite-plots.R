@@ -704,8 +704,11 @@ plotQuantileQuantilePlot <- function(
   }
 
   # check for negative yErrorValues
-  if ("yErrorValues" %in% names(plotData) && "yErrorType" %in% names(plotData)) {
-    negative <- !is.na(plotData[["yErrorValues"]]) & plotData[["yErrorValues"]] < 0
+  if (
+    "yErrorValues" %in% names(plotData) && "yErrorType" %in% names(plotData)
+  ) {
+    negative <- !is.na(plotData[["yErrorValues"]]) &
+      plotData[["yErrorValues"]] < 0
     if (any(negative)) {
       warning(messages$yErrorValuesNegative(sum(negative)))
       plotData[["yErrorValues"]][negative] <- NA_real_

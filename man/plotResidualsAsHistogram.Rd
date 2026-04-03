@@ -67,7 +67,8 @@ If TRUE, the variables \code{distribution}, \code{meanFunction}, \code{xScale}, 
   }}
 }
 \value{
-A \code{ggplot2} plot object representing the histogram of residuals.
+A \code{ggplot2} plot object representing the histogram of residuals,
+or \code{NULL} if the data contains no plottable entries.
 }
 \description{
 Plots residuals as a histogram, grouped by "group".

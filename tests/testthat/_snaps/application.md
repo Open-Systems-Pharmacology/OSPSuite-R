@@ -4,7 +4,8 @@
       application$print()
     Output
       <Application>
-        * Path: Applications|IV|Application_1
-        * Start time: 10.00 [min]
-        * Drug mass: 375.90 [µmol]
+        * Path: Events|IV 250mg 10min|Application_1
+        * Start time: 0.00e+00 [min]
+        * Infusion time: 10.00 [min]
+        * Drug mass: 1110.08 [µmol]
 
