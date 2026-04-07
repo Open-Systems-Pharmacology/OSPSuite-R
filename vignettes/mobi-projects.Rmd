@@ -101,12 +101,12 @@ head(icBBDf)
 # # Print the first few rows of the data frame
 # head(pvBBDf)
 
-# individual <- myProject$getIndividual("Rat")
+individual <- myProject$getIndividual("Rat")
 # individualDf <- individualToDataFrame(individual)
 # # Print the individual data frame
 # print(individualDf)
 
-# expProfiles <- myProject$getExpressionProfiles()
+expProfiles <- myProject$getExpressionProfiles("UDPGT1|Human|Healthy")
 # expProfilesDf <- expressionProfilesToDataFrame(expProfiles)
 # # Print the first few rows of the data frame
 # head(expProfilesDf)

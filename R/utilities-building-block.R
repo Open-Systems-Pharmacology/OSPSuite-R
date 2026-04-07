@@ -32,7 +32,7 @@ initialConditionsToDataFrame <- function(initialConditionsBuildingBlock) {
   containerPaths <- vapply(
     paths,
     function(path) {
-      .getParentPath(path)
+      .getParentContainerPath(path)
     },
     character(1),
     USE.NAMES = FALSE
@@ -292,15 +292,15 @@ extendInitialConditions <- function(
 
   # Throw an error if any of the provided modules does not contain the required BB
   if (is.null(spatialStructureBB) || is.null(moleculesBB)) {
+    missingBBs <- c(
+      if (is.null(spatialStructureBB)) "Spatial Structure",
+      if (is.null(moleculesBB)) "Molecules"
+    )
     stop(
-      paste(
-        "The provided modules do not contain the required building blocks:",
-        if (is.null(spatialStructureBB)) {
-          "Spatial Structure"
-        },
-        if (is.null(moleculesBB)) {
-          "Molecules"
-        }
+      paste0(
+        "The provided modules do not contain the required building blocks: ",
+        paste(missingBBs, collapse = ", "),
+        ". "
       ),
       "Please provide modules with the required building blocks to be able to extend the initial conditions building block."
     )

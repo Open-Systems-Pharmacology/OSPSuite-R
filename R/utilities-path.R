@@ -41,9 +41,9 @@ toPathString <- function(...) {
 #' @return A string representing the parent path, or `NULL` if the path has no parent.
 #'
 #' @examples
-#' getParentContainerPath("Organism|Organ|Liver") # "Organism|Organ"
+#' .getParentContainerPath("Organism|Organ|Liver") # "Organism|Organ"
 #' @noRd
-getParentContainerPath <- function(path) {
+.getParentContainerPath <- function(path) {
   validateIsString(path)
   pathEntries <- toPathArray(path)
   if (length(pathEntries) <= 1) {
