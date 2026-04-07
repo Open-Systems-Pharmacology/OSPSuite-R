@@ -71,3 +71,105 @@ loadModuleFromPKML <- function(path) {
   results <- netTask$call(property, ...)
   return(results)
 }
+
+#' Get a list of Parameter Values (PV) or Initial Conditions (IC) Building Blocks (BBs) in the module.
+#'
+#' @param module The `MoBiModule` object for which to retrieve the Building Blocks.
+#' @param names Optional names of the Parameter Values (PV) or the Initial Conditions (IC) Building Block to retrieve.
+#' If `NULL`, returns all PV/IC BBs.
+#' @param bbType Type of Building Block to retrieve, either "Parameter Values" or "Initial Conditions".
+#' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
+#' BB is not present in the project.
+#' @returns A named list of `BuildingBlock` objects, with names being the names of the PV or IC BBs.
+#' @noRd
+.getICPVBBsFromModule <- function(
+  module,
+  names = NULL,
+  bbType,
+  stopIfNotFound
+) {
+  if (bbType == BuildingBlockTypes$`Parameter Values`) {
+    allNames <- module$parameterValuesBBnames
+    allMethodName <- "AllParameterValuesFromModule"
+    byNameMethodName <- "ParameterValueBuildingBlockByName"
+  } else if (bbType == BuildingBlockTypes$`Initial Conditions`) {
+    allNames <- module$initialConditionsBBnames
+    allMethodName <- "AllInitialConditionsFromModule"
+    byNameMethodName <- "InitialConditionBuildingBlockByName"
+  } else {
+    stop(
+      paste0(
+        "Invalid Building Block type. Must be one of the following: ",
+        paste(
+          c(
+            BuildingBlockTypes$`Parameter Values`,
+            BuildingBlockTypes$`Initial Conditions`
+          ),
+          collapse = ", "
+        )
+      )
+    )
+  }
+
+  # Check if any of the provided names are not present in the module
+  missingNames <- setdiff(names, allNames)
+  if (length(missingNames) > 0 && stopIfNotFound) {
+    stop(paste(
+      "No",
+      bbType,
+      "Building Blocks found with names:",
+      paste(missingNames, collapse = ", "),
+      "in module",
+      module$name
+    ))
+  }
+
+  # If stopIfNotFound is FALSE, filter only the names that are present in the project
+  if (is.null(names)) {
+    names <- allNames
+    # If no names are provided, just return all available BBs of this type
+    bbsNet <- .callModuleTask(allMethodName, module)
+  } else {
+    names <- intersect(names, allNames)
+    bbsNet <- lapply(names, function(name) {
+      .callModuleTask(byNameMethodName, module, name)
+    })
+  }
+
+  # Create BuildingBlock objects
+  bbs <- lapply(bbsNet, function(bb) {
+    BuildingBlock$new(bb, type = bbType)
+  })
+  names(bbs) <- names
+
+  return(bbs)
+}
+
+
+#' Get a specified Building Block (BBs) from the module.
+#' To get IC or PV BBs, use the `.getICPVBBsFromModule` function.
+#'
+#' @param module The `MoBiModule` object for which to retrieve the Building Block.
+#' @param bbType Type of Building Block to retrieve. One of the following: "SpatialStructure", "Molecules", "Reactions", "Passive Transports", "Observers", "EventGroups".
+#' @returns A `BuildingBlock` object, or `NULL` if no BB of the specified type is present in the module.
+#' @noRd
+.getBBFromModule = function(
+  module,
+  bbType
+) {
+  if (!(bbType %in% names(BuildingBlockTypes))) {
+    stop(
+      paste0(
+        "Invalid Building Block type. Must be one of the following: ",
+        paste(names(BuildingBlockTypes), collapse = ", ")
+      )
+    )
+  }
+  bbNet <- module$get(bbType)
+  if (is.null(bbNet)) {
+    return(NULL)
+  }
+
+  # Create BuildingBlock object
+  return(BuildingBlock$new(bbNet, type = bbType))
+}

@@ -90,6 +90,28 @@ icBBs <- module$getInitialConditionsBBs()
 pvBBs <- module$getParameterValuesBBs()
 ```
 
+You can easily convert the retrieved initial conditions, parameter values, individuals, and expression profiles to data frames for further processing:
+
+```{r convertBBsToDataFrames}
+icBBDf <- initialConditionsToDataFrame(icBBs[[1]])
+# Print the first few rows of the data frame
+head(icBBDf)
+
+# pvBBDf <- parameterValuesToDataFrame(pvBBs[["Rat"]])
+# # Print the first few rows of the data frame
+# head(pvBBDf)
+
+individual <- myProject$getIndividual("Rat")
+# individualDf <- individualToDataFrame(individual)
+# # Print the individual data frame
+# print(individualDf)
+
+expProfiles <- myProject$getExpressionProfiles("UDPGT1|Human|Healthy")
+# expProfilesDf <- expressionProfilesToDataFrame(expProfiles)
+# # Print the first few rows of the data frame
+# head(expProfilesDf)
+```
+
 ## Simulation configurations
 
 Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, the Individual, the Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation. Additionally, it can contain settings for the simulation time, output settings, and solver settings.
@@ -160,16 +182,16 @@ An alternative to creating simulation configurations from modules from a project
 
 ```{r extractModulesAndCreateIndividual}
 # # Get modules from the project
-# modules <- myProject$getModules()
-# # Get the expression profiles from the project
-# expressionProfiles <- myProject$getExpressionProfiles(
-#   names = c(
-#     "UDPGT1|Human|Healthy",
-#     "DIO1|Human|Healthy",
-#     "DIO3|Human|Healthy",
-#     "UDPGT2|Human|Healthy"
-#   )
-# )
+modules <- myProject$getModules()
+# Get the expression profiles from the project
+expressionProfiles <- myProject$getExpressionProfiles(
+  names = c(
+    "UDPGT1|Human|Healthy",
+    "DIO1|Human|Healthy",
+    "DIO3|Human|Healthy",
+    "UDPGT2|Human|Healthy"
+  )
+)
 # # Create an individual building block
 # myIndividual <- createIndividualBuildingBlock(
 #   species = Species$Human,
@@ -199,27 +221,27 @@ Followning functionalities are available for the Parameter Values (PV) BBs:
 So in the first step we load the extension module "Thyroid" from a pkml file:
 
 ```{r loadThyroidModule}
-# thyroidModule <- loadModuleFromPKML(system.file(
-#   "extdata",
-#   "Thyroid.pkml",
-#   package = "ospsuite"
-# ))
+thyroidModule <- loadModuleFromPKML(system.file(
+  "extdata",
+  "Thyroid.pkml",
+  package = "ospsuite"
+))
 ```
 
 Then we extend the initial conditions BB of the loaded module by molecules defined in other modules of our project:
 
 ```{r extendICBB}
-# # Get the IC BB from the Thyroid module
-# icBB <- thyroidModule$getBuildingBlocks(type = "Initial Conditions")[[1]]
-# # Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"
-# newPaths <- extendInitialConditions(
-#   icBB,
-#   spatialStructureBB = thyroidModule$getBuildingBlocks(
-#     type = "Spatial Structure"
-#   ),
-#   moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
-#   moleculeNames = c("DIO1", "T3", "T4", "TSH")
-# )
+# Get the IC BB from the Thyroid module. The module has only one IC BB.
+icBB <- thyroidModule$getInitialConditionsBBs()[[1]]
+# Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"
+newPaths <- extendInitialConditions(
+  initialConditionsBuildingBlock = icBB,
+  spatialStructureModule = thyroidModule,
+  moleculesModule = modules[["Thyroid_QST"]],
+  moleculeNames = c("DIO1", "T3", "T4", "TSH")
+)
+
+print(newPaths)
 ```
 
 The molecule "DIO1" that has been added to the IC BB in the previous step is a protein. As the module "Thyroid" adds a new organ for which no protein expression is defined in the Expression Profiles, parameters defining the expression must be added to the PV BB of the new module using the `addProteinExpressionToParameterValuesBB()` function:

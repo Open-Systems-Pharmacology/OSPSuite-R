@@ -32,3 +32,23 @@ toPathString <- function(...) {
   validateIsString(pathStrings)
   paste(pathStrings, collapse = ospsuiteEnv$pathSeparator)
 }
+
+#' Get the parent path of a given path
+#'
+#' @param path A string representation of a path, with path entries separated
+#' by '|'
+#'
+#' @return A string representing the parent path, or `NULL` if the path has no parent.
+#'
+#' @examples
+#' .getParentContainerPath("Organism|Organ|Liver") # "Organism|Organ"
+#' @noRd
+.getParentContainerPath <- function(path) {
+  validateIsString(path)
+  pathEntries <- toPathArray(path)
+  if (length(pathEntries) <= 1) {
+    return(NULL)
+  }
+  parentPathEntries <- head(pathEntries, -1)
+  toPathString(parentPathEntries)
+}
