@@ -80,10 +80,7 @@
 #'   User-provided `mapping` and `observedMapping` will override internal
 #'   settings. A warning is issued if the override removes per-dataset
 #'   differentiation.
-#' @inheritDotParams ospsuite.plots::plotTimeProfile xScale xScaleArgs yScale
-#'   yScaleArgs y2Scale y2ScaleArgs groupAesthetics plotObject
-#'   geomLineAttributes geomRibbonAttributes geomPointAttributes
-#'   geomErrorbarAttributes geomLLOQAttributes
+#' @inheritDotParams ospsuite.plots::plotTimeProfile xScale xScaleArgs yScale yScaleArgs y2Scale y2ScaleArgs groupAesthetics plotObject geomLineAttributes geomRibbonAttributes geomPointAttributes geomErrorbarAttributes geomLLOQAttributes
 #'
 #' @return A `ggplot2` plot object representing the time profile, or `NULL`
 #'   if the data contains no plottable entries.
@@ -225,11 +222,7 @@ plotTimeProfile <- function(
 #'   `ospsuite.plots::getFoldDistanceList`. This list contains fold distances,
 #'   where each entry represents a fold and its reciprocal. The identity fold
 #'   (1) will be included if specified in `getFoldDistanceList`.
-#' @inheritDotParams ospsuite.plots::plotYVsX xScaleArgs yScaleArgs
-#'   groupAesthetics addRegression geomPointAttributes
-#'   geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
-#'   addGuestLimits deltaGuest labelGuestCriteria geomGuestLineAttributes
-#'   lloqOnBothAxes
+#' @inheritDotParams ospsuite.plots::plotYVsX xScaleArgs yScaleArgs groupAesthetics addRegression geomPointAttributes geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes addGuestLimits deltaGuest labelGuestCriteria geomGuestLineAttributes lloqOnBothAxes
 #'
 #'
 #' @return A `ggplot2` plot object representing predicted vs observed values,
@@ -357,9 +350,7 @@ plotPredictedVsObserved <- function(
 #'   and observed y-values used for residual calculation and (if `xAxis !=
 #'   "time"`) displayed on the x-Axis. If `NULL` (default), the most frequent
 #'   unit in the data is used. For available units, see `ospsuite::ospUnits`.
-#' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale
-#'   yScaleArgs groupAesthetics addRegression geomPointAttributes
-#'   geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
+#' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale yScaleArgs groupAesthetics addRegression geomPointAttributes geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
 #' @inheritDotParams ospsuite.plots::plotResVsCov comparisonLineVector
 #'
 #' @return A `ggplot2` plot object representing residuals vs time, observed, or
@@ -467,8 +458,7 @@ plotResidualsVsCovariate <- function(
 #'   the most frequent unit in the data is used. For available units, see
 #'   `ospsuite::ospUnits`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
-#' @inheritDotParams ospsuite.plots::plotHistogram xScale xScaleArgs yScale
-#'   yScaleArgs plotAsFrequency meanFunction geomHistAttributes asBarPlot
+#' @inheritDotParams ospsuite.plots::plotHistogram xScale xScaleArgs yScale yScaleArgs plotAsFrequency meanFunction geomHistAttributes asBarPlot
 #'
 #' @return A `ggplot2` plot object representing the histogram of residuals,
 #'   or `NULL` if the data contains no plottable entries.
@@ -547,8 +537,7 @@ plotResidualsAsHistogram <- function(
 #'   and observed y-values used for residual calculation. If `NULL` (default),
 #'   the most frequent unit in the data is used. For available units, see
 #'   `ospsuite::ospUnits`.
-#' @inheritDotParams ospsuite.plots::plotQQ xScaleArgs yScaleArgs
-#'   groupAesthetics geomQQAttributes geomQQLineAttributes
+#' @inheritDotParams ospsuite.plots::plotQQ xScaleArgs yScaleArgs groupAesthetics geomQQAttributes geomQQLineAttributes
 #'
 #' @return A `ggplot2` plot object representing the Q-Q plot, or `NULL` if
 #'   the data contains no plottable entries.
@@ -704,8 +693,11 @@ plotQuantileQuantilePlot <- function(
   }
 
   # check for negative yErrorValues
-  if ("yErrorValues" %in% names(plotData) && "yErrorType" %in% names(plotData)) {
-    negative <- !is.na(plotData[["yErrorValues"]]) & plotData[["yErrorValues"]] < 0
+  if (
+    "yErrorValues" %in% names(plotData) && "yErrorType" %in% names(plotData)
+  ) {
+    negative <- !is.na(plotData[["yErrorValues"]]) &
+      plotData[["yErrorValues"]] < 0
     if (any(negative)) {
       warning(messages$yErrorValuesNegative(sum(negative)))
       plotData[["yErrorValues"]][negative] <- NA_real_
