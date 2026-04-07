@@ -11,7 +11,7 @@ using a Q-Q plot.'><meta name="robots" content="noindex"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,13 +145,18 @@ residuals. Default is <code>log</code>.</p></dd>
     <dt><code>geomQQLineAttributes</code></dt>
 <dd><p>A list of arguments passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html" class="external-link">ggplot2::stat_qq_line()</a></code>.</p></dd>
 
+    <dt><code>groupAesthetics</code></dt>
+<dd><p>A character vector of aesthetic names used for grouping data points in the Q-Q plot.
+Common options include <code>"colour"</code>, <code>"fill"</code>, <code>"shape"</code>, <code>"linetype"</code>, and <code>"size"</code>.</p></dd>
+
 
 </dl></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>ggplot2</code> plot object representing the Q-Q plot.</p>
+    <p>A <code>ggplot2</code> plot object representing the Q-Q plot, or <code>NULL</code> if
+the data contains no plottable entries.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

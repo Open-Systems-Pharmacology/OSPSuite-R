@@ -11,7 +11,7 @@ values, allowing for easy identification of discrepancies.'><meta name="robots" 
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,6 +143,9 @@ where each entry represents a fold and its reciprocal. The identity fold
 <dd><p>Arguments passed on to <code><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/plotYVsX.html" class="external-link">ospsuite.plots::plotYVsX</a></code></p><dl><dt><code>geomPointAttributes</code></dt>
 <dd><p>A <code>list</code> with arguments which are passed on to the call <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">ggplot2::geom_point</a></code></p></dd>
 
+    <dt><code>geomErrorbarAttributes</code></dt>
+<dd><p>A <code>list</code> with arguments which are passed on to the call <code><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">ggplot2::geom_errorbar</a></code></p></dd>
+
     <dt><code>geomGuestLineAttributes</code></dt>
 <dd><p>A <code>list</code> of arguments passed to <code><a href="https://ggplot2.tidyverse.org/reference/geom_function.html" class="external-link">ggplot2::geom_function</a></code> to display guest criteria.</p></dd>
 
@@ -152,8 +155,16 @@ where each entry represents a fold and its reciprocal. The identity fold
     <dt><code>geomLLOQAttributes</code></dt>
 <dd><p>A <code>list</code> with arguments which are passed on to the call <code><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">ggplot2::geom_hline</a></code></p></dd>
 
+    <dt><code>groupAesthetics</code></dt>
+<dd><p>A character vector of aesthetic names used for grouping data points when calculating
+comparison statistics. Data will be grouped by combinations of these aesthetics before computing counts
+and proportions within comparison lines. Common grouping aesthetics include <code>"colour"</code>, <code>"fill"</code>, <code>"shape"</code>.</p></dd>
+
     <dt><code>addRegression</code></dt>
 <dd><p>A boolean that activates the insertion of a regression line.</p></dd>
+
+    <dt><code>addGuestLimits</code></dt>
+<dd><p>A boolean that activates the insertion of guest limits.</p></dd>
 
     <dt><code>deltaGuest</code></dt>
 <dd><p>Numeric value parameter for the Guest function.</p></dd>
@@ -167,6 +178,11 @@ where each entry represents a fold and its reciprocal. The identity fold
     <dt><code>yScaleArgs</code></dt>
 <dd><p>list of arguments passed to <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_continuous()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_log10()</a></code></p></dd>
 
+    <dt><code>lloqOnBothAxes</code></dt>
+<dd><p>A boolean; if <code>TRUE</code>, LLOQ lines are drawn on both axes. If <code>FALSE</code> (default),
+the LLOQ line is drawn for the observed-data axis only.
+(<code>geom_vline</code> when <code>observedDataDirection = "x"</code>, <code>geom_hline</code> when <code>observedDataDirection = "y"</code>).</p></dd>
+
 
 </dl></dd>
 
@@ -174,7 +190,8 @@ where each entry represents a fold and its reciprocal. The identity fold
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A <code>ggplot2</code> plot object representing predicted vs observed values,
-including aesthetics for the x and y axes.</p>
+including aesthetics for the x and y axes, or <code>NULL</code> if the data contains
+no plottable entries.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

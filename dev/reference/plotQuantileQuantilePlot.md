@@ -111,9 +111,16 @@ plotQuantileQuantilePlot(
   :   A list of arguments passed to
       [`ggplot2::stat_qq_line()`](https://ggplot2.tidyverse.org/reference/geom_qq.html).
 
+  `groupAesthetics`
+
+  :   A character vector of aesthetic names used for grouping data
+      points in the Q-Q plot. Common options include `"colour"`,
+      `"fill"`, `"shape"`, `"linetype"`, and `"size"`.
+
 ## Value
 
-A `ggplot2` plot object representing the Q-Q plot.
+A `ggplot2` plot object representing the Q-Q plot, or `NULL` if the data
+contains no plottable entries.
 
 ## See also
 

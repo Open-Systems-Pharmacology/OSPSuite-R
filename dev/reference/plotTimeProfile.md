@@ -164,6 +164,13 @@ plotTimeProfile(
       [`ggplot2::scale_y_log10()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
       is used
 
+  `yScaleArgs`
+
+  :   list of arguments passed to
+      [`ggplot2::scale_y_continuous()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
+      or
+      [`ggplot2::scale_y_log10()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
+
   `y2Scale`
 
   :   either 'linear' the secondary axis is displayed linear, or 'log'
@@ -179,6 +186,11 @@ plotTimeProfile(
 
   :   An optional `ggplot` object on which to add the plot layers
 
+  `geomLineAttributes`
+
+  :   A `list` with arguments which are passed on to the call
+      [`ggplot2::geom_line`](https://ggplot2.tidyverse.org/reference/geom_path.html)
+
   `geomRibbonAttributes`
 
   :   A `list` with arguments which are passed on to the call
@@ -188,6 +200,11 @@ plotTimeProfile(
 
   :   A `list` with arguments which are passed on to the call
       [`ggplot2::geom_point`](https://ggplot2.tidyverse.org/reference/geom_point.html)
+
+  `geomErrorbarAttributes`
+
+  :   A `list` with arguments which are passed on to the call
+      [`ggplot2::geom_errorbar`](https://ggplot2.tidyverse.org/reference/geom_linerange.html)
 
   `geomLLOQAttributes`
 
@@ -201,7 +218,8 @@ plotTimeProfile(
 
 ## Value
 
-A `ggplot2` plot object representing the time profile.
+A `ggplot2` plot object representing the time profile, or `NULL` if the
+data contains no plottable entries.
 
 ## Details
 

@@ -11,7 +11,7 @@ grouped by a column named "group".'><meta name="robots" content="noindex"></head
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -184,6 +184,9 @@ differentiation.</p></dd>
     <dt><code>yScale</code></dt>
 <dd><p>either 'linear' then <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_continuous()</a></code> or 'log' then <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_log10()</a></code> is used</p></dd>
 
+    <dt><code>yScaleArgs</code></dt>
+<dd><p>list of arguments passed to <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_continuous()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_log10()</a></code></p></dd>
+
     <dt><code>y2Scale</code></dt>
 <dd><p>either 'linear' the secondary axis is displayed linear, or 'log' secondary axis is displayed with log scale</p></dd>
 
@@ -193,11 +196,17 @@ differentiation.</p></dd>
     <dt><code>plotObject</code></dt>
 <dd><p>An optional <code>ggplot</code> object on which to add the plot layers</p></dd>
 
+    <dt><code>geomLineAttributes</code></dt>
+<dd><p>A <code>list</code> with arguments which are passed on to the call <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">ggplot2::geom_line</a></code></p></dd>
+
     <dt><code>geomRibbonAttributes</code></dt>
 <dd><p>A <code>list</code> with arguments which are passed on to the call <code><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">ggplot2::geom_ribbon</a></code></p></dd>
 
     <dt><code>geomPointAttributes</code></dt>
 <dd><p>A <code>list</code> with arguments which are passed on to the call <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">ggplot2::geom_point</a></code></p></dd>
+
+    <dt><code>geomErrorbarAttributes</code></dt>
+<dd><p>A <code>list</code> with arguments which are passed on to the call <code><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">ggplot2::geom_errorbar</a></code></p></dd>
 
     <dt><code>geomLLOQAttributes</code></dt>
 <dd><p>A <code>list</code> with arguments which are passed on to the call <code><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">ggplot2::geom_hline</a></code></p></dd>
@@ -211,7 +220,8 @@ differentiation.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>ggplot2</code> plot object representing the time profile.</p>
+    <p>A <code>ggplot2</code> plot object representing the time profile, or <code>NULL</code>
+if the data contains no plottable entries.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

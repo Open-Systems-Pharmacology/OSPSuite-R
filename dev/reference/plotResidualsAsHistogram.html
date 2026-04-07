@@ -11,7 +11,7 @@ representation of their distribution.'><meta name="robots" content="noindex"></h
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,6 +150,9 @@ If TRUE, the variables <code>distribution</code>, <code>meanFunction</code>, <co
     <dt><code>yScale</code></dt>
 <dd><p>either 'linear' then <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_continuous()</a></code> or 'log' then <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_log10()</a></code> is used</p></dd>
 
+    <dt><code>yScaleArgs</code></dt>
+<dd><p>list of arguments passed to <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_continuous()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">ggplot2::scale_y_log10()</a></code></p></dd>
+
     <dt><code>meanFunction</code></dt>
 <dd><p>Function selection for the display of a vertical line. Options: <code>'none'</code>, <code>'mean'</code>, <code>'geomean'</code>, <code>'median'</code>, <code>'auto'</code> (default).
 <code>'auto'</code> selects <code>'mean'</code> for normal distribution, <code>'geomean'</code> for lognormal, <code>'median'</code> for other distributions, and <code>'none'</code> when no distribution fit.</p></dd>
@@ -160,7 +163,8 @@ If TRUE, the variables <code>distribution</code>, <code>meanFunction</code>, <co
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>ggplot2</code> plot object representing the histogram of residuals.</p>
+    <p>A <code>ggplot2</code> plot object representing the histogram of residuals,
+or <code>NULL</code> if the data contains no plottable entries.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

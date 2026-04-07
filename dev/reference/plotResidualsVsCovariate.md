@@ -102,6 +102,11 @@ plotResidualsVsCovariate(
   :   A `list` with arguments which are passed on to the call
       [`ggplot2::geom_point`](https://ggplot2.tidyverse.org/reference/geom_point.html)
 
+  `geomErrorbarAttributes`
+
+  :   A `list` with arguments which are passed on to the call
+      [`ggplot2::geom_errorbar`](https://ggplot2.tidyverse.org/reference/geom_linerange.html)
+
   `geomComparisonLineAttributes`
 
   :   A `list` of arguments passed to `ggplot2::hline` or
@@ -147,6 +152,13 @@ plotResidualsVsCovariate(
       [`ggplot2::scale_y_log10()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
       is used
 
+  `yScaleArgs`
+
+  :   list of arguments passed to
+      [`ggplot2::scale_y_continuous()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
+      or
+      [`ggplot2::scale_y_log10()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
+
   `comparisonLineVector`
 
   :   A vector defining the comparison lines.
@@ -154,7 +166,7 @@ plotResidualsVsCovariate(
 ## Value
 
 A `ggplot2` plot object representing residuals vs time, observed, or
-predicted values.
+predicted values, or `NULL` if the data contains no plottable entries.
 
 ## Details
 

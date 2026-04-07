@@ -48,5 +48,5 @@ popPath <- system.file("extdata", "simple_pop.csv", package = "ospsuite")
 population <- loadPopulation(popPath)
 
 exportIndividualSimulations(population, c(1, 2), tempdir(), sim)
-#> [1] "/tmp/Rtmpn8O1dY/Simple_1.pkml" "/tmp/Rtmpn8O1dY/Simple_2.pkml"
+#> [1] "/tmp/RtmpdFthy5/Simple_1.pkml" "/tmp/RtmpdFthy5/Simple_2.pkml"
 ```
