@@ -122,13 +122,13 @@ plotResidualsVsCovariate(
   xAxis = "time",
   residualScale = 'linear'
 )
-}
 
 # Generate a residuals vs predicted plot
 plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
 
 # Generate a residuals vs time plot
 plotResidualsVsCovariate(myDataCombined, xAxis = "time")
+}
 }
 \seealso{
 Other plot functions based on ospsuite.plots: 

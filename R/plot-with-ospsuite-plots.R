@@ -378,13 +378,13 @@ plotPredictedVsObserved <- function(
 #'   xAxis = "time",
 #'   residualScale = 'linear'
 #' )
-#' }
 #'
 #' # Generate a residuals vs predicted plot
 #' plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
 #'
 #' # Generate a residuals vs time plot
 #' plotResidualsVsCovariate(myDataCombined, xAxis = "time")
+#' }
 plotResidualsVsCovariate <- function(
   plotData,
   metaData = NULL,
