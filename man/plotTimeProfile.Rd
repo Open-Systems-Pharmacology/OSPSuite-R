@@ -96,11 +96,14 @@ differentiation.}
     \item{\code{xScale}}{either 'linear' then \code{ggplot2::scale_x_continuous()} or 'log' then \code{ggplot2::scale_x_log10()} is used}
     \item{\code{xScaleArgs}}{list of arguments passed to \code{ggplot2::scale_x_continuous()} or \code{ggplot2::scale_x_log10()}}
     \item{\code{yScale}}{either 'linear' then \code{ggplot2::scale_y_continuous()} or 'log' then \code{ggplot2::scale_y_log10()} is used}
+    \item{\code{yScaleArgs}}{list of arguments passed to \code{ggplot2::scale_y_continuous()} or \code{ggplot2::scale_y_log10()}}
     \item{\code{y2Scale}}{either 'linear' the secondary axis is displayed linear, or 'log' secondary axis is displayed with log scale}
     \item{\code{y2ScaleArgs}}{list of arguments passed to \code{ggplot2::sec_axis()}, trans, break are set by code}
     \item{\code{plotObject}}{An optional \code{ggplot} object on which to add the plot layers}
+    \item{\code{geomLineAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_line}}
     \item{\code{geomRibbonAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_ribbon}}
     \item{\code{geomPointAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_point}}
+    \item{\code{geomErrorbarAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_errorbar}}
     \item{\code{geomLLOQAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_hline}}
     \item{\code{groupAesthetics}}{vector of aesthetics, which are used for columns mapped with \code{groupby},}
   }}

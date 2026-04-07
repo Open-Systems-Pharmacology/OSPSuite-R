@@ -63,6 +63,7 @@ values, default), or \code{"predicted"} (predicted/simulated values).}
   Arguments passed on to \code{\link[ospsuite.plots:plotYVsX]{ospsuite.plots::plotYVsX}}, \code{\link[ospsuite.plots:plotResVsCov]{ospsuite.plots::plotResVsCov}}
   \describe{
     \item{\code{geomPointAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_point}}
+    \item{\code{geomErrorbarAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_errorbar}}
     \item{\code{geomComparisonLineAttributes}}{A \code{list} of arguments passed to \code{ggplot2::hline} or \code{ggplot2::abline} to display comparison lines.}
     \item{\code{geomLLOQAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_hline}}
     \item{\code{groupAesthetics}}{A character vector of aesthetic names used for grouping data points when calculating
@@ -72,6 +73,7 @@ and proportions within comparison lines. Common grouping aesthetics include \cod
     \item{\code{xScale}}{either 'linear' then \code{ggplot2::scale_x_continuous()} or 'log' then \code{ggplot2::scale_x_log10()} is used}
     \item{\code{xScaleArgs}}{list of arguments passed to \code{ggplot2::scale_x_continuous()} or \code{ggplot2::scale_x_log10()}}
     \item{\code{yScale}}{either 'linear' then \code{ggplot2::scale_y_continuous()} or 'log' then \code{ggplot2::scale_y_log10()} is used}
+    \item{\code{yScaleArgs}}{list of arguments passed to \code{ggplot2::scale_y_continuous()} or \code{ggplot2::scale_y_log10()}}
     \item{\code{comparisonLineVector}}{A vector defining the comparison lines.}
   }}
 }
