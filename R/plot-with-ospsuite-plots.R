@@ -537,8 +537,7 @@ plotResidualsAsHistogram <- function(
 #'   and observed y-values used for residual calculation. If `NULL` (default),
 #'   the most frequent unit in the data is used. For available units, see
 #'   `ospsuite::ospUnits`.
-#' @inheritDotParams ospsuite.plots::plotQQ xScaleArgs yScaleArgs
-#'   groupAesthetics geomQQAttributes geomQQLineAttributes
+#' @inheritDotParams ospsuite.plots::plotQQ xScaleArgs yScaleArgs groupAesthetics geomQQAttributes geomQQLineAttributes
 #'
 #' @return A `ggplot2` plot object representing the Q-Q plot, or `NULL` if
 #'   the data contains no plottable entries.
