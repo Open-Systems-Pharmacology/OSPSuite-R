@@ -55,9 +55,11 @@ test_that("It throws an error when no valid values are provided", {
 
 test_that("It throws an error when the number of quantity differs from the number of values", {
   molecule <- getMolecule("Organism|Liver|A", sim)
-  molecules <- getAllMoleculesMatching("Organism|Liver|*|A", sim)
-  expect_error(setMoleculeInitialValues(molecule, c(1, 2)))
-  expect_error(setMoleculeInitialValues(molecules, 1))
+  molecules <- getAllMoleculesMatching("Organism|**|A", sim)
+  expect_error(
+    setMoleculeInitialValues(molecule, c(1, 2)),
+    regexp = "must have the same length"
+  )
 })
 
 test_that("It can set the value of a single quantity", {
@@ -73,6 +75,12 @@ test_that("It can set the values of multiple molecules", {
     x$value
   })
   expect_equal(newVals, c(1:2))
+
+  setMoleculeInitialValues(molecules, 3)
+  newVals <- sapply(molecules, function(x) {
+    x$value
+  })
+  expect_equal(newVals, c(3, 3))
 })
 
 # setMoleculeScaleDivisors

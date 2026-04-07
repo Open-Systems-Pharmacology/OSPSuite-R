@@ -115,7 +115,7 @@ test_that("It produces expected plot for multiple simulated and observed dataset
     groups = "Aciclovir PVB"
   )
 
-  myDataCombined$addDataSets(obsData[1 - 3], groups = "Aciclovir observed")
+  myDataCombined$addDataSets(obsData[c(1, 3)], groups = "Aciclovir observed")
 
   set.seed(123)
   vdiffr::expect_doppelganger(
