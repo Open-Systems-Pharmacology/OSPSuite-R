@@ -113,7 +113,6 @@ prediction error.
 }
 }
 \examples{
-\dontrun{
 # Generate a residuals vs observed plot for the provided data
 plotResidualsVsCovariate(
   myDataCombined,
@@ -128,7 +127,6 @@ plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
 
 # Generate a residuals vs time plot
 plotResidualsVsCovariate(myDataCombined, xAxis = "time")
-}
 }
 \seealso{
 Other plot functions based on ospsuite.plots: 

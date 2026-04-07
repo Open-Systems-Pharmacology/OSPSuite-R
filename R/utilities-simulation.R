@@ -201,10 +201,9 @@ runSimulation <- function(
 #'
 #' # Running multiple simulations in parallel
 #' sim2 <- loadSimulation(simPath)
-#' sim3 <- loadSimulation(simPath)
 #'
 #' # Results is a list of `SimulationResults`
-#' results <- runSimulations(list(sim, sim2, sim3))
+#' results <- runSimulations(list(sim, sim2))
 #' @export
 runSimulations <- function(
   simulations,
@@ -593,7 +592,7 @@ removeSimulationFromCache <- function(simulation) {
 #' @export
 #'
 #' @examples
-#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+#' simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim1 <- loadSimulation(simPath)
 #'
 #' parameters <- getStandardMoleculeParameters("CYP3A4", sim1)
@@ -940,7 +939,7 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
 #' @import ospsuite.utils
 #' @export
 #' @examples
-#' simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #' steadyState <- getSteadyState(simulations = sim)
 #' # Set initial values for steady-state simulations

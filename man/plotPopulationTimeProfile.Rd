@@ -53,6 +53,7 @@ standard deviation (SD) will be plotted. Use the optional parameter \code{nsd} t
 change the number of SD to plot above and below the mean.
 }
 \examples{
+\dontrun{
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
@@ -76,6 +77,7 @@ plotPopulationTimeProfile(myDataComb, quantiles = c(0.1, 0.5, 0.9))
 plotPopulationTimeProfile(myDataComb,
   aggregation = "arithmetic"
 )
+}
 
 }
 \seealso{

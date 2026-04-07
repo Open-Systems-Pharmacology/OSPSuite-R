@@ -18,6 +18,7 @@
 #' @family plotting
 #'
 #' @examples
+#' \dontrun{
 #' # simulated data
 #' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simFilePath)
@@ -53,6 +54,7 @@
 #'
 #' # plot
 #' plotObservedVsSimulated(myDataCombined, myPlotConfiguration)
+#' }
 #' @export
 plotObservedVsSimulated <- function(
   dataCombined,

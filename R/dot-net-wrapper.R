@@ -3,7 +3,7 @@
 #'
 #' @examples
 #'
-#' sim <- loadSimulation(system.file("extdata", "Aciclovir.pkml", package = "ospsuite"))
+#' sim <- loadSimulation(system.file("extdata", "simple.pkml", package = "ospsuite"))
 #'
 #' # looking at a reference to `.NET` simulation object
 #' sim$pointer
