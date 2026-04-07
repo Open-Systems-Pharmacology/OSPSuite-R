@@ -113,6 +113,7 @@ prediction error.
 }
 }
 \examples{
+\dontrun{
 # Generate a residuals vs observed plot for the provided data
 plotResidualsVsCovariate(
   myDataCombined,
@@ -121,6 +122,7 @@ plotResidualsVsCovariate(
   xAxis = "time",
   residualScale = 'linear'
 )
+}
 
 # Generate a residuals vs predicted plot
 plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
