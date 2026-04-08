@@ -19,7 +19,7 @@ on:
 
 name: Update Core Files
 
-permissions: 
+permissions:
   contents: write
   pull-requests: write
 
@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.CORE_FILES_UPDATE_PAT }}
           fetch-depth: 0
@@ -121,7 +121,7 @@ jobs:
               ## What this PR does
               This PR updates the core files (shared libraries) required by the \`{ospsuite}\` package to access PK-Sim functionality. The files are downloaded from the latest PK-Sim build artifacts.`
             });
-            
+
             console.log(`Created PR #${pr.number}: ${pr.html_url}`);
 
       - name: No changes message
@@ -138,7 +138,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.CORE_FILES_UPDATE_PAT }}
           ref: ${{ needs.update-core-files.outputs.branch_name }}
