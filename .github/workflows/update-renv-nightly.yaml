@@ -27,8 +27,6 @@ jobs:
 
       - name: Update packages at latest versions and snapshot
         run: Rscript -e "renv::update(lock = TRUE)"
-        env:
-          GITHUB_PAT: ${{ github.token }}
 
       - name: Upload updated renv.lock
         uses: actions/upload-artifact@v7
