@@ -54,11 +54,6 @@ test_that("It creates default plots as expected for multiple observed datasets",
     title = "multiple obs - showLegendPerDataset observed",
     fig = plotTimeProfile(manyObsDC, showLegendPerDataset = "observed")
   )
-
-  vdiffr::expect_doppelganger(
-    title = "multiple obs - showLegendPerDataset observed",
-    fig = plotTimeProfile(manyObsDC, showLegendPerDataset = "observed")
-  )
 })
 
 # only simulated ------------------------
