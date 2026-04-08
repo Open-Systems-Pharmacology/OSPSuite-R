@@ -135,9 +135,13 @@ test_that("It returns `NULL` with warning when `DataCombined` doesn't have any p
   myCombDat$addDataSets(dataSet1)
 
   expect_warning(
-    result <- suppressMessages(plotResidualsVsCovariate(myCombDat)),
-    regexp = messages$plotNoDataAvailable()
+    expect_warning(
+      result <- suppressMessages(plotResidualsVsCovariate(myCombDat)),
+      regexp = messages$plotNoDataAvailable()
+    ),
+    messages$residualsCanNotBeComputed()
   )
+
   expect_null(result)
 })
 

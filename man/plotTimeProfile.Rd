@@ -16,7 +16,7 @@ plotTimeProfile(
   quantiles =
     ospsuite.plots::getOspsuite.plots.option(ospsuite.plots::OptionKeys$defaultPercentiles),
   nsd = 1,
-  showLegendPerDataset = "none",
+  showLegendPerDataset = "all",
   ...
 )
 }
@@ -80,8 +80,8 @@ plot above and below the mean (used for error bars when aggregation is
 \item{showLegendPerDataset}{Controls display of separate legend entries for
 individual datasets. One of:
 \itemize{
-\item \code{"none"} (default): No per-dataset differentiation. Only group-level legend.
-\item \code{"all"}: Differentiate both observed (via \code{shape}) and simulated (via \code{linetype}).
+\item \code{"none"}: No per-dataset differentiation. Only group-level legend.
+\item \code{"all"} (default): Differentiate both observed (via \code{shape}) and simulated (via \code{linetype}).
 \item \code{"observed"}: Differentiate only observed data via different shapes.
 \item \code{"simulated"}: Differentiate only simulated data via different line types.
 }
