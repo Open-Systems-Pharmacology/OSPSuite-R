@@ -40,7 +40,8 @@ jobs:
           install.packages("desc")
           if (desc::desc_has_fields("Remotes")) {
             remotes <- trimws(desc::desc_get_remotes())
-            remotes <- ifelse(grepl("@", remotes), remotes, paste0(remotes, "@*release"))
+            remotes <- sub("@.*", "", remotes)
+            remotes <- paste0(remotes, "@*release")
             desc::desc_set_remotes(remotes)
             cat("Remotes pinned to released versions:\n")
             cat(paste(remotes, collapse = "\n"), "\n")
