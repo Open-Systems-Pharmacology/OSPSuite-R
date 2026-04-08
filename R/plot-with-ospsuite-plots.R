@@ -72,8 +72,8 @@
 #'   (default), the most frequent unit in the data is used.
 #' @param showLegendPerDataset Controls display of separate legend entries for
 #'   individual datasets. One of:
-#'   - `"none"` (default): No per-dataset differentiation. Only group-level legend.
-#'   - `"all"`: Differentiate both observed (via `shape`) and simulated (via `linetype`).
+#'   - `"none"`: No per-dataset differentiation. Only group-level legend.
+#'   - `"all"` (default): Differentiate both observed (via `shape`) and simulated (via `linetype`).
 #'   - `"observed"`: Differentiate only observed data via different shapes.
 #'   - `"simulated"`: Differentiate only simulated data via different line types.
 #'
@@ -115,7 +115,7 @@ plotTimeProfile <- function(
     ospsuite.plots::OptionKeys$defaultPercentiles
   ),
   nsd = 1,
-  showLegendPerDataset = "none",
+  showLegendPerDataset = "all",
   ...
 ) {
   # initialize variables used for data.table to avoid messages during checks
@@ -1151,7 +1151,7 @@ plotQuantileQuantilePlot <- function(
   plotData <- plotData[dataType == dataTypeFilter]
 
   if (nrow(plotData) == 0) {
-    if (any(showLegendPerDataset == c(dataTypeFilter, "all"))) {
+    if (any(showLegendPerDataset == c(dataTypeFilter))) {
       warning(messages$plotShowLegendPerDatasetHasNoEffect(
         dataType = dataTypeFilter
       ))

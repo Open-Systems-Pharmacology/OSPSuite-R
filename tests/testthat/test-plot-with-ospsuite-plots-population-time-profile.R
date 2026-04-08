@@ -2,8 +2,8 @@
 oldDefaults <- ospsuite.plots::setDefaults()
 withr::defer(ospsuite.plots::resetDefaults(oldDefaults))
 ggplot2::theme_update(legend.title = ggplot2::element_blank())
-ggplot2::theme_update(legend.position = c(0.95, 0.05))
-ggplot2::theme_update(legend.justification = c("right", "bottom"))
+ggplot2::theme_update(legend.position = c(0.95, 0.95))
+ggplot2::theme_update(legend.justification = c("right", "top"))
 
 ospsuite.plots::setOspsuite.plots.option(
   ospsuite.plots::OptionKeys$defaultPercentiles,
@@ -232,12 +232,18 @@ test_that("Aggregations are computed and displayed correctly", {
 
   vdiffr::expect_doppelganger(
     title = "modified quantiles",
-    fig = plotTimeProfile(myDataComb, quantiles = c(0.1, 0.5, 0.9))
+    fig = plotTimeProfile(
+      myDataComb,
+      quantiles = c(0.1, 0.5, 0.9)
+    )
   )
 
   vdiffr::expect_doppelganger(
     title = "arithmetic mean",
-    fig = plotTimeProfile(myDataComb, aggregation = "arithmetic")
+    fig = plotTimeProfile(
+      myDataComb,
+      aggregation = "arithmetic"
+    )
   )
 
   vdiffr::expect_doppelganger(
@@ -251,7 +257,10 @@ test_that("Aggregations are computed and displayed correctly", {
 
   vdiffr::expect_doppelganger(
     title = "geometric mean",
-    fig = plotTimeProfile(myDataComb, aggregation = "geometric")
+    fig = plotTimeProfile(
+      myDataComb,
+      aggregation = "geometric"
+    )
   )
 
   vdiffr::expect_doppelganger(
