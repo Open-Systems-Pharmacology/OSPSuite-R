@@ -73,13 +73,9 @@ jobs:
 
       - name: Install renv
         run: Rscript -e "install.packages(c('renv','devtools'))"
-        env:
-          GITHUB_PAT: ${{ github.token }}
 
       - name: Restore renv environment
         run: Rscript -e "renv::restore(prompt = FALSE)"
-        env:
-          GITHUB_PAT: ${{ github.token }}
 
       - name: Run R CMD Check
         run: Rscript -e "devtools::check(error_on = 'error')"
