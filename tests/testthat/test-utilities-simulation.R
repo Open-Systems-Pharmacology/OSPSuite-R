@@ -8,6 +8,12 @@ aciclovirSimulation <- loadSimulation(
 # exportIndividualSimulations
 
 test_that("It can export the simulation for file for given individual in a population", {
+  # Loading a simulation because the function will mutate it by calling "setParameterValuesByPath".
+  aciclovirSimulation <- loadSimulation(
+    aciclovirSimulationPath,
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
   paths <- exportIndividualSimulations(
     population = population,
     individualIds = c(1, 2),

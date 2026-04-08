@@ -1360,14 +1360,14 @@ test_that("sequential update when first and second datasets have same names but 
 
 test_that("data frame is as expected when `Population` objects are used", {
   # Load simulation
-  sim_immutable <- loadSimulation(
+  sim <- loadSimulation(
     aciclovirSimulationPath,
     loadFromCache = TRUE,
     addToCache = TRUE
   )
 
   populationResults <- importResultsFromCSV(
-    simulation = sim_immutable,
+    simulation = sim,
     filePaths = getTestDataFilePath("SimResults_pop.csv")
   )
 
