@@ -69,6 +69,8 @@ jobs:
 
       - name: Install renv
         run: Rscript -e "install.packages(c('renv','devtools'))"
+        env:
+          GITHUB_PAT: ${{ github.token }}
 
       - name: Restore renv environment
         run: Rscript -e "renv::restore(prompt = FALSE)"
