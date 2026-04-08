@@ -224,11 +224,9 @@ plotTimeProfile <- function(
 #'   (1) will be included if specified in `getFoldDistanceList`.
 #' @param showLegendPerDataset Controls display of separate legend entries for
 #'   individual datasets. One of:
-#'   - `"none"` (default): No per-dataset differentiation. Only group-level legend.
-#'   - `"all"` or `"observed"`: Differentiate observed datasets via different
+#'   - `"none"` : No per-dataset differentiation. Only group-level legend.
+#'   - `"all"` (default) or `"observed"`: Differentiate observed datasets via different
 #'     shapes (using the `name` column).
-#'   - `"simulated"`: Issues a warning; simulated data is represented as axis
-#'     values, not as separate visual elements, so this setting has no effect.
 #'
 #'   User-provided `mapping` will override internal settings.
 #' @inheritDotParams ospsuite.plots::plotYVsX xScaleArgs yScaleArgs groupAesthetics addRegression geomPointAttributes geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes addGuestLimits deltaGuest labelGuestCriteria geomGuestLineAttributes lloqOnBothAxes
@@ -259,12 +257,12 @@ plotPredictedVsObserved <- function(
   xyScale = "log",
   predictedAxis = "y",
   comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
-  showLegendPerDataset = "none",
+  showLegendPerDataset = "all",
   ...
 ) {
   checkmate::assertChoice(
     showLegendPerDataset,
-    choices = c("none", "all", "observed", "simulated")
+    choices = c("none", "all", "observed")
   )
 
   # Validate predictedAxis parameter
@@ -371,11 +369,9 @@ plotPredictedVsObserved <- function(
 #'   unit in the data is used. For available units, see `ospsuite::ospUnits`.
 #' @param showLegendPerDataset Controls display of separate legend entries for
 #'   individual datasets. One of:
-#'   - `"none"` (default): No per-dataset differentiation. Only group-level legend.
-#'   - `"all"` or `"observed"`: Differentiate observed datasets via different
+#'   - `"none"`: No per-dataset differentiation. Only group-level legend.
+#'   - `"all"` (default) or `"observed"`: Differentiate observed datasets via different
 #'     shapes (using the `name` column).
-#'   - `"simulated"`: Issues a warning; simulated data is represented as axis
-#'     values, not as separate visual elements, so this setting has no effect.
 #'
 #'   User-provided `mapping` will override internal settings.
 #' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale yScaleArgs groupAesthetics addRegression geomPointAttributes geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
@@ -414,14 +410,14 @@ plotResidualsVsCovariate <- function(
   yUnit = NULL,
   residualScale = "log",
   xAxis = "observed",
-  showLegendPerDataset = "none",
+  showLegendPerDataset = "all",
   ...
 ) {
   predicted <- NULL
 
   checkmate::assertChoice(
     showLegendPerDataset,
-    choices = c("none", "all", "observed", "simulated")
+    choices = c("none", "all", "observed")
   )
 
   # Validate xAxis parameter
@@ -1329,11 +1325,6 @@ plotQuantileQuantilePlot <- function(
     )
   }
 
-  # Warn if simulated differentiation is requested (not applicable)
-  if (showLegendPerDataset %in% c("simulated")) {
-    warning(messages$plotShowLegendPerDatasetSimulatedNotSupported())
-  }
-
   mapping <- structure(
     utils::modifyList(mapping, userMapping),
     class = "uneval"
@@ -1389,11 +1380,6 @@ plotQuantileQuantilePlot <- function(
       utils::modifyList(mapping, ggplot2::aes(shape = name)),
       class = "uneval"
     )
-  }
-
-  # Warn if simulated differentiation is requested (not applicable)
-  if (showLegendPerDataset %in% c("simulated")) {
-    warning(messages$plotShowLegendPerDatasetSimulatedNotSupported())
   }
 
   # delete columns not needed

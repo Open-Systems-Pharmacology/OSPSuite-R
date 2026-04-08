@@ -231,12 +231,6 @@ messages$plotShowLegendPerDatasetHasNoEffect <- function(dataType) {
   )
 }
 
-messages$plotShowLegendPerDatasetSimulatedNotSupported <- function() {
-  paste0(
-    "showLegendPerDataset = 'simulated' has no effect for this plot type. ",
-    "Simulated data is represented as axis values, not as separate points or lines."
-  )
-}
 
 messages$plotUntypicalAesthetic <- function(aesthetic, dataType) {
   sprintf(

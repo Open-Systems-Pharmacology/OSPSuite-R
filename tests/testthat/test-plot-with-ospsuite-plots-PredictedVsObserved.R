@@ -405,49 +405,30 @@ test_that("plotPredictedVsObserved produces same result as pre-converting with c
 # showLegendPerDataset ----
 
 test_that("showLegendPerDataset adds shape mapping for observed datasets", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
-  simData <- withr::with_tempdir({
-    df <- dplyr::tibble(
-      IndividualId = c(0, 0, 0),
-      `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
-        0,
-        4,
-        8
-      )
+  myCombDat$setGroups(
+    names = c(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Placebo_proximal"
+    ),
+    groups = c(
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012",
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012"
     )
-    readr::write_csv(df, "SimResults.csv")
-    importResultsFromCSV(sim, "SimResults.csv")
-  })
-
-  obsData <- DataSet$new(name = "Observed")
-  obsData$setValues(
-    xValues = c(1, 3, 3.5, 4, 5),
-    yValues = c(1.9, 6.1, 7, 8.2, 1)
   )
-  obsData$xUnit <- "min"
-  obsData$yDimension <- ospDimensions$`Concentration (molar)`
-
-  myDC <- DataCombined$new()
-  myDC$addSimulationResults(simData, groups = "myGroup")
-  myDC$addDataSets(obsData, groups = "myGroup")
-
-  obsData2 <- DataSet$new(name = "Observed 2")
-  obsData2$setValues(
-    xValues = c(1, 3, 4, 4.5, 5.5),
-    yValues = c(2.9, 5.1, 3, 8.2, 1)
-  )
-  obsData2$xUnit <- "min"
-  obsData2$yDimension <- ospDimensions$`Concentration (molar)`
-  myDC$addDataSets(obsData2, groups = "myGroup")
 
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "showLegendPerDataset observed - predicted vs observed",
     fig = plotPredictedVsObserved(
-      myDC,
+      myCombDat,
       xyScale = "linear",
       showLegendPerDataset = "observed"
     )
@@ -455,64 +436,55 @@ test_that("showLegendPerDataset adds shape mapping for observed datasets", {
 
   set.seed(123)
   vdiffr::expect_doppelganger(
-    title = "showLegendPerDataset all - predicted vs observed",
+    title = "showLegendPerDataset none - predicted vs observed",
     fig = plotPredictedVsObserved(
-      myDC,
+      myCombDat,
       xyScale = "linear",
-      showLegendPerDataset = "all"
+      showLegendPerDataset = "none"
     )
   )
 })
 
-test_that("showLegendPerDataset simulated warns for predictedVsObserved", {
-  expect_warning(
+test_that("showLegendPerDataset throws error for predictedVsObserved", {
+  expect_error(
     plotPredictedVsObserved(
       myCombDat,
       xyScale = "linear",
       showLegendPerDataset = "simulated"
     ),
-    messages$plotShowLegendPerDatasetSimulatedNotSupported()
+    "Assertion on 'showLegendPerDataset' failed"
   )
 })
 
 test_that("User mapping overrides showLegendPerDataset in predictedVsObserved", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
-  simData <- withr::with_tempdir({
-    df <- dplyr::tibble(
-      IndividualId = c(0, 0, 0),
-      `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
-        0,
-        4,
-        8
-      )
+  myCombDat$setGroups(
+    names = c(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Placebo_proximal"
+    ),
+    groups = c(
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012",
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012"
     )
-    readr::write_csv(df, "SimResults.csv")
-    importResultsFromCSV(sim, "SimResults.csv")
-  })
-
-  obsData <- DataSet$new(name = "Observed")
-  obsData$setValues(
-    xValues = c(1, 3, 3.5, 4, 5),
-    yValues = c(1.9, 6.1, 7, 8.2, 1)
   )
-  obsData$xUnit <- "min"
-  obsData$yDimension <- ospDimensions$`Concentration (molar)`
-
-  myDC <- DataCombined$new()
-  myDC$addSimulationResults(simData, groups = "myGroup")
-  myDC$addDataSets(obsData, groups = "myGroup")
 
   # User mapping overrides showLegendPerDataset
-  expect_s3_class(
-    plotPredictedVsObserved(
-      myDC,
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "showLegendPerDataset overwritten by name",
+    fig = plotPredictedVsObserved(
+      myCombDat,
       xyScale = "linear",
       showLegendPerDataset = "observed",
       mapping = ggplot2::aes(groupby = name)
-    ),
-    "gg"
+    )
   )
 })

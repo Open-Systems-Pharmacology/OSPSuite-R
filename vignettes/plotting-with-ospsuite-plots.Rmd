@@ -321,11 +321,11 @@ plotPredictedVsObserved(myDataCombined, xyScale = "linear")
 Similar to `plotTimeProfile()`, you can display individual dataset names in the legend using the `showLegendPerDataset` parameter:
 
 ```{r predvsobs-legend-per-dataset, eval=FALSE}
-# Show individual observed dataset names (different shapes)
-plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "observed")
-
-# Same as "observed" for these scatter plots
+# Show individual observed dataset names (different shapes) (default)
 plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "all")
+
+# No per-dataset differentiation
+plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "none")
 ```
 
 ## Residuals vs Covariate Plots
@@ -372,11 +372,11 @@ plotResidualsVsCovariate(
 You can display individual dataset names in the legend using the `showLegendPerDataset` parameter:
 
 ```{r resvscovariate-legend-per-dataset, eval=FALSE}
-# Show individual observed dataset names (different shapes)
-plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "observed")
-
-# Same as "observed" for these scatter plots
+# Show individual observed dataset names (different shapes) (default)
 plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "all")
+
+# No per-dataset differentiation
+plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "none")
 ```
 
 ## Residuals as Histogram
