@@ -25,31 +25,31 @@ testProject <- loadMoBiProject(system.file(
 ))
 minimalTestProject <- loadMoBiProject(getTestDataFilePath("Test_Project.mbp3"))
 
-# Test initialConditionsToDataFrame with no paths
-# Test initialConditionsToDataFrame with one path
-# Test initialConditionsToDataFrame with multiple paths
-test_that("initialConditionsToDataFrame returns a data frame with the expected columns", {
+# Test initialConditionsBBToDataFrame with no paths
+# Test initialConditionsBBToDataFrame with one path
+# Test initialConditionsBBToDataFrame with multiple paths
+test_that("initialConditionsBBToDataFrame returns a data frame with the expected columns", {
   icBB <- getFreshICBB()
-  df <- initialConditionsToDataFrame(icBB)
+  df <- initialConditionsBBToDataFrame(icBB)
   expect_snapshot(df)
 })
 
-test_that("initialConditionsToDataFrame throws an error if the building block is not of type Initial Conditions", {
+test_that("initialConditionsBBToDataFrame throws an error if the building block is not of type Initial Conditions", {
   expect_error(
-    initialConditionsToDataFrame(testPVBB),
+    initialConditionsBBToDataFrame(testPVBB),
     regexp = "Initial Conditions"
   )
 })
 
-test_that("parameterValuesToDataFrame returns a data frame with the expected columns", {
-  df <- parameterValuesToDataFrame(testPVBB)
+test_that("parameterValuesBBToDataFrame returns a data frame with the expected columns", {
+  df <- parameterValuesBBToDataFrame(testPVBB)
   expect_snapshot(df)
 })
 
-test_that("parameterValuesToDataFrame throws an error if the building block is not of type Parameter Values", {
+test_that("parameterValuesBBToDataFrame throws an error if the building block is not of type Parameter Values", {
   icBB <- getFreshICBB()
   expect_error(
-    parameterValuesToDataFrame(icBB),
+    parameterValuesBBToDataFrame(icBB),
     regexp = "Parameter Values"
   )
 })
@@ -92,7 +92,7 @@ test_that("setInitialConditionsBB updates one entry correctly", {
     negativeValuesAllowed = FALSE
   )
 
-  df <- initialConditionsToDataFrame(icBB)
+  df <- initialConditionsBBToDataFrame(icBB)
 
   # Check if the paths exist in the data frame
   # The data frame columns are "Container Path" and "Molecule Name"
@@ -124,7 +124,7 @@ test_that("setInitialConditionsBB updates multiple entries correctly", {
     negativeValuesAllowed = TRUE
   )
 
-  df <- initialConditionsToDataFrame(icBB)
+  df <- initialConditionsBBToDataFrame(icBB)
 
   brainEntry <- df[
     df$`Container Path` == "Organism|Brain|Intracellular" &
@@ -166,7 +166,7 @@ test_that("setInitialConditionsBB adds new entries correctly", {
     negativeValuesAllowed = FALSE
   )
 
-  df <- initialConditionsToDataFrame(icBB)
+  df <- initialConditionsBBToDataFrame(icBB)
   liverEntry <- df[
     df$`Container Path` == "Organism|Intracellular" &
       df$`Molecule Name` == "Aciclovir",
@@ -195,7 +195,7 @@ test_that("deleteInitialConditionsBB throws an error if the building block is no
 test_that("deleteInitialConditionsBB removes existing entries correctly", {
   icBB <- getFreshICBB()
   # Get initial count
-  dfBefore <- initialConditionsToDataFrame(icBB)
+  dfBefore <- initialConditionsBBToDataFrame(icBB)
   pathToDelete <- "Organism|Brain|Intracellular|Aciclovir"
 
   # Ensure the path exists before deletion
@@ -208,7 +208,7 @@ test_that("deleteInitialConditionsBB removes existing entries correctly", {
   deleteInitialConditionsBB(icBB, pathToDelete)
 
   # Check after deletion
-  dfAfter <- initialConditionsToDataFrame(icBB)
+  dfAfter <- initialConditionsBBToDataFrame(icBB)
   expect_false(any(
     paste0(dfAfter$`Container Path`, "|", dfAfter$`Molecule Name`) ==
       pathToDelete
@@ -218,7 +218,7 @@ test_that("deleteInitialConditionsBB removes existing entries correctly", {
 
 test_that("deleteInitialConditionsBB removes multiple entries correctly", {
   icBB <- getFreshICBB()
-  dfBefore <- initialConditionsToDataFrame(icBB)
+  dfBefore <- initialConditionsBBToDataFrame(icBB)
   pathsToDelete <- c(
     "Organism|Kidney|Intracellular|Aciclovir",
     "Organism|Muscle|Intracellular|Aciclovir"
@@ -226,7 +226,7 @@ test_that("deleteInitialConditionsBB removes multiple entries correctly", {
 
   deleteInitialConditionsBB(icBB, pathsToDelete)
 
-  dfAfter <- initialConditionsToDataFrame(icBB)
+  dfAfter <- initialConditionsBBToDataFrame(icBB)
   currentPaths <- paste0(dfAfter$`Container Path`, "|", dfAfter$`Molecule Name`)
 
   expect_false(any(currentPaths %in% pathsToDelete))
@@ -235,18 +235,18 @@ test_that("deleteInitialConditionsBB removes multiple entries correctly", {
 
 test_that("deleteInitialConditionsBB ignores paths that do not exist", {
   icBB <- getFreshICBB()
-  dfBefore <- initialConditionsToDataFrame(icBB)
+  dfBefore <- initialConditionsBBToDataFrame(icBB)
   nonExistentPath <- "Non|Existent|Path|Molecule"
 
   # Should not throw an error
   expect_silent(deleteInitialConditionsBB(icBB, nonExistentPath))
 
-  dfAfter <- initialConditionsToDataFrame(icBB)
+  dfAfter <- initialConditionsBBToDataFrame(icBB)
   expect_equal(dfAfter, dfBefore)
 })
 
 # extendInitialConditions
-test_that("extendInitialConditions extends with all molecules if moleculeNames is NULL", {
+test_that("extendInitialConditionsBB extends with all molecules if moleculeNames is NULL", {
   module <- testProject$getModules("Thyroid_QST")[[1]]
   icBB <- module$getInitialConditionsBBs()[[1]]
   spatialStructureModule <- thyroidModule <- loadModuleFromPKML(system.file(
@@ -255,13 +255,13 @@ test_that("extendInitialConditions extends with all molecules if moleculeNames i
     package = "ospsuite"
   ))
 
-  newPaths <- extendInitialConditions(
+  newPaths <- extendInitialConditionsBB(
     initialConditionsBuildingBlock = icBB,
     spatialStructureModule = spatialStructureModule,
     moleculesModule = module
   )
 
-  icBB_df <- initialConditionsToDataFrame(icBB)
+  icBB_df <- initialConditionsBBToDataFrame(icBB)
   # Select only the new paths
   newPaths_df <- icBB_df[
     paste0(icBB_df$`Container Path`, "|", icBB_df$`Molecule Name`) %in%
@@ -271,11 +271,11 @@ test_that("extendInitialConditions extends with all molecules if moleculeNames i
   expect_snapshot(newPaths_df)
 })
 
-test_that("extendInitialConditions does not add new entries for existing molecules and compartments", {
+test_that("extendInitialConditionsBB does not add new entries for existing molecules and compartments", {
   module <- testProject$getModules("Thyroid_QST")[[1]]
   icBB <- module$getInitialConditionsBBs()[[1]]
 
-  newPaths <- extendInitialConditions(
+  newPaths <- extendInitialConditionsBB(
     initialConditionsBuildingBlock = icBB,
     spatialStructureModule = module,
     moleculesModule = module,
@@ -283,7 +283,7 @@ test_that("extendInitialConditions does not add new entries for existing molecul
   )
 
   # New entries are still added , specifically for the "EndogenousIgG" compartment. This is expected.
-  icBB_df <- initialConditionsToDataFrame(icBB)
+  icBB_df <- initialConditionsBBToDataFrame(icBB)
   # Select only the new paths
   newPaths_df <- icBB_df[
     paste0(icBB_df$`Container Path`, "|", icBB_df$`Molecule Name`) %in%
@@ -293,7 +293,7 @@ test_that("extendInitialConditions does not add new entries for existing molecul
   expect_snapshot(newPaths_df)
 })
 
-test_that("extendInitialConditions extends only with specified molecules", {
+test_that("extendInitialConditionsBB extends only with specified molecules", {
   testProject <- loadMoBiProject(system.file(
     "extdata",
     "TH_QST_Platform.mbp3",
@@ -307,14 +307,14 @@ test_that("extendInitialConditions extends only with specified molecules", {
     package = "ospsuite"
   ))
 
-  newPaths <- extendInitialConditions(
+  newPaths <- extendInitialConditionsBB(
     initialConditionsBuildingBlock = icBB,
     spatialStructureModule = spatialStructureModule,
     moleculesModule = module,
     moleculeNames = c("T3", "T4")
   )
 
-  icBB_df <- initialConditionsToDataFrame(icBB)
+  icBB_df <- initialConditionsBBToDataFrame(icBB)
   # Select only the new paths
   newPaths_df <- icBB_df[
     paste0(icBB_df$`Container Path`, "|", icBB_df$`Molecule Name`) %in%
@@ -324,30 +324,30 @@ test_that("extendInitialConditions extends only with specified molecules", {
   expect_snapshot(newPaths_df)
 })
 
-test_that("extendInitialConditions throws error for wrong spatial structure module", {
+test_that("extendInitialConditionsBB throws error for wrong spatial structure module", {
   icBB <- getFreshICBB()
   moleculesModule <- getSimulation()$configuration$modules[[1]]
   # A module without a spatial structure BB is needed.
   emptyModule <- minimalTestProject$getModules("ExtModule_noIC_noPV")[[1]]
 
   expect_error(
-    extendInitialConditions(icBB, emptyModule, moleculesModule),
+    extendInitialConditionsBB(icBB, emptyModule, moleculesModule),
     "The provided modules do not contain the required building blocks"
   )
 })
 
-test_that("extendInitialConditions throws error for wrong molecules module", {
+test_that("extendInitialConditionsBB throws error for wrong molecules module", {
   icBB <- getFreshICBB()
   spatialStructureModule <- getSimulation()$configuration$modules[[1]]
   emptyModule <- minimalTestProject$getModules("ExtModule_noIC_noPV")[[1]]
 
   expect_error(
-    extendInitialConditions(icBB, spatialStructureModule, emptyModule),
+    extendInitialConditionsBB(icBB, spatialStructureModule, emptyModule),
     "The provided modules do not contain the required building blocks"
   )
 })
 
-test_that("extendInitialConditions should handle wrong type of initialConditionsBuildingBlock", {
+test_that("extendInitialConditionsBB should handle wrong type of initialConditionsBuildingBlock", {
   simulation <- getSimulation()
   spatialStructureModule <- simulation$configuration$modules[[1]]
   moleculesModule <- simulation$configuration$modules[[1]]
@@ -355,7 +355,7 @@ test_that("extendInitialConditions should handle wrong type of initialConditions
   # I am not sure if this should throw an error on the R side, as there is no validation
   # but the underlying .NET code might throw.
   expect_error(
-    extendInitialConditions(testPVBB, spatialStructureModule, moleculesModule)
+    extendInitialConditionsBB(testPVBB, spatialStructureModule, moleculesModule)
   )
 })
 
@@ -395,7 +395,7 @@ test_that("setParameterValuesBB sets a single entry with explicit dimensions", {
     dimensions = ospDimensions$Volume
   )
 
-  df <- parameterValuesToDataFrame(pvBB)
+  df <- parameterValuesBBToDataFrame(pvBB)
   entry <- df[
     df$`Container Path` == "Organism|Liver" &
       df$`Parameter Name` == "Volume",
@@ -417,7 +417,7 @@ test_that("setParameterValuesBB derives dimensions from units when dimensions is
     units = "l"
   )
 
-  df <- parameterValuesToDataFrame(pvBB)
+  df <- parameterValuesBBToDataFrame(pvBB)
   entry <- df[
     df$`Container Path` == "Organism|Liver" &
       df$`Parameter Name` == "Volume",
@@ -443,7 +443,7 @@ test_that("setParameterValuesBB sets multiple entries correctly", {
     dimensions = ospDimensions$Volume
   )
 
-  df <- parameterValuesToDataFrame(pvBB)
+  df <- parameterValuesBBToDataFrame(pvBB)
   liverEntry <- df[
     df$`Container Path` == "Organism|Liver" &
       df$`Parameter Name` == "Volume",
@@ -482,7 +482,7 @@ test_that("setParameterValuesBB overwrites the dimension of an existing entry", 
     dimensions = ospDimensions$Amount
   )
 
-  df <- parameterValuesToDataFrame(pvBB)
+  df <- parameterValuesBBToDataFrame(pvBB)
   liverEntry <- df[
     df$`Container Path` == "Organism|Liver" &
       df$`Parameter Name` == "Volume",
@@ -512,7 +512,7 @@ test_that("setParameterValuesBB correctly updates an existing entry when the val
     units = "ml"
   )
 
-  df <- parameterValuesToDataFrame(pvBB)
+  df <- parameterValuesBBToDataFrame(pvBB)
   heartEntry <- df[
     df$`Container Path` == "Organism|Heart" &
       df$`Parameter Name` == "Volume",
@@ -545,11 +545,11 @@ test_that("deleteParameterValuesBB removes existing entries correctly", {
     dimensions = ospDimensions$Volume
   )
 
-  dfBefore <- parameterValuesToDataFrame(pvBB)
+  dfBefore <- parameterValuesBBToDataFrame(pvBB)
   pathToDelete <- "Organism|Liver|Volume"
   deleteParameterValuesBB(pvBB, pathToDelete)
 
-  dfAfter <- parameterValuesToDataFrame(pvBB)
+  dfAfter <- parameterValuesBBToDataFrame(pvBB)
   expect_false(any(
     paste0(dfAfter$`Container Path`, "|", dfAfter$`Parameter Name`) ==
       pathToDelete
@@ -570,7 +570,7 @@ test_that("deleteParameterValuesBB removes multiple entries correctly", {
     quantityValues = c(1.5, 0.3, 0.8),
     units = c("l", "l", "g")
   )
-  dfBefore <- parameterValuesToDataFrame(pvBB)
+  dfBefore <- parameterValuesBBToDataFrame(pvBB)
 
   pathsToDelete <- paste0(
     dfBefore$`Container Path`[1:2],
@@ -580,7 +580,7 @@ test_that("deleteParameterValuesBB removes multiple entries correctly", {
 
   deleteParameterValuesBB(pvBB, pathsToDelete)
 
-  dfAfter <- parameterValuesToDataFrame(pvBB)
+  dfAfter <- parameterValuesBBToDataFrame(pvBB)
   currentPaths <- paste0(
     dfAfter$`Container Path`,
     "|",
@@ -604,11 +604,11 @@ test_that("deleteParameterValuesBB ignores paths that do not exist", {
     units = "l",
     dimensions = ospDimensions$Volume
   )
-  dfBefore <- parameterValuesToDataFrame(pvBB)
+  dfBefore <- parameterValuesBBToDataFrame(pvBB)
   nonExistentPath <- "Non|Existent|Path|Parameter"
 
   expect_silent(deleteParameterValuesBB(pvBB, nonExistentPath))
 
-  dfAfter <- parameterValuesToDataFrame(pvBB)
+  dfAfter <- parameterValuesBBToDataFrame(pvBB)
   expect_equal(dfAfter, dfBefore)
 })

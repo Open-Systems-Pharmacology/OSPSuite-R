@@ -17,9 +17,9 @@
 #' \dontrun{
 #' module <- loadModuleFromPKML("path/to/module.pkml")
 #' icBB <- module$getInitialConditionsBBs()[[1]]
-#' df <- initialConditionsToDataFrame(icBB)
+#' df <- initialConditionsBBToDataFrame(icBB)
 #' }
-initialConditionsToDataFrame <- function(initialConditionsBuildingBlock) {
+initialConditionsBBToDataFrame <- function(initialConditionsBuildingBlock) {
   .validateBuildingBlockType(
     initialConditionsBuildingBlock,
     BuildingBlockTypes$`Initial Conditions`
@@ -268,7 +268,7 @@ deleteInitialConditionsBB <- function(
 #'
 #' @returns Paths of entries added to the building block.
 #' @export
-extendInitialConditions <- function(
+extendInitialConditionsBB <- function(
   initialConditionsBuildingBlock,
   spatialStructureModule,
   moleculesModule,
@@ -337,9 +337,9 @@ extendInitialConditions <- function(
 #' \dontrun{
 #' module <- loadModuleFromPKML("path/to/module.pkml")
 #' pvBB <- module$getParameterValuesBBs()[[1]]
-#' df <- parameterValuesToDataFrame(pvBB)
+#' df <- parameterValuesBBToDataFrame(pvBB)
 #' }
-parameterValuesToDataFrame <- function(parameterValuesBuildingBlock) {
+parameterValuesBBToDataFrame <- function(parameterValuesBuildingBlock) {
   .validateBuildingBlockType(
     parameterValuesBuildingBlock,
     BuildingBlockTypes$`Parameter Values`
@@ -557,7 +557,7 @@ deleteParameterValuesBB <- function(
 #' @export
 #'
 #' @examples
-addLocalMoleculeParameters <- function(
+addLocalMoleculeParametersToParameterValuesBB <- function(
   parameterValuesBuildingBlock,
   spatialStructureBB,
   moleculesBB,
