@@ -211,7 +211,7 @@ plotTimeProfile(
 
 By default, `showLegendPerDataset = "all"`, which differentiates both observed (via `shape`) and simulated (via `linetype`) datasets in the legend.
 
-For datasets with multiple observed or simulated results, you can control individual dataset name display using the `showLegendPerDataset` parameter.
+You can customize this behavior using the `showLegendPerDataset` parameter:
 
 ```{r timeprofile-legend-per-dataset, eval=TRUE}
 # Show all individual dataset names (both observed and simulated) - default

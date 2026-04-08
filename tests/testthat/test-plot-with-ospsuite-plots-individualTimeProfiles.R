@@ -336,8 +336,14 @@ test_that("It plots data with two y-axis dimensions (fraction and concentration)
 
 test_that("It converts x-axis units when xUnit is provided", {
   # Default: x in h; override to "min"
-  suppressWarnings(plotDefault <- plotTimeProfile(oneObsDC))
-  suppressWarnings(plotMinutes <- plotTimeProfile(oneObsDC, xUnit = "min"))
+  plotDefault <- expect_warning(
+    plotTimeProfile(oneObsDC),
+    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
+  )
+  plotMinutes <- expect_warning(
+    plotTimeProfile(oneObsDC, xUnit = "min"),
+    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
+  )
 
   # The x-axis label should contain "min" when xUnit = "min"
   expect_true(
