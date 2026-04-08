@@ -2,6 +2,7 @@
 
 ## Minor improvements and bug fixes
 
+- `plotTimeProfile()` now defaults to `showLegendPerDataset = "all"`, showing individual dataset names for both observed and simulated data by default (#1844).
 - `DataSet$setValues()` and plotting functions (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, `plotQuantileQuantilePlot()`) now warn and replace negative `yErrorValues` with `NA` instead of silently accepting them (#1756).
 - Fixed `plotPredictedVsObserved()` error bar mapping: when `predictedAxis = "x"`, error bars are now correctly placed on the y-axis (#1715).
 
