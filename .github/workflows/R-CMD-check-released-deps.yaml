@@ -1,0 +1,67 @@
+name: Check against released dependencies
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # Run at 3 AM UTC daily (after renv nightly at 2 AM)
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  check-released-deps:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) [Released Deps]
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: windows-latest, r: 'release'}
+          - {os: ubuntu-latest, r: 'release'}
+          - {os: macos-latest, r: 'release'}
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          use-public-rspm: true
+
+      - name: Pin Remotes to released versions
+        run: |
+          install.packages("desc")
+          if (desc::desc_has_fields("Remotes")) {
+            remotes <- trimws(desc::desc_get_remotes())
+            remotes <- ifelse(grepl("@", remotes), remotes, paste0(remotes, "@*release"))
+            desc::desc_set_remotes(remotes)
+            cat("Remotes pinned to released versions:\n")
+            cat(paste(remotes, collapse = "\n"), "\n")
+          }
+        shell: Rscript {0}
+
+      - name: Setup R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          cache: false
+
+      - name: Check R package
+        uses: r-lib/actions/check-r-package@v2
+        with:
+          args: 'c("--no-manual", "--no-vignettes")'
+          build_args: 'c("--no-manual", "--no-build-vignettes")'
+          error-on: 'c("error")'
+
+      - name: Diagnostic message on failure
+        if: failure()
+        run: |
+          echo "::warning::This workflow tests the package against the latest *released* versions of OSP dependencies."
+          echo "::warning::If the main R-CMD-Check workflow passes but this one fails, it means the package works with development dependencies but not with the currently released ones."
+          echo "::warning::A new release of one or more OSP dependencies is likely needed before this package can be released."
