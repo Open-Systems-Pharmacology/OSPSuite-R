@@ -2,8 +2,8 @@
 oldDefaults <- ospsuite.plots::setDefaults()
 withr::defer(ospsuite.plots::resetDefaults(oldDefaults))
 ggplot2::theme_update(legend.title = ggplot2::element_blank())
-ggplot2::theme_update(legend.position = c(0.95, 0.05))
-ggplot2::theme_update(legend.justification = c("right", "bottom"))
+ggplot2::theme_update(legend.position = c(0.95, 0.95))
+ggplot2::theme_update(legend.justification = c("right", "top"))
 
 ospsuite.plots::setOspsuite.plots.option(
   ospsuite.plots::OptionKeys$defaultPercentiles,
@@ -30,12 +30,9 @@ test_that("It respects custom plot configuration", {
   myDataComb$addSimulationResults(populationResults)
 
   set.seed(123)
-  expect_warning(
-    vdiffr::expect_doppelganger(
-      title = "only sim",
-      fig = plotTimeProfile(myDataComb)
-    ),
-    messages$plotShowLegendPerDatasetHasNoEffect('observed')
+  vdiffr::expect_doppelganger(
+    title = "only sim",
+    fig = plotTimeProfile(myDataComb)
   )
 })
 
@@ -138,24 +135,18 @@ test_that("It produces expected plot for multiple simulated datasets per group",
   )
 
   set.seed(123)
-  expect_warning(
-    vdiffr::expect_doppelganger(
-      title = "multiple sim",
-      fig = plotTimeProfile(myDataCombined)
-    ),
-    messages$plotShowLegendPerDatasetHasNoEffect('observed')
+  vdiffr::expect_doppelganger(
+    title = "multiple sim",
+    fig = plotTimeProfile(myDataCombined)
   )
 
   set.seed(123)
-  expect_warning(
-    vdiffr::expect_doppelganger(
-      title = "multiple sim - dataset legend",
-      fig = plotTimeProfile(
-        myDataCombined,
-        mapping = ggplot2::aes(linetype = group)
-      )
-    ),
-    messages$plotShowLegendPerDatasetHasNoEffect('observed')
+  vdiffr::expect_doppelganger(
+    title = "multiple sim - dataset legend",
+    fig = plotTimeProfile(
+      myDataCombined,
+      mapping = ggplot2::aes(linetype = group)
+    )
   )
 })
 
@@ -236,39 +227,48 @@ test_that("Aggregations are computed and displayed correctly", {
 
   vdiffr::expect_doppelganger(
     title = "default (quantiles)",
-    fig = suppressWarnings(plotTimeProfile(myDataComb))
+    fig = plotTimeProfile(myDataComb)
   )
 
   vdiffr::expect_doppelganger(
     title = "modified quantiles",
-    fig = suppressWarnings(plotTimeProfile(myDataComb, quantiles = c(0.1, 0.5, 0.9)))
+    fig = plotTimeProfile(
+      myDataComb,
+      quantiles = c(0.1, 0.5, 0.9)
+    )
   )
 
   vdiffr::expect_doppelganger(
     title = "arithmetic mean",
-    fig = suppressWarnings(plotTimeProfile(myDataComb, aggregation = "arithmetic"))
+    fig = plotTimeProfile(
+      myDataComb,
+      aggregation = "arithmetic"
+    )
   )
 
   vdiffr::expect_doppelganger(
     title = "arithmetic mean with 2sd",
-    fig = suppressWarnings(plotTimeProfile(
+    fig = plotTimeProfile(
       myDataComb,
       aggregation = "arithmetic",
       nsd = 2
-    ))
+    )
   )
 
   vdiffr::expect_doppelganger(
     title = "geometric mean",
-    fig = suppressWarnings(plotTimeProfile(myDataComb, aggregation = "geometric"))
+    fig = plotTimeProfile(
+      myDataComb,
+      aggregation = "geometric"
+    )
   )
 
   vdiffr::expect_doppelganger(
     title = "geometric mean with 2sd",
-    fig = suppressWarnings(plotTimeProfile(
+    fig = plotTimeProfile(
       myDataComb,
       aggregation = "geometric",
       nsd = 2
-    ))
+    )
   )
 })

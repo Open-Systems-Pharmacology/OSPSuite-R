@@ -1110,7 +1110,7 @@ plotQuantileQuantilePlot <- function(
   plotData <- plotData[dataType == dataTypeFilter]
 
   if (nrow(plotData) == 0) {
-    if (any(showLegendPerDataset == c(dataTypeFilter, "all"))) {
+    if (any(showLegendPerDataset == c(dataTypeFilter))) {
       warning(messages$plotShowLegendPerDatasetHasNoEffect(
         dataType = dataTypeFilter
       ))
