@@ -51,8 +51,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Install Pandoc
-        uses: r-lib/actions/setup-pandoc@v2
 
       - name: Set DOTNET_ROOT for macOS
         if: runner.os == 'macOS'
