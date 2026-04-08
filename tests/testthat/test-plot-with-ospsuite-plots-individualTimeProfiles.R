@@ -26,23 +26,32 @@ manyObsSimDCWithFraction <- readRDS(getTestDataFilePath(
 test_that("It creates default plots as expected for single observed dataset", {
   set.seed(123)
 
-  vdiffr::expect_doppelganger(
-    title = "single obs",
-    fig = plotTimeProfile(oneObsDC)
+  expect_warning(
+    vdiffr::expect_doppelganger(
+      title = "single obs",
+      fig = plotTimeProfile(oneObsDC)
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
   )
 })
 
 test_that("It creates default plots as expected for multiple observed datasets", {
   set.seed(123)
 
-  vdiffr::expect_doppelganger(
-    title = "multiple obs",
-    fig = plotTimeProfile(manyObsDC)
+  expect_warning(
+    vdiffr::expect_doppelganger(
+      title = "multiple obs",
+      fig = plotTimeProfile(manyObsDC)
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
   )
 
-  vdiffr::expect_doppelganger(
-    title = "multiple obs - separate legend",
-    fig = plotTimeProfile(manyObsDC, mapping = ggplot2::aes(groupby = name))
+  expect_warning(
+    vdiffr::expect_doppelganger(
+      title = "multiple obs - separate legend",
+      fig = plotTimeProfile(manyObsDC, mapping = ggplot2::aes(groupby = name))
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
   )
 
   expect_warning(
@@ -63,23 +72,29 @@ test_that("It creates default plots as expected for multiple observed datasets",
 
 test_that("It creates default plots as expected for single simulated dataset", {
   set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "single sim",
-    fig = plotTimeProfile(oneSimDC)
+  expect_warning(
+    vdiffr::expect_doppelganger(
+      title = "single sim",
+      fig = plotTimeProfile(oneSimDC)
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('observed')
   )
 })
 
 test_that("It plots multiple simulated datasets with dataset name legend entries", {
   set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "multiple sim - separate legend",
-    fig = plotTimeProfile(
-      manySimDC,
-      mapping = ggplot2::aes(
-        group = name,
-        linetype = name
+  expect_warning(
+    vdiffr::expect_doppelganger(
+      title = "multiple sim - separate legend",
+      fig = plotTimeProfile(
+        manySimDC,
+        mapping = ggplot2::aes(
+          group = name,
+          linetype = name
+        )
       )
-    )
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('observed')
   )
 
   expect_warning(
@@ -262,9 +277,12 @@ test_that("It handles edge case: simulated data with showLegendPerDataset observ
 
 test_that("It works when geometric error is present", {
   set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "geometric error",
-    fig = plotTimeProfile(oneObsGeometricDC)
+  expect_warning(
+    vdiffr::expect_doppelganger(
+      title = "geometric error",
+      fig = plotTimeProfile(oneObsGeometricDC)
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
   )
 })
 
@@ -293,9 +311,12 @@ test_that("It plots LLOQ correctly on log scale", {
   dc <- DataCombined$new()
   dc$addDataSets(dataSet)
 
-  vdiffr::expect_doppelganger(
-    title = "lloq",
-    fig = plotTimeProfile(dc, yScale = "log")
+  expect_warning(
+    vdiffr::expect_doppelganger(
+      title = "lloq",
+      fig = plotTimeProfile(dc, yScale = "log")
+    ),
+    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
   )
 })
 
@@ -315,8 +336,8 @@ test_that("It plots data with two y-axis dimensions (fraction and concentration)
 
 test_that("It converts x-axis units when xUnit is provided", {
   # Default: x in h; override to "min"
-  plotDefault <- plotTimeProfile(oneObsDC)
-  plotMinutes <- plotTimeProfile(oneObsDC, xUnit = "min")
+  suppressWarnings(plotDefault <- plotTimeProfile(oneObsDC))
+  suppressWarnings(plotMinutes <- plotTimeProfile(oneObsDC, xUnit = "min"))
 
   # The x-axis label should contain "min" when xUnit = "min"
   expect_true(
