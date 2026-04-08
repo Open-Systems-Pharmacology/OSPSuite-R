@@ -37,6 +37,19 @@ test_that("initialConditionsToDataFrame throws an error if the building block is
   )
 })
 
+test_that("parameterValuesToDataFrame returns a data frame with the expected columns", {
+  df <- parameterValuesToDataFrame(testPVBB)
+  expect_snapshot(df)
+})
+
+test_that("parameterValuesToDataFrame throws an error if the building block is not of type Parameter Values", {
+  icBB <- getFreshICBB()
+  expect_error(
+    parameterValuesToDataFrame(icBB),
+    regexp = "Parameter Values"
+  )
+})
+
 
 # test for wrong type of building block
 test_that("setInitialConditions throws an error if the building block is not of type Initial Conditions", {

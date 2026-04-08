@@ -97,9 +97,9 @@ icBBDf <- initialConditionsToDataFrame(icBBs[[1]])
 # Print the first few rows of the data frame
 head(icBBDf)
 
-# pvBBDf <- parameterValuesToDataFrame(pvBBs[["Rat"]])
-# # Print the first few rows of the data frame
-# head(pvBBDf)
+pvBBDf <- parameterValuesToDataFrame(pvBBs[["Rat"]])
+# Print the first few rows of the data frame
+head(pvBBDf)
 
 individual <- myProject$getIndividual("Rat")
 # individualDf <- individualToDataFrame(individual)

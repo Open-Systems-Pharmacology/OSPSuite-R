@@ -321,6 +321,64 @@ extendInitialConditions <- function(
 }
 
 
+#' Convert a Parameter Values Building Block to a data frame.
+#'
+#' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values`.
+#'
+#' @returns A data frame with the following columns:
+#' - `Container Path`: Full path to the container where the parameter is located.
+#' - `Parameter Name`: Name of the parameter.
+#' - `Value`: Value of the parameter. For values that are defined by a formula, the return value can be `NaN`.
+#' - `Unit`: Unit of the parameter value.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' module <- loadModuleFromPKML("path/to/module.pkml")
+#' pvBB <- module$getParameterValuesBBs()[[1]]
+#' df <- parameterValuesToDataFrame(pvBB)
+#' }
+parameterValuesToDataFrame <- function(parameterValuesBuildingBlock) {
+  .validateBuildingBlockType(
+    parameterValuesBuildingBlock,
+    BuildingBlockTypes$`Parameter Values`
+  )
+
+  pvTask <- .getMoBiTaskFromCache("ParameterValuesTask")
+
+  paths <- pvTask$call("AllPathsFrom", parameterValuesBuildingBlock)
+  containerPaths <- vapply(
+    paths,
+    function(path) {
+      .getParentContainerPath(path)
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
+  parameterNames <- vapply(
+    paths,
+    function(path) {
+      tail(toPathArray(path), 1)
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
+  values <- pvTask$call("AllValuesFrom", parameterValuesBuildingBlock, paths)
+  units <- pvTask$call("AllUnitsFrom", parameterValuesBuildingBlock, paths)
+
+  df <- data.frame(
+    "Container Path" = containerPaths,
+    "Parameter Name" = parameterNames,
+    "Value" = values,
+    "Unit" = units,
+    check.names = FALSE,
+    stringsAsFactors = FALSE
+  )
+
+  return(df)
+}
+
 #' Set or add parameter values to an existing Parameter Values building block.
 #'
 #' This functions allows adding or modifying parameter values entries. Only constant values are allowed. For setting or adding parameter values defined by formulas, use the `setParameterValuesFormulas` function.
