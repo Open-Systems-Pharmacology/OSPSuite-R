@@ -112,7 +112,7 @@ initialConditionsToDataFrame <- function(initialConditionsBuildingBlock) {
 #' \dontrun{
 #' module <- loadModuleFromPKML("path/to/module.pkml")
 #' icBB <- module$getInitialConditionsBBs()[[1]]
-#' setInitialConditions(
+#' setInitialConditionsBB(
 #'   icBB,
 #'   quantityPaths = c("Organ|Tissue|Molecule1", "Organ|Tissue|Molecule2"),
 #'   quantityValues = c(1, 0),
@@ -121,7 +121,7 @@ initialConditionsToDataFrame <- function(initialConditionsBuildingBlock) {
 #'   negativeValuesAllowed = c(TRUE, FALSE)
 #' )
 #' }
-setInitialConditions <- function(
+setInitialConditionsBB <- function(
   initialConditionsBuildingBlock,
   quantityPaths,
   quantityValues,
@@ -226,7 +226,7 @@ setInitialConditions <- function(
 #' @export
 #'
 #' @examples
-deleteInitialConditions <- function(
+deleteInitialConditionsBB <- function(
   initialConditionsBuildingBlock,
   quantityPaths
 ) {
@@ -381,28 +381,103 @@ parameterValuesToDataFrame <- function(parameterValuesBuildingBlock) {
 
 #' Set or add parameter values to an existing Parameter Values building block.
 #'
-#' This functions allows adding or modifying parameter values entries. Only constant values are allowed. For setting or adding parameter values defined by formulas, use the `setParameterValuesFormulas` function.
+#' This function allows adding or modifying parameter value entries. Only constant
+#' values are allowed. Values are expected in the provided `units` and will be
+#' converted to base units internally.
 #'
 #' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values`.
 #' The entries will be added to or set in this building block.
 #' @param quantityPaths A list of full paths of the quantities (usually parameters). Should contain
 #' all path elements and the parameter name, separated by `|`.
-#' @param dimensions A single dimension or a list of dimensions (string names)
-#' of parameter values. Supported dimensions are listed in `ospDimension`. By default,
-#' new entries get the `Dimensionless` dimension.
-#' @param quantityValues A list of values for the quantities.
+#' @param quantityValues A list of values for the quantities in the provided `units`.
 #' The length of this list should be equal to the length of `quantityPaths`.
+#' @param units A single unit string or a list of unit strings for the quantity values.
+#' If a single string is provided, it will be used for all quantities.
+#' @param dimensions A single dimension or a list of dimensions (string names)
+#' of parameter values. Supported dimensions are listed in `ospDimensions`. If `NULL`
+#' (default), dimensions are derived from the provided `units` using `getDimensionForUnit()`.
 #'
+#' @returns Invisibly returns the updated `parameterValuesBuildingBlock` object.
 #' @export
 #'
 #' @examples
-setParameterValues <- function(
+#' \dontrun{
+#' module <- loadModuleFromPKML("path/to/module.pkml")
+#' pvBB <- module$getParameterValuesBBs()[[1]]
+#' setParameterValuesBB(
+#'   pvBB,
+#'   quantityPaths = "Organism|Organ|Parameter",
+#'   quantityValues = 1.33,
+#'   units = "ml/min/kg"
+#' )
+#' }
+setParameterValuesBB <- function(
   parameterValuesBuildingBlock,
   quantityPaths,
   quantityValues,
-  dimensions = ospDimensions$Dimensionless
+  units,
+  dimensions = NULL
 ) {
-  return(parameterValuesBuildingBlock)
+  .validateBuildingBlockType(
+    parameterValuesBuildingBlock,
+    BuildingBlockTypes$`Parameter Values`
+  )
+
+  # Exit early if no quantity paths are provided
+  if (length(quantityPaths) == 0) {
+    return(invisible(parameterValuesBuildingBlock))
+  }
+
+  # Replicate scalar units and dimensions to match the length of quantityPaths
+  if (length(units) == 1) {
+    units <- rep(units, length(quantityPaths))
+  }
+
+  if (!is.null(dimensions) && length(dimensions) == 1) {
+    dimensions <- rep(dimensions, length(quantityPaths))
+  }
+
+  if (
+    length(quantityPaths) != length(quantityValues) ||
+      length(quantityPaths) != length(units) ||
+      (!is.null(dimensions) && length(quantityPaths) != length(dimensions))
+  ) {
+    stop(
+      "The length of quantityPaths should be equal to the length of quantityValues, units, and dimensions (if provided as lists)."
+    )
+  }
+
+  # Derive dimensions from units if not provided
+  if (is.null(dimensions)) {
+    dimensions <- vapply(
+      units,
+      getDimensionForUnit,
+      character(1),
+      USE.NAMES = FALSE
+    )
+  }
+
+  # Convert values from provided units to base units
+  baseValues <- vapply(
+    seq_along(quantityValues),
+    function(i) {
+      toBaseUnit(dimensions[i], quantityValues[i], units[i])
+    },
+    numeric(1),
+    USE.NAMES = FALSE
+  )
+
+  pvTask <- .getMoBiTaskFromCache("ParameterValuesTask")
+
+  pvTask$call(
+    "SetParameterValue",
+    parameterValuesBuildingBlock,
+    as.vector(quantityPaths, mode = "character"),
+    as.vector(baseValues, mode = "numeric"),
+    as.vector(dimensions, mode = "character")
+  )
+
+  return(invisible(parameterValuesBuildingBlock))
 }
 
 
@@ -435,13 +510,33 @@ setParameterValues <- function(
 #' that will be deleted. Should contain all path elements and the parameter name, separated by `|`.
 #' Entries not present in the provided BB are ignored.
 #'
+#' @returns Invisibly returns the updated `parameterValuesBuildingBlock` object.
 #' @export
 #'
 #' @examples
-deleteParameterValues <- function(
+deleteParameterValuesBB <- function(
   parameterValuesBuildingBlock,
   quantityPaths
-) {}
+) {
+  .validateBuildingBlockType(
+    parameterValuesBuildingBlock,
+    BuildingBlockTypes$`Parameter Values`
+  )
+
+  # Exit early if no quantity paths are provided
+  if (length(quantityPaths) == 0) {
+    return(invisible(parameterValuesBuildingBlock))
+  }
+
+  pvTask <- .getMoBiTaskFromCache("ParameterValuesTask")
+  pvTask$call(
+    "DeleteParameterValues",
+    parameterValuesBuildingBlock,
+    as.vector(quantityPaths, mode = "character")
+  )
+
+  return(invisible(parameterValuesBuildingBlock))
+}
 
 #' Extend a Parameter Values Building Block (BB) with local molecule parameters
 #' for molecules from a molecules BB in all physical containers of a spatial structure BB.

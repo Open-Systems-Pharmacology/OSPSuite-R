@@ -207,14 +207,14 @@ Modules that are intended to be used in combination with a variety of other modu
 
 Following functionalities are available for the Initial Conditions BBs:
 
--   `setInitialConditions()`: Allows adding new entries or changing the values of existing entries in the Initial Conditions BB.
--   `deleteInitialConditions()`: Allows deleting entries from the Initial Conditions BB.
+-   `setInitialConditionsBB()`: Allows adding new entries or changing the values of existing entries in the Initial Conditions BB.
+-   `deleteInitialConditionsBB()`: Allows deleting entries from the Initial Conditions BB.
 -   `extendInitialConditions()`: Extending an IC BB by entries for specified molecules in all physical containers of a spatial structure.
 
 Followning functionalities are available for the Parameter Values (PV) BBs:
 
--   `setParameterValues()`: Allows adding new entries or changing the values of existing entries in the PV BB.
--   `deleteParameterValues()`: Allows deleting entries from the PV BB.
+-   `setParameterValuesBB()`: Allows adding new entries or changing the values of existing entries in the PV BB.
+-   `deleteParameterValuesBB()`: Allows deleting entries from the PV BB.
 -   `addLocalMoleculeParameters()`: Extending a PV BB by entries for local parameters of specified molecules in all physical containers of a spatial structure.
 -   `addProteinExpressionToParameterValuesBB()`: Extending a PV BB by parameters defining expression of protein molecules in selected organs.
 
@@ -276,11 +276,12 @@ The molecule "DIO1" that has been added to the IC BB in the previous step is a p
 and overwrite the value of "Relative expression":
 
 ```{r setRelativeExpressionValue}
-# setParameterValues(
+# setParameterValuesBB(
 #   parameterValuesBuildingBlock = pvBB,
 #   quantityPaths = "Organism|Thyroid|Intracellular|DIO1|Relative expression",
-#   dimensions = ospDimensions$Fraction,
-#   quantityValues = 1.33
+#   quantityValues = 1.33,
+#   units = "",
+#   dimensions = ospDimensions$Fraction
 # )
 ```
 
