@@ -54,11 +54,9 @@ jobs:
       - name: Install Pandoc
         uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Setup .NET
+      - name: Set DOTNET_ROOT for macOS
         if: runner.os == 'macOS'
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
+        run:  echo "DOTNET_ROOT=$HOME/.dotnet" >> $GITHUB_ENV
 
       - name: Download updated renv.lock
         uses: actions/download-artifact@v8
