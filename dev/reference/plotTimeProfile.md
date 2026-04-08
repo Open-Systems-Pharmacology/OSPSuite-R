@@ -20,7 +20,7 @@ plotTimeProfile(
   quantiles =
     ospsuite.plots::getOspsuite.plots.option(ospsuite.plots::OptionKeys$defaultPercentiles),
   nsd = 1,
-  showLegendPerDataset = "none",
+  showLegendPerDataset = "all",
   ...
 )
 ```
@@ -121,11 +121,10 @@ plotTimeProfile(
   Controls display of separate legend entries for individual datasets.
   One of:
 
-  - `"none"` (default): No per-dataset differentiation. Only group-level
-    legend.
+  - `"none"`: No per-dataset differentiation. Only group-level legend.
 
-  - `"all"`: Differentiate both observed (via `shape`) and simulated
-    (via `linetype`).
+  - `"all"` (default): Differentiate both observed (via `shape`) and
+    simulated (via `linetype`).
 
   - `"observed"`: Differentiate only observed data via different shapes.
 

@@ -226,24 +226,24 @@ plotTimeProfile(
 
 ### Showing Individual Dataset Names
 
-By default, the legend is created using the `group` variable of the
-`DataCombined` object.
+By default, `showLegendPerDataset = "all"`, which differentiates both
+observed (via `shape`) and simulated (via `linetype`) datasets in the
+legend.
 
-For datasets with multiple observed or simulated results, you can
-display individual dataset names in the legend using the
-`showLegendPerDataset` parameter.
+You can customize this behavior using the `showLegendPerDataset`
+parameter:
 
 ``` r
-# No per-dataset differentiation (default)
-plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "none")
+# Show all individual dataset names (both observed and simulated) - default
+plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "all")
 ```
 
 ![](plotting-with-ospsuite-plots_files/figure-html/timeprofile-legend-per-dataset-1.png)
 
 ``` r
 
-# Show all individual dataset names (both observed and simulated)
-plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "all")
+# No per-dataset differentiation
+plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "none")
 ```
 
 ![](plotting-with-ospsuite-plots_files/figure-html/timeprofile-legend-per-dataset-2.png)

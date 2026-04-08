@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -307,19 +307,19 @@ deviation bands:</p>
 <div class="section level3">
 <h3 id="showing-individual-dataset-names">Showing Individual Dataset Names<a class="anchor" aria-label="anchor" href="#showing-individual-dataset-names"></a>
 </h3>
-<p>By default, the legend is created using the <code>group</code>
-variable of the <code>DataCombined</code> object.</p>
-<p>For datasets with multiple observed or simulated results, you can
-display individual dataset names in the legend using the
-<code>showLegendPerDataset</code> parameter.</p>
+<p>By default, <code>showLegendPerDataset = "all"</code>, which
+differentiates both observed (via <code>shape</code>) and simulated (via
+<code>linetype</code>) datasets in the legend.</p>
+<p>You can customize this behavior using the
+<code>showLegendPerDataset</code> parameter:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># No per-dataset differentiation (default)</span></span>
-<span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombinedMulti</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Show all individual dataset names (both observed and simulated) - default</span></span>
+<span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombinedMulti</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/timeprofile-legend-per-dataset-1.png" class="r-plt" alt="" width="100%"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="co"># Show all individual dataset names (both observed and simulated)</span></span>
-<span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombinedMulti</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># No per-dataset differentiation</span></span>
+<span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombinedMulti</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/timeprofile-legend-per-dataset-2.png" class="r-plt" alt="" width="100%"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>

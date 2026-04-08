@@ -4,6 +4,10 @@
 
 ### Minor improvements and bug fixes
 
+- [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md)
+  now defaults to `showLegendPerDataset = "all"`, showing individual
+  dataset names for both observed and simulated data by default
+  ([\#1844](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1844)).
 - `DataSet$setValues()` and plotting functions
   ([`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md),
   [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md),

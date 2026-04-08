@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,8 @@
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
 <ul><li>
+<code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code> now defaults to <code>showLegendPerDataset = "all"</code>, showing individual dataset names for both observed and simulated data by default (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1844" class="external-link">#1844</a>).</li>
+<li>
 <code>DataSet$setValues()</code> and plotting functions (<code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code>, <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code>, <code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>, <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code>, <code><a href="../reference/plotQuantileQuantilePlot.html">plotQuantileQuantilePlot()</a></code>) now warn and replace negative <code>yErrorValues</code> with <code>NA</code> instead of silently accepting them (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1756" class="external-link">#1756</a>).</li>
 <li>Fixed <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code> error bar mapping: when <code>predictedAxis = "x"</code>, error bars are now correctly placed on the y-axis (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1715" class="external-link">#1715</a>).</li>
 </ul></div>
