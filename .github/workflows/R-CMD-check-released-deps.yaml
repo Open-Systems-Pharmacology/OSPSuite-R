@@ -35,6 +35,12 @@ jobs:
           r-version: ${{ matrix.config.r }}
           use-public-rspm: true
 
+      - name: Setup .NET
+        if: runner.os == 'macOS'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
       - name: Pin Remotes to released versions
         run: |
           install.packages("desc")
