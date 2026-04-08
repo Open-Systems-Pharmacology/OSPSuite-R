@@ -28,18 +28,17 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Set DOTNET_ROOT for macOS
+        if: runner.os == 'macOS'
+        run:  echo "DOTNET_ROOT=$HOME/.dotnet" >> $GITHUB_ENV
+
       - uses: r-lib/actions/setup-pandoc@v2
 
       - uses: r-lib/actions/setup-r@v2
+        id: setup-r
         with:
           r-version: ${{ matrix.config.r }}
           use-public-rspm: true
-
-      - name: Setup .NET
-        if: runner.os == 'macOS'
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
 
       - name: Pin Remotes to released versions
         run: |
@@ -54,14 +53,16 @@ jobs:
           }
         shell: Rscript {0}
 
-      - name: Setup R dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Setup R environment
+        id: setup-r-env
+        uses: Open-Systems-Pharmacology/Workflows/.github/actions/setup-r-env@main
         with:
-          cache: false
+          ignore-renv: true
 
       - name: Check R package
         uses: r-lib/actions/check-r-package@v2
         with:
+          upload-snapshots: true
           args: 'c("--no-manual", "--no-vignettes")'
           build_args: 'c("--no-manual", "--no-build-vignettes")'
           error-on: 'c("error")'
