@@ -1,6 +1,6 @@
 # SolverSettings
 
-sim <- loadTestSimulation("S1")
+sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
 solver <- sim$solver
 test_that("It can retrieve the basic solver parameters", {
   expect_true(solver$useJacobian)

@@ -103,6 +103,10 @@ myDataCombinedMulti <- DataCombined$new()
 
 myDataCombinedMulti$addSimulationResults(
   simulationResults = simResults,
+  quantitiesOrPaths = c(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+    "Organism|Kidney|Urine|Aciclovir|Fraction excreted to urine"
+  ),
   names = list(
     "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)" = "Plasma (Peripheral Venous Blood) ",
     "Organism|Kidney|Urine|Aciclovir|Fraction excreted to urine" = "fraction excreted"

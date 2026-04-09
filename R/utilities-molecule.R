@@ -70,7 +70,8 @@ getMolecule <- function(path, container, stopIfNotFound = TRUE) {
 #'
 #' @param values A numeric value that should be assigned to the molecule start value or a vector
 #' of numeric values, if the start value of more than one molecule should be changed. Must have the same
-#' length as `molecules`
+#' length as `molecules`. Alternatively, the value can be a unique number. In that case, the same value will
+#' be set for all molecules
 #' @inheritParams .setQuantityValues
 #'
 #' @examples

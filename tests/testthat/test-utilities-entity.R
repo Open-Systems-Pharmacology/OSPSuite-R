@@ -1,6 +1,6 @@
 # uniqueEntities
 
-sim <- loadTestSimulation("S1")
+sim <- loadTestSimulation("simple", loadFromCache = TRUE, addToCache = FALSE)
 
 test_that("It throws an error when no valid entities are provided", {
   expect_error(
@@ -12,7 +12,7 @@ test_that("It throws an error when no valid entities are provided", {
 
 test_that("It returns the entity for uniqueEntities with one passed entity", {
   parameter <- getParameter(
-    toPathString(c("Organism", "Liver", "Pericentral", "Volume")),
+    toPathString(c("Organism", "Liver", "Volume")),
     sim
   )
   expect_equal(uniqueEntities(parameter)[[1]], parameter)
@@ -20,7 +20,7 @@ test_that("It returns the entity for uniqueEntities with one passed entity", {
 
 test_that("It throws an error when no valid 'compareBy' is provided", {
   parameter <- getParameter(
-    toPathString(c("Organism", "Liver", "Pericentral", "Volume")),
+    toPathString(c("Organism", "Liver", "Volume")),
     sim
   )
 
@@ -39,15 +39,15 @@ test_that("It throws an error when no valid 'compareBy' is provided", {
 test_that("It can filter by id", {
   parameters <- c(
     getParameter(
-      toPathString(c("Organism", "Liver", "Pericentral", "Volume")),
+      toPathString(c("Organism", "Liver", "Volume")),
       sim
     ),
     getParameter(
-      toPathString(c("Organism", "Liver", "Pericentral", "Volume")),
+      toPathString(c("Organism", "Liver", "Volume")),
       sim
     ),
     getParameter(
-      toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")),
+      toPathString(c("Organism", "Volume")),
       sim
     )
   )
@@ -57,15 +57,15 @@ test_that("It can filter by id", {
 test_that("It can filter by name", {
   parameters <- c(
     getParameter(
-      toPathString(c("Organism", "Liver", "Pericentral", "Volume")),
+      toPathString(c("Organism", "Liver", "Volume")),
       sim
     ),
     getParameter(
-      toPathString(c("Organism", "Liver", "Pericentral", "Volume")),
+      toPathString(c("Organism", "Liver", "Volume")),
       sim
     ),
     getParameter(
-      toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")),
+      toPathString(c("Organism", "Liver", "paré")),
       sim
     )
   )
@@ -75,15 +75,15 @@ test_that("It can filter by name", {
 test_that("It can filter by path", {
   parameters <- c(
     getParameter(
-      toPathString(c("Organism", "Liver", "Pericentral", "Volume")),
+      toPathString(c("Organism", "Liver", "Volume")),
       sim
     ),
     getParameter(
-      toPathString(c("Organism", "Liver", "Pericentral", "Volume")),
+      toPathString(c("Organism", "Liver", "Volume")),
       sim
     ),
     getParameter(
-      toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")),
+      toPathString(c("Organism", "Liver", "paré")),
       sim
     )
   )
@@ -93,15 +93,15 @@ test_that("It can filter by path", {
 test_that("It throws an exception if comparing by a value that is not defined", {
   parameters <- c(
     getParameter(
-      toPathString(c("Organism", "Liver", "Pericentral", "Volume")),
+      toPathString(c("Organism", "Liver", "Volume")),
       sim
     ),
     getParameter(
-      toPathString(c("Organism", "Liver", "Pericentral", "Volume")),
+      toPathString(c("Organism", "Liver", "Volume")),
       sim
     ),
     getParameter(
-      toPathString(c("Organism", "Liver", "Pericentral", "Weight (tissue)")),
+      toPathString(c("Organism", "Liver", "paré")),
       sim
     )
   )

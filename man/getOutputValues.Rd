@@ -53,8 +53,6 @@ Results of a simulation of a single individual is treated as a population
 simulation with only one individual.
 }
 \examples{
-library(ospsuite)
-
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 

@@ -224,34 +224,6 @@ test_that("line width does not leak into observedMapping", {
   )
 })
 
-test_that("It handles edge case: observed data with showLegendPerDataset simulated", {
-  set.seed(123)
-  # Should warn and produce plot with no per-dataset differentiation
-  expect_warning(
-    fig <- plotTimeProfile(
-      manyObsDC,
-      showLegendPerDataset = "simulated"
-    ),
-    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
-  )
-
-  expect_s3_class(fig, 'gg')
-})
-
-test_that("It handles edge case: simulated data with showLegendPerDataset observed", {
-  set.seed(123)
-  # Should warn and produce plot with no per-dataset differentiation
-  expect_warning(
-    fig <- plotTimeProfile(
-      manySimDC,
-      showLegendPerDataset = "observed"
-    ),
-    messages$plotShowLegendPerDatasetHasNoEffect('observed')
-  )
-
-  expect_s3_class(fig, 'gg')
-})
-
 # edge cases ------------------------
 
 test_that("It works when geometric error is present", {

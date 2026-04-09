@@ -1,5 +1,9 @@
 # createImporterConfigurationForFile
-filePath <- getTestDataFilePath("CompiledDataSet.xlsx")
+filePath <- system.file(
+  "extdata",
+  "CompiledDataSet.xlsx",
+  package = "ospsuite"
+)
 
 test_that("It can create a DataImporterConfiguration from a XLS file", {
   importerConfiguration <- createImporterConfigurationForFile(
@@ -76,7 +80,11 @@ test_that("It can load data sets from excel using configuration with sheet speci
 # DataImporterConfiguration from file
 
 test_that("it can load a data importer configuration", {
-  configurationPath <- getTestDataFilePath("dataImporterConfiguration.xml")
+  configurationPath <- system.file(
+    "extdata",
+    "dataImporterConfiguration.xml",
+    package = "ospsuite"
+  )
   importerConfiguration <- loadDataImporterConfiguration(configurationPath)
   expect_equal(importerConfiguration$timeColumn, "Time [h]")
   expect_equal(importerConfiguration$errorColumn, "Error [ng/ml]")

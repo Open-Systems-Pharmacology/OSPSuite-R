@@ -359,7 +359,8 @@ plotPredictedVsObserved <- function(
 #'
 #' @family plot functions based on ospsuite.plots
 #'
-#' @examples \dontrun{
+#' @examples
+#' \dontrun{
 #' # Generate a residuals vs observed plot for the provided data
 #' plotResidualsVsCovariate(
 #'   myDataCombined,

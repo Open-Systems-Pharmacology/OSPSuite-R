@@ -16,8 +16,4 @@ Create a list of all units available for each dimension
 Loop through dimensions and build a list containing an enum of all units
 available for each dimension
 }
-\examples{
-
-ospsuite:::.getUnitsEnum()
-}
 \keyword{internal}

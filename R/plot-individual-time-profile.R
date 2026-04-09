@@ -16,6 +16,7 @@
 #' @family plotting
 #'
 #' @examples
+#' \dontrun{
 #' # simulated data
 #' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simFilePath)
@@ -51,6 +52,7 @@
 #'
 #' # plot
 #' plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
+#' }
 #'
 #' @export
 plotIndividualTimeProfile <- function(

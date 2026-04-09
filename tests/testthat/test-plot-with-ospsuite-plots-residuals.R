@@ -8,11 +8,31 @@ ggplot2::theme_update(legend.justification = c("right", "top"))
 # data to be used ---------------------------------------
 
 # load the simulation
-sim <- loadTestSimulation("MinimalModel")
+sim <- loadTestSimulation("simple", loadFromCache = TRUE, addToCache = TRUE)
 simResults <- importResultsFromCSV(
   simulation = sim,
   filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
 )
+
+aciclovirSimulation <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
+
+aciclovirSimData <- withr::with_tempdir({
+  df <- dplyr::tibble(
+    IndividualId = c(0, 0, 0),
+    `Time [min]` = c(0, 2, 4),
+    `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
+      0.5,
+      4,
+      8
+    )
+  )
+  readr::write_csv(df, "SimResults.csv")
+  importResultsFromCSV(aciclovirSimulation, "SimResults.csv")
+})
 
 # import observed data (will return a list of DataSet objects)
 dataSet <- loadDataSetsFromExcel(
@@ -146,23 +166,6 @@ test_that("It returns `NULL` with warning when `DataCombined` doesn't have any p
 })
 
 test_that("Different symbols for data sets within one group", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
-  simData <- withr::with_tempdir({
-    df <- dplyr::tibble(
-      IndividualId = c(0, 0, 0),
-      `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
-        0,
-        4,
-        8
-      )
-    )
-    readr::write_csv(df, "SimResults.csv")
-    importResultsFromCSV(sim, "SimResults.csv")
-  })
-
   obsData <- DataSet$new(name = "Observed")
   obsData$setValues(
     xValues = c(1, 3, 3.5, 4, 5),
@@ -172,7 +175,7 @@ test_that("Different symbols for data sets within one group", {
   obsData$yDimension <- ospDimensions$`Concentration (molar)`
 
   myDC <- DataCombined$new()
-  myDC$addSimulationResults(simData, groups = "myGroup")
+  myDC$addSimulationResults(aciclovirSimData, groups = "myGroup")
   myDC$addDataSets(obsData, groups = "myGroup")
 
   # Add second obs data

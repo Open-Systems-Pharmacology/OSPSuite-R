@@ -27,10 +27,10 @@ An array containing the path of all exported simulations.
 Export simulation PKMLs for given \code{individualIds}. Each pkml file will contain the original simulation updated with parameters of the corresponding individual.
 }
 \examples{
-simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
-popPath <- system.file("extdata", "simple_pop.csv", package = "ospsuite")
+popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 population <- loadPopulation(popPath)
 
 exportIndividualSimulations(population, c(1, 2), tempdir(), sim)

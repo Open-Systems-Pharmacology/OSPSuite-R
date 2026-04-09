@@ -44,6 +44,8 @@ This example demonstrates the essential ospsuite workflow. Detailed explanations
 ```{r, echo=TRUE, results='hide'}
 # Load the ospsuite package
 library(ospsuite)
+ospsuite.plots::setDefaults()
+options(ospsuite.plots.watermarkEnabled = FALSE)
 
 # Load the built-in example simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
@@ -55,7 +57,7 @@ results <- runSimulations(sim)
 # Create a quick visualization
 myDataCombined <- DataCombined$new()
 myDataCombined$addSimulationResults(results[[1]])
-plotIndividualTimeProfile(dataCombined = myDataCombined)
+plotTimeProfile(myDataCombined)
 ```
 
 This example loads, runs, and visualizes a PBPK simulation. The plot shows the concentration-time profile for Aciclovir in plasma after IV administration.
@@ -107,7 +109,7 @@ Retrieve and modify parameter values:
 ```{r, echo=TRUE, message=TRUE}
 # Get a specific parameter
 dose <- getParameter(
-  path = "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
+  path = "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
   sim
 )
 print(dose)
@@ -195,7 +197,7 @@ df_results <- myDataCombined$toDataFrame()
 head(df_results)
 
 # Create publication-ready plots
-plotIndividualTimeProfile(dataCombined = myDataCombined)
+plotTimeProfile(myDataCombined)
 ```
 
 #### Option 2: Custom Plotting with ggplot2
@@ -233,7 +235,7 @@ sim <- loadSimulation(simFilePath)
 
 # 2. Modify parameters (e.g., change dose)
 dose <- getParameter(
-  path = "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
+  path = "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
   sim
 )
 setParameterValues(dose, 0.006) # 6 mg/kg dose
@@ -244,7 +246,7 @@ results <- runSimulations(sim)
 # 4. Visualize results
 myDataCombined <- DataCombined$new()
 myDataCombined$addSimulationResults(results[[1]])
-plotIndividualTimeProfile(dataCombined = myDataCombined)
+plotTimeProfile(myDataCombined)
 
 # 5. Extract data for further analysis
 df_results <- myDataCombined$toDataFrame()
@@ -337,7 +339,8 @@ After mastering the basics, explore these advanced topics:
 ### Data Integration:
 - **[Working with observed data](observed-data.html)** - Import experimental data
 - **[DataCombined workflows](data-combined.html)** - Combine simulations with observations
-- **[Visualizations with DataCombined](data-combined-plotting.html)** - Advanced plotting with DataCombined objects
+- **[Plotting](plotting-with-ospsuite-plots.html)** - Built-in plotting functions for quick visualization
+- **[DEPRECATED - Visualizations with DataCombined](data-combined-plotting.html)** - Advanced plotting with DataCombined objects. The functions described in this article are deprecated and will be removed in future versions. Please use the functions described in the article [Plotting with ospsuite.plots](plotting-with-ospsuite-plots.html) instead, which provide more features and better performance.
 
 ### Advanced Topics:
 - **[Efficient calculations](efficient-calculations.html)** - Performance optimization
