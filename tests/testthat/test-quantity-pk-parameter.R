@@ -1,14 +1,15 @@
 # QuantityPKParameter
 
-sim <- loadTestSimulation("S1")
-clearOutputs(sim)
-outputs <- "Organism|VenousBlood|*|Caffeine"
-addOutputs(outputs, sim)
+sim <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
 results <- runSimulations(sim)[[1]]
 pkAnalyses <- calculatePKAnalyses(results)
 
 allPKParameters <- pkAnalyses$allPKParametersFor(
-  quantityPath = "Organism|VenousBlood|Plasma|Caffeine"
+  quantityPath = "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 )
 pkParameter <- allPKParameters[[1]]
 

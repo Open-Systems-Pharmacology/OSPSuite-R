@@ -23,7 +23,7 @@ These parameters are typically located directly under the container named after 
 For the list of standard parameters
 }
 \examples{
-simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim1 <- loadSimulation(simPath)
 
 parameters <- getStandardMoleculeParameters("CYP3A4", sim1)

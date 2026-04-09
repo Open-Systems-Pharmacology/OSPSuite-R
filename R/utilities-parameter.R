@@ -96,7 +96,7 @@ getParameterDisplayPaths <- function(paths, simulation) {
 #' param <- getParameter("Organism|Liver|Volume", sim)
 #' setParameterValues(param, 1)
 #' params <- getAllParametersMatching("Organism|**|Volume", sim)
-#' setParameterValues(params, c(2, 3), units = c("ml", "l"))
+#' setParameterValues(params, c(2, 3, 4), units = c("ml", "l", "ml"))
 #' @export
 setParameterValues <- function(parameters, values, units = NULL) {
   validateIsOfType(parameters, "Parameter")

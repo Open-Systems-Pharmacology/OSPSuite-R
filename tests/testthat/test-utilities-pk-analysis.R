@@ -1,22 +1,20 @@
 # calculatePKAnalyses
 
-sim <- loadTestSimulation("S1")
-clearOutputs(sim)
-outputs <- "Organism|VenousBlood|*|*"
-addOutputs(outputs, sim)
+sim <- loadSimulation(aciclovirSimulationPath, loadFromCache = TRUE)
+outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 results <- runSimulations(sim)[[1]]
 pkAnalyses <- calculatePKAnalyses(results)
 
 test_that("It should be able to calculate the PK-Analyses each output of a simulation", {
   pkAnalysesForOutput <- pkAnalyses$allPKParametersFor(
-    "Organism|VenousBlood|Plasma|Caffeine"
+    outputPath
   )
   expect_gt(length(pkAnalysesForOutput), 0)
 })
 
 test_that("It should be able to retrieve a standard pk parameter", {
   pkParameter <- pkAnalyses$pKParameterFor(
-    "Organism|VenousBlood|Plasma|Caffeine",
+    outputPath,
     "AUC_tEnd"
   )
   expect_false(is.null(pkParameter))
@@ -24,15 +22,13 @@ test_that("It should be able to retrieve a standard pk parameter", {
 
 test_that("It should return null when retrieving a pk parameter that does not exist", {
   pkParameter <- pkAnalyses$pKParameterFor(
-    "Organism|VenousBlood|Plasma|Caffeine",
+    outputPath,
     "NOPE"
   )
   expect_null(pkParameter)
 })
 
 test_that("it can return pk analysis for sparse population and only return ids defined in the population file", {
-  clearOutputs(sim)
-  addOutputs(outputs, sim)
   population <- loadPopulation(getTestDataFilePath("pop_5_spared_id.csv"))
   results <- runSimulations(sim, population = population)[[1]]
   pkAnalyses <- calculatePKAnalyses(results = results)
@@ -42,12 +38,7 @@ test_that("it can return pk analysis for sparse population and only return ids d
 })
 
 
-test_that("It should an empty list of parameters for an output that is not part of the calculated results", {
-  clearOutputs(sim)
-  addOutputs(outputs, sim)
-  results <- runSimulations(sim)[[1]]
-  pkAnalyses <- calculatePKAnalyses(results)
-
+test_that("It returns an empty list of parameters for an output that is not part of the calculated results", {
   pkAnalysesForOutput <- pkAnalyses$allPKParametersFor(
     "Another output that does not exist"
   )

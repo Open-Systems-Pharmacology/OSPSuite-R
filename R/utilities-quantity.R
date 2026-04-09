@@ -400,9 +400,9 @@ isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
 #' @export
 #'
 #' @examples
-#' simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+#' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
-#' parameterPath <- "Organism|VenousBlood|Plasma|Aciclovir|Concentration"
+#' parameterPath <- "Organism|Lumen|Stomach|Dapagliflozin"
 #' quantity <- getQuantity(parameterPath, container = sim)
 #' getMolWeightFor(quantity, unit = "g/mol")
 getMolWeightFor <- function(quantity, unit = NULL, stopIfNotFound = FALSE) {

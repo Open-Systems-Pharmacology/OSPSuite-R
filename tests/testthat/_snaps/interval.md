@@ -4,8 +4,8 @@
       interval$print()
     Output
       <Interval>
-        * Name: Simulation interval high resolution
+        * Name: Output interval
         * Start time: 0.00e+00 [min]
-        * End time: 120.00 [min]
-        * Resolution: 0.33 [pts/min]
+        * End time: 300.00 [min]
+        * Resolution: 0.07 [pts/min]
 

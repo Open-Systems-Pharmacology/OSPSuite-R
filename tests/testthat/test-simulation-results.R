@@ -1,9 +1,9 @@
 # SimulationResults
 
-sim <- loadTestSimulation("S1")
+sim <- loadTestSimulation("simple", loadFromCache = TRUE, addToCache = TRUE)
 simResults <- runSimulations(sim)[[1]]
 
-resultsPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
+resultsPath <- "Organism|Liver|A"
 
 test_that("It can print simulation results", {
   expect_snapshot(simResults$print())
@@ -46,7 +46,7 @@ test_that("It can retrieve the simulation", {
 })
 
 test_that("It throws an error when trying to set the simulation", {
-  expect_error(simResults$simulation <- loadTestSimulation("S1"))
+  expect_error(simResults$simulation <- sim)
 })
 
 test_that("It can retrieve the time values", {
@@ -58,7 +58,7 @@ test_that("It throws an error when trying to set the time values", {
 })
 
 test_that("It can retrieve the paths of all outputs", {
-  expect_equal(length(simResults$allQuantityPaths), 5)
+  expect_snapshot(simResults$allQuantityPaths)
 })
 
 test_that("It throws an error when trying to set the paths of all outputs", {

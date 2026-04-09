@@ -254,6 +254,11 @@ DataSet <- R6::R6Class(
       validateIsSameLength(xValues, yValues)
       if (!is.null(yErrorValues)) {
         validateIsSameLength(xValues, yErrorValues)
+        negative <- !is.na(yErrorValues) & yErrorValues < 0
+        if (any(negative)) {
+          warning(messages$yErrorValuesNegative(sum(negative)))
+          yErrorValues[negative] <- NA_real_
+        }
       }
 
       private$.setColumnValues(column = private$.xColumn, xValues)

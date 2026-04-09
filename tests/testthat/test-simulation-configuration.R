@@ -20,7 +20,14 @@ test_that("SimulationConfiguration can be created from a simulation loaded from 
   # Check that the individual is correct
   expect_equal(configurationFromPKML$individual$name, "Vergin_1995_IV")
   # Check that expression profiles are correct
-  expect_null(configurationFromPKML$expressionProfiles)
+  expect_true(isOfType(
+    configurationFromPKML$expressionProfiles,
+    "BuildingBlock"
+  ))
+  expect_named(
+    configurationFromPKML$expressionProfiles,
+    "CYP3A4|Human|Healthy"
+  )
 
   # Check that selected initial conditions are correct
   selectedICs <- configurationFromPKML$selectedInitialConditions

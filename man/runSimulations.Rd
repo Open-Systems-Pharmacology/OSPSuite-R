@@ -66,8 +66,7 @@ results <- runSimulations(sim, population, simulationRunOptions = simRunOptions)
 
 # Running multiple simulations in parallel
 sim2 <- loadSimulation(simPath)
-sim3 <- loadSimulation(simPath)
 
 # Results is a list of `SimulationResults`
-results <- runSimulations(list(sim, sim2, sim3))
+results <- runSimulations(list(sim, sim2))
 }
