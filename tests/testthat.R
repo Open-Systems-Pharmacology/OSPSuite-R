@@ -9,4 +9,7 @@
 library(testthat)
 library(ospsuite)
 
+Sys.setenv(TESTTHAT_PARALLEL = "true")
+Sys.setenv(TESTTHAT_CPUS = parallel::detectCores())
+
 test_check("ospsuite")
