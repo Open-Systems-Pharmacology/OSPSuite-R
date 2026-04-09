@@ -1,4 +1,4 @@
-name: Update renv packages nightly
+name: Update renv snapshot and check package
 
 on:
   schedule:
