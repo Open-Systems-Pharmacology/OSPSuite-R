@@ -247,8 +247,8 @@ print(newPaths)
 The molecule "DIO1" that has been added to the IC BB in the previous step is a protein. As the module "Thyroid" adds a new organ for which no protein expression is defined in the Expression Profiles, parameters defining the expression must be added to the PV BB of the new module using the `addProteinExpressionToParameterValuesBB()` function:
 
 ```{r addProteinExpressionToPVBB}
-# # Get the PV BB from the Thyroid module
-# pvBB <- thyroidModule$getBuildingBlocks(type = "Parameter Values")[["Human"]]
+# Get the PV BB from the Thyroid module
+pvBB <- thyroidModule$getParameterValuesBBs()[["Human"]]
 # # Add protein expression to the PV BB
 # proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(
 #   pvBB,
@@ -276,13 +276,13 @@ The molecule "DIO1" that has been added to the IC BB in the previous step is a p
 and overwrite the value of "Relative expression":
 
 ```{r setRelativeExpressionValue}
-# setParameterValuesInBB(
-#   parameterValuesBuildingBlock = pvBB,
-#   quantityPaths = "Organism|Thyroid|Intracellular|DIO1|Relative expression",
-#   quantityValues = 1.33,
-#   units = "",
-#   dimensions = ospDimensions$Fraction
-# )
+setParameterValuesInBB(
+  parameterValuesBuildingBlock = pvBB,
+  quantityPaths = "Organism|Thyroid|Intracellular|DIO1|Relative expression",
+  quantityValues = 1.33,
+  units = "",
+  dimensions = ospDimensions$Fraction
+)
 ```
 
 Finally, we can create a simulation configuration from the modules and the individual we created:
@@ -314,11 +314,10 @@ The simulation configuration can be used to create a simulation. The simulation 
 simulation <- myProject$getSimulation("Thyroid_QST_Human")
 configuration <- simulation$configuration
 
-# TODO enable after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2252
-# simulation <- createSimulation(
-#   simulationName = "Thyroid_QST_Human_copy",
-#   configuration
-# )
+simulation <- createSimulation(
+  simulationName = "Thyroid_QST_Human_copy",
+  configuration
+)
 ```
 
 Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation. Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`. Additionally, the user can select whether to create all process rate parameters in the simulation or not by setting the argument `createAllProcessRateParameters` in the function `createSimulation()`. These parameters can be used for model debugging and analysis.
