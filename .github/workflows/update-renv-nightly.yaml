@@ -5,6 +5,9 @@ on:
     - cron: '0 2 * * *'  # Run at 2 AM UTC daily
   workflow_dispatch:  # Allow manual triggering
 
+permissions:
+  contents: read
+
 jobs:
   update-renv-nightly:
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/update-renv-lockfile.yaml@main
