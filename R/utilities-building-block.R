@@ -470,7 +470,7 @@ setParameterValuesInBB <- function(
   pvTask <- .getMoBiTaskFromCache("ParameterValuesTask")
 
   pvTask$call(
-    "SetParameterValue",
+    "SetParameterValues",
     parameterValuesBuildingBlock,
     as.vector(quantityPaths, mode = "character"),
     as.vector(baseValues, mode = "numeric"),
