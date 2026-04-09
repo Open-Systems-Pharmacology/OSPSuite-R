@@ -51,10 +51,10 @@
     },
     "Matrix": {
       "Package": "Matrix",
-      "Version": "1.7-4",
+      "Version": "1.7-5",
       "Source": "Repository",
       "VersionNote": "do also bump src/version.h, inst/include/Matrix/version.h",
-      "Date": "2025-08-27",
+      "Date": "2026-03-20",
       "Priority": "recommended",
       "Title": "Sparse and Dense Matrix Classes and Methods",
       "Description": "A rich hierarchy of sparse and dense matrix classes, including general, symmetric, triangular, and diagonal matrices with numeric, logical, or pattern entries.  Efficient methods for operating on such matrices, often wrapping the 'BLAS', 'LAPACK', and 'SuiteSparse' libraries.",
@@ -1026,6 +1026,35 @@
       "NeedsCompilation": "yes",
       "Author": "Brodie Gaslam [aut, cre], Michael B. Allen [ctb, cph] (Original C implementation of Myers Diff Algorithm)",
       "Maintainer": "Brodie Gaslam <brodie.gaslam@yahoo.com>",
+      "Repository": "CRAN"
+    },
+    "diffviewer": {
+      "Package": "diffviewer",
+      "Version": "0.1.2",
+      "Source": "Repository",
+      "Title": "HTML Widget to Show File Differences",
+      "Authors@R": "c( person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\")), person(\"Joshua\", \"Kunst\", role = \"aut\"), person(\"Winston\", \"Chang\", , \"winston@posit.co\", role = \"aut\"), person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")), person(\"Paul\", \"Fitzpatrick\", role = \"cph\", comment = \"Author of included daff.js library\"), person(\"Rodrigo\", \"Fernandes\", role = \"cph\", comment = \"Author of included diff2html library\"), person(\"JQuery Foundation\", role = \"cph\", comment = \"Author of included jquery library\"), person(\"Kevin\", \"Decker\", role = \"cph\", comment = \"Author of included jsdiff library\"), person(\"Matthew\", \"Holt\", role = \"cph\", comment = \"Author of incldued PapaParse library\"), person(\"Huddle\", role = \"cph\", comment = \"Author of included resemble library\") )",
+      "Description": "A HTML widget that shows differences between files (text, images, and data frames).",
+      "License": "MIT + file LICENSE",
+      "URL": "https://diffviewer.r-lib.org, https://github.com/r-lib/diffviewer",
+      "BugReports": "https://github.com/r-lib/diffviewer/issues",
+      "Depends": [
+        "R (>= 3.6.0)"
+      ],
+      "Imports": [
+        "htmlwidgets",
+        "jsonlite"
+      ],
+      "Suggests": [
+        "covr",
+        "shiny"
+      ],
+      "Config/Needs/website": "tidyverse/tidytemplate",
+      "Encoding": "UTF-8",
+      "RoxygenNote": "7.3.1",
+      "NeedsCompilation": "no",
+      "Author": "Hadley Wickham [aut, cre], Joshua Kunst [aut], Winston Chang [aut], Posit Software, PBC [cph, fnd], Paul Fitzpatrick [cph] (Author of included daff.js library), Rodrigo Fernandes [cph] (Author of included diff2html library), JQuery Foundation [cph] (Author of included jquery library), Kevin Decker [cph] (Author of included jsdiff library), Matthew Holt [cph] (Author of incldued PapaParse library), Huddle [cph] (Author of included resemble library)",
+      "Maintainer": "Hadley Wickham <hadley@posit.co>",
       "Repository": "CRAN"
     },
     "digest": {
@@ -2756,8 +2785,8 @@
     },
     "ospsuite.plots": {
       "Package": "ospsuite.plots",
-      "Version": "1.1.0",
-      "Source": "git",
+      "Version": "1.1.0.9003",
+      "Source": "GitHub",
       "Type": "Package",
       "Title": "Library for standardized graphs",
       "Authors@R": "c(person(given = \"Open-Systems-Pharmacology Community\", role = \"cph\"), person(given = \"Katrin\", family = \"Coboeken\", role = c(\"aut\", \"cre\"), email = \"katrin.coboeken@bayer.com\"))",
@@ -2808,16 +2837,16 @@
       "Config/testthat/edition": "3",
       "Collate": "'messages.R' 'utilities-defaults.R' 'utilities_enum.R' 'add_Layer.R' 'ggplotWithWatermark.R' 'CombinedPlot.R' 'data.R' 'MappedData.R' 'MappedDataBoxplot.R' 'MappedDataTimeProfile.R' 'MappedDataRangePlot.R' 'ospsuite.plots-package.R' 'plotBoxWhisker.R' 'plotHistogram.R' 'plotQQ.R' 'plotTimeProfile.R' 'plotYVsX.R' 'plotForest.R' 'plotRangeDistribution.R' 'utilities.R' 'utilities_export.R' 'utilities_shapes.R' 'zzz.R'",
       "LazyData": "true",
-      "Author": "Open-Systems-Pharmacology Community [cph], Katrin Coboeken [aut, cre]",
-      "Maintainer": "Katrin Coboeken <katrin.coboeken@bayer.com>",
-      "RemoteType": "git",
       "Remotes": "ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils",
-      "RemoteUrl": "https://github.com/Open-Systems-Pharmacology/OSPSuite.Plots",
+      "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "OSPSuite.Plots",
-      "RemoteRef": "main",
-      "RemoteSha": "e70f239441a65656fe683050453d866ae526a32e"
+      "RemoteUsername": "Open-Systems-Pharmacology",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "4a216f05dc7d22ee12f61e118b3da4ffe8c5470e",
+      "NeedsCompilation": "no",
+      "Author": "Open-Systems-Pharmacology Community [cph], Katrin Coboeken [aut, cre]",
+      "Maintainer": "Katrin Coboeken <katrin.coboeken@bayer.com>"
     },
     "ospsuite.utils": {
       "Package": "ospsuite.utils",
