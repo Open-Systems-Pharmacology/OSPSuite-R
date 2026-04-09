@@ -207,15 +207,15 @@ Modules that are intended to be used in combination with a variety of other modu
 
 Following functionalities are available for the Initial Conditions BBs:
 
--   `setInitialConditionsBB()`: Allows adding new entries or changing the values of existing entries in the Initial Conditions BB.
--   `deleteInitialConditionsBB()`: Allows deleting entries from the Initial Conditions BB.
+-   `setInitialConditionsInBB()`: Allows adding new entries or changing the values of existing entries in the Initial Conditions BB.
+-   `deleteInitialConditionsFromBB()`: Allows deleting entries from the Initial Conditions BB.
 -   `extendInitialConditionsBB()`: Extending an IC BB by entries for specified molecules in all physical containers of a spatial structure.
 
 Followning functionalities are available for the Parameter Values (PV) BBs:
 
--   `setParameterValuesBB()`: Allows adding new entries or changing the values of existing entries in the PV BB.
--   `deleteParameterValuesBB()`: Allows deleting entries from the PV BB.
--   `addLocalMoleculeParametersToParameterValuesBB()`: Extending a PV BB by entries for local parameters of specified molecules in all physical containers of a spatial structure.
+-   `setParameterValuesInBB()`: Allows adding new entries or changing the values of existing entries in the PV BB.
+-   `deleteParameterValuesFromBB()`: Allows deleting entries from the PV BB.
+-   `addLocalMoleculeParametersToParameterValuesBB()`: Extending a PV BB by entries for local parameters of specified molecules in all physical containers of a spatial structure. This functions does not add parameters those values are defined by a formula, e.g., the "Relative expression" parameters for proteins.
 -   `addProteinExpressionToParameterValuesBB()`: Extending a PV BB by parameters defining expression of protein molecules in selected organs.
 
 So in the first step we load the extension module "Thyroid" from a pkml file:
@@ -276,7 +276,7 @@ The molecule "DIO1" that has been added to the IC BB in the previous step is a p
 and overwrite the value of "Relative expression":
 
 ```{r setRelativeExpressionValue}
-# setParameterValuesBB(
+# setParameterValuesInBB(
 #   parameterValuesBuildingBlock = pvBB,
 #   quantityPaths = "Organism|Thyroid|Intracellular|DIO1|Relative expression",
 #   quantityValues = 1.33,

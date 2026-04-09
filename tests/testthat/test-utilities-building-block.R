@@ -56,18 +56,18 @@ test_that("parameterValuesBBToDataFrame throws an error if the building block is
 
 
 # test for wrong type of building block
-test_that("setInitialConditionsBB throws an error if the building block is not of type Initial Conditions", {
+test_that("setInitialConditionsInBB throws an error if the building block is not of type Initial Conditions", {
   expect_error(
-    setInitialConditionsBB(testPVBB, "Path", 1),
+    setInitialConditionsInBB(testPVBB, "Path", 1),
     regexp = "Initial Conditions"
   )
 })
 
 # test for differnt lengths of quantityPaths and quantityValues
-test_that("setInitialConditionsBB throws an error if quantityPaths and quantityValues have different lengths", {
+test_that("setInitialConditionsInBB throws an error if quantityPaths and quantityValues have different lengths", {
   icBB <- getFreshICBB()
   expect_error(
-    setInitialConditionsBB(
+    setInitialConditionsInBB(
       icBB,
       quantityPaths = c("Path1", "Path2"),
       quantityValues = c(1)
@@ -77,13 +77,13 @@ test_that("setInitialConditionsBB throws an error if quantityPaths and quantityV
 })
 
 
-test_that("setInitialConditionsBB updates one entry correctly", {
+test_that("setInitialConditionsInBB updates one entry correctly", {
   icBB <- getFreshICBB()
   quantityPaths <- "Organism|Brain|Intracellular|Aciclovir"
   quantityValues <- 10
 
   # Set initial conditions
-  setInitialConditionsBB(
+  setInitialConditionsInBB(
     icBB,
     quantityPaths = quantityPaths,
     quantityValues = quantityValues,
@@ -106,7 +106,7 @@ test_that("setInitialConditionsBB updates one entry correctly", {
 })
 
 # It can change two entries of the same molecule in different compartments
-test_that("setInitialConditionsBB updates multiple entries correctly", {
+test_that("setInitialConditionsInBB updates multiple entries correctly", {
   icBB <- getFreshICBB()
   quantityPaths <- c(
     "Organism|Brain|Intracellular|Aciclovir",
@@ -115,7 +115,7 @@ test_that("setInitialConditionsBB updates multiple entries correctly", {
   quantityValues <- c(10, 20)
 
   # Set initial conditions
-  setInitialConditionsBB(
+  setInitialConditionsInBB(
     icBB,
     quantityPaths = quantityPaths,
     quantityValues = quantityValues,
@@ -148,7 +148,7 @@ test_that("setInitialConditionsBB updates multiple entries correctly", {
 })
 
 # It can add new entries if the paths do not exist in the BB
-test_that("setInitialConditionsBB adds new entries correctly", {
+test_that("setInitialConditionsInBB adds new entries correctly", {
   icBB <- getFreshICBB()
   quantityPaths <- c(
     "Organism|Intracellular|Aciclovir",
@@ -157,7 +157,7 @@ test_that("setInitialConditionsBB adds new entries correctly", {
   quantityValues <- c(30, 40)
 
   # Set initial conditions
-  setInitialConditionsBB(
+  setInitialConditionsInBB(
     icBB,
     quantityPaths = quantityPaths,
     quantityValues = quantityValues,
@@ -182,9 +182,9 @@ test_that("setInitialConditionsBB adds new entries correctly", {
   expect_equal(heartEntry$Value, 40)
 })
 
-test_that("deleteInitialConditionsBB throws an error if the building block is not of type Initial Conditions", {
+test_that("deleteInitialConditionsFromBB throws an error if the building block is not of type Initial Conditions", {
   expect_error(
-    deleteInitialConditionsBB(
+    deleteInitialConditionsFromBB(
       testPVBB,
       "Organism|Brain|Intracellular|Aciclovir"
     ),
@@ -192,7 +192,7 @@ test_that("deleteInitialConditionsBB throws an error if the building block is no
   )
 })
 
-test_that("deleteInitialConditionsBB removes existing entries correctly", {
+test_that("deleteInitialConditionsFromBB removes existing entries correctly", {
   icBB <- getFreshICBB()
   # Get initial count
   dfBefore <- initialConditionsBBToDataFrame(icBB)
@@ -205,7 +205,7 @@ test_that("deleteInitialConditionsBB removes existing entries correctly", {
   ))
 
   # Delete the entry
-  deleteInitialConditionsBB(icBB, pathToDelete)
+  deleteInitialConditionsFromBB(icBB, pathToDelete)
 
   # Check after deletion
   dfAfter <- initialConditionsBBToDataFrame(icBB)
@@ -216,7 +216,7 @@ test_that("deleteInitialConditionsBB removes existing entries correctly", {
   expect_equal(nrow(dfAfter), nrow(dfBefore) - 1)
 })
 
-test_that("deleteInitialConditionsBB removes multiple entries correctly", {
+test_that("deleteInitialConditionsFromBB removes multiple entries correctly", {
   icBB <- getFreshICBB()
   dfBefore <- initialConditionsBBToDataFrame(icBB)
   pathsToDelete <- c(
@@ -224,7 +224,7 @@ test_that("deleteInitialConditionsBB removes multiple entries correctly", {
     "Organism|Muscle|Intracellular|Aciclovir"
   )
 
-  deleteInitialConditionsBB(icBB, pathsToDelete)
+  deleteInitialConditionsFromBB(icBB, pathsToDelete)
 
   dfAfter <- initialConditionsBBToDataFrame(icBB)
   currentPaths <- paste0(dfAfter$`Container Path`, "|", dfAfter$`Molecule Name`)
@@ -233,13 +233,13 @@ test_that("deleteInitialConditionsBB removes multiple entries correctly", {
   expect_equal(nrow(dfAfter), nrow(dfBefore) - 2)
 })
 
-test_that("deleteInitialConditionsBB ignores paths that do not exist", {
+test_that("deleteInitialConditionsFromBB ignores paths that do not exist", {
   icBB <- getFreshICBB()
   dfBefore <- initialConditionsBBToDataFrame(icBB)
   nonExistentPath <- "Non|Existent|Path|Molecule"
 
   # Should not throw an error
-  expect_silent(deleteInitialConditionsBB(icBB, nonExistentPath))
+  expect_silent(deleteInitialConditionsFromBB(icBB, nonExistentPath))
 
   dfAfter <- initialConditionsBBToDataFrame(icBB)
   expect_equal(dfAfter, dfBefore)
@@ -359,20 +359,20 @@ test_that("extendInitialConditionsBB should handle wrong type of initialConditio
   )
 })
 
-# setParameterValuesBB tests
+# setParameterValuesInBB tests
 
-test_that("setParameterValuesBB throws an error if the building block is not of type Parameter Values", {
+test_that("setParameterValuesInBB throws an error if the building block is not of type Parameter Values", {
   icBB <- getFreshICBB()
   expect_error(
-    setParameterValuesBB(icBB, "Path", 1, units = ""),
+    setParameterValuesInBB(icBB, "Path", 1, units = ""),
     regexp = "Parameter Values"
   )
 })
 
-test_that("setParameterValuesBB throws an error if quantityPaths and quantityValues have different lengths", {
+test_that("setParameterValuesInBB throws an error if quantityPaths and quantityValues have different lengths", {
   pvBB <- getFreshPVBB()
   expect_error(
-    setParameterValuesBB(
+    setParameterValuesInBB(
       pvBB,
       quantityPaths = c("Path1", "Path2"),
       quantityValues = c(1),
@@ -382,12 +382,12 @@ test_that("setParameterValuesBB throws an error if quantityPaths and quantityVal
   )
 })
 
-test_that("setParameterValuesBB sets a single entry with explicit dimensions", {
+test_that("setParameterValuesInBB sets a single entry with explicit dimensions", {
   pvBB <- getFreshPVBB()
   quantityPath <- "Organism|Liver|Volume"
   quantityValue <- 1.5
 
-  setParameterValuesBB(
+  setParameterValuesInBB(
     pvBB,
     quantityPaths = quantityPath,
     quantityValues = quantityValue,
@@ -405,12 +405,12 @@ test_that("setParameterValuesBB sets a single entry with explicit dimensions", {
   expect_equal(entry$Value, 1.5)
 })
 
-test_that("setParameterValuesBB derives dimensions from units when dimensions is NULL", {
+test_that("setParameterValuesInBB derives dimensions from units when dimensions is NULL", {
   pvBB <- getFreshPVBB()
   quantityPath <- "Organism|Liver|Volume"
   quantityValue <- 1.5
 
-  setParameterValuesBB(
+  setParameterValuesInBB(
     pvBB,
     quantityPaths = quantityPath,
     quantityValues = quantityValue,
@@ -427,7 +427,7 @@ test_that("setParameterValuesBB derives dimensions from units when dimensions is
   expect_equal(entry$Value, 1.5)
 })
 
-test_that("setParameterValuesBB sets multiple entries correctly", {
+test_that("setParameterValuesInBB sets multiple entries correctly", {
   pvBB <- getFreshPVBB()
   quantityPaths <- c(
     "Organism|Liver|Volume",
@@ -435,7 +435,7 @@ test_that("setParameterValuesBB sets multiple entries correctly", {
   )
   quantityValues <- c(1.5, 0.3)
 
-  setParameterValuesBB(
+  setParameterValuesInBB(
     pvBB,
     quantityPaths = quantityPaths,
     quantityValues = quantityValues,
@@ -459,14 +459,14 @@ test_that("setParameterValuesBB sets multiple entries correctly", {
   expect_equal(kidneyEntry$Value, 0.3)
 })
 
-test_that("setParameterValuesBB overwrites the dimension of an existing entry", {
+test_that("setParameterValuesInBB overwrites the dimension of an existing entry", {
   pvBB <- getFreshPVBB()
   quantityPaths <- c(
     "Organism|Liver|Volume"
   )
   quantityValues <- c(1.5)
 
-  setParameterValuesBB(
+  setParameterValuesInBB(
     pvBB,
     quantityPaths = quantityPaths,
     quantityValues = quantityValues,
@@ -474,7 +474,7 @@ test_that("setParameterValuesBB overwrites the dimension of an existing entry", 
     dimensions = ospDimensions$Volume
   )
 
-  setParameterValuesBB(
+  setParameterValuesInBB(
     pvBB,
     quantityPaths = "Organism|Liver|Volume",
     quantityValues = 1,
@@ -490,13 +490,13 @@ test_that("setParameterValuesBB overwrites the dimension of an existing entry", 
   expect_equal(liverEntry$Unit, "µmol")
 })
 
-test_that("setParameterValuesBB correctly updates an existing entry when the values are provided in non-base units", {
+test_that("setParameterValuesInBB correctly updates an existing entry when the values are provided in non-base units", {
   pvBB <- getFreshPVBB()
   quantityPaths <- c(
     "Organism|Heart|Volume"
   )
 
-  setParameterValuesBB(
+  setParameterValuesInBB(
     pvBB,
     quantityPaths = quantityPaths,
     quantityValues = 1,
@@ -505,7 +505,7 @@ test_that("setParameterValuesBB correctly updates an existing entry when the val
   )
 
   # Now set the value in different units, but with the same dimensions. The value should be converted to the base unit and overwrite the existing value.
-  setParameterValuesBB(
+  setParameterValuesInBB(
     pvBB,
     quantityPaths = "Organism|Heart|Volume",
     quantityValues = 0.1,
@@ -521,20 +521,20 @@ test_that("setParameterValuesBB correctly updates an existing entry when the val
   expect_equal(heartEntry$Value, 0.0001)
 })
 
-# deleteParameterValuesBB tests
+# deleteParameterValuesFromBB tests
 
-test_that("deleteParameterValuesBB throws an error if the building block is not of type Parameter Values", {
+test_that("deleteParameterValuesFromBB throws an error if the building block is not of type Parameter Values", {
   icBB <- getFreshICBB()
   expect_error(
-    deleteParameterValuesBB(icBB, "Path"),
+    deleteParameterValuesFromBB(icBB, "Path"),
     regexp = "Parameter Values"
   )
 })
 
-test_that("deleteParameterValuesBB removes existing entries correctly", {
+test_that("deleteParameterValuesFromBB removes existing entries correctly", {
   pvBB <- getFreshPVBB()
   # The PV BB in this simulation is empty, so we have to add some entries first
-  setParameterValuesBB(
+  setParameterValuesInBB(
     pvBB,
     quantityPaths = c(
       "Organism|Liver|Volume",
@@ -547,7 +547,7 @@ test_that("deleteParameterValuesBB removes existing entries correctly", {
 
   dfBefore <- parameterValuesBBToDataFrame(pvBB)
   pathToDelete <- "Organism|Liver|Volume"
-  deleteParameterValuesBB(pvBB, pathToDelete)
+  deleteParameterValuesFromBB(pvBB, pathToDelete)
 
   dfAfter <- parameterValuesBBToDataFrame(pvBB)
   expect_false(any(
@@ -557,10 +557,10 @@ test_that("deleteParameterValuesBB removes existing entries correctly", {
   expect_equal(nrow(dfAfter), nrow(dfBefore) - 1)
 })
 
-test_that("deleteParameterValuesBB removes multiple entries correctly", {
+test_that("deleteParameterValuesFromBB removes multiple entries correctly", {
   pvBB <- getFreshPVBB()
   # The PV BB in this simulation is empty, so we have to add some entries first
-  setParameterValuesBB(
+  setParameterValuesInBB(
     pvBB,
     quantityPaths = c(
       "Organism|Liver|Volume",
@@ -578,7 +578,7 @@ test_that("deleteParameterValuesBB removes multiple entries correctly", {
     dfBefore$`Parameter Name`[1:2]
   )
 
-  deleteParameterValuesBB(pvBB, pathsToDelete)
+  deleteParameterValuesFromBB(pvBB, pathsToDelete)
 
   dfAfter <- parameterValuesBBToDataFrame(pvBB)
   currentPaths <- paste0(
@@ -591,10 +591,10 @@ test_that("deleteParameterValuesBB removes multiple entries correctly", {
   expect_equal(nrow(dfAfter), nrow(dfBefore) - 2)
 })
 
-test_that("deleteParameterValuesBB ignores paths that do not exist", {
+test_that("deleteParameterValuesFromBB ignores paths that do not exist", {
   pvBB <- getFreshPVBB()
   # The PV BB in this simulation is empty, so we have to add some entries first
-  setParameterValuesBB(
+  setParameterValuesInBB(
     pvBB,
     quantityPaths = c(
       "Organism|Liver|Volume",
@@ -607,8 +607,168 @@ test_that("deleteParameterValuesBB ignores paths that do not exist", {
   dfBefore <- parameterValuesBBToDataFrame(pvBB)
   nonExistentPath <- "Non|Existent|Path|Parameter"
 
-  expect_silent(deleteParameterValuesBB(pvBB, nonExistentPath))
+  expect_silent(deleteParameterValuesFromBB(pvBB, nonExistentPath))
 
   dfAfter <- parameterValuesBBToDataFrame(pvBB)
   expect_equal(dfAfter, dfBefore)
+})
+
+# addLocalMoleculeParametersToParameterValuesBB tests
+
+test_that("addLocalMoleculeParametersToParameterValuesBB adds parameters for all molecules when moleculeNames is NULL", {
+  module <- minimalTestProject$getModules("TestModule")[[1]]
+  pvBB <- module$getParameterValuesBBs()[[1]]
+
+  newPaths <- addLocalMoleculeParametersToParameterValuesBB(
+    parameterValuesBuildingBlock = pvBB,
+    spatialStructureModule = module,
+    moleculesModule = module
+  )
+
+  pvBB_df <- parameterValuesBBToDataFrame(pvBB)
+  newPaths_df <- pvBB_df[
+    paste0(pvBB_df$`Container Path`, "|", pvBB_df$`Parameter Name`) %in%
+      newPaths,
+  ]
+
+  expect_snapshot(newPaths_df)
+})
+
+test_that("addLocalMoleculeParametersToParameterValuesBB adds parameters for multiple specified molecules", {
+  testProject <- loadMoBiProject(getTestDataFilePath("Test_Project.mbp3"))
+  module <- testProject$getModules("TestModule")[[1]]
+  pvBB <- module$getParameterValuesBBs()[[1]]
+
+  newPaths <- addLocalMoleculeParametersToParameterValuesBB(
+    parameterValuesBuildingBlock = pvBB,
+    spatialStructureModule = module,
+    moleculesModule = module,
+    moleculeNames = c("A", "B")
+  )
+
+  pvBB_df <- parameterValuesBBToDataFrame(pvBB)
+  newPaths_df <- pvBB_df[
+    paste0(pvBB_df$`Container Path`, "|", pvBB_df$`Parameter Name`) %in%
+      newPaths,
+  ]
+
+  # All new entries should be for molecules A and B
+  expect_true(all(grepl("\\|A\\|", newPaths) | grepl("\\|B\\|", newPaths)))
+})
+
+test_that("addLocalMoleculeParametersToParameterValuesBB adds parameters only for specified molecules", {
+  testProject <- loadMoBiProject(getTestDataFilePath("Test_Project.mbp3"))
+  module <- testProject$getModules("TestModule")[[1]]
+  pvBB <- module$getParameterValuesBBs()[[1]]
+
+  newPaths <- addLocalMoleculeParametersToParameterValuesBB(
+    parameterValuesBuildingBlock = pvBB,
+    spatialStructureModule = module,
+    moleculesModule = module,
+    moleculeNames = "A"
+  )
+
+  pvBB_df <- parameterValuesBBToDataFrame(pvBB)
+  newPaths_df <- pvBB_df[
+    paste0(pvBB_df$`Container Path`, "|", pvBB_df$`Parameter Name`) %in%
+      newPaths,
+  ]
+
+  # All new entries should be for molecule A only
+  expect_true(all(grepl("\\|A\\|", newPaths)))
+  expect_false(any(grepl("\\|B\\|", newPaths)))
+
+  expect_snapshot(newPaths_df)
+})
+
+test_that("addLocalMoleculeParametersToParameterValuesBB does not overwrite existing entries", {
+  testProject <- loadMoBiProject(getTestDataFilePath("Test_Project.mbp3"))
+  module <- testProject$getModules("TestModule")[[1]]
+  pvBB <- module$getParameterValuesBBs()[[1]]
+
+  # First call adds entries
+  firstPaths <- addLocalMoleculeParametersToParameterValuesBB(
+    parameterValuesBuildingBlock = pvBB,
+    spatialStructureModule = module,
+    moleculesModule = module
+  )
+  # Set the values for all entries
+  setParameterValuesInBB(
+    pvBB,
+    quantityPaths = firstPaths,
+    quantityValues = rep(1, length(firstPaths)),
+    units = "µmol"
+  )
+
+  # Second call should not add duplicate entries or change existing entries, so it should return an empty vector
+  secondPaths <- addLocalMoleculeParametersToParameterValuesBB(
+    parameterValuesBuildingBlock = pvBB,
+    spatialStructureModule = module,
+    moleculesModule = module
+  )
+
+  expect_equal(length(secondPaths), 0)
+  # The values of the first entries should remain unchanged
+  pvBB_df <- parameterValuesBBToDataFrame(pvBB)
+  firstPaths_df <- pvBB_df[
+    paste0(pvBB_df$`Container Path`, "|", pvBB_df$`Parameter Name`) %in%
+      firstPaths,
+  ]
+  expect_true(all(firstPaths_df$Value == 1))
+})
+
+test_that("addLocalMoleculeParametersToParameterValuesBB throws error for wrong BB type", {
+  icBB <- getFreshICBB()
+  module <- minimalTestProject$getModules("TestModule")[[1]]
+
+  expect_error(
+    addLocalMoleculeParametersToParameterValuesBB(icBB, module, module),
+    regexp = "Parameter Values"
+  )
+})
+
+test_that("addLocalMoleculeParametersToParameterValuesBB throws error for module without spatial structure", {
+  module <- minimalTestProject$getModules("TestModule")[[1]]
+  pvBB <- module$getParameterValuesBBs()[[1]]
+  emptyModule <- minimalTestProject$getModules("ExtModule_noIC_noPV")[[1]]
+
+  expect_error(
+    addLocalMoleculeParametersToParameterValuesBB(pvBB, emptyModule, module),
+    "The provided modules do not contain the required building blocks"
+  )
+})
+
+test_that("addLocalMoleculeParametersToParameterValuesBB throws error for module without molecules", {
+  module <- minimalTestProject$getModules("TestModule")[[1]]
+  pvBB <- module$getParameterValuesBBs()[[1]]
+  emptyModule <- minimalTestProject$getModules("ExtModule_noIC_noPV")[[1]]
+
+  expect_error(
+    addLocalMoleculeParametersToParameterValuesBB(pvBB, module, emptyModule),
+    "The provided modules do not contain the required building blocks"
+  )
+})
+
+# Test for molecules that are not present in the project
+test_that("addLocalMoleculeParametersToParameterValuesBB ignores molecules that are not present in the molecules module", {
+  testProject <- loadMoBiProject(getTestDataFilePath("Test_Project.mbp3"))
+  module <- testProject$getModules("TestModule")[[1]]
+  pvBB <- module$getParameterValuesBBs()[[1]]
+
+  newPaths <- addLocalMoleculeParametersToParameterValuesBB(
+    parameterValuesBuildingBlock = pvBB,
+    spatialStructureModule = module,
+    moleculesModule = module,
+    moleculeNames = c("A", "NonExistentMolecule")
+  )
+
+  pvBB_df <- parameterValuesBBToDataFrame(pvBB)
+  newPaths_df <- pvBB_df[
+    paste0(pvBB_df$`Container Path`, "|", pvBB_df$`Parameter Name`) %in%
+      newPaths,
+  ]
+
+  # All new entries should be for molecule A only
+  expect_true(all(grepl("\\|A\\|", newPaths)))
+  expect_false(any(grepl("\\|NonExistentMolecule\\|", newPaths)))
 })

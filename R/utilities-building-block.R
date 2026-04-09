@@ -112,7 +112,7 @@ initialConditionsBBToDataFrame <- function(initialConditionsBuildingBlock) {
 #' \dontrun{
 #' module <- loadModuleFromPKML("path/to/module.pkml")
 #' icBB <- module$getInitialConditionsBBs()[[1]]
-#' setInitialConditionsBB(
+#' setInitialConditionsInBB(
 #'   icBB,
 #'   quantityPaths = c("Organ|Tissue|Molecule1", "Organ|Tissue|Molecule2"),
 #'   quantityValues = c(1, 0),
@@ -121,7 +121,7 @@ initialConditionsBBToDataFrame <- function(initialConditionsBuildingBlock) {
 #'   negativeValuesAllowed = c(TRUE, FALSE)
 #' )
 #' }
-setInitialConditionsBB <- function(
+setInitialConditionsInBB <- function(
   initialConditionsBuildingBlock,
   quantityPaths,
   quantityValues,
@@ -226,7 +226,7 @@ setInitialConditionsBB <- function(
 #' @export
 #'
 #' @examples
-deleteInitialConditionsBB <- function(
+deleteInitialConditionsFromBB <- function(
   initialConditionsBuildingBlock,
   quantityPaths
 ) {
@@ -264,7 +264,7 @@ deleteInitialConditionsBB <- function(
 #' created for all molecules from this building block, or for a subset of molecules
 #' defined in the `moleculeNames` argument.
 #' @param moleculeNames Optional list of molecule names. If provided, only the molecules
-#' with these names will be added to the `initialConditionsBuildingBlock`.
+#' with these names will be added to the `initialConditionsBuildingBlock`. If a specified molecule is not present in the provided molecules BB, it will be ignored.
 #'
 #' @returns Paths of entries added to the building block.
 #' @export
@@ -404,14 +404,14 @@ parameterValuesBBToDataFrame <- function(parameterValuesBuildingBlock) {
 #' \dontrun{
 #' module <- loadModuleFromPKML("path/to/module.pkml")
 #' pvBB <- module$getParameterValuesBBs()[[1]]
-#' setParameterValuesBB(
+#' setParameterValuesInBB(
 #'   pvBB,
 #'   quantityPaths = "Organism|Organ|Parameter",
 #'   quantityValues = 1.33,
 #'   units = "ml/min/kg"
 #' )
 #' }
-setParameterValuesBB <- function(
+setParameterValuesInBB <- function(
   parameterValuesBuildingBlock,
   quantityPaths,
   quantityValues,
@@ -514,7 +514,7 @@ setParameterValuesBB <- function(
 #' @export
 #'
 #' @examples
-deleteParameterValuesBB <- function(
+deleteParameterValuesFromBB <- function(
   parameterValuesBuildingBlock,
   quantityPaths
 ) {
@@ -539,19 +539,19 @@ deleteParameterValuesBB <- function(
 }
 
 #' Extend a Parameter Values Building Block (BB) with local molecule parameters
-#' for molecules from a molecules BB in all physical containers of a spatial structure BB.
+#' for molecules from a molecules module in all physical containers of a spatial structure module.
 #'
 #' Existing entries will not be overwritten.
 #'
 #' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values`.
-#' @param spatialStructureBB A `BuildingBlock` object of type `Spatial Structure`.
+#' @param spatialStructureModule A `MoBiModule` containing a `Spatial Structure` building block.
 #' Entries will be created for local parameters of the selected molecules in all physical containers of this
 #' spatial structure.
-#' @param moleculesBB A `BuildingBlock` object of type `Molecules`. The entries will be
+#' @param moleculesModule A `MoBiModule` containing a `Molecules` building block. The entries will be
 #' created for all molecules from this building block, or for a subset of molecules
 #' defined in the `moleculeNames` argument.
 #' @param moleculeNames Optional list of molecule names. If provided, only the molecules
-#' with these names will be added to the `parameterValuesBuildingBlock`.
+#' with these names will be added to the `parameterValuesBuildingBlock`. If a specified molecule is not present in the provided molecules BB, it will be ignored.
 #'
 #' @returns Path of entries added to the building block.
 #' @export
@@ -559,10 +559,55 @@ deleteParameterValuesBB <- function(
 #' @examples
 addLocalMoleculeParametersToParameterValuesBB <- function(
   parameterValuesBuildingBlock,
-  spatialStructureBB,
-  moleculesBB,
+  spatialStructureModule,
+  moleculesModule,
   moleculeNames = NULL
-) {}
+) {
+  .validateBuildingBlockType(
+    parameterValuesBuildingBlock,
+    BuildingBlockTypes$`Parameter Values`
+  )
+  # Get the spatial structure BB from the provided module
+  spatialStructureBB <- .getBBFromModule(
+    spatialStructureModule,
+    bbType = "SpatialStructure"
+  )
+  # Get the molecules BB from the provided module
+  moleculesBB <- .getBBFromModule(moleculesModule, bbType = "Molecules")
+  # If molecule names are not provided, supply an empty list.
+  if (is.null(moleculeNames)) {
+    moleculeNames <- vector(mode = "character")
+  }
+
+  # Throw an error if any of the provided modules does not contain the required BB
+  if (is.null(spatialStructureBB) || is.null(moleculesBB)) {
+    missingBBs <- c(
+      if (is.null(spatialStructureBB)) "Spatial Structure",
+      if (is.null(moleculesBB)) "Molecules"
+    )
+    stop(
+      paste0(
+        "The provided modules do not contain the required building blocks: ",
+        paste(missingBBs, collapse = ", "),
+        ". "
+      ),
+      "Please provide modules with the required building blocks to be able to extend the parameter values building block."
+    )
+  }
+
+  # Get ParameterValuesTask
+  pvTask <- .getMoBiTaskFromCache("ParameterValuesTask")
+  # Call the task method to add local molecule parameters to the PV BB
+  newPaths <- pvTask$call(
+    "AddLocalMoleculeParameters",
+    parameterValuesBuildingBlock,
+    spatialStructureBB,
+    moleculesBB,
+    moleculeNames
+  )
+
+  return(newPaths)
+}
 
 #' Extend a Parameter Values Building Block (BB) with protein expression parameters
 #' for selected protein molecules in the selected organs.
