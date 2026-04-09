@@ -61,6 +61,8 @@ residuals. Default is \code{log}.}
     \item{\code{yScaleArgs}}{list of arguments passed to \code{ggplot2::scale_y_continuous()} or \code{ggplot2::scale_y_log10()}}
     \item{\code{geomQQAttributes}}{A list of arguments passed to \code{ggplot2::stat_qq()}.}
     \item{\code{geomQQLineAttributes}}{A list of arguments passed to \code{ggplot2::stat_qq_line()}.}
+    \item{\code{groupAesthetics}}{A character vector of aesthetic names used for grouping data points in the Q-Q plot.
+Common options include \code{"colour"}, \code{"fill"}, \code{"shape"}, \code{"linetype"}, and \code{"size"}.}
   }}
 }
 \value{

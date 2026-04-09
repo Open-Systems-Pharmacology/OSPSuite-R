@@ -12,7 +12,7 @@ values <- c(1:10) * 2.5
 
 # Immutable tests
 
-test_that("has worsk with parameter object", {
+test_that("getParameter works with parameter object", {
   simulation <- loadTestSimulation("simple", loadFromCache = TRUE)
   parameter <- getParameter("Organism|Liver|Volume", simulation)
   expect_true(population$has(parameter))
@@ -60,7 +60,7 @@ test_that("It can retrieve the covariate values for given individual", {
   expect_equal(gender, "2")
 })
 
-test_that("It retrieve an empty string for an non existant covariate", {
+test_that("It can retrieve an empty string for an non existent covariate", {
   covariates <- population$getCovariateValues("Does not exist")
   expect_null(covariates)
 })
@@ -69,7 +69,7 @@ test_that("It can print population", {
   expect_snapshot(population$print())
 })
 
-test_that("It can retrieve all ids define ina population", {
+test_that("It can retrieve all ids defined in a population", {
   expect_length(population$allIndividualIds, 10)
 })
 test_that("It can export valid population to CSV", {

@@ -93,20 +93,20 @@ pvBBs <- module$getParameterValuesBBs()
 You can easily convert the retrieved initial conditions, parameter values, individuals, and expression profiles to data frames for further processing:
 
 ```{r convertBBsToDataFrames}
-icBBDf <- initialConditionsToDataFrame(icBBs[[1]])
+icBBDf <- initialConditionsBBToDataFrame(icBBs[[1]])
 # Print the first few rows of the data frame
 head(icBBDf)
 
-# pvBBDf <- parameterValuesToDataFrame(pvBBs[["Rat"]])
-# # Print the first few rows of the data frame
-# head(pvBBDf)
+pvBBDf <- parameterValuesBBToDataFrame(pvBBs[["Rat"]])
+# Print the first few rows of the data frame
+head(pvBBDf)
 
-# individual <- myProject$getIndividual("Rat")
+individual <- myProject$getIndividual("Rat")
 # individualDf <- individualToDataFrame(individual)
 # # Print the individual data frame
 # print(individualDf)
 
-# expProfiles <- myProject$getExpressionProfiles()
+expProfiles <- myProject$getExpressionProfiles("UDPGT1|Human|Healthy")
 # expProfilesDf <- expressionProfilesToDataFrame(expProfiles)
 # # Print the first few rows of the data frame
 # head(expProfilesDf)
@@ -207,15 +207,15 @@ Modules that are intended to be used in combination with a variety of other modu
 
 Following functionalities are available for the Initial Conditions BBs:
 
--   `setInitialConditions()`: Allows adding new entries or changing the values of existing entries in the Initial Conditions BB.
--   `deleteInitialConditions()`: Allows deleting entries from the Initial Conditions BB.
--   `extendInitialConditions()`: Extending an IC BB by entries for specified molecules in all physical containers of a spatial structure.
+-   `setInitialConditionsInBB()`: Allows adding new entries or changing the values of existing entries in the Initial Conditions BB.
+-   `deleteInitialConditionsFromBB()`: Allows deleting entries from the Initial Conditions BB.
+-   `extendInitialConditionsBB()`: Extending an IC BB by entries for specified molecules in all physical containers of a spatial structure.
 
-Followning functionalities are available for the Parameter Values (PV) BBs:
+Following functionalities are available for the Parameter Values (PV) BBs:
 
--   `setParameterValues()`: Allows adding new entries or changing the values of existing entries in the PV BB.
--   `deleteParameterValues()`: Allows deleting entries from the PV BB.
--   `addLocalMoleculeParameters()`: Extending a PV BB by entries for local parameters of specified molecules in all physical containers of a spatial structure.
+-   `setParameterValuesInBB()`: Allows adding new entries or changing the values of existing entries in the PV BB.
+-   `deleteParameterValuesFromBB()`: Allows deleting entries from the PV BB.
+-   `addLocalMoleculeParametersToParameterValuesBB()`: Extending a PV BB by entries for local parameters of specified molecules in all physical containers of a spatial structure. This function does not add parameters whose values are defined by a formula", e.g., the "Relative expression" parameters for proteins.
 -   `addProteinExpressionToParameterValuesBB()`: Extending a PV BB by parameters defining expression of protein molecules in selected organs.
 
 So in the first step we load the extension module "Thyroid" from a pkml file:
@@ -234,7 +234,7 @@ Then we extend the initial conditions BB of the loaded module by molecules defin
 # Get the IC BB from the Thyroid module. The module has only one IC BB.
 icBB <- thyroidModule$getInitialConditionsBBs()[[1]]
 # Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"
-newPaths <- extendInitialConditions(
+newPaths <- extendInitialConditionsBB(
   initialConditionsBuildingBlock = icBB,
   spatialStructureModule = thyroidModule,
   moleculesModule = modules[["Thyroid_QST"]],
@@ -247,8 +247,8 @@ print(newPaths)
 The molecule "DIO1" that has been added to the IC BB in the previous step is a protein. As the module "Thyroid" adds a new organ for which no protein expression is defined in the Expression Profiles, parameters defining the expression must be added to the PV BB of the new module using the `addProteinExpressionToParameterValuesBB()` function:
 
 ```{r addProteinExpressionToPVBB}
-# # Get the PV BB from the Thyroid module
-# pvBB <- thyroidModule$getBuildingBlocks(type = "Parameter Values")[["Human"]]
+# Get the PV BB from the Thyroid module
+pvBB <- thyroidModule$getParameterValuesBBs()[["Human"]]
 # # Add protein expression to the PV BB
 # proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(
 #   pvBB,
@@ -276,12 +276,13 @@ The molecule "DIO1" that has been added to the IC BB in the previous step is a p
 and overwrite the value of "Relative expression":
 
 ```{r setRelativeExpressionValue}
-# setParameterValues(
-#   parameterValuesBuildingBlock = pvBB,
-#   quantityPaths = "Organism|Thyroid|Intracellular|DIO1|Relative expression",
-#   dimensions = ospDimensions$Fraction,
-#   quantityValues = 1.33
-# )
+setParameterValuesInBB(
+  parameterValuesBuildingBlock = pvBB,
+  quantityPaths = "Organism|Thyroid|Intracellular|DIO1|Relative expression",
+  quantityValues = 1.33,
+  units = "",
+  dimensions = ospDimensions$Fraction
+)
 ```
 
 Finally, we can create a simulation configuration from the modules and the individual we created:
@@ -313,11 +314,10 @@ The simulation configuration can be used to create a simulation. The simulation 
 simulation <- myProject$getSimulation("Thyroid_QST_Human")
 configuration <- simulation$configuration
 
-# TODO enable after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2252
-# simulation <- createSimulation(
-#   simulationName = "Thyroid_QST_Human_copy",
-#   configuration
-# )
+simulation <- createSimulation(
+  simulationName = "Thyroid_QST_Human_copy",
+  configuration
+)
 ```
 
 Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation. Available methods are listed in the enums `MoleculeCalculationMethod` and `PartitionCoefficientMethod`. Additionally, the user can select whether to create all process rate parameters in the simulation or not by setting the argument `createAllProcessRateParameters` in the function `createSimulation()`. These parameters can be used for model debugging and analysis.

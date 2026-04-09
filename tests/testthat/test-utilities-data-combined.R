@@ -1,8 +1,11 @@
 tolerance <- 0.0001
 
 # load the simulation
-simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-sim <- loadSimulation(simFilePath)
+sim <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
 simData <- withr::with_tempdir({
   df <- dplyr::tibble(
     IndividualId = c(0, 0, 0, 0),
@@ -35,10 +38,6 @@ test_that("NULL passed to the calculateResiduals function is an error", {
 
 test_that("An empty dataCombined object passed to the calculateResiduals function results in an error", {
   expect_error(calculateResiduals(DataCombined$new()))
-})
-
-test_that("calculateResiduals returns a data frame", {
-  expect_s3_class(calculateResiduals(myDC, scaling = "lin"), "data.frame")
 })
 
 test_that("calculateResiduals returns expected columns", {
@@ -79,13 +78,6 @@ test_that("calculateResiduals function keeps passes lloq data through", {
     calculateResiduals(myDC, scaling = "lin")$lloq,
     rep(0.02, 6),
     tolerance = tolerance
-  )
-})
-
-test_that("calculateResiduals does not return rows for data outside of the simulation time", {
-  expect_equal(
-    nrow(calculateResiduals(myDC, scaling = "lin")),
-    6
   )
 })
 

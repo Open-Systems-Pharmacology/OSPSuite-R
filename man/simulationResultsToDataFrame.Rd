@@ -47,8 +47,6 @@ simulationValues, unit, dimension, TimeUnit.
 Converts a \code{SimulationResults} objects to a data.frame
 }
 \examples{
-library(ospsuite)
-
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 

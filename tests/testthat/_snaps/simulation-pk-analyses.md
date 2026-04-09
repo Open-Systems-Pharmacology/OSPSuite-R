@@ -5,8 +5,10 @@
     Output
       <SimulationPKAnalyses>
       For outputs::
-        * Organism|VenousBlood|Plasma|Caffeine
-        * Organism|VenousBlood|BloodCells|Caffeine
+        * Organism|B
+        * Organism|A
+        * Organism|Liver|A
+        * Organism|Liver|B
       For pK-Parameters::
         * C_max
         * C_max_norm

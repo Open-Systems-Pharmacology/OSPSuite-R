@@ -1,4 +1,4 @@
-sim <- loadTestSimulation("S1")
+sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
 outputSchema <- sim$outputSchema
 
 # clearOutputIntervals

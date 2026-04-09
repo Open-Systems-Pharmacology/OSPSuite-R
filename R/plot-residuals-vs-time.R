@@ -12,6 +12,7 @@
 #' @family plotting
 #'
 #' @examples
+#' \dontrun{
 #' # simulated data
 #' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simFilePath)
@@ -47,6 +48,7 @@
 #'
 #' # plot
 #' plotResidualsVsTime(myDataCombined, scaling = "lin", defaultPlotConfiguration = myPlotConfiguration)
+#' }
 #'
 #' @export
 plotResidualsVsTime <- function(

@@ -88,19 +88,25 @@ loadModuleFromPKML <- function(path) {
   bbType,
   stopIfNotFound
 ) {
-  if (bbType == "Parameter Values") {
+  if (bbType == BuildingBlockTypes$`Parameter Values`) {
     allNames <- module$parameterValuesBBnames
     allMethodName <- "AllParameterValuesFromModule"
     byNameMethodName <- "ParameterValueBuildingBlockByName"
-  } else if (bbType == "Initial Conditions") {
+  } else if (bbType == BuildingBlockTypes$`Initial Conditions`) {
     allNames <- module$initialConditionsBBnames
     allMethodName <- "AllInitialConditionsFromModule"
     byNameMethodName <- "InitialConditionBuildingBlockByName"
   } else {
     stop(
       paste0(
-        "Invalid Building Block type. Must be on of the following: ",
-        paste(c("Parameter Values", "Initial Conditions"), collapse = ", ")
+        "Invalid Building Block type. Must be one of the following: ",
+        paste(
+          c(
+            BuildingBlockTypes$`Parameter Values`,
+            BuildingBlockTypes$`Initial Conditions`
+          ),
+          collapse = ", "
+        )
       )
     )
   }
@@ -151,11 +157,11 @@ loadModuleFromPKML <- function(path) {
   module,
   bbType
 ) {
-  if (!(bbType %in% .BBTypes)) {
+  if (!(bbType %in% names(BuildingBlockTypes))) {
     stop(
       paste0(
-        "Invalid Building Block type. Must be on of the following: ",
-        paste(.BBTypes, collapse = ", ")
+        "Invalid Building Block type. Must be one of the following: ",
+        paste(names(BuildingBlockTypes), collapse = ", ")
       )
     )
   }
@@ -167,12 +173,3 @@ loadModuleFromPKML <- function(path) {
   # Create BuildingBlock object
   return(BuildingBlock$new(bbNet, type = bbType))
 }
-
-.BBTypes <- c(
-  "SpatialStructure",
-  "Molecules",
-  "Reactions",
-  "Passive Transports",
-  "Observers",
-  "EventGroups"
-)

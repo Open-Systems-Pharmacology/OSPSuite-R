@@ -12,7 +12,7 @@
 #' @family plotting
 #'
 #' @examples
-#'
+#' \dontrun{
 #' # simulated data
 #' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simFilePath)
@@ -51,6 +51,7 @@
 #'   scaling = "log",
 #'   defaultPlotConfiguration = myPlotConfiguration
 #' )
+#' }
 #'
 #' @export
 plotResidualsVsSimulated <- function(

@@ -11,5 +11,8 @@ test_that("It can retrieve the pointer for an object loaded", {
 })
 
 test_that("It throws an error when trying to overwrite the pointer", {
-  expect_error(sim$ref <- sim2$pointer)
+  expect_error(
+    sim$pointer <- sim$pointer,
+    regexp = "Property 'pointer' is read-only"
+  )
 })

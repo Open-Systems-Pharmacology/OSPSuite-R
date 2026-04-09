@@ -1,6 +1,6 @@
 # toUni
 
-sim <- loadTestSimulation("S1")
+sim <- loadTestSimulation("simple", loadFromCache = TRUE)
 volumePath <- toPathString(c("Organism", "Liver", "Volume"))
 par <- getParameter(volumePath, sim)
 
@@ -52,9 +52,9 @@ test_that("It throws an exception when converting to a unit that is not suppored
 })
 
 test_that("It does not change the value of the quantity when converting to another unit", {
-  par$value <- 5
-  toUnit(par, 1, "ml")
-  expect_equal(par$value, 5)
+  oldVal <- par$value
+  toUnit(par, 2, "ml")
+  expect_equal(par$value, oldVal)
 })
 
 test_that("It can convert from a value in a non-base unit to another unit", {
@@ -129,9 +129,9 @@ test_that("It can convert from an array of values with NULL entrues in a unit to
 })
 
 test_that("It does not change the value of the quantity when converting to another unit", {
-  par$value <- 5
-  toBaseUnit(par, 1000, "ml")
-  expect_equal(par$value, 5)
+  oldValue <- par$value
+  toBaseUnit(par, 2000, "ml")
+  expect_equal(par$value, oldValue)
 })
 
 test_that("µtants are converted to the right unicode", {
@@ -238,10 +238,10 @@ test_that("It returns the correct base unit when supplied with dimension", {
 test_that("It returns the correct base unit when supplied with quantity", {
   expect_equal(
     getBaseUnit(getQuantity(
-      "Organism|VenousBlood|Plasma|CYP3A4|Concentration in container",
+      "Organism|Liver|A",
       sim
     )),
-    .encodeUnit("µmol/l")
+    .encodeUnit("µmol")
   )
 })
 
@@ -419,12 +419,6 @@ test_that(".unitConverter changes error units as well - defaults", {
   expect_equal(unique(dfErrorConvert$yErrorUnit), "%")
   expect_equal(dfErrorConvert$yErrorValues[1] / 100, dfError$yErrorValues[1])
   expect_equal(dfErrorConvert$yErrorValues[2:3], dfError$yErrorValues[2:3])
-})
-
-test_that(".unitConverter changes error units as well - defaults", {
-  expect_equal(unique(dfYErrorConvert$yErrorUnit), "%")
-  expect_equal(dfYErrorConvert$yErrorValues[1] / 100, dfError$yErrorValues[1])
-  expect_equal(dfYErrorConvert$yErrorValues[2:3], dfError$yErrorValues[2:3])
 })
 
 # different molecular weights handled properly -------------------

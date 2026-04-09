@@ -22,9 +22,9 @@ Returns the molecular weight of the molecule for a given quantity.
 If no unit is provided, the value is returned in the base unit (\code{kg/µmol}).
 }
 \examples{
-simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
-parameterPath <- "Organism|VenousBlood|Plasma|Aciclovir|Concentration"
+parameterPath <- "Organism|Lumen|Stomach|Dapagliflozin"
 quantity <- getQuantity(parameterPath, container = sim)
 getMolWeightFor(quantity, unit = "g/mol")
 }

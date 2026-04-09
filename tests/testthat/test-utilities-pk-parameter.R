@@ -1,3 +1,5 @@
+sim <- loadTestSimulation("simple", loadFromCache = TRUE, addToCache = TRUE)
+
 # addUserDefinedPKParameter
 
 test_that("It can add a user defined pk-parameter by name and type", {
@@ -27,7 +29,6 @@ test_that("It can add a user defined pk-parameter with another display unit", {
 })
 
 test_that("It calculates the pk parameters in the expected units", {
-  sim <- loadTestSimulation("S1")
   c_max_base <- updatePKParameter(
     name = "C_max",
     displayUnit = .encodeUnit("µmol/l")
@@ -37,7 +38,7 @@ test_that("It calculates the pk parameters in the expected units", {
     standardPKParameter = StandardPKParameter$C_max,
     displayUnit = "mg/l"
   )
-  quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
+  quantityPath <- "Organism|Liver|B"
   mw <- sim$molWeightFor(quantityPath)
   results <- runSimulations(sim)[[1]]
   pkAnalyses <- calculatePKAnalyses(results)

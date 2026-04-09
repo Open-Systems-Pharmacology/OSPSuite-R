@@ -1,11 +1,21 @@
 # Simulation
 
-quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
-sim <- loadTestSimulation("S1")
+# To speed up the tests, we load the Aciclovir simulation from cache and use it for tests that do not modify it. For tests that need to modify the simulation, we load a simple simulation without using cache to ensure we have a clean instance.
+quantityPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+sim <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
+mutableSim <- loadTestSimulation(
+  "simple",
+  loadFromCache = FALSE,
+  addToCache = FALSE
+)
 
 test_that("It can retrieve the file source of the simulation", {
-  sourceFile <- sim$sourceFile
-  expect_equal(sourceFile, getSimulationFilePath("S1"))
+  sourceFile <- mutableSim$sourceFile
+  expect_equal(sourceFile, getSimulationFilePath("simple"))
 })
 
 test_that("It throws an error when trying to set file source", {
@@ -13,47 +23,29 @@ test_that("It throws an error when trying to set file source", {
 })
 
 test_that("It can print the simulation", {
-  expect_snapshot(sim$print())
+  expect_snapshot(mutableSim$print())
 })
 
 test_that("It can retrieve the name of all stationary molecules used in the model", {
-  molecules <- sim$allStationaryMoleculeNames()
-  expect_equal(
-    molecules,
-    c(
-      "CYP3A4",
-      "AADAC",
-      "CYP3A5",
-      "CYP2C9",
-      "CYP1A2",
-      "Caffeine-CYP1A2-MM Metabolite",
-      "OATP1B1",
-      "ABCB1"
-    )
-  )
+  expect_snapshot(sim$allStationaryMoleculeNames())
 })
 
 test_that("It can retrieve the name of all floating molecule used in the model", {
-  molecules <- sim$allFloatingMoleculeNames()
-  expect_equal(molecules, c("Caffeine"))
+  expect_snapshot(sim$allFloatingMoleculeNames())
 })
 
 test_that("It can retrieve the name of all endogenous stationary molecules used in the model", {
-  molecules <- sim$allEndogenousStationaryMoleculeNames()
-  expect_equal(
-    molecules,
-    c("CYP3A4", "AADAC", "CYP3A5", "CYP2C9", "CYP1A2", "OATP1B1", "ABCB1")
-  )
+  expect_snapshot(sim$allEndogenousStationaryMoleculeNames())
 })
 
 test_that("It can retrieve the name of all xenobiotic floating molecule used in the model", {
-  molecules <- sim$allXenobioticFloatingMoleculeNames()
-  expect_equal(molecules, c("Caffeine"))
+  expect_snapshot(sim$allXenobioticFloatingMoleculeNames())
 })
 
 test_that("It can retrieve the mol weight of a valid quantity path", {
   molWeight <- sim$molWeightFor(quantityPath)
-  expect_equal(molWeight, 1.942e-07)
+  molWeightParam <- getParameter("Aciclovir|Molecular weight", sim)$value
+  expect_equal(molWeight, molWeightParam)
 })
 
 test_that("It returns NA if the path is not valid for mol weight", {
@@ -68,13 +60,27 @@ test_that("It returns the applications defined for the simulation", {
 
 test_that("It can set a new name to the simulation", {
   newName <- "NewName"
-  sim$name <- newName
-  expect_equal(sim$name, newName)
+  mutableSim$name <- newName
+  expect_equal(mutableSim$name, newName)
 })
 
 test_that("It throws an error when trying to set a new name with illegal characters", {
   newName <- "NewName|"
-  expect_error(sim$name <- newName, messages$illegalCharactersInName(newName))
+  expect_error(
+    mutableSim$name <- newName,
+    messages$illegalCharactersInName(newName)
+  )
+})
+
+test_that("It throws an error when trying to change the name of the simulation to a forbidden name", {
+  expect_error(
+    mutableSim$name <- "MoleculeProperties",
+    regexp = messages$forbiddenSimulationName("MoleculeProperties", mutableSim)
+  )
+  expect_error(
+    mutableSim$name <- "Metformin",
+    regexp = messages$forbiddenSimulationName("Metformin", mutableSim)
+  )
 })
 
 # It returns a simulation configuration
@@ -89,12 +95,12 @@ test_that("It returns a simulation configuration", {
 })
 
 test_that("It throws an error when the simulation was created with an earlier version of OSPS", {
-  sim <- loadTestSimulation("S1")
+  sim <- loadTestSimulation("simple_v11")
   expect_error(
     sim$configuration,
     regexp = messages$errorFeatureNotSupportedBySimulation(
       "SimulationConfiguration",
-      9,
+      8,
       12
     ),
     fixed = TRUE

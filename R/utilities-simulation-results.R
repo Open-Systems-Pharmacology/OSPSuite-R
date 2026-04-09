@@ -22,8 +22,6 @@
 #'   option to `FALSE` might improve the performance of the function.
 #'
 #' @examples
-#' library(ospsuite)
-#'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
@@ -243,8 +241,6 @@ importResultsFromCSV <- function(simulation, filePaths) {
 #' @inheritParams getOutputValues
 #'
 #' @examples
-#' library(ospsuite)
-#'
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simPath)
 #'
