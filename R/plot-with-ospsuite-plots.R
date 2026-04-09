@@ -407,11 +407,11 @@ plotResidualsVsCovariate <- function(
 
   # Set x-axis mapping based on xAxis parameter
   xMapping <- if (xAxis == "time") {
-    ggplot2::aes(x = xValues)
+    ggplot2::aes(x = xValues, y = residualValues)
   } else if (xAxis == "observed") {
-    ggplot2::aes(x = yValues)
+    ggplot2::aes(x = yValues, y = residualValues)
   } else {
-    ggplot2::aes(x = predicted)
+    ggplot2::aes(x = predicted, y = residualValues)
   }
 
   mapping <- .getMappingForResiduals(xMapping = xMapping, userMapping = mapping)
@@ -497,7 +497,7 @@ plotResidualsAsHistogram <- function(
   additionalArgs <- list(...)
 
   mapping <- .getMappingForResiduals(
-    xMapping = ggplot2::aes(),
+    xMapping = ggplot2::aes(x = residualValues),
     userMapping = mapping
   )
 
@@ -577,7 +577,7 @@ plotQuantileQuantilePlot <- function(
   additionalArgs <- list(...)
 
   mapping <- .getMappingForResiduals(
-    xMapping = ggplot2::aes(),
+    xMapping = ggplot2::aes(sample = residualValues),
     userMapping = mapping
   )
 
@@ -1070,12 +1070,18 @@ plotQuantileQuantilePlot <- function(
     warning(messages$residualsCanNotBeComputed())
     return(NULL)
   }
+  # pairedData <- plotData %>%
+  #   dplyr::group_by(group) %>%
+  #   dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) %>%
+  #   dplyr::ungroup() %>%
+  #   dplyr::relocate(group, name, nameSimulated)
 
-  pairedData <- plotData %>%
-    dplyr::group_by(group) %>%
-    dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) %>%
-    dplyr::ungroup() %>%
-    dplyr::relocate(group, name, nameSimulated)
+  pairedData <- rbindlist(
+    lapply(split(setDT(plotData), by = 'group'), function(data) {
+      .extractResidualsToTibble(data = data, scaling = scaling)
+    }),
+    idcol = 'group'
+  )
 
   return(pairedData)
 }
@@ -1254,30 +1260,22 @@ plotQuantileQuantilePlot <- function(
 #' @param xMapping Mapping for x-axis.
 #' @param userMapping Mapping provided by the user; this will update the
 #'   internal mapping.
-#' @param residualAesthetic The aesthetic name used to map the pre-calculated
-#'   residual values. Use `"y"` for scatter plots (default), `"x"` for
-#'   histograms, and `"sample"` for Q-Q plots.
 #'
 #' @return A mapping object for ggplot2 that includes aesthetics for the x-axis,
 #'   residual values, and grouping.
 #' @keywords internal
 #' @noRd
-.getMappingForResiduals <- function(xMapping, userMapping, residualAesthetic = "y") {
+.getMappingForResiduals <- function(
+  xMapping,
+  userMapping
+) {
   # initialize variables used for data.table to avoid messages during checks
   residualValues <- group <- NULL
-
-  residualAesList <- switch(
-    residualAesthetic,
-    "y" = ggplot2::aes(y = residualValues),
-    "x" = ggplot2::aes(x = residualValues),
-    "sample" = ggplot2::aes(sample = residualValues)
-  )
 
   mapping <- structure(
     utils::modifyList(
       c(
         xMapping,
-        residualAesList,
         ggplot2::aes(groupby = group)
       ),
       userMapping
