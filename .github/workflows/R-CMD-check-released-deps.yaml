@@ -9,5 +9,5 @@ permissions: read-all
 
 jobs:
   check-released-deps:
-    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-released-deps.yaml@refactor/reusable-workflows-and-composite-actions
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-released-deps.yaml@main
     secrets: inherit

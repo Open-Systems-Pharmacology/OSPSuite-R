@@ -7,7 +7,7 @@ on:
 
 jobs:
   update-renv-nightly:
-    uses: Felixmil/Workflows/.github/workflows/update-renv-lockfile.yaml@refactor/reusable-workflows-and-composite-actions
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/update-renv-lockfile.yaml@main
     with:
       app-id: ${{ vars.VERSION_BUMPER_APPID }}
     secrets:
