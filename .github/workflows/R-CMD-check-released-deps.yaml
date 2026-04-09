@@ -1,0 +1,13 @@
+name: Check against released dependencies
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # Run at 3 AM UTC daily (after renv nightly at 2 AM)
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  check-released-deps:
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-released-deps.yaml@refactor/reusable-workflows-and-composite-actions
+    secrets: inherit
