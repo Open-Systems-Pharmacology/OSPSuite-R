@@ -653,6 +653,9 @@ test_that("addLocalMoleculeParametersToParameterValuesBB adds parameters for mul
   ]
 
   # All new entries should be for molecules A and B
+  expect_gt(length(newPaths), 0)
+  expect_true(any(grepl("\\|A\\|", newPaths)))
+  expect_true(any(grepl("\\|B\\|", newPaths)))
   expect_true(all(grepl("\\|A\\|", newPaths) | grepl("\\|B\\|", newPaths)))
 })
 
@@ -675,6 +678,7 @@ test_that("addLocalMoleculeParametersToParameterValuesBB adds parameters only fo
   ]
 
   # All new entries should be for molecule A only
+  expect_gt(length(newPaths), 0)
   expect_true(all(grepl("\\|A\\|", newPaths)))
   expect_false(any(grepl("\\|B\\|", newPaths)))
 
@@ -769,6 +773,7 @@ test_that("addLocalMoleculeParametersToParameterValuesBB ignores molecules that 
   ]
 
   # All new entries should be for molecule A only
+  expect_gt(length(newPaths), 0)
   expect_true(all(grepl("\\|A\\|", newPaths)))
   expect_false(any(grepl("\\|NonExistentMolecule\\|", newPaths)))
 })

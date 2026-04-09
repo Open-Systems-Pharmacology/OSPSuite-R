@@ -14,11 +14,14 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' module <- loadModuleFromPKML("path/to/module.pkml")
+#' sim <- loadSimulation(system.file(
+#'   "extdata",
+#'   "simple.pkml",
+#'   package = "ospsuite"
+#' ))
+#' module <- sim$configuration$modules[[1]]
 #' icBB <- module$getInitialConditionsBBs()[[1]]
 #' df <- initialConditionsBBToDataFrame(icBB)
-#' }
 initialConditionsBBToDataFrame <- function(initialConditionsBuildingBlock) {
   .validateBuildingBlockType(
     initialConditionsBuildingBlock,
@@ -109,8 +112,12 @@ initialConditionsBBToDataFrame <- function(initialConditionsBuildingBlock) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' module <- loadModuleFromPKML("path/to/module.pkml")
+#' sim <- loadSimulation(system.file(
+#'   "extdata",
+#'   "simple.pkml",
+#'   package = "ospsuite"
+#' ))
+#' module <- sim$configuration$modules[[1]]
 #' icBB <- module$getInitialConditionsBBs()[[1]]
 #' setInitialConditionsInBB(
 #'   icBB,
@@ -120,7 +127,6 @@ initialConditionsBBToDataFrame <- function(initialConditionsBuildingBlock) {
 #'   isPresent = c(TRUE, FALSE),
 #'   negativeValuesAllowed = c(TRUE, FALSE)
 #' )
-#' }
 setInitialConditionsInBB <- function(
   initialConditionsBuildingBlock,
   quantityPaths,
@@ -226,6 +232,17 @@ setInitialConditionsInBB <- function(
 #' @export
 #'
 #' @examples
+#' sim <- loadSimulation(system.file(
+#'   "extdata",
+#'   "simple.pkml",
+#'   package = "ospsuite"
+#' ))
+#' module <- sim$configuration$modules[[1]]
+#' icBB <- module$getInitialConditionsBBs()[[1]]
+#' deleteInitialConditionsFromBB(
+#'   icBB,
+#'   quantityPaths = c("Organism|Liver|A", "Organism|Liver|B")
+#' )
 deleteInitialConditionsFromBB <- function(
   initialConditionsBuildingBlock,
   quantityPaths
@@ -260,7 +277,7 @@ deleteInitialConditionsFromBB <- function(
 #' @param spatialStructureModule A module with a spatial structure building block.
 #' Entries will be created for the selected molecules in all physical containers of the
 #' spatial structure.
-#' @param moleculesBB A module with a molecules building block. The entries will be
+#' @param moleculesModule A module with a molecules building block. The entries will be
 #' created for all molecules from this building block, or for a subset of molecules
 #' defined in the `moleculeNames` argument.
 #' @param moleculeNames Optional list of molecule names. If provided, only the molecules
@@ -334,11 +351,14 @@ extendInitialConditionsBB <- function(
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' module <- loadModuleFromPKML("path/to/module.pkml")
+#' sim <- loadSimulation(system.file(
+#'   "extdata",
+#'   "simple.pkml",
+#'   package = "ospsuite"
+#' ))
+#' module <- sim$configuration$modules[[1]]
 #' pvBB <- module$getParameterValuesBBs()[[1]]
 #' df <- parameterValuesBBToDataFrame(pvBB)
-#' }
 parameterValuesBBToDataFrame <- function(parameterValuesBuildingBlock) {
   .validateBuildingBlockType(
     parameterValuesBuildingBlock,
@@ -401,8 +421,12 @@ parameterValuesBBToDataFrame <- function(parameterValuesBuildingBlock) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' module <- loadModuleFromPKML("path/to/module.pkml")
+#' sim <- loadSimulation(system.file(
+#'   "extdata",
+#'   "simple.pkml",
+#'   package = "ospsuite"
+#' ))
+#' module <- sim$configuration$modules[[1]]
 #' pvBB <- module$getParameterValuesBBs()[[1]]
 #' setParameterValuesInBB(
 #'   pvBB,
@@ -410,7 +434,6 @@ parameterValuesBBToDataFrame <- function(parameterValuesBuildingBlock) {
 #'   quantityValues = 1.33,
 #'   units = "ml/min/kg"
 #' )
-#' }
 setParameterValuesInBB <- function(
   parameterValuesBuildingBlock,
   quantityPaths,
@@ -514,6 +537,14 @@ setParameterValuesInBB <- function(
 #' @export
 #'
 #' @examples
+#' sim <- loadSimulation(system.file(
+#'   "extdata",
+#'   "simple.pkml",
+#'   package = "ospsuite"
+#' ))
+#' module <- sim$configuration$modules[[1]]
+#' pvBB <- module$getParameterValuesBBs()[[1]]
+#' deleteParameterValuesFromBB(pvBB, quantityPaths = "Organism|Volume")
 deleteParameterValuesFromBB <- function(
   parameterValuesBuildingBlock,
   quantityPaths
@@ -555,8 +586,6 @@ deleteParameterValuesFromBB <- function(
 #'
 #' @returns Path of entries added to the building block.
 #' @export
-#'
-#' @examples
 addLocalMoleculeParametersToParameterValuesBB <- function(
   parameterValuesBuildingBlock,
   spatialStructureModule,
@@ -633,8 +662,6 @@ addLocalMoleculeParametersToParameterValuesBB <- function(
 #'
 #' @returns Path of entries added to the building block.
 #' @export
-#'
-#' @examples
 addProteinExpressionToParameterValuesBB <- function(
   parameterValuesBuildingBlock,
   spatialStructureBB,

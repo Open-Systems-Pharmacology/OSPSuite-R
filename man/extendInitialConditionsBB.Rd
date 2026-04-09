@@ -19,12 +19,12 @@ extendInitialConditionsBB(
 Entries will be created for the selected molecules in all physical containers of the
 spatial structure.}
 
-\item{moleculeNames}{Optional list of molecule names. If provided, only the molecules
-with these names will be added to the \code{initialConditionsBuildingBlock}. If a specified molecule is not present in the provided molecules BB, it will be ignored.}
-
-\item{moleculesBB}{A module with a molecules building block. The entries will be
+\item{moleculesModule}{A module with a molecules building block. The entries will be
 created for all molecules from this building block, or for a subset of molecules
 defined in the \code{moleculeNames} argument.}
+
+\item{moleculeNames}{Optional list of molecule names. If provided, only the molecules
+with these names will be added to the \code{initialConditionsBuildingBlock}. If a specified molecule is not present in the provided molecules BB, it will be ignored.}
 }
 \value{
 Paths of entries added to the building block.

@@ -22,9 +22,12 @@ A data frame with the following columns:
 Convert a Parameter Values Building Block to a data frame.
 }
 \examples{
-\dontrun{
-module <- loadModuleFromPKML("path/to/module.pkml")
+sim <- loadSimulation(system.file(
+  "extdata",
+  "simple.pkml",
+  package = "ospsuite"
+))
+module <- sim$configuration$modules[[1]]
 pvBB <- module$getParameterValuesBBs()[[1]]
 df <- parameterValuesBBToDataFrame(pvBB)
-}
 }

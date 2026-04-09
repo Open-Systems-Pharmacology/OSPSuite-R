@@ -42,8 +42,12 @@ Invisibly returns the updated \code{initialConditionsBuildingBlock} object.
 This functions allows adding or modifying initial condition entries. Only constant values are allowed. For setting or adding initial conditions defined by formulas, use the \code{setInitialConditionsFormulas} function.
 }
 \examples{
-\dontrun{
-module <- loadModuleFromPKML("path/to/module.pkml")
+sim <- loadSimulation(system.file(
+  "extdata",
+  "simple.pkml",
+  package = "ospsuite"
+))
+module <- sim$configuration$modules[[1]]
 icBB <- module$getInitialConditionsBBs()[[1]]
 setInitialConditionsInBB(
   icBB,
@@ -53,5 +57,4 @@ setInitialConditionsInBB(
   isPresent = c(TRUE, FALSE),
   negativeValuesAllowed = c(TRUE, FALSE)
 )
-}
 }

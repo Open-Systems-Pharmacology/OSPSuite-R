@@ -38,8 +38,12 @@ values are allowed. Values are expected in the provided \code{units} and will be
 converted to base units internally.
 }
 \examples{
-\dontrun{
-module <- loadModuleFromPKML("path/to/module.pkml")
+sim <- loadSimulation(system.file(
+  "extdata",
+  "simple.pkml",
+  package = "ospsuite"
+))
+module <- sim$configuration$modules[[1]]
 pvBB <- module$getParameterValuesBBs()[[1]]
 setParameterValuesInBB(
   pvBB,
@@ -47,5 +51,4 @@ setParameterValuesInBB(
   quantityValues = 1.33,
   units = "ml/min/kg"
 )
-}
 }

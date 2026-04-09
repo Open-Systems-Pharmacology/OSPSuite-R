@@ -25,9 +25,12 @@ A data frame with the following columns:
 Convert an Initial Conditions Building Block to a data frame.
 }
 \examples{
-\dontrun{
-module <- loadModuleFromPKML("path/to/module.pkml")
+sim <- loadSimulation(system.file(
+  "extdata",
+  "simple.pkml",
+  package = "ospsuite"
+))
+module <- sim$configuration$modules[[1]]
 icBB <- module$getInitialConditionsBBs()[[1]]
 df <- initialConditionsBBToDataFrame(icBB)
-}
 }

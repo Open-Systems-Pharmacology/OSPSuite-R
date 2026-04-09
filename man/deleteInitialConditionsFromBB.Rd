@@ -19,3 +19,16 @@ Invisibly returns the updated \code{initialConditionsBuildingBlock} object.
 \description{
 Delete entries from an Initial Conditions Building Block
 }
+\examples{
+sim <- loadSimulation(system.file(
+  "extdata",
+  "simple.pkml",
+  package = "ospsuite"
+))
+module <- sim$configuration$modules[[1]]
+icBB <- module$getInitialConditionsBBs()[[1]]
+deleteInitialConditionsFromBB(
+  icBB,
+  quantityPaths = c("Organism|Liver|A", "Organism|Liver|B")
+)
+}

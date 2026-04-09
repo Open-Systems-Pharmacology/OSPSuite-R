@@ -19,3 +19,13 @@ Invisibly returns the updated \code{parameterValuesBuildingBlock} object.
 \description{
 Delete entries from a Parameter Values Building Block
 }
+\examples{
+sim <- loadSimulation(system.file(
+  "extdata",
+  "simple.pkml",
+  package = "ospsuite"
+))
+module <- sim$configuration$modules[[1]]
+pvBB <- module$getParameterValuesBBs()[[1]]
+deleteParameterValuesFromBB(pvBB, quantityPaths = "Organism|Volume")
+}

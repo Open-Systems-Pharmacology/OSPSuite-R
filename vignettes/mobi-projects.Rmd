@@ -211,11 +211,11 @@ Following functionalities are available for the Initial Conditions BBs:
 -   `deleteInitialConditionsFromBB()`: Allows deleting entries from the Initial Conditions BB.
 -   `extendInitialConditionsBB()`: Extending an IC BB by entries for specified molecules in all physical containers of a spatial structure.
 
-Followning functionalities are available for the Parameter Values (PV) BBs:
+Following functionalities are available for the Parameter Values (PV) BBs:
 
 -   `setParameterValuesInBB()`: Allows adding new entries or changing the values of existing entries in the PV BB.
 -   `deleteParameterValuesFromBB()`: Allows deleting entries from the PV BB.
--   `addLocalMoleculeParametersToParameterValuesBB()`: Extending a PV BB by entries for local parameters of specified molecules in all physical containers of a spatial structure. This functions does not add parameters those values are defined by a formula, e.g., the "Relative expression" parameters for proteins.
+-   `addLocalMoleculeParametersToParameterValuesBB()`: Extending a PV BB by entries for local parameters of specified molecules in all physical containers of a spatial structure. This function does not add parameters whose values are defined by a formula", e.g., the "Relative expression" parameters for proteins.
 -   `addProteinExpressionToParameterValuesBB()`: Extending a PV BB by parameters defining expression of protein molecules in selected organs.
 
 So in the first step we load the extension module "Thyroid" from a pkml file:
