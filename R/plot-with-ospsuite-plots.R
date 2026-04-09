@@ -1254,24 +1254,31 @@ plotQuantileQuantilePlot <- function(
 #' @param xMapping Mapping for x-axis.
 #' @param userMapping Mapping provided by the user; this will update the
 #'   internal mapping.
+#' @param residualAesthetic The aesthetic name used to map the pre-calculated
+#'   residual values. Use `"y"` for scatter plots (default), `"x"` for
+#'   histograms, and `"sample"` for Q-Q plots.
 #'
 #' @return A mapping object for ggplot2 that includes aesthetics for the x-axis,
-#'   predicted values, observed values, and grouping.
+#'   residual values, and grouping.
 #' @keywords internal
 #' @noRd
-.getMappingForResiduals <- function(xMapping, userMapping) {
+.getMappingForResiduals <- function(xMapping, userMapping, residualAesthetic = "y") {
   # initialize variables used for data.table to avoid messages during checks
-  predicted <- yValues <- group <- NULL
+  residualValues <- group <- NULL
+
+  residualAesList <- switch(
+    residualAesthetic,
+    "y" = ggplot2::aes(y = residualValues),
+    "x" = ggplot2::aes(x = residualValues),
+    "sample" = ggplot2::aes(sample = residualValues)
+  )
 
   mapping <- structure(
     utils::modifyList(
       c(
         xMapping,
-        ggplot2::aes(
-          predicted = predicted,
-          observed = yValues,
-          groupby = group
-        )
+        residualAesList,
+        ggplot2::aes(groupby = group)
       ),
       userMapping
     ),
