@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9006</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -118,9 +118,7 @@ simulationValues, unit, dimension, TimeUnit.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">simPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">simPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simPath</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Running an individual simulation</span></span></span>
@@ -215,90 +213,90 @@ simulationValues, unit, dimension, TimeUnit.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 83            0  300       Organism|A         1.997175          Time      min</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 84            0  300       Organism|B        48.002823          Time      min</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    dimension unit molWeight</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7     Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8     Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9     Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 74    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 75    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 76    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 77    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 78    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 79    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 81    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 82    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 83    Amount µmol        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 84    Amount µmol        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 61    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 66    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 81    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 82    Amount µmol   408.873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 83    Amount µmol       NaN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 84    Amount µmol   408.873</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -43,6 +43,7 @@ Other plotting:
 ## Examples
 
 ``` r
+if (FALSE) { # \dontrun{
 # simulated data
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -78,8 +79,5 @@ myPlotConfiguration$caption <- "My Sources"
 
 # plot
 plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
-#> Warning: `plotIndividualTimeProfile()` was deprecated in ospsuite 12.4.2.
-#> ℹ Please use `plotTimeProfile()` instead.
-#> ℹ It will be removed in version 14.0.
-
+} # }
 ```

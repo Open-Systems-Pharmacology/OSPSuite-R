@@ -78,7 +78,7 @@ for the given time.
 ## Examples
 
 ``` r
-simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 steadyState <- getSteadyState(simulations = sim)
 # Set initial values for steady-state simulations

@@ -217,11 +217,6 @@ simTree$Organism$Weight
 # Getting all entities located under "Organism|Liver|Periportal|Intracellular"
 entitiesList <- simTree$Organism$Liver$Periportal$Intracellular
 entitiesList
-#> $`Volume of protein container`
-#> $`Volume of protein container`$path
-#> [1] "Organism|Liver|Periportal|Intracellular|Volume of protein container"
-#> 
-#> 
 #> $Volume
 #> $Volume$path
 #> [1] "Organism|Liver|Periportal|Intracellular|Volume"
@@ -230,6 +225,106 @@ entitiesList
 #> $pH
 #> $pH$path
 #> [1] "Organism|Liver|Periportal|Intracellular|pH"
+#> 
+#> 
+#> $CYP3A4
+#> $CYP3A4$path
+#> [1] "Organism|Liver|Periportal|Intracellular|CYP3A4"
+#> 
+#> $CYP3A4$`Degradation coefficient`
+#> $CYP3A4$`Degradation coefficient`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Degradation coefficient"
+#> 
+#> 
+#> $CYP3A4$`Relative expression`
+#> $CYP3A4$`Relative expression`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Relative expression"
+#> 
+#> 
+#> $CYP3A4$`Initial concentration`
+#> $CYP3A4$`Initial concentration`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Initial concentration"
+#> 
+#> 
+#> $CYP3A4$`Start amount`
+#> $CYP3A4$`Start amount`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Start amount"
+#> 
+#> 
+#> $CYP3A4$`Fraction expressed intracellular`
+#> $CYP3A4$`Fraction expressed intracellular`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Fraction expressed intracellular"
+#> 
+#> 
+#> $CYP3A4$Concentration
+#> $CYP3A4$Concentration$path
+#> [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Concentration"
+#> 
+#> 
+#> $CYP3A4$`Ontogeny factor`
+#> $CYP3A4$`Ontogeny factor`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Ontogeny factor"
+#> 
+#> 
+#> $CYP3A4$`t1/2`
+#> $CYP3A4$`t1/2`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|t1/2"
+#> 
+#> 
+#> $CYP3A4$`Concentration in container`
+#> $CYP3A4$`Concentration in container`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Concentration in container"
+#> 
+#> 
+#> 
+#> $`Undefined Liver`
+#> $`Undefined Liver`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver"
+#> 
+#> $`Undefined Liver`$`Degradation coefficient`
+#> $`Undefined Liver`$`Degradation coefficient`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Degradation coefficient"
+#> 
+#> 
+#> $`Undefined Liver`$`Relative expression`
+#> $`Undefined Liver`$`Relative expression`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Relative expression"
+#> 
+#> 
+#> $`Undefined Liver`$`Initial concentration`
+#> $`Undefined Liver`$`Initial concentration`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Initial concentration"
+#> 
+#> 
+#> $`Undefined Liver`$`Start amount`
+#> $`Undefined Liver`$`Start amount`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Start amount"
+#> 
+#> 
+#> $`Undefined Liver`$`Fraction expressed intracellular`
+#> $`Undefined Liver`$`Fraction expressed intracellular`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Fraction expressed intracellular"
+#> 
+#> 
+#> $`Undefined Liver`$Concentration
+#> $`Undefined Liver`$Concentration$path
+#> [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Concentration"
+#> 
+#> 
+#> $`Undefined Liver`$`Ontogeny factor`
+#> $`Undefined Liver`$`Ontogeny factor`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Ontogeny factor"
+#> 
+#> 
+#> $`Undefined Liver`$`t1/2`
+#> $`Undefined Liver`$`t1/2`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|t1/2"
+#> 
+#> 
+#> $`Undefined Liver`$`Concentration in container`
+#> $`Undefined Liver`$`Concentration in container`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Concentration in container"
+#> 
 #> 
 #> 
 #> $Aciclovir
@@ -249,4 +344,14 @@ entitiesList
 #> $Aciclovir$`Concentration in container`
 #> $Aciclovir$`Concentration in container`$path
 #> [1] "Organism|Liver|Periportal|Intracellular|Aciclovir|Concentration in container"
+#> 
+#> 
+#> 
+#> $`Aciclovir-Undefined Liver Metabolite`
+#> $`Aciclovir-Undefined Liver Metabolite`$path
+#> [1] "Organism|Liver|Periportal|Intracellular|Aciclovir-Undefined Liver Metabolite"
+#> 
+#> $`Aciclovir-Undefined Liver Metabolite`$Concentration
+#> $`Aciclovir-Undefined Liver Metabolite`$Concentration$path
+#> [1] "Organism|Liver|Periportal|Intracellular|Aciclovir-Undefined Liver Metabolite|Concentration"
 ```

@@ -41,16 +41,6 @@ uniqueEntities(parameters, CompareBy$id)
 #> [[1]]
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Organism|Liver|Volume
-#>   • Value: 10.00 [l]
-#> 
-#> ── Formula ──
-#> 
-#>   • isConstant: TRUE
-#> 
-#> [[2]]
-#> <Parameter>
-#>   • Quantity Type: Parameter
 #>   • Path: Organism|TableParameter
 #>   • Value: 1.00 [1/min]
 #> 
@@ -66,5 +56,19 @@ uniqueEntities(parameters, CompareBy$id)
 #>   x= 30, y= 3, restartSolver= FALSE
 #>   x= 40, y= 4, restartSolver= FALSE
 #>   • Value overrides formula: FALSE
+#> 
+#> [[2]]
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|Liver|Volume
+#>   • Value: 10.00 [l]
+#>   • Value Origin: Publication-Willmann S, Lippert J, Sevestre M, Solodenko J,
+#>   Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic
+#>   ‘whole-body’ model. Biosilico. 2003; 1 (4): 121-124.
+#>   http://dx.doi.org/10.1016/S1478-5382%2803%2902342-4
+#> 
+#> ── Formula ──
+#> 
+#>   • isConstant: TRUE
 #> 
 ```

@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9006</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,7 +110,8 @@ simulation and accessing entities</a>), it can be run using
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SimulationResults&gt;</span></span></span>
 <span><span class="co">#&gt;   • Number of individuals: 1</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">For paths</span>:</span></span>
-<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span></code></pre></div>
+<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound</span></span></code></pre></div>
 <p>The advantage of storing the results in a object is the option to
 keep different results of the same simulation produced with different
 settings (e.g., model parameters).</p>
@@ -125,7 +126,8 @@ available in the simulation results are returned.</p>
 <p>The paths of all available outputs can be accessed via</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulationResults</span><span class="op">$</span><span class="va">allQuantityPaths</span></span>
-<span><span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span></span>
+<span><span class="co">#&gt; [2] "Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound"</span></span></code></pre></div>
 <p><code>getOutputValues</code> returns a list with two entries:
 <code>data</code> and <code>metadata</code>:</p>
 <ul>
@@ -187,7 +189,8 @@ methods <code>exportResultsToCSV</code> and
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SimulationResults&gt;</span></span></span>
 <span><span class="co">#&gt;   • Number of individuals: 1</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">For paths</span>:</span></span>
-<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span></code></pre></div>
+<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="running-multiple-individual-simulations-and-retrieving-the-results">Running multiple individual simulations and retrieving the
@@ -223,11 +226,11 @@ correct results for the specific simulation</p>
 <code class="sourceCode R"><span><span class="co"># Get the id of the second simulation</span></span>
 <span><span class="va">id</span> <span class="op">&lt;-</span> <span class="va">sim2</span><span class="op">$</span><span class="va">id</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "jLq3yz-5cUu-8Us10jTghA"</span></span>
+<span><span class="co">#&gt; [1] "QHZX7i3GW0WQaNr79xK0Cw"</span></span>
 <span><span class="co"># get the corresponding result</span></span>
 <span><span class="va">sim2Results</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">[[</span><span class="va">id</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim2Results</span><span class="op">$</span><span class="va">simulation</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "jLq3yz-5cUu-8Us10jTghA"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "QHZX7i3GW0WQaNr79xK0Cw"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="adding-new-outputs">Adding new outputs<a class="anchor" aria-label="anchor" href="#adding-new-outputs"></a>
@@ -287,17 +290,17 @@ are stored) are stored as the property <code>$outputSchema</code> of a
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Output intervals</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
-<span><span class="co">#&gt;   • Name: Simulation interval high resolution</span></span>
+<span><span class="co">#&gt;   • Name: Simulation Interval 1</span></span>
 <span><span class="co">#&gt;   • Start time: 0.00e+00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 15.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 1.00 [pts/min]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
-<span><span class="co">#&gt;   • Name: Simulation Interval 1</span></span>
+<span><span class="co">#&gt;   • Name: Simulation Interval 2</span></span>
 <span><span class="co">#&gt;   • Start time: 15.00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 1440.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 0.33 [pts/min]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
-<span><span class="co">#&gt;   • Name: Simulation Interval 2</span></span>
+<span><span class="co">#&gt;   • Name: Simulation Interval 3</span></span>
 <span><span class="co">#&gt;   • Start time: 120.00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 1440.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 0.07 [pts/min]</span></span></code></pre></div>

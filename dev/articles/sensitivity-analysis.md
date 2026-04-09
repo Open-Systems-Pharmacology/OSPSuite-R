@@ -198,7 +198,7 @@ sa <- SensitivityAnalysis$new(
 saResult <- runSensitivityAnalysis(sa)
 print(saResult)
 #> <SensitivityAnalysisResults>
-#>   • Number of calculated sensitivities: 11
+#>   • Number of calculated sensitivities: 22
 #> Available PK Parameters:
 #>   • C_max
 #>   • t_max
@@ -213,6 +213,7 @@ print(saResult)
 #>   • Vd
 #> For the following outputs:
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
 
 # Get sensitivities for the parameter "AUC_inf" of the simulated output with a threshold of 0.8
 outputPath <- sim$outputSelections$allOutputs[[1]]$path
@@ -224,7 +225,7 @@ print(sensitivities)
 #>   • PK-Parameter: AUC_inf
 #>   • Output path: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral
 #>   Venous Blood)
-#>   • Value: 0.00470852808265833
+#>   • Value: 0.00465402182994968
 ```
 
 The value `-1` for the sensitivity of “AUC_inf” of the output

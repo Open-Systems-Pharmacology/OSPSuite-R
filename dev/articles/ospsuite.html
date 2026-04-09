@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9006</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,6 +120,8 @@ explanations follow in subsequent sections.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load the ospsuite package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
+<span><span class="fu">ospsuite.plots</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/setDefaults.html" class="external-link">setDefaults</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ospsuite.plots.watermarkEnabled <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load the built-in example simulation</span></span>
 <span><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
@@ -131,7 +133,7 @@ explanations follow in subsequent sections.</p>
 <span><span class="co"># Create a quick visualization</span></span>
 <span><span class="va">myDataCombined</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/DataCombined.html">DataCombined</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">myDataCombined</span><span class="op">$</span><span class="fu">addSimulationResults</span><span class="op">(</span><span class="va">results</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ospsuite_files/figure-html/unnamed-chunk-2-1.png"><!-- --></p>
 <p>This example loads, runs, and visualizes a PBPK simulation. The plot
 shows the concentration-time profile for Aciclovir in plasma after IV
@@ -179,7 +181,7 @@ from PK-Sim or MoBi):</p>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
 <span><span class="co">#&gt;   • Value: 2.50e-04 [kg]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
@@ -189,7 +191,7 @@ from PK-Sim or MoBi):</p>
 <span><span class="co">#&gt; [[2]]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg</span></span>
 <span><span class="co">#&gt;   10min|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea</span></span>
 <span><span class="co">#&gt;   • Value: 0.00e+00 [kg/dm²]</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -200,7 +202,7 @@ from PK-Sim or MoBi):</p>
 <span><span class="co">#&gt; [[3]]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg</span></span>
 <span><span class="co">#&gt;   10min|Application_1|ProtocolSchemaItem|DosePerBodyWeight</span></span>
 <span><span class="co">#&gt;   • Value: 0.00e+00 [kg/kg]</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -210,9 +212,9 @@ from PK-Sim or MoBi):</p>
 <span></span>
 <span><span class="co"># Or search for specific terms</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"Dose"</span>, <span class="fu"><a href="../reference/getAllParameterPathsIn.html">getAllParameterPathsIn</a></span><span class="op">(</span>container <span class="op">=</span> <span class="va">sim</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"                  </span></span>
-<span><span class="co">#&gt; [2] "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea"</span></span>
-<span><span class="co">#&gt; [3] "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodyWeight"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"                  </span></span>
+<span><span class="co">#&gt; [2] "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea"</span></span>
+<span><span class="co">#&gt; [3] "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodyWeight"</span></span></code></pre></div>
 <p><strong>Note:</strong> Parameter paths in ospsuite match those
 displayed in PK-Sim or MoBi. Starting with MoBi 12.0, parameter paths
 can be copied by right-clicking the parameter in the simulation tree and
@@ -225,13 +227,13 @@ selecting “Copy Path”.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get a specific parameter</span></span>
 <span><span class="va">dose</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span></span>
-<span>  path <span class="op">=</span> <span class="st">"Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"</span>,</span>
+<span>  path <span class="op">=</span> <span class="st">"Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"</span>,</span>
 <span>  <span class="va">sim</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
 <span><span class="co">#&gt;   • Value: 2.50e-04 [kg]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
@@ -243,7 +245,7 @@ selecting “Copy Path”.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
 <span><span class="co">#&gt;   • Value: 4.00e-03 [kg]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
@@ -255,7 +257,7 @@ selecting “Copy Path”.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
 <span><span class="co">#&gt;   • Value: 8.00e-03 [kg]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
@@ -267,7 +269,7 @@ selecting “Copy Path”.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dose</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Parameter&gt;</span></span></span>
 <span><span class="co">#&gt;   • Quantity Type: Parameter</span></span>
-<span><span class="co">#&gt;   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
+<span><span class="co">#&gt;   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose</span></span>
 <span><span class="co">#&gt;   • Value: 2.50e-04 [kg]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Formula</span> ──</span></span>
@@ -285,6 +287,7 @@ selecting “Copy Path”.</p>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;OutputSelections&gt;</span></span></span>
 <span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood):</span></span>
 <span><span class="co">#&gt;   Drug, Observer</span></span>
+<span><span class="co">#&gt;   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound: Drug, Observer</span></span>
 <span></span>
 <span><span class="co"># Add new outputs to track</span></span>
 <span><span class="fu"><a href="../reference/addOutputs.html">addOutputs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Organism|Lumen|Stomach|Aciclovir"</span><span class="op">)</span>, simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
@@ -294,6 +297,7 @@ selecting “Copy Path”.</p>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;OutputSelections&gt;</span></span></span>
 <span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood):</span></span>
 <span><span class="co">#&gt;   Drug, Observer</span></span>
+<span><span class="co">#&gt;   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound: Drug, Observer</span></span>
 <span><span class="co">#&gt;   • Organism|Lumen|Stomach|Aciclovir: Drug</span></span>
 <span></span>
 <span><span class="co"># Adjust solver precision if needed</span></span>
@@ -316,17 +320,17 @@ selecting “Copy Path”.</p>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Output intervals</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
-<span><span class="co">#&gt;   • Name: Simulation interval high resolution</span></span>
+<span><span class="co">#&gt;   • Name: Simulation Interval 1</span></span>
 <span><span class="co">#&gt;   • Start time: 0.00e+00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 15.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 1.00 [pts/min]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
-<span><span class="co">#&gt;   • Name: Simulation Interval 1</span></span>
+<span><span class="co">#&gt;   • Name: Simulation Interval 2</span></span>
 <span><span class="co">#&gt;   • Start time: 15.00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 1440.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 0.33 [pts/min]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;Interval&gt;</span></span></span>
-<span><span class="co">#&gt;   • Name: Simulation Interval 2</span></span>
+<span><span class="co">#&gt;   • Name: Simulation Interval 3</span></span>
 <span><span class="co">#&gt;   • Start time: 120.00 [min]</span></span>
 <span><span class="co">#&gt;   • End time: 1440.00 [min]</span></span>
 <span><span class="co">#&gt;   • Resolution: 0.07 [pts/min]</span></span>
@@ -351,6 +355,7 @@ selecting “Copy Path”.</p>
 <span><span class="co">#&gt; <span style="font-weight: bold;">For paths</span>:</span></span>
 <span><span class="co">#&gt;   • Organism|Lumen|Stomach|Aciclovir</span></span>
 <span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound</span></span>
 <span></span>
 <span><span class="co"># Extract specific concentration-time data</span></span>
 <span><span class="va">plasmaConc</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">getValuesByPath</span><span class="op">(</span></span>
@@ -390,7 +395,7 @@ selecting “Copy Path”.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: dataType &lt;chr&gt;, yErrorValues &lt;dbl&gt;, group &lt;chr&gt;</span></span></span>
 <span></span>
 <span><span class="co"># Create publication-ready plots</span></span>
-<span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ospsuite_files/figure-html/unnamed-chunk-8-1.png"><!-- --></p>
 </div>
 <div class="section level4">
@@ -431,7 +436,7 @@ selecting “Copy Path”.</p>
 <span></span>
 <span><span class="co"># 2. Modify parameters (e.g., change dose)</span></span>
 <span><span class="va">dose</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getParameter.html">getParameter</a></span><span class="op">(</span></span>
-<span>  path <span class="op">=</span> <span class="st">"Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"</span>,</span>
+<span>  path <span class="op">=</span> <span class="st">"Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"</span>,</span>
 <span>  <span class="va">sim</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/setParameterValues.html">setParameterValues</a></span><span class="op">(</span><span class="va">dose</span>, <span class="fl">0.006</span><span class="op">)</span> <span class="co"># 6 mg/kg dose</span></span>
@@ -442,14 +447,14 @@ selecting “Copy Path”.</p>
 <span><span class="co"># 4. Visualize results</span></span>
 <span><span class="va">myDataCombined</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/DataCombined.html">DataCombined</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">myDataCombined</span><span class="op">$</span><span class="fu">addSimulationResults</span><span class="op">(</span><span class="va">results</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ospsuite_files/figure-html/unnamed-chunk-10-1.png"><!-- --></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># 5. Extract data for further analysis</span></span>
 <span><span class="va">df_results</span> <span class="op">&lt;-</span> <span class="va">myDataCombined</span><span class="op">$</span><span class="fu">toDataFrame</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Peak concentration:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">df_results</span><span class="op">$</span><span class="va">yValues</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>, <span class="st">"µmol/L"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Peak concentration: 1206.07 µmol/L"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Peak concentration: 1677.57 µmol/L"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="understanding-ospsuite-objects">Understanding ospsuite Objects<a class="anchor" aria-label="anchor" href="#understanding-ospsuite-objects"></a>
@@ -621,9 +626,16 @@ data</a></strong> - Import experimental data</li>
 <strong><a href="data-combined.html">DataCombined
 workflows</a></strong> - Combine simulations with observations</li>
 <li>
-<strong><a href="data-combined-plotting.html">Visualizations with
-DataCombined</a></strong> - Advanced plotting with DataCombined
-objects</li>
+<strong><a href="plotting-with-ospsuite-plots.html">Plotting</a></strong> -
+Built-in plotting functions for quick visualization</li>
+<li>
+<strong><a href="data-combined-plotting.html">DEPRECATED -
+Visualizations with DataCombined</a></strong> - Advanced plotting with
+DataCombined objects. The functions described in this article are
+deprecated and will be removed in future versions. Please use the
+functions described in the article <a href="plotting-with-ospsuite-plots.html">Plotting with
+ospsuite.plots</a> instead, which provide more features and better
+performance.</li>
 </ul>
 </div>
 <div class="section level3">

@@ -25,6 +25,7 @@ print(simulationResults)
 #>   • Number of individuals: 1
 #> For paths:
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
 ```
 
 The advantage of storing the results in a object is the option to keep
@@ -44,6 +45,7 @@ The paths of all available outputs can be accessed via
 ``` r
 simulationResults$allQuantityPaths
 #> [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+#> [2] "Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound"
 ```
 
 `getOutputValues` returns a list with two entries: `data` and
@@ -105,6 +107,7 @@ print(resultsLoaded)
 #>   • Number of individuals: 1
 #> For paths:
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
 ```
 
 ## Running multiple individual simulations and retrieving the results
@@ -145,11 +148,11 @@ for the specific simulation
 # Get the id of the second simulation
 id <- sim2$id
 print(id)
-#> [1] "jLq3yz-5cUu-8Us10jTghA"
+#> [1] "QHZX7i3GW0WQaNr79xK0Cw"
 # get the corresponding result
 sim2Results <- simulationResults[[id]]
 print(sim2Results$simulation$id)
-#> [1] "jLq3yz-5cUu-8Us10jTghA"
+#> [1] "QHZX7i3GW0WQaNr79xK0Cw"
 ```
 
 ## Adding new outputs
@@ -214,17 +217,17 @@ print(sim$outputSchema)
 #> ── Output intervals ──
 #> 
 #> <Interval>
-#>   • Name: Simulation interval high resolution
+#>   • Name: Simulation Interval 1
 #>   • Start time: 0.00e+00 [min]
 #>   • End time: 15.00 [min]
 #>   • Resolution: 1.00 [pts/min]
 #> <Interval>
-#>   • Name: Simulation Interval 1
+#>   • Name: Simulation Interval 2
 #>   • Start time: 15.00 [min]
 #>   • End time: 1440.00 [min]
 #>   • Resolution: 0.33 [pts/min]
 #> <Interval>
-#>   • Name: Simulation Interval 2
+#>   • Name: Simulation Interval 3
 #>   • Start time: 120.00 [min]
 #>   • End time: 1440.00 [min]
 #>   • Resolution: 0.07 [pts/min]

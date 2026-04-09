@@ -421,17 +421,17 @@ For ratio scaling (`scaling = "ratio"`):
 ``` r
 # Linear residuals
 calculateResiduals(myDataCombined, scaling = "linear")$residualValues
-#>  [1]  2.13792816 -0.03274317  0.04046021  0.41573761  0.79398335  0.82012495
-#>  [7]  0.71088603  0.53688426  0.33489522  0.11380446  0.01803885 -0.03354008
-#> [13] -0.06620067
+#>  [1]  2.13793038 -0.03274317  0.04046023  0.41573747  0.79398400  0.82012473
+#>  [7]  0.71088624  0.53688435  0.33489522  0.11380446  0.01803883 -0.03354010
+#> [13] -0.06620068
 #> attr(,"label")
 #> [1] "residuals\npredicted - observed"
 
 # Logarithmic residuals
 calculateResiduals(myDataCombined, scaling = "log")$residualValues
-#>  [1]  0.239719620 -0.007286928  0.012618336  0.155242835  0.384912455
-#>  [6]  0.482210178  0.578799737  0.577914238  0.647582143  0.457679775
-#> [11]  0.137321647 -0.418715711 -2.305882655
+#>  [1]  0.239719842 -0.007286928  0.012618343  0.155242789  0.384912714
+#>  [6]  0.482210078  0.578799870  0.577914304  0.647582143  0.457679775
+#> [11]  0.137321456 -0.418716062 -2.305883113
 #> attr(,"label")
 #> [1] "residuals\nlog(predicted) - log(observed)"
 ```
@@ -444,7 +444,7 @@ up the absolute values of the residuals:
 totalError <- sum(abs(calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues))
 
 print(totalError)
-#> [1] 6.055227
+#> [1] 6.05523
 ```
 
 ## Visualizations with `DataCombined`

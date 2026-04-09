@@ -103,6 +103,7 @@ print(simulationResults)
 #>   • Number of individuals: 50
 #> For paths:
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
 ```
 
 Population simulations are run in parallel on multi-core machines - one
@@ -137,6 +138,7 @@ print(populationResults)
 #>   • Number of individuals: 50
 #> For paths:
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
 ```
 
 Simulated time-value pairs for a specific output from the
@@ -153,6 +155,7 @@ The paths of all available outputs can be accessed via
 ``` r
 populationResults$allQuantityPaths
 #> [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+#> [2] "Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound"
 ```
 
 [`getOutputValues()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getOutputValues.md)

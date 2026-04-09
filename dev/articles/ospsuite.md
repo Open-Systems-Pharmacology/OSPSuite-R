@@ -36,6 +36,8 @@ explanations follow in subsequent sections.
 ``` r
 # Load the ospsuite package
 library(ospsuite)
+ospsuite.plots::setDefaults()
+options(ospsuite.plots.watermarkEnabled = FALSE)
 
 # Load the built-in example simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
@@ -47,7 +49,7 @@ results <- runSimulations(sim)
 # Create a quick visualization
 myDataCombined <- DataCombined$new()
 myDataCombined$addSimulationResults(results[[1]])
-plotIndividualTimeProfile(dataCombined = myDataCombined)
+plotTimeProfile(myDataCombined)
 ```
 
 ![](ospsuite_files/figure-html/unnamed-chunk-2-1.png)
@@ -99,7 +101,7 @@ getAllParametersMatching("**|Dose*", sim)
 #> [[1]]
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
+#>   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
 #>   • Value: 2.50e-04 [kg]
 #> 
 #> ── Formula ──
@@ -109,7 +111,7 @@ getAllParametersMatching("**|Dose*", sim)
 #> [[2]]
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Applications|IV 250mg
+#>   • Path: Events|IV 250mg
 #>   10min|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea
 #>   • Value: 0.00e+00 [kg/dm²]
 #> 
@@ -120,7 +122,7 @@ getAllParametersMatching("**|Dose*", sim)
 #> [[3]]
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Applications|IV 250mg
+#>   • Path: Events|IV 250mg
 #>   10min|Application_1|ProtocolSchemaItem|DosePerBodyWeight
 #>   • Value: 0.00e+00 [kg/kg]
 #> 
@@ -130,9 +132,9 @@ getAllParametersMatching("**|Dose*", sim)
 
 # Or search for specific terms
 grep("Dose", getAllParameterPathsIn(container = sim), value = TRUE)
-#> [1] "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"                  
-#> [2] "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea"
-#> [3] "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodyWeight"
+#> [1] "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"                  
+#> [2] "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea"
+#> [3] "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodyWeight"
 ```
 
 **Note:** Parameter paths in ospsuite match those displayed in PK-Sim or
@@ -147,13 +149,13 @@ Retrieve and modify parameter values:
 ``` r
 # Get a specific parameter
 dose <- getParameter(
-  path = "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
+  path = "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
   sim
 )
 print(dose)
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
+#>   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
 #>   • Value: 2.50e-04 [kg]
 #> 
 #> ── Formula ──
@@ -165,7 +167,7 @@ setParameterValues(dose, 0.004) # New dose: 4 mg/kg
 print(dose)
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
+#>   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
 #>   • Value: 4.00e-03 [kg]
 #> 
 #> ── Formula ──
@@ -177,7 +179,7 @@ scaleParameterValues(dose, factor = 2) # Double the dose
 print(dose)
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
+#>   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
 #>   • Value: 8.00e-03 [kg]
 #> 
 #> ── Formula ──
@@ -189,7 +191,7 @@ dose$reset()
 print(dose)
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
+#>   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
 #>   • Value: 2.50e-04 [kg]
 #> 
 #> ── Formula ──
@@ -208,6 +210,7 @@ sim$outputSelections
 #> <OutputSelections>
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood):
 #>   Drug, Observer
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound: Drug, Observer
 
 # Add new outputs to track
 addOutputs(c("Organism|Lumen|Stomach|Aciclovir"), simulation = sim)
@@ -217,6 +220,7 @@ sim$outputSelections
 #> <OutputSelections>
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood):
 #>   Drug, Observer
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound: Drug, Observer
 #>   • Organism|Lumen|Stomach|Aciclovir: Drug
 
 # Adjust solver precision if needed
@@ -239,17 +243,17 @@ print(sim$outputSchema)
 #> ── Output intervals ──
 #> 
 #> <Interval>
-#>   • Name: Simulation interval high resolution
+#>   • Name: Simulation Interval 1
 #>   • Start time: 0.00e+00 [min]
 #>   • End time: 15.00 [min]
 #>   • Resolution: 1.00 [pts/min]
 #> <Interval>
-#>   • Name: Simulation Interval 1
+#>   • Name: Simulation Interval 2
 #>   • Start time: 15.00 [min]
 #>   • End time: 1440.00 [min]
 #>   • Resolution: 0.33 [pts/min]
 #> <Interval>
-#>   • Name: Simulation Interval 2
+#>   • Name: Simulation Interval 3
 #>   • Start time: 120.00 [min]
 #>   • End time: 1440.00 [min]
 #>   • Resolution: 0.07 [pts/min]
@@ -275,6 +279,7 @@ print(results[[1]])
 #> For paths:
 #>   • Organism|Lumen|Stomach|Aciclovir
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
 
 # Extract specific concentration-time data
 plasmaConc <- results[[1]]$getValuesByPath(
@@ -314,7 +319,7 @@ head(df_results)
 #> # ℹ 3 more variables: dataType <chr>, yErrorValues <dbl>, group <chr>
 
 # Create publication-ready plots
-plotIndividualTimeProfile(dataCombined = myDataCombined)
+plotTimeProfile(myDataCombined)
 ```
 
 ![](ospsuite_files/figure-html/unnamed-chunk-8-1.png)
@@ -356,7 +361,7 @@ sim <- loadSimulation(simFilePath)
 
 # 2. Modify parameters (e.g., change dose)
 dose <- getParameter(
-  path = "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
+  path = "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
   sim
 )
 setParameterValues(dose, 0.006) # 6 mg/kg dose
@@ -367,7 +372,7 @@ results <- runSimulations(sim)
 # 4. Visualize results
 myDataCombined <- DataCombined$new()
 myDataCombined$addSimulationResults(results[[1]])
-plotIndividualTimeProfile(dataCombined = myDataCombined)
+plotTimeProfile(myDataCombined)
 ```
 
 ![](ospsuite_files/figure-html/unnamed-chunk-10-1.png)
@@ -377,7 +382,7 @@ plotIndividualTimeProfile(dataCombined = myDataCombined)
 # 5. Extract data for further analysis
 df_results <- myDataCombined$toDataFrame()
 print(paste("Peak concentration:", round(max(df_results$yValues), 2), "µmol/L"))
-#> [1] "Peak concentration: 1206.07 µmol/L"
+#> [1] "Peak concentration: 1677.57 µmol/L"
 ```
 
 ## Understanding ospsuite Objects
@@ -500,9 +505,15 @@ After mastering the basics, explore these advanced topics:
 - **[DataCombined
   workflows](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/data-combined.md)** -
   Combine simulations with observations
-- **[Visualizations with
+- **[Plotting](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/plotting-with-ospsuite-plots.md)** -
+  Built-in plotting functions for quick visualization
+- **[DEPRECATED - Visualizations with
   DataCombined](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/data-combined-plotting.md)** -
-  Advanced plotting with DataCombined objects
+  Advanced plotting with DataCombined objects. The functions described
+  in this article are deprecated and will be removed in future versions.
+  Please use the functions described in the article [Plotting with
+  ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/plotting-with-ospsuite-plots.md)
+  instead, which provide more features and better performance.
 
 ### Advanced Topics:
 

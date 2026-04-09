@@ -200,7 +200,7 @@ wrangling), and the package provides a convenient helper to extract it:
 
 ``` r
 pkAnalysesToDataFrame(pkAnalysis)
-#> # A tibble: 14 × 5
+#> # A tibble: 28 × 5
 #>    IndividualId QuantityPath                            Parameter    Value Unit 
 #>           <int> <chr>                                   <chr>        <dbl> <chr>
 #>  1            0 Organism|PeripheralVenousBlood|Aciclov… C_max     5.03e+ 1 µmol…
@@ -213,10 +213,7 @@ pkAnalysesToDataFrame(pkAnalysis)
 #>  8            0 Organism|PeripheralVenousBlood|Aciclov… AUC_inf_… 2.48e+11 µg*m…
 #>  9            0 Organism|PeripheralVenousBlood|Aciclov… MRT       3.22e+ 0 h    
 #> 10            0 Organism|PeripheralVenousBlood|Aciclov… Thalf     3.02e+ 0 h    
-#> 11            0 Organism|PeripheralVenousBlood|Aciclov… Fraction… 2.09e- 3 NA   
-#> 12            0 Organism|PeripheralVenousBlood|Aciclov… CL        4.02e+ 0 ml/m…
-#> 13            0 Organism|PeripheralVenousBlood|Aciclov… Vss       7.78e+ 2 ml/kg
-#> 14            0 Organism|PeripheralVenousBlood|Aciclov… Vd        1.05e+ 3 ml/kg
+#> # ℹ 18 more rows
 ```
 
 ## Import and export of PK-analyses

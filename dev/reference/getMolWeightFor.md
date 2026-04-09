@@ -31,10 +31,10 @@ The molecular weight in the specified unit or `NA` if not found.
 ## Examples
 
 ``` r
-simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
-parameterPath <- "Organism|VenousBlood|Plasma|Aciclovir|Concentration"
+parameterPath <- "Organism|Lumen|Stomach|Dapagliflozin"
 quantity <- getQuantity(parameterPath, container = sim)
 getMolWeightFor(quantity, unit = "g/mol")
-#> [1] 225.21
+#> [1] 408.873
 ```

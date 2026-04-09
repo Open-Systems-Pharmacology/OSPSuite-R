@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9006</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -277,7 +277,7 @@ Existing objects retain their original values.</p>
 <span><span class="va">saResult</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSensitivityAnalysis.html">runSensitivityAnalysis</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">saResult</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SensitivityAnalysisResults&gt;</span></span></span>
-<span><span class="co">#&gt;   • Number of calculated sensitivities: 11</span></span>
+<span><span class="co">#&gt;   • Number of calculated sensitivities: 22</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Available PK Parameters</span>:</span></span>
 <span><span class="co">#&gt;   • C_max</span></span>
 <span><span class="co">#&gt;   • t_max</span></span>
@@ -292,6 +292,7 @@ Existing objects retain their original values.</p>
 <span><span class="co">#&gt;   • Vd</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">For the following outputs</span>:</span></span>
 <span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound</span></span>
 <span></span>
 <span><span class="co"># Get sensitivities for the parameter "AUC_inf" of the simulated output with a threshold of 0.8</span></span>
 <span><span class="va">outputPath</span> <span class="op">&lt;-</span> <span class="va">sim</span><span class="op">$</span><span class="va">outputSelections</span><span class="op">$</span><span class="va">allOutputs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">path</span></span>
@@ -303,7 +304,7 @@ Existing objects retain their original values.</p>
 <span><span class="co">#&gt;   • PK-Parameter: AUC_inf</span></span>
 <span><span class="co">#&gt;   • Output path: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral</span></span>
 <span><span class="co">#&gt;   Venous Blood)</span></span>
-<span><span class="co">#&gt;   • Value: 0.00470852808265833</span></span></code></pre></div>
+<span><span class="co">#&gt;   • Value: 0.00465402182994968</span></span></code></pre></div>
 <p>The value <code>-1</code> for the sensitivity of “AUC_inf” of the
 output
 <code>Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</code>

@@ -68,8 +68,6 @@ parameters).
 ## Examples
 
 ``` r
-library(ospsuite)
-
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
