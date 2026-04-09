@@ -12,8 +12,4 @@ enum of all dimensions
 \description{
 Function to return an enum of all available dimensions
 }
-\examples{
-
-ospsuite:::.getDimensionsEnum()
-}
 \keyword{internal}

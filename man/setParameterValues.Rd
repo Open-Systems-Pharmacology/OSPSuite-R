@@ -43,7 +43,7 @@ sim <- loadSimulation(simPath)
 param <- getParameter("Organism|Liver|Volume", sim)
 setParameterValues(param, 1)
 params <- getAllParametersMatching("Organism|**|Volume", sim)
-setParameterValues(params, c(2, 3), units = c("ml", "l"))
+setParameterValues(params, c(2, 3, 4), units = c("ml", "l", "ml"))
 }
 \seealso{
 \code{\link[=getParameter]{getParameter()}} and \code{\link[=getAllParametersMatching]{getAllParametersMatching()}} to create objects of type Parameter

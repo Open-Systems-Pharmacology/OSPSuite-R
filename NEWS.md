@@ -7,11 +7,17 @@ The reason is that in v13, the absorption model has been refined, adding new par
 To be able to use creation of individuals or populations with earlier models, the user has to re-create the models from snapshot with the latest PK-Sim version.
 If no original PK-Sim project or snapshot are available, the user should use the latest version 12 of the R package.
 
+## Minor improvements and bug fixes
+
+- `plotTimeProfile()` now defaults to `showLegendPerDataset = "all"`, showing individual dataset names for both observed and simulated data by default (#1844).
+- `DataSet$setValues()` and plotting functions (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, `plotQuantileQuantilePlot()`) now warn and replace negative `yErrorValues` with `NA` instead of silently accepting them (#1756).
+- Fixed `plotPredictedVsObserved()` error bar mapping: when `predictedAxis = "x"`, error bars are now correctly placed on the y-axis (#1715).
+
 # ospsuite 12.4.2
 
 ## Major changes
 
-- Added five new plotting functions powered by `{ospsuite.plots}`: `plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()`. These functions accept `DataCombined` objects or data frames and handle mixed error types and unit conversion directly, without requiring data preprocessing.
+- Added five new plotting functions powered by `{ospsuite.plots}`: `plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()`. These functions accept `DataCombined` objects or data frames and handle mixed error types and unit conversion directly, without requiring data preprocessing (#1652).
 - The `{tlf}`-based plotting functions `plotIndividualTimeProfile()`, `plotPopulationTimeProfile()`, `plotObservedVsSimulated()`, `plotResidualsVsTime()`, and `plotResidualsVsSimulated()` are now soft-deprecated in favor of the `{ospsuite.plots}`-based equivalents and will be removed in version 14.0. (\#1739)
 
 ## Minor improvements and bug fixes
@@ -144,7 +150,6 @@ to `dataSetToTibble()` for better code reuse and maintainability. (\#1627)
   function.
 
 ## Major Changes
-
 
 - The package gains `{openxlsx}` and `{lifecycle}` dependencies.
 - Added a function `getSteadyState()` to calculate steady state values for

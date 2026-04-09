@@ -1,7 +1,11 @@
 # getAllParametersMatching
 
-sim <- loadTestSimulation("S1")
-
+sim <- loadSimulation(aciclovirSimulationPath, loadFromCache = TRUE)
+sim_mutable <- loadTestSimulation(
+  "simple",
+  loadFromCache = FALSE,
+  addToCache = FALSE
+)
 test_that("It can retrieve parameters with absolute path", {
   parameters <- getAllParametersMatching(
     toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
@@ -125,8 +129,8 @@ test_that("It throws an error when no valid parameter objects are provided", {
   expect_error(setParameterValues("parameter", 1))
   parameters <- c(
     getAllParametersMatching(
-      toPathString(c("Organism", "Liver", "*", "Volume")),
-      sim
+      toPathString(c("Organism", "*", "Volume")),
+      sim_mutable
     ),
     "1"
   )
@@ -135,45 +139,48 @@ test_that("It throws an error when no valid parameter objects are provided", {
 
 test_that("It throws an error when no valid values are provided", {
   parameter <- getParameter(
-    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    sim
+    toPathString(c("Organism", "Liver", "Volume")),
+    sim_mutable
   )
   expect_error(setParameterValues(parameter, "s"))
 })
 
 test_that("It throws an error when the number of parameters differs from the number of values", {
   parameter <- getParameter(
-    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    sim
+    toPathString(c("Organism", "Liver", "Volume")),
+    sim_mutable
   )
   parameters <- getAllParametersMatching(
-    toPathString(c("Organism", "Liver", "*", "Volume")),
-    sim
+    toPathString(c("Organism", "**", "Volume")),
+    sim_mutable
   )
   expect_error(setParameterValues(parameter, c(1, 2)))
-  expect_error(setParameterValues(parameters, c(1:5)))
+  expect_error(setParameterValues(parameters, c(1, 2)))
 })
 
 test_that("It throws an error when the number of parameters differs from the number units", {
   parameter <- getParameter(
-    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    sim
+    toPathString(c("Organism", "Liver", "Volume")),
+    sim_mutable
   )
   parameters <- getAllParametersMatching(
-    toPathString(c("Organism", "Liver", "*", "Volume")),
-    sim
+    toPathString(c("Organism", "**", "Volume")),
+    sim_mutable
   )
-  expect_error(setParameterValues(
-    parameters = parameters,
-    values = c(1:6),
-    units = c("l", "ml")
-  ))
+  expect_error(
+    setParameterValues(
+      parameters = parameters,
+      values = 1,
+      units = c("l", "ml")
+    ),
+    "Arguments \"quantities, units\" must have the same length"
+  )
 })
 
 test_that("It can set the value of a single parameter", {
   parameter <- getParameter(
-    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    sim
+    toPathString(c("Organism", "Liver", "Volume")),
+    sim_mutable
   )
   setParameterValues(parameter, 1)
   expect_equal(parameter$value, 1)
@@ -181,8 +188,8 @@ test_that("It can set the value of a single parameter", {
 
 test_that("It can set the value of a single parameter with unit", {
   parameter <- getParameter(
-    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    sim
+    toPathString(c("Organism", "Liver", "Volume")),
+    sim_mutable
   )
   setParameterValues(parameters = parameter, values = 1, units = "ml")
   expect_equal(parameter$value, 1e-3)
@@ -190,83 +197,74 @@ test_that("It can set the value of a single parameter with unit", {
 
 test_that("It can set the values of multiple parameters", {
   parameters <- getAllParametersMatching(
-    toPathString(c("Organism", "Liver", "*", "Volume")),
-    sim
+    toPathString(c("Organism", "**", "Volume")),
+    sim_mutable
   )
-  setParameterValues(parameters, c(1:6))
+  setParameterValues(parameters, c(1:3))
   newVals <- sapply(parameters, function(x) {
     x$value
   })
-  expect_equal(newVals, c(1:6))
+  expect_equal(newVals, c(1:3))
 })
 
 test_that("It can set the values of multiple parameters with units", {
   parameters <- getAllParametersMatching(
-    toPathString(c("Organism", "Liver", "*", "Volume")),
-    sim
+    toPathString(c("Organism", "**", "Volume")),
+    sim_mutable
   )
-  setParameterValues(parameters, c(1:6), units = rep(c("l", "ml"), 3))
+  setParameterValues(parameters, c(1:3), units = c("l", "ml", "µl"))
   newVals <- sapply(parameters, function(x) {
     x$value
   })
-  expect_equal(newVals, c(1:6) * c(1, 1e-3))
+  expect_equal(newVals, c(1:3) * c(1, 1e-3, 1e-6))
 })
 
 test_that("It can set a single values in multiple parameters", {
   parameters <- getAllParametersMatching(
-    toPathString(c("Organism", "Liver", "*", "Volume")),
-    sim
+    toPathString(c("Organism", "**", "Volume")),
+    sim_mutable
   )
   setParameterValues(parameters, 10)
   newVals <- sapply(parameters, function(x) {
     x$value
   })
-  expect_equal(newVals, rep(10, 6))
+  expect_equal(newVals, rep(10, 3))
 })
 
 # setParameterValuesByPath
 
 test_that("It can set single parameter values", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  parameterPath <- "Organism|Liver|Intracellular|Volume"
-  setParameterValuesByPath(parameterPath, 100, sim)
-  parameter <- getParameter(parameterPath, sim)
+  parameterPath <- "Organism|Liver|Volume"
+  setParameterValuesByPath(parameterPath, 100, sim_mutable)
+  parameter <- getParameter(parameterPath, sim_mutable)
   expect_equal(parameter$value, 100)
 })
 
 test_that("It can set multiple parameter values", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  parameterPath1 <- "Organism|Liver|Intracellular|Volume"
-  parameterPath2 <- "Organism|Kidney|Intracellular|Volume"
-  setParameterValuesByPath(c(parameterPath1, parameterPath2), c(40, 50), sim)
-  parameter1 <- getParameter(parameterPath1, sim)
-  parameter2 <- getParameter(parameterPath2, sim)
+  parameterPath1 <- "Organism|Liver|Volume"
+  parameterPath2 <- "Organism|Lumen|Stomach|Volume"
+  setParameterValuesByPath(
+    c(parameterPath1, parameterPath2),
+    c(40, 50),
+    sim_mutable
+  )
+  parameter1 <- getParameter(parameterPath1, sim_mutable)
+  parameter2 <- getParameter(parameterPath2, sim_mutable)
   expect_equal(parameter1$value, 40)
   expect_equal(parameter2$value, 50)
 })
 
 test_that("It throws an exception when setting values for a parameter that does not exist", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameterPath1 <- "Organism|Liver|NOPE|Volume"
-  expect_error(setParameterValuesByPath(parameterPath, 100, sim))
-})
-
-test_that("It can get the value of an individual from a population and set them into a simulation", {
-  populationFileName <- getTestDataFilePath("pop.csv")
-  population <- loadPopulation(populationFileName)
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  individualValues <- population$getParameterValuesForIndividual(8)
-  setParameterValuesByPath(individualValues$paths, individualValues$values, sim)
-  parameter <- getParameter(individualValues$paths[1], sim)
-  expect_equal(parameter$value, individualValues$values[1])
+  expect_error(setParameterValuesByPath(parameterPath1, 100, sim_mutable))
 })
 
 # scaleParameterValues
 
 test_that("It can scale a single parameter with a given factor", {
   parameter <- getParameter(
-    toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    sim
+    toPathString(c("Organism", "Liver", "Volume")),
+    sim_mutable
   )
   originalValue <- parameter$value
   scaleParameterValues(parameter, 1.5)
@@ -275,8 +273,8 @@ test_that("It can scale a single parameter with a given factor", {
 
 test_that("It can scale mulstiple parameters with a given factor", {
   parameters <- getAllParametersMatching(
-    toPathString(c("Organism", "Liver", "*", "Volume")),
-    sim
+    toPathString(c("Organism", "**", "Volume")),
+    sim_mutable
   )
   originalValues <- sapply(parameters, function(x) x$value)
   scaleParameterValues(parameters, 1.5)
@@ -284,22 +282,21 @@ test_that("It can scale mulstiple parameters with a given factor", {
   expect_equal(scaledValues, originalValues * 1.5)
 })
 
-
 # getParameterDisplayPaths
 
-test_that("It return the display path for an existing parameter", {
+test_that("It returns the display path for an existing parameter", {
   path <- toPathString(c("Organism", "Liver", "Intracellular", "Volume"))
   displayPath <- getParameterDisplayPaths(path, sim)
   expect_equal(displayPath, "Liver-Intracellular-Volume")
 })
 
-test_that("It return the full path for a parameter that does not exist", {
+test_that("It returns the full path for a parameter that does not exist", {
   path <- toPathString(c("Organism", "Nope"))
   displayPath <- getParameterDisplayPaths(path, sim)
   expect_equal(displayPath, path)
 })
 
-test_that("It return the display paths for a vector of parameters", {
+test_that("It returns the display paths for a vector of parameters", {
   path1 <- toPathString(c("Organism", "Liver", "Intracellular", "Volume"))
   path2 <- toPathString(c("Organism", "Liver", "Volume"))
   path3 <- toPathString(c("Organism", "Age"))

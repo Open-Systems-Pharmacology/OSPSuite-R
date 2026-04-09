@@ -1,6 +1,6 @@
 # ValuePoint$print
 
-simple <- loadTestSimulation("simple")
+simple <- loadTestSimulation("simple", loadFromCache = TRUE)
 tableParameter <- getParameter("Organism|TableParameter", simple)
 tableFormula <- tableParameter$formula
 point <- tableFormula$allPoints[[1]]

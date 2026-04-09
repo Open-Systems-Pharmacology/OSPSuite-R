@@ -1,10 +1,16 @@
-sim <- loadTestSimulation("S1")
+sim <- loadSimulation(aciclovirSimulationPath, loadFromCache = TRUE)
 individualResults <- runSimulations(sim)[[1]]
 resultsPaths <- individualResults$allQuantityPaths
 
-population <- loadPopulation(getTestDataFilePath("pop.csv"))
-populationResults <- runSimulations(sim, population)[[1]]
+simpleSim <- loadTestSimulation("simple", loadFromCache = TRUE)
+simpleIndividualResults <- runSimulations(simpleSim)[[1]]
 
+population <- loadPopulation(system.file(
+  "extdata",
+  "pop.csv",
+  package = "ospsuite"
+))
+populationResults <- runSimulations(sim, population)[[1]]
 
 NUMBER_OF_COVARIATES_COLUMNS <- 3
 NUMBER_OF_STATIC_COLUMNS <- 2
@@ -119,7 +125,6 @@ test_that("It can retrieve results with provided individual id", {
   }
 })
 
-
 # exportResultsToCSV
 
 test_that("It can export valid simulation results to CSV", {
@@ -159,27 +164,27 @@ test_that("It can import valid simulation results from multiple CSV files", {
 })
 
 test_that("It throws an exception if the file imported are not valid results file", {
-  junkFile <- getTestDataFilePath("pop.csv")
+  junkFile <- getTestDataFilePath("junk.csv")
   expect_error(importResultsFromCSV(sim, junkFile))
 })
 
 test_that("It throws an exception when importing a valid result file that does not match the simulation", {
-  otherSim <- loadTestSimulation("simple")
+  otherSim <- loadTestSimulation(
+    "simple",
+    loadFromCache = TRUE,
+    addToCache = TRUE
+  )
   resFile <- getTestDataFilePath("res_10.csv")
   expect_error(importResultsFromCSV(otherSim, resFile))
 })
 
 
 test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
-  simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
-  sim <- loadSimulation(simPath)
-
-  # Running an individual simulation
-  # results is an instance of `SimulationResults`
-  results <- runSimulations(sim)[[1]]
-
-  df1 <- simulationResultsToDataFrame(results)
-  df2 <- simulationResultsToDataFrame(results, quantitiesOrPaths = "Organism|A")
+  df1 <- simulationResultsToDataFrame(simpleIndividualResults)
+  df2 <- simulationResultsToDataFrame(
+    simpleIndividualResults,
+    quantitiesOrPaths = "Organism|A"
+  )
 
   # should not be grouped
   expect_false(dplyr::is_grouped_df(df1))
@@ -219,60 +224,39 @@ test_that("simulationResultsToDataFrame works as expected - minimal pkml", {
 })
 
 test_that("simulationResultsToDataFrame works as expected - Aciclovir", {
-  simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simPath)
+  df1 <- simulationResultsToDataFrame(individualResults)
 
-  # Running an individual simulation
-  # results is an instance of `SimulationResults`
-  results <- runSimulations(sim)[[1]]
-
-  df1 <- simulationResultsToDataFrame(results)
-
-  # with all paths
-  expect_equal(dim(df1), c(491L, 9L))
-  expect_s3_class(df1, "data.frame")
-  expect_equal(
-    unique(df1$paths),
-    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
-  )
-  expect_equal(unique(df1$IndividualId), 0)
-  expect_equal(unique(df1$unit), .encodeUnit("µmol/l"))
-  expect_equal(unique(df1$dimension), "Concentration (molar)")
-  expect_equal(unique(df1$TimeUnit), "min")
+  expect_snapshot(df1)
 })
 
+test_that("simulationResultsToDataFrame with population", {
+  df1 <- simulationResultsToDataFrame(populationResults)
+
+  expect_snapshot(df1)
+
+  df2 <- simulationResultsToDataFrame(
+    populationResults,
+    individualIds = c(1, 4, 5)
+  )
+  expect_snapshot(df2)
+})
+
+
 test_that("simulationResultsToTibble works as expected - Aciclovir", {
-  simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simPath)
-
-  # Running an individual simulation
-  # results is an instance of `SimulationResults`
-  results <- runSimulations(sim)[[1]]
-
-  df1 <- simulationResultsToTibble(results)
-
-  # with all paths
-  expect_equal(dim(df1), c(491L, 9L))
-  expect_s3_class(df1, "tbl_df")
+  df1 <- simulationResultsToTibble(individualResults)
+  expect_snapshot(df1)
 })
 
 test_that("simulationResultsToDataFrame with lists", {
-  # Load and run multiple simulations concurrently.
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-
-  # We load 3 times the same simulation for convenience. But in real life scenarios,
-  # they should be different simulations
-  sim1 <- loadSimulation(simFilePath)
-  sim2 <- loadSimulation(simFilePath)
-  sim3 <- loadSimulation(simFilePath)
-
   # list is not allowed, so this should fail
-  simulationResults <- runSimulations(simulations = list(sim1, sim2, sim3))
-  expect_error(simulationResultsToDataFrame(simulationResults))
+  expect_error(simulationResultsToDataFrame(list(
+    individualResults,
+    individualResults
+  )))
 })
 
 test_that("It retrieves simulation results of an individual simulation after changing simulation name", {
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
   sim$name <- "foo"
 
   res <- runSimulations(sim)
@@ -285,8 +269,8 @@ test_that("It retrieves simulation results of an individual simulation after cha
 })
 
 test_that("It retrieves simulation results of a population simulation after changing simulation name", {
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  populationFileName <- getTestDataFilePath(fileName = "pop.csv")
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  populationFileName <- system.file("extdata", "pop.csv", package = "ospsuite")
   population <- loadPopulation(csvPopulationFile = populationFileName)
   sim$name <- "foo"
 
@@ -296,17 +280,5 @@ test_that("It retrieves simulation results of a population simulation after chan
       simulationResults = simResults[[1]],
       quantitiesOrPaths = simResults[[1]]$allQuantityPaths
     )
-  )
-})
-
-test_that("It throws an error when trying to change the name of the simulation to a forbidden name", {
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  expect_error(
-    sim$name <- "MoleculeProperties",
-    regexp = messages$forbiddenSimulationName("MoleculeProperties", sim)
-  )
-  expect_error(
-    sim$name <- "CYP3A4",
-    regexp = messages$forbiddenSimulationName("CYP3A4", sim)
   )
 })

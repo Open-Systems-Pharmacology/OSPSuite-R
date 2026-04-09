@@ -45,12 +45,9 @@ test_that("It creates default plots as expected for multiple observed datasets",
     fig = plotTimeProfile(manyObsDC, mapping = ggplot2::aes(groupby = name))
   )
 
-  expect_warning(
-    vdiffr::expect_doppelganger(
-      title = "multiple obs - showLegendPerDataset all",
-      fig = plotTimeProfile(manyObsDC, showLegendPerDataset = "all")
-    ),
-    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
+  vdiffr::expect_doppelganger(
+    title = "multiple obs - showLegendPerDataset none",
+    fig = plotTimeProfile(manyObsDC, showLegendPerDataset = "none")
   )
 
   vdiffr::expect_doppelganger(
@@ -82,12 +79,9 @@ test_that("It plots multiple simulated datasets with dataset name legend entries
     )
   )
 
-  expect_warning(
-    vdiffr::expect_doppelganger(
-      title = "multiple sim - showLegendPerDataset all",
-      fig = plotTimeProfile(manySimDC, showLegendPerDataset = "all")
-    ),
-    messages$plotShowLegendPerDatasetHasNoEffect(dataType = 'observed')
+  vdiffr::expect_doppelganger(
+    title = "multiple sim - showLegendPerDataset none",
+    fig = plotTimeProfile(manySimDC, showLegendPerDataset = "none")
   )
 
   vdiffr::expect_doppelganger(
@@ -128,8 +122,8 @@ test_that("It maps multiple observed and simulated datasets to different visual 
   )
 
   vdiffr::expect_doppelganger(
-    title = "many obs sim - showLegendPerDataset all",
-    fig = plotTimeProfile(manyObsSimDC, showLegendPerDataset = "all")
+    title = "many obs sim - showLegendPerDataset none",
+    fig = plotTimeProfile(manyObsSimDC, showLegendPerDataset = "none")
   )
 
   vdiffr::expect_doppelganger(
@@ -230,34 +224,6 @@ test_that("line width does not leak into observedMapping", {
   )
 })
 
-test_that("It handles edge case: observed data with showLegendPerDataset simulated", {
-  set.seed(123)
-  # Should warn and produce plot with no per-dataset differentiation
-  expect_warning(
-    fig <- plotTimeProfile(
-      manyObsDC,
-      showLegendPerDataset = "simulated"
-    ),
-    messages$plotShowLegendPerDatasetHasNoEffect('simulated')
-  )
-
-  expect_s3_class(fig, 'gg')
-})
-
-test_that("It handles edge case: simulated data with showLegendPerDataset observed", {
-  set.seed(123)
-  # Should warn and produce plot with no per-dataset differentiation
-  expect_warning(
-    fig <- plotTimeProfile(
-      manySimDC,
-      showLegendPerDataset = "observed"
-    ),
-    messages$plotShowLegendPerDatasetHasNoEffect('observed')
-  )
-
-  expect_s3_class(fig, 'gg')
-})
-
 # edge cases ------------------------
 
 test_that("It works when geometric error is present", {
@@ -316,7 +282,9 @@ test_that("It plots data with two y-axis dimensions (fraction and concentration)
 test_that("It converts x-axis units when xUnit is provided", {
   # Default: x in h; override to "min"
   plotDefault <- plotTimeProfile(oneObsDC)
-  plotMinutes <- plotTimeProfile(oneObsDC, xUnit = "min")
+
+  plotMinutes <-
+    plotTimeProfile(oneObsDC, xUnit = "min")
 
   # The x-axis label should contain "min" when xUnit = "min"
   expect_true(

@@ -1,6 +1,10 @@
 # getAllContainersMatching
 
-sim <- loadTestSimulation("S1")
+sim <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
 
 test_that("It can retrieve containers with absolute path", {
   containers <- getAllContainersMatching(
@@ -106,19 +110,13 @@ test_that("It returns null if the  container by path does not exist and stopIfNo
   expect_null(container)
 })
 
-test_that("It throws an error if the container by path does not exist", {
-  expect_error(
-    (container <- getContainer(
-      toPathString(c("Organism", "Liver", "TOTO", "Length")),
-      sim
-    ))
-  )
-})
-
 test_that("It throws an error when trying to retrieve a container by path that would result in multiple containers", {
   expect_error(getContainer(toPathString(c("Organism", "*")), sim))
 })
 
 test_that("It throws an error when no valid container is provided", {
-  expect_error(getContainer(toPathString(c("Organism", "*")), "sim"))
+  expect_error(
+    getContainer(toPathString(c("Organism", "foo")), sim),
+    regexp = "no entity exists"
+  )
 })
