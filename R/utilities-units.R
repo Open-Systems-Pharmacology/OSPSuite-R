@@ -351,10 +351,6 @@ getDimensionByName <- function(name) {
 #' available for each dimension
 #'
 #' @return enum of all units for each dimension
-#'
-#' @examples
-#'
-#' ospsuite:::.getUnitsEnum()
 #' @keywords internal
 .getUnitsEnum <- function() {
   dimensions <- allAvailableDimensions()
@@ -390,10 +386,6 @@ getDimensionByName <- function(name) {
 #' @title Function to return an enum of all available dimensions
 #'
 #' @return enum of all dimensions
-#'
-#' @examples
-#'
-#' ospsuite:::.getDimensionsEnum()
 #' @keywords internal
 .getDimensionsEnum <- function() {
   enum(allAvailableDimensions())

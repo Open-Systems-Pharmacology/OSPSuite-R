@@ -1,6 +1,14 @@
 tolerance <- 0.0001
 dataSetName <- "MyDataSet"
 
+# DataSet from pkml without error
+obsDataFile_no_error <- getTestDataFilePath("obs_data_no_error.pkml")
+obsData_no_error_immutable <- .loadDataRepositoryFromPKML(obsDataFile_no_error)
+
+# DataSet from pkml with error
+obsDataFile <- getTestDataFilePath("obs_data.pkml")
+obsData_immutable <- .loadDataRepositoryFromPKML(obsDataFile)
+
 # DataSet from scratch
 
 test_that("it cannot create a new data set from scratch without a name", {
@@ -290,22 +298,19 @@ test_that("it can get and set molWeight", {
   expect_equal(dataSet$molWeight, 123)
 })
 
-# DataSet from pkml without error
-obsDataFile <- getTestDataFilePath("obs_data_no_error.pkml")
-obsData <- .loadDataRepositoryFromPKML(obsDataFile)
 
 test_that("it can create a new data set from an existing repository", {
-  dataSet <- DataSet$new(dataRepository = obsData)
+  dataSet <- DataSet$new(dataRepository = obsData_no_error_immutable)
   expect_equal(dataSet$name, "ObservedData_noError")
 })
 
 test_that("it does not overwrite a name when creating from an existing repository", {
-  dataSet <- DataSet$new(dataRepository = obsData, name = dataSetName)
+  dataSet <- DataSet$new(
+    dataRepository = obsData_no_error_immutable,
+    name = dataSetName
+  )
   expect_equal(dataSet$name, "ObservedData_noError")
 })
-
-# DataSet from pkml with error
-obsDataFile <- getTestDataFilePath("obs_data.pkml")
 
 xValues <- c(
   1.79999995231628,
@@ -343,8 +348,7 @@ metaData <- list(
 )
 
 test_that("it can create a new data set from an existing repository", {
-  obsData <- .loadDataRepositoryFromPKML(obsDataFile)
-  dataSet <- DataSet$new(dataRepository = obsData)
+  dataSet <- DataSet$new(dataRepository = obsData_immutable)
   expect_equal(dataSet$xValues, xValues)
   expect_equal(dataSet$yValues, yValues)
   expect_equal(dataSet$yErrorValues, yError)

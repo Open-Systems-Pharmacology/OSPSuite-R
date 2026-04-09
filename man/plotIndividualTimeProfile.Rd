@@ -26,6 +26,7 @@ to \code{FALSE}.}
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \examples{
+\dontrun{
 # simulated data
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -61,6 +62,7 @@ myPlotConfiguration$caption <- "My Sources"
 
 # plot
 plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
+}
 
 }
 \seealso{

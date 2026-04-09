@@ -11,7 +11,8 @@ setMoleculeInitialValues(molecules, values, units = NULL)
 
 \item{values}{A numeric value that should be assigned to the molecule start value or a vector
 of numeric values, if the start value of more than one molecule should be changed. Must have the same
-length as \code{molecules}}
+length as \code{molecules}. Alternatively, the value can be a unique number. In that case, the same value will
+be set for all molecules}
 
 \item{units}{A string or a list of strings defining the units of the
 \code{values}. If \code{NULL} (default), values are assumed to be in base units. If

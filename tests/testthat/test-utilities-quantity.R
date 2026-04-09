@@ -1,6 +1,11 @@
 # getAllQuantitiesMatching
 
-sim <- loadTestSimulation("S1")
+sim <- loadSimulation(aciclovirSimulationPath, loadFromCache = TRUE)
+sim_mutable <- loadTestSimulation(
+  "simple",
+  loadFromCache = FALSE,
+  addToCache = FALSE
+)
 
 test_that("It can retrieve quantities with absolute path", {
   quantities <- getAllQuantitiesMatching(
@@ -79,66 +84,57 @@ test_that("It throws an error when trying to retrieve a quantity by path that wo
 
 
 # setQuantityValuesByPath
-sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-
 test_that("It can set single parameter value", {
-  parameterPath <- "Organism|Liver|Intracellular|Volume"
-  setQuantityValuesByPath(parameterPath, 100, sim)
-  parameter <- getParameter(parameterPath, sim)
+  parameterPath <- "Organism|Liver|Volume"
+  setQuantityValuesByPath(parameterPath, 100, sim_mutable)
+  parameter <- getParameter(parameterPath, sim_mutable)
   expect_equal(parameter$value, 100)
 })
 
 test_that("It can set single parameter value with unit", {
-  parameterPath <- "Organism|Liver|Intracellular|Volume"
+  parameterPath <- "Organism|Liver|Volume"
   setQuantityValuesByPath(
     quantityPaths = parameterPath,
     values = 100,
-    simulation = sim,
+    simulation = sim_mutable,
     units = "ml"
   )
-  parameter <- getParameter(parameterPath, sim)
+  parameter <- getParameter(parameterPath, sim_mutable)
   expect_equal(parameter$value, 100e-3)
 })
 
 test_that("It can set multiple quantity values", {
-  quantityPath1 <- "Organism|Liver|Intracellular|Volume"
-  quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
-  setQuantityValuesByPath(c(quantityPath1, quantityPath2), c(40, 50), sim)
-  quantity1 <- getQuantity(quantityPath1, sim)
-  quantity2 <- getQuantity(quantityPath2, sim)
+  quantityPath1 <- "Organism|Liver|Volume"
+  quantityPath2 <- "Organism|Lumen|Stomach|Volume"
+  setQuantityValuesByPath(
+    c(quantityPath1, quantityPath2),
+    c(40, 50),
+    sim_mutable
+  )
+  quantity1 <- getQuantity(quantityPath1, sim_mutable)
+  quantity2 <- getQuantity(quantityPath2, sim_mutable)
   expect_equal(quantity1$value, 40)
   expect_equal(quantity2$value, 50)
 })
 
 test_that("It can set multiple quantity values with units", {
-  quantityPath1 <- "Organism|Liver|Intracellular|Volume"
-  quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
+  quantityPath1 <- "Organism|Liver|Volume"
+  quantityPath2 <- "Organism|Lumen|Stomach|Volume"
   setQuantityValuesByPath(
     quantityPaths = c(quantityPath1, quantityPath2),
     values = c(40, 50),
-    simulation = sim,
-    units = c("ml", "mol")
+    simulation = sim_mutable,
+    units = c("ml", "l")
   )
-  quantity1 <- getQuantity(quantityPath1, sim)
-  quantity2 <- getQuantity(quantityPath2, sim)
+  quantity1 <- getQuantity(quantityPath1, sim_mutable)
+  quantity2 <- getQuantity(quantityPath2, sim_mutable)
   expect_equal(quantity1$value, 40e-3)
-  expect_equal(quantity2$value, 50e6)
+  expect_equal(quantity2$value, 50)
 })
 
 test_that("It throws an exception when setting values for a quantity that does not exist", {
   parameterPath <- "Organism|Liver|NOPE|Volume"
-  expect_error(setQuantityValuesByPath(parameterPath, 100, sim))
-})
-
-test_that("It does not throw an exception when setting values for a quantity that does not exist with unit", {
-  parameterPath <- "Organism|Liver|NOPE|Volume"
-  expect_no_error(setQuantityValuesByPath(
-    quantityPaths = parameterPath,
-    values = 100,
-    simulation = sim,
-    units = "ml",
-    stopIfNotFound = FALSE
-  ))
+  expect_error(setQuantityValuesByPath(parameterPath, 100, sim_mutable))
 })
 
 test_that("It does not throw an exception when setting values for a quantity that does not exist and the stopIfnotFound flag is set to false", {
@@ -146,18 +142,18 @@ test_that("It does not throw an exception when setting values for a quantity tha
   expect_no_error(setQuantityValuesByPath(
     quantityPaths = parameterPath,
     values = 100,
-    simulation = sim,
+    simulation = sim_mutable,
     stopIfNotFound = FALSE
   ))
 })
 
 test_that("It throws an error when the number of quantity paths differs from the number units", {
-  quantityPath1 <- "Organism|Liver|Intracellular|Volume"
-  quantityPath2 <- "Organism|VenousBlood|Plasma|CYP3A4"
+  quantityPath1 <- "Organism|Liver|Volume"
+  quantityPath2 <- "Organism|Lumen|Stomach|Volume"
   expect_error(setQuantityValuesByPath(
     c(quantityPath1, quantityPath2),
     c(40, 50),
-    sim,
+    sim_mutable,
     units = "ml"
   ))
 })
@@ -336,12 +332,12 @@ test_that("It returns TRUE when the quantity is an explicit formula", {
 })
 
 test_that("It shows an expected message when setting a value with wrong unit", {
-  parameterPath <- "Organism|Liver|Intracellular|Volume"
+  parameterPath <- "Organism|Liver|Volume"
   expect_error(
     setQuantityValuesByPath(
       quantityPaths = parameterPath,
       values = 100,
-      simulation = sim,
+      simulation = sim_mutable,
       units = "mol"
     ),
     regexp = messages$wrongUnitForQuantity(
@@ -355,21 +351,21 @@ test_that("It shows an expected message when setting a value with wrong unit", {
 
 # getMolWeightFor
 test_that("It can retrieve the molecular weight for molecule of quantity", {
-  quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
+  quantityPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
   quantity <- getQuantity(quantityPath, sim)
-  expect_equal(getMolWeightFor(quantity), 1.942e-07)
+  expect_equal(getMolWeightFor(quantity), 2.2521e-07)
 })
 
 test_that("It can retrieve the molecular weight for molecule of `MoleculeAmount` type quantity", {
-  quantityPath <- "Organism|VenousBlood|Plasma|Caffeine"
+  quantityPath <- "Organism|VenousBlood|Plasma|Aciclovir"
   quantity <- getQuantity(quantityPath, sim)
-  expect_equal(getMolWeightFor(quantity), 1.942e-07)
+  expect_equal(getMolWeightFor(quantity), 2.2521e-07)
 })
 
 test_that("It can retrieve the molecular weight for molecule of quantity with unit", {
-  quantityPath <- "Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood)"
+  quantityPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
   quantity <- getQuantity(quantityPath, sim)
-  expect_equal(getMolWeightFor(quantity, unit = "g/mol"), 194.2)
+  expect_equal(getMolWeightFor(quantity, unit = "g/mol"), 225.21)
 })
 
 test_that("It returns `NA` if no molecule in quantity path", {

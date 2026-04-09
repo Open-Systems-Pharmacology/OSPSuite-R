@@ -1,6 +1,10 @@
 # Formula
 
-sim <- loadTestSimulation("S1")
+sim <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
 distributedFormula <- getParameter("Organism|Liver|Volume", sim)$formula
 constantFormula <- getParameter("Organism|Age", sim)$formula
 explicitFormula <- getParameter("Organism|Liver|Plasma|Volume", sim)$formula
