@@ -14,6 +14,7 @@
       Individual:
         * Vergin_1995_IV
       Expression profiles:
+        * CYP3A4|Human|Healthy
 
 # SimulationConfiguration can be created from a simulation loaded from a MoBi project with selected IC and PV BBs
 

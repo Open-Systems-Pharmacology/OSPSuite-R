@@ -18,25 +18,16 @@
       -- Output intervals --
       
       <Interval>
-        * Name: Simulation interval high resolution
+        * Name: Output interval
         * Start time: 0.00e+00 [min]
-        * End time: 120.00 [min]
-        * Resolution: 0.33 [pts/min]
-      <Interval>
-        * Name: Simulation interval low resolution
-        * Start time: 120.00 [min]
-        * End time: 1440.00 [min]
+        * End time: 300.00 [min]
         * Resolution: 0.07 [pts/min]
       
       -- Output Selections --
       
       <OutputSelections>
-        * Organism|PeripheralVenousBlood|Caffeine|Plasma (Peripheral Venous Blood):
-        Drug, Observer
-        * Organism|ArterialBlood|Plasma|Caffeine|Concentration in container: Drug,
-        Observer
-        * Organism|ArterialBlood|Plasma|Caffeine|Plasma Unbound: Drug, Observer
-        * Organism|ArterialBlood|BloodCells|Caffeine|Concentration in container:
-        Drug, Observer
-        * Organism|ArterialBlood|Caffeine|Whole Blood: Drug, Observer
+        * Organism|B: Drug
+        * Organism|Liver|A: Drug
+        * Organism|Liver|B: Drug
+        * Organism|A: Drug
 

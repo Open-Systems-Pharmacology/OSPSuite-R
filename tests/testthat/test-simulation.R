@@ -95,12 +95,12 @@ test_that("It returns a simulation configuration", {
 })
 
 test_that("It throws an error when the simulation was created with an earlier version of OSPS", {
-  sim <- loadTestSimulation("S1")
+  sim <- loadTestSimulation("simple_v11")
   expect_error(
     sim$configuration,
     regexp = messages$errorFeatureNotSupportedBySimulation(
       "SimulationConfiguration",
-      9,
+      8,
       12
     ),
     fixed = TRUE

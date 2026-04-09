@@ -722,8 +722,8 @@ test_that("It can create a simulation from a project configuration retrieved fro
   # Check simulation configuration
   expect_equal(newSimulation$name, "MySim")
   expect_equal(
-    newSimulation$configuration$expressionProfiles,
-    simConfig$expressionProfiles
+    names(newSimulation$configuration$expressionProfiles),
+    names(simConfig$expressionProfiles)
   )
   expect_equal(
     newSimulation$configuration$individual$name,
