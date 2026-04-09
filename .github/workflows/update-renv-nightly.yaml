@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # Allow manual triggering
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   update-renv-nightly:
