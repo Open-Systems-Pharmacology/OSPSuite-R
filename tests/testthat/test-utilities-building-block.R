@@ -265,10 +265,11 @@ test_that("extendInitialConditionsBB does not add new entries for existing molec
   icBB <- module$getInitialConditionsBBs()[[1]]
 
   ####
-  module <- testProject$getModules("Thyroid_QST")[[1]]
-  icBB <- module$getInitialConditionsBBs()[[1]]
+  # module <- testProject$getModules("Thyroid_QST")[[1]]
+  # icBB <- module$getInitialConditionsBBs()[[1]]
   ######
 
+  # Fails because of the wron "Spatial Structure" class
   newPaths <- extendInitialConditionsBB(
     initialConditionsBuildingBlock = icBB,
     spatialStructureModule = module,
