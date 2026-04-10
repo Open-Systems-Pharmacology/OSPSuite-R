@@ -274,3 +274,90 @@ test_that("plotPredictedVsObserved produces same result as pre-converting with c
 
   expect_equal(plotDirect$data, plotPreConverted$data)
 })
+
+# showLegendPerDataset ----
+
+test_that("showLegendPerDataset adds shape mapping for observed datasets", {
+  myCombDat$setGroups(
+    names = c(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Placebo_proximal"
+    ),
+    groups = c(
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012",
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012"
+    )
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "showLegendPerDataset observed - predicted vs observed",
+    fig = plotPredictedVsObserved(
+      myCombDat,
+      xyScale = "linear",
+      showLegendPerDataset = "observed"
+    )
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "showLegendPerDataset none - predicted vs observed",
+    fig = plotPredictedVsObserved(
+      myCombDat,
+      xyScale = "linear",
+      showLegendPerDataset = "none"
+    )
+  )
+})
+
+test_that("showLegendPerDataset throws error for predictedVsObserved", {
+  expect_error(
+    plotPredictedVsObserved(
+      myCombDat,
+      xyScale = "linear",
+      showLegendPerDataset = "simulated"
+    ),
+    "Assertion on 'showLegendPerDataset' failed"
+  )
+})
+
+test_that("User mapping overrides showLegendPerDataset in predictedVsObserved", {
+  myCombDat$setGroups(
+    names = c(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Placebo_proximal"
+    ),
+    groups = c(
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012",
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012"
+    )
+  )
+
+  # User mapping overrides showLegendPerDataset
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "showLegendPerDataset overwritten by name",
+    fig = plotPredictedVsObserved(
+      myCombDat,
+      xyScale = "linear",
+      showLegendPerDataset = "observed",
+      mapping = ggplot2::aes(groupby = name)
+    )
+  )
+})
