@@ -21,7 +21,7 @@ IndividualDiseaseStates <- enum(c(
 #' @export
 #'
 #' @examples
-#' individual <- createMoBiIndividualBuildingBlock(
+#' individual <- createIndividualBuildingBlock(
 #'   species = Species$Human,
 #'   population = HumanPopulation$European_ICRP_2002,
 #'   gender = Gender$Male,
@@ -40,10 +40,30 @@ createIndividualBuildingBlock <- function(
   ageUnit = "year(s)",
   gestationalAge = 40,
   gestationalAgeUnit = "week(s)",
-  moleculeOntogenies = NULL,
   seed = NULL
 ) {
-  return(IndividualBuildingBlock)
+  individualCharacteristics <- createIndividualCharacteristics(
+    species = species,
+    population = population,
+    gender = gender,
+    weight = weight,
+    weightUnit = weightUnit,
+    height = height,
+    heightUnit = heightUnit,
+    age = age,
+    ageUnit = ageUnit,
+    gestationalAge = gestationalAge,
+    gestationalAgeUnit = gestationalAgeUnit,
+    seed = seed
+  )
+
+  netTask <- .getMoBiTaskFromCache("IndividualTask")
+  netObject <- netTask$call(
+    "CreateIndividual",
+    individualCharacteristics
+  )
+
+  return(BuildingBlock$new(netObject, type = BuildingBlockTypes$Individual))
 }
 
 #' Creates a set of parameter values describing an individual using the PK-Sim Database
