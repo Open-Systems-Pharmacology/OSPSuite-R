@@ -1,81 +1,67 @@
 getSimulation <- function() {
-  loadSimulation(system.file(
-    "extdata",
-    "Aciclovir.pkml",
-    package = "ospsuite"
-  ))
+  loadSimulation(
+    aciclovirSimulationPath,
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
 }
 
-getFreshICBB <- function() {
-  getSimulation()$configuration$modules[[1]]$getInitialConditionsBBs()[[1]]
+# Reloads simulation and gets the first initial conditions building block. This is needed to ensure that we have a fresh instance of the building block for each test, as the building blocks are mutable and changes in one test could affect other tests.
+getFreshICBB <- function(simulation = getSimulation()) {
+  simulation$configuration$modules[[1]]$getInitialConditionsBBs()[[1]]
 }
 
-testPVBB <- getSimulation()$configuration$modules[[1]]$getParameterValuesBBs()[[
-  1
-]]
-
-getFreshPVBB <- function() {
-  getSimulation()$configuration$modules[[1]]$getParameterValuesBBs()[[1]]
+getFreshPVBB <- function(simulation = getSimulation()) {
+  simulation$configuration$modules[[1]]$getParameterValuesBBs()[[1]]
 }
 
-testProject <- loadMoBiProject(system.file(
-  "extdata",
-  "TH_QST_Platform.mbp3",
-  package = "ospsuite"
-))
-minimalTestProject <- loadMoBiProject(getTestDataFilePath("Test_Project.mbp3"))
+# Used for non-mutable tests that just need to read the building blocks without modifying them. This avoids the overhead of loading the simulation multiple times.
+cachedICBB <- getFreshICBB()
+cachedPVBB <- getFreshPVBB()
 
-# Test initialConditionsBBToDataFrame with no paths
-# Test initialConditionsBBToDataFrame with one path
-# Test initialConditionsBBToDataFrame with multiple paths
 test_that("initialConditionsBBToDataFrame returns a data frame with the expected columns", {
-  icBB <- getFreshICBB()
-  df <- initialConditionsBBToDataFrame(icBB)
+  df <- initialConditionsBBToDataFrame(cachedICBB)
   expect_snapshot(df)
 })
 
 test_that("initialConditionsBBToDataFrame throws an error if the building block is not of type Initial Conditions", {
   expect_error(
-    initialConditionsBBToDataFrame(testPVBB),
+    initialConditionsBBToDataFrame(cachedPVBB),
     regexp = "Initial Conditions"
   )
 })
 
 test_that("parameterValuesBBToDataFrame returns a data frame with the expected columns", {
-  df <- parameterValuesBBToDataFrame(testPVBB)
+  df <- parameterValuesBBToDataFrame(cachedPVBB)
   expect_snapshot(df)
 })
 
 test_that("parameterValuesBBToDataFrame throws an error if the building block is not of type Parameter Values", {
-  icBB <- getFreshICBB()
   expect_error(
-    parameterValuesBBToDataFrame(icBB),
+    parameterValuesBBToDataFrame(cachedICBB),
     regexp = "Parameter Values"
   )
 })
 
-
 # test for wrong type of building block
 test_that("setInitialConditionsInBB throws an error if the building block is not of type Initial Conditions", {
   expect_error(
-    setInitialConditionsInBB(testPVBB, "Path", 1),
+    setInitialConditionsInBB(cachedPVBB, "Path", 1),
     regexp = "Initial Conditions"
   )
 })
 
 # test for differnt lengths of quantityPaths and quantityValues
 test_that("setInitialConditionsInBB throws an error if quantityPaths and quantityValues have different lengths", {
-  icBB <- getFreshICBB()
   expect_error(
     setInitialConditionsInBB(
-      icBB,
+      cachedICBB,
       quantityPaths = c("Path1", "Path2"),
       quantityValues = c(1)
     ),
     regexp = "The length of quantityPaths should be equal to the length "
   )
 })
-
 
 test_that("setInitialConditionsInBB updates one entry correctly", {
   icBB <- getFreshICBB()
@@ -185,7 +171,7 @@ test_that("setInitialConditionsInBB adds new entries correctly", {
 test_that("deleteInitialConditionsFromBB throws an error if the building block is not of type Initial Conditions", {
   expect_error(
     deleteInitialConditionsFromBB(
-      testPVBB,
+      cachedPVBB,
       "Organism|Brain|Intracellular|Aciclovir"
     ),
     regexp = "Initial Conditions"
@@ -247,9 +233,11 @@ test_that("deleteInitialConditionsFromBB ignores paths that do not exist", {
 
 # extendInitialConditions
 test_that("extendInitialConditionsBB extends with all molecules if moleculeNames is NULL", {
-  module <- testProject$getModules("Thyroid_QST")[[1]]
-  icBB <- module$getInitialConditionsBBs()[[1]]
-  spatialStructureModule <- thyroidModule <- loadModuleFromPKML(system.file(
+  # BB to mutate
+  icBB <- getFreshICBB()
+  # Module to get BBs from that will not be mutated
+  module <- testMoBiProject$getModules("TestModule")[[1]]
+  spatialStructureModule <- loadModuleFromPKML(system.file(
     "extdata",
     "Thyroid.pkml",
     package = "ospsuite"
@@ -272,14 +260,20 @@ test_that("extendInitialConditionsBB extends with all molecules if moleculeNames
 })
 
 test_that("extendInitialConditionsBB does not add new entries for existing molecules and compartments", {
+  sim <- getSimulation()
+  module <- simulation$configuration$modules[[1]]
+  icBB <- module$getInitialConditionsBBs()[[1]]
+
+  ####
   module <- testProject$getModules("Thyroid_QST")[[1]]
   icBB <- module$getInitialConditionsBBs()[[1]]
+  ######
 
   newPaths <- extendInitialConditionsBB(
     initialConditionsBuildingBlock = icBB,
     spatialStructureModule = module,
     moleculesModule = module,
-    moleculeNames = c("T3", "T4")
+    moleculeNames = c("Aciclovir", "CYP3A4")
   )
 
   # New entries are still added , specifically for the "EndogenousIgG" compartment. This is expected.

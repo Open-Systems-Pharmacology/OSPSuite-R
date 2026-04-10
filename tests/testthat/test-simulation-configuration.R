@@ -1,11 +1,10 @@
-simulation <- loadSimulation(system.file(
-  "extdata",
-  "Aciclovir.pkml",
-  package = "ospsuite"
-))
-
-testMoBiProject <- loadMoBiProject(
-  filePath = getTestDataFilePath("Test_Project.mbp3")
+simulation <- loadSimulation(
+  system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  ),
+  addToCache = FALSE
 )
 
 test_that("SimulationConfiguration can be created from a simulation loaded from PKML", {
@@ -206,11 +205,10 @@ test_that("SimulationConfiguration can get and set expression profiles", {
   ))
 
   configurationFromPKML$expressionProfiles <- expProfiles
-  expProfiles <- configurationFromPKML$expressionProfiles
 
   expect_true(isOfType(expProfiles, "BuildingBlock"))
   expect_named(
-    expProfiles,
+    configurationFromPKML$expressionProfiles,
     c("CYP3A4|Human|Healthy", "UGT2B6|Human|Healthy"),
     ignore.order = TRUE
   )
