@@ -1,4 +1,4 @@
-# initialConditionsToDataFrame returns a data frame with the expected columns
+# initialConditionsBBToDataFrame returns a data frame with the expected columns
 
     Code
       df
@@ -412,7 +412,35 @@
       134               FALSE
       135                TRUE
 
-# extendInitialConditions extends with all molecules if moleculeNames is NULL
+# parameterValuesBBToDataFrame returns a data frame with the expected columns
+
+    Code
+      df
+    Output
+                                                   Container Path
+      1                                           Undefined Liver
+      2                                           Undefined Liver
+      3                                           Undefined Liver
+      4                                           Undefined Liver
+      5   Organism|Liver|Periportal|Intracellular|Undefined Liver
+      6   Organism|Liver|Periportal|Intracellular|Undefined Liver
+      7   Organism|Liver|Periportal|Intracellular|Undefined Liver
+      8  Organism|Liver|Pericentral|Intracellular|Undefined Liver
+      9  Organism|Liver|Pericentral|Intracellular|Undefined Liver
+      10 Organism|Liver|Pericentral|Intracellular|Undefined Liver
+                           Parameter Name      Value   Unit
+      1           Reference concentration    1.00000 µmol/l
+      2                      t1/2 (liver) 2160.00000    min
+      3                  t1/2 (intestine) 1380.00000    min
+      4                    Disease factor    1.00000       
+      5               Relative expression    1.00000       
+      6  Fraction expressed intracellular    1.00000       
+      7             Initial concentration    1.49925 µmol/l
+      8               Relative expression    1.00000       
+      9  Fraction expressed intracellular    1.00000       
+      10            Initial concentration    1.49925 µmol/l
+
+# extendInitialConditionsBB extends with all molecules if moleculeNames is NULL
 
     Code
       newPaths_df
@@ -684,7 +712,7 @@
       1635     0 µmol             1               FALSE
       1636     0 µmol             1               FALSE
 
-# extendInitialConditions does not add new entries for existing molecules and compartments
+# extendInitialConditionsBB does not add new entries for existing molecules and compartments
 
     Code
       newPaths_df
@@ -712,7 +740,7 @@
       1645 µmol             1               FALSE
       1646 µmol             1               FALSE
 
-# extendInitialConditions extends only with specified molecules
+# extendInitialConditionsBB extends only with specified molecules
 
     Code
       newPaths_df
@@ -743,4 +771,788 @@
       1514             1               FALSE
       1515             1               FALSE
       1516             1               FALSE
+
+# addLocalMoleculeParametersToParameterValuesBB adds parameters for all molecules when moleculeNames is NULL
+
+    Code
+      newPaths_df
+    Output
+                                                           Container Path
+      1                                            Organism|Gallbladder|A
+      2                                            Organism|Gallbladder|B
+      3                               Organism|ArterialBlood|BloodCells|A
+      4                               Organism|ArterialBlood|BloodCells|B
+      5                                   Organism|ArterialBlood|Plasma|A
+      6                                   Organism|ArterialBlood|Plasma|B
+      7                                      Organism|Bone|Interstitial|A
+      8                                      Organism|Bone|Interstitial|B
+      9                                     Organism|Bone|Intracellular|A
+      10                                    Organism|Bone|Intracellular|B
+      11                                       Organism|Bone|BloodCells|A
+      12                                       Organism|Bone|BloodCells|B
+      13                                           Organism|Bone|Plasma|A
+      14                                           Organism|Bone|Plasma|B
+      15                                      Organism|Brain|BloodCells|A
+      16                                      Organism|Brain|BloodCells|B
+      17                                    Organism|Brain|Interstitial|A
+      18                                    Organism|Brain|Interstitial|B
+      19                                   Organism|Brain|Intracellular|A
+      20                                   Organism|Brain|Intracellular|B
+      21                                          Organism|Brain|Plasma|A
+      22                                          Organism|Brain|Plasma|B
+      23                                        Organism|Fat|BloodCells|A
+      24                                        Organism|Fat|BloodCells|B
+      25                                      Organism|Fat|Interstitial|A
+      26                                      Organism|Fat|Interstitial|B
+      27                                     Organism|Fat|Intracellular|A
+      28                                     Organism|Fat|Intracellular|B
+      29                                            Organism|Fat|Plasma|A
+      30                                            Organism|Fat|Plasma|B
+      31                                     Organism|Gonads|BloodCells|A
+      32                                     Organism|Gonads|BloodCells|B
+      33                                   Organism|Gonads|Interstitial|A
+      34                                   Organism|Gonads|Interstitial|B
+      35                                  Organism|Gonads|Intracellular|A
+      36                                  Organism|Gonads|Intracellular|B
+      37                                         Organism|Gonads|Plasma|A
+      38                                         Organism|Gonads|Plasma|B
+      39                                      Organism|Heart|BloodCells|A
+      40                                      Organism|Heart|BloodCells|B
+      41                                    Organism|Heart|Interstitial|A
+      42                                    Organism|Heart|Interstitial|B
+      43                                   Organism|Heart|Intracellular|A
+      44                                   Organism|Heart|Intracellular|B
+      45                                          Organism|Heart|Plasma|A
+      46                                          Organism|Heart|Plasma|B
+      47                                     Organism|Kidney|BloodCells|A
+      48                                     Organism|Kidney|BloodCells|B
+      49                                   Organism|Kidney|Interstitial|A
+      50                                   Organism|Kidney|Interstitial|B
+      51                                  Organism|Kidney|Intracellular|A
+      52                                  Organism|Kidney|Intracellular|B
+      53                                         Organism|Kidney|Plasma|A
+      54                                         Organism|Kidney|Plasma|B
+      55                             Organism|LargeIntestine|BloodCells|A
+      56                             Organism|LargeIntestine|BloodCells|B
+      57                           Organism|LargeIntestine|Interstitial|A
+      58                           Organism|LargeIntestine|Interstitial|B
+      59                          Organism|LargeIntestine|Intracellular|A
+      60                          Organism|LargeIntestine|Intracellular|B
+      61                                 Organism|LargeIntestine|Plasma|A
+      62                                 Organism|LargeIntestine|Plasma|B
+      63               Organism|LargeIntestine|Mucosa|Caecum|BloodCells|A
+      64               Organism|LargeIntestine|Mucosa|Caecum|BloodCells|B
+      65             Organism|LargeIntestine|Mucosa|Caecum|Interstitial|A
+      66             Organism|LargeIntestine|Mucosa|Caecum|Interstitial|B
+      67            Organism|LargeIntestine|Mucosa|Caecum|Intracellular|A
+      68            Organism|LargeIntestine|Mucosa|Caecum|Intracellular|B
+      69                   Organism|LargeIntestine|Mucosa|Caecum|Plasma|A
+      70                   Organism|LargeIntestine|Mucosa|Caecum|Plasma|B
+      71       Organism|LargeIntestine|Mucosa|ColonAscendens|BloodCells|A
+      72       Organism|LargeIntestine|Mucosa|ColonAscendens|BloodCells|B
+      73     Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial|A
+      74     Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial|B
+      75    Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|A
+      76    Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|B
+      77           Organism|LargeIntestine|Mucosa|ColonAscendens|Plasma|A
+      78           Organism|LargeIntestine|Mucosa|ColonAscendens|Plasma|B
+      79      Organism|LargeIntestine|Mucosa|ColonDescendens|BloodCells|A
+      80      Organism|LargeIntestine|Mucosa|ColonDescendens|BloodCells|B
+      81    Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial|A
+      82    Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial|B
+      83   Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|A
+      84   Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|B
+      85          Organism|LargeIntestine|Mucosa|ColonDescendens|Plasma|A
+      86          Organism|LargeIntestine|Mucosa|ColonDescendens|Plasma|B
+      87         Organism|LargeIntestine|Mucosa|ColonSigmoid|BloodCells|A
+      88         Organism|LargeIntestine|Mucosa|ColonSigmoid|BloodCells|B
+      89       Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial|A
+      90       Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial|B
+      91      Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|A
+      92      Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|B
+      93             Organism|LargeIntestine|Mucosa|ColonSigmoid|Plasma|A
+      94             Organism|LargeIntestine|Mucosa|ColonSigmoid|Plasma|B
+      95     Organism|LargeIntestine|Mucosa|ColonTransversum|BloodCells|A
+      96     Organism|LargeIntestine|Mucosa|ColonTransversum|BloodCells|B
+      97   Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial|A
+      98   Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial|B
+      99  Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|A
+      100 Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|B
+      101        Organism|LargeIntestine|Mucosa|ColonTransversum|Plasma|A
+      102        Organism|LargeIntestine|Mucosa|ColonTransversum|Plasma|B
+      103              Organism|LargeIntestine|Mucosa|Rectum|BloodCells|A
+      104              Organism|LargeIntestine|Mucosa|Rectum|BloodCells|B
+      105            Organism|LargeIntestine|Mucosa|Rectum|Interstitial|A
+      106            Organism|LargeIntestine|Mucosa|Rectum|Interstitial|B
+      107           Organism|LargeIntestine|Mucosa|Rectum|Intracellular|A
+      108           Organism|LargeIntestine|Mucosa|Rectum|Intracellular|B
+      109                  Organism|LargeIntestine|Mucosa|Rectum|Plasma|A
+      110                  Organism|LargeIntestine|Mucosa|Rectum|Plasma|B
+      111                         Organism|Liver|Pericentral|BloodCells|A
+      112                         Organism|Liver|Pericentral|BloodCells|B
+      113                       Organism|Liver|Pericentral|Interstitial|A
+      114                       Organism|Liver|Pericentral|Interstitial|B
+      115                      Organism|Liver|Pericentral|Intracellular|A
+      116                      Organism|Liver|Pericentral|Intracellular|B
+      117                             Organism|Liver|Pericentral|Plasma|A
+      118                             Organism|Liver|Pericentral|Plasma|B
+      119                          Organism|Liver|Periportal|BloodCells|A
+      120                          Organism|Liver|Periportal|BloodCells|B
+      121                        Organism|Liver|Periportal|Interstitial|A
+      122                        Organism|Liver|Periportal|Interstitial|B
+      123                       Organism|Liver|Periportal|Intracellular|A
+      124                       Organism|Liver|Periportal|Intracellular|B
+      125                              Organism|Liver|Periportal|Plasma|A
+      126                              Organism|Liver|Periportal|Plasma|B
+      127                                         Organism|Lumen|Caecum|A
+      128                                         Organism|Lumen|Caecum|B
+      129                                 Organism|Lumen|ColonAscendens|A
+      130                                 Organism|Lumen|ColonAscendens|B
+      131                                Organism|Lumen|ColonDescendens|A
+      132                                Organism|Lumen|ColonDescendens|B
+      133                                   Organism|Lumen|ColonSigmoid|A
+      134                                   Organism|Lumen|ColonSigmoid|B
+      135                               Organism|Lumen|ColonTransversum|A
+      136                               Organism|Lumen|ColonTransversum|B
+      137                                       Organism|Lumen|Duodenum|A
+      138                                       Organism|Lumen|Duodenum|B
+      139                                          Organism|Lumen|Feces|A
+      140                                          Organism|Lumen|Feces|B
+      141                                     Organism|Lumen|LowerIleum|A
+      142                                     Organism|Lumen|LowerIleum|B
+      143                                   Organism|Lumen|LowerJejunum|A
+      144                                   Organism|Lumen|LowerJejunum|B
+      145                                         Organism|Lumen|Rectum|A
+      146                                         Organism|Lumen|Rectum|B
+      147                                        Organism|Lumen|Stomach|A
+      148                                        Organism|Lumen|Stomach|B
+      149                                     Organism|Lumen|UpperIleum|A
+      150                                     Organism|Lumen|UpperIleum|B
+      151                                   Organism|Lumen|UpperJejunum|A
+      152                                   Organism|Lumen|UpperJejunum|B
+      153                                      Organism|Lung|BloodCells|A
+      154                                      Organism|Lung|BloodCells|B
+      155                                    Organism|Lung|Interstitial|A
+      156                                    Organism|Lung|Interstitial|B
+      157                                   Organism|Lung|Intracellular|A
+      158                                   Organism|Lung|Intracellular|B
+      159                                          Organism|Lung|Plasma|A
+      160                                          Organism|Lung|Plasma|B
+      161                                    Organism|Muscle|BloodCells|A
+      162                                    Organism|Muscle|BloodCells|B
+      163                                  Organism|Muscle|Interstitial|A
+      164                                  Organism|Muscle|Interstitial|B
+      165                                 Organism|Muscle|Intracellular|A
+      166                                 Organism|Muscle|Intracellular|B
+      167                                        Organism|Muscle|Plasma|A
+      168                                        Organism|Muscle|Plasma|B
+      169                                  Organism|Pancreas|BloodCells|A
+      170                                  Organism|Pancreas|BloodCells|B
+      171                                Organism|Pancreas|Interstitial|A
+      172                                Organism|Pancreas|Interstitial|B
+      173                               Organism|Pancreas|Intracellular|A
+      174                               Organism|Pancreas|Intracellular|B
+      175                                      Organism|Pancreas|Plasma|A
+      176                                      Organism|Pancreas|Plasma|B
+      177                                Organism|PortalVein|BloodCells|A
+      178                                Organism|PortalVein|BloodCells|B
+      179                                    Organism|PortalVein|Plasma|A
+      180                                    Organism|PortalVein|Plasma|B
+      181                                      Organism|Skin|BloodCells|A
+      182                                      Organism|Skin|BloodCells|B
+      183                                    Organism|Skin|Interstitial|A
+      184                                    Organism|Skin|Interstitial|B
+      185                                   Organism|Skin|Intracellular|A
+      186                                   Organism|Skin|Intracellular|B
+      187                                          Organism|Skin|Plasma|A
+      188                                          Organism|Skin|Plasma|B
+      189                            Organism|SmallIntestine|BloodCells|A
+      190                            Organism|SmallIntestine|BloodCells|B
+      191                          Organism|SmallIntestine|Interstitial|A
+      192                          Organism|SmallIntestine|Interstitial|B
+      193                         Organism|SmallIntestine|Intracellular|A
+      194                         Organism|SmallIntestine|Intracellular|B
+      195                                Organism|SmallIntestine|Plasma|A
+      196                                Organism|SmallIntestine|Plasma|B
+      197            Organism|SmallIntestine|Mucosa|Duodenum|BloodCells|A
+      198            Organism|SmallIntestine|Mucosa|Duodenum|BloodCells|B
+      199          Organism|SmallIntestine|Mucosa|Duodenum|Interstitial|A
+      200          Organism|SmallIntestine|Mucosa|Duodenum|Interstitial|B
+      201         Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|A
+      202         Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|B
+      203                Organism|SmallIntestine|Mucosa|Duodenum|Plasma|A
+      204                Organism|SmallIntestine|Mucosa|Duodenum|Plasma|B
+      205          Organism|SmallIntestine|Mucosa|LowerIleum|BloodCells|A
+      206          Organism|SmallIntestine|Mucosa|LowerIleum|BloodCells|B
+      207        Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial|A
+      208        Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial|B
+      209       Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|A
+      210       Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|B
+      211              Organism|SmallIntestine|Mucosa|LowerIleum|Plasma|A
+      212              Organism|SmallIntestine|Mucosa|LowerIleum|Plasma|B
+      213        Organism|SmallIntestine|Mucosa|LowerJejunum|BloodCells|A
+      214        Organism|SmallIntestine|Mucosa|LowerJejunum|BloodCells|B
+      215      Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial|A
+      216      Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial|B
+      217     Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|A
+      218     Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|B
+      219            Organism|SmallIntestine|Mucosa|LowerJejunum|Plasma|A
+      220            Organism|SmallIntestine|Mucosa|LowerJejunum|Plasma|B
+      221          Organism|SmallIntestine|Mucosa|UpperIleum|BloodCells|A
+      222          Organism|SmallIntestine|Mucosa|UpperIleum|BloodCells|B
+      223        Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial|A
+      224        Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial|B
+      225       Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|A
+      226       Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|B
+      227              Organism|SmallIntestine|Mucosa|UpperIleum|Plasma|A
+      228              Organism|SmallIntestine|Mucosa|UpperIleum|Plasma|B
+      229        Organism|SmallIntestine|Mucosa|UpperJejunum|BloodCells|A
+      230        Organism|SmallIntestine|Mucosa|UpperJejunum|BloodCells|B
+      231      Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial|A
+      232      Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial|B
+      233     Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|A
+      234     Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|B
+      235            Organism|SmallIntestine|Mucosa|UpperJejunum|Plasma|A
+      236            Organism|SmallIntestine|Mucosa|UpperJejunum|Plasma|B
+      237                                    Organism|Spleen|BloodCells|A
+      238                                    Organism|Spleen|BloodCells|B
+      239                                  Organism|Spleen|Interstitial|A
+      240                                  Organism|Spleen|Interstitial|B
+      241                                 Organism|Spleen|Intracellular|A
+      242                                 Organism|Spleen|Intracellular|B
+      243                                        Organism|Spleen|Plasma|A
+      244                                        Organism|Spleen|Plasma|B
+      245                                   Organism|Stomach|BloodCells|A
+      246                                   Organism|Stomach|BloodCells|B
+      247                                 Organism|Stomach|Interstitial|A
+      248                                 Organism|Stomach|Interstitial|B
+      249                                Organism|Stomach|Intracellular|A
+      250                                Organism|Stomach|Intracellular|B
+      251                                       Organism|Stomach|Plasma|A
+      252                                       Organism|Stomach|Plasma|B
+      253                               Organism|VenousBlood|BloodCells|A
+      254                               Organism|VenousBlood|BloodCells|B
+      255                                   Organism|VenousBlood|Plasma|A
+      256                                   Organism|VenousBlood|Plasma|B
+                  Parameter Name Value Unit
+      1   LocalMoleculeParameter     0 µmol
+      2   LocalMoleculeParameter     0 µmol
+      3   LocalMoleculeParameter     0 µmol
+      4   LocalMoleculeParameter     0 µmol
+      5   LocalMoleculeParameter     0 µmol
+      6   LocalMoleculeParameter     0 µmol
+      7   LocalMoleculeParameter     0 µmol
+      8   LocalMoleculeParameter     0 µmol
+      9   LocalMoleculeParameter     0 µmol
+      10  LocalMoleculeParameter     0 µmol
+      11  LocalMoleculeParameter     0 µmol
+      12  LocalMoleculeParameter     0 µmol
+      13  LocalMoleculeParameter     0 µmol
+      14  LocalMoleculeParameter     0 µmol
+      15  LocalMoleculeParameter     0 µmol
+      16  LocalMoleculeParameter     0 µmol
+      17  LocalMoleculeParameter     0 µmol
+      18  LocalMoleculeParameter     0 µmol
+      19  LocalMoleculeParameter     0 µmol
+      20  LocalMoleculeParameter     0 µmol
+      21  LocalMoleculeParameter     0 µmol
+      22  LocalMoleculeParameter     0 µmol
+      23  LocalMoleculeParameter     0 µmol
+      24  LocalMoleculeParameter     0 µmol
+      25  LocalMoleculeParameter     0 µmol
+      26  LocalMoleculeParameter     0 µmol
+      27  LocalMoleculeParameter     0 µmol
+      28  LocalMoleculeParameter     0 µmol
+      29  LocalMoleculeParameter     0 µmol
+      30  LocalMoleculeParameter     0 µmol
+      31  LocalMoleculeParameter     0 µmol
+      32  LocalMoleculeParameter     0 µmol
+      33  LocalMoleculeParameter     0 µmol
+      34  LocalMoleculeParameter     0 µmol
+      35  LocalMoleculeParameter     0 µmol
+      36  LocalMoleculeParameter     0 µmol
+      37  LocalMoleculeParameter     0 µmol
+      38  LocalMoleculeParameter     0 µmol
+      39  LocalMoleculeParameter     0 µmol
+      40  LocalMoleculeParameter     0 µmol
+      41  LocalMoleculeParameter     0 µmol
+      42  LocalMoleculeParameter     0 µmol
+      43  LocalMoleculeParameter     0 µmol
+      44  LocalMoleculeParameter     0 µmol
+      45  LocalMoleculeParameter     0 µmol
+      46  LocalMoleculeParameter     0 µmol
+      47  LocalMoleculeParameter     0 µmol
+      48  LocalMoleculeParameter     0 µmol
+      49  LocalMoleculeParameter     0 µmol
+      50  LocalMoleculeParameter     0 µmol
+      51  LocalMoleculeParameter     0 µmol
+      52  LocalMoleculeParameter     0 µmol
+      53  LocalMoleculeParameter     0 µmol
+      54  LocalMoleculeParameter     0 µmol
+      55  LocalMoleculeParameter     0 µmol
+      56  LocalMoleculeParameter     0 µmol
+      57  LocalMoleculeParameter     0 µmol
+      58  LocalMoleculeParameter     0 µmol
+      59  LocalMoleculeParameter     0 µmol
+      60  LocalMoleculeParameter     0 µmol
+      61  LocalMoleculeParameter     0 µmol
+      62  LocalMoleculeParameter     0 µmol
+      63  LocalMoleculeParameter     0 µmol
+      64  LocalMoleculeParameter     0 µmol
+      65  LocalMoleculeParameter     0 µmol
+      66  LocalMoleculeParameter     0 µmol
+      67  LocalMoleculeParameter     0 µmol
+      68  LocalMoleculeParameter     0 µmol
+      69  LocalMoleculeParameter     0 µmol
+      70  LocalMoleculeParameter     0 µmol
+      71  LocalMoleculeParameter     0 µmol
+      72  LocalMoleculeParameter     0 µmol
+      73  LocalMoleculeParameter     0 µmol
+      74  LocalMoleculeParameter     0 µmol
+      75  LocalMoleculeParameter     0 µmol
+      76  LocalMoleculeParameter     0 µmol
+      77  LocalMoleculeParameter     0 µmol
+      78  LocalMoleculeParameter     0 µmol
+      79  LocalMoleculeParameter     0 µmol
+      80  LocalMoleculeParameter     0 µmol
+      81  LocalMoleculeParameter     0 µmol
+      82  LocalMoleculeParameter     0 µmol
+      83  LocalMoleculeParameter     0 µmol
+      84  LocalMoleculeParameter     0 µmol
+      85  LocalMoleculeParameter     0 µmol
+      86  LocalMoleculeParameter     0 µmol
+      87  LocalMoleculeParameter     0 µmol
+      88  LocalMoleculeParameter     0 µmol
+      89  LocalMoleculeParameter     0 µmol
+      90  LocalMoleculeParameter     0 µmol
+      91  LocalMoleculeParameter     0 µmol
+      92  LocalMoleculeParameter     0 µmol
+      93  LocalMoleculeParameter     0 µmol
+      94  LocalMoleculeParameter     0 µmol
+      95  LocalMoleculeParameter     0 µmol
+      96  LocalMoleculeParameter     0 µmol
+      97  LocalMoleculeParameter     0 µmol
+      98  LocalMoleculeParameter     0 µmol
+      99  LocalMoleculeParameter     0 µmol
+      100 LocalMoleculeParameter     0 µmol
+      101 LocalMoleculeParameter     0 µmol
+      102 LocalMoleculeParameter     0 µmol
+      103 LocalMoleculeParameter     0 µmol
+      104 LocalMoleculeParameter     0 µmol
+      105 LocalMoleculeParameter     0 µmol
+      106 LocalMoleculeParameter     0 µmol
+      107 LocalMoleculeParameter     0 µmol
+      108 LocalMoleculeParameter     0 µmol
+      109 LocalMoleculeParameter     0 µmol
+      110 LocalMoleculeParameter     0 µmol
+      111 LocalMoleculeParameter     0 µmol
+      112 LocalMoleculeParameter     0 µmol
+      113 LocalMoleculeParameter     0 µmol
+      114 LocalMoleculeParameter     0 µmol
+      115 LocalMoleculeParameter     0 µmol
+      116 LocalMoleculeParameter     0 µmol
+      117 LocalMoleculeParameter     0 µmol
+      118 LocalMoleculeParameter     0 µmol
+      119 LocalMoleculeParameter     0 µmol
+      120 LocalMoleculeParameter     0 µmol
+      121 LocalMoleculeParameter     0 µmol
+      122 LocalMoleculeParameter     0 µmol
+      123 LocalMoleculeParameter     0 µmol
+      124 LocalMoleculeParameter     0 µmol
+      125 LocalMoleculeParameter     0 µmol
+      126 LocalMoleculeParameter     0 µmol
+      127 LocalMoleculeParameter     0 µmol
+      128 LocalMoleculeParameter     0 µmol
+      129 LocalMoleculeParameter     0 µmol
+      130 LocalMoleculeParameter     0 µmol
+      131 LocalMoleculeParameter     0 µmol
+      132 LocalMoleculeParameter     0 µmol
+      133 LocalMoleculeParameter     0 µmol
+      134 LocalMoleculeParameter     0 µmol
+      135 LocalMoleculeParameter     0 µmol
+      136 LocalMoleculeParameter     0 µmol
+      137 LocalMoleculeParameter     0 µmol
+      138 LocalMoleculeParameter     0 µmol
+      139 LocalMoleculeParameter     0 µmol
+      140 LocalMoleculeParameter     0 µmol
+      141 LocalMoleculeParameter     0 µmol
+      142 LocalMoleculeParameter     0 µmol
+      143 LocalMoleculeParameter     0 µmol
+      144 LocalMoleculeParameter     0 µmol
+      145 LocalMoleculeParameter     0 µmol
+      146 LocalMoleculeParameter     0 µmol
+      147 LocalMoleculeParameter     0 µmol
+      148 LocalMoleculeParameter     0 µmol
+      149 LocalMoleculeParameter     0 µmol
+      150 LocalMoleculeParameter     0 µmol
+      151 LocalMoleculeParameter     0 µmol
+      152 LocalMoleculeParameter     0 µmol
+      153 LocalMoleculeParameter     0 µmol
+      154 LocalMoleculeParameter     0 µmol
+      155 LocalMoleculeParameter     0 µmol
+      156 LocalMoleculeParameter     0 µmol
+      157 LocalMoleculeParameter     0 µmol
+      158 LocalMoleculeParameter     0 µmol
+      159 LocalMoleculeParameter     0 µmol
+      160 LocalMoleculeParameter     0 µmol
+      161 LocalMoleculeParameter     0 µmol
+      162 LocalMoleculeParameter     0 µmol
+      163 LocalMoleculeParameter     0 µmol
+      164 LocalMoleculeParameter     0 µmol
+      165 LocalMoleculeParameter     0 µmol
+      166 LocalMoleculeParameter     0 µmol
+      167 LocalMoleculeParameter     0 µmol
+      168 LocalMoleculeParameter     0 µmol
+      169 LocalMoleculeParameter     0 µmol
+      170 LocalMoleculeParameter     0 µmol
+      171 LocalMoleculeParameter     0 µmol
+      172 LocalMoleculeParameter     0 µmol
+      173 LocalMoleculeParameter     0 µmol
+      174 LocalMoleculeParameter     0 µmol
+      175 LocalMoleculeParameter     0 µmol
+      176 LocalMoleculeParameter     0 µmol
+      177 LocalMoleculeParameter     0 µmol
+      178 LocalMoleculeParameter     0 µmol
+      179 LocalMoleculeParameter     0 µmol
+      180 LocalMoleculeParameter     0 µmol
+      181 LocalMoleculeParameter     0 µmol
+      182 LocalMoleculeParameter     0 µmol
+      183 LocalMoleculeParameter     0 µmol
+      184 LocalMoleculeParameter     0 µmol
+      185 LocalMoleculeParameter     0 µmol
+      186 LocalMoleculeParameter     0 µmol
+      187 LocalMoleculeParameter     0 µmol
+      188 LocalMoleculeParameter     0 µmol
+      189 LocalMoleculeParameter     0 µmol
+      190 LocalMoleculeParameter     0 µmol
+      191 LocalMoleculeParameter     0 µmol
+      192 LocalMoleculeParameter     0 µmol
+      193 LocalMoleculeParameter     0 µmol
+      194 LocalMoleculeParameter     0 µmol
+      195 LocalMoleculeParameter     0 µmol
+      196 LocalMoleculeParameter     0 µmol
+      197 LocalMoleculeParameter     0 µmol
+      198 LocalMoleculeParameter     0 µmol
+      199 LocalMoleculeParameter     0 µmol
+      200 LocalMoleculeParameter     0 µmol
+      201 LocalMoleculeParameter     0 µmol
+      202 LocalMoleculeParameter     0 µmol
+      203 LocalMoleculeParameter     0 µmol
+      204 LocalMoleculeParameter     0 µmol
+      205 LocalMoleculeParameter     0 µmol
+      206 LocalMoleculeParameter     0 µmol
+      207 LocalMoleculeParameter     0 µmol
+      208 LocalMoleculeParameter     0 µmol
+      209 LocalMoleculeParameter     0 µmol
+      210 LocalMoleculeParameter     0 µmol
+      211 LocalMoleculeParameter     0 µmol
+      212 LocalMoleculeParameter     0 µmol
+      213 LocalMoleculeParameter     0 µmol
+      214 LocalMoleculeParameter     0 µmol
+      215 LocalMoleculeParameter     0 µmol
+      216 LocalMoleculeParameter     0 µmol
+      217 LocalMoleculeParameter     0 µmol
+      218 LocalMoleculeParameter     0 µmol
+      219 LocalMoleculeParameter     0 µmol
+      220 LocalMoleculeParameter     0 µmol
+      221 LocalMoleculeParameter     0 µmol
+      222 LocalMoleculeParameter     0 µmol
+      223 LocalMoleculeParameter     0 µmol
+      224 LocalMoleculeParameter     0 µmol
+      225 LocalMoleculeParameter     0 µmol
+      226 LocalMoleculeParameter     0 µmol
+      227 LocalMoleculeParameter     0 µmol
+      228 LocalMoleculeParameter     0 µmol
+      229 LocalMoleculeParameter     0 µmol
+      230 LocalMoleculeParameter     0 µmol
+      231 LocalMoleculeParameter     0 µmol
+      232 LocalMoleculeParameter     0 µmol
+      233 LocalMoleculeParameter     0 µmol
+      234 LocalMoleculeParameter     0 µmol
+      235 LocalMoleculeParameter     0 µmol
+      236 LocalMoleculeParameter     0 µmol
+      237 LocalMoleculeParameter     0 µmol
+      238 LocalMoleculeParameter     0 µmol
+      239 LocalMoleculeParameter     0 µmol
+      240 LocalMoleculeParameter     0 µmol
+      241 LocalMoleculeParameter     0 µmol
+      242 LocalMoleculeParameter     0 µmol
+      243 LocalMoleculeParameter     0 µmol
+      244 LocalMoleculeParameter     0 µmol
+      245 LocalMoleculeParameter     0 µmol
+      246 LocalMoleculeParameter     0 µmol
+      247 LocalMoleculeParameter     0 µmol
+      248 LocalMoleculeParameter     0 µmol
+      249 LocalMoleculeParameter     0 µmol
+      250 LocalMoleculeParameter     0 µmol
+      251 LocalMoleculeParameter     0 µmol
+      252 LocalMoleculeParameter     0 µmol
+      253 LocalMoleculeParameter     0 µmol
+      254 LocalMoleculeParameter     0 µmol
+      255 LocalMoleculeParameter     0 µmol
+      256 LocalMoleculeParameter     0 µmol
+
+# addLocalMoleculeParametersToParameterValuesBB adds parameters only for specified molecules
+
+    Code
+      newPaths_df
+    Output
+                                                           Container Path
+      1                                            Organism|Gallbladder|A
+      2                               Organism|ArterialBlood|BloodCells|A
+      3                                   Organism|ArterialBlood|Plasma|A
+      4                                      Organism|Bone|Interstitial|A
+      5                                     Organism|Bone|Intracellular|A
+      6                                        Organism|Bone|BloodCells|A
+      7                                            Organism|Bone|Plasma|A
+      8                                       Organism|Brain|BloodCells|A
+      9                                     Organism|Brain|Interstitial|A
+      10                                   Organism|Brain|Intracellular|A
+      11                                          Organism|Brain|Plasma|A
+      12                                        Organism|Fat|BloodCells|A
+      13                                      Organism|Fat|Interstitial|A
+      14                                     Organism|Fat|Intracellular|A
+      15                                            Organism|Fat|Plasma|A
+      16                                     Organism|Gonads|BloodCells|A
+      17                                   Organism|Gonads|Interstitial|A
+      18                                  Organism|Gonads|Intracellular|A
+      19                                         Organism|Gonads|Plasma|A
+      20                                      Organism|Heart|BloodCells|A
+      21                                    Organism|Heart|Interstitial|A
+      22                                   Organism|Heart|Intracellular|A
+      23                                          Organism|Heart|Plasma|A
+      24                                     Organism|Kidney|BloodCells|A
+      25                                   Organism|Kidney|Interstitial|A
+      26                                  Organism|Kidney|Intracellular|A
+      27                                         Organism|Kidney|Plasma|A
+      28                             Organism|LargeIntestine|BloodCells|A
+      29                           Organism|LargeIntestine|Interstitial|A
+      30                          Organism|LargeIntestine|Intracellular|A
+      31                                 Organism|LargeIntestine|Plasma|A
+      32               Organism|LargeIntestine|Mucosa|Caecum|BloodCells|A
+      33             Organism|LargeIntestine|Mucosa|Caecum|Interstitial|A
+      34            Organism|LargeIntestine|Mucosa|Caecum|Intracellular|A
+      35                   Organism|LargeIntestine|Mucosa|Caecum|Plasma|A
+      36       Organism|LargeIntestine|Mucosa|ColonAscendens|BloodCells|A
+      37     Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial|A
+      38    Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|A
+      39           Organism|LargeIntestine|Mucosa|ColonAscendens|Plasma|A
+      40      Organism|LargeIntestine|Mucosa|ColonDescendens|BloodCells|A
+      41    Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial|A
+      42   Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|A
+      43          Organism|LargeIntestine|Mucosa|ColonDescendens|Plasma|A
+      44         Organism|LargeIntestine|Mucosa|ColonSigmoid|BloodCells|A
+      45       Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial|A
+      46      Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|A
+      47             Organism|LargeIntestine|Mucosa|ColonSigmoid|Plasma|A
+      48     Organism|LargeIntestine|Mucosa|ColonTransversum|BloodCells|A
+      49   Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial|A
+      50  Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|A
+      51         Organism|LargeIntestine|Mucosa|ColonTransversum|Plasma|A
+      52               Organism|LargeIntestine|Mucosa|Rectum|BloodCells|A
+      53             Organism|LargeIntestine|Mucosa|Rectum|Interstitial|A
+      54            Organism|LargeIntestine|Mucosa|Rectum|Intracellular|A
+      55                   Organism|LargeIntestine|Mucosa|Rectum|Plasma|A
+      56                          Organism|Liver|Pericentral|BloodCells|A
+      57                        Organism|Liver|Pericentral|Interstitial|A
+      58                       Organism|Liver|Pericentral|Intracellular|A
+      59                              Organism|Liver|Pericentral|Plasma|A
+      60                           Organism|Liver|Periportal|BloodCells|A
+      61                         Organism|Liver|Periportal|Interstitial|A
+      62                        Organism|Liver|Periportal|Intracellular|A
+      63                               Organism|Liver|Periportal|Plasma|A
+      64                                          Organism|Lumen|Caecum|A
+      65                                  Organism|Lumen|ColonAscendens|A
+      66                                 Organism|Lumen|ColonDescendens|A
+      67                                    Organism|Lumen|ColonSigmoid|A
+      68                                Organism|Lumen|ColonTransversum|A
+      69                                        Organism|Lumen|Duodenum|A
+      70                                           Organism|Lumen|Feces|A
+      71                                      Organism|Lumen|LowerIleum|A
+      72                                    Organism|Lumen|LowerJejunum|A
+      73                                          Organism|Lumen|Rectum|A
+      74                                         Organism|Lumen|Stomach|A
+      75                                      Organism|Lumen|UpperIleum|A
+      76                                    Organism|Lumen|UpperJejunum|A
+      77                                       Organism|Lung|BloodCells|A
+      78                                     Organism|Lung|Interstitial|A
+      79                                    Organism|Lung|Intracellular|A
+      80                                           Organism|Lung|Plasma|A
+      81                                     Organism|Muscle|BloodCells|A
+      82                                   Organism|Muscle|Interstitial|A
+      83                                  Organism|Muscle|Intracellular|A
+      84                                         Organism|Muscle|Plasma|A
+      85                                   Organism|Pancreas|BloodCells|A
+      86                                 Organism|Pancreas|Interstitial|A
+      87                                Organism|Pancreas|Intracellular|A
+      88                                       Organism|Pancreas|Plasma|A
+      89                                 Organism|PortalVein|BloodCells|A
+      90                                     Organism|PortalVein|Plasma|A
+      91                                       Organism|Skin|BloodCells|A
+      92                                     Organism|Skin|Interstitial|A
+      93                                    Organism|Skin|Intracellular|A
+      94                                           Organism|Skin|Plasma|A
+      95                             Organism|SmallIntestine|BloodCells|A
+      96                           Organism|SmallIntestine|Interstitial|A
+      97                          Organism|SmallIntestine|Intracellular|A
+      98                                 Organism|SmallIntestine|Plasma|A
+      99             Organism|SmallIntestine|Mucosa|Duodenum|BloodCells|A
+      100          Organism|SmallIntestine|Mucosa|Duodenum|Interstitial|A
+      101         Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|A
+      102                Organism|SmallIntestine|Mucosa|Duodenum|Plasma|A
+      103          Organism|SmallIntestine|Mucosa|LowerIleum|BloodCells|A
+      104        Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial|A
+      105       Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|A
+      106              Organism|SmallIntestine|Mucosa|LowerIleum|Plasma|A
+      107        Organism|SmallIntestine|Mucosa|LowerJejunum|BloodCells|A
+      108      Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial|A
+      109     Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|A
+      110            Organism|SmallIntestine|Mucosa|LowerJejunum|Plasma|A
+      111          Organism|SmallIntestine|Mucosa|UpperIleum|BloodCells|A
+      112        Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial|A
+      113       Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|A
+      114              Organism|SmallIntestine|Mucosa|UpperIleum|Plasma|A
+      115        Organism|SmallIntestine|Mucosa|UpperJejunum|BloodCells|A
+      116      Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial|A
+      117     Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|A
+      118            Organism|SmallIntestine|Mucosa|UpperJejunum|Plasma|A
+      119                                    Organism|Spleen|BloodCells|A
+      120                                  Organism|Spleen|Interstitial|A
+      121                                 Organism|Spleen|Intracellular|A
+      122                                        Organism|Spleen|Plasma|A
+      123                                   Organism|Stomach|BloodCells|A
+      124                                 Organism|Stomach|Interstitial|A
+      125                                Organism|Stomach|Intracellular|A
+      126                                       Organism|Stomach|Plasma|A
+      127                               Organism|VenousBlood|BloodCells|A
+      128                                   Organism|VenousBlood|Plasma|A
+                  Parameter Name Value Unit
+      1   LocalMoleculeParameter     0 µmol
+      2   LocalMoleculeParameter     0 µmol
+      3   LocalMoleculeParameter     0 µmol
+      4   LocalMoleculeParameter     0 µmol
+      5   LocalMoleculeParameter     0 µmol
+      6   LocalMoleculeParameter     0 µmol
+      7   LocalMoleculeParameter     0 µmol
+      8   LocalMoleculeParameter     0 µmol
+      9   LocalMoleculeParameter     0 µmol
+      10  LocalMoleculeParameter     0 µmol
+      11  LocalMoleculeParameter     0 µmol
+      12  LocalMoleculeParameter     0 µmol
+      13  LocalMoleculeParameter     0 µmol
+      14  LocalMoleculeParameter     0 µmol
+      15  LocalMoleculeParameter     0 µmol
+      16  LocalMoleculeParameter     0 µmol
+      17  LocalMoleculeParameter     0 µmol
+      18  LocalMoleculeParameter     0 µmol
+      19  LocalMoleculeParameter     0 µmol
+      20  LocalMoleculeParameter     0 µmol
+      21  LocalMoleculeParameter     0 µmol
+      22  LocalMoleculeParameter     0 µmol
+      23  LocalMoleculeParameter     0 µmol
+      24  LocalMoleculeParameter     0 µmol
+      25  LocalMoleculeParameter     0 µmol
+      26  LocalMoleculeParameter     0 µmol
+      27  LocalMoleculeParameter     0 µmol
+      28  LocalMoleculeParameter     0 µmol
+      29  LocalMoleculeParameter     0 µmol
+      30  LocalMoleculeParameter     0 µmol
+      31  LocalMoleculeParameter     0 µmol
+      32  LocalMoleculeParameter     0 µmol
+      33  LocalMoleculeParameter     0 µmol
+      34  LocalMoleculeParameter     0 µmol
+      35  LocalMoleculeParameter     0 µmol
+      36  LocalMoleculeParameter     0 µmol
+      37  LocalMoleculeParameter     0 µmol
+      38  LocalMoleculeParameter     0 µmol
+      39  LocalMoleculeParameter     0 µmol
+      40  LocalMoleculeParameter     0 µmol
+      41  LocalMoleculeParameter     0 µmol
+      42  LocalMoleculeParameter     0 µmol
+      43  LocalMoleculeParameter     0 µmol
+      44  LocalMoleculeParameter     0 µmol
+      45  LocalMoleculeParameter     0 µmol
+      46  LocalMoleculeParameter     0 µmol
+      47  LocalMoleculeParameter     0 µmol
+      48  LocalMoleculeParameter     0 µmol
+      49  LocalMoleculeParameter     0 µmol
+      50  LocalMoleculeParameter     0 µmol
+      51  LocalMoleculeParameter     0 µmol
+      52  LocalMoleculeParameter     0 µmol
+      53  LocalMoleculeParameter     0 µmol
+      54  LocalMoleculeParameter     0 µmol
+      55  LocalMoleculeParameter     0 µmol
+      56  LocalMoleculeParameter     0 µmol
+      57  LocalMoleculeParameter     0 µmol
+      58  LocalMoleculeParameter     0 µmol
+      59  LocalMoleculeParameter     0 µmol
+      60  LocalMoleculeParameter     0 µmol
+      61  LocalMoleculeParameter     0 µmol
+      62  LocalMoleculeParameter     0 µmol
+      63  LocalMoleculeParameter     0 µmol
+      64  LocalMoleculeParameter     0 µmol
+      65  LocalMoleculeParameter     0 µmol
+      66  LocalMoleculeParameter     0 µmol
+      67  LocalMoleculeParameter     0 µmol
+      68  LocalMoleculeParameter     0 µmol
+      69  LocalMoleculeParameter     0 µmol
+      70  LocalMoleculeParameter     0 µmol
+      71  LocalMoleculeParameter     0 µmol
+      72  LocalMoleculeParameter     0 µmol
+      73  LocalMoleculeParameter     0 µmol
+      74  LocalMoleculeParameter     0 µmol
+      75  LocalMoleculeParameter     0 µmol
+      76  LocalMoleculeParameter     0 µmol
+      77  LocalMoleculeParameter     0 µmol
+      78  LocalMoleculeParameter     0 µmol
+      79  LocalMoleculeParameter     0 µmol
+      80  LocalMoleculeParameter     0 µmol
+      81  LocalMoleculeParameter     0 µmol
+      82  LocalMoleculeParameter     0 µmol
+      83  LocalMoleculeParameter     0 µmol
+      84  LocalMoleculeParameter     0 µmol
+      85  LocalMoleculeParameter     0 µmol
+      86  LocalMoleculeParameter     0 µmol
+      87  LocalMoleculeParameter     0 µmol
+      88  LocalMoleculeParameter     0 µmol
+      89  LocalMoleculeParameter     0 µmol
+      90  LocalMoleculeParameter     0 µmol
+      91  LocalMoleculeParameter     0 µmol
+      92  LocalMoleculeParameter     0 µmol
+      93  LocalMoleculeParameter     0 µmol
+      94  LocalMoleculeParameter     0 µmol
+      95  LocalMoleculeParameter     0 µmol
+      96  LocalMoleculeParameter     0 µmol
+      97  LocalMoleculeParameter     0 µmol
+      98  LocalMoleculeParameter     0 µmol
+      99  LocalMoleculeParameter     0 µmol
+      100 LocalMoleculeParameter     0 µmol
+      101 LocalMoleculeParameter     0 µmol
+      102 LocalMoleculeParameter     0 µmol
+      103 LocalMoleculeParameter     0 µmol
+      104 LocalMoleculeParameter     0 µmol
+      105 LocalMoleculeParameter     0 µmol
+      106 LocalMoleculeParameter     0 µmol
+      107 LocalMoleculeParameter     0 µmol
+      108 LocalMoleculeParameter     0 µmol
+      109 LocalMoleculeParameter     0 µmol
+      110 LocalMoleculeParameter     0 µmol
+      111 LocalMoleculeParameter     0 µmol
+      112 LocalMoleculeParameter     0 µmol
+      113 LocalMoleculeParameter     0 µmol
+      114 LocalMoleculeParameter     0 µmol
+      115 LocalMoleculeParameter     0 µmol
+      116 LocalMoleculeParameter     0 µmol
+      117 LocalMoleculeParameter     0 µmol
+      118 LocalMoleculeParameter     0 µmol
+      119 LocalMoleculeParameter     0 µmol
+      120 LocalMoleculeParameter     0 µmol
+      121 LocalMoleculeParameter     0 µmol
+      122 LocalMoleculeParameter     0 µmol
+      123 LocalMoleculeParameter     0 µmol
+      124 LocalMoleculeParameter     0 µmol
+      125 LocalMoleculeParameter     0 µmol
+      126 LocalMoleculeParameter     0 µmol
+      127 LocalMoleculeParameter     0 µmol
+      128 LocalMoleculeParameter     0 µmol
 
