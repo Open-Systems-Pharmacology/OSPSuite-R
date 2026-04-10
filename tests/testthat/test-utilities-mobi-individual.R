@@ -67,6 +67,14 @@ test_that("setParameterValuesInIndividualBB throws an error when quantityPaths a
   )
 })
 
+setParameterValuesInBB(
+  individual,
+  quantityPaths = c("Organism|Age", "Organism|BMI"),
+  quantityValues = c(30, 25),
+  units = c("year(s)", "kg/m^2")
+)
+
+
 test_that("setParameterValuesInIndividualBB throws an error when individualBuildingBlock is not a BuildingBlock", {
   expect_error(
     setParameterValuesInIndividualBB(

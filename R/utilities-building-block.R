@@ -443,7 +443,7 @@ setParameterValuesInBB <- function(
 ) {
   .validateBuildingBlockType(
     parameterValuesBuildingBlock,
-    BuildingBlockTypes$`Parameter Values`
+    c(BuildingBlockTypes$`Parameter Values`, BuildingBlockTypes$`Individual`)
   )
 
   # Exit early if no quantity paths are provided
@@ -454,6 +454,18 @@ setParameterValuesInBB <- function(
   # Replicate scalar units and dimensions to match the length of quantityPaths
   if (length(units) == 1) {
     units <- rep(units, length(quantityPaths))
+  }
+
+  # Validate if any unit is not supported
+  if (!all(sapply(units, isSupportedUnit))) {
+    unsupportedUnits <- units[!sapply(units, isSupportedUnit)]
+    stop(
+      paste0(
+        "The following units are not supported in the OSPSuite platform: ",
+        paste(unique(unsupportedUnits), collapse = ", "),
+        ". Please provide supported units to set parameter values in the building block."
+      )
+    )
   }
 
   if (!is.null(dimensions) && length(dimensions) == 1) {
@@ -676,23 +688,23 @@ addProteinExpressionToParameterValuesBB <- function(
 #' Internal utility function to validate the type of a building block.
 #'
 #' @param buildingBlock A `BuildingBlock` object to validate.
-#' @param expectedType A string indicating the expected type of the building block.
+#' @param expectedTypes A character vector indicating the expected types of the building block.
 #'
 #' @keywords internal
 #' @noRd
 .validateBuildingBlockType <- function(
   buildingBlock,
-  expectedType
+  expectedTypes
 ) {
   if (is.null(buildingBlock)) {
     return(invisible(TRUE))
   }
 
-  if (buildingBlock$type != expectedType) {
+  if (!buildingBlock$type %in% expectedTypes) {
     # throw error
     stop(messages$errorWrongBuildingBlockType(
       buildingBlock$name,
-      expectedType,
+      expectedTypes,
       buildingBlock$type
     ))
   }

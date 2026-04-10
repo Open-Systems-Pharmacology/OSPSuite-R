@@ -835,3 +835,12 @@ test_that(".extractMostFrequentUnit uses naive count without dataType column", {
   d <- data.frame(xUnit = c("min", "min", "h"), yUnit = c("mg", "g", "g"))
   expect_equal(.extractMostFrequentUnit(d, "yUnit"), "g")
 })
+
+# isSupportedUnit
+test_that("isSupportedUnit returns true for supported unit", {
+  expect_true(isSupportedUnit("mg"))
+})
+
+test_that("isSupportedUnit returns false for unsupported unit", {
+  expect_false(isSupportedUnit("unsupportedUnit"))
+})

@@ -361,6 +361,20 @@ test_that("extendInitialConditionsBB should handle wrong type of initialConditio
 
 # setParameterValuesInBB tests
 
+test_that("setParameterValuesInBB throws an error if one of the provided units is not valid", {
+  pvBB <- getFreshPVBB()
+  expect_error(
+    setParameterValuesInBB(
+      pvBB,
+      quantityPaths = c("Path1", "Path2", "Path3"),
+      quantityValues = c(1, 2, 3),
+      units = c("invalidUnit", "µmol", "invalidUnit3")
+    ),
+    regexp = "The following units are not supported: invalidUnit"
+  )
+})
+
+
 test_that("setParameterValuesInBB throws an error if the building block is not of type Parameter Values", {
   icBB <- getFreshICBB()
   expect_error(

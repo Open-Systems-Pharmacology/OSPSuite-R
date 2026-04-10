@@ -46,6 +46,15 @@ validateUnit <- function(unit, dimension) {
   }
 }
 
+#' Check if unit is supported in the OSPSuite platform
+#'
+#' @param unit String name of the unit
+#' @details Returns `TRUE` if the provided unit is supported in the OSPSuite platform, otherwise `FALSE`
+#' @export
+isSupportedUnit <- function(unit) {
+  return(unit %in% unlist(ospUnits))
+}
+
 #' Check if quantity can be represented in the unit
 #'
 #' @param quantity `Quantity` object
