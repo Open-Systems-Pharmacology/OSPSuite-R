@@ -9,5 +9,5 @@ permissions: read-all
 
 jobs:
   check-released-deps:
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-released-deps.yaml@main
+    uses: Felixmil/Workflows/.github/workflows/R-CMD-check-released-deps.yaml@optimize-renv-cache
     secrets: inherit

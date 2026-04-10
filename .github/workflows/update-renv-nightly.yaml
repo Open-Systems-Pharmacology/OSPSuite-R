@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   update-renv-nightly:
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/update-renv-lockfile.yaml@main
+    uses: Felixmil/Workflows/.github/workflows/update-renv-lockfile.yaml@optimize-renv-cache
     with:
       app-id: ${{ vars.VERSION_BUMPER_APPID }}
     secrets:
