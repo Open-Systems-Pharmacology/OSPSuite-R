@@ -20,13 +20,13 @@
 #'   species = Species$Human,
 #'   population = HumanPopulation$European_ICRP_2002
 #' )
-#' setMoBiIndividualParameters(
+#' setParameterValuesInIndividualBB(
 #'   individual,
 #'   quantityPaths = c("Organism|Age", "Organism|Weight"),
 #'   quantityValues = c(30, 73)
 #' )
 #' }
-setMoBiIndividualParameters <- function(
+setParameterValuesInIndividualBB <- function(
   individualBuildingBlock,
   quantityPaths,
   quantityValues
