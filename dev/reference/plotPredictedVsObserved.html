@@ -11,7 +11,7 @@ values, allowing for easy identification of discrepancies.'><meta name="robots" 
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9009</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,6 +78,7 @@ values, allowing for easy identification of discrepancies.</p>
 <span>  xyScale <span class="op">=</span> <span class="st">"log"</span>,</span>
 <span>  predictedAxis <span class="op">=</span> <span class="st">"y"</span>,</span>
 <span>  comparisonLineVector <span class="op">=</span> <span class="fu">ospsuite.plots</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/getFoldDistanceList.html" class="external-link">getFoldDistanceList</a></span><span class="op">(</span>folds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  showLegendPerDataset <span class="op">=</span> <span class="st">"all"</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -137,6 +138,14 @@ y-axis) or <code>"y"</code> (default, predicted on y-axis, observed on x-axis).<
 <code><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/getFoldDistanceList.html" class="external-link">ospsuite.plots::getFoldDistanceList</a></code>. This list contains fold distances,
 where each entry represents a fold and its reciprocal. The identity fold
 (1) will be included if specified in <code>getFoldDistanceList</code>.</p></dd>
+
+
+<dt id="arg-showlegendperdataset">showLegendPerDataset<a class="anchor" aria-label="anchor" href="#arg-showlegendperdataset"></a></dt>
+<dd><p>Controls display of separate legend entries for
+individual datasets. One of:</p><ul><li><p><code>"none"</code> : No per-dataset differentiation. Only group-level legend.</p></li>
+<li><p><code>"all"</code> (default) or <code>"observed"</code>: Differentiate observed datasets via different
+shapes (using the <code>name</code> column).</p></li>
+</ul><p>User-provided <code>mapping</code> will override internal settings.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -210,6 +219,9 @@ no plottable entries.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate an observed vs predicted plot (swap axes)</span></span></span>
 <span class="r-in"><span><span class="fu">plotPredictedVsObserved</span><span class="op">(</span><span class="va">myDataCombined</span>, predictedAxis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Show individual dataset names in legend</span></span></span>
+<span class="r-in"><span><span class="fu">plotPredictedVsObserved</span><span class="op">(</span><span class="va">myDataCombined</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"observed"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

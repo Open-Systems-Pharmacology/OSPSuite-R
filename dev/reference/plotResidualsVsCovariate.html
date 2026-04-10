@@ -13,7 +13,7 @@ This function visualizes the residuals against time, observed, or predicted
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9009</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,6 +81,7 @@ values), grouped by "group".</p>
 <span>  yUnit <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  residualScale <span class="op">=</span> <span class="st">"log"</span>,</span>
 <span>  xAxis <span class="op">=</span> <span class="st">"observed"</span>,</span>
+<span>  showLegendPerDataset <span class="op">=</span> <span class="st">"all"</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -140,6 +141,14 @@ residuals. Default is <code>log</code>.</p></dd>
 <dd><p>A character string specifying what to display on the x-axis.
 Options are <code>"time"</code> (time points from xValues), <code>"observed"</code> (observed
 values, default), or <code>"predicted"</code> (predicted/simulated values).</p></dd>
+
+
+<dt id="arg-showlegendperdataset">showLegendPerDataset<a class="anchor" aria-label="anchor" href="#arg-showlegendperdataset"></a></dt>
+<dd><p>Controls display of separate legend entries for
+individual datasets. One of:</p><ul><li><p><code>"none"</code>: No per-dataset differentiation. Only group-level legend.</p></li>
+<li><p><code>"all"</code> (default) or <code>"observed"</code>: Differentiate observed datasets via different
+shapes (using the <code>name</code> column).</p></li>
+</ul><p>User-provided <code>mapping</code> will override internal settings.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -243,6 +252,9 @@ prediction error.</p></li>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate a residuals vs time plot</span></span></span>
 <span class="r-in"><span><span class="fu">plotResidualsVsCovariate</span><span class="op">(</span><span class="va">myDataCombined</span>, xAxis <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Show individual dataset names in legend</span></span></span>
+<span class="r-in"><span><span class="fu">plotResidualsVsCovariate</span><span class="op">(</span><span class="va">myDataCombined</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"observed"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

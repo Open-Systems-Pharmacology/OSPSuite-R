@@ -16,6 +16,7 @@ plotPredictedVsObserved(
   xyScale = "log",
   predictedAxis = "y",
   comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
+  showLegendPerDataset = "all",
   ...
 )
 ```
@@ -89,6 +90,18 @@ plotPredictedVsObserved(
   This list contains fold distances, where each entry represents a fold
   and its reciprocal. The identity fold (1) will be included if
   specified in `getFoldDistanceList`.
+
+- showLegendPerDataset:
+
+  Controls display of separate legend entries for individual datasets.
+  One of:
+
+  - `"none"` : No per-dataset differentiation. Only group-level legend.
+
+  - `"all"` (default) or `"observed"`: Differentiate observed datasets
+    via different shapes (using the `name` column).
+
+  User-provided `mapping` will override internal settings.
 
 - ...:
 
@@ -190,5 +203,8 @@ plotPredictedVsObserved(myDataCombined)
 
 # Generate an observed vs predicted plot (swap axes)
 plotPredictedVsObserved(myDataCombined, predictedAxis = "x")
+
+# Show individual dataset names in legend
+plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "observed")
 } # }
 ```

@@ -17,6 +17,7 @@ plotResidualsVsCovariate(
   yUnit = NULL,
   residualScale = "log",
   xAxis = "observed",
+  showLegendPerDataset = "all",
   ...
 )
 ```
@@ -90,6 +91,18 @@ plotResidualsVsCovariate(
   A character string specifying what to display on the x-axis. Options
   are `"time"` (time points from xValues), `"observed"` (observed
   values, default), or `"predicted"` (predicted/simulated values).
+
+- showLegendPerDataset:
+
+  Controls display of separate legend entries for individual datasets.
+  One of:
+
+  - `"none"`: No per-dataset differentiation. Only group-level legend.
+
+  - `"all"` (default) or `"observed"`: Differentiate observed datasets
+    via different shapes (using the `name` column).
+
+  User-provided `mapping` will override internal settings.
 
 - ...:
 
@@ -223,5 +236,8 @@ plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
 
 # Generate a residuals vs time plot
 plotResidualsVsCovariate(myDataCombined, xAxis = "time")
+
+# Show individual dataset names in legend
+plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "observed")
 } # }
 ```

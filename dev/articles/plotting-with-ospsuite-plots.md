@@ -375,6 +375,21 @@ plotPredictedVsObserved(myDataCombined, xyScale = "linear")
 
 ![](plotting-with-ospsuite-plots_files/figure-html/predvsobs-scale-1.png)
 
+### Showing Individual Dataset Names
+
+Similar to
+[`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md),
+you can display individual dataset names in the legend using the
+`showLegendPerDataset` parameter:
+
+``` r
+# Show individual observed dataset names (different shapes) (default)
+plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "all")
+
+# No per-dataset differentiation
+plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "none")
+```
+
 ## Residuals vs Covariate Plots
 
 The
@@ -427,6 +442,19 @@ plotResidualsVsCovariate(
 ```
 
 ![](plotting-with-ospsuite-plots_files/figure-html/resvsobs-scale-1.png)
+
+### Showing Individual Dataset Names
+
+You can display individual dataset names in the legend using the
+`showLegendPerDataset` parameter:
+
+``` r
+# Show individual observed dataset names (different shapes) (default)
+plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "all")
+
+# No per-dataset differentiation
+plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "none")
+```
 
 ## Residuals as Histogram
 
