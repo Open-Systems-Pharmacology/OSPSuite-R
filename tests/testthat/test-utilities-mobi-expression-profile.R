@@ -47,7 +47,7 @@ test_that("createMoBiExpressionProfileBuildingBlock throws an error when categor
       moleculeName = "CYP3A4",
       speciesName = "Human"
     ),
-    "The `category` argument must not be an empty string."
+    "argument \"category\" has empty strings!."
   )
 })
 
@@ -58,9 +58,10 @@ test_that("createMoBiExpressionProfileBuildingBlock throws an error when molecul
       moleculeName = "",
       speciesName = "Human"
     ),
-    "The `moleculeName` argument must not be an empty string."
+    "argument \"moleculeName\" has empty strings!."
   )
 })
+
 test_that("createMoBiExpressionProfileBuildingBlock throws an error when speciesName is not in the Species enumeration", {
   expect_error(
     createMoBiExpressionProfileBuildingBlock(

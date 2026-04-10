@@ -10,26 +10,24 @@ IndividualDiseaseStates <- enum(c(
 ))
 
 
-#' Create an Individual Building Block
+#' Create a MoBi Individual Building Block
 #'
-#' @param species
-#' @param population
-#' @param gender
-#' @param weight
-#' @param weightUnit
-#' @param height
-#' @param heightUnit
-#' @param age
-#' @param ageUnit
-#' @param gestationalAge
-#' @param gestationalAgeUnit
-#' @param moleculeOntogenies
-#' @param seed
+#' Creates an individual building block in MoBi for a given species and
+#' optional demographic characteristics. Currently, disease states are not supported.
 #'
-#' @returns An object of type `BuildingBlock` representing an individual
+#' @inheritParams createIndividualCharacteristics
+#'
+#' @returns An object of type `BuildingBlock` representing the created individual.
 #' @export
 #'
 #' @examples
+#' individual <- createMoBiIndividualBuildingBlock(
+#'   species = Species$Human,
+#'   population = HumanPopulation$European_ICRP_2002,
+#'   gender = Gender$Male,
+#'   weight = 73,
+#'   age = 30
+#' )
 createIndividualBuildingBlock <- function(
   species,
   population = NULL,
@@ -43,13 +41,12 @@ createIndividualBuildingBlock <- function(
   gestationalAge = 40,
   gestationalAgeUnit = "week(s)",
   moleculeOntogenies = NULL,
-  seed = NULL,
-  diseaseState = IndividualDiseaseStates$None
+  seed = NULL
 ) {
   return(IndividualBuildingBlock)
 }
 
-#' Creates an individual using the PK-Sim Database
+#' Creates a set of parameter values describing an individual using the PK-Sim Database
 #'
 #' @param individualCharacteristics Characteristics of the individual to create
 #'   as an instance of `IndividualCharacteristics`
@@ -142,10 +139,10 @@ createDistributions <- function(individualCharacteristics) {
 #' @param gestationalAge Gestational age of the created individual (for human species only using the Preterm population). Default is 40 Weeks
 #' @param gestationalAgeUnit Unit in which the gestational age value is defined. Default is week(s)
 #' @param moleculeOntogenies Optional list of `MoleculeOntogeny` that will be used to retrieve ontogeny information for molecules.
-#' @param seed Optional seed parameter to use to generate start values for the created individual algorithm.
 #' A `MoleculeOntogeny` is an object with the name a `molecule` property (e.g the name of the molecule as defined in your simulation)
 #' and an `ontogeny` property (e.g. the name of the predefined ontogeny to use for this molecule). The list of all available ontogenies
 #' can be accessed programmatically using the enum `StandardOntogeny`
+#' @param seed Optional seed parameter to use to generate start values for the created individual algorithm.
 #'
 #' @import ospsuite.utils
 #'
