@@ -12,6 +12,7 @@ plotResidualsVsCovariate(
   yUnit = NULL,
   residualScale = "log",
   xAxis = "observed",
+  showLegendPerDataset = "all",
   ...
 )
 }
@@ -58,6 +59,16 @@ residuals. Default is \code{log}.}
 \item{xAxis}{A character string specifying what to display on the x-axis.
 Options are \code{"time"} (time points from xValues), \code{"observed"} (observed
 values, default), or \code{"predicted"} (predicted/simulated values).}
+
+\item{showLegendPerDataset}{Controls display of separate legend entries for
+individual datasets. One of:
+\itemize{
+\item \code{"none"}: No per-dataset differentiation. Only group-level legend.
+\item \code{"all"} (default) or \code{"observed"}: Differentiate observed datasets via different
+shapes (using the \code{name} column).
+}
+
+User-provided \code{mapping} will override internal settings.}
 
 \item{...}{
   Arguments passed on to \code{\link[ospsuite.plots:plotYVsX]{ospsuite.plots::plotYVsX}}, \code{\link[ospsuite.plots:plotResVsCov]{ospsuite.plots::plotResVsCov}}
@@ -130,6 +141,9 @@ plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
 
 # Generate a residuals vs time plot
 plotResidualsVsCovariate(myDataCombined, xAxis = "time")
+
+# Show individual dataset names in legend
+plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "observed")
 }
 }
 \seealso{
