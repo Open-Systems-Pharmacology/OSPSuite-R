@@ -351,10 +351,6 @@ getDimensionByName <- function(name) {
 #' available for each dimension
 #'
 #' @return enum of all units for each dimension
-#'
-#' @examples
-#'
-#' ospsuite:::.getUnitsEnum()
 #' @keywords internal
 .getUnitsEnum <- function() {
   dimensions <- allAvailableDimensions()
@@ -390,10 +386,6 @@ getDimensionByName <- function(name) {
 #' @title Function to return an enum of all available dimensions
 #'
 #' @return enum of all dimensions
-#'
-#' @examples
-#'
-#' ospsuite:::.getDimensionsEnum()
 #' @keywords internal
 .getDimensionsEnum <- function() {
   enum(allAvailableDimensions())
@@ -595,19 +587,44 @@ ospUnits <- NULL
   data <- as.data.table(data)
 
   # xUnit: convert xValues in-place, grouped by (xDimension, xUnit)
-  data[, xValues := toUnit(
-    quantityOrDimension = xDimension[[1L]],
-    values = xValues,
-    targetUnit = xTargetUnit,
-    sourceUnit = xUnit[[1L]]
-  ), by = .(xDimension, xUnit)]
+  data[,
+    xValues := toUnit(
+      quantityOrDimension = xDimension[[1L]],
+      values = xValues,
+      targetUnit = xTargetUnit,
+      sourceUnit = xUnit[[1L]]
+    ),
+    by = .(xDimension, xUnit)
+  ]
   data[, xUnit := xTargetUnit]
 
   # yUnit: convert yValues (and lloq if present) in-place,
   # grouped by (yDimension, yUnit, molWeight)
   if ("lloq" %in% colnames(data)) {
-    data[, c("yValues", "lloq") := list(
-      toUnit(
+    data[,
+      c("yValues", "lloq") := list(
+        toUnit(
+          quantityOrDimension = yDimension[[1L]],
+          values = yValues,
+          targetUnit = yTargetUnit,
+          sourceUnit = yUnit[[1L]],
+          molWeight = molWeight[[1L]],
+          molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+        ),
+        toUnit(
+          quantityOrDimension = yDimension[[1L]],
+          values = lloq,
+          targetUnit = yTargetUnit,
+          sourceUnit = yUnit[[1L]],
+          molWeight = molWeight[[1L]],
+          molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
+        )
+      ),
+      by = .(yDimension, yUnit, molWeight)
+    ]
+  } else {
+    data[,
+      yValues := toUnit(
         quantityOrDimension = yDimension[[1L]],
         values = yValues,
         targetUnit = yTargetUnit,
@@ -615,24 +632,8 @@ ospUnits <- NULL
         molWeight = molWeight[[1L]],
         molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
       ),
-      toUnit(
-        quantityOrDimension = yDimension[[1L]],
-        values = lloq,
-        targetUnit = yTargetUnit,
-        sourceUnit = yUnit[[1L]],
-        molWeight = molWeight[[1L]],
-        molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
-      )
-    ), by = .(yDimension, yUnit, molWeight)]
-  } else {
-    data[, yValues := toUnit(
-      quantityOrDimension = yDimension[[1L]],
-      values = yValues,
-      targetUnit = yTargetUnit,
-      sourceUnit = yUnit[[1L]],
-      molWeight = molWeight[[1L]],
-      molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
-    ), by = .(yDimension, yUnit, molWeight)]
+      by = .(yDimension, yUnit, molWeight)
+    ]
   }
   data[, yUnit := yTargetUnit]
 

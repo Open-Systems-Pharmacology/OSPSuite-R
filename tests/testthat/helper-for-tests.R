@@ -1,3 +1,9 @@
+aciclovirSimulationPath <- system.file(
+  "extdata",
+  "Aciclovir.pkml",
+  package = "ospsuite"
+)
+
 getTestDataFilePath <- function(fileName) {
   dataPath <- testthat::test_path("../data")
   file.path(dataPath, fileName, fsep = .Platform$file.sep)

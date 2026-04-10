@@ -15,7 +15,7 @@ Loads data (typically observed data) from a PKML file and creates a \code{DataSe
 The pkml files are typically exported from PK-Sim or MoBi.
 }
 \examples{
-filePath <- system.file("extdata", "obs_data.pkml", package = "ospsuite")
+filePath <- system.file("extdata", "ObsDataAciclovir_1.pkml", package = "ospsuite")
 
 obsData <- loadDataSetFromPKML(filePath)
 }

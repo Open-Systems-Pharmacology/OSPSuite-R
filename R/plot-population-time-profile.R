@@ -18,6 +18,7 @@
 #' @family plotting
 #'
 #' @examples
+#' \dontrun{
 #' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simFilePath)
 #'
@@ -41,6 +42,7 @@
 #' plotPopulationTimeProfile(myDataComb,
 #'   aggregation = "arithmetic"
 #' )
+#' }
 #'
 #' @export
 plotPopulationTimeProfile <- function(

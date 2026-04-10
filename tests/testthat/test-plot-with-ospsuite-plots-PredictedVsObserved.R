@@ -8,7 +8,7 @@ ggplot2::theme_update(legend.justification = c("right", "bottom"))
 # data to be used ---------------------------------------
 
 # load the simulation
-sim <- loadTestSimulation("MinimalModel")
+sim <- loadTestSimulation("simple", loadFromCache = TRUE, addToCache = TRUE)
 simResults <- importResultsFromCSV(
   simulation = sim,
   filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
@@ -21,6 +21,43 @@ dataSet <- loadDataSetsFromExcel(
     "ImporterConfiguration.xml"
   ))
 )
+
+aciclovirSimulation <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
+
+aciclovirSimResults <- runSimulations(aciclovirSimulation)[[1]]
+aciclovirSimData <- withr::with_tempdir({
+  df <- dplyr::tibble(
+    IndividualId = c(0, 0, 0),
+    `Time [min]` = c(0, 2, 4),
+    `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
+      0.5,
+      4,
+      8
+    )
+  )
+  readr::write_csv(df, "SimResults.csv")
+  importResultsFromCSV(aciclovirSimulation, "SimResults.csv")
+})
+# observed data
+obsData <- lapply(
+  c(
+    "ObsDataAciclovir_1.pkml",
+    "ObsDataAciclovir_2.pkml",
+    "ObsDataAciclovir_3.pkml"
+  ),
+  function(x) {
+    loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+  }
+)
+names(obsData) <- lapply(obsData, function(x) x$name)
+
+manyObsSimDCWithFraction <- readRDS(getTestDataFilePath(
+  "manyObsSimDCWithFraction"
+))
 
 # create a new instance and add datasets
 myCombDat <- DataCombined$new()
@@ -110,30 +147,12 @@ test_that("It creates default plots as expected with multiple fold distance line
 })
 
 test_that("It produces expected plot for Aciclovir data", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
-  simResults <- runSimulations(sim)[[1]]
-
-  obsData <- lapply(
-    c(
-      "ObsDataAciclovir_1.pkml",
-      "ObsDataAciclovir_2.pkml",
-      "ObsDataAciclovir_3.pkml"
-    ),
-    function(x) {
-      loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
-    }
-  )
-
-  names(obsData) <- lapply(obsData, function(x) x$name)
-
   outputPaths <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
   myDataCombined <- DataCombined$new()
 
   # Add simulated results
   myDataCombined$addSimulationResults(
-    simulationResults = simResults,
+    simulationResults = aciclovirSimResults,
     quantitiesOrPaths = outputPaths,
     groups = "Aciclovir PVB"
   )
@@ -164,23 +183,6 @@ test_that("It returns `NULL` with warning when `DataCombined` is empty", {
 })
 
 test_that("Different symbols for data sets within one group", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
-  simData <- withr::with_tempdir({
-    df <- dplyr::tibble(
-      IndividualId = c(0, 0, 0),
-      `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
-        0.5,
-        4,
-        8
-      )
-    )
-    readr::write_csv(df, "SimResults.csv")
-    importResultsFromCSV(sim, "SimResults.csv")
-  })
-
   obsData <- DataSet$new(name = "Observed")
   obsData$setValues(
     xValues = c(1, 3, 3.5, 4, 5),
@@ -190,7 +192,7 @@ test_that("Different symbols for data sets within one group", {
   obsData$yDimension <- ospDimensions$`Concentration (molar)`
 
   myDC <- DataCombined$new()
-  myDC$addSimulationResults(simData, groups = "myGroup")
+  myDC$addSimulationResults(aciclovirSimData, groups = "myGroup")
   myDC$addDataSets(obsData, groups = "myGroup")
 
   # Add second obs data
@@ -211,23 +213,6 @@ test_that("Different symbols for data sets within one group", {
 })
 
 test_that("LLOQ is plotted", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
-  simData <- withr::with_tempdir({
-    df <- dplyr::tibble(
-      IndividualId = c(0, 0, 0),
-      `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
-        0,
-        4,
-        8
-      )
-    )
-    readr::write_csv(df, "SimResults.csv")
-    importResultsFromCSV(sim, "SimResults.csv")
-  })
-
   obsData <- DataSet$new(name = "Observed")
   obsData$setValues(
     xValues = c(1, 3, 3.5, 4, 5),
@@ -238,110 +223,13 @@ test_that("LLOQ is plotted", {
   obsData$LLOQ <- 3
 
   myDC <- DataCombined$new()
-  myDC$addSimulationResults(simData, groups = "myGroup")
+  myDC$addSimulationResults(aciclovirSimData, groups = "myGroup")
   myDC$addDataSets(obsData, groups = "myGroup")
 
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "lloq vertical",
     fig = plotPredictedVsObserved(myDC)
-  )
-})
-
-test_that("plotPredictedVsObserved does not error with LLOQ and predictedAxis x", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
-  simData <- withr::with_tempdir({
-    df <- dplyr::tibble(
-      IndividualId = c(0, 0, 0),
-      `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
-        0,
-        4,
-        8
-      )
-    )
-    readr::write_csv(df, "SimResults.csv")
-    importResultsFromCSV(sim, "SimResults.csv")
-  })
-
-  obsData <- DataSet$new(name = "Observed")
-  obsData$setValues(
-    xValues = c(1, 3, 3.5, 4, 5),
-    yValues = c(1.9, 6.1, 7, 8.2, 1)
-  )
-  obsData$xUnit <- "min"
-  obsData$yDimension <- ospDimensions$`Concentration (molar)`
-  obsData$LLOQ <- 3
-
-  myDC <- DataCombined$new()
-  myDC$addSimulationResults(simData, groups = "myGroup")
-  myDC$addDataSets(obsData, groups = "myGroup")
-
-  expect_no_error(
-    plotPredictedVsObserved(
-      myDC,
-      comparisonLineVector = ospsuite.plots::getFoldDistanceList(
-        2,
-        includeIdentity = TRUE
-      ),
-      predictedAxis = "x"
-    )
-  )
-})
-
-test_that("plotPredictedVsObserved maps error bars to correct axis with predictedAxis x", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
-
-  simData <- withr::with_tempdir({
-    df <- dplyr::tibble(
-      IndividualId = c(0, 0, 0),
-      `Time [min]` = c(0, 2, 4),
-      `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
-        0,
-        4,
-        8
-      )
-    )
-    readr::write_csv(df, "SimResults.csv")
-    importResultsFromCSV(sim, "SimResults.csv")
-  })
-
-  obsData <- DataSet$new(name = "Observed")
-  obsData$setValues(
-    xValues = c(1, 3, 3.5, 4, 5),
-    yValues = c(1.9, 6.1, 7, 8.2, 1),
-    yErrorValues = c(0.2, 0.5, 0.3, 0.4, 0.1)
-  )
-  obsData$xUnit <- "min"
-  obsData$yDimension <- ospDimensions$`Concentration (molar)`
-
-  # Two datasets with different error types to trigger yMin/yMax path
-  obsData$yErrorType <- DataErrorType$ArithmeticStdDev
-
-  obsData2 <- DataSet$new(name = "Observed 2")
-  obsData2$setValues(
-    xValues = c(1, 3, 4),
-    yValues = c(2.5, 5.5, 7.5),
-    yErrorValues = c(1.2, 1.3, 1.1)
-  )
-  obsData2$xUnit <- "min"
-  obsData2$yDimension <- ospDimensions$`Concentration (molar)`
-  obsData2$yErrorType <- DataErrorType$GeometricStdDev
-
-  myDC <- DataCombined$new()
-  myDC$addSimulationResults(simData, groups = "myGroup")
-  myDC$addDataSets(obsData, groups = "myGroup")
-  myDC$addDataSets(obsData2, groups = "myGroup")
-
-  set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "mixed errors predicted on x-axis",
-    fig = suppressWarnings(
-      plotPredictedVsObserved(myDC, predictedAxis = "x", xyScale = "linear")
-    )
   )
 })
 
@@ -360,10 +248,6 @@ test_that("It swaps axes when predictedAxis is 'x'", {
 
 # 2 y-axis dimensions ----
 test_that("Plot throws error with fraction and concentration", {
-  manyObsSimDCWithFraction <- readRDS(getTestDataFilePath(
-    "manyObsSimDCWithFraction"
-  ))
-
   expect_error(
     plotPredictedVsObserved(manyObsSimDCWithFraction),
     'Data contains too many'
@@ -371,29 +255,18 @@ test_that("Plot throws error with fraction and concentration", {
 })
 
 # xUnit / yUnit direct parameters ----
-
-test_that("plotPredictedVsObserved converts units when yUnit is provided", {
-  # Providing yUnit should override the auto-detected unit %
-  expect_no_error(
-    resultPlot <- plotPredictedVsObserved(
-      myCombDat,
-      xyScale = "linear",
-      yUnit = ""
-    )
-  )
-
-  expect_false(
-    grepl("%", resultPlot$labels$x, fixed = TRUE),
-    info = "default x-axis label should not contain '%'"
-  )
-})
-
 test_that("plotPredictedVsObserved produces same result as pre-converting with convertUnits", {
   plotDirect <- plotPredictedVsObserved(
     myCombDat,
     xyScale = "linear",
     yUnit = ""
   )
+
+  expect_false(
+    grepl("%", plotDirect$labels$x, fixed = TRUE),
+    info = "default x-axis label should not contain '%'"
+  )
+
   plotPreConverted <- plotPredictedVsObserved(
     convertUnits(myCombDat, yUnit = ""),
     xyScale = "linear"

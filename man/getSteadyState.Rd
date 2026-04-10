@@ -59,7 +59,7 @@ the processes do not (significantly) change. The steady-state is NOT analyticall
 calculated or estimated in any other way than simulating for the given time.
 }
 \examples{
-simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 steadyState <- getSteadyState(simulations = sim)
 # Set initial values for steady-state simulations

@@ -1,6 +1,6 @@
 # QuantitySelection$print
 
-sim <- loadTestSimulation("S1")
+sim <- loadTestSimulation("simple", loadFromCache = TRUE)
 
 test_that("It can print Quantity Selection", {
   quantitySelection <- sim$outputSelections$allOutputs[[1]]

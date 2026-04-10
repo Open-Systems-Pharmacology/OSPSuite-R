@@ -1,4 +1,4 @@
-sim <- loadTestSimulation("simple")
+sim <- loadTestSimulation("simple", loadFromCache = TRUE, addToCache = TRUE)
 sensitivity <- SensitivityAnalysis$new(sim)
 sensitivityAnalysisOptions <- SensitivityAnalysisRunOptions$new(
   showProgress = FALSE

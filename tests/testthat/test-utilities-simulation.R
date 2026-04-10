@@ -1,145 +1,109 @@
+populationFileName <- system.file("extdata", "pop.csv", package = "ospsuite")
+population <- loadPopulation(csvPopulationFile = populationFileName)
+
+aciclovirSimulation <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE
+)
 # exportIndividualSimulations
 
 test_that("It can export the simulation for file for given individual in a population", {
-  populationFileName <- getTestDataFilePath(fileName = "pop.csv")
-  population <- loadPopulation(csvPopulationFile = populationFileName)
-  sim <- loadTestSimulation(simulationName = "S1", loadFromCache = FALSE)
+  # Loading a simulation because the function will mutate it by calling "setParameterValuesByPath".
+  aciclovirSimulation <- loadSimulation(
+    aciclovirSimulationPath,
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
   paths <- exportIndividualSimulations(
     population = population,
     individualIds = c(1, 2),
     outputFolder = tempdir(),
-    simulation = sim
+    simulation = aciclovirSimulation
   )
+  simulationName <- aciclovirSimulation$name
   expect_length(paths, 2)
-  expect_true(grepl("S1_1.pkml", paths[1], fixed = TRUE))
-  expect_true(grepl("S1_2.pkml", paths[2], fixed = TRUE))
+  expect_true(grepl(paste0(simulationName, "_1.pkml"), paths[1], fixed = TRUE))
+  expect_true(grepl(paste0(simulationName, "_2.pkml"), paths[2], fixed = TRUE))
   sapply(paths, function(p) file.remove(p))
 })
 
-
 test_that("It throws an exception when trying to export for an individual id that does not exist in the population", {
-  populationFileName <- getTestDataFilePath(fileName = "pop.csv")
-  population <- loadPopulation(csvPopulationFile = populationFileName)
-  sim <- loadTestSimulation(simulationName = "S1", loadFromCache = FALSE)
-  expect_error(exportIndividualSimulations(
-    population = population,
-    individualIds = c(50, 2),
-    outputFolder = tempdir(),
-    simulation = sim
-  ))
+  expect_error(
+    exportIndividualSimulations(
+      population = population,
+      individualIds = c(50, 2),
+      outputFolder = tempdir(),
+      simulation = aciclovirSimulation
+    ),
+    regexp = "Individual with id"
+  )
 })
 
 # loadSimulation
 
-test_that("It can load a valid pkml simulation file with 'loadFromCache = TRUE' without previously loaded sim", {
-  resetSimulationCache()
-
-  sim <- loadTestSimulation(simulationName = "S1", loadFromCache = TRUE)
-  expect_true(!is.null(sim))
-})
-
-test_that("It can load a valid pkml simulation file with 'loadFromCache = FALSE' without previously loaded sim", {
-  resetSimulationCache()
-
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  expect_true(!is.null(sim))
+test_that("It throws an exception if the pkml loaded is not a valid simulation file", {
+  expect_error(
+    loadTestSimulation("molecules"),
+    regexp = "Could not find file"
+  )
 })
 
 test_that("It can load a simulation from cache", {
   resetSimulationCache()
 
-  sim1 <- loadTestSimulation("S1", loadFromCache = TRUE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = TRUE)
+  sim1 <- loadTestSimulation(simulationName = "simple", loadFromCache = TRUE)
+  sim2 <- loadTestSimulation(simulationName = "simple", loadFromCache = TRUE)
 
-  parameter1 <- getParameter(
-    path = toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    container = sim1
-  )
-  parameter2 <- getParameter(
-    path = toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    container = sim2
-  )
-
-  setParameterValues(parameters = parameter1, values = 0)
-  expect_equal(parameter1$value, parameter2$value)
+  # Testing that the same instance is returned from cache by comparing ids
+  expect_equal(sim1$id, sim2$id)
 })
 
 test_that("It can load two simulations not from cache", {
   resetSimulationCache()
 
-  sim1 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim1 <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
 
-  parameter1 <- getParameter(
-    path = toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    container = sim1
-  )
-  parameter2 <- getParameter(
-    path = toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    container = sim2
-  )
-
-  setParameterValues(parameters = parameter1, values = 0)
-  expect_false(isTRUE(identical(parameter1$value, parameter2$value)))
+  expect_false(identical(sim1$id, sim2$id))
 })
 
 test_that("Two sims not from cache and third from cache", {
   resetSimulationCache()
 
-  sim1 <- loadTestSimulation("S1", loadFromCache = TRUE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim3 <- loadTestSimulation("S1", loadFromCache = TRUE)
-
-  parameter1 <- getParameter(
-    path = toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    container = sim1
+  sim1 <- loadTestSimulation("simple", loadFromCache = TRUE)
+  sim2 <- loadTestSimulation(
+    "simple",
+    loadFromCache = FALSE,
+    addToCache = FALSE
   )
-  parameter2 <- getParameter(
-    path = toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    container = sim2
-  )
-  parameter3 <- getParameter(
-    path = toPathString(c("Organism", "Liver", "Intracellular", "Volume")),
-    container = sim3
-  )
+  sim3 <- loadTestSimulation("simple", loadFromCache = TRUE)
 
-  setParameterValues(parameters = parameter1, values = 1)
-
-  expect_false(isTRUE(identical(parameter1$value, parameter3$value)))
-  expect_equal(parameter2$value, parameter3$value)
-})
-
-test_that("It throws an exception if the pkml loaded is not a valid simulation file", {
-  expect_error(
-    loadTestSimulation("molecules"),
-    regexp = "Could not load simulation"
-  )
+  expect_false(identical(sim1$id, sim2$id))
+  expect_true(identical(sim1$id, sim3$id))
 })
 
 test_that("It can remove simulation from cache", {
   resetSimulationCache()
-  sim1 <- loadTestSimulation("S1")
+  sim1 <- loadTestSimulation("simple")
 
-  expect_true(removeSimulationFromCache(sim1))
+  expect_true(ospsuiteEnv$loadedSimulationsCache$hasKey(sim1$sourceFile))
+  removeSimulationFromCache(sim1)
+  expect_false(ospsuiteEnv$loadedSimulationsCache$hasKey(sim1$sourceFile))
 })
 
 test_that("It returns false when attempting to remove a simulation from cache that is not cached", {
   resetSimulationCache()
-  sim1 <- loadTestSimulation("S1")
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE, addToCache = FALSE)
-
-  expect_false(removeSimulationFromCache(sim2))
+  sim1 <- loadTestSimulation(
+    "simple",
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
+  expect_false(removeSimulationFromCache(sim1))
 })
 
 # runSimulations
-test_that("It can run a valid individual simulation and returns results", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  results <- runSimulations(simulations = sim)[[1]]
-  expect_equal(results$count, 1)
-})
-
 test_that("It throws an error when simulation has empty output selections", {
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
   setOutputs("blubb", sim, stopIfNotFound = FALSE)
   expect_error(
     runSimulations(simulations = sim),
@@ -148,8 +112,16 @@ test_that("It throws an error when simulation has empty output selections", {
 })
 
 test_that("It throws an error when any simulation in a list has empty output selections", {
-  sim1 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim1 <- loadTestSimulation(
+    "simple",
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
+  sim2 <- loadTestSimulation(
+    "simple",
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
   setOutputs("blubb", sim2, stopIfNotFound = FALSE)
   expect_error(
     runSimulations(simulations = c(sim1, sim2)),
@@ -158,9 +130,7 @@ test_that("It throws an error when any simulation in a list has empty output sel
 })
 
 test_that("It can run a valid population simulation and returns results", {
-  populationFileName <- getTestDataFilePath("pop.csv")
-  population <- loadPopulation(csvPopulationFile = populationFileName)
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   results <- runSimulations(simulations = sim, population = population)[[1]]
   expect_equal(results$count, population$count)
 })
@@ -171,7 +141,7 @@ test_that("It can run a valid population simulation with aging data and returns 
   population <- loadPopulation(csvPopulationFile = populationFileName)
   agingData <- loadAgingDataFromCSV(filePath = agingDataFileName)
 
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   results <- runSimulations(
     simulations = sim,
     population = population,
@@ -180,36 +150,25 @@ test_that("It can run a valid population simulation with aging data and returns 
   expect_equal(results$count, population$count)
 })
 
-test_that("It can run a valid population simulation created directly from create population", {
-  populationFileName <- getTestDataFilePath("pop.csv")
-  population <- loadPopulation(csvPopulationFile = populationFileName)
-  list <- list(population = population)
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  results <- runSimulations(simulations = sim, population = list)[[1]]
-  expect_equal(results$count, population$count)
+test_that("It throws an exception when running simulation with the wrong arguments", {
+  expect_error(
+    runSimulations(
+      simulations = population
+    ),
+    regexp = "argument \"simulation\" is of type"
+  )
 })
 
-test_that("It throws an exception when running a population simulation with the wrong arguments", {
-  populationFileName <- getTestDataFilePath("pop.csv")
-  population <- loadPopulation(csvPopulationFile = populationFileName)
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  expect_error(runSimulations(
-    simulations = population,
-    population = simulation
-  )[[1]])
-})
-
-test_that("It runs one individual simulation without simulationRunOptions", {
-  resetSimulationCache()
-
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  results <- runSimulations(simulations = sim)[[1]]
-  expect_true(isOfType(results, "SimulationResults"))
+test_that("It runs one individual simulation without simulationRunOptions and returns a named list", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
+  results <- runSimulations(simulations = sim)
+  expect_true(isOfType(results[[1]], "SimulationResults"))
+  # Check the ids
+  expect_equal(names(results)[[1]], sim$id)
 })
 
 test_that("It runs one individual simulation with simulationRunOptions", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   simRunOptions <- SimulationRunOptions$new()
   results <- runSimulations(
     simulations = sim,
@@ -218,19 +177,17 @@ test_that("It runs one individual simulation with simulationRunOptions", {
   expect_true(isOfType(results, "SimulationResults"))
 })
 
-test_that("runSimulations returns a named list for one simulation", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  results <- runSimulations(simulations = sim)
-  # Check the ids
-  expect_equal(names(results)[[1]], sim$id)
-  expect_true(isOfType(results[[1]], "SimulationResults"))
-})
-
 test_that("runSimulations returns named list using input list names without duplicates", {
-  resetSimulationCache()
-  sim1 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
+  sim1 <- loadTestSimulation(
+    "simple",
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
+  sim2 <- loadTestSimulation(
+    "simple",
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
 
   # No names
   expect_contains(
@@ -267,98 +224,95 @@ test_that("runSimulations returns named list using input list names without dupl
   )
 })
 
-test_that("It runs multiple individual simulations", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  results <- runSimulations(simulations = c(sim, sim2))
-  expect_equal(length(results), 2)
-  # Check the ids
-  expect_equal(names(results)[[1]], sim$id)
-  expect_true(isOfType(results[[1]], "SimulationResults"))
-})
-
-test_that("It shows a warning if one of simulations fails. Results for this simulation are NULL", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim$solver$relTol <- 1000
-
-  expect_warning(results <- runSimulations(simulations = c(sim, sim2)))
-  expect_equal(length(results), 2)
-  expect_equal(names(results)[[2]], sim2$id)
-  expect_null(results[[sim$id]])
-  expect_true(isOfType(results[[2]], "SimulationResults"))
-})
-
-test_that("It does not show a warning if one of simulations fails in silent mode. Results for this simulation are NULL", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim$solver$relTol <- 1000
-
-  expect_no_warning(
-    results <- runSimulations(simulations = c(sim, sim2), silentMode = TRUE)
+test_that("Behavior when one of simulations fails. Results for this simulation are NULL", {
+  sim1 <- loadTestSimulation(
+    "simple",
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
+  sim2 <- loadTestSimulation(
+    "simple",
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
+  # sim1 is supposed to fail because of negative start values, while sim2 should run fine
+  setQuantityValuesByPath(
+    "Organism|Liver|A",
+    -1,
+    sim1
+  )
+  expect_warning(
+    results <- runSimulations(simulations = c(sim1, sim2)),
+    regexp = "Initial value"
   )
   expect_equal(length(results), 2)
   expect_equal(names(results)[[2]], sim2$id)
-  expect_null(results[[sim$id]])
+  expect_null(results[[sim1$id]])
   expect_true(isOfType(results[[2]], "SimulationResults"))
-})
 
-test_that("Show an error when a simulations fails.", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim$solver$relTol <- 1000
+  # It does not show a warning if one of simulations fails in silent mode.
+  expect_no_warning(
+    results <- runSimulations(simulations = c(sim1, sim2), silentMode = TRUE)
+  )
+  expect_equal(length(results), 2)
+  expect_equal(names(results)[[2]], sim2$id)
+  expect_null(results[[sim1$id]])
+  expect_true(isOfType(results[[2]], "SimulationResults"))
 
-  expect_error(runSimulations(simulations = c(sim, sim2), stopIfFails = TRUE))
+  # It throws an error if one of simulations fails and stopIfFails is TRUE
+  expect_error(
+    runSimulations(simulations = c(sim1, sim2), stopIfFails = TRUE),
+    regexp = "Initial value"
+  )
 })
 
 test_that("It throws an error when running multiple simulations with a population", {
-  sim1 <- loadTestSimulation("simple", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("simple", loadFromCache = FALSE)
-  populationFileName <- getTestDataFilePath(fileName = "pop.csv")
-  population <- loadPopulation(csvPopulationFile = populationFileName)
-  expect_error(runSimulations(
-    simulations = c(sim1, sim2),
-    population = population
-  ))
+  sim1 <- loadTestSimulation("simple", loadFromCache = TRUE)
+  sim2 <- loadTestSimulation("simple", loadFromCache = TRUE)
+  expect_error(
+    runSimulations(
+      simulations = c(sim1, sim2),
+      population = population
+    ),
+    regexp = "Multiple simulations cannot be run concurrently"
+  )
 })
 
 test_that("It throws an error when running the same instance of a simulation multiple time", {
-  resetSimulationCache()
   sim1 <- loadTestSimulation("simple", loadFromCache = TRUE)
   sim2 <- loadTestSimulation("simple", loadFromCache = TRUE)
-  expect_error(runSimulations(simulations = c(sim1, sim2)))
+  expect_error(
+    runSimulations(simulations = c(sim1, sim2)),
+    regexp = "is used multiple times in"
+  )
 })
 
 # getStandardMoleculeParameters
 test_that("It returns all molecule parameters for an existing molecule in a simulation", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameters <- getStandardMoleculeParameters(
     moleculeName = "CYP3A4",
-    simulation = sim
+    simulation = aciclovirSimulation
   )
   expect_equal(length(parameters), length(MoleculeParameter))
 })
 
 test_that("It returns an empty list of parameters for a molecule that does not exist", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
   parameters <- getStandardMoleculeParameters(
     moleculeName = "NOPE",
-    simulation = sim
+    simulation = aciclovirSimulation
   )
   expect_equal(length(parameters), 0)
 })
 
 # getAllParametersForSensitivityAnalysisMatching
 test_that("It returns all parameter potentially interesting for sensitivity analysis for a given wild card path", {
-  sim <- loadTestSimulation("S1", loadFromCache = TRUE)
-  parameters <- getAllParametersMatching(paths = "**|Volume", container = sim)
+  parameters <- getAllParametersMatching(
+    paths = "**|Volume",
+    container = aciclovirSimulation
+  )
   variableParameters <- getAllParametersForSensitivityAnalysisMatching(
     paths = "**|Volume",
-    simulation = sim
+    simulation = aciclovirSimulation
   )
   expect_gt(length(parameters), length(variableParameters))
 })
@@ -417,9 +371,8 @@ test_that("It creates a simulation batch when using only molecule instances", {
 
 
 # runSimulationBatches
-sim <- loadTestSimulation("simple", loadFromCache = TRUE)
-
 test_that("It can run a simulation batch by varying some parameters and molecules", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   parameters <- c("Organism|Liver|Volume", "R1|k1")
   molecules <- "Organism|Liver|A"
   simulationBatch <- createSimulationBatch(
@@ -437,6 +390,7 @@ test_that("It can run a simulation batch by varying some parameters and molecule
 })
 
 test_that("It can run a simulation batch by varying some parameters only", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   parameters <- c("Organism|Liver|Volume", "R1|k1")
   simulationBatch <- createSimulationBatch(sim, parametersOrPaths = parameters)
   id <- simulationBatch$addRunValues(parameterValues = c(1.2, 2.4))
@@ -445,7 +399,8 @@ test_that("It can run a simulation batch by varying some parameters only", {
   expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
 })
 
-test_that("It can run a simulation batch by varying some molecule only", {
+test_that("It can run a simulation batch by varying some molecules only", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   molecules <- "Organism|Liver|A"
   simulationBatch <- createSimulationBatch(sim, moleculesOrPaths = molecules)
   id <- simulationBatch$addRunValues(initialValues = 1.2)
@@ -455,6 +410,7 @@ test_that("It can run a simulation batch by varying some molecule only", {
 })
 
 test_that("The result is NULL when the number of values does not match the initialization count for initial values", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   molecules <- "Organism|Liver|A"
   simulationBatch <- createSimulationBatch(sim, moleculesOrPaths = molecules)
   id <- simulationBatch$addRunValues(initialValues = c(1, 1.2))
@@ -463,6 +419,7 @@ test_that("The result is NULL when the number of values does not match the initi
 })
 
 test_that("The result is NULL when the number of values does not match the initialization count for parameters", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   parameters <- c("Organism|Liver|Volume", "R1|k1")
   simulationBatch <- createSimulationBatch(sim, parametersOrPaths = parameters)
   id <- simulationBatch$addRunValues(parameterValues = c(1.2))
@@ -471,6 +428,7 @@ test_that("The result is NULL when the number of values does not match the initi
 })
 
 test_that("It throws an error when multiple values sets are added", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   parameters <- c("Organism|Liver|Volume", "R1|k1")
   molecules <- "Organism|Liver|A"
   simulationBatch <- createSimulationBatch(sim, parametersOrPaths = parameters)
@@ -492,6 +450,7 @@ test_that("It throws an error when multiple values sets are added", {
 })
 
 test_that("It can run a simulation batch with multiple parameters and molecules values sets", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   parameters <- c("Organism|Liver|Volume", "R1|k1")
   molecules <- "Organism|Liver|A"
   simulationBatch <- createSimulationBatch(
@@ -516,6 +475,7 @@ test_that("It can run a simulation batch with multiple parameters and molecules 
 })
 
 test_that("It can run multiple simulation batches with multiple parameters and molecules values sets", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   parameters <- c("Organism|Liver|Volume", "R1|k1")
   molecules <- "Organism|Liver|A"
   simulationBatch1 <- createSimulationBatch(
@@ -560,6 +520,7 @@ test_that("It can run multiple simulation batches with multiple parameters and m
 })
 
 test_that("It can run a simulation batch, add new values, and run again", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   parameters <- c("Organism|Liver|Volume", "R1|k1")
   molecules <- "Organism|Liver|A"
   simulationBatch <- createSimulationBatch(
@@ -578,6 +539,7 @@ test_that("It can run a simulation batch, add new values, and run again", {
     initialValues = 3
   )
   res <- runSimulationBatches(simulationBatches = simulationBatch)
+  # One simulation batch - therefore one element in the list, and two runs values - therefore two results in the batch result
   expect_equal(length(res), 1)
   expect_true(isOfType(res[[1]][[1]], "SimulationResults"))
   expect_equal(names(res[[1]])[[1]], ids[[1]])
@@ -599,6 +561,7 @@ test_that("It can run a simulation batch, add new values, and run again", {
 })
 
 test_that("It does not show a warning when simulation fails in silentMode", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   molecules <- "Organism|Liver|A"
   simulationBatch <- createSimulationBatch(sim, moleculesOrPaths = molecules)
   id <- simulationBatch$addRunValues(initialValues = c(1, 1.2))
@@ -606,6 +569,7 @@ test_that("It does not show a warning when simulation fails in silentMode", {
 })
 
 test_that("Throws an error when a simulation does not succeed", {
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   molecules <- "Organism|Liver|A"
   simulationBatch <- createSimulationBatch(sim, moleculesOrPaths = molecules)
   id <- simulationBatch$addRunValues(initialValues = c(1, 1.2))
@@ -615,13 +579,13 @@ test_that("Throws an error when a simulation does not succeed", {
 # getAllStateVariablesPaths
 
 test_that("It returns the correct paths of the state variables", {
-  sim <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
+  sim <- loadTestSimulation(simulationName = "simple", loadFromCache = TRUE)
   stateVariablePaths <- getAllStateVariablesPaths(simulation = sim)
-  expect_equal(length(stateVariablePaths), 5)
+  expect_equal(length(stateVariablePaths), 11)
 })
 
-test_that("It returns the correct paths of the state variables", {
-  sim <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
+test_that("It returns the correct paths of the state variable parameters", {
+  sim <- loadTestSimulation(simulationName = "simple", loadFromCache = TRUE)
   stateVariableParametersPaths <- getAllStateVariableParametersPaths(
     simulation = sim
   )
@@ -640,7 +604,7 @@ test_that("it can explore a simulation by path", {
 
 
 test_that("it can explore a simulation by instance", {
-  sim <- loadTestSimulation("simple")
+  sim <- loadTestSimulation("simple", loadFromCache = TRUE)
   tree <- getSimulationTree(sim)
 
   path <- tree$Organism$Liver$Volume$path
@@ -648,9 +612,8 @@ test_that("it can explore a simulation by instance", {
 })
 
 test_that("It calculates steady-state for multiple simulations, single steadyStateTime", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim1 <- loadSimulation(simFilePath)
-  sim2 <- loadSimulation(simFilePath)
+  sim1 <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
   output <- getSteadyState(
     simulations = c(sim1, sim2),
     steadyStateTime = 1
@@ -659,9 +622,8 @@ test_that("It calculates steady-state for multiple simulations, single steadySta
 })
 
 test_that("It calculates steady-state for multiple simulations, multiple steadyStateTime", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim1 <- loadSimulation(simFilePath)
-  sim2 <- loadSimulation(simFilePath)
+  sim1 <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
   output <- getSteadyState(
     simulations = c(sim1, sim2),
     steadyStateTime = list(1, NULL)
@@ -672,9 +634,8 @@ test_that("It calculates steady-state for multiple simulations, multiple steadyS
 
 
 test_that("Getting Steady State works with named simulations without duplicated names", {
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim1 <- loadSimulation(simFilePath)
-  sim2 <- loadSimulation(simFilePath)
+  sim1 <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation(simulationName = "simple", loadFromCache = FALSE)
   output <- getSteadyState(
     simulations = c("sim1" = sim1, "sim2" = sim2),
     steadyStateTime = 1
@@ -690,45 +651,39 @@ test_that("Getting Steady State works with named simulations without duplicated 
 })
 
 test_that("lowerThreshold in getSteadyState correctly handles positive and negative values", {
-  # Create a simulation to test with
-  simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-  sim <- loadSimulation(simFilePath)
   # Test that lowerThreshold is applied using absolute value
   # Get steady state with a relatively large threshold to test the logic
   threshold <- 1
 
   steadyState <- getSteadyState(
-    simulations = sim,
+    simulations = aciclovirSimulation,
     steadyStateTime = 1,
     lowerThreshold = threshold
   )
 
   # Verify that the structure is correct
   expect_true(is.list(steadyState))
-  expect_true(all(c("paths", "values") %in% names(steadyState[[sim$id]])))
+  expect_true(all(
+    c("paths", "values") %in% names(steadyState[[aciclovirSimulation$id]])
+  ))
 
   # All values should be either 0 or have absolute value >= lowerThreshold
-  values <- unlist(steadyState[[sim$id]]$values)
+  values <- unlist(steadyState[[aciclovirSimulation$id]]$values)
   expect_true(all(values == 0 | abs(values) >= threshold))
 
   # Test with NULL threshold (no cut-off applied)
   steadyStateNoThreshold <- getSteadyState(
-    simulations = sim,
+    simulations = aciclovirSimulation,
     steadyStateTime = 1,
     lowerThreshold = NULL
   )
-  values <- unlist(steadyStateNoThreshold[[sim$id]]$values)
+  values <- unlist(steadyStateNoThreshold[[aciclovirSimulation$id]]$values)
   expect_false(all(values == 0 | abs(values) >= threshold))
 })
 
 test_that("`exportSteadyStateToXLS` generates excel file with correct sheets", {
   withr::with_tempfile("resultsXLSPath", code = {
-    simFilePath <- system.file(
-      "extdata",
-      "Aciclovir.pkml",
-      package = "ospsuite"
-    )
-    sim <- loadSimulation(simFilePath)
+    sim <- loadTestSimulation("simple", loadFromCache = TRUE)
     wb <- exportSteadyStateToXLS(sim, resultsXLSPath = resultsXLSPath)
     expect_true(file.exists(resultsXLSPath))
     expect_equal(wb$sheet_names, c("Molecules", "Parameters"))
@@ -739,26 +694,14 @@ test_that("`exportSteadyStateToXLS` generates excel file with correct sheets", {
 
 test_that("`runSimulation()` is deprecated", {
   expect_snapshot({
-    sim <- loadTestSimulation("S1", loadFromCache = TRUE)
+    sim <- loadTestSimulation("simple", loadFromCache = TRUE)
     results <- runSimulation(sim)
     expect_equal(results$count, 1)
   })
 })
 
-
-test_that("runSimulation can run one simulation", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  expect_warning(
-    results <- runSimulation(sim)
-  )
-})
-
 test_that("It throws an error when trying to run multiple simulations", {
-  resetSimulationCache()
-  sim <- loadTestSimulation("S1", loadFromCache = FALSE)
-  sim2 <- loadTestSimulation("S1", loadFromCache = FALSE)
-  expect_warning(
-    expect_error(results <- runSimulation(c(sim, sim2)))
-  )
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE)
+  sim2 <- loadTestSimulation("simple", loadFromCache = FALSE)
+  suppressWarnings(expect_error(results <- runSimulation(c(sim, sim2))))
 })

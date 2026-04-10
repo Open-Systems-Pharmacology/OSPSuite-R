@@ -5,8 +5,8 @@
     Output
       <Quantity>
         * Quantity Type: Parameter
-        * Path: Organism|Liver|Intracellular|Volume
-        * Value: 1.59 [l]
+        * Path: Organism|Liver|Volume
+        * Value: 10.00 [l]
         * Value Origin: Publication-Willmann S, Lippert J, Sevestre M, Solodenko J,
         Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic
         ‘whole-body’ model. Biosilico. 2003; 1 (4): 121-124.
@@ -14,9 +14,7 @@
       
       -- Formula --
       
-        * isExplicit: TRUE
-        * formula: f_cell*V
-        * Value overrides formula: FALSE
+        * isConstant: TRUE
 
 # It prints the Scientific value of the Quantity
 
@@ -25,7 +23,7 @@
     Output
       <Quantity>
         * Quantity Type: Parameter
-        * Path: Organism|Liver|Intracellular|Volume
+        * Path: Organism|Liver|Volume
         * Value: 1.00e-03 [l]
         * Value Origin: Publication-Willmann S, Lippert J, Sevestre M, Solodenko J,
         Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic
@@ -34,9 +32,7 @@
       
       -- Formula --
       
-        * isExplicit: TRUE
-        * formula: f_cell*V
-        * Value overrides formula: TRUE
+        * isConstant: TRUE
 
 ---
 
@@ -45,7 +41,7 @@
     Output
       <Quantity>
         * Quantity Type: Parameter
-        * Path: Organism|Liver|Intracellular|Volume
+        * Path: Organism|Liver|Volume
         * Value: 2.00 [l]
         * Value Origin: Publication-Willmann S, Lippert J, Sevestre M, Solodenko J,
         Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic
@@ -54,9 +50,7 @@
       
       -- Formula --
       
-        * isExplicit: TRUE
-        * formula: f_cell*V
-        * Value overrides formula: TRUE
+        * isConstant: TRUE
 
 ---
 
@@ -65,7 +59,7 @@
     Output
       <Quantity>
         * Quantity Type: Parameter
-        * Path: Organism|Liver|Intracellular|Volume
+        * Path: Organism|Liver|Volume
         * Value: 1.00e+04 [l]
         * Value Origin: Publication-Willmann S, Lippert J, Sevestre M, Solodenko J,
         Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic
@@ -74,9 +68,7 @@
       
       -- Formula --
       
-        * isExplicit: TRUE
-        * formula: f_cell*V
-        * Value overrides formula: TRUE
+        * isConstant: TRUE
 
 ---
 
@@ -85,7 +77,7 @@
     Output
       <Quantity>
         * Quantity Type: Parameter
-        * Path: Organism|Liver|Intracellular|Volume
+        * Path: Organism|Liver|Volume
         * Value: 1.00e+04 [l]
         * Value Origin: Publication-Willmann S, Lippert J, Sevestre M, Solodenko J,
         Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic
@@ -94,9 +86,7 @@
       
       -- Formula --
       
-        * isExplicit: TRUE
-        * formula: f_cell*V
-        * Value overrides formula: TRUE
+        * isConstant: TRUE
 
 # It prints the NaN value of the Quantity
 
@@ -105,8 +95,8 @@
     Output
       <Quantity>
         * Quantity Type: Parameter
-        * Path: AADAC|Lipophilicity
-        * Value: NaN [Log Units]
+        * Path: A|Molecular weight
+        * Value: NaN [kg/µmol]
       
       -- Formula --
       

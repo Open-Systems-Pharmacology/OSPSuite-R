@@ -1,5 +1,5 @@
 {
-  "Version": 79,
+  "Version": 80,
   "Individuals": [
     {
       "Name": "Mouse",
@@ -129,10 +129,7 @@
       "Parameters": [
         {
           "Name": "Cl",
-          "Value": 1.0,
-          "ValueOrigin": {
-            "Source": "Unknown"
-          }
+          "Value": 1.0
         },
         {
           "Name": "Molecular weight",
@@ -305,7 +302,7 @@
       ],
       "Parameters": [
         {
-          "Path": "Applications|IV + Weibull|Default Weibull|Application_2|ProtocolSchemaItem|Volume of water/body weight",
+          "Path": "Events|IV + Weibull|Default Weibull|Application_2|ProtocolSchemaItem|Volume of water/body weight",
           "Value": 0.0,
           "Unit": "ml/kg"
         },
