@@ -18,6 +18,7 @@
 #'   Default is 40.
 #' @param gestationalAgeUnit Unit of the gestational age value. Default is `"week(s)"`.
 #' @param seed Optional seed for the individual creation algorithm.
+#' @param name Name for the building block.
 #'
 #' @return A `BuildingBlock` object representing the created individual.
 #' @export
@@ -25,6 +26,7 @@
 #' @examples
 #' \dontrun{
 #' individual <- createMoBiIndividualBuildingBlock(
+#'   name = "MyIndividual",
 #'   species = Species$Human,
 #'   population = HumanPopulation$European_ICRP_2002,
 #'   gender = Gender$Male,
@@ -33,6 +35,7 @@
 #' )
 #' }
 createMoBiIndividualBuildingBlock <- function(
+  name,
   species,
   population = NULL,
   gender = NULL,
@@ -64,7 +67,8 @@ createMoBiIndividualBuildingBlock <- function(
   netTask <- .getMoBiTaskFromCache("IndividualTask")
   netObject <- netTask$call(
     "CreateIndividual",
-    individualCharacteristics
+    individualCharacteristics,
+    name
   )
 
   return(BuildingBlock$new(netObject, type = BuildingBlockTypes$Individual))

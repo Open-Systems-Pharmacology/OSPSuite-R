@@ -260,7 +260,7 @@ test_that("extendInitialConditionsBB extends with all molecules if moleculeNames
 })
 
 test_that("extendInitialConditionsBB does not add new entries for existing molecules and compartments", {
-  sim <- getSimulation()
+  simulation <- getSimulation()
   module <- simulation$configuration$modules[[1]]
   icBB <- module$getInitialConditionsBBs()[[1]]
 

@@ -2,6 +2,7 @@
 
 test_that("createMoBiIndividualBuildingBlock creates a building block for a non-human species", {
   individual <- createMoBiIndividualBuildingBlock(
+    name = "testName",
     species = Species$Beagle
   )
 
@@ -10,6 +11,7 @@ test_that("createMoBiIndividualBuildingBlock creates a building block for a non-
 
 test_that("createMoBiIndividualBuildingBlock creates a building block for a human individual", {
   individual <- createMoBiIndividualBuildingBlock(
+    name = "testName",
     species = Species$Human,
     population = HumanPopulation$European_ICRP_2002,
     gender = Gender$Male,
@@ -23,6 +25,7 @@ test_that("createMoBiIndividualBuildingBlock creates a building block for a huma
 test_that("createMoBiIndividualBuildingBlock throws an error when species is Human and no population is provided", {
   expect_error(
     createMoBiIndividualBuildingBlock(
+      name = "testName",
       species = Species$Human
     ),
     messages$errorWrongPopulation(Species$Human, NULL)
@@ -32,6 +35,7 @@ test_that("createMoBiIndividualBuildingBlock throws an error when species is Hum
 test_that("createMoBiIndividualBuildingBlock throws an error when species is Human and wrong population is provided", {
   expect_error(
     createMoBiIndividualBuildingBlock(
+      name = "testName",
       species = Species$Human,
       population = "NAN"
     ),
@@ -41,6 +45,7 @@ test_that("createMoBiIndividualBuildingBlock throws an error when species is Hum
 
 test_that("createMoBiIndividualBuildingBlock respects a specified seed", {
   individual <- createMoBiIndividualBuildingBlock(
+    name = "testName",
     species = Species$Human,
     population = HumanPopulation$European_ICRP_2002,
     seed = 42
@@ -52,6 +57,7 @@ test_that("createMoBiIndividualBuildingBlock respects a specified seed", {
 
 test_that("setMoBiIndividualParameters sets parameters on a building block", {
   individual <- createMoBiIndividualBuildingBlock(
+    name = "testName",
     species = Species$Human,
     population = HumanPopulation$European_ICRP_2002
   )
@@ -66,6 +72,7 @@ test_that("setMoBiIndividualParameters sets parameters on a building block", {
 
 test_that("setMoBiIndividualParameters returns the building block invisibly", {
   individual <- createMoBiIndividualBuildingBlock(
+    name = "testName",
     species = Species$Human,
     population = HumanPopulation$European_ICRP_2002
   )
@@ -81,6 +88,7 @@ test_that("setMoBiIndividualParameters returns the building block invisibly", {
 
 test_that("setMoBiIndividualParameters throws an error when quantityPaths and quantityValues have different lengths", {
   individual <- createMoBiIndividualBuildingBlock(
+    name = "testName",
     species = Species$Human,
     population = HumanPopulation$European_ICRP_2002
   )
