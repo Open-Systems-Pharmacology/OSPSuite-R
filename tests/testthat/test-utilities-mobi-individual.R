@@ -67,14 +67,6 @@ test_that("setParameterValuesInIndividualBB throws an error when quantityPaths a
   )
 })
 
-setParameterValuesInBB(
-  individual,
-  quantityPaths = c("Organism|Age", "Organism|BMI"),
-  quantityValues = c(30, 25),
-  units = c("year(s)", "kg/m^2")
-)
-
-
 test_that("setParameterValuesInIndividualBB throws an error when individualBuildingBlock is not a BuildingBlock", {
   expect_error(
     setParameterValuesInIndividualBB(
@@ -84,3 +76,11 @@ test_that("setParameterValuesInIndividualBB throws an error when individualBuild
     )
   )
 })
+
+# throws an error when units are not compatible with the reference dimensions
+
+# throws an error when trying to set a parameter that is not in the bb
+
+# correctly sets parameters when units are compatible with the reference dimensions
+
+parameterValuesBBToDataFrame(individual)

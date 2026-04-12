@@ -33,18 +33,41 @@ setParameterValuesInIndividualBB <- function(
   quantityValues,
   units
 ) {
-  validateIsOfType(individualBuildingBlock, "BuildingBlock")
-  validateIsString(quantityPaths)
-  validateIsNumeric(quantityValues)
-  validateIsSameLength(quantityPaths, quantityValues)
-  validateIsString(units)
+  .validateBuildingBlockType(
+    individualBuildingBlock,
+    BuildingBlockTypes$`Individual`
+  )
+  validatedInputs <- .validatePVBBInputs(
+    individualBuildingBlock,
+    quantityPaths,
+    quantityValues,
+    units,
+    dimensions = NULL
+  )
+  baseValues <- validatedInputs$baseValues
+  dimensions <- validatedInputs$dimensions
 
   netTask <- .getMoBiTaskFromCache("IndividualTask")
+  # Get the dimensions for the provided paths from the building block
+  refDimensions <- netTask$call(
+    "AllDimensionsFrom",
+    individualBuildingBlock,
+    quantityPaths
+  )
+  # Check if units are compatible with the reference dimensions. In contrast to the `setParameterValuesInBB` function, changing of dimensions of existing entries is not allowed.
+  isUnitSupported <- vapply(
+    seq_along(quantityPaths),
+    function(x) {
+      validateUnit(units[x], refDimensions[x])
+    },
+    logical(1),
+    USE.NAMES = FALSE
+  )
   netTask$call(
     "SetIndividualParameter",
     individualBuildingBlock,
     quantityPaths,
-    quantityValues
+    baseValues
   )
 
   invisible(individualBuildingBlock)

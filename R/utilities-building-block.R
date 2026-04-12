@@ -362,10 +362,28 @@ extendInitialConditionsBB <- function(
 parameterValuesBBToDataFrame <- function(parameterValuesBuildingBlock) {
   .validateBuildingBlockType(
     parameterValuesBuildingBlock,
-    BuildingBlockTypes$`Parameter Values`
+    c(
+      BuildingBlockTypes$`Parameter Values`,
+      BuildingBlockTypes$`Individual`,
+      BuildingBlockTypes$`Expression Profiles`
+    )
   )
 
-  pvTask <- .getMoBiTaskFromCache("ParameterValuesTask")
+  taskName <- if (
+    parameterValuesBuildingBlock$type == BuildingBlockTypes$`Parameter Values`
+  ) {
+    "ParameterValuesTask"
+  } else if (
+    parameterValuesBuildingBlock$type == BuildingBlockTypes$`Individual`
+  ) {
+    "IndividualTask"
+  } else if (
+    parameterValuesBuildingBlock$type ==
+      BuildingBlockTypes$`Expression Profiles`
+  ) {
+    "ExpressionProfilesTask"
+  }
+  pvTask <- .getMoBiTaskFromCache(taskName)
 
   paths <- pvTask$call("AllPathsFrom", parameterValuesBuildingBlock)
   containerPaths <- vapply(
@@ -443,64 +461,17 @@ setParameterValuesInBB <- function(
 ) {
   .validateBuildingBlockType(
     parameterValuesBuildingBlock,
-    c(BuildingBlockTypes$`Parameter Values`, BuildingBlockTypes$`Individual`)
+    c(BuildingBlockTypes$`Parameter Values`)
   )
-
-  # Exit early if no quantity paths are provided
-  if (length(quantityPaths) == 0) {
-    return(invisible(parameterValuesBuildingBlock))
-  }
-
-  # Replicate scalar units and dimensions to match the length of quantityPaths
-  if (length(units) == 1) {
-    units <- rep(units, length(quantityPaths))
-  }
-
-  # Validate if any unit is not supported
-  if (!all(sapply(units, isSupportedUnit))) {
-    unsupportedUnits <- units[!sapply(units, isSupportedUnit)]
-    stop(
-      paste0(
-        "The following units are not supported in the OSPSuite platform: ",
-        paste(unique(unsupportedUnits), collapse = ", "),
-        ". Please provide supported units to set parameter values in the building block."
-      )
-    )
-  }
-
-  if (!is.null(dimensions) && length(dimensions) == 1) {
-    dimensions <- rep(dimensions, length(quantityPaths))
-  }
-
-  if (
-    length(quantityPaths) != length(quantityValues) ||
-      length(quantityPaths) != length(units) ||
-      (!is.null(dimensions) && length(quantityPaths) != length(dimensions))
-  ) {
-    stop(
-      "The length of quantityPaths should be equal to the length of quantityValues, units, and dimensions (if provided as lists)."
-    )
-  }
-
-  # Derive dimensions from units if not provided
-  if (is.null(dimensions)) {
-    dimensions <- vapply(
-      units,
-      getDimensionForUnit,
-      character(1),
-      USE.NAMES = FALSE
-    )
-  }
-
-  # Convert values from provided units to base units
-  baseValues <- vapply(
-    seq_along(quantityValues),
-    function(i) {
-      toBaseUnit(dimensions[i], quantityValues[i], units[i])
-    },
-    numeric(1),
-    USE.NAMES = FALSE
+  validatedInputs <- .validatePVBBInputs(
+    parameterValuesBuildingBlock,
+    quantityPaths,
+    quantityValues,
+    units,
+    dimensions
   )
+  baseValues <- validatedInputs$baseValues
+  dimensions <- validatedInputs$dimensions
 
   pvTask <- .getMoBiTaskFromCache("ParameterValuesTask")
 
@@ -709,4 +680,95 @@ addProteinExpressionToParameterValuesBB <- function(
     ))
   }
   return(invisible(TRUE))
+}
+
+#' Validate and process Parameter Values Building Block Inputs.
+#'
+#' Internal utility function to validate the inputs for setting parameter values in Building Blocks that have a "Parameter Values" structure. These include
+#' the Parameter Values BB, the Individual, and the Expression Profiles BBs.
+#' Following validation and conversion is performed:
+#' - If `units` is provided as a single string, it is replicated to match the length of `quantityPaths`.
+#' - If `dimensions` is provided as a single string, it is replicated to match the length of `quantityPaths`.
+#' - It is validated that all provided units are supported in the OSPSuite platform. If any unsupported unit is found, an error is thrown listing the unsupported units.
+#' - It is validated that the lengths of `quantityPaths`, `quantityValues`, `units`, and `dimensions` (if provided as lists) are all equal. If not, an error is thrown indicating the mismatch.
+#' - If `dimensions` is not provided, it is derived from the provided `units` using the `getDimensionForUnit()` function.
+#' - The `quantityValues` are converted from the provided `units` to base units using the `toBaseUnit()` function, and the converted values are returned in a list along with the dimensions.
+#'
+#' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values` or `Individual` or `Expression Profiles`.
+#' @param quantityPaths A character vector of quantity paths to set.
+#' @param quantityValues A numeric vector of values to assign. Must have the same length as `quantityPaths`.
+#' @param units A single unit string or a list of unit strings for the quantity values.
+#' @param dimensions A single dimension string or a list of dimension strings for the quantity values.
+#'
+#' @returns A list containing the converted `baseValues` and their corresponding `dimensions`.
+#' @keywords internal
+#'
+#' @noRd
+.validatePVBBInputs <- function(
+  parameterValuesBuildingBlock,
+  quantityPaths,
+  quantityValues,
+  units,
+  dimensions
+) {
+  # Exit early if no quantity paths are provided
+  if (length(quantityPaths) == 0) {
+    return(invisible(parameterValuesBuildingBlock))
+  }
+
+  # Replicate scalar units and dimensions to match the length of quantityPaths
+  if (length(units) == 1) {
+    units <- rep(units, length(quantityPaths))
+  }
+
+  # Validate if any unit is not supported
+  if (!all(sapply(units, isSupportedUnit))) {
+    unsupportedUnits <- units[!sapply(units, isSupportedUnit)]
+    stop(
+      paste0(
+        "The following units are not supported in the OSPSuite platform: ",
+        paste(unique(unsupportedUnits), collapse = ", "),
+        ". Please provide supported units to set parameter values in the building block."
+      )
+    )
+  }
+
+  if (!is.null(dimensions) && length(dimensions) == 1) {
+    dimensions <- rep(dimensions, length(quantityPaths))
+  }
+
+  if (
+    length(quantityPaths) != length(quantityValues) ||
+      length(quantityPaths) != length(units) ||
+      (!is.null(dimensions) && length(quantityPaths) != length(dimensions))
+  ) {
+    stop(
+      "The length of quantityPaths should be equal to the length of quantityValues, units, and dimensions (if provided as lists)."
+    )
+  }
+
+  # Derive dimensions from units if not provided
+  if (is.null(dimensions)) {
+    dimensions <- vapply(
+      units,
+      getDimensionForUnit,
+      character(1),
+      USE.NAMES = FALSE
+    )
+  }
+
+  # Convert values from provided units to base units
+  baseValues <- vapply(
+    seq_along(quantityValues),
+    function(i) {
+      toBaseUnit(dimensions[i], quantityValues[i], units[i])
+    },
+    numeric(1),
+    USE.NAMES = FALSE
+  )
+
+  return(list(
+    baseValues = baseValues,
+    dimensions = dimensions
+  ))
 }
