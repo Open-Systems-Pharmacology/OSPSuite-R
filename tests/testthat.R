@@ -9,13 +9,9 @@
 library(testthat)
 library(ospsuite)
 
-numCores <- parallel::detectCores()
+numCores <- parallel::detectCores() - 1
 numCores <- if (is.na(numCores)) 1L else numCores
 Sys.setenv(TESTTHAT_PARALLEL = "true")
 Sys.setenv(TESTTHAT_CPUS = as.character(numCores))
-
-# Create data combined objects for testing and save them as RDS files. This is done to avoid the need to create these objects from scratch in each test, which can be time-consuming.
-source(testthat::test_path("../data/create_and_save_data_combined_objects.R"))
-
 
 test_check("ospsuite")

@@ -34,7 +34,7 @@ names(obsData) <- lapply(obsData, function(x) x$name)
 
 oneObsDC <- DataCombined$new()
 oneObsDC$addDataSets(obsData$`Vergin 1995.Iv`)
-saveRDS(oneObsDC, file = file.path(path, "oneObsDC"))
+saveRDS(oneObsDC, file = file.path(path, "oneObsDC.rds"))
 
 ## only one simulated dataset ------------------------
 
@@ -44,7 +44,7 @@ oneSimDC$addSimulationResults(
   quantitiesOrPaths = outputPathSingle,
   groups = "Aciclovir PVB"
 )
-saveRDS(oneSimDC, file = file.path(path, "oneSimDC"))
+saveRDS(oneSimDC, file = file.path(path, "oneSimDC.rds"))
 
 ## many observed datasets ------------------------
 
@@ -53,7 +53,7 @@ manyObsDC$addDataSets(
   c(obsData$`Vergin 1995.Iv`, obsData$`Laskin 1982.Group C`),
   groups = "Aciclovir observed"
 )
-saveRDS(manyObsDC, file = file.path(path, "manyObsDC"))
+saveRDS(manyObsDC, file = file.path(path, "manyObsDC.rds"))
 
 ## many simulated datasets ------------------------
 
@@ -64,7 +64,7 @@ manySimDC$addSimulationResults(
   quantitiesOrPaths = outputPaths[1:2],
   groups = "Aciclovir PVB"
 )
-saveRDS(manySimDC, file = file.path(path, "manySimDC"))
+saveRDS(manySimDC, file = file.path(path, "manySimDC.rds"))
 
 ## one observed and one simulated dataset ------------------------
 
@@ -75,7 +75,7 @@ oneObsSimDC$addSimulationResults(
   quantitiesOrPaths = outputPathSingle,
   groups = "Aciclovir PVB"
 )
-saveRDS(oneObsSimDC, file = file.path(path, "oneObsSimDC"))
+saveRDS(oneObsSimDC, file = file.path(path, "oneObsSimDC.rds"))
 
 ## multiple observed and multiple simulated datasets ------------------------
 
@@ -90,7 +90,7 @@ manyObsSimDC$addSimulationResults(
   quantitiesOrPaths = outputPaths[1:2],
   groups = "Aciclovir PVB"
 )
-saveRDS(manyObsSimDC, file = file.path(path, "manyObsSimDC"))
+saveRDS(manyObsSimDC, file = file.path(path, "manyObsSimDC.rds"))
 
 ## dataset with geometric error ------------------------
 
@@ -99,7 +99,7 @@ oneObsGeometricDC$addDataSets(
   obsData$`Laskin 1982.Group C`,
   groups = "Aciclovir PVB"
 )
-saveRDS(oneObsGeometricDC, file = file.path(path, "oneObsGeometricDC"))
+saveRDS(oneObsGeometricDC, file = file.path(path, "oneObsGeometricDC.rds"))
 
 # custom default plot configuration (DPC) -------------------------------------
 
@@ -110,7 +110,7 @@ customDPC$caption <- "My Sources"
 customDPC$legendPosition <- tlf::LegendPositions$outsideRight
 customDPC$yAxisScale <- "log"
 customDPC$yAxisLimits <- c(0.01, 1000)
-saveRDS(customDPC, file = file.path(path, "customDPC"))
+saveRDS(customDPC, file = file.path(path, "customDPC.rds"))
 
 # dataset with mixed dimensions and y-Units ---------------------------
 
@@ -133,5 +133,5 @@ manyObsSimDCWithFraction$addDataSets(obsData[[1]], groups = "Aciclovir PVB")
 
 saveRDS(
   manyObsSimDCWithFraction,
-  file = file.path(path, "manyObsSimDCWithFraction")
+  file = file.path(path, "manyObsSimDCWithFraction.rds")
 )

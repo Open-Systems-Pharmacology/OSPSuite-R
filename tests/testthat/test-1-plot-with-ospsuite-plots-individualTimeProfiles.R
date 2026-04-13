@@ -7,19 +7,19 @@ ggplot2::theme_update(legend.justification = c("right", "top"))
 
 # `DataCombined` objects ------------------------
 
-oneObsDC <- readRDS(getTestDataFilePath("oneObsDC"))
-manyObsDC <- readRDS(getTestDataFilePath("manyObsDC"))
+oneObsDC <- readRDS(getTestDataFilePath("oneObsDC.rds"))
+manyObsDC <- readRDS(getTestDataFilePath("manyObsDC.rds"))
 
-oneSimDC <- readRDS(getTestDataFilePath("oneSimDC"))
-manySimDC <- readRDS(getTestDataFilePath("manySimDC"))
+oneSimDC <- readRDS(getTestDataFilePath("oneSimDC.rds"))
+manySimDC <- readRDS(getTestDataFilePath("manySimDC.rds"))
 
-oneObsSimDC <- readRDS(getTestDataFilePath("oneObsSimDC"))
-manyObsSimDC <- readRDS(getTestDataFilePath("manyObsSimDC"))
+oneObsSimDC <- readRDS(getTestDataFilePath("oneObsSimDC.rds"))
+manyObsSimDC <- readRDS(getTestDataFilePath("manyObsSimDC.rds"))
 
-oneObsGeometricDC <- readRDS(getTestDataFilePath("oneObsGeometricDC"))
+oneObsGeometricDC <- readRDS(getTestDataFilePath("oneObsGeometricDC.rds"))
 
 manyObsSimDCWithFraction <- readRDS(getTestDataFilePath(
-  "manyObsSimDCWithFraction"
+  "manyObsSimDCWithFraction.rds"
 ))
 
 ### only observed ------------------------
