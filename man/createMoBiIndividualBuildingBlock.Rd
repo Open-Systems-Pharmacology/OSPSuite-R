@@ -5,6 +5,7 @@
 \title{Create a MoBi Individual Building Block}
 \usage{
 createMoBiIndividualBuildingBlock(
+  name,
   species,
   population = NULL,
   gender = NULL,
@@ -20,6 +21,8 @@ createMoBiIndividualBuildingBlock(
 )
 }
 \arguments{
+\item{name}{Name for the building block.}
+
 \item{species}{Species of the individual as defined in PK-Sim (see \code{Species} enum).}
 
 \item{population}{Population to use to create the individual. Required when
@@ -56,6 +59,7 @@ optional demographic characteristics by calling the MoBi \code{IndividualTask}.
 \examples{
 \dontrun{
 individual <- createMoBiIndividualBuildingBlock(
+  name = "MyIndividual",
   species = Species$Human,
   population = HumanPopulation$European_ICRP_2002,
   gender = Gender$Male,

@@ -617,7 +617,7 @@ DataCombined <- R6::R6Class(
 
       # Update names, if custom names are specified
       if (!is.null(names)) {
-        new_names <- setNames(names, unique(simData$name))
+        new_names <- stats::setNames(names, unique(simData$name))
         simData <- dplyr::mutate(simData, name = new_names[name])
       }
 

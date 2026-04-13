@@ -1,31 +1,20 @@
 # It can print a MoBi project
 
     Code
-      print(defaultMoBiProject)
+      print(globalTestMoBiProject)
     Output
       <MoBiProject>
-        * Source file: ../data/TH_QST_Platform.mbp3
+        * Source file: ../data/MoBiProject/Test_Project.mbp3
       Simulations:
-        * Thyroid_QST_Human
-        * Thyroid_QST_Phenobarbital
+        * TestSim_2Modules
+        * TestSim_2Modules_noICSelected
       Individuals:
-        * Human
-        * Rat
+        * DefaultIndividual
       Expression profiles:
-        * UDPGT1|Human|Healthy
-        * DIO1|Human|Healthy
-        * DIO3|Human|Healthy
-        * UDPGT2|Human|Healthy
-        * UGT1A1|Rat|Healthy
-        * PB-LiverBindingPartner|Human|Healthy
+        * UGT2B6|Human|Healthy
+        * CYP3A4|Human|Healthy
       Modules:
-        * Thyroid_QST
-        * TH_activeTransports
-        * Pituitary
-        * Phenobarbital_Extension
-        * Phenobarbital_PBPK
-        * Endogenous_TH
-        * TH_plasma_binding
-        * Thyroid
-        * Rat physiology
+        * ExtModule_3IC_3PV
+        * TestModule
+        * ExtModule_noIC_noPV
 

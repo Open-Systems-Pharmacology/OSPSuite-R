@@ -1,12 +1,8 @@
-testMoBiProject <- loadMoBiProject(
-  filePath = getTestDataFilePath("Test_Project.mbp3")
-)
-
 # Test for .createModuleConfiguration
 
 # Create a module configuration with no IC and PV BBs
 test_that(".createModuleConfiguration creates a module configuration with no IC and PV BBs", {
-  module <- testMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
+  module <- globalTestMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
   netModuleConfiguration <- .createModuleConfiguration(module)
 
   # Expect that no PV and IC BBs are selected
@@ -23,7 +19,7 @@ test_that(".createModuleConfiguration creates a module configuration with no IC 
 
 # Create a module configuration with specified IC and PV BBs
 test_that(".createModuleConfiguration creates a module configuration with IC and PV BBs", {
-  module <- testMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+  module <- globalTestMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
 
   netModuleConfiguration <- .createModuleConfiguration(
     module,
@@ -50,7 +46,7 @@ test_that("loadModuleFromPKML loads a module correctly", {
 })
 
 test_that("loadModuleFromPKML throws an error when the passed PKML contains more than one module", {
-  filePath <- getTestDataFilePath("TestSim_2Modules.pkml")
+  filePath <- getTestDataFilePath("MoBiProject/TestSim_2Modules.pkml")
   expect_error(
     loadModuleFromPKML(filePath),
     regexp = "The PKML you are trying to load the module from contains more than one module, but the 
