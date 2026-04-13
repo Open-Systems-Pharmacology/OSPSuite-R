@@ -5,23 +5,6 @@ ggplot2::theme_update(legend.title = ggplot2::element_blank())
 ggplot2::theme_update(legend.position = c(0.95, 0.95))
 ggplot2::theme_update(legend.justification = c("right", "top"))
 
-# `DataCombined` objects ------------------------
-
-oneObsDC <- readRDS(getTestDataFilePath("oneObsDC.rds"))
-manyObsDC <- readRDS(getTestDataFilePath("manyObsDC.rds"))
-
-oneSimDC <- readRDS(getTestDataFilePath("oneSimDC.rds"))
-manySimDC <- readRDS(getTestDataFilePath("manySimDC.rds"))
-
-oneObsSimDC <- readRDS(getTestDataFilePath("oneObsSimDC.rds"))
-manyObsSimDC <- readRDS(getTestDataFilePath("manyObsSimDC.rds"))
-
-oneObsGeometricDC <- readRDS(getTestDataFilePath("oneObsGeometricDC.rds"))
-
-manyObsSimDCWithFraction <- readRDS(getTestDataFilePath(
-  "manyObsSimDCWithFraction.rds"
-))
-
 ### only observed ------------------------
 test_that("It creates default plots as expected for single observed dataset", {
   set.seed(123)
