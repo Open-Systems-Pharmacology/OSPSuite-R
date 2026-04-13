@@ -613,7 +613,7 @@ test_that("addLocalMoleculeParametersToParameterValuesBB adds parameters for all
 })
 
 test_that("addLocalMoleculeParametersToParameterValuesBB adds parameters for multiple specified molecules", {
-  testProject <- getSimpleProject
+  testProject <- getSimpleProject()
   module <- testProject$getModules("TestModule")[[1]]
   pvBB <- module$getParameterValuesBBs()[[1]]
 
@@ -732,7 +732,9 @@ test_that("addLocalMoleculeParametersToParameterValuesBB throws error for module
 
 # Test for molecules that are not present in the project
 test_that("addLocalMoleculeParametersToParameterValuesBB ignores molecules that are not present in the molecules module", {
-  testProject <- loadMoBiProject(getTestDataFilePath("Test_Project.mbp3"))
+  testProject <- loadMoBiProject(getTestDataFilePath(
+    "MoBiProject/Test_Project.mbp3"
+  ))
   module <- testProject$getModules("TestModule")[[1]]
   pvBB <- module$getParameterValuesBBs()[[1]]
 

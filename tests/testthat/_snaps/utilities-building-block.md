@@ -445,332 +445,314 @@
     Code
       newPaths_df
     Output
-                           Container Path                  Molecule Name Is Present
-      1505        Organism|Thyroid|Plasma                           DIO1       TRUE
-      1506        Organism|Thyroid|Plasma                         UDPGT1       TRUE
-      1507        Organism|Thyroid|Plasma                         UDPGT2       TRUE
-      1508        Organism|Thyroid|Plasma                           DIO3       TRUE
-      1509        Organism|Thyroid|Plasma                Undefined Liver       TRUE
-      1510        Organism|Thyroid|Plasma                             T3       TRUE
-      1511        Organism|Thyroid|Plasma                             T4       TRUE
-      1512        Organism|Thyroid|Plasma                            TSH       TRUE
-      1513        Organism|Thyroid|Plasma                T3-FcRn_Complex       TRUE
-      1514        Organism|Thyroid|Plasma                     LigandEndo       TRUE
-      1515        Organism|Thyroid|Plasma                           FcRn       TRUE
-      1516        Organism|Thyroid|Plasma             LigandEndo_Complex       TRUE
-      1517        Organism|Thyroid|Plasma                T4-FcRn_Complex       TRUE
-      1518        Organism|Thyroid|Plasma               TSH-FcRn_Complex       TRUE
-      1519        Organism|Thyroid|Plasma  T3-DIO1-Assumption Metabolite       TRUE
-      1520        Organism|Thyroid|Plasma        T3-UGT2B4-NA Metabolite       TRUE
-      1521        Organism|Thyroid|Plasma  T3-DIO3-Assumption Metabolite       TRUE
-      1522        Organism|Thyroid|Plasma  T3-Undefined Liver Metabolite       TRUE
-      1523        Organism|Thyroid|Plasma  T4-DIO1-Assumption Metabolite       TRUE
-      1524        Organism|Thyroid|Plasma        T4-UDPGT1-NA Metabolite       TRUE
-      1525        Organism|Thyroid|Plasma  T4-Undefined Liver Metabolite       TRUE
-      1526        Organism|Thyroid|Plasma TSH-Undefined Liver Metabolite       TRUE
-      1527    Organism|Thyroid|BloodCells                           DIO1       TRUE
-      1528    Organism|Thyroid|BloodCells                         UDPGT1       TRUE
-      1529    Organism|Thyroid|BloodCells                         UDPGT2       TRUE
-      1530    Organism|Thyroid|BloodCells                           DIO3       TRUE
-      1531    Organism|Thyroid|BloodCells                Undefined Liver       TRUE
-      1532    Organism|Thyroid|BloodCells                             T3       TRUE
-      1533    Organism|Thyroid|BloodCells                             T4       TRUE
-      1534    Organism|Thyroid|BloodCells                            TSH       TRUE
-      1535    Organism|Thyroid|BloodCells                T3-FcRn_Complex       TRUE
-      1536    Organism|Thyroid|BloodCells                     LigandEndo       TRUE
-      1537    Organism|Thyroid|BloodCells                           FcRn       TRUE
-      1538    Organism|Thyroid|BloodCells             LigandEndo_Complex       TRUE
-      1539    Organism|Thyroid|BloodCells                T4-FcRn_Complex       TRUE
-      1540    Organism|Thyroid|BloodCells               TSH-FcRn_Complex       TRUE
-      1541    Organism|Thyroid|BloodCells  T3-DIO1-Assumption Metabolite       TRUE
-      1542    Organism|Thyroid|BloodCells        T3-UGT2B4-NA Metabolite       TRUE
-      1543    Organism|Thyroid|BloodCells  T3-DIO3-Assumption Metabolite       TRUE
-      1544    Organism|Thyroid|BloodCells  T3-Undefined Liver Metabolite       TRUE
-      1545    Organism|Thyroid|BloodCells  T4-DIO1-Assumption Metabolite       TRUE
-      1546    Organism|Thyroid|BloodCells        T4-UDPGT1-NA Metabolite       TRUE
-      1547    Organism|Thyroid|BloodCells  T4-Undefined Liver Metabolite       TRUE
-      1548    Organism|Thyroid|BloodCells TSH-Undefined Liver Metabolite       TRUE
-      1549  Organism|Thyroid|Interstitial                           DIO1       TRUE
-      1550  Organism|Thyroid|Interstitial                         UDPGT1       TRUE
-      1551  Organism|Thyroid|Interstitial                         UDPGT2       TRUE
-      1552  Organism|Thyroid|Interstitial                           DIO3       TRUE
-      1553  Organism|Thyroid|Interstitial                Undefined Liver       TRUE
-      1554  Organism|Thyroid|Interstitial                             T3       TRUE
-      1555  Organism|Thyroid|Interstitial                             T4       TRUE
-      1556  Organism|Thyroid|Interstitial                            TSH       TRUE
-      1557  Organism|Thyroid|Interstitial                T3-FcRn_Complex       TRUE
-      1558  Organism|Thyroid|Interstitial                     LigandEndo       TRUE
-      1559  Organism|Thyroid|Interstitial                           FcRn       TRUE
-      1560  Organism|Thyroid|Interstitial             LigandEndo_Complex       TRUE
-      1561  Organism|Thyroid|Interstitial                T4-FcRn_Complex       TRUE
-      1562  Organism|Thyroid|Interstitial               TSH-FcRn_Complex       TRUE
-      1563  Organism|Thyroid|Interstitial  T3-DIO1-Assumption Metabolite       TRUE
-      1564  Organism|Thyroid|Interstitial        T3-UGT2B4-NA Metabolite       TRUE
-      1565  Organism|Thyroid|Interstitial  T3-DIO3-Assumption Metabolite       TRUE
-      1566  Organism|Thyroid|Interstitial  T3-Undefined Liver Metabolite       TRUE
-      1567  Organism|Thyroid|Interstitial  T4-DIO1-Assumption Metabolite       TRUE
-      1568  Organism|Thyroid|Interstitial        T4-UDPGT1-NA Metabolite       TRUE
-      1569  Organism|Thyroid|Interstitial  T4-Undefined Liver Metabolite       TRUE
-      1570  Organism|Thyroid|Interstitial TSH-Undefined Liver Metabolite       TRUE
-      1571 Organism|Thyroid|Intracellular                           DIO1       TRUE
-      1572 Organism|Thyroid|Intracellular                         UDPGT1       TRUE
-      1573 Organism|Thyroid|Intracellular                         UDPGT2       TRUE
-      1574 Organism|Thyroid|Intracellular                           DIO3       TRUE
-      1575 Organism|Thyroid|Intracellular                Undefined Liver       TRUE
-      1576 Organism|Thyroid|Intracellular                             T3       TRUE
-      1577 Organism|Thyroid|Intracellular                             T4       TRUE
-      1578 Organism|Thyroid|Intracellular                            TSH       TRUE
-      1579 Organism|Thyroid|Intracellular                T3-FcRn_Complex       TRUE
-      1580 Organism|Thyroid|Intracellular                     LigandEndo       TRUE
-      1581 Organism|Thyroid|Intracellular                           FcRn       TRUE
-      1582 Organism|Thyroid|Intracellular             LigandEndo_Complex       TRUE
-      1583 Organism|Thyroid|Intracellular                T4-FcRn_Complex       TRUE
-      1584 Organism|Thyroid|Intracellular               TSH-FcRn_Complex       TRUE
-      1585 Organism|Thyroid|Intracellular  T3-DIO1-Assumption Metabolite       TRUE
-      1586 Organism|Thyroid|Intracellular        T3-UGT2B4-NA Metabolite       TRUE
-      1587 Organism|Thyroid|Intracellular  T3-DIO3-Assumption Metabolite       TRUE
-      1588 Organism|Thyroid|Intracellular  T3-Undefined Liver Metabolite       TRUE
-      1589 Organism|Thyroid|Intracellular  T4-DIO1-Assumption Metabolite       TRUE
-      1590 Organism|Thyroid|Intracellular        T4-UDPGT1-NA Metabolite       TRUE
-      1591 Organism|Thyroid|Intracellular  T4-Undefined Liver Metabolite       TRUE
-      1592 Organism|Thyroid|Intracellular TSH-Undefined Liver Metabolite       TRUE
-      1593      Organism|Thyroid|Endosome                           DIO1       TRUE
-      1594      Organism|Thyroid|Endosome                         UDPGT1       TRUE
-      1595      Organism|Thyroid|Endosome                         UDPGT2       TRUE
-      1596      Organism|Thyroid|Endosome                           DIO3       TRUE
-      1597      Organism|Thyroid|Endosome                Undefined Liver       TRUE
-      1598      Organism|Thyroid|Endosome                             T3       TRUE
-      1599      Organism|Thyroid|Endosome                             T4       TRUE
-      1600      Organism|Thyroid|Endosome                            TSH       TRUE
-      1601      Organism|Thyroid|Endosome                T3-FcRn_Complex       TRUE
-      1602      Organism|Thyroid|Endosome                     LigandEndo       TRUE
-      1603      Organism|Thyroid|Endosome                           FcRn       TRUE
-      1604      Organism|Thyroid|Endosome             LigandEndo_Complex       TRUE
-      1605      Organism|Thyroid|Endosome                T4-FcRn_Complex       TRUE
-      1606      Organism|Thyroid|Endosome               TSH-FcRn_Complex       TRUE
-      1607      Organism|Thyroid|Endosome  T3-DIO1-Assumption Metabolite       TRUE
-      1608      Organism|Thyroid|Endosome        T3-UGT2B4-NA Metabolite       TRUE
-      1609      Organism|Thyroid|Endosome  T3-DIO3-Assumption Metabolite       TRUE
-      1610      Organism|Thyroid|Endosome  T3-Undefined Liver Metabolite       TRUE
-      1611      Organism|Thyroid|Endosome  T4-DIO1-Assumption Metabolite       TRUE
-      1612      Organism|Thyroid|Endosome        T4-UDPGT1-NA Metabolite       TRUE
-      1613      Organism|Thyroid|Endosome  T4-Undefined Liver Metabolite       TRUE
-      1614      Organism|Thyroid|Endosome TSH-Undefined Liver Metabolite       TRUE
-      1615         Organism|Thyroid|Lumen                           DIO1       TRUE
-      1616         Organism|Thyroid|Lumen                         UDPGT1       TRUE
-      1617         Organism|Thyroid|Lumen                         UDPGT2       TRUE
-      1618         Organism|Thyroid|Lumen                           DIO3       TRUE
-      1619         Organism|Thyroid|Lumen                Undefined Liver       TRUE
-      1620         Organism|Thyroid|Lumen                             T3       TRUE
-      1621         Organism|Thyroid|Lumen                             T4       TRUE
-      1622         Organism|Thyroid|Lumen                            TSH       TRUE
-      1623         Organism|Thyroid|Lumen                T3-FcRn_Complex       TRUE
-      1624         Organism|Thyroid|Lumen                     LigandEndo       TRUE
-      1625         Organism|Thyroid|Lumen                           FcRn       TRUE
-      1626         Organism|Thyroid|Lumen             LigandEndo_Complex       TRUE
-      1627         Organism|Thyroid|Lumen                T4-FcRn_Complex       TRUE
-      1628         Organism|Thyroid|Lumen               TSH-FcRn_Complex       TRUE
-      1629         Organism|Thyroid|Lumen  T3-DIO1-Assumption Metabolite       TRUE
-      1630         Organism|Thyroid|Lumen        T3-UGT2B4-NA Metabolite       TRUE
-      1631         Organism|Thyroid|Lumen  T3-DIO3-Assumption Metabolite       TRUE
-      1632         Organism|Thyroid|Lumen  T3-Undefined Liver Metabolite       TRUE
-      1633         Organism|Thyroid|Lumen  T4-DIO1-Assumption Metabolite       TRUE
-      1634         Organism|Thyroid|Lumen        T4-UDPGT1-NA Metabolite       TRUE
-      1635         Organism|Thyroid|Lumen  T4-Undefined Liver Metabolite       TRUE
-      1636         Organism|Thyroid|Lumen TSH-Undefined Liver Metabolite       TRUE
-           Value Unit Scale Divisor Neg. Values Allowed
-      1505   NaN µmol             1               FALSE
-      1506   NaN µmol             1               FALSE
-      1507   NaN µmol             1               FALSE
-      1508   NaN µmol             1               FALSE
-      1509   NaN µmol             1               FALSE
-      1510     0 µmol             1               FALSE
-      1511     0 µmol             1               FALSE
-      1512     0 µmol             1               FALSE
-      1513     0 µmol             1               FALSE
-      1514     0 µmol             1               FALSE
-      1515     0 µmol             1               FALSE
-      1516     0 µmol             1               FALSE
-      1517     0 µmol             1               FALSE
-      1518     0 µmol             1               FALSE
-      1519     0 µmol             1               FALSE
-      1520     0 µmol             1               FALSE
-      1521     0 µmol             1               FALSE
-      1522     0 µmol             1               FALSE
-      1523     0 µmol             1               FALSE
-      1524     0 µmol             1               FALSE
-      1525     0 µmol             1               FALSE
-      1526     0 µmol             1               FALSE
-      1527   NaN µmol             1               FALSE
-      1528   NaN µmol             1               FALSE
-      1529   NaN µmol             1               FALSE
-      1530   NaN µmol             1               FALSE
-      1531   NaN µmol             1               FALSE
-      1532     0 µmol             1               FALSE
-      1533     0 µmol             1               FALSE
-      1534     0 µmol             1               FALSE
-      1535     0 µmol             1               FALSE
-      1536     0 µmol             1               FALSE
-      1537     0 µmol             1               FALSE
-      1538     0 µmol             1               FALSE
-      1539     0 µmol             1               FALSE
-      1540     0 µmol             1               FALSE
-      1541     0 µmol             1               FALSE
-      1542     0 µmol             1               FALSE
-      1543     0 µmol             1               FALSE
-      1544     0 µmol             1               FALSE
-      1545     0 µmol             1               FALSE
-      1546     0 µmol             1               FALSE
-      1547     0 µmol             1               FALSE
-      1548     0 µmol             1               FALSE
-      1549   NaN µmol             1               FALSE
-      1550   NaN µmol             1               FALSE
-      1551   NaN µmol             1               FALSE
-      1552   NaN µmol             1               FALSE
-      1553   NaN µmol             1               FALSE
-      1554     0 µmol             1               FALSE
-      1555     0 µmol             1               FALSE
-      1556     0 µmol             1               FALSE
-      1557     0 µmol             1               FALSE
-      1558     0 µmol             1               FALSE
-      1559     0 µmol             1               FALSE
-      1560     0 µmol             1               FALSE
-      1561     0 µmol             1               FALSE
-      1562     0 µmol             1               FALSE
-      1563     0 µmol             1               FALSE
-      1564     0 µmol             1               FALSE
-      1565     0 µmol             1               FALSE
-      1566     0 µmol             1               FALSE
-      1567     0 µmol             1               FALSE
-      1568     0 µmol             1               FALSE
-      1569     0 µmol             1               FALSE
-      1570     0 µmol             1               FALSE
-      1571   NaN µmol             1               FALSE
-      1572   NaN µmol             1               FALSE
-      1573   NaN µmol             1               FALSE
-      1574   NaN µmol             1               FALSE
-      1575   NaN µmol             1               FALSE
-      1576     0 µmol             1               FALSE
-      1577     0 µmol             1               FALSE
-      1578     0 µmol             1               FALSE
-      1579     0 µmol             1               FALSE
-      1580     0 µmol             1               FALSE
-      1581     0 µmol             1               FALSE
-      1582     0 µmol             1               FALSE
-      1583     0 µmol             1               FALSE
-      1584     0 µmol             1               FALSE
-      1585     0 µmol             1               FALSE
-      1586     0 µmol             1               FALSE
-      1587     0 µmol             1               FALSE
-      1588     0 µmol             1               FALSE
-      1589     0 µmol             1               FALSE
-      1590     0 µmol             1               FALSE
-      1591     0 µmol             1               FALSE
-      1592     0 µmol             1               FALSE
-      1593   NaN µmol             1               FALSE
-      1594   NaN µmol             1               FALSE
-      1595   NaN µmol             1               FALSE
-      1596   NaN µmol             1               FALSE
-      1597   NaN µmol             1               FALSE
-      1598     0 µmol             1               FALSE
-      1599     0 µmol             1               FALSE
-      1600     0 µmol             1               FALSE
-      1601     0 µmol             1               FALSE
-      1602     0 µmol             1               FALSE
-      1603     0 µmol             1               FALSE
-      1604     0 µmol             1               FALSE
-      1605     0 µmol             1               FALSE
-      1606     0 µmol             1               FALSE
-      1607     0 µmol             1               FALSE
-      1608     0 µmol             1               FALSE
-      1609     0 µmol             1               FALSE
-      1610     0 µmol             1               FALSE
-      1611     0 µmol             1               FALSE
-      1612     0 µmol             1               FALSE
-      1613     0 µmol             1               FALSE
-      1614     0 µmol             1               FALSE
-      1615   NaN µmol             1               FALSE
-      1616   NaN µmol             1               FALSE
-      1617   NaN µmol             1               FALSE
-      1618   NaN µmol             1               FALSE
-      1619   NaN µmol             1               FALSE
-      1620     0 µmol             1               FALSE
-      1621     0 µmol             1               FALSE
-      1622     0 µmol             1               FALSE
-      1623     0 µmol             1               FALSE
-      1624     0 µmol             1               FALSE
-      1625     0 µmol             1               FALSE
-      1626     0 µmol             1               FALSE
-      1627     0 µmol             1               FALSE
-      1628     0 µmol             1               FALSE
-      1629     0 µmol             1               FALSE
-      1630     0 µmol             1               FALSE
-      1631     0 µmol             1               FALSE
-      1632     0 µmol             1               FALSE
-      1633     0 µmol             1               FALSE
-      1634     0 µmol             1               FALSE
-      1635     0 µmol             1               FALSE
-      1636     0 µmol             1               FALSE
+                          Container Path Molecule Name Is Present Value Unit
+      136        Organism|Thyroid|Plasma             A       TRUE     0 µmol
+      137        Organism|Thyroid|Plasma             B       TRUE     0 µmol
+      138        Organism|Thyroid|Plasma        UGT2B6       TRUE     0 µmol
+      139    Organism|Thyroid|BloodCells             A       TRUE     0 µmol
+      140    Organism|Thyroid|BloodCells             B       TRUE     0 µmol
+      141    Organism|Thyroid|BloodCells        UGT2B6       TRUE     0 µmol
+      142  Organism|Thyroid|Interstitial             A       TRUE     0 µmol
+      143  Organism|Thyroid|Interstitial             B       TRUE     0 µmol
+      144  Organism|Thyroid|Interstitial        UGT2B6       TRUE     0 µmol
+      145 Organism|Thyroid|Intracellular             A       TRUE     0 µmol
+      146 Organism|Thyroid|Intracellular             B       TRUE     0 µmol
+      147 Organism|Thyroid|Intracellular        UGT2B6       TRUE     0 µmol
+      148      Organism|Thyroid|Endosome             A       TRUE     0 µmol
+      149      Organism|Thyroid|Endosome             B       TRUE     0 µmol
+      150      Organism|Thyroid|Endosome        UGT2B6       TRUE     0 µmol
+      151         Organism|Thyroid|Lumen             A       TRUE     0 µmol
+      152         Organism|Thyroid|Lumen             B       TRUE     0 µmol
+      153         Organism|Thyroid|Lumen        UGT2B6       TRUE     0 µmol
+          Scale Divisor Neg. Values Allowed
+      136             1               FALSE
+      137             1               FALSE
+      138             1               FALSE
+      139             1               FALSE
+      140             1               FALSE
+      141             1               FALSE
+      142             1               FALSE
+      143             1               FALSE
+      144             1               FALSE
+      145             1               FALSE
+      146             1               FALSE
+      147             1               FALSE
+      148             1               FALSE
+      149             1               FALSE
+      150             1               FALSE
+      151             1               FALSE
+      152             1               FALSE
+      153             1               FALSE
 
 # extendInitialConditionsBB does not add new entries for existing molecules and compartments
 
     Code
       newPaths_df
     Output
-                                      Container Path Molecule Name Is Present Value
-      1637             Organism|EndogenousIgG|Plasma            T3      FALSE     0
-      1638             Organism|EndogenousIgG|Plasma            T4      FALSE     0
-      1639       Organism|EndogenousIgG|Interstitial            T3      FALSE     0
-      1640       Organism|EndogenousIgG|Interstitial            T4      FALSE     0
-      1641           Organism|EndogenousIgG|Endosome            T3      FALSE     0
-      1642           Organism|EndogenousIgG|Endosome            T4      FALSE     0
-      1643         Organism|EndogenousIgG|IgG_Source            T3      FALSE     0
-      1644         Organism|EndogenousIgG|IgG_Source            T4      FALSE     0
-      1645 Organism|EndogenousIgG|EndosomalClearance            T3      FALSE     0
-      1646 Organism|EndogenousIgG|EndosomalClearance            T4      FALSE     0
-           Unit Scale Divisor Neg. Values Allowed
-      1637 µmol             1               FALSE
-      1638 µmol             1               FALSE
-      1639 µmol             1               FALSE
-      1640 µmol             1               FALSE
-      1641 µmol             1               FALSE
-      1642 µmol             1               FALSE
-      1643 µmol             1               FALSE
-      1644 µmol             1               FALSE
-      1645 µmol             1               FALSE
-      1646 µmol             1               FALSE
-
-# extendInitialConditionsBB extends only with specified molecules
-
-    Code
-      newPaths_df
-    Output
-                           Container Path Molecule Name Is Present Value Unit
-      1505        Organism|Thyroid|Plasma            T3       TRUE     0 µmol
-      1506        Organism|Thyroid|Plasma            T4       TRUE     0 µmol
-      1507    Organism|Thyroid|BloodCells            T3       TRUE     0 µmol
-      1508    Organism|Thyroid|BloodCells            T4       TRUE     0 µmol
-      1509  Organism|Thyroid|Interstitial            T3       TRUE     0 µmol
-      1510  Organism|Thyroid|Interstitial            T4       TRUE     0 µmol
-      1511 Organism|Thyroid|Intracellular            T3       TRUE     0 µmol
-      1512 Organism|Thyroid|Intracellular            T4       TRUE     0 µmol
-      1513      Organism|Thyroid|Endosome            T3       TRUE     0 µmol
-      1514      Organism|Thyroid|Endosome            T4       TRUE     0 µmol
-      1515         Organism|Thyroid|Lumen            T3       TRUE     0 µmol
-      1516         Organism|Thyroid|Lumen            T4       TRUE     0 µmol
-           Scale Divisor Neg. Values Allowed
-      1505             1               FALSE
-      1506             1               FALSE
-      1507             1               FALSE
-      1508             1               FALSE
-      1509             1               FALSE
-      1510             1               FALSE
-      1511             1               FALSE
-      1512             1               FALSE
-      1513             1               FALSE
-      1514             1               FALSE
-      1515             1               FALSE
-      1516             1               FALSE
+                                                         Container Path Molecule Name
+      136                                          Organism|Gallbladder        CYP3A4
+      137                                   Organism|VenousBlood|Plasma        CYP3A4
+      138                               Organism|VenousBlood|BloodCells        CYP3A4
+      139                                 Organism|ArterialBlood|Plasma        CYP3A4
+      140                             Organism|ArterialBlood|BloodCells        CYP3A4
+      141                                          Organism|Bone|Plasma        CYP3A4
+      142                                      Organism|Bone|BloodCells        CYP3A4
+      143                                    Organism|Bone|Interstitial        CYP3A4
+      144                                   Organism|Bone|Intracellular        CYP3A4
+      145                                         Organism|Brain|Plasma        CYP3A4
+      146                                     Organism|Brain|BloodCells        CYP3A4
+      147                                   Organism|Brain|Interstitial        CYP3A4
+      148                                  Organism|Brain|Intracellular        CYP3A4
+      149                                           Organism|Fat|Plasma        CYP3A4
+      150                                       Organism|Fat|BloodCells        CYP3A4
+      151                                     Organism|Fat|Interstitial        CYP3A4
+      152                                    Organism|Fat|Intracellular        CYP3A4
+      153                                        Organism|Gonads|Plasma        CYP3A4
+      154                                    Organism|Gonads|BloodCells        CYP3A4
+      155                                  Organism|Gonads|Interstitial        CYP3A4
+      156                                 Organism|Gonads|Intracellular        CYP3A4
+      157                                         Organism|Heart|Plasma        CYP3A4
+      158                                     Organism|Heart|BloodCells        CYP3A4
+      159                                   Organism|Heart|Interstitial        CYP3A4
+      160                                  Organism|Heart|Intracellular        CYP3A4
+      161                                        Organism|Kidney|Plasma        CYP3A4
+      162                                    Organism|Kidney|BloodCells        CYP3A4
+      163                                  Organism|Kidney|Interstitial        CYP3A4
+      164                                 Organism|Kidney|Intracellular        CYP3A4
+      165                                         Organism|Kidney|Urine        CYP3A4
+      166                                        Organism|Lumen|Stomach        CYP3A4
+      167                                       Organism|Lumen|Duodenum        CYP3A4
+      168                                   Organism|Lumen|UpperJejunum        CYP3A4
+      169                                   Organism|Lumen|LowerJejunum        CYP3A4
+      170                                     Organism|Lumen|UpperIleum        CYP3A4
+      171                                     Organism|Lumen|LowerIleum        CYP3A4
+      172                                         Organism|Lumen|Caecum        CYP3A4
+      173                                 Organism|Lumen|ColonAscendens        CYP3A4
+      174                               Organism|Lumen|ColonTransversum        CYP3A4
+      175                                Organism|Lumen|ColonDescendens        CYP3A4
+      176                                   Organism|Lumen|ColonSigmoid        CYP3A4
+      177                                         Organism|Lumen|Rectum        CYP3A4
+      178                                          Organism|Lumen|Feces        CYP3A4
+      179                                       Organism|Stomach|Plasma        CYP3A4
+      180                                   Organism|Stomach|BloodCells        CYP3A4
+      181                                 Organism|Stomach|Interstitial        CYP3A4
+      182                                Organism|Stomach|Intracellular        CYP3A4
+      183                                Organism|SmallIntestine|Plasma        CYP3A4
+      184                            Organism|SmallIntestine|BloodCells        CYP3A4
+      185                          Organism|SmallIntestine|Interstitial        CYP3A4
+      186                         Organism|SmallIntestine|Intracellular        CYP3A4
+      187                Organism|SmallIntestine|Mucosa|Duodenum|Plasma        CYP3A4
+      188            Organism|SmallIntestine|Mucosa|Duodenum|BloodCells        CYP3A4
+      189          Organism|SmallIntestine|Mucosa|Duodenum|Interstitial        CYP3A4
+      190         Organism|SmallIntestine|Mucosa|Duodenum|Intracellular        CYP3A4
+      191            Organism|SmallIntestine|Mucosa|UpperJejunum|Plasma        CYP3A4
+      192        Organism|SmallIntestine|Mucosa|UpperJejunum|BloodCells        CYP3A4
+      193      Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial        CYP3A4
+      194     Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular        CYP3A4
+      195            Organism|SmallIntestine|Mucosa|LowerJejunum|Plasma        CYP3A4
+      196        Organism|SmallIntestine|Mucosa|LowerJejunum|BloodCells        CYP3A4
+      197      Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial        CYP3A4
+      198     Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular        CYP3A4
+      199              Organism|SmallIntestine|Mucosa|UpperIleum|Plasma        CYP3A4
+      200          Organism|SmallIntestine|Mucosa|UpperIleum|BloodCells        CYP3A4
+      201        Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial        CYP3A4
+      202       Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular        CYP3A4
+      203              Organism|SmallIntestine|Mucosa|LowerIleum|Plasma        CYP3A4
+      204          Organism|SmallIntestine|Mucosa|LowerIleum|BloodCells        CYP3A4
+      205        Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial        CYP3A4
+      206       Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular        CYP3A4
+      207                                Organism|LargeIntestine|Plasma        CYP3A4
+      208                            Organism|LargeIntestine|BloodCells        CYP3A4
+      209                          Organism|LargeIntestine|Interstitial        CYP3A4
+      210                         Organism|LargeIntestine|Intracellular        CYP3A4
+      211                  Organism|LargeIntestine|Mucosa|Caecum|Plasma        CYP3A4
+      212              Organism|LargeIntestine|Mucosa|Caecum|BloodCells        CYP3A4
+      213            Organism|LargeIntestine|Mucosa|Caecum|Interstitial        CYP3A4
+      214           Organism|LargeIntestine|Mucosa|Caecum|Intracellular        CYP3A4
+      215          Organism|LargeIntestine|Mucosa|ColonAscendens|Plasma        CYP3A4
+      216      Organism|LargeIntestine|Mucosa|ColonAscendens|BloodCells        CYP3A4
+      217    Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial        CYP3A4
+      218   Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular        CYP3A4
+      219        Organism|LargeIntestine|Mucosa|ColonTransversum|Plasma        CYP3A4
+      220    Organism|LargeIntestine|Mucosa|ColonTransversum|BloodCells        CYP3A4
+      221  Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial        CYP3A4
+      222 Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular        CYP3A4
+      223         Organism|LargeIntestine|Mucosa|ColonDescendens|Plasma        CYP3A4
+      224     Organism|LargeIntestine|Mucosa|ColonDescendens|BloodCells        CYP3A4
+      225   Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial        CYP3A4
+      226  Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular        CYP3A4
+      227            Organism|LargeIntestine|Mucosa|ColonSigmoid|Plasma        CYP3A4
+      228        Organism|LargeIntestine|Mucosa|ColonSigmoid|BloodCells        CYP3A4
+      229      Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial        CYP3A4
+      230     Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular        CYP3A4
+      231                  Organism|LargeIntestine|Mucosa|Rectum|Plasma        CYP3A4
+      232              Organism|LargeIntestine|Mucosa|Rectum|BloodCells        CYP3A4
+      233            Organism|LargeIntestine|Mucosa|Rectum|Interstitial        CYP3A4
+      234           Organism|LargeIntestine|Mucosa|Rectum|Intracellular        CYP3A4
+      235                              Organism|Liver|Periportal|Plasma        CYP3A4
+      236                          Organism|Liver|Periportal|BloodCells        CYP3A4
+      237                        Organism|Liver|Periportal|Interstitial        CYP3A4
+      238                       Organism|Liver|Periportal|Intracellular        CYP3A4
+      239                             Organism|Liver|Pericentral|Plasma        CYP3A4
+      240                         Organism|Liver|Pericentral|BloodCells        CYP3A4
+      241                       Organism|Liver|Pericentral|Interstitial        CYP3A4
+      242                      Organism|Liver|Pericentral|Intracellular        CYP3A4
+      243                                          Organism|Lung|Plasma        CYP3A4
+      244                                      Organism|Lung|BloodCells        CYP3A4
+      245                                    Organism|Lung|Interstitial        CYP3A4
+      246                                   Organism|Lung|Intracellular        CYP3A4
+      247                                        Organism|Muscle|Plasma        CYP3A4
+      248                                    Organism|Muscle|BloodCells        CYP3A4
+      249                                  Organism|Muscle|Interstitial        CYP3A4
+      250                                 Organism|Muscle|Intracellular        CYP3A4
+      251                                      Organism|Pancreas|Plasma        CYP3A4
+      252                                  Organism|Pancreas|BloodCells        CYP3A4
+      253                                Organism|Pancreas|Interstitial        CYP3A4
+      254                               Organism|Pancreas|Intracellular        CYP3A4
+      255                                    Organism|PortalVein|Plasma        CYP3A4
+      256                                Organism|PortalVein|BloodCells        CYP3A4
+      257                                          Organism|Skin|Plasma        CYP3A4
+      258                                      Organism|Skin|BloodCells        CYP3A4
+      259                                    Organism|Skin|Interstitial        CYP3A4
+      260                                   Organism|Skin|Intracellular        CYP3A4
+      261                                        Organism|Spleen|Plasma        CYP3A4
+      262                                    Organism|Spleen|BloodCells        CYP3A4
+      263                                  Organism|Spleen|Interstitial        CYP3A4
+      264                                 Organism|Spleen|Intracellular        CYP3A4
+      265                                        Organism|Saliva|Saliva        CYP3A4
+      266                                   Organism|Saliva|SalivaGland        CYP3A4
+          Is Present Value Unit Scale Divisor Neg. Values Allowed
+      136       TRUE   NaN µmol             1               FALSE
+      137       TRUE   NaN µmol             1               FALSE
+      138       TRUE   NaN µmol             1               FALSE
+      139       TRUE   NaN µmol             1               FALSE
+      140       TRUE   NaN µmol             1               FALSE
+      141       TRUE   NaN µmol             1               FALSE
+      142       TRUE   NaN µmol             1               FALSE
+      143       TRUE   NaN µmol             1               FALSE
+      144       TRUE   NaN µmol             1               FALSE
+      145       TRUE   NaN µmol             1               FALSE
+      146       TRUE   NaN µmol             1               FALSE
+      147       TRUE   NaN µmol             1               FALSE
+      148       TRUE   NaN µmol             1               FALSE
+      149       TRUE   NaN µmol             1               FALSE
+      150       TRUE   NaN µmol             1               FALSE
+      151       TRUE   NaN µmol             1               FALSE
+      152       TRUE   NaN µmol             1               FALSE
+      153       TRUE   NaN µmol             1               FALSE
+      154       TRUE   NaN µmol             1               FALSE
+      155       TRUE   NaN µmol             1               FALSE
+      156       TRUE   NaN µmol             1               FALSE
+      157       TRUE   NaN µmol             1               FALSE
+      158       TRUE   NaN µmol             1               FALSE
+      159       TRUE   NaN µmol             1               FALSE
+      160       TRUE   NaN µmol             1               FALSE
+      161       TRUE   NaN µmol             1               FALSE
+      162       TRUE   NaN µmol             1               FALSE
+      163       TRUE   NaN µmol             1               FALSE
+      164       TRUE   NaN µmol             1               FALSE
+      165       TRUE   NaN µmol             1               FALSE
+      166       TRUE   NaN µmol             1               FALSE
+      167       TRUE   NaN µmol             1               FALSE
+      168       TRUE   NaN µmol             1               FALSE
+      169       TRUE   NaN µmol             1               FALSE
+      170       TRUE   NaN µmol             1               FALSE
+      171       TRUE   NaN µmol             1               FALSE
+      172       TRUE   NaN µmol             1               FALSE
+      173       TRUE   NaN µmol             1               FALSE
+      174       TRUE   NaN µmol             1               FALSE
+      175       TRUE   NaN µmol             1               FALSE
+      176       TRUE   NaN µmol             1               FALSE
+      177       TRUE   NaN µmol             1               FALSE
+      178       TRUE   NaN µmol             1               FALSE
+      179       TRUE   NaN µmol             1               FALSE
+      180       TRUE   NaN µmol             1               FALSE
+      181       TRUE   NaN µmol             1               FALSE
+      182       TRUE   NaN µmol             1               FALSE
+      183       TRUE   NaN µmol             1               FALSE
+      184       TRUE   NaN µmol             1               FALSE
+      185       TRUE   NaN µmol             1               FALSE
+      186       TRUE   NaN µmol             1               FALSE
+      187       TRUE   NaN µmol             1               FALSE
+      188       TRUE   NaN µmol             1               FALSE
+      189       TRUE   NaN µmol             1               FALSE
+      190       TRUE   NaN µmol             1               FALSE
+      191       TRUE   NaN µmol             1               FALSE
+      192       TRUE   NaN µmol             1               FALSE
+      193       TRUE   NaN µmol             1               FALSE
+      194       TRUE   NaN µmol             1               FALSE
+      195       TRUE   NaN µmol             1               FALSE
+      196       TRUE   NaN µmol             1               FALSE
+      197       TRUE   NaN µmol             1               FALSE
+      198       TRUE   NaN µmol             1               FALSE
+      199       TRUE   NaN µmol             1               FALSE
+      200       TRUE   NaN µmol             1               FALSE
+      201       TRUE   NaN µmol             1               FALSE
+      202       TRUE   NaN µmol             1               FALSE
+      203       TRUE   NaN µmol             1               FALSE
+      204       TRUE   NaN µmol             1               FALSE
+      205       TRUE   NaN µmol             1               FALSE
+      206       TRUE   NaN µmol             1               FALSE
+      207       TRUE   NaN µmol             1               FALSE
+      208       TRUE   NaN µmol             1               FALSE
+      209       TRUE   NaN µmol             1               FALSE
+      210       TRUE   NaN µmol             1               FALSE
+      211       TRUE   NaN µmol             1               FALSE
+      212       TRUE   NaN µmol             1               FALSE
+      213       TRUE   NaN µmol             1               FALSE
+      214       TRUE   NaN µmol             1               FALSE
+      215       TRUE   NaN µmol             1               FALSE
+      216       TRUE   NaN µmol             1               FALSE
+      217       TRUE   NaN µmol             1               FALSE
+      218       TRUE   NaN µmol             1               FALSE
+      219       TRUE   NaN µmol             1               FALSE
+      220       TRUE   NaN µmol             1               FALSE
+      221       TRUE   NaN µmol             1               FALSE
+      222       TRUE   NaN µmol             1               FALSE
+      223       TRUE   NaN µmol             1               FALSE
+      224       TRUE   NaN µmol             1               FALSE
+      225       TRUE   NaN µmol             1               FALSE
+      226       TRUE   NaN µmol             1               FALSE
+      227       TRUE   NaN µmol             1               FALSE
+      228       TRUE   NaN µmol             1               FALSE
+      229       TRUE   NaN µmol             1               FALSE
+      230       TRUE   NaN µmol             1               FALSE
+      231       TRUE   NaN µmol             1               FALSE
+      232       TRUE   NaN µmol             1               FALSE
+      233       TRUE   NaN µmol             1               FALSE
+      234       TRUE   NaN µmol             1               FALSE
+      235       TRUE   NaN µmol             1               FALSE
+      236       TRUE   NaN µmol             1               FALSE
+      237       TRUE   NaN µmol             1               FALSE
+      238       TRUE   NaN µmol             1               FALSE
+      239       TRUE   NaN µmol             1               FALSE
+      240       TRUE   NaN µmol             1               FALSE
+      241       TRUE   NaN µmol             1               FALSE
+      242       TRUE   NaN µmol             1               FALSE
+      243       TRUE   NaN µmol             1               FALSE
+      244       TRUE   NaN µmol             1               FALSE
+      245       TRUE   NaN µmol             1               FALSE
+      246       TRUE   NaN µmol             1               FALSE
+      247       TRUE   NaN µmol             1               FALSE
+      248       TRUE   NaN µmol             1               FALSE
+      249       TRUE   NaN µmol             1               FALSE
+      250       TRUE   NaN µmol             1               FALSE
+      251       TRUE   NaN µmol             1               FALSE
+      252       TRUE   NaN µmol             1               FALSE
+      253       TRUE   NaN µmol             1               FALSE
+      254       TRUE   NaN µmol             1               FALSE
+      255       TRUE   NaN µmol             1               FALSE
+      256       TRUE   NaN µmol             1               FALSE
+      257       TRUE   NaN µmol             1               FALSE
+      258       TRUE   NaN µmol             1               FALSE
+      259       TRUE   NaN µmol             1               FALSE
+      260       TRUE   NaN µmol             1               FALSE
+      261       TRUE   NaN µmol             1               FALSE
+      262       TRUE   NaN µmol             1               FALSE
+      263       TRUE   NaN µmol             1               FALSE
+      264       TRUE   NaN µmol             1               FALSE
+      265       TRUE   NaN µmol             1               FALSE
+      266       TRUE   NaN µmol             1               FALSE
 
 # addLocalMoleculeParametersToParameterValuesBB adds parameters for all molecules when moleculeNames is NULL
 
