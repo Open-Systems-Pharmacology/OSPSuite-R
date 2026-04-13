@@ -6,7 +6,7 @@ test_that("It creates default plots as expected for single observed dataset", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "single obs",
-    fig = plotIndividualTimeProfile(oneObsDCGlobal)
+    fig = plotIndividualTimeProfile(oneObsDC())
   )
 })
 
@@ -14,7 +14,7 @@ test_that("It creates default plots as expected for multiple observed datasets",
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple obs",
-    fig = plotIndividualTimeProfile(manyObsDCGlobal)
+    fig = plotIndividualTimeProfile(manyObsDC())
   )
 })
 
@@ -23,7 +23,7 @@ test_that("It plots multiple observed datasets with dataset name legend entries"
   vdiffr::expect_doppelganger(
     title = "multiple obs - separate legend",
     fig = plotIndividualTimeProfile(
-      manyObsDCGlobal,
+      manyObsDC(),
       showLegendPerDataset = TRUE
     )
   )
@@ -36,7 +36,7 @@ test_that("It creates default plots as expected for single simulated dataset", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "single sim",
-    fig = plotIndividualTimeProfile(oneSimDCGlobal)
+    fig = plotIndividualTimeProfile(oneSimDC())
   )
 })
 
@@ -44,7 +44,7 @@ test_that("It creates default plots as expected for multiple simulated datasets"
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple sim",
-    fig = plotIndividualTimeProfile(manySimDCGlobal)
+    fig = plotIndividualTimeProfile(manySimDC())
   )
 })
 
@@ -53,7 +53,7 @@ test_that("It plots multiple simulated datasets with dataset name legend entries
   vdiffr::expect_doppelganger(
     title = "multiple sim - separate legend",
     fig = plotIndividualTimeProfile(
-      manySimDCGlobal,
+      manySimDC(),
       showLegendPerDataset = TRUE
     )
   )
@@ -65,7 +65,7 @@ test_that("It creates default plots as expected for both observed and simulated"
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "both - default",
-    fig = plotIndividualTimeProfile(oneObsSimDCGlobal)
+    fig = plotIndividualTimeProfile(oneObsSimDC())
   )
 })
 
@@ -73,13 +73,13 @@ test_that("It respects custom plot configuration", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "both - custom",
-    fig = plotIndividualTimeProfile(oneObsSimDCGlobal, customDPCGlobal)
+    fig = plotIndividualTimeProfile(oneObsSimDC(), customDPC())
   )
 
   # Since these were not specified by the user, they should not be updated
   # after plotting function is done with it.
-  expect_null(customDPCGlobal$xLabel)
-  expect_null(customDPCGlobal$yLabel)
+  expect_null(customDPC()$xLabel)
+  expect_null(customDPC()$yLabel)
 })
 
 test_that("It plots both observed and simulated datasets with dataset name legend entries", {
@@ -87,7 +87,7 @@ test_that("It plots both observed and simulated datasets with dataset name legen
   vdiffr::expect_doppelganger(
     title = "both - separate legend",
     fig = plotIndividualTimeProfile(
-      oneObsSimDCGlobal,
+      oneObsSimDC(),
       showLegendPerDataset = TRUE
     )
   )
@@ -98,8 +98,8 @@ test_that("It plots both observed and simulated datasets with dataset name legen
   vdiffr::expect_doppelganger(
     title = "both - custom - separate legend",
     fig = plotIndividualTimeProfile(
-      oneObsSimDCGlobal,
-      customDPCGlobal,
+      oneObsSimDC(),
+      customDPC(),
       showLegendPerDataset = TRUE
     )
   )
@@ -111,7 +111,7 @@ test_that("It maps multiple observed and simulated datasets to different visual 
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple obs and sim",
-    fig = plotIndividualTimeProfile(manyObsSimDCGlobal)
+    fig = plotIndividualTimeProfile(manyObsSimDC())
   )
 })
 
@@ -121,7 +121,7 @@ test_that("It works when geometric error is present", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "geometric error",
-    fig = plotIndividualTimeProfile(oneObsGeometricDCGlobal)
+    fig = plotIndividualTimeProfile(oneObsGeometricDC())
   )
 })
 
