@@ -52,7 +52,7 @@ manyObsDCGlobal$addDataSets(
 ## many simulated datasets ------------------------
 
 manySimDCGlobal <- DataCombined$new()
-manySimDC$addSimulationResults(
+manySimDCGlobal$addSimulationResults(
   simulationResults = simResults,
   # Excluding the fraction excreted output
   quantitiesOrPaths = outputPaths[1:2],
