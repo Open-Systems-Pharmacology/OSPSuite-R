@@ -2,9 +2,18 @@
 options(ospsuite.plots.watermarkEnabled = NULL)
 
 # Clean up RDS files created by setup
-rds_files <- list.files(
+rds_files <- file.path(
   testthat::test_path("../data"),
-  pattern = "\\.rds$",
-  full.names = TRUE
+  c(
+    "oneObsDC.rds",
+    "oneSimDC.rds",
+    "manyObsDC.rds",
+    "manySimDC.rds",
+    "oneObsSimDC.rds",
+    "manyObsSimDC.rds",
+    "oneObsGeometricDC.rds",
+    "customDPC.rds",
+    "manyObsSimDCWithFraction.rds"
+  )
 )
-file.remove(rds_files)
+file.remove(rds_files[file.exists(rds_files)])
