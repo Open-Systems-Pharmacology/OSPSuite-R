@@ -1,5 +1,9 @@
-testModule_noIC_noPV <- testMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
-testModule_3IC_3_PV <- testMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+testModule_noIC_noPV <- globalTestMoBiProject$getModules(
+  "ExtModule_noIC_noPV"
+)[[1]]
+testModule_3IC_3_PV <- globalTestMoBiProject$getModules("ExtModule_3IC_3PV")[[
+  1
+]]
 
 # Getting module name
 test_that("MoBiModule name is correct", {

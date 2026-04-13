@@ -53,7 +53,7 @@ test_that("SimulationConfiguration can get and set simulation settings", {
   oldSettings <- configurationFromPKML$settings
 
   # Retrieve settings from one configuration and set it to another
-  newSettings <- testMoBiProject$getSimulation(
+  newSettings <- globalTestMoBiProject$getSimulation(
     "TestSim_2Modules"
   )$configuration$settings
   configurationFromPKML$settings <- newSettings
@@ -74,7 +74,7 @@ test_that("SimulationConfiguration can get and set simulation settings", {
 })
 
 test_that("SimulationConfiguration can be created from a simulation loaded from a MoBi project with selected IC and PV BBs", {
-  configurationFromProject <- testMoBiProject$getSimulation(
+  configurationFromProject <- globalTestMoBiProject$getSimulation(
     "TestSim_2Modules"
   )$configuration
 
@@ -116,7 +116,7 @@ test_that("SimulationConfiguration can be created from a simulation loaded from 
 })
 
 test_that("SimulationConfiguration can be created from a simulation loaded from a MoBi project with selected PV but no IC BBs", {
-  configurationFromProject <- testMoBiProject$getSimulation(
+  configurationFromProject <- globalTestMoBiProject$getSimulation(
     "TestSim_2Modules_noICSelected"
   )$configuration
 
@@ -162,7 +162,7 @@ test_that("SimulationConfiguration can get and set individual", {
   configurationFromPKML <- simulation$configuration
 
   # Retrieve individual from one configuration and set it to another
-  individual <- testMoBiProject$getIndividual("DefaultIndividual")
+  individual <- globalTestMoBiProject$getIndividual("DefaultIndividual")
   configurationFromPKML$individual <- individual
   expect_equal(configurationFromPKML$individual$name, "DefaultIndividual")
 
@@ -174,7 +174,7 @@ test_that("SimulationConfiguration can get and set individual", {
 test_that("SimulationConfiguration individual throws an error when setting multiple individuals", {
   configurationFromPKML <- simulation$configuration
 
-  individual1 <- testMoBiProject$getIndividual("DefaultIndividual")
+  individual1 <- globalTestMoBiProject$getIndividual("DefaultIndividual")
   expect_error(
     configurationFromPKML$individual <- c(individual1, individual1),
     regexp = "Only one individual can be assigned to a simulation configuration.",
@@ -185,7 +185,7 @@ test_that("SimulationConfiguration individual throws an error when setting multi
 # Error when trying to set a wrong BB
 test_that("SimulationConfiguration individual throws an error when wrong BB type is provided for individual", {
   configurationFromPKML <- simulation$configuration
-  bb <- testMoBiProject$getExpressionProfiles("CYP3A4|Human|Healthy")[[1]]
+  bb <- globalTestMoBiProject$getExpressionProfiles("CYP3A4|Human|Healthy")[[1]]
 
   expect_error(
     configurationFromPKML$individual <- bb,
@@ -199,7 +199,7 @@ test_that("SimulationConfiguration individual throws an error when wrong BB type
 test_that("SimulationConfiguration can get and set expression profiles", {
   configurationFromPKML <- simulation$configuration
 
-  expProfiles <- testMoBiProject$getExpressionProfiles(c(
+  expProfiles <- globalTestMoBiProject$getExpressionProfiles(c(
     "CYP3A4|Human|Healthy",
     "UGT2B6|Human|Healthy"
   ))
@@ -218,10 +218,14 @@ test_that("SimulationConfiguration can get and set expression profiles", {
 test_that("SimulationConfiguration expression profiles throws an error when setting multiple profiles for the same protein", {
   configurationFromPKML <- simulation$configuration
 
-  expProfile1 <- testMoBiProject$getExpressionProfiles("CYP3A4|Human|Healthy")[[
+  expProfile1 <- globalTestMoBiProject$getExpressionProfiles(
+    "CYP3A4|Human|Healthy"
+  )[[
     1
   ]]
-  expProfile2 <- testMoBiProject$getExpressionProfiles("CYP3A4|Human|Healthy")[[
+  expProfile2 <- globalTestMoBiProject$getExpressionProfiles(
+    "CYP3A4|Human|Healthy"
+  )[[
     1
   ]]
 
@@ -237,7 +241,7 @@ test_that("SimulationConfiguration expression profiles throws an error when sett
 
 ### Selected Initial Conditions
 test_that("SimulationConfiguration throws an error when the passed IC is not a named list", {
-  configurationFromProject <- testMoBiProject$getSimulation(
+  configurationFromProject <- globalTestMoBiProject$getSimulation(
     "TestSim_2Modules"
   )$configuration
 
@@ -251,7 +255,7 @@ test_that("SimulationConfiguration throws an error when the passed IC is not a n
 })
 
 test_that("SimulationConfiguration can get and set selected initial conditions", {
-  configurationFromProject <- testMoBiProject$getSimulation(
+  configurationFromProject <- globalTestMoBiProject$getSimulation(
     "TestSim_2Modules"
   )$configuration
 
@@ -284,7 +288,7 @@ test_that("SimulationConfiguration can get and set selected initial conditions",
 
 # Trying to set a non existing IC BB
 test_that("SimulationConfiguration selected initial conditions throws an error when setting a non existing IC BB", {
-  configurationFromProject <- testMoBiProject$getSimulation(
+  configurationFromProject <- globalTestMoBiProject$getSimulation(
     "TestSim_2Modules"
   )$configuration
   originalICs <- configurationFromProject$selectedInitialConditions
@@ -304,7 +308,7 @@ test_that("SimulationConfiguration selected initial conditions throws an error w
 
 # Trying to set an IC BB for a non existing module
 test_that("SimulationConfiguration selected initial conditions throws an error when setting an IC BB for a non existing module", {
-  configurationFromProject <- testMoBiProject$getSimulation(
+  configurationFromProject <- globalTestMoBiProject$getSimulation(
     "TestSim_2Modules"
   )$configuration
   originalICs <- configurationFromProject$selectedInitialConditions
@@ -325,7 +329,7 @@ test_that("SimulationConfiguration selected initial conditions throws an error w
 
 ### Selected Parameter Values
 test_that("SimulationConfiguration throws an error when the passed PV is not a named list", {
-  configurationFromProject <- testMoBiProject$getSimulation(
+  configurationFromProject <- globalTestMoBiProject$getSimulation(
     "TestSim_2Modules"
   )$configuration
 
@@ -339,7 +343,7 @@ test_that("SimulationConfiguration throws an error when the passed PV is not a n
 })
 
 test_that("SimulationConfiguration can get and set selected parameter values", {
-  configurationFromProject <- testMoBiProject$getSimulation(
+  configurationFromProject <- globalTestMoBiProject$getSimulation(
     "TestSim_2Modules"
   )$configuration
 
@@ -373,7 +377,7 @@ test_that("SimulationConfiguration can get and set selected parameter values", {
 
 # Trying to set a non existing PV BB
 test_that("SimulationConfiguration selected parameter values throws an error when setting a non existing PV BB", {
-  configurationFromProject <- testMoBiProject$getSimulation(
+  configurationFromProject <- globalTestMoBiProject$getSimulation(
     "TestSim_2Modules"
   )$configuration
   originalPVs <- configurationFromProject$selectedParameterValues
@@ -393,7 +397,7 @@ test_that("SimulationConfiguration selected parameter values throws an error whe
 
 # Trying to set a PV BB for a non existing module
 test_that("SimulationConfiguration selected parameter values throws an error when setting a PV BB for a non existing module", {
-  configurationFromProject <- testMoBiProject$getSimulation(
+  configurationFromProject <- globalTestMoBiProject$getSimulation(
     "TestSim_2Modules"
   )$configuration
   originalPVs <- configurationFromProject$selectedParameterValues

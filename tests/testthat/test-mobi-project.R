@@ -3,7 +3,7 @@ emptyProject <- loadMoBiProject(
 )
 
 test_that("It can print a MoBi project", {
-  expect_snapshot(print(testMoBiProject))
+  expect_snapshot(print(globalTestMoBiProject))
 })
 
 # Test for MoBiProject$simulationNames
@@ -12,22 +12,25 @@ test_that("It can get simulation names from a MoBi project", {
     "TestSim_2Modules",
     "TestSim_2Modules_noICSelected"
   )
-  expect_equal(testMoBiProject$simulationNames, expectedNames)
+  expect_equal(globalTestMoBiProject$simulationNames, expectedNames)
   expect_equal(emptyProject$simulationNames, character(0))
   # Test that simulationNames is read-only
   expect_error(
-    testMoBiProject$simulationNames <- "NewSimulation",
+    globalTestMoBiProject$simulationNames <- "NewSimulation",
     "Property 'simulationNames' is read-only"
   )
 })
 
 test_that("It can get parameter identification names from a MoBi project", {
   expectedNames <- "Parameter Identification 1"
-  expect_equal(testMoBiProject$parameterIdentificationNames, expectedNames)
+  expect_equal(
+    globalTestMoBiProject$parameterIdentificationNames,
+    expectedNames
+  )
   expect_equal(emptyProject$parameterIdentificationNames, character(0))
   # Test that parameterIdentificationNames is read-only
   expect_error(
-    testMoBiProject$parameterIdentificationNames <- "NewParameterIdentification",
+    globalTestMoBiProject$parameterIdentificationNames <- "NewParameterIdentification",
     "Property 'parameterIdentificationNames' is read-only"
   )
 })
@@ -37,11 +40,11 @@ test_that("It can get individuals names from a MoBi project", {
   expectedNames <- c(
     "DefaultIndividual"
   )
-  expect_equal(testMoBiProject$individualNames, expectedNames)
+  expect_equal(globalTestMoBiProject$individualNames, expectedNames)
   expect_equal(emptyProject$individualNames, character(0))
   # Test that individualNames is read-only
   expect_error(
-    testMoBiProject$individualNames <- "NewIndividual",
+    globalTestMoBiProject$individualNames <- "NewIndividual",
     "Property 'individualNames' is read-only"
   )
 })
@@ -52,11 +55,11 @@ test_that("It can get expression profiles names from a MoBi project", {
     "UGT2B6|Human|Healthy",
     "CYP3A4|Human|Healthy"
   )
-  expect_equal(testMoBiProject$expressionProfilesNames, expectedNames)
+  expect_equal(globalTestMoBiProject$expressionProfilesNames, expectedNames)
   expect_equal(emptyProject$expressionProfilesNames, character(0))
   # Test that expressionProfilesNames is read-only
   expect_error(
-    testMoBiProject$expressionProfilesNames <- "NewExpressionProfile",
+    globalTestMoBiProject$expressionProfilesNames <- "NewExpressionProfile",
     "Property 'expressionProfilesNames' is read-only"
   )
 })
@@ -69,7 +72,7 @@ test_that("It can get all modules from a MoBi project", {
     "TestModule"
   )
 
-  modules <- testMoBiProject$getModules()
+  modules <- globalTestMoBiProject$getModules()
   expect_true(isOfType(modules, "MoBiModule"))
   expect_named(modules, expectedNames, ignore.order = TRUE)
   modules <- emptyProject$getModules()
@@ -77,13 +80,13 @@ test_that("It can get all modules from a MoBi project", {
 })
 
 test_that("It can get a specific module from a MoBi project", {
-  module <- testMoBiProject$getModules("ExtModule_3IC_3PV")
+  module <- globalTestMoBiProject$getModules("ExtModule_3IC_3PV")
   expect_true(isOfType(module, "MoBiModule"))
   expect_equal(names(module), "ExtModule_3IC_3PV")
 
   # Test for non-existing module
   expect_error(
-    testMoBiProject$getModules("NonExistingModule"),
+    globalTestMoBiProject$getModules("NonExistingModule"),
     messages$modulesNotPresentInProject("NonExistingModule"),
     fixed = TRUE
   )
@@ -91,21 +94,21 @@ test_that("It can get a specific module from a MoBi project", {
 
 # Test for MoBiProject$getIndividual
 test_that("It can get an individual from a MoBi project", {
-  individual <- testMoBiProject$getIndividual("DefaultIndividual")
+  individual <- globalTestMoBiProject$getIndividual("DefaultIndividual")
   expect_true(isOfType(individual, "BuildingBlock"))
   expect_true(individual$type == BuildingBlockTypes$Individual)
   expect_equal(individual$name, "DefaultIndividual")
 
   # Test for non-existing individual
   expect_error(
-    testMoBiProject$getIndividual("NonExistingIndividual"),
+    globalTestMoBiProject$getIndividual("NonExistingIndividual"),
     messages$errorIndividualNotFound("NonExistingIndividual")
   )
 })
 
 test_that("It correctly handles non-existing individuals", {
   # Test for non-existing individual with stopIfNotFound = FALSE
-  individual <- testMoBiProject$getIndividual(
+  individual <- globalTestMoBiProject$getIndividual(
     "NonExistingIndividual",
     stopIfNotFound = FALSE
   )
@@ -114,13 +117,13 @@ test_that("It correctly handles non-existing individuals", {
 
 # Test for MoBiProject$getSimulation
 test_that("It returns a simulation object for getSimulation with existing simulation", {
-  simulation <- testMoBiProject$getSimulation("TestSim_2Modules")
+  simulation <- globalTestMoBiProject$getSimulation("TestSim_2Modules")
   expect_true(isOfType(simulation, "Simulation"))
   expect_equal(simulation$name, "TestSim_2Modules")
 
   # Test for non-existing simulation
   expect_error(
-    testMoBiProject$getSimulation("NonExistingSimulation"),
+    globalTestMoBiProject$getSimulation("NonExistingSimulation"),
     messages$errorSimulationNotFound("NonExistingSimulation"),
     fixed = TRUE
   )
@@ -128,7 +131,7 @@ test_that("It returns a simulation object for getSimulation with existing simula
 
 test_that("It correctly handles non-existing simulations", {
   # Test for non-existing simulation with stopIfNotFound = FALSE
-  simulation <- testMoBiProject$getSimulation(
+  simulation <- globalTestMoBiProject$getSimulation(
     "NonExistingSimulation",
     stopIfNotFound = FALSE
   )
@@ -137,7 +140,7 @@ test_that("It correctly handles non-existing simulations", {
 
 # Test for MoBiProject$getExpressionProfiles
 test_that("It can get expression profiles from a MoBi project", {
-  expressionProfiles <- testMoBiProject$getExpressionProfiles(c(
+  expressionProfiles <- globalTestMoBiProject$getExpressionProfiles(c(
     "UGT2B6|Human|Healthy"
   ))
   expect_true(isOfType(expressionProfiles, "BuildingBlock"))
@@ -151,14 +154,14 @@ test_that("It can get expression profiles from a MoBi project", {
 
   # Test for non-existing expression profile
   expect_error(
-    testMoBiProject$getExpressionProfiles(names = "NonExistingProfile"),
+    globalTestMoBiProject$getExpressionProfiles(names = "NonExistingProfile"),
     messages$errorExpressionProfileNotFound(c("NonExistingProfile")),
     fixed = TRUE
   )
 
   # Test for a list of expression profiles where one profile is existent
   expect_error(
-    testMoBiProject$getExpressionProfiles(
+    globalTestMoBiProject$getExpressionProfiles(
       names = c(
         "NonExistingProfile",
         "UGT2B6|Human|Healthy",
@@ -174,13 +177,13 @@ test_that("It can get expression profiles from a MoBi project", {
 
 test_that("It correctly handles non-existing expression profiles", {
   # Test for non-existing expression profile with stopIfNotFound = FALSE
-  expressionProfiles <- testMoBiProject$getExpressionProfiles(
+  expressionProfiles <- globalTestMoBiProject$getExpressionProfiles(
     c("NonExistingProfile"),
     stopIfNotFound = FALSE
   )
   expect_vector(expressionProfiles, list(), size = 0)
 
-  expressionProfiles <- testMoBiProject$getExpressionProfiles(
+  expressionProfiles <- globalTestMoBiProject$getExpressionProfiles(
     names = c(
       "NonExistingProfile",
       "UGT2B6|Human|Healthy",
@@ -197,7 +200,7 @@ test_that("It can get all data sets from a MoBi project", {
     "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A",
     "Liu 1995_Total T3__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.5A"
   )
-  dataSets <- testMoBiProject$getObservedData()
+  dataSets <- globalTestMoBiProject$getObservedData()
   expect_true(isOfType(dataSets, "DataSet"))
   expect_named(dataSets, allDataSetNames, ignore.order = TRUE)
 
@@ -210,20 +213,20 @@ test_that("It can get specific data sets from a MoBi project", {
   dataSetNames <- c(
     "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A"
   )
-  dataSets <- testMoBiProject$getObservedData(dataSetNames)
+  dataSets <- globalTestMoBiProject$getObservedData(dataSetNames)
   expect_true(isOfType(dataSets, "DataSet"))
   expect_equal(names(dataSets), dataSetNames)
 
   # Test for non-existing data set
   expect_error(
-    testMoBiProject$getObservedData("NonExistingDataSet"),
+    globalTestMoBiProject$getObservedData("NonExistingDataSet"),
     messages$errorDataSetsNotPresentInProject(c("NonExistingDataSet")),
     fixed = TRUE
   )
 
   # Test for a list of data sets where one is non-existing
   expect_error(
-    testMoBiProject$getObservedData(c(
+    globalTestMoBiProject$getObservedData(c(
       "NonExistingDataSet",
       "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A"
     )),
@@ -234,14 +237,14 @@ test_that("It can get specific data sets from a MoBi project", {
 
 test_that("It correctly handles non-existing data sets", {
   # Test for non-existing data set with stopIfNotFound = FALSE
-  dataSets <- testMoBiProject$getObservedData(
+  dataSets <- globalTestMoBiProject$getObservedData(
     "NonExistingDataSet",
     stopIfNotFound = FALSE
   )
   expect_length(dataSets, 0)
 
   # Test for a list of data sets where one is non-existing
-  dataSets <- testMoBiProject$getObservedData(
+  dataSets <- globalTestMoBiProject$getObservedData(
     c(
       "NonExistingDataSet",
       "Liu 1995_Total T3__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.5A"

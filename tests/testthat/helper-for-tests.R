@@ -9,7 +9,7 @@ getTestDataFilePath <- function(fileName) {
   file.path(dataPath, fileName, fsep = .Platform$file.sep)
 }
 
-testMoBiProject <- loadMoBiProject(
+globalTestMoBiProject <- loadMoBiProject(
   filePath = getTestDataFilePath("MoBiProject/Test_Project.mbp3")
 )
 

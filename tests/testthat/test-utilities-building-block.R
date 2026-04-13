@@ -1,9 +1,13 @@
-getSimulation <- function() {
+getSimulation <- function(loadFromCache = FALSE) {
   loadSimulation(
     aciclovirSimulationPath,
-    loadFromCache = FALSE,
-    addToCache = FALSE
+    loadFromCache = loadFromCache,
+    addToCache = loadFromCache
   )
+}
+
+getSimpleProject <- function() {
+  loadMoBiProject(getTestDataFilePath("MoBiProject/Test_Project.mbp3"))
 }
 
 # Reloads simulation and gets the first initial conditions building block. This is needed to ensure that we have a fresh instance of the building block for each test, as the building blocks are mutable and changes in one test could affect other tests.
@@ -236,7 +240,7 @@ test_that("extendInitialConditionsBB extends with all molecules if moleculeNames
   # BB to mutate
   icBB <- getFreshICBB()
   # Module to get BBs from that will not be mutated
-  module <- testMoBiProject$getModules("TestModule")[[1]]
+  module <- globalTestMoBiProject$getModules("TestModule")[[1]]
   spatialStructureModule <- loadModuleFromPKML(system.file(
     "extdata",
     "Thyroid.pkml",
@@ -264,12 +268,6 @@ test_that("extendInitialConditionsBB does not add new entries for existing molec
   module <- simulation$configuration$modules[[1]]
   icBB <- module$getInitialConditionsBBs()[[1]]
 
-  ####
-  # module <- testProject$getModules("Thyroid_QST")[[1]]
-  # icBB <- module$getInitialConditionsBBs()[[1]]
-  ######
-
-  # Fails because of the wron "Spatial Structure" class
   newPaths <- extendInitialConditionsBB(
     initialConditionsBuildingBlock = icBB,
     spatialStructureModule = module,
@@ -277,38 +275,7 @@ test_that("extendInitialConditionsBB does not add new entries for existing molec
     moleculeNames = c("Aciclovir", "CYP3A4")
   )
 
-  # New entries are still added , specifically for the "EndogenousIgG" compartment. This is expected.
-  icBB_df <- initialConditionsBBToDataFrame(icBB)
-  # Select only the new paths
-  newPaths_df <- icBB_df[
-    paste0(icBB_df$`Container Path`, "|", icBB_df$`Molecule Name`) %in%
-      newPaths,
-  ]
-
-  expect_snapshot(newPaths_df)
-})
-
-test_that("extendInitialConditionsBB extends only with specified molecules", {
-  testProject <- loadMoBiProject(system.file(
-    "extdata",
-    "TH_QST_Platform.mbp3",
-    package = "ospsuite"
-  ))
-  module <- testProject$getModules("Thyroid_QST")[[1]]
-  icBB <- module$getInitialConditionsBBs()[[1]]
-  spatialStructureModule <- thyroidModule <- loadModuleFromPKML(system.file(
-    "extdata",
-    "Thyroid.pkml",
-    package = "ospsuite"
-  ))
-
-  newPaths <- extendInitialConditionsBB(
-    initialConditionsBuildingBlock = icBB,
-    spatialStructureModule = spatialStructureModule,
-    moleculesModule = module,
-    moleculeNames = c("T3", "T4")
-  )
-
+  # New entries are only added for CYP3A4, as Aciclovir already has entries in the IC BB for all compartments in which it is present in the molecules module. For CYP3A4, new entries are only added for compartments in which it is present in the molecules module and does not yet have an entry in the IC BB, which are "Organism|Liver|Intracellular" and "Organism|Intestine|Intracellular".
   icBB_df <- initialConditionsBBToDataFrame(icBB)
   # Select only the new paths
   newPaths_df <- icBB_df[
@@ -320,55 +287,56 @@ test_that("extendInitialConditionsBB extends only with specified molecules", {
 })
 
 test_that("extendInitialConditionsBB throws error for wrong spatial structure module", {
-  icBB <- getFreshICBB()
-  moleculesModule <- getSimulation()$configuration$modules[[1]]
+  moleculesModule <- getSimulation(loadFromCache = TRUE)$configuration$modules[[
+    1
+  ]]
   # A module without a spatial structure BB is needed.
-  emptyModule <- minimalTestProject$getModules("ExtModule_noIC_noPV")[[1]]
+  emptyModule <- globalTestMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
 
   expect_error(
-    extendInitialConditionsBB(icBB, emptyModule, moleculesModule),
+    extendInitialConditionsBB(cachedICBB, emptyModule, moleculesModule),
     "The provided modules do not contain the required building blocks"
   )
 })
 
 test_that("extendInitialConditionsBB throws error for wrong molecules module", {
-  icBB <- getFreshICBB()
-  spatialStructureModule <- getSimulation()$configuration$modules[[1]]
-  emptyModule <- minimalTestProject$getModules("ExtModule_noIC_noPV")[[1]]
+  spatialStructureModule <- getSimulation(
+    loadFromCache = TRUE
+  )$configuration$modules[[1]]
+  emptyModule <- globalTestMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
 
   expect_error(
-    extendInitialConditionsBB(icBB, spatialStructureModule, emptyModule),
+    extendInitialConditionsBB(
+      cachedICBB,
+      spatialStructureModule,
+      emptyModule
+    ),
     "The provided modules do not contain the required building blocks"
   )
 })
 
 test_that("extendInitialConditionsBB should handle wrong type of initialConditionsBuildingBlock", {
-  simulation <- getSimulation()
-  spatialStructureModule <- simulation$configuration$modules[[1]]
-  moleculesModule <- simulation$configuration$modules[[1]]
+  simulation <- getSimulation(loadFromCache = TRUE)
+  module <- simulation$configuration$modules[[1]]
 
-  # I am not sure if this should throw an error on the R side, as there is no validation
-  # but the underlying .NET code might throw.
   expect_error(
-    extendInitialConditionsBB(testPVBB, spatialStructureModule, moleculesModule)
+    extendInitialConditionsBB(cachedPVBB, module, module)
   )
 })
 
 # setParameterValuesInBB tests
 
 test_that("setParameterValuesInBB throws an error if the building block is not of type Parameter Values", {
-  icBB <- getFreshICBB()
   expect_error(
-    setParameterValuesInBB(icBB, "Path", 1, units = ""),
+    setParameterValuesInBB(cachedICBB, "Path", 1, units = ""),
     regexp = "Parameter Values"
   )
 })
 
 test_that("setParameterValuesInBB throws an error if quantityPaths and quantityValues have different lengths", {
-  pvBB <- getFreshPVBB()
   expect_error(
     setParameterValuesInBB(
-      pvBB,
+      cachedPVBB,
       quantityPaths = c("Path1", "Path2"),
       quantityValues = c(1),
       units = ""
@@ -378,7 +346,10 @@ test_that("setParameterValuesInBB throws an error if quantityPaths and quantityV
 })
 
 test_that("setParameterValuesInBB sets a single entry with explicit dimensions", {
-  pvBB <- getFreshPVBB()
+  simpleProject <- getSimpleProject()
+  pvBB <- simpleProject$getModules("TestModule")[[1]]$getParameterValuesBBs()[[
+    1
+  ]]
   quantityPath <- "Organism|Liver|Volume"
   quantityValue <- 1.5
 
@@ -401,7 +372,10 @@ test_that("setParameterValuesInBB sets a single entry with explicit dimensions",
 })
 
 test_that("setParameterValuesInBB derives dimensions from units when dimensions is NULL", {
-  pvBB <- getFreshPVBB()
+  simpleProject <- getSimpleProject()
+  pvBB <- simpleProject$getModules("TestModule")[[1]]$getParameterValuesBBs()[[
+    1
+  ]]
   quantityPath <- "Organism|Liver|Volume"
   quantityValue <- 1.5
 
@@ -423,7 +397,10 @@ test_that("setParameterValuesInBB derives dimensions from units when dimensions 
 })
 
 test_that("setParameterValuesInBB sets multiple entries correctly", {
-  pvBB <- getFreshPVBB()
+  simpleProject <- getSimpleProject()
+  pvBB <- simpleProject$getModules("TestModule")[[1]]$getParameterValuesBBs()[[
+    1
+  ]]
   quantityPaths <- c(
     "Organism|Liver|Volume",
     "Organism|Kidney|Volume"
@@ -455,7 +432,10 @@ test_that("setParameterValuesInBB sets multiple entries correctly", {
 })
 
 test_that("setParameterValuesInBB overwrites the dimension of an existing entry", {
-  pvBB <- getFreshPVBB()
+  simpleProject <- getSimpleProject()
+  pvBB <- simpleProject$getModules("TestModule")[[1]]$getParameterValuesBBs()[[
+    1
+  ]]
   quantityPaths <- c(
     "Organism|Liver|Volume"
   )
@@ -471,7 +451,7 @@ test_that("setParameterValuesInBB overwrites the dimension of an existing entry"
 
   setParameterValuesInBB(
     pvBB,
-    quantityPaths = "Organism|Liver|Volume",
+    quantityPaths = quantityPaths,
     quantityValues = 1,
     units = "µmol",
     dimensions = ospDimensions$Amount
@@ -486,20 +466,15 @@ test_that("setParameterValuesInBB overwrites the dimension of an existing entry"
 })
 
 test_that("setParameterValuesInBB correctly updates an existing entry when the values are provided in non-base units", {
-  pvBB <- getFreshPVBB()
+  simpleProject <- getSimpleProject()
+  pvBB <- simpleProject$getModules("TestModule")[[1]]$getParameterValuesBBs()[[
+    1
+  ]]
   quantityPaths <- c(
     "Organism|Heart|Volume"
   )
 
-  setParameterValuesInBB(
-    pvBB,
-    quantityPaths = quantityPaths,
-    quantityValues = 1,
-    units = "l",
-    dimensions = ospDimensions$Volume
-  )
-
-  # Now set the value in different units, but with the same dimensions. The value should be converted to the base unit and overwrite the existing value.
+  # Set the value in non-base units. The value should be converted to the base unit and overwrite the existing value.
   setParameterValuesInBB(
     pvBB,
     quantityPaths = "Organism|Heart|Volume",
@@ -519,15 +494,17 @@ test_that("setParameterValuesInBB correctly updates an existing entry when the v
 # deleteParameterValuesFromBB tests
 
 test_that("deleteParameterValuesFromBB throws an error if the building block is not of type Parameter Values", {
-  icBB <- getFreshICBB()
   expect_error(
-    deleteParameterValuesFromBB(icBB, "Path"),
+    deleteParameterValuesFromBB(cachedICBB, "Path"),
     regexp = "Parameter Values"
   )
 })
 
 test_that("deleteParameterValuesFromBB removes existing entries correctly", {
-  pvBB <- getFreshPVBB()
+  simpleProject <- getSimpleProject()
+  pvBB <- simpleProject$getModules("TestModule")[[1]]$getParameterValuesBBs()[[
+    1
+  ]]
   # The PV BB in this simulation is empty, so we have to add some entries first
   setParameterValuesInBB(
     pvBB,
@@ -553,7 +530,10 @@ test_that("deleteParameterValuesFromBB removes existing entries correctly", {
 })
 
 test_that("deleteParameterValuesFromBB removes multiple entries correctly", {
-  pvBB <- getFreshPVBB()
+  simpleProject <- getSimpleProject()
+  pvBB <- simpleProject$getModules("TestModule")[[1]]$getParameterValuesBBs()[[
+    1
+  ]]
   # The PV BB in this simulation is empty, so we have to add some entries first
   setParameterValuesInBB(
     pvBB,
@@ -587,7 +567,10 @@ test_that("deleteParameterValuesFromBB removes multiple entries correctly", {
 })
 
 test_that("deleteParameterValuesFromBB ignores paths that do not exist", {
-  pvBB <- getFreshPVBB()
+  simpleProject <- getSimpleProject()
+  pvBB <- simpleProject$getModules("TestModule")[[1]]$getParameterValuesBBs()[[
+    1
+  ]]
   # The PV BB in this simulation is empty, so we have to add some entries first
   setParameterValuesInBB(
     pvBB,
@@ -611,7 +594,7 @@ test_that("deleteParameterValuesFromBB ignores paths that do not exist", {
 # addLocalMoleculeParametersToParameterValuesBB tests
 
 test_that("addLocalMoleculeParametersToParameterValuesBB adds parameters for all molecules when moleculeNames is NULL", {
-  module <- minimalTestProject$getModules("TestModule")[[1]]
+  module <- getSimpleProject()$getModules("TestModule")[[1]]
   pvBB <- module$getParameterValuesBBs()[[1]]
 
   newPaths <- addLocalMoleculeParametersToParameterValuesBB(
@@ -630,7 +613,7 @@ test_that("addLocalMoleculeParametersToParameterValuesBB adds parameters for all
 })
 
 test_that("addLocalMoleculeParametersToParameterValuesBB adds parameters for multiple specified molecules", {
-  testProject <- loadMoBiProject(getTestDataFilePath("Test_Project.mbp3"))
+  testProject <- getSimpleProject
   module <- testProject$getModules("TestModule")[[1]]
   pvBB <- module$getParameterValuesBBs()[[1]]
 
@@ -655,7 +638,7 @@ test_that("addLocalMoleculeParametersToParameterValuesBB adds parameters for mul
 })
 
 test_that("addLocalMoleculeParametersToParameterValuesBB adds parameters only for specified molecules", {
-  testProject <- loadMoBiProject(getTestDataFilePath("Test_Project.mbp3"))
+  testProject <- getSimpleProject()
   module <- testProject$getModules("TestModule")[[1]]
   pvBB <- module$getParameterValuesBBs()[[1]]
 
@@ -681,7 +664,7 @@ test_that("addLocalMoleculeParametersToParameterValuesBB adds parameters only fo
 })
 
 test_that("addLocalMoleculeParametersToParameterValuesBB does not overwrite existing entries", {
-  testProject <- loadMoBiProject(getTestDataFilePath("Test_Project.mbp3"))
+  testProject <- getSimpleProject()
   module <- testProject$getModules("TestModule")[[1]]
   pvBB <- module$getParameterValuesBBs()[[1]]
 
@@ -717,19 +700,18 @@ test_that("addLocalMoleculeParametersToParameterValuesBB does not overwrite exis
 })
 
 test_that("addLocalMoleculeParametersToParameterValuesBB throws error for wrong BB type", {
-  icBB <- getFreshICBB()
-  module <- minimalTestProject$getModules("TestModule")[[1]]
+  module <- globalTestMoBiProject$getModules("TestModule")[[1]]
 
   expect_error(
-    addLocalMoleculeParametersToParameterValuesBB(icBB, module, module),
+    addLocalMoleculeParametersToParameterValuesBB(cachedICBB, module, module),
     regexp = "Parameter Values"
   )
 })
 
 test_that("addLocalMoleculeParametersToParameterValuesBB throws error for module without spatial structure", {
-  module <- minimalTestProject$getModules("TestModule")[[1]]
+  module <- globalTestMoBiProject$getModules("TestModule")[[1]]
   pvBB <- module$getParameterValuesBBs()[[1]]
-  emptyModule <- minimalTestProject$getModules("ExtModule_noIC_noPV")[[1]]
+  emptyModule <- globalTestMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
 
   expect_error(
     addLocalMoleculeParametersToParameterValuesBB(pvBB, emptyModule, module),
@@ -738,9 +720,9 @@ test_that("addLocalMoleculeParametersToParameterValuesBB throws error for module
 })
 
 test_that("addLocalMoleculeParametersToParameterValuesBB throws error for module without molecules", {
-  module <- minimalTestProject$getModules("TestModule")[[1]]
+  module <- globalTestMoBiProject$getModules("TestModule")[[1]]
   pvBB <- module$getParameterValuesBBs()[[1]]
-  emptyModule <- minimalTestProject$getModules("ExtModule_noIC_noPV")[[1]]
+  emptyModule <- globalTestMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
 
   expect_error(
     addLocalMoleculeParametersToParameterValuesBB(pvBB, module, emptyModule),

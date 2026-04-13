@@ -708,11 +708,14 @@ test_that("It throws an error when trying to run multiple simulations", {
 
 #### Creating simulation ####
 test_that("It can create a simulation from a project configuration retrieved from a simulation with no expression profiles", {
-  simulation <- loadSimulation(system.file(
-    "extdata",
-    "Aciclovir.pkml",
-    package = "ospsuite"
-  ))
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "Aciclovir.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = TRUE
+  )
   simConfig <- simulation$configuration
   newSimulation <- createSimulation(
     simulationConfiguration = simConfig,
@@ -760,11 +763,14 @@ test_that("It can create a simulation from a project configuration retrieved fro
 
 # show warnings true
 test_that("createSimulation shows warnings when showWarnings is TRUE", {
-  simulation <- loadSimulation(system.file(
-    "extdata",
-    "Aciclovir.pkml",
-    package = "ospsuite"
-  ))
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "Aciclovir.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = TRUE
+  )
   simConfig <- simulation$configuration
 
   expect_snapshot(
@@ -778,11 +784,14 @@ test_that("createSimulation shows warnings when showWarnings is TRUE", {
 
 # errors
 test_that("createSimulation throws an error when simulation cannot be created", {
-  simulation <- loadSimulation(system.file(
-    "extdata",
-    "Aciclovir.pkml",
-    package = "ospsuite"
-  ))
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "Aciclovir.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = TRUE
+  )
   simConfig <- simulation$configuration
 
   # Introduce an error in the configuration
@@ -800,11 +809,14 @@ test_that("createSimulation throws an error when simulation cannot be created", 
 
 # Test for process rate parameters
 test_that("createSimulation can create process rate parameters when requested", {
-  simulation <- loadSimulation(system.file(
-    "extdata",
-    "Aciclovir.pkml",
-    package = "ospsuite"
-  ))
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "Aciclovir.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = TRUE
+  )
   simConfig <- simulation$configuration
 
   newSimulation <- createSimulation(
