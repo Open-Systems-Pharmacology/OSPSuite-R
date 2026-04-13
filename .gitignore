@@ -60,12 +60,3 @@ inst/lib/System.Data.SQLite.dll
 **/obj/
 *.user
 .vs
-tests/data/customDPC
-tests/data/manyObsDC
-tests/data/manyObsSimDC
-tests/data/manyObsSimDCWithFraction
-tests/data/manySimDC
-tests/data/oneObsDC
-tests/data/oneObsGeometricDC
-tests/data/oneObsSimDC
-tests/data/oneSimDC
