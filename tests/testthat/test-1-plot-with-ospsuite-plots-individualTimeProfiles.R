@@ -11,7 +11,7 @@ test_that("It creates default plots as expected for single observed dataset", {
 
   vdiffr::expect_doppelganger(
     title = "single obs",
-    fig = plotTimeProfile(oneObsDCGlobal)
+    fig = plotTimeProfile(oneObsDC())
   )
 })
 
@@ -20,25 +20,25 @@ test_that("It creates default plots as expected for multiple observed datasets",
 
   vdiffr::expect_doppelganger(
     title = "multiple obs",
-    fig = plotTimeProfile(manyObsDCGlobal)
+    fig = plotTimeProfile(manyObsDC())
   )
 
   vdiffr::expect_doppelganger(
     title = "multiple obs - separate legend",
     fig = plotTimeProfile(
-      manyObsDCGlobal,
+      manyObsDC(),
       mapping = ggplot2::aes(groupby = name)
     )
   )
 
   vdiffr::expect_doppelganger(
     title = "multiple obs - showLegendPerDataset none",
-    fig = plotTimeProfile(manyObsDCGlobal, showLegendPerDataset = "none")
+    fig = plotTimeProfile(manyObsDC(), showLegendPerDataset = "none")
   )
 
   vdiffr::expect_doppelganger(
     title = "multiple obs - showLegendPerDataset observed",
-    fig = plotTimeProfile(manyObsDCGlobal, showLegendPerDataset = "observed")
+    fig = plotTimeProfile(manyObsDC(), showLegendPerDataset = "observed")
   )
 })
 
@@ -48,7 +48,7 @@ test_that("It creates default plots as expected for single simulated dataset", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "single sim",
-    fig = plotTimeProfile(oneSimDCGlobal)
+    fig = plotTimeProfile(oneSimDC())
   )
 })
 
@@ -57,7 +57,7 @@ test_that("It plots multiple simulated datasets with dataset name legend entries
   vdiffr::expect_doppelganger(
     title = "multiple sim - separate legend",
     fig = plotTimeProfile(
-      manySimDCGlobal,
+      manySimDC(),
       mapping = ggplot2::aes(
         group = name,
         linetype = name
@@ -67,12 +67,12 @@ test_that("It plots multiple simulated datasets with dataset name legend entries
 
   vdiffr::expect_doppelganger(
     title = "multiple sim - showLegendPerDataset none",
-    fig = plotTimeProfile(manySimDCGlobal, showLegendPerDataset = "none")
+    fig = plotTimeProfile(manySimDC(), showLegendPerDataset = "none")
   )
 
   vdiffr::expect_doppelganger(
     title = "multiple sim - showLegendPerDataset simulated",
-    fig = plotTimeProfile(manySimDCGlobal, showLegendPerDataset = "simulated")
+    fig = plotTimeProfile(manySimDC(), showLegendPerDataset = "simulated")
   )
 })
 
@@ -82,7 +82,7 @@ test_that("It creates default plots as expected for both observed and simulated"
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "both - default",
-    fig = plotTimeProfile(oneObsSimDCGlobal)
+    fig = plotTimeProfile(oneObsSimDC())
   )
 })
 
@@ -92,7 +92,7 @@ test_that("It creates default plot with group legend for multiple obs and sim", 
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "many obs sim - default",
-    fig = plotTimeProfile(manyObsSimDCGlobal)
+    fig = plotTimeProfile(manyObsSimDC())
   )
 })
 
@@ -101,7 +101,7 @@ test_that("It maps multiple observed and simulated datasets to different visual 
   vdiffr::expect_doppelganger(
     title = "many obs sim - name",
     fig = plotTimeProfile(
-      manyObsSimDCGlobal,
+      manyObsSimDC(),
       mapping = ggplot2::aes(linetype = name),
       observedMapping = ggplot2::aes(fill = name)
     )
@@ -109,13 +109,13 @@ test_that("It maps multiple observed and simulated datasets to different visual 
 
   vdiffr::expect_doppelganger(
     title = "many obs sim - showLegendPerDataset none",
-    fig = plotTimeProfile(manyObsSimDCGlobal, showLegendPerDataset = "none")
+    fig = plotTimeProfile(manyObsSimDC(), showLegendPerDataset = "none")
   )
 
   vdiffr::expect_doppelganger(
     title = "many obs sim - showLegendPerDataset observed",
     fig = plotTimeProfile(
-      manyObsSimDCGlobal,
+      manyObsSimDC(),
       showLegendPerDataset = "observed"
     )
   )
@@ -123,7 +123,7 @@ test_that("It maps multiple observed and simulated datasets to different visual 
   vdiffr::expect_doppelganger(
     title = "many obs sim - showLegendPerDataset simulated",
     fig = plotTimeProfile(
-      manyObsSimDCGlobal,
+      manyObsSimDC(),
       showLegendPerDataset = "simulated"
     )
   )
@@ -134,7 +134,7 @@ test_that("It applies yScale and yScaleArgs to multiple obs and sim datasets", {
   vdiffr::expect_doppelganger(
     title = "many obs sim - log scale",
     fig = plotTimeProfile(
-      manyObsSimDCGlobal,
+      manyObsSimDC(),
       yScale = "log",
       yScaleArgs = list(limits = c(0.001, NA))
     )
@@ -147,7 +147,7 @@ test_that("User-provided mappings override showLegendPerDataset", {
   vdiffr::expect_doppelganger(
     title = "user mapping overrides showLegendPerDataset",
     fig = plotTimeProfile(
-      manyObsSimDCGlobal,
+      manyObsSimDC(),
       showLegendPerDataset = "all",
       mapping = ggplot2::aes(color = name, linetype = NULL),
       observedMapping = ggplot2::aes(
@@ -164,13 +164,13 @@ test_that("User-provided mappings override showLegendPerDataset", {
 test_that("It warns when showLegendPerDataset setting doesn't match data", {
   # Only observed data, but asking for simulated differentiation
   expect_warning(
-    plotTimeProfile(manyObsDCGlobal, showLegendPerDataset = "simulated"),
+    plotTimeProfile(manyObsDC(), showLegendPerDataset = "simulated"),
     "showLegendPerDataset = 'simulated' but no simulated data present"
   )
 
   # Only simulated data, but asking for observed differentiation
   expect_warning(
-    plotTimeProfile(manySimDCGlobal, showLegendPerDataset = "observed"),
+    plotTimeProfile(manySimDC(), showLegendPerDataset = "observed"),
     "showLegendPerDataset = 'observed' but no observed data present"
   )
 })
@@ -179,7 +179,7 @@ test_that("It warns when user mapping contains untypical aesthetics", {
   # User shape is unusual for simulated
   expect_warning(
     plotTimeProfile(
-      manySimDCGlobal,
+      manySimDC(),
       mapping = ggplot2::aes(shape = dataType)
     ),
     messages$plotUntypicalAesthetic(
@@ -191,7 +191,7 @@ test_that("It warns when user mapping contains untypical aesthetics", {
   # User shape is unusual for simulated
   expect_warning(
     plotTimeProfile(
-      manyObsDCGlobal,
+      manyObsDC(),
       observedMapping = ggplot2::aes(linetype = dataType)
     ),
     messages$plotUntypicalAesthetic(
@@ -204,7 +204,7 @@ test_that("It warns when user mapping contains untypical aesthetics", {
 test_that("line width does not leak into observedMapping", {
   expect_no_warning(
     plotTimeProfile(
-      manyObsSimDCGlobal,
+      manyObsSimDC(),
       mapping = ggplot2::aes(linetype = name)
     )
   )
@@ -216,7 +216,7 @@ test_that("It works when geometric error is present", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "geometric error",
-    fig = plotTimeProfile(oneObsGeometricDCGlobal)
+    fig = plotTimeProfile(oneObsGeometricDC())
   )
 })
 
@@ -255,7 +255,7 @@ test_that("It plots LLOQ correctly on log scale", {
 test_that("It plots data with two y-axis dimensions (fraction and concentration)", {
   vdiffr::expect_doppelganger(
     title = "with_secAxis",
-    fig = plotTimeProfile(manyObsSimDCWithFractionGlobal, yScale = "log") +
+    fig = plotTimeProfile(manyObsSimDCWithFraction(), yScale = "log") +
       ggplot2::theme(
         legend.position = c(0.95, 0.05),
         legend.justification = c("right", "bottom")
@@ -267,10 +267,10 @@ test_that("It plots data with two y-axis dimensions (fraction and concentration)
 
 test_that("It converts x-axis units when xUnit is provided", {
   # Default: x in h; override to "min"
-  plotDefault <- plotTimeProfile(oneObsDCGlobal)
+  plotDefault <- plotTimeProfile(oneObsDC())
 
   plotMinutes <-
-    plotTimeProfile(oneObsDCGlobal, xUnit = "min")
+    plotTimeProfile(oneObsDC(), xUnit = "min")
 
   # The x-axis label should contain "min" when xUnit = "min"
   expect_true(
@@ -288,7 +288,7 @@ test_that("It converts y-axis units when yUnit is provided", {
   # most frequent units would be xUnit 'h',yUnit 'mg/l', y2Unit = ''
   # overwrite this with userdefined units
   plotNonDefaultUnits <- plotTimeProfile(
-    manyObsSimDCWithFractionGlobal,
+    manyObsSimDCWithFraction(),
     xUnit = 'day(s)',
     yUnit = 'ng/l',
     y2Unit = '%'
@@ -304,12 +304,12 @@ test_that("It converts y-axis units when yUnit is provided", {
 test_that("It produces the same result as pre-converting with convertUnits", {
   # Passing units directly should be equivalent to calling convertUnits first
   plotDirect <- plotTimeProfile(
-    oneObsSimDCGlobal,
+    oneObsSimDC(),
     xUnit = "day(s)",
     yUnit = 'mg/l'
   )
   plotPreConverted <- plotTimeProfile(convertUnits(
-    oneObsSimDCGlobal,
+    oneObsSimDC(),
     yUnit = 'mg/l',
     xUnit = "day(s)"
   ))
@@ -317,7 +317,7 @@ test_that("It produces the same result as pre-converting with convertUnits", {
   expect_equal(plotDirect$data, plotPreConverted$data)
 
   plotDataFrame <- plotTimeProfile(
-    oneObsSimDCGlobal$toDataFrame(),
+    oneObsSimDC()$toDataFrame(),
     xUnit = "day(s)",
     yUnit = 'mg/l'
   )

@@ -26,102 +26,113 @@ obsData <- lapply(
 names(obsData) <- lapply(obsData, function(x) x$name)
 
 # `DataCombined` (DC) objects ----------------------------
+# Each object is stored with a `.` prefix and exposed via an accessor function
+# that returns a fresh clone, so tests can safely mutate the returned object.
 
 ## only one observed dataset ------------------------
 
-oneObsDCGlobal <- DataCombined$new()
-oneObsDCGlobal$addDataSets(obsData$`Vergin 1995.Iv`)
+.oneObsDC <- DataCombined$new()
+.oneObsDC$addDataSets(obsData$`Vergin 1995.Iv`)
+oneObsDC <- function() .oneObsDC$clone(deep = TRUE)
 
 ## only one simulated dataset ------------------------
 
-oneSimDCGlobal <- DataCombined$new()
-oneSimDCGlobal$addSimulationResults(
+.oneSimDC <- DataCombined$new()
+.oneSimDC$addSimulationResults(
   simulationResults = simResults,
   quantitiesOrPaths = outputPathSingle,
   groups = "Aciclovir PVB"
 )
+oneSimDC <- function() .oneSimDC$clone(deep = TRUE)
 
 ## many observed datasets ------------------------
 
-manyObsDCGlobal <- DataCombined$new()
-manyObsDCGlobal$addDataSets(
+.manyObsDC <- DataCombined$new()
+.manyObsDC$addDataSets(
   c(obsData$`Vergin 1995.Iv`, obsData$`Laskin 1982.Group C`),
   groups = "Aciclovir observed"
 )
+manyObsDC <- function() .manyObsDC$clone(deep = TRUE)
 
 ## many simulated datasets ------------------------
 
-manySimDCGlobal <- DataCombined$new()
-manySimDCGlobal$addSimulationResults(
+.manySimDC <- DataCombined$new()
+.manySimDC$addSimulationResults(
   simulationResults = simResults,
   # Excluding the fraction excreted output
   quantitiesOrPaths = outputPaths[1:2],
   groups = "Aciclovir PVB"
 )
+manySimDC <- function() .manySimDC$clone(deep = TRUE)
 
 ## one observed and one simulated dataset ------------------------
 
-oneObsSimDCGlobal <- DataCombined$new()
-oneObsSimDCGlobal$addDataSets(
+.oneObsSimDC <- DataCombined$new()
+.oneObsSimDC$addDataSets(
   obsData$`Vergin 1995.Iv`,
   groups = "Aciclovir PVB"
 )
-oneObsSimDCGlobal$addSimulationResults(
+.oneObsSimDC$addSimulationResults(
   simulationResults = simResults,
   quantitiesOrPaths = outputPathSingle,
   groups = "Aciclovir PVB"
 )
+oneObsSimDC <- function() .oneObsSimDC$clone(deep = TRUE)
 
 ## multiple observed and multiple simulated datasets ------------------------
 
-manyObsSimDCGlobal <- DataCombined$new()
-manyObsSimDCGlobal$addDataSets(
+.manyObsSimDC <- DataCombined$new()
+.manyObsSimDC$addDataSets(
   c(obsData$`Vergin 1995.Iv`, obsData$`Laskin 1982.Group C`),
   groups = "Aciclovir observed"
 )
-manyObsSimDCGlobal$addSimulationResults(
+.manyObsSimDC$addSimulationResults(
   simulationResults = simResults,
   # Excluding the fraction excreted output
   quantitiesOrPaths = outputPaths[1:2],
   groups = "Aciclovir PVB"
 )
+manyObsSimDC <- function() .manyObsSimDC$clone(deep = TRUE)
 
 ## dataset with geometric error ------------------------
 
-oneObsGeometricDCGlobal <- DataCombined$new()
-oneObsGeometricDCGlobal$addDataSets(
+.oneObsGeometricDC <- DataCombined$new()
+.oneObsGeometricDC$addDataSets(
   obsData$`Laskin 1982.Group C`,
   groups = "Aciclovir PVB"
 )
+oneObsGeometricDC <- function() .oneObsGeometricDC$clone(deep = TRUE)
 
 # custom default plot configuration (DPC) -------------------------------------
 
-customDPCGlobal <- DefaultPlotConfiguration$new()
-customDPCGlobal$title <- "My Plot Title"
-customDPCGlobal$subtitle <- "My Plot Subtitle"
-customDPCGlobal$caption <- "My Sources"
-customDPCGlobal$legendPosition <- tlf::LegendPositions$outsideRight
-customDPCGlobal$yAxisScale <- "log"
-customDPCGlobal$yAxisLimits <- c(0.01, 1000)
+.customDPC <- DefaultPlotConfiguration$new()
+.customDPC$title <- "My Plot Title"
+.customDPC$subtitle <- "My Plot Subtitle"
+.customDPC$caption <- "My Sources"
+.customDPC$legendPosition <- tlf::LegendPositions$outsideRight
+.customDPC$yAxisScale <- "log"
+.customDPC$yAxisLimits <- c(0.01, 1000)
+customDPC <- function() .customDPC$clone(deep = TRUE)
 
 # dataset with mixed dimensions and y-Units ---------------------------
 
-manyObsSimDCWithFractionGlobal <- DataCombined$new()
+.manyObsSimDCWithFraction <- DataCombined$new()
 
-manyObsSimDCWithFractionGlobal$addSimulationResults(
+.manyObsSimDCWithFraction$addSimulationResults(
   simulationResults = simResults,
   quantitiesOrPaths = outputPaths[[1]],
   names = "Aciclovir Plasma",
   groups = "Aciclovir PVB"
 )
-manyObsSimDCWithFractionGlobal$addSimulationResults(
+.manyObsSimDCWithFraction$addSimulationResults(
   simulationResults = simResults,
   quantitiesOrPaths = outputPaths[[3]],
   names = "Aciclovir Fraction excreted",
   groups = "Aciclovir Urine"
 )
 
-manyObsSimDCWithFractionGlobal$addDataSets(
+.manyObsSimDCWithFraction$addDataSets(
   obsData[[1]],
   groups = "Aciclovir PVB"
 )
+manyObsSimDCWithFraction <- function() .manyObsSimDCWithFraction$clone(deep = TRUE)

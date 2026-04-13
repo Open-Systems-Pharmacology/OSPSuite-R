@@ -4,7 +4,7 @@
 
 test_that("plotIndividualTimeProfile emits a soft deprecation warning pointing to plotTimeProfile", {
   expect_warning(
-    plotIndividualTimeProfile(oneObsDCGlobal),
+    plotIndividualTimeProfile(oneObsDC()),
     regexp = "plotIndividualTimeProfile.*deprecated.*plotTimeProfile",
     class = "lifecycle_warning_deprecated"
   )
@@ -14,7 +14,7 @@ test_that("plotIndividualTimeProfile emits a soft deprecation warning pointing t
 
 test_that("plotPopulationTimeProfile emits a soft deprecation warning pointing to plotTimeProfile", {
   expect_warning(
-    plotPopulationTimeProfile(oneObsDCGlobal),
+    plotPopulationTimeProfile(oneObsDC()),
     regexp = "plotPopulationTimeProfile.*deprecated.*plotTimeProfile",
     class = "lifecycle_warning_deprecated"
   )
