@@ -46,7 +46,10 @@ test_that("It can import valid simulation results from multiple CSV files", {
 
 test_that("It throws an exception if the file imported are not valid results file", {
   junkFile <- getTestDataFilePath("junk.csv")
-  expect_error(importSensitivityAnalysisResultsFromCSV(sim, junkFile))
+  expect_error(
+    importSensitivityAnalysisResultsFromCSV(sim, junkFile),
+    regexp = "Sensitivity analysis file format is not supported"
+  )
 })
 
 test_that("It throws an exception when importing a valid result file that would result in duplicated results", {
