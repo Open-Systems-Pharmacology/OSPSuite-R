@@ -13,7 +13,6 @@ globalTestMoBiProject <- loadMoBiProject(
   filePath = getTestDataFilePath("MoBiProject/Test_Project.mbp3")
 )
 
-
 getSimulationFilePath <- function(simulationName) {
   getTestDataFilePath(paste0(simulationName, ".pkml"))
 }
