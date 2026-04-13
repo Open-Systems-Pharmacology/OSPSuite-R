@@ -253,3 +253,103 @@ test_that("plotQuantileQuantilePlot runs without error when yUnit is provided", 
     plotQuantileQuantilePlot(myCombDat, residualScale = "linear", yUnit = "")
   )
 })
+
+# showLegendPerDataset ----
+
+test_that("showLegendPerDataset adds shape mapping for observed datasets", {
+  myCombDat$setGroups(
+    names = c(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Placebo_proximal"
+    ),
+    groups = c(
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012",
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012"
+    )
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "showLegendPerDataset observed - residuals",
+    fig = plotResidualsVsCovariate(
+      myCombDat,
+      residualScale = "linear",
+      showLegendPerDataset = "observed"
+    ) +
+      ggplot2::theme(
+        legend.position = c(0.05, 0.05),
+        legend.justification = c("left", "bottom")
+      )
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "showLegendPerDataset none - residuals",
+    fig = plotResidualsVsCovariate(
+      myCombDat,
+      residualScale = "linear",
+      showLegendPerDataset = "none"
+    ) +
+      ggplot2::theme(
+        legend.position = c(0.05, 0.05),
+        legend.justification = c("left", "bottom")
+      )
+  )
+})
+
+test_that("showLegendPerDataset simulated throws error for residuals", {
+  expect_error(
+    plotResidualsVsCovariate(
+      myCombDat,
+      residualScale = "linear",
+      xAxis = "time",
+      showLegendPerDataset = "simulated"
+    ),
+    "Assertion on 'showLegendPerDataset' failed"
+  )
+})
+
+test_that("User mapping overrides showLegendPerDataset in residuals", {
+  myCombDat$setGroups(
+    names = c(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Placebo_proximal"
+    ),
+    groups = c(
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012",
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012"
+    )
+  )
+
+  # User mapping overrides showLegendPerDataset
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "showLegendPerDataset overwritten by name for residuals",
+    fig = plotResidualsVsCovariate(
+      myCombDat,
+      residualScale = "linear",
+      showLegendPerDataset = "observed",
+      mapping = ggplot2::aes(groupby = name)
+    ) +
+      ggplot2::theme(
+        legend.position = c(0.05, 0.05),
+        legend.justification = c("left", "bottom")
+      )
+  )
+})
