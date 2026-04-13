@@ -1,8 +1,5 @@
 # Soft deprecation warnings for tlf-based plotting functions
 
-oneObsDC <- readRDS(getTestDataFilePath("oneObsDC.rds"))
-oneObsSimDC <- readRDS(getTestDataFilePath("oneObsSimDC.rds"))
-
 # plotIndividualTimeProfile -----------------------------------------------
 
 test_that("plotIndividualTimeProfile emits a soft deprecation warning pointing to plotTimeProfile", {

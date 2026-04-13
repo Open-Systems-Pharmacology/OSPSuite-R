@@ -1,5 +1,4 @@
-# This file is run once before all tests
-# Set watermark option globally for all tests
+# This file is run before all tests (inside each worker when parallel)
 options(ospsuite.plots.watermarkEnabled = TRUE)
 
 # Create global `DataCombined` (DC) objects ----------------------------

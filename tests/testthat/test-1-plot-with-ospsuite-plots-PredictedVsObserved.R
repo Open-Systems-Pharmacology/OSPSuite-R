@@ -55,10 +55,6 @@ obsData <- lapply(
 )
 names(obsData) <- lapply(obsData, function(x) x$name)
 
-manyObsSimDCWithFraction <- readRDS(getTestDataFilePath(
-  "manyObsSimDCWithFraction.rds"
-))
-
 # create a new instance and add datasets
 myCombDat <- DataCombined$new()
 myCombDat$addDataSets(dataSet[c(1, 3, 5)])
