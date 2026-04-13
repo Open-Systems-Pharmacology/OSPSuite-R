@@ -245,7 +245,7 @@ test_that("It swaps axes when predictedAxis is 'x'", {
 # 2 y-axis dimensions ----
 test_that("Plot throws error with fraction and concentration", {
   expect_error(
-    plotPredictedVsObserved(manyObsSimDCWithFraction),
+    plotPredictedVsObserved(manyObsSimDCWithFractionGlobal),
     'Data contains too many'
   )
 })

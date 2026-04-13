@@ -6,7 +6,7 @@ test_that("It creates default plots as expected for single observed dataset", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "single obs",
-    fig = plotIndividualTimeProfile(oneObsDC)
+    fig = plotIndividualTimeProfile(oneObsDCGlobal)
   )
 })
 
@@ -14,7 +14,7 @@ test_that("It creates default plots as expected for multiple observed datasets",
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple obs",
-    fig = plotIndividualTimeProfile(manyObsDC)
+    fig = plotIndividualTimeProfile(manyObsDCGlobal)
   )
 })
 
@@ -22,7 +22,10 @@ test_that("It plots multiple observed datasets with dataset name legend entries"
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple obs - separate legend",
-    fig = plotIndividualTimeProfile(manyObsDC, showLegendPerDataset = TRUE)
+    fig = plotIndividualTimeProfile(
+      manyObsDCGlobal,
+      showLegendPerDataset = TRUE
+    )
   )
 })
 
@@ -33,7 +36,7 @@ test_that("It creates default plots as expected for single simulated dataset", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "single sim",
-    fig = plotIndividualTimeProfile(oneSimDC)
+    fig = plotIndividualTimeProfile(oneSimDCGlobal)
   )
 })
 
@@ -41,7 +44,7 @@ test_that("It creates default plots as expected for multiple simulated datasets"
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple sim",
-    fig = plotIndividualTimeProfile(manySimDC)
+    fig = plotIndividualTimeProfile(manySimDCGlobal)
   )
 })
 
@@ -49,7 +52,10 @@ test_that("It plots multiple simulated datasets with dataset name legend entries
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple sim - separate legend",
-    fig = plotIndividualTimeProfile(manySimDC, showLegendPerDataset = TRUE)
+    fig = plotIndividualTimeProfile(
+      manySimDCGlobal,
+      showLegendPerDataset = TRUE
+    )
   )
 })
 
@@ -59,7 +65,7 @@ test_that("It creates default plots as expected for both observed and simulated"
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "both - default",
-    fig = plotIndividualTimeProfile(oneObsSimDC)
+    fig = plotIndividualTimeProfile(oneObsSimDCGlobal)
   )
 })
 
@@ -67,20 +73,23 @@ test_that("It respects custom plot configuration", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "both - custom",
-    fig = plotIndividualTimeProfile(oneObsSimDC, customDPC)
+    fig = plotIndividualTimeProfile(oneObsSimDCGlobal, customDPCGlobal)
   )
 
   # Since these were not specified by the user, they should not be updated
   # after plotting function is done with it.
-  expect_null(customDPC$xLabel)
-  expect_null(customDPC$yLabel)
+  expect_null(customDPCGlobal$xLabel)
+  expect_null(customDPCGlobal$yLabel)
 })
 
 test_that("It plots both observed and simulated datasets with dataset name legend entries", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "both - separate legend",
-    fig = plotIndividualTimeProfile(oneObsSimDC, showLegendPerDataset = TRUE)
+    fig = plotIndividualTimeProfile(
+      oneObsSimDCGlobal,
+      showLegendPerDataset = TRUE
+    )
   )
 })
 
@@ -89,8 +98,8 @@ test_that("It plots both observed and simulated datasets with dataset name legen
   vdiffr::expect_doppelganger(
     title = "both - custom - separate legend",
     fig = plotIndividualTimeProfile(
-      oneObsSimDC,
-      customDPC,
+      oneObsSimDCGlobal,
+      customDPCGlobal,
       showLegendPerDataset = TRUE
     )
   )
@@ -102,7 +111,7 @@ test_that("It maps multiple observed and simulated datasets to different visual 
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple obs and sim",
-    fig = plotIndividualTimeProfile(manyObsSimDC)
+    fig = plotIndividualTimeProfile(manyObsSimDCGlobal)
   )
 })
 
@@ -112,7 +121,7 @@ test_that("It works when geometric error is present", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "geometric error",
-    fig = plotIndividualTimeProfile(oneObsGeometricDC)
+    fig = plotIndividualTimeProfile(oneObsGeometricDCGlobal)
   )
 })
 
