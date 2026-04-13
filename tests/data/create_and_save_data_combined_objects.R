@@ -4,7 +4,7 @@ path <- testthat::test_path("../data")
 # simulated results ------------------------
 
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-sim <- loadSimulation(simFilePath)
+sim <- loadSimulation(simFilePath, loadFromCache = FALSE, addToCache = FALSE)
 outputPathSingle <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 outputPaths <- c(
   "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
@@ -60,7 +60,8 @@ saveRDS(manyObsDC, file = file.path(path, "manyObsDC"))
 manySimDC <- DataCombined$new()
 manySimDC$addSimulationResults(
   simulationResults = simResults,
-  quantitiesOrPaths = outputPaths,
+  # Excluding the fraction excreted output
+  quantitiesOrPaths = outputPaths[1:2],
   groups = "Aciclovir PVB"
 )
 saveRDS(manySimDC, file = file.path(path, "manySimDC"))
@@ -85,7 +86,8 @@ manyObsSimDC$addDataSets(
 )
 manyObsSimDC$addSimulationResults(
   simulationResults = simResults,
-  quantitiesOrPaths = outputPaths,
+  # Excluding the fraction excreted output
+  quantitiesOrPaths = outputPaths[1:2],
   groups = "Aciclovir PVB"
 )
 saveRDS(manyObsSimDC, file = file.path(path, "manyObsSimDC"))
