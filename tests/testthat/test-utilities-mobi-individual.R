@@ -59,7 +59,17 @@ test_that("individualsBBToDataFrame returns a data frame with expected columns",
 
   df <- individualsBBToDataFrame(individual)
 
-  expect_snapshot(df)
+  expect_true(is.data.frame(df))
+  expect_equal(
+    colnames(df),
+    c(
+      "Container Path",
+      "Parameter Name",
+      "Value",
+      "Unit",
+      "Value Origin"
+    )
+  )
 })
 
 # setParameterValuesInIndividualBB
@@ -81,10 +91,10 @@ test_that("setParameterValuesInIndividualBB sets parameters on a building block"
     (df$`Container Path` == "Organism" &
       df$`Parameter Name` == "BMI") |
       (df$`Container Path` == "Organism" &
-        df$`Parameter Name` == "Age")
+        df$`Parameter Name` == "Age"),
   ]
   # Returned values are converted to the reference unit, which is year for age and kg/m² for BMI. Therefore, the value for BMI is converted from 73 kg/m² to 0.73 kg/cm².
-  expect_equal(entries$Value, c(30, 0.73))
+  expect_equal(entries$Value, c(0.73, 30))
 })
 
 test_that("setParameterValuesInIndividualBB returns the building block invisibly", {
