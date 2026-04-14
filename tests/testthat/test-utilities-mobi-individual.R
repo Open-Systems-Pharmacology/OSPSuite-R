@@ -178,8 +178,8 @@ test_that("setParameterValuesInIndividualBB throws an error if trying to set a p
         "Organism|Age",
         "SecondNonExistingParameter"
       ),
-      quantityValues = c(30),
-      units = c("year(s)")
+      quantityValues = c(0, 30, 0),
+      units = c("", "year(s)", "")
     ),
     regexp = "are not present in the building block: Organism|NonExistingParameter, SecondNonExistingParameter"
   )

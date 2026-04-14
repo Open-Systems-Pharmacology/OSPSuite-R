@@ -125,6 +125,10 @@ setParameterValuesInIndividualBB <- function(
     individualBuildingBlock,
     BuildingBlockTypes$`Individual`
   )
+  # Exit early if no quantity paths are provided
+  if (length(quantityPaths) == 0) {
+    return(invisible(individualBuildingBlock))
+  }
   netTask <- .getMoBiTaskFromCache("IndividualTask")
   # Check if all provided paths exist in the Individual BB. If any path does not exist, an error is thrown.
   allPaths <- netTask$call(

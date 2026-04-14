@@ -723,7 +723,10 @@ addProteinExpressionToParameterValuesBB <- function(
 ) {
   # Exit early if no quantity paths are provided
   if (length(quantityPaths) == 0) {
-    return(invisible(parameterValuesBuildingBlock))
+    return(list(
+      baseValues = numeric(0),
+      dimensions = character(0)
+    ))
   }
 
   # Replicate scalar units and dimensions to match the length of quantityPaths
