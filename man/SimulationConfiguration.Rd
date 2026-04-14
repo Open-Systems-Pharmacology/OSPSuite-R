@@ -11,21 +11,6 @@ A new \code{SimulationConfiguration} object.
 Configuration of a simulation. Contains description of the modules used for
 the simulation, selected Parameter Values (PV) and Initial Conditions (IC), and molecule calculation methods.
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{partitionCoefficientMethods}}{The method used for calculation of partition coefficients. A named list with names being the molecules used in all modules,
-and the values being one of the \code{PartitionCoefficientMethods} enum values.
-To set the partition coefficient method for a molecule, provide a named list.
-TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650}
-
-\item{\code{cellularPermeabilityMethods}}{The method used for calculation of cellular permeabilities. A named list with names being the molecules used in all modules,
-and the values being one of the \code{CellularPermeabilityMethods} enum values.
-To set the cellular permeability method for a molecule, provide a named list.
-TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650}
-}
-\if{html}{\out{</div>}}
-}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
@@ -48,20 +33,18 @@ and the values the names of Parameter Values Building Blocks
 If the modules for which the PV
 selection is provided are not in the configuration, throw an error.}
 
+\item{\code{partitionCoefficientOverrides}}{A named list of partition coefficient method
+overrides. Names are molecule names, values are the full calculation method names.
+Read-only; use \code{setPartitionCoefficientMethods()} to modify.}
+
+\item{\code{cellularPermeabilityOverrides}}{A named list of cellular permeability method
+overrides. Names are molecule names, values are the full calculation method names.
+Read-only; use \code{setCellularPermeabilityMethods()} to modify.}
+
 \item{\code{settings}}{A \code{SimulationSettings} object defining the simulation settings.
 If no settings are provided, default settings will be used upon simulation creation.
 Individual properties within the \code{SimulationSettings} object are read-only, but the entire settings object can be replaced with another \code{SimulationSettings} instance (or set to \code{NULL} to use defaults).
 Setting the solver settings, output intervals, and output selections must be done after creating the simulation from the configuration.}
-
-\item{\code{partitionCoefficientMethods}}{The method used for calculation of partition coefficients. A named list with names being the molecules used in all modules,
-and the values being one of the \code{PartitionCoefficientMethods} enum values.
-To set the partition coefficient method for a molecule, provide a named list.
-TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650}
-
-\item{\code{cellularPermeabilityMethods}}{The method used for calculation of cellular permeabilities. A named list with names being the molecules used in all modules,
-and the values being one of the \code{CellularPermeabilityMethods} enum values.
-To set the cellular permeability method for a molecule, provide a named list.
-TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650}
 }
 \if{html}{\out{</div>}}
 }
@@ -69,6 +52,8 @@ TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-SimulationConfiguration-new}{\code{SimulationConfiguration$new()}}
+\item \href{#method-SimulationConfiguration-setPartitionCoefficientMethods}{\code{SimulationConfiguration$setPartitionCoefficientMethods()}}
+\item \href{#method-SimulationConfiguration-setCellularPermeabilityMethods}{\code{SimulationConfiguration$setCellularPermeabilityMethods()}}
 \item \href{#method-SimulationConfiguration-print}{\code{SimulationConfiguration$print()}}
 }
 }
@@ -117,6 +102,52 @@ If the list contains a module name that is not part of the provided modules, it 
 
 \item{\code{settings}}{Optional, a \code{SimulationSettings} object defining the simulation settings. If no settings are provided,
 default settings will be used upon simulation creation.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SimulationConfiguration-setPartitionCoefficientMethods"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationConfiguration-setPartitionCoefficientMethods}{}}}
+\subsection{Method \code{setPartitionCoefficientMethods()}}{
+Sets the method used for calculation of partition coefficients. This method can be used to specify the partition coefficient method for each molecule used in the modules. If
+not specified, the method set in the Molecules Building Block of the last module in which the molecule is present will be used.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationConfiguration$setPartitionCoefficientMethods(
+  moleculeName,
+  methodName
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{moleculeName}}{The name of the molecule for which to set the partition coefficient method.}
+
+\item{\code{methodName}}{The name of the method to use for calculation of partition coefficients for the specified molecule. Should be one of the \code{PartitionCoefficientMethods} enum values.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SimulationConfiguration-setCellularPermeabilityMethods"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationConfiguration-setCellularPermeabilityMethods}{}}}
+\subsection{Method \code{setCellularPermeabilityMethods()}}{
+Sets the method used for calculation of cellular permeabilities. This method can be used to specify the cellular permeability method for each molecule used in the modules. If
+not specified, the method set in the Molecules Building Block of the last module in which the molecule is present will be used.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimulationConfiguration$setCellularPermeabilityMethods(
+  moleculeName,
+  methodName
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{moleculeName}}{The name of the molecule for which to set the cellular permeability method.}
+
+\item{\code{methodName}}{The name of the method to use for calculation of cellular permeabilities for the specified molecule. Should be one of the \code{CellularPermeabilityMethods} enum values.}
 }
 \if{html}{\out{</div>}}
 }
