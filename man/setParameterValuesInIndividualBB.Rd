@@ -38,8 +38,8 @@ individual <- createIndividualBuildingBlock(
 )
 setParameterValuesInIndividualBB(
   individual,
-  quantityPaths = c("Organism|Age", "Organism|Weight"),
-  quantityValues = c(30, 73),
-  units = c("year(s)", "kg")
+  quantityPaths = c("Organism|Age", "Organism|Height"),
+  quantityValues = c(30, 173),
+  units = c("year(s)", "cm")
 )
 }
