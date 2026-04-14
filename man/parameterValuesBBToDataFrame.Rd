@@ -7,7 +7,7 @@
 parameterValuesBBToDataFrame(parameterValuesBuildingBlock)
 }
 \arguments{
-\item{parameterValuesBuildingBlock}{A \code{BuildingBlock} object of type \verb{Parameter Values}.}
+\item{parameterValuesBuildingBlock}{A \code{BuildingBlock} object of type \verb{Parameter Values} or \code{Individual}.}
 }
 \value{
 A data frame with the following columns:
@@ -16,6 +16,7 @@ A data frame with the following columns:
 \item \verb{Parameter Name}: Name of the parameter.
 \item \code{Value}: Value of the parameter. For values that are defined by a formula, the return value can be \code{NaN}.
 \item \code{Unit}: Unit of the parameter value.
+\item \verb{Value Origin}: Origin of the parameter value.
 }
 }
 \description{

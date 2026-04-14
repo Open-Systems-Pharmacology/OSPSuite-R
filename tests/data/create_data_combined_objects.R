@@ -135,4 +135,6 @@ customDPC <- function() .customDPC$clone(deep = TRUE)
   obsData[[1]],
   groups = "Aciclovir PVB"
 )
-manyObsSimDCWithFraction <- function() .manyObsSimDCWithFraction$clone(deep = TRUE)
+manyObsSimDCWithFraction <- function() {
+  .manyObsSimDCWithFraction$clone(deep = TRUE)
+}

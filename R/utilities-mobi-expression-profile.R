@@ -26,8 +26,8 @@ createMoBiExpressionProfileBuildingBlock <- function(
   moleculeName,
   speciesName
 ) {
-  validateIsNonEmptyString(category, "category")
-  validateIsNonEmptyString(moleculeName, "moleculeName")
+  ospsuite.utils::validateHasOnlyNonEmptyStrings(category)
+  ospsuite.utils::validateHasOnlyNonEmptyStrings(moleculeName)
   validateEnumValue(speciesName, Species)
 
   netTask <- .getMoBiTaskFromCache("ExpressionProfileTask")
