@@ -235,6 +235,7 @@ messages$plotShowLegendPerDatasetHasNoEffect <- function(dataType) {
   )
 }
 
+
 messages$plotUntypicalAesthetic <- function(aesthetic, dataType) {
   sprintf(
     "aesthetic '%s' is set to mapping for %s data.

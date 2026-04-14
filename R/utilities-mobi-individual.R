@@ -1,38 +1,26 @@
-#' @title Create a MoBi Individual Building Block
+#' Create a MoBi Individual Building Block
 #'
-#' @description
 #' Creates an individual building block in MoBi for a given species and
-#' optional demographic characteristics by calling the MoBi `IndividualTask`.
+#' optional demographic characteristics. Currently, disease states are not supported.
 #'
-#' @param species Species of the individual as defined in PK-Sim (see `Species` enum).
-#' @param population Population to use to create the individual. Required when
-#'   species is Human (see `HumanPopulation` enum).
-#' @param gender Gender of the individual (see `Gender` enum).
-#' @param weight Weight of the individual.
-#' @param weightUnit Unit of the weight value. Default is `"kg"`.
-#' @param height Height of the individual (human species only).
-#' @param heightUnit Unit of the height value. Default is `"cm"`.
-#' @param age Age of the individual (human species only).
-#' @param ageUnit Unit of the age value. Default is `"year(s)"`.
-#' @param gestationalAge Gestational age of the individual (for preterm human population).
-#'   Default is 40.
-#' @param gestationalAgeUnit Unit of the gestational age value. Default is `"week(s)"`.
-#' @param seed Optional seed for the individual creation algorithm.
+#' @param name Optional name for the individual building block. If not provided, species will be used as name.
 #'
-#' @return A `BuildingBlock` object representing the created individual.
+#' @inheritParams createIndividualCharacteristics
+#'
+#' @returns An object of type `BuildingBlock` representing the created individual.
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' individual <- createMoBiIndividualBuildingBlock(
+#' individual <- createIndividualBuildingBlock(
+#'   name = "Standard Individual",
 #'   species = Species$Human,
 #'   population = HumanPopulation$European_ICRP_2002,
 #'   gender = Gender$Male,
 #'   weight = 73,
 #'   age = 30
 #' )
-#' }
-createMoBiIndividualBuildingBlock <- function(
+createIndividualBuildingBlock <- function(
+  name = NULL,
   species,
   population = NULL,
   gender = NULL,
@@ -46,6 +34,10 @@ createMoBiIndividualBuildingBlock <- function(
   gestationalAgeUnit = "week(s)",
   seed = NULL
 ) {
+  validateIsCharacter(name, nullAllowed = TRUE)
+  if (is.null(name)) {
+    name <- species
+  }
   individualCharacteristics <- createIndividualCharacteristics(
     species = species,
     population = population,
@@ -64,11 +56,35 @@ createMoBiIndividualBuildingBlock <- function(
   netTask <- .getMoBiTaskFromCache("IndividualTask")
   netObject <- netTask$call(
     "CreateIndividual",
-    individualCharacteristics
+    individualCharacteristics,
+    name
   )
 
   return(BuildingBlock$new(netObject, type = BuildingBlockTypes$Individual))
 }
+
+#' Convert an Individual Building Block to a data frame.
+#'
+#' @param individualBuildingBlock A `BuildingBlock` object of type `Individual`.
+#'
+#' @inherit parameterValuesBBToDataFrame return
+#'
+#' @export
+#'
+#' @examples
+#' individual <- createIndividualBuildingBlock(
+#'   species = Species$Human,
+#'   population = HumanPopulation$European_ICRP_2002
+#' )
+#' df <- individualsBBToDataFrame(individual)
+individualsBBToDataFrame <- function(individualBuildingBlock) {
+  .validateBuildingBlockType(
+    individualBuildingBlock,
+    BuildingBlockTypes$Individual
+  )
+  parameterValuesBBToDataFrame(individualBuildingBlock)
+}
+
 
 #' @title Set Parameters of a MoBi Individual Building Block
 #'
@@ -78,42 +94,86 @@ createMoBiIndividualBuildingBlock <- function(
 #' paths and values must be equal.
 #'
 #' @param individualBuildingBlock A `BuildingBlock` object as returned
-#'   by `createMoBiIndividualBuildingBlock()`.
+#'   by `createIndividualBuildingBlock()`.
 #' @param quantityPaths A character vector of quantity paths to set.
 #' @param quantityValues A numeric vector of values to assign. Must have the
 #'   same length as `quantityPaths`.
+#' @param units A single unit string or a list of unit strings for the quantity values.
+#' If a single string is provided, it will be used for all quantities.
 #'
 #' @return `individualBuildingBlock`, invisibly.
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' individual <- createMoBiIndividualBuildingBlock(
+#' individual <- createIndividualBuildingBlock(
 #'   species = Species$Human,
 #'   population = HumanPopulation$European_ICRP_2002
 #' )
-#' setMoBiIndividualParameters(
+#' setParameterValuesInIndividualBB(
 #'   individual,
-#'   quantityPaths = c("Organism|Age", "Organism|Weight"),
-#'   quantityValues = c(30, 73)
+#'   quantityPaths = c("Organism|Age", "Organism|Height"),
+#'   quantityValues = c(30, 173),
+#'   units = c("year(s)", "cm")
 #' )
-#' }
-setMoBiIndividualParameters <- function(
+setParameterValuesInIndividualBB <- function(
   individualBuildingBlock,
   quantityPaths,
-  quantityValues
+  quantityValues,
+  units
 ) {
-  validateIsOfType(individualBuildingBlock, "BuildingBlock")
-  validateIsString(quantityPaths)
-  validateIsNumeric(quantityValues)
-  validateIsSameLength(quantityPaths, quantityValues)
-
+  .validateBuildingBlockType(
+    individualBuildingBlock,
+    BuildingBlockTypes$`Individual`
+  )
+  # Exit early if no quantity paths are provided
+  if (length(quantityPaths) == 0) {
+    return(invisible(individualBuildingBlock))
+  }
   netTask <- .getMoBiTaskFromCache("IndividualTask")
+  # Check if all provided paths exist in the Individual BB. If any path does not exist, an error is thrown.
+  allPaths <- netTask$call(
+    "AllPathsFrom",
+    individualBuildingBlock
+  )
+  if (!all(quantityPaths %in% allPaths)) {
+    missingPaths <- quantityPaths[!quantityPaths %in% allPaths]
+    stop(
+      sprintf(
+        "Cannot add new entries to the Building Block. Only setting of the existing entries is supported. The following quantity paths are not present in the building block: %s",
+        paste(missingPaths, collapse = ", ")
+      )
+    )
+  }
+
+  validatedInputs <- .validatePVBBInputs(
+    individualBuildingBlock,
+    quantityPaths,
+    quantityValues,
+    units,
+    dimensions = NULL
+  )
+  baseValues <- validatedInputs$baseValues
+  dimensions <- validatedInputs$dimensions
+
+  # Get the dimensions for the provided paths from the building block
+  refDimensions <- netTask$call(
+    "AllDimensionsFrom",
+    individualBuildingBlock,
+    quantityPaths
+  )
+  # Check if units are compatible with the reference dimensions. In contrast to the `setParameterValuesInBB` function, changing of dimensions of existing entries is not allowed.
+  invisible(sapply(
+    seq_along(quantityPaths),
+    function(x) {
+      validateUnit(units[x], refDimensions[x])
+    },
+    USE.NAMES = FALSE
+  ))
   netTask$call(
     "SetIndividualParameter",
     individualBuildingBlock,
     quantityPaths,
-    quantityValues
+    baseValues
   )
 
   invisible(individualBuildingBlock)

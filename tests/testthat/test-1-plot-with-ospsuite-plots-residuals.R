@@ -1,0 +1,355 @@
+# Set defaults
+oldDefaults <- ospsuite.plots::setDefaults()
+withr::defer(ospsuite.plots::resetDefaults(oldDefaults))
+ggplot2::theme_update(legend.title = ggplot2::element_blank())
+ggplot2::theme_update(legend.position = c(0.95, 0.95))
+ggplot2::theme_update(legend.justification = c("right", "top"))
+
+# data to be used ---------------------------------------
+
+# load the simulation
+sim <- loadTestSimulation("simple", loadFromCache = TRUE, addToCache = TRUE)
+simResults <- importResultsFromCSV(
+  simulation = sim,
+  filePaths = getTestDataFilePath("Stevens_2012_placebo_indiv_results.csv")
+)
+
+aciclovirSimulation <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
+
+aciclovirSimData <- withr::with_tempdir({
+  df <- dplyr::tibble(
+    IndividualId = c(0, 0, 0),
+    `Time [min]` = c(0, 2, 4),
+    `Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood) [µmol/l]` = c(
+      0.5,
+      4,
+      8
+    )
+  )
+  readr::write_csv(df, "SimResults.csv")
+  importResultsFromCSV(aciclovirSimulation, "SimResults.csv")
+})
+
+# import observed data (will return a list of DataSet objects)
+dataSet <- loadDataSetsFromExcel(
+  xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
+  importerConfiguration = loadDataImporterConfiguration(getTestDataFilePath(
+    "ImporterConfiguration.xml"
+  ))
+)
+
+# create a new instance and add datasets
+myCombDat <- DataCombined$new()
+myCombDat$addDataSets(dataSet[c(1, 3, 5)])
+myCombDat$addSimulationResults(
+  simResults,
+  quantitiesOrPaths = c(
+    "Organism|Lumen|Stomach|Metformin|Gastric retention",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention proximal"
+  )
+)
+
+myCombDat$setGroups(
+  names = c(
+    "Organism|Lumen|Stomach|Metformin|Gastric retention",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+    "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+    "Stevens_2012_placebo.Placebo_total",
+    "Stevens_2012_placebo.Placebo_distal",
+    "Stevens_2012_placebo.Placebo_proximal"
+  ),
+  groups = c(
+    "Solid total",
+    "Solid distal",
+    "Solid proximal",
+    "Solid total",
+    "Solid distal",
+    "Solid proximal"
+  )
+)
+
+test_that("It creates default plots as expected", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "defaults vs Time",
+    fig = plotResidualsVsCovariate(
+      myCombDat,
+      residualScale = "linear",
+      xAxis = "time"
+    )
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "defaults vs Observed",
+    fig = suppressWarnings(plotResidualsVsCovariate(
+      myCombDat,
+      residualScale = "log"
+    ))
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "defaults vs Predicted",
+    fig = suppressWarnings(plotResidualsVsCovariate(
+      myCombDat,
+      residualScale = "log",
+      xAxis = "predicted"
+    ))
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "defaults as Histograms",
+    fig = plotResidualsAsHistogram(
+      myCombDat,
+      residualScale = "linear",
+      distribution = 'none'
+    )
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "Histograms with parameters",
+    fig = plotResidualsAsHistogram(
+      myCombDat,
+      residualScale = "linear",
+      distribution = 'normal',
+      plotAsFrequency = TRUE,
+      geomHistAttributes = list(position = 'stack')
+    )
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "defaults as QQ-Plot",
+    fig = plotQuantileQuantilePlot(myCombDat, residualScale = "linear")
+  )
+})
+
+
+# edge cases ------------------------
+
+test_that("It returns `NULL` with warning when `DataCombined` is empty", {
+  myCombDat <- DataCombined$new()
+
+  expect_warning(
+    result <- plotResidualsVsCovariate(myCombDat),
+    regexp = messages$plotNoDataAvailable()
+  )
+  expect_null(result)
+})
+
+test_that("It returns `NULL` with warning when `DataCombined` doesn't have any pairable datasets", {
+  dataSet1 <- DataSet$new(name = "Dataset1")
+  dataSet1$setValues(1, 1)
+  dataSet1$yDimension <- ospDimensions$`Concentration (molar)`
+  dataSet1$molWeight <- 1
+
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet1)
+
+  expect_warning(
+    expect_warning(
+      result <- suppressMessages(plotResidualsVsCovariate(myCombDat)),
+      regexp = messages$plotNoDataAvailable()
+    ),
+    messages$residualsCanNotBeComputed()
+  )
+
+  expect_null(result)
+})
+
+test_that("Different symbols for data sets within one group", {
+  obsData <- DataSet$new(name = "Observed")
+  obsData$setValues(
+    xValues = c(1, 3, 3.5, 4, 5),
+    yValues = c(1.9, 6.1, 7, 8.2, 1)
+  )
+  obsData$xUnit <- "min"
+  obsData$yDimension <- ospDimensions$`Concentration (molar)`
+
+  myDC <- DataCombined$new()
+  myDC$addSimulationResults(aciclovirSimData, groups = "myGroup")
+  myDC$addDataSets(obsData, groups = "myGroup")
+
+  # Add second obs data
+  obsData2 <- DataSet$new(name = "Observed 2")
+  obsData2$setValues(
+    xValues = c(0, 3, 4, 4.5, 5.5),
+    yValues = c(2.9, 5.1, 3, 8.2, 1)
+  )
+  obsData2$xUnit <- "min"
+  obsData2$yDimension <- ospDimensions$`Concentration (molar)`
+  myDC$addDataSets(obsData2, groups = "myGroup")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple data sets one group",
+    fig = plotResidualsVsCovariate(
+      myDC,
+      residualScale = "linear",
+      mapping = ggplot2::aes(groupby = name)
+    )
+  )
+})
+
+test_that("works with data.frame input", {
+  set.seed(123)
+
+  vdiffr::expect_doppelganger(
+    title = "dataFrame Input with unit conversion",
+    fig = plotResidualsVsCovariate(
+      convertUnits(myCombDat, yUnit = ""),
+      residualScale = "linear",
+      xAxis = "time"
+    )
+  )
+})
+
+# xUnit / yUnit direct parameters ----
+
+test_that("plotResidualsVsCovariate converts units when xUnit is provided", {
+  plotDefaultUnit <- plotResidualsVsCovariate(
+    myCombDat,
+    residualScale = "linear",
+    xAxis = "time"
+  )
+  plotHours <- plotResidualsVsCovariate(
+    myCombDat,
+    residualScale = "linear",
+    xAxis = "time",
+    xUnit = "h"
+  )
+
+  expect_true(
+    grepl("min", plotDefaultUnit$labels$x, fixed = TRUE),
+    info = "x-axis label should contain 'min' when xUnit is auto-detected as 'min'"
+  )
+  expect_false(
+    grepl("min", plotHours$labels$x, fixed = TRUE),
+    info = "x-axis label should not contain 'min' when xUnit = 'h'"
+  )
+})
+
+test_that("plotResidualsAsHistogram runs without error when yUnit is provided", {
+  expect_no_error(
+    plotResidualsAsHistogram(
+      myCombDat,
+      residualScale = "linear",
+      distribution = "none",
+      yUnit = ""
+    )
+  )
+})
+
+test_that("plotQuantileQuantilePlot runs without error when yUnit is provided", {
+  expect_no_error(
+    plotQuantileQuantilePlot(myCombDat, residualScale = "linear", yUnit = "")
+  )
+})
+
+# showLegendPerDataset ----
+
+test_that("showLegendPerDataset adds shape mapping for observed datasets", {
+  myCombDat$setGroups(
+    names = c(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Placebo_proximal"
+    ),
+    groups = c(
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012",
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012"
+    )
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "showLegendPerDataset observed - residuals",
+    fig = plotResidualsVsCovariate(
+      myCombDat,
+      residualScale = "linear",
+      showLegendPerDataset = "observed"
+    ) +
+      ggplot2::theme(
+        legend.position = c(0.05, 0.05),
+        legend.justification = c("left", "bottom")
+      )
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "showLegendPerDataset none - residuals",
+    fig = plotResidualsVsCovariate(
+      myCombDat,
+      residualScale = "linear",
+      showLegendPerDataset = "none"
+    ) +
+      ggplot2::theme(
+        legend.position = c(0.05, 0.05),
+        legend.justification = c("left", "bottom")
+      )
+  )
+})
+
+test_that("showLegendPerDataset simulated throws error for residuals", {
+  expect_error(
+    plotResidualsVsCovariate(
+      myCombDat,
+      residualScale = "linear",
+      xAxis = "time",
+      showLegendPerDataset = "simulated"
+    ),
+    "Assertion on 'showLegendPerDataset' failed"
+  )
+})
+
+test_that("User mapping overrides showLegendPerDataset in residuals", {
+  myCombDat$setGroups(
+    names = c(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Placebo_proximal"
+    ),
+    groups = c(
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012",
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012"
+    )
+  )
+
+  # User mapping overrides showLegendPerDataset
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "showLegendPerDataset overwritten by name for residuals",
+    fig = plotResidualsVsCovariate(
+      myCombDat,
+      residualScale = "linear",
+      showLegendPerDataset = "observed",
+      mapping = ggplot2::aes(groupby = name)
+    ) +
+      ggplot2::theme(
+        legend.position = c(0.05, 0.05),
+        legend.justification = c("left", "bottom")
+      )
+  )
+})

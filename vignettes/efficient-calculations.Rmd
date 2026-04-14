@@ -56,7 +56,10 @@ library(ospsuite)
 # Load and run the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
-doseParameter <- getAllParametersMatching(toPathString("Applications", "**", "Dose"), sim)[[1]]
+doseParameter <- getAllParametersMatching(
+  toPathString("Applications", "**", "Dose"),
+  sim
+)[[1]]
 
 # run for dose 100mg
 doseParameter$value <- toBaseUnit(doseParameter, 100, "mg")
@@ -84,13 +87,15 @@ When the simulation run time (5) is much greater than the loading (1) and initia
 Consider the following implementation:
 
 ```{r ParallelRun, eval=TRUE}
-library(ospsuite)
 # Load and run the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 
 loadSimulationWithDose <- function(doseInMg) {
   sim <- loadSimulation(simFilePath, loadFromCache = FALSE)
-  doseParameter <- getAllParametersMatching(toPathString("Applications", "**", "Dose"), sim)[[1]]
+  doseParameter <- getAllParametersMatching(
+    toPathString("Applications", "**", "Dose"),
+    sim
+  )[[1]]
   doseParameter$value <- toBaseUnit(doseParameter, doseInMg, "mg")
   return(sim)
 }
@@ -104,7 +109,9 @@ sim500 <- loadSimulationWithDose(doseInMg = 500)
 
 
 # Runs the simulation in parallel
-results <- runSimulations(simulations = list(sim100, sim200, sim300, sim400, sim500))
+results <- runSimulations(
+  simulations = list(sim100, sim200, sim300, sim400, sim500)
+)
 
 # Results in now a list of SimulationResults
 ```
@@ -125,7 +132,6 @@ the `Simulation` object, we do not have access to any parameter/species values n
 the outputs or simulation time.
 
 ```{r BatchRunInit, eval=TRUE}
-library(ospsuite)
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 
 # We load the simulation for which the batches will be created
@@ -136,7 +142,10 @@ sim1 <- loadSimulation(simFilePath, loadFromCache = FALSE)
 parameterPaths <- c("Aciclovir|Lipophilicity", "Aciclovir|Permeability")
 
 # define a first simulation batch
-simBatch1 <- createSimulationBatch(simulation = sim1, parametersOrPaths = parameterPaths)
+simBatch1 <- createSimulationBatch(
+  simulation = sim1,
+  parametersOrPaths = parameterPaths
+)
 
 # for the second batch, we will vary Molecular Weight
 simBatch2 <- createSimulationBatch(
@@ -211,11 +220,17 @@ State variable parameters, i.e., those defined by a right hand side (RHS), are t
 will result in an error:
 
 ```{r BatchRunStateVarParam, error = TRUE, purl = FALSE}
-stateVariableParam <- getParameter(path = "Organism|Lumen|Stomach|Liquid", container = sim1)
+stateVariableParam <- getParameter(
+  path = "Organism|Lumen|Stomach|Liquid",
+  container = sim1
+)
 print(stateVariableParam)
 
 # Create simulation batch with state variable parameter set as a variable parameter
-simBatch <- createSimulationBatch(simulation = sim1, parametersOrPaths = stateVariableParam)
+simBatch <- createSimulationBatch(
+  simulation = sim1,
+  parametersOrPaths = stateVariableParam
+)
 
 # Add run values
 resId <- simBatch$addRunValues(parameterValues = 0.5)
@@ -226,9 +241,15 @@ results <- runSimulationBatches(simBatch)
 Instead, the state variable parameter should be treated as a species and set as a variable molecule start value.
 
 ```{r BatchRunStateVarMolecule, eval=TRUE}
-stateVariableParam <- getParameter(path = "Organism|Lumen|Stomach|Liquid", container = sim1)
+stateVariableParam <- getParameter(
+  path = "Organism|Lumen|Stomach|Liquid",
+  container = sim1
+)
 # Create simulation batch with state variable parameter set as a variable molecule
-simBatch <- createSimulationBatch(simulation = sim1, moleculesOrPaths = stateVariableParam)
+simBatch <- createSimulationBatch(
+  simulation = sim1,
+  moleculesOrPaths = stateVariableParam
+)
 # Add run values
 resId <- simBatch$addRunValues(initialValues = 0.5)
 # Try to run batch

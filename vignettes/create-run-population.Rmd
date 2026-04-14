@@ -37,27 +37,27 @@ print(myPopulation)
 Similar to creating individual parameter sets (see [Creating individuals](create-individual.html)), a population is created from *population characteristics* created by calling the method `createPopulationCharacteristics()`. To see the list of available values for the arguments `species` and `population` (only for human), use the enums `Species` and `HumanPopulation`, respectively. The returned object of type `PopulationCharacteristics` is then passed to the function `createPopulation` to generate a set of parameter values. The algorithm behind is the same used in PK-Sim when creating an population. Molecule ontogenies can be added as described in the vignette [Creating individuals](create-individual.html).
 
 ```{r createPop}
-library(ospsuite)
-
 # If no unit is specified, the default units are used. For "height" it is "dm", for "weight" it is "kg", for "age" it is "year(s)".
 populationCharacteristics <- createPopulationCharacteristics(
-  species             = Species$Human,
-  population          = HumanPopulation$Asian_Tanaka_1996,
+  species = Species$Human,
+  population = HumanPopulation$Asian_Tanaka_1996,
   numberOfIndividuals = 50,
   proportionOfFemales = 50,
-  weightMin           = 30,
-  weightMax           = 98,
-  weightUnit          = "kg",
-  heightMin           = NULL,
-  heightMax           = NULL,
-  ageMin              = 0,
-  ageMax              = 80,
-  ageUnit             = "year(s)"
+  weightMin = 30,
+  weightMax = 98,
+  weightUnit = "kg",
+  heightMin = NULL,
+  heightMax = NULL,
+  ageMin = 0,
+  ageMax = 80,
+  ageUnit = "year(s)"
 )
 print(populationCharacteristics)
 
 # Create population from population characteristics
-result <- createPopulation(populationCharacteristics = populationCharacteristics)
+result <- createPopulation(
+  populationCharacteristics = populationCharacteristics
+)
 myPopulation <- result$population
 print(myPopulation)
 ```
@@ -67,14 +67,15 @@ print(myPopulation)
 To run a population simulation, the `Population` object created by the `createPopulation` method must be passed to the `runSimulation()` method:
 
 ```{r runPop}
-library(ospsuite)
-
 # Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Run population simulation
-simulationResults <- runSimulations(simulations = sim, population = myPopulation)[[1]]
+simulationResults <- runSimulations(
+  simulations = sim,
+  population = myPopulation
+)[[1]]
 print(simulationResults)
 ```
 
@@ -96,7 +97,11 @@ simRunOptions$numberOfCores <- 3
 simRunOptions$showProgress <- TRUE
 
 # Run population simulation with custom options
-populationResults <- runSimulations(simulations = sim, population = myPopulation, simulationRunOptions = simRunOptions)[[1]]
+populationResults <- runSimulations(
+  simulations = sim,
+  population = myPopulation,
+  simulationRunOptions = simRunOptions
+)[[1]]
 print(populationResults)
 ```
 
@@ -123,7 +128,10 @@ The values of `IndividualId`, `Time`, and the simulated outputs, are appended fo
 resultsPath <- populationResults$allQuantityPaths[[1]]
 print(resultsPath)
 
-resultsData <- getOutputValues(populationResults, quantitiesOrPaths = resultsPath)
+resultsData <- getOutputValues(
+  populationResults,
+  quantitiesOrPaths = resultsPath
+)
 
 resultsTime <- resultsData$data$Time
 resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
@@ -139,7 +147,11 @@ resultsPath <- populationResults$allQuantityPaths[[1]]
 print(resultsPath)
 
 # Get only the results for individuals with IDs 1 and 2
-resultsData <- getOutputValues(populationResults, quantitiesOrPaths = resultsPath, individualIds = c(1, 2))
+resultsData <- getOutputValues(
+  populationResults,
+  quantitiesOrPaths = resultsPath,
+  individualIds = c(1, 2)
+)
 
 resultsTime <- resultsData$data$Time
 resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`

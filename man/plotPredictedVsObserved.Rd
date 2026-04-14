@@ -12,6 +12,7 @@ plotPredictedVsObserved(
   xyScale = "log",
   predictedAxis = "y",
   comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
+  showLegendPerDataset = "all",
   ...
 )
 }
@@ -59,6 +60,16 @@ y-axis) or \code{"y"} (default, predicted on y-axis, observed on x-axis).}
 where each entry represents a fold and its reciprocal. The identity fold
 (1) will be included if specified in \code{getFoldDistanceList}.}
 
+\item{showLegendPerDataset}{Controls display of separate legend entries for
+individual datasets. One of:
+\itemize{
+\item \code{"none"} : No per-dataset differentiation. Only group-level legend.
+\item \code{"all"} (default) or \code{"observed"}: Differentiate observed datasets via different
+shapes (using the \code{name} column).
+}
+
+User-provided \code{mapping} will override internal settings.}
+
 \item{...}{
   Arguments passed on to \code{\link[ospsuite.plots:plotYVsX]{ospsuite.plots::plotYVsX}}
   \describe{
@@ -99,6 +110,9 @@ plotPredictedVsObserved(myDataCombined)
 
 # Generate an observed vs predicted plot (swap axes)
 plotPredictedVsObserved(myDataCombined, predictedAxis = "x")
+
+# Show individual dataset names in legend
+plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "observed")
 }
 }
 \seealso{

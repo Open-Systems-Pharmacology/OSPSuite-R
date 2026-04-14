@@ -1,3 +1,2 @@
-# This file is run once after all tests
-# Clean up watermark option
+# This file is run after all tests (inside each worker when parallel)
 options(ospsuite.plots.watermarkEnabled = NULL)

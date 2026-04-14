@@ -1,11 +1,11 @@
 #  Application
 quantityPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
-sim_mutable <- loadSimulation(
+sim <- loadSimulation(
   aciclovirSimulationPath,
   loadFromCache = FALSE,
   addToCache = FALSE
 )
-applications <- sim_mutable$allApplicationsFor(quantityPath)
+applications <- sim$allApplicationsFor(quantityPath)
 application <- applications[[1]]
 
 # Application$print
