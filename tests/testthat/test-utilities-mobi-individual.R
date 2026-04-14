@@ -2,6 +2,7 @@
 
 test_that("createIndividualBuildingBlock creates a building block for a non-human species", {
   individual <- createIndividualBuildingBlock(
+    name = "testName",
     species = Species$Beagle
   )
 
@@ -10,6 +11,7 @@ test_that("createIndividualBuildingBlock creates a building block for a non-huma
 
 test_that("createIndividualBuildingBlock creates a building block for a human individual", {
   individual <- createIndividualBuildingBlock(
+    name = "testName",
     species = Species$Human,
     population = HumanPopulation$European_ICRP_2002,
     gender = Gender$Male,
@@ -21,10 +23,45 @@ test_that("createIndividualBuildingBlock creates a building block for a human in
   expect_true(isOfType(individual, "BuildingBlock"))
 })
 
+test_that("createMoBiIndividualBuildingBlock throws an error when species is Human and no population is provided", {
+  expect_error(
+    createMoBiIndividualBuildingBlock(
+      name = "testName",
+      species = Species$Human
+    ),
+    messages$errorWrongPopulation(Species$Human, NULL)
+  )
+})
 # setParameterValuesInIndividualBB
 
+test_that("createMoBiIndividualBuildingBlock throws an error when species is Human and wrong population is provided", {
+  expect_error(
+    createMoBiIndividualBuildingBlock(
+      name = "testName",
+      species = Species$Human,
+      population = "NAN"
+    ),
+    messages$errorWrongPopulation(Species$Human, "NAN")
+  )
+})
+
+test_that("createMoBiIndividualBuildingBlock respects a specified seed", {
+  individual <- createMoBiIndividualBuildingBlock(
 test_that("setParameterValuesInIndividualBB sets parameters on a building block", {
   individual <- createIndividualBuildingBlock(
+    name = "testName",
+    species = Species$Human,
+    population = HumanPopulation$European_ICRP_2002,
+    seed = 42
+  )
+  expect_true(isOfType(individual, "BuildingBlock"))
+})
+
+# setMoBiIndividualParameters
+
+test_that("setMoBiIndividualParameters sets parameters on a building block", {
+  individual <- createMoBiIndividualBuildingBlock(
+    name = "testName",
     species = Species$Human,
     population = HumanPopulation$European_ICRP_2002
   )
@@ -39,6 +76,7 @@ test_that("setParameterValuesInIndividualBB sets parameters on a building block"
 
 test_that("setParameterValuesInIndividualBB returns the building block invisibly", {
   individual <- createIndividualBuildingBlock(
+    name = "testName",
     species = Species$Human,
     population = HumanPopulation$European_ICRP_2002
   )
@@ -54,6 +92,7 @@ test_that("setParameterValuesInIndividualBB returns the building block invisibly
 
 test_that("setParameterValuesInIndividualBB throws an error when quantityPaths and quantityValues have different lengths", {
   individual <- createIndividualBuildingBlock(
+    name = "testName",
     species = Species$Human,
     population = HumanPopulation$European_ICRP_2002
   )
