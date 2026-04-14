@@ -1,3 +1,91 @@
+#' Create a MoBi Individual Building Block
+#'
+#' Creates an individual building block in MoBi for a given species and
+#' optional demographic characteristics. Currently, disease states are not supported.
+#'
+#' @param name Optional name for the individual building block. If not provided, species will be used as name.
+#'
+#' @inheritParams createIndividualCharacteristics
+#'
+#' @returns An object of type `BuildingBlock` representing the created individual.
+#' @export
+#'
+#' @examples
+#' individual <- createIndividualBuildingBlock(
+#'   name = "Standard Individual",
+#'   species = Species$Human,
+#'   population = HumanPopulation$European_ICRP_2002,
+#'   gender = Gender$Male,
+#'   weight = 73,
+#'   age = 30
+#' )
+createIndividualBuildingBlock <- function(
+  name = NULL,
+  species,
+  population = NULL,
+  gender = NULL,
+  weight = NULL,
+  weightUnit = "kg",
+  height = NULL,
+  heightUnit = "cm",
+  age = NULL,
+  ageUnit = "year(s)",
+  gestationalAge = 40,
+  gestationalAgeUnit = "week(s)",
+  seed = NULL
+) {
+  validateIsCharacter(name, nullAllowed = TRUE)
+  if (is.null(name)) {
+    name <- species
+  }
+  individualCharacteristics <- createIndividualCharacteristics(
+    species = species,
+    population = population,
+    gender = gender,
+    weight = weight,
+    weightUnit = weightUnit,
+    height = height,
+    heightUnit = heightUnit,
+    age = age,
+    ageUnit = ageUnit,
+    gestationalAge = gestationalAge,
+    gestationalAgeUnit = gestationalAgeUnit,
+    seed = seed
+  )
+
+  netTask <- .getMoBiTaskFromCache("IndividualTask")
+  netObject <- netTask$call(
+    "CreateIndividual",
+    individualCharacteristics,
+    name
+  )
+
+  return(BuildingBlock$new(netObject, type = BuildingBlockTypes$Individual))
+}
+
+#' Convert an Individual Building Block to a data frame.
+#'
+#' @param individualBuildingBlock A `BuildingBlock` object of type `Individual`.
+#'
+#' @inherit parameterValuesBBToDataFrame return
+#'
+#' @export
+#'
+#' @examples
+#' individual <- createIndividualBuildingBlock(
+#'   species = Species$Human,
+#'   population = HumanPopulation$European_ICRP_2002
+#' )
+#' df <- individualsBBToDataFrame(individual)
+individualsBBToDataFrame <- function(individualBuildingBlock) {
+  .validateBuildingBlockType(
+    individualBuildingBlock,
+    BuildingBlockTypes$Individual
+  )
+  parameterValuesBBToDataFrame(individualBuildingBlock)
+}
+
+
 #' @title Set Parameters of a MoBi Individual Building Block
 #'
 #' @description
@@ -37,6 +125,22 @@ setParameterValuesInIndividualBB <- function(
     individualBuildingBlock,
     BuildingBlockTypes$`Individual`
   )
+  netTask <- .getMoBiTaskFromCache("IndividualTask")
+  # Check if all provided paths exist in the Individual BB. If any path does not exist, an error is thrown.
+  allPaths <- netTask$call(
+    "AllPathsFrom",
+    individualBuildingBlock
+  )
+  if (!all(quantityPaths %in% allPaths)) {
+    missingPaths <- quantityPaths[!quantityPaths %in% allPaths]
+    stop(
+      sprintf(
+        "Cannot add new entries to the Building Block. Only setting of the existing entries is supported. The following quantity paths are not present in the building block: %s",
+        paste(missingPaths, collapse = ", ")
+      )
+    )
+  }
+
   validatedInputs <- .validatePVBBInputs(
     individualBuildingBlock,
     quantityPaths,
@@ -47,7 +151,6 @@ setParameterValuesInIndividualBB <- function(
   baseValues <- validatedInputs$baseValues
   dimensions <- validatedInputs$dimensions
 
-  netTask <- .getMoBiTaskFromCache("IndividualTask")
   # Get the dimensions for the provided paths from the building block
   refDimensions <- netTask$call(
     "AllDimensionsFrom",
@@ -55,14 +158,13 @@ setParameterValuesInIndividualBB <- function(
     quantityPaths
   )
   # Check if units are compatible with the reference dimensions. In contrast to the `setParameterValuesInBB` function, changing of dimensions of existing entries is not allowed.
-  isUnitSupported <- vapply(
+  invisible(sapply(
     seq_along(quantityPaths),
     function(x) {
       validateUnit(units[x], refDimensions[x])
     },
-    logical(1),
     USE.NAMES = FALSE
-  )
+  ))
   netTask$call(
     "SetIndividualParameter",
     individualBuildingBlock,

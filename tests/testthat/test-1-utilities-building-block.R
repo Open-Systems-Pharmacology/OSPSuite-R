@@ -335,7 +335,7 @@ test_that("setParameterValuesInBB throws an error if one of the provided units i
       quantityValues = c(1, 2, 3),
       units = c("invalidUnit", "µmol", "invalidUnit3")
     ),
-    regexp = "The following units are not supported: invalidUnit"
+    regexp = "The following units are not supported in the OSPSuite platform: invalidUnit,"
   )
 })
 

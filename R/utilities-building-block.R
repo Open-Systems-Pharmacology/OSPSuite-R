@@ -340,13 +340,14 @@ extendInitialConditionsBB <- function(
 
 #' Convert a Parameter Values Building Block to a data frame.
 #'
-#' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values`.
+#' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values` or `Individual`.
 #'
 #' @returns A data frame with the following columns:
 #' - `Container Path`: Full path to the container where the parameter is located.
 #' - `Parameter Name`: Name of the parameter.
 #' - `Value`: Value of the parameter. For values that are defined by a formula, the return value can be `NaN`.
 #' - `Unit`: Unit of the parameter value.
+#' - `Value Origin`: Origin of the parameter value.
 #'
 #' @export
 #'
@@ -404,12 +405,20 @@ parameterValuesBBToDataFrame <- function(parameterValuesBuildingBlock) {
   )
   values <- pvTask$call("AllValuesFrom", parameterValuesBuildingBlock, paths)
   units <- pvTask$call("AllUnitsFrom", parameterValuesBuildingBlock, paths)
+  # TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1857
+  # valueOrigins <- pvTask$call(
+  #   "AllValueOriginsFrom",
+  #   parameterValuesBuildingBlock,
+  #   paths
+  # )
+  valueOrigins <- vector(mode = "character", length = length(paths))
 
   df <- data.frame(
     "Container Path" = containerPaths,
     "Parameter Name" = parameterNames,
     "Value" = values,
     "Unit" = units,
+    "Value Origin" = valueOrigins,
     check.names = FALSE,
     stringsAsFactors = FALSE
   )
@@ -667,6 +676,7 @@ addProteinExpressionToParameterValuesBB <- function(
   buildingBlock,
   expectedTypes
 ) {
+  validateIsOfType(buildingBlock, "BuildingBlock")
   if (is.null(buildingBlock)) {
     return(invisible(TRUE))
   }

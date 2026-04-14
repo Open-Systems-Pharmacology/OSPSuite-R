@@ -7,7 +7,8 @@
 setParameterValuesInIndividualBB(
   individualBuildingBlock,
   quantityPaths,
-  quantityValues
+  quantityValues,
+  units
 )
 }
 \arguments{
@@ -18,6 +19,9 @@ by \code{createIndividualBuildingBlock()}.}
 
 \item{quantityValues}{A numeric vector of values to assign. Must have the
 same length as \code{quantityPaths}.}
+
+\item{units}{A single unit string or a list of unit strings for the quantity values.
+If a single string is provided, it will be used for all quantities.}
 }
 \value{
 \code{individualBuildingBlock}, invisibly.
@@ -28,7 +32,6 @@ providing the corresponding quantity paths and values. The number of
 paths and values must be equal.
 }
 \examples{
-\dontrun{
 individual <- createIndividualBuildingBlock(
   species = Species$Human,
   population = HumanPopulation$European_ICRP_2002
@@ -36,7 +39,7 @@ individual <- createIndividualBuildingBlock(
 setParameterValuesInIndividualBB(
   individual,
   quantityPaths = c("Organism|Age", "Organism|Weight"),
-  quantityValues = c(30, 73)
+  quantityValues = c(30, 73),
+  units = c("year(s)", "kg")
 )
-}
 }

@@ -9,63 +9,6 @@ IndividualDiseaseStates <- enum(c(
   "Hepatic impairment"
 ))
 
-
-#' Create a MoBi Individual Building Block
-#'
-#' Creates an individual building block in MoBi for a given species and
-#' optional demographic characteristics. Currently, disease states are not supported.
-#'
-#' @inheritParams createIndividualCharacteristics
-#'
-#' @returns An object of type `BuildingBlock` representing the created individual.
-#' @export
-#'
-#' @examples
-#' individual <- createIndividualBuildingBlock(
-#'   species = Species$Human,
-#'   population = HumanPopulation$European_ICRP_2002,
-#'   gender = Gender$Male,
-#'   weight = 73,
-#'   age = 30
-#' )
-createIndividualBuildingBlock <- function(
-  species,
-  population = NULL,
-  gender = NULL,
-  weight = NULL,
-  weightUnit = "kg",
-  height = NULL,
-  heightUnit = "cm",
-  age = NULL,
-  ageUnit = "year(s)",
-  gestationalAge = 40,
-  gestationalAgeUnit = "week(s)",
-  seed = NULL
-) {
-  individualCharacteristics <- createIndividualCharacteristics(
-    species = species,
-    population = population,
-    gender = gender,
-    weight = weight,
-    weightUnit = weightUnit,
-    height = height,
-    heightUnit = heightUnit,
-    age = age,
-    ageUnit = ageUnit,
-    gestationalAge = gestationalAge,
-    gestationalAgeUnit = gestationalAgeUnit,
-    seed = seed
-  )
-
-  netTask <- .getMoBiTaskFromCache("IndividualTask")
-  netObject <- netTask$call(
-    "CreateIndividual",
-    individualCharacteristics
-  )
-
-  return(BuildingBlock$new(netObject, type = BuildingBlockTypes$Individual))
-}
-
 #' Creates a set of parameter values describing an individual using the PK-Sim Database
 #'
 #' @param individualCharacteristics Characteristics of the individual to create
