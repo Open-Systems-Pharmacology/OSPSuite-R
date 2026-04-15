@@ -1,14 +1,3 @@
-#' Available disease states
-#'
-#' MUST WE DEFINE IT HERE, OR CAN WE GET IT FROM .NET SOMEHOW?
-#'
-#' @export
-IndividualDiseaseStates <- enum(c(
-  "None",
-  "Renal impairment",
-  "Hepatic impairment"
-))
-
 #' Creates a set of parameter values describing an individual using the PK-Sim Database
 #'
 #' @param individualCharacteristics Characteristics of the individual to create

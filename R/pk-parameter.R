@@ -1,33 +1,3 @@
-#' Standard PK-Parameters types defined in OSPSuite
-#' This is only used to defined how a user defined PK Parameter should be calculated
-#'
-#' @export
-StandardPKParameter <- enum(c(
-  Unknown = 0,
-  C_max = 1,
-  C_max_norm = 2,
-  C_min = 3,
-  C_min_norm = 4,
-  t_max = 5,
-  t_min = 6,
-  C_trough = 7,
-  C_trough_norm = 8,
-  AUC_tEnd = 9,
-  AUC_tEnd_norm = 10,
-  AUCM_tEnd = 11,
-  AUC_inf = 12,
-  AUC_inf_norm = 13,
-  AUC_tEnd_inf = 14,
-  AUC_tEnd_inf_norm = 15,
-  CL = 16,
-  MRT = 17,
-  FractionAucEndToInf = 18,
-  Thalf = 19,
-  Vss = 20,
-  Vd = 21,
-  Tthreshold = 22
-))
-
 #' @title PKParameter
 #' @docType class
 #' @description Standard PK Parameters defined in the OSPSuite

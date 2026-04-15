@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-mobi-expression-profile.R
 \name{expressionProfileBBToDataFrame}
 \alias{expressionProfileBBToDataFrame}
-\title{Convert an Expression Profiles Building Block to data frames.}
+\title{Convert an Expression Profiles Building Block to data frames}
 \usage{
 expressionProfileBBToDataFrame(expressionProfilesBuildingBlock)
 }

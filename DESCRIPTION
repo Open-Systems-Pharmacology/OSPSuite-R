@@ -75,6 +75,7 @@ Collate:
     'default-plot-configuration.R'
     'dot-net-wrapper.R'
     'entity.R'
+    'enums.R'
     'formula.R'
     'get-net-task.R'
     'globals.R'

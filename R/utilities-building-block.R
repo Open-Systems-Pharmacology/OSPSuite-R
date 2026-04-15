@@ -820,3 +820,87 @@ addProteinExpressionToParameterValuesBB <- function(
     dimensions = dimensions
   ))
 }
+
+#' Set parameter values in a building block that does not allow adding new entries
+#'
+#' Shared implementation for `setExpressionProfileParameters` and
+#' `setParameterValuesInIndividualBB`. Validates inputs, checks that all
+#' provided paths exist in the building block, converts values to base units,
+#' validates units against reference dimensions, and calls the .NET setter.
+#'
+#' @param buildingBlock A `BuildingBlock` object.
+#' @param quantityPaths Character vector of quantity paths.
+#' @param quantityValues Numeric vector of values.
+#' @param units Character scalar or vector of units.
+#' @param expectedType The expected `BuildingBlockTypes` value.
+#' @param taskName .NET task name (e.g. `"ExpressionProfileTask"`).
+#' @param setMethodName .NET method name (e.g. `"SetExpressionParameter"`).
+#' @param bbLabel Label for error messages (e.g. `"Expression Profile"`).
+#'
+#' @returns `buildingBlock`, invisibly.
+#' @keywords internal
+#'
+#' @noRd
+.setParameterValuesInBBInternal <- function(
+  buildingBlock,
+  quantityPaths,
+  quantityValues,
+  units,
+  expectedType,
+  taskName,
+  setMethodName,
+  bbLabel
+) {
+  .validateBuildingBlockType(buildingBlock, expectedType)
+
+  if (length(quantityPaths) == 0) {
+    return(invisible(buildingBlock))
+  }
+
+  validateIsString(quantityPaths)
+  validateIsNumeric(quantityValues)
+  validateIsSameLength(quantityPaths, quantityValues)
+
+  netTask <- .getMoBiTaskFromCache(taskName)
+
+  allPaths <- netTask$call("AllPathsFrom", buildingBlock)
+  if (!all(quantityPaths %in% allPaths)) {
+    missingPaths <- quantityPaths[!quantityPaths %in% allPaths]
+    stop(sprintf(
+      "Cannot add new entries to the %s. Only setting of the existing entries is supported. The following quantity paths are not present in the building block: %s",
+      bbLabel,
+      paste(missingPaths, collapse = ", ")
+    ))
+  }
+
+  # Replicate scalar units before validation loop
+  if (length(units) == 1) {
+    units <- rep(units, length(quantityPaths))
+  }
+
+  validatedInputs <- .validatePVBBInputs(
+    buildingBlock,
+    quantityPaths,
+    quantityValues,
+    units,
+    dimensions = NULL
+  )
+  baseValues <- validatedInputs$baseValues
+
+  refDimensions <- netTask$call(
+    "AllDimensionsFrom",
+    buildingBlock,
+    quantityPaths
+  )
+  # Check if units are compatible with the reference dimensions.
+  # In contrast to `setParameterValuesInBB`, changing of dimensions
+  # of existing entries is not allowed.
+  invisible(sapply(
+    seq_along(quantityPaths),
+    function(x) validateUnit(units[x], refDimensions[x]),
+    USE.NAMES = FALSE
+  ))
+
+  netTask$call(setMethodName, buildingBlock, quantityPaths, baseValues)
+  invisible(buildingBlock)
+}

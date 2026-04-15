@@ -1,20 +1,3 @@
-#' Types of building blocks supported.
-#'
-#' @export
-BuildingBlockTypes <- enum(c(
-  "SpatialStructure",
-  "Molecules",
-  "Reactions",
-  "Passive Transports",
-  "Observers",
-  "EventGroups",
-  "Initial Conditions",
-  "Parameter Values",
-  "Expression Profile",
-  "Individual"
-))
-
-
 #' @title Building block # ONLY MOBI BBs, or should we consider having PK-Sim BBs as pkml export in the future?
 #' @docType class
 #' @description  A representation of a building block
@@ -66,6 +49,14 @@ BuildingBlock <- R6::R6Class(
         "Name" = self$name,
         "Type" = self$type
       ))
+
+      if (self$type == BuildingBlockTypes$`Expression Profile`) {
+        ospsuite.utils::ospPrintItems(list(
+          "Protein type" = self$get("Category"),
+          "Molecule" = self$get("MoleculeName"),
+          "Species" = self$get("Species")
+        ))
+      }
     }
   ),
   private = list(
