@@ -11,6 +11,6 @@ An object of class \code{list} of length 3.
 CellularPermeabilityMethods
 }
 \description{
-MUST WE DEFINE IT HERE, OR CAN WE GET IT FROM .NET SOMEHOW?
+Available methods for calculation of cellular permeabilities.
 }
 \keyword{datasets}
