@@ -287,6 +287,14 @@ SimulationConfiguration <- R6::R6Class(
       # This class does not wrap the .NET domain object. Instead, it is used as a container
       # for the simulation configuration data before creating the actual simulation in .NET.
 
+      validateIsOfType(modules, "MoBiModule")
+      validateIsOfType(individual, "BuildingBlock", nullAllowed = TRUE)
+      .validateBuildingBlockType(individual, "Individual")
+      validateIsOfType(expressionProfiles, "BuildingBlock", nullAllowed = TRUE)
+      for (bb in expressionProfiles) {
+        .validateBuildingBlockType(bb, "Expression Profile")
+      }
+
       self$modules <- modules
       self$individual <- individual
       self$expressionProfiles <- expressionProfiles

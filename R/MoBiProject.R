@@ -285,67 +285,63 @@ MoBiProject <- R6::R6Class(
       # Create module configurations for each module
       moduleConfigurations <- lapply(modulesNames, function(moduleName) {
         module <- modules[[moduleName]]
+        # First get the names of all IC and PV BBs
+        icBBNames <- .callModuleTask(
+          "AllInitialConditionsBuildingBlockNames",
+          module
+        )
+        pvBBNames <- .callModuleTask(
+          "AllParameterValueBuildingBlockNames",
+          module
+        )
 
         icBB <- NULL
         # If no IC BB is specified, use the first IC BB available in the module
-        if (is.null(initialConditions)) {
-          # First get the list of all IC BBs
-          icBBs <- .callModuleTask("AllInitialConditionsFromModule", module)
+        if (
+          is.null(initialConditions) || moduleName %in% names(initialConditions)
+        ) {
           # Select the first IC BB if available
-          if (length(icBBs) > 0) {
-            icBB <- icBBs[[1]]
+          if (length(icBBNames) > 0) {
+            icBB <- icBBNames[[1]]
           }
         } else {
           # If initial conditions selection have been provided, use them.
           # If the name of the module is in the names of 'initialConditions',
           # get the value. The value could be NULL, of no IC BB should be selected.
-          if (moduleName %in% names(initialConditions)) {
-            selectedICName <- initialConditions[[moduleName]]
-            if (!is.null(selectedICName)) {
-              icBB <- .callModuleTask(
-                "InitialConditionBuildingBlockByName",
-                module,
-                selectedICName
-              )
-              # Cannot create configuration if the speciefied IC BB is not available
-              if (is.null(icBB)) {
-                stop(messages$icBBNotPresentInModule(
-                  moduleName,
-                  selectedICName
-                ))
-              }
+          icBB <- initialConditions[[moduleName]]
+          # Can be NULL if no IC BB should be selected for the module
+          if (!is.null(icBB)) {
+            # Cannot create configuration if the specified IC BB is not available
+            if (!(icBB %in% icBBNames)) {
+              stop(messages$icBBNotPresentInModule(
+                moduleName,
+                icBB
+              ))
             }
           }
         }
 
         pvBB <- NULL
         # If no PV BB is specified, use the first PV BB available in the module
-        if (is.null(parameterValues)) {
-          # First get the list of all PV BBs
-          pvBBs <- .callModuleTask("AllParameterValuesFromModule", module)
-          # Select the first IC BB if available
-          if (length(pvBBs) > 0) {
-            pvBB <- pvBBs[[1]]
+        if (
+          is.null(parameterValues) || moduleName %in% names(parameterValues)
+        ) {
+          # Select the first PV BB if available
+          if (length(pvBBNames) > 0) {
+            pvBB <- pvBBNames[[1]]
           }
         } else {
           # If parameter values selection have been provided, use them.
           # If the name of the module is in the names of 'parameterValues',
           # get the value. The value could be NULL, of no PV BB should be selected.
-          if (moduleName %in% names(parameterValues)) {
-            selectedPVName <- parameterValues[[moduleName]]
-            if (!is.null(selectedPVName)) {
-              pvBB <- .callModuleTask(
-                "ParameterValueBuildingBlockByName",
-                module,
-                selectedPVName
-              )
-              # Cannot create configuration if the speciefied PV BB is not available
-              if (is.null(pvBB) && !is.null(selectedPVName)) {
-                stop(messages$pvBBNotPresentInModule(
-                  moduleName,
-                  selectedPVName
-                ))
-              }
+          pvBB <- parameterValues[[moduleName]]
+          if (!is.null(pvBB)) {
+            # Cannot create configuration if the speciefied PV BB is not available
+            if (!(pvBB %in% pvBBNames)) {
+              stop(messages$pvBBNotPresentInModule(
+                moduleName,
+                pvBB
+              ))
             }
           }
         }
@@ -357,18 +353,14 @@ MoBiProject <- R6::R6Class(
         )
         return(moduleConfiguration)
       })
-      netTask <- .getMoBiTaskFromCache("SimulationTask")
-      # TODO: remove simulation name after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2018
-      # TODO: does not work until https://github.com/Open-Systems-Pharmacology/MoBi/issues/2024 is fixed
-      netConfiguration <- netTask$call(
-        "CreateConfiguration",
-        "dummyName",
-        moduleConfigurations,
-        expressionProfiles,
-        individual
-      )
-      configuration <- SimulationConfiguration$new(netConfiguration)
 
+      configuration <- SimulationConfiguration$new(
+        modules = modules[modulesNames],
+        individual = individual,
+        expressionProfiles = expressionProfiles,
+        selectedInitialConditions = initialConditions,
+        selectedParameterValues = parameterValues
+      )
       return(configuration)
     },
 
@@ -381,9 +373,10 @@ MoBiProject <- R6::R6Class(
         "Source file" = self$sourceFile
       ))
       ospsuite.utils::ospPrintItems(self$simulationNames, title = "Simulations")
-      # ospsuite.utils::ospPrintItems(
-      #   self$parameterIdentificationNames, title = "Parameter identifications"
-      # )
+      ospsuite.utils::ospPrintItems(
+        self$parameterIdentificationNames,
+        title = "Parameter identifications"
+      )
       ospsuite.utils::ospPrintItems(self$individualNames, title = "Individuals")
       ospsuite.utils::ospPrintItems(
         self$expressionProfilesNames,

@@ -258,12 +258,166 @@ test_that("It correctly handles non-existing data sets", {
 })
 
 # Test for MoBiProject$createSimulationConfiguration
-# TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1597
-# test_that("It can create a simulation configuration from a MoBi project", {
-#   modulesNames <- "Rat physiology"
-#
-#   simConfig <- defaultMoBiProject$createSimulationConfiguration(modulesNames = modulesNames)
-# })
 
-# test modules with no IC BB
-# test modules with no PV BB
+test_that("It can create a simulation configuration with default IC and PV BBs", {
+  simConfig <- globalTestMoBiProject$createSimulationConfiguration(
+    modulesNames = "ExtModule_3IC_3PV"
+  )
+  expect_true(isOfType(simConfig, "SimulationConfiguration"))
+
+  # Default IC and PV should be the first ones (IC1, PV1)
+  expect_equal(
+    simConfig$selectedInitialConditions,
+    list("ExtModule_3IC_3PV" = "IC1")
+  )
+  expect_equal(
+    simConfig$selectedParameterValues,
+    list("ExtModule_3IC_3PV" = "PV1")
+  )
+
+  # No individual or expression profiles specified
+  expect_null(simConfig$individual)
+  expect_length(simConfig$expressionProfiles, 0)
+})
+
+test_that("It can create a simulation configuration with a module that has no IC or PV BBs", {
+  simConfig <- globalTestMoBiProject$createSimulationConfiguration(
+    modulesNames = "ExtModule_noIC_noPV"
+  )
+  expect_true(isOfType(simConfig, "SimulationConfiguration"))
+
+  # No IC or PV BBs should be selected
+  expect_equal(
+    simConfig$selectedInitialConditions,
+    list("ExtModule_noIC_noPV" = NULL)
+  )
+  expect_equal(
+    simConfig$selectedParameterValues,
+    list("ExtModule_noIC_noPV" = NULL)
+  )
+})
+
+test_that("It can create a simulation configuration with multiple modules", {
+  simConfig <- globalTestMoBiProject$createSimulationConfiguration(
+    modulesNames = c("ExtModule_3IC_3PV", "ExtModule_noIC_noPV")
+  )
+  expect_true(isOfType(simConfig, "SimulationConfiguration"))
+
+  expect_equal(
+    simConfig$selectedInitialConditions,
+    list("ExtModule_3IC_3PV" = "IC1", "ExtModule_noIC_noPV" = NULL)
+  )
+  expect_equal(
+    simConfig$selectedParameterValues,
+    list("ExtModule_3IC_3PV" = "PV1", "ExtModule_noIC_noPV" = NULL)
+  )
+})
+
+test_that("It can create a simulation configuration with an individual", {
+  simConfig <- globalTestMoBiProject$createSimulationConfiguration(
+    modulesNames = "ExtModule_3IC_3PV",
+    individualName = "DefaultIndividual"
+  )
+  expect_true(isOfType(simConfig, "SimulationConfiguration"))
+  expect_equal(simConfig$individual$name, "DefaultIndividual")
+})
+
+test_that("It can create a simulation configuration with expression profiles", {
+  simConfig <- globalTestMoBiProject$createSimulationConfiguration(
+    modulesNames = "ExtModule_3IC_3PV",
+    expressionProfilesNames = c("UGT2B6|Human|Healthy", "CYP3A4|Human|Healthy")
+  )
+  expect_true(isOfType(simConfig, "SimulationConfiguration"))
+  expect_named(
+    simConfig$expressionProfiles,
+    c("UGT2B6|Human|Healthy", "CYP3A4|Human|Healthy"),
+    ignore.order = TRUE
+  )
+})
+
+test_that("It can create a simulation configuration with specific IC and PV BBs", {
+  simConfig <- globalTestMoBiProject$createSimulationConfiguration(
+    modulesNames = "ExtModule_3IC_3PV",
+    initialConditions = list("ExtModule_3IC_3PV" = "IC2"),
+    parameterValues = list("ExtModule_3IC_3PV" = "PV3")
+  )
+  expect_true(isOfType(simConfig, "SimulationConfiguration"))
+  expect_equal(
+    simConfig$selectedInitialConditions,
+    list("ExtModule_3IC_3PV" = "IC2")
+  )
+  expect_equal(
+    simConfig$selectedParameterValues,
+    list("ExtModule_3IC_3PV" = "PV3")
+  )
+})
+
+test_that("It can create a simulation configuration with IC and PV explicitly set to NULL", {
+  simConfig <- globalTestMoBiProject$createSimulationConfiguration(
+    modulesNames = "ExtModule_3IC_3PV",
+    initialConditions = list("ExtModule_3IC_3PV" = NULL),
+    parameterValues = list("ExtModule_3IC_3PV" = NULL)
+  )
+  expect_true(isOfType(simConfig, "SimulationConfiguration"))
+  expect_equal(
+    simConfig$selectedInitialConditions,
+    list("ExtModule_3IC_3PV" = NULL)
+  )
+  expect_equal(
+    simConfig$selectedParameterValues,
+    list("ExtModule_3IC_3PV" = NULL)
+  )
+})
+
+test_that("It throws an error when creating a configuration with non-existing modules", {
+  expect_error(
+    globalTestMoBiProject$createSimulationConfiguration(
+      modulesNames = "NonExistingModule"
+    ),
+    messages$modulesNotPresentInProject("NonExistingModule"),
+    fixed = TRUE
+  )
+})
+
+test_that("It throws an error when creating a configuration with a non-existing individual", {
+  expect_error(
+    globalTestMoBiProject$createSimulationConfiguration(
+      modulesNames = "ExtModule_3IC_3PV",
+      individualName = "NonExistingIndividual"
+    ),
+    messages$errorIndividualNotFound("NonExistingIndividual")
+  )
+})
+
+test_that("It throws an error when creating a configuration with non-existing expression profiles", {
+  expect_error(
+    globalTestMoBiProject$createSimulationConfiguration(
+      modulesNames = "ExtModule_3IC_3PV",
+      expressionProfilesNames = "NonExistingProfile"
+    ),
+    messages$errorExpressionProfileNotFound("NonExistingProfile"),
+    fixed = TRUE
+  )
+})
+
+test_that("It throws an error when specifying a non-existing IC BB for a module", {
+  expect_error(
+    globalTestMoBiProject$createSimulationConfiguration(
+      modulesNames = "ExtModule_3IC_3PV",
+      initialConditions = list("ExtModule_3IC_3PV" = "NonExistingIC")
+    ),
+    messages$icBBNotPresentInModule("ExtModule_3IC_3PV", "NonExistingIC"),
+    fixed = TRUE
+  )
+})
+
+test_that("It throws an error when specifying a non-existing PV BB for a module", {
+  expect_error(
+    globalTestMoBiProject$createSimulationConfiguration(
+      modulesNames = "ExtModule_3IC_3PV",
+      parameterValues = list("ExtModule_3IC_3PV" = "NonExistingPV")
+    ),
+    messages$pvBBNotPresentInModule("ExtModule_3IC_3PV", "NonExistingPV"),
+    fixed = TRUE
+  )
+})
