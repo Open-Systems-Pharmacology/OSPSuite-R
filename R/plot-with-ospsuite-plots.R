@@ -222,6 +222,13 @@ plotTimeProfile <- function(
 #'   `ospsuite.plots::getFoldDistanceList`. This list contains fold distances,
 #'   where each entry represents a fold and its reciprocal. The identity fold
 #'   (1) will be included if specified in `getFoldDistanceList`.
+#' @param showLegendPerDataset Controls display of separate legend entries for
+#'   individual datasets. One of:
+#'   - `"none"` : No per-dataset differentiation. Only group-level legend.
+#'   - `"all"` (default) or `"observed"`: Differentiate observed datasets via different
+#'     shapes (using the `name` column).
+#'
+#'   User-provided `mapping` will override internal settings.
 #' @inheritDotParams ospsuite.plots::plotYVsX xScaleArgs yScaleArgs groupAesthetics addRegression geomPointAttributes geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes addGuestLimits deltaGuest labelGuestCriteria geomGuestLineAttributes lloqOnBothAxes
 #'
 #'
@@ -238,6 +245,9 @@ plotTimeProfile <- function(
 #'
 #' # Generate an observed vs predicted plot (swap axes)
 #' plotPredictedVsObserved(myDataCombined, predictedAxis = "x")
+#'
+#' # Show individual dataset names in legend
+#' plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "observed")
 #' }
 plotPredictedVsObserved <- function(
   plotData, # nolint
@@ -247,8 +257,14 @@ plotPredictedVsObserved <- function(
   xyScale = "log",
   predictedAxis = "y",
   comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
+  showLegendPerDataset = "all",
   ...
 ) {
+  checkmate::assertChoice(
+    showLegendPerDataset,
+    choices = c("none", "all", "observed")
+  )
+
   # Validate predictedAxis parameter
   predictedAxis <- match.arg(predictedAxis, choices = c("x", "y"))
   observedAxis <- setdiff(c("x", "y"), predictedAxis)
@@ -269,7 +285,8 @@ plotPredictedVsObserved <- function(
   mapping <- .getMappingForPredictedVsObserved(
     plotData = plotData,
     userMapping = mapping,
-    predictedAxis = predictedAxis
+    predictedAxis = predictedAxis,
+    showLegendPerDataset = showLegendPerDataset
   )
 
   if (is.null(metaData)) {
@@ -350,6 +367,13 @@ plotPredictedVsObserved <- function(
 #'   and observed y-values used for residual calculation and (if `xAxis !=
 #'   "time"`) displayed on the x-Axis. If `NULL` (default), the most frequent
 #'   unit in the data is used. For available units, see `ospsuite::ospUnits`.
+#' @param showLegendPerDataset Controls display of separate legend entries for
+#'   individual datasets. One of:
+#'   - `"none"`: No per-dataset differentiation. Only group-level legend.
+#'   - `"all"` (default) or `"observed"`: Differentiate observed datasets via different
+#'     shapes (using the `name` column).
+#'
+#'   User-provided `mapping` will override internal settings.
 #' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale yScaleArgs groupAesthetics addRegression geomPointAttributes geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
 #' @inheritDotParams ospsuite.plots::plotResVsCov comparisonLineVector
 #'
@@ -375,6 +399,9 @@ plotPredictedVsObserved <- function(
 #'
 #' # Generate a residuals vs time plot
 #' plotResidualsVsCovariate(myDataCombined, xAxis = "time")
+#'
+#' # Show individual dataset names in legend
+#' plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "observed")
 #' }
 plotResidualsVsCovariate <- function(
   plotData,
@@ -384,9 +411,15 @@ plotResidualsVsCovariate <- function(
   yUnit = NULL,
   residualScale = "log",
   xAxis = "observed",
+  showLegendPerDataset = "all",
   ...
 ) {
   predicted <- NULL
+
+  checkmate::assertChoice(
+    showLegendPerDataset,
+    choices = c("none", "all", "observed")
+  )
 
   # Validate xAxis parameter
   xAxis <- match.arg(xAxis, choices = c("time", "observed", "predicted"))
@@ -407,14 +440,18 @@ plotResidualsVsCovariate <- function(
 
   # Set x-axis mapping based on xAxis parameter
   xMapping <- if (xAxis == "time") {
-    ggplot2::aes(x = xValues, y = residualValues)
+    ggplot2::aes(x = xValues)
   } else if (xAxis == "observed") {
-    ggplot2::aes(x = yValues, y = residualValues)
+    ggplot2::aes(x = yValues)
   } else {
-    ggplot2::aes(x = predicted, y = residualValues)
+    ggplot2::aes(x = predicted)
   }
 
-  mapping <- .getMappingForResiduals(xMapping = xMapping, userMapping = mapping)
+  mapping <- .getMappingForResiduals(
+    xMapping = xMapping,
+    userMapping = mapping,
+    showLegendPerDataset = showLegendPerDataset
+  )
 
   if (is.null(metaData)) {
     metaData <- .constructMetDataForTimeProfile(plotData)
@@ -497,7 +534,7 @@ plotResidualsAsHistogram <- function(
   additionalArgs <- list(...)
 
   mapping <- .getMappingForResiduals(
-    xMapping = ggplot2::aes(x = residualValues),
+    xMapping = ggplot2::aes(),
     userMapping = mapping
   )
 
@@ -577,7 +614,7 @@ plotQuantileQuantilePlot <- function(
   additionalArgs <- list(...)
 
   mapping <- .getMappingForResiduals(
-    xMapping = ggplot2::aes(sample = residualValues),
+    xMapping = ggplot2::aes(),
     userMapping = mapping
   )
 
@@ -1070,18 +1107,12 @@ plotQuantileQuantilePlot <- function(
     warning(messages$residualsCanNotBeComputed())
     return(NULL)
   }
-  # pairedData <- plotData %>%
-  #   dplyr::group_by(group) %>%
-  #   dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) %>%
-  #   dplyr::ungroup() %>%
-  #   dplyr::relocate(group, name, nameSimulated)
 
-  pairedData <- rbindlist(
-    lapply(split(setDT(plotData), by = 'group'), function(data) {
-      .extractResidualsToTibble(data = data, scaling = scaling)
-    }),
-    idcol = 'group'
-  )
+  pairedData <- plotData %>%
+    dplyr::group_by(group) %>%
+    dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) %>%
+    dplyr::ungroup() %>%
+    dplyr::relocate(group, name, nameSimulated)
 
   return(pairedData)
 }
@@ -1260,26 +1291,43 @@ plotQuantileQuantilePlot <- function(
 #' @param xMapping Mapping for x-axis.
 #' @param userMapping Mapping provided by the user; this will update the
 #'   internal mapping.
+#' @param showLegendPerDataset Controls display of separate legend entries for
+#'   individual datasets. See `plotResidualsVsCovariate` for details.
 #'
 #' @return A mapping object for ggplot2 that includes aesthetics for the x-axis,
-#'   residual values, and grouping.
+#'   predicted values, observed values, and grouping.
 #' @keywords internal
 #' @noRd
 .getMappingForResiduals <- function(
   xMapping,
-  userMapping
+  userMapping,
+  showLegendPerDataset = "none"
 ) {
   # initialize variables used for data.table to avoid messages during checks
-  residualValues <- group <- NULL
+  predicted <- yValues <- group <- name <- NULL
 
   mapping <- structure(
-    utils::modifyList(
-      c(
-        xMapping,
-        ggplot2::aes(groupby = group)
-      ),
-      userMapping
+    c(
+      xMapping,
+      ggplot2::aes(
+        predicted = predicted,
+        observed = yValues,
+        groupby = group
+      )
     ),
+    class = "uneval"
+  )
+
+  # Add shape mapping for observed dataset differentiation
+  if (showLegendPerDataset %in% c("all", "observed")) {
+    mapping <- structure(
+      utils::modifyList(mapping, ggplot2::aes(shape = name)),
+      class = "uneval"
+    )
+  }
+
+  mapping <- structure(
+    utils::modifyList(mapping, userMapping),
     class = "uneval"
   )
 
@@ -1296,6 +1344,8 @@ plotQuantileQuantilePlot <- function(
 #' @param userMapping Mapping provided by the user; this will update the
 #'   internal mapping.
 #' @param predictedAxis Which axis to use for predicted values ("x" or "y").
+#' @param showLegendPerDataset Controls display of separate legend entries for
+#'   individual datasets. See `plotPredictedVsObserved` for details.
 #'
 #' @return A mapping object for ggplot2.
 #' @keywords internal
@@ -1303,10 +1353,12 @@ plotQuantileQuantilePlot <- function(
 .getMappingForPredictedVsObserved <- function(
   plotData,
   userMapping,
-  predictedAxis = "x"
+  predictedAxis = "x",
+  showLegendPerDataset = "none"
 ) {
   # initialize variables used as quotes
-  predicted <- yMin <- yMax <- lloq <- yValues <- group <- yErrorValues <- NULL
+  predicted <- yMin <- yMax <- lloq <- yValues <- group <- yErrorValues <-
+    name <- NULL
 
   # Set up mapping based on which axis has predicted values
   if (predictedAxis == "x") {
@@ -1320,6 +1372,14 @@ plotQuantileQuantilePlot <- function(
       x = yValues,
       y = predicted,
       groupby = group
+    )
+  }
+
+  # Add shape mapping for observed dataset differentiation
+  if (showLegendPerDataset %in% c("all", "observed")) {
+    mapping <- structure(
+      utils::modifyList(mapping, ggplot2::aes(shape = name)),
+      class = "uneval"
     )
   }
 

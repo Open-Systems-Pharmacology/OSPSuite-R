@@ -320,6 +320,18 @@ The `xyScale` parameter controls the axis scaling:
 plotPredictedVsObserved(myDataCombined, xyScale = "linear")
 ```
 
+### Showing Individual Dataset Names
+
+Similar to `plotTimeProfile()`, you can display individual dataset names in the legend using the `showLegendPerDataset` parameter:
+
+```{r predvsobs-legend-per-dataset, eval=FALSE}
+# Show individual observed dataset names (different shapes) (default)
+plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "all")
+
+# No per-dataset differentiation
+plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "none")
+```
+
 ## Residuals vs Covariate Plots
 
 The `plotResidualsVsCovariate()` function creates residual plots to assess systematic bias in the model. You can plot residuals against time, observed values, or predicted values.
@@ -357,6 +369,18 @@ plotResidualsVsCovariate(
   xAxis = "observed",
   residualScale = "linear"
 )
+```
+
+### Showing Individual Dataset Names
+
+You can display individual dataset names in the legend using the `showLegendPerDataset` parameter:
+
+```{r resvscovariate-legend-per-dataset, eval=FALSE}
+# Show individual observed dataset names (different shapes) (default)
+plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "all")
+
+# No per-dataset differentiation
+plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "none")
 ```
 
 ## Residuals as Histogram
