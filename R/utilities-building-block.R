@@ -1,36 +1,3 @@
-#' Convert an Initial Conditions Building Block to a data frame.
-#'
-#' @param initialConditionsBuildingBlock A `BuildingBlock` object of type `Initial Conditions`.
-#'
-#' @returns A data frame with the following columns:
-#' - `Container Path`: Full path to the container where the molecule is located.
-#' - `Molecule Name`: Name of the molecule.
-#' - `Is Present`: Boolean indicating if the molecule is present.
-#' - `Value`: Initial value of the molecule. For values that are defined by a formula, the return value can be `NaN`.
-#' - `Unit`: Unit of the initial value.
-#' - `Scale Divisor`: Scale divisor for the initial value.
-#' - `Neg. Values Allowed`: Boolean indicating if negative values are allowed.
-#'
-#' @export
-#'
-#' @examples
-#' sim <- loadSimulation(system.file(
-#'   "extdata",
-#'   "simple.pkml",
-#'   package = "ospsuite"
-#' ))
-#' module <- sim$configuration$modules[[1]]
-#' icBB <- module$getInitialConditionsBBs()[[1]]
-#' df <- initialConditionsBBToDataFrame(icBB)
-initialConditionsBBToDataFrame <- function(initialConditionsBuildingBlock) {
-  .validateBuildingBlockType(
-    initialConditionsBuildingBlock,
-    BuildingBlockTypes$`Initial Conditions`
-  )
-
-  bbWithInitialConditionsToDataFrame(initialConditionsBuildingBlock)
-}
-
 #' Convert a building block containing initial conditions to a data frame.
 #'
 #' Works with any building block that contains initial conditions, including
@@ -48,8 +15,8 @@ initialConditionsBBToDataFrame <- function(initialConditionsBuildingBlock) {
 #' - `Scale Divisor`: Scale divisor for the initial value.
 #' - `Neg. Values Allowed`: Boolean indicating if negative values are allowed.
 #'
-#' @export
-bbWithInitialConditionsToDataFrame <- function(buildingBlock) {
+#' @keywords internal
+.bbWithInitialConditionsToDataFrame <- function(buildingBlock) {
   .validateBuildingBlockType(
     buildingBlock,
     c(
@@ -117,6 +84,105 @@ bbWithInitialConditionsToDataFrame <- function(buildingBlock) {
 
   return(df)
 }
+
+#' Convert a building block containing parameter values to a data frame.
+#'
+#' Works with any building block that contains parameter values, including
+#' `Parameter Values`, `Individual`, and `Expression Profile` building blocks.
+#'
+#' @param buildingBlock A `BuildingBlock` object of type `Parameter Values`, `Individual`, or `Expression Profile`.
+#'
+#' @returns A data frame with the following columns:
+#' - `Container Path`: Full path to the container where the parameter is located.
+#' - `Parameter Name`: Name of the parameter.
+#' - `Value`: Value of the parameter. For values that are defined by a formula, the return value can be `NaN`.
+#' - `Unit`: Unit of the parameter value.
+#' - `Value Origin`: Origin of the parameter value.
+#'
+#' @keywords internal
+.bbWithParameterValuesToDataFrame <- function(buildingBlock) {
+  .validateBuildingBlockType(
+    buildingBlock,
+    c(
+      BuildingBlockTypes$`Parameter Values`,
+      BuildingBlockTypes$`Individual`,
+      BuildingBlockTypes$`Expression Profile`
+    )
+  )
+
+  taskName <- if (buildingBlock$type == BuildingBlockTypes$`Parameter Values`) {
+    "ParameterValuesTask"
+  } else if (buildingBlock$type == BuildingBlockTypes$`Individual`) {
+    "IndividualTask"
+  } else if (buildingBlock$type == BuildingBlockTypes$`Expression Profile`) {
+    "ExpressionProfileTask"
+  }
+  pvTask <- .getMoBiTaskFromCache(taskName)
+
+  paths <- pvTask$call("AllPathsFrom", buildingBlock)
+  containerPaths <- vapply(
+    paths,
+    function(path) {
+      .getParentContainerPath(path)
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
+  parameterNames <- vapply(
+    paths,
+    function(path) {
+      tail(toPathArray(path), 1)
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
+  values <- pvTask$call("AllValuesFrom", buildingBlock, paths)
+  units <- pvTask$call("AllUnitsFrom", buildingBlock, paths)
+  valueOrigins <- pvTask$call(
+    "AllValueOriginsFrom",
+    buildingBlock,
+    paths
+  )
+
+  df <- data.frame(
+    "Container Path" = containerPaths,
+    "Parameter Name" = parameterNames,
+    "Value" = values,
+    "Unit" = units,
+    "Value Origin" = valueOrigins,
+    check.names = FALSE,
+    stringsAsFactors = FALSE
+  )
+
+  return(df)
+}
+
+#' Convert an Initial Conditions Building Block to a data frame.
+#'
+#' @param initialConditionsBuildingBlock A `BuildingBlock` object of type `Initial Conditions`.
+#'
+#' @inherit .bbWithInitialConditionsToDataFrame return
+#'
+#' @export
+#'
+#' @examples
+#' sim <- loadSimulation(system.file(
+#'   "extdata",
+#'   "simple.pkml",
+#'   package = "ospsuite"
+#' ))
+#' module <- sim$configuration$modules[[1]]
+#' icBB <- module$getInitialConditionsBBs()[[1]]
+#' df <- initialConditionsBBToDataFrame(icBB)
+initialConditionsBBToDataFrame <- function(initialConditionsBuildingBlock) {
+  .validateBuildingBlockType(
+    initialConditionsBuildingBlock,
+    BuildingBlockTypes$`Initial Conditions`
+  )
+
+  .bbWithInitialConditionsToDataFrame(initialConditionsBuildingBlock)
+}
+
 
 #' Set or add initial conditions to an existing Initial Conditions building block.
 #'
@@ -369,14 +435,9 @@ extendInitialConditionsBB <- function(
 
 #' Convert a Parameter Values Building Block to a data frame.
 #'
-#' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values` or `Individual`.
+#' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values`, `Individual`, or `Expression Profile`.
 #'
-#' @returns A data frame with the following columns:
-#' - `Container Path`: Full path to the container where the parameter is located.
-#' - `Parameter Name`: Name of the parameter.
-#' - `Value`: Value of the parameter. For values that are defined by a formula, the return value can be `NaN`.
-#' - `Unit`: Unit of the parameter value.
-#' - `Value Origin`: Origin of the parameter value.
+#' @inherit .bbWithParameterValuesToDataFrame return
 #'
 #' @export
 #'
@@ -393,141 +454,11 @@ parameterValuesBBToDataFrame <- function(parameterValuesBuildingBlock) {
   .validateBuildingBlockType(
     parameterValuesBuildingBlock,
     c(
-      BuildingBlockTypes$`Parameter Values`,
-      BuildingBlockTypes$`Individual`,
-      BuildingBlockTypes$`Expression Profile`
+      BuildingBlockTypes$`Parameter Values`
     )
   )
 
-  taskName <- if (
-    parameterValuesBuildingBlock$type == BuildingBlockTypes$`Parameter Values`
-  ) {
-    "ParameterValuesTask"
-  } else if (
-    parameterValuesBuildingBlock$type == BuildingBlockTypes$`Individual`
-  ) {
-    "IndividualTask"
-  } else if (
-    parameterValuesBuildingBlock$type == BuildingBlockTypes$`Expression Profile`
-  ) {
-    "ExpressionProfilesTask"
-  }
-  pvTask <- .getMoBiTaskFromCache(taskName)
-
-  paths <- pvTask$call("AllPathsFrom", parameterValuesBuildingBlock)
-  containerPaths <- vapply(
-    paths,
-    function(path) {
-      .getParentContainerPath(path)
-    },
-    character(1),
-    USE.NAMES = FALSE
-  )
-  parameterNames <- vapply(
-    paths,
-    function(path) {
-      tail(toPathArray(path), 1)
-    },
-    character(1),
-    USE.NAMES = FALSE
-  )
-  values <- pvTask$call("AllValuesFrom", parameterValuesBuildingBlock, paths)
-  units <- pvTask$call("AllUnitsFrom", parameterValuesBuildingBlock, paths)
-  valueOrigins <- pvTask$call(
-    "AllValueOriginsFrom",
-    parameterValuesBuildingBlock,
-    paths
-  )
-
-  df <- data.frame(
-    "Container Path" = containerPaths,
-    "Parameter Name" = parameterNames,
-    "Value" = values,
-    "Unit" = units,
-    "Value Origin" = valueOrigins,
-    check.names = FALSE,
-    stringsAsFactors = FALSE
-  )
-
-  return(df)
-}
-
-#' Convert an Expression Profiles Building Block to data frames.
-#' Convert an Expression Profiles Building Block to data frames.
-#'
-#' Returns both the expression parameter values and the initial conditions
-#' contained in the expression profile building block.
-#'
-#' @param expressionProfilesBuildingBlock A `BuildingBlock` object of type `Expression Profile`.
-#'
-#' @returns A named list with two data frames:
-#' - `expressionParameters`: A data frame with the following columns:
-#'   - `Container Path`: Full path to the container where the parameter is located.
-#'   - `Parameter Name`: Name of the parameter.
-#'   - `Value`: Value of the parameter. For values that are defined by a formula, the return value can be `NaN`.
-#'   - `Unit`: Unit of the parameter value.
-#'   - `Value Origin`: Origin of the parameter value.
-#' - `initialConditions`: A data frame with the following columns:
-#'   - `Container Path`: Full path to the container where the molecule is located.
-#'   - `Molecule Name`: Name of the molecule.
-#'   - `Is Present`: Boolean indicating if the molecule is present.
-#'   - `Value`: Initial value of the molecule. For values that are defined by a formula, the return value can be `NaN`.
-#'   - `Unit`: Unit of the initial value.
-#'   - `Scale Divisor`: Scale divisor for the initial value.
-#'   - `Neg. Values Allowed`: Boolean indicating if negative values are allowed.
-#'
-#' @export
-expressionProfileBBToDataFrame <- function(expressionProfilesBuildingBlock) {
-  .validateBuildingBlockType(
-    expressionProfilesBuildingBlock,
-    BuildingBlockTypes$`Expression Profile`
-  )
-
-  epTask <- .getMoBiTaskFromCache("ExpressionProfileTask")
-
-  paths <- epTask$call("AllPathsFrom", expressionProfilesBuildingBlock)
-  containerPaths <- vapply(
-    paths,
-    function(path) {
-      .getParentContainerPath(path)
-    },
-    character(1),
-    USE.NAMES = FALSE
-  )
-  parameterNames <- vapply(
-    paths,
-    function(path) {
-      tail(toPathArray(path), 1)
-    },
-    character(1),
-    USE.NAMES = FALSE
-  )
-  values <- epTask$call("AllValuesFrom", expressionProfilesBuildingBlock, paths)
-  units <- epTask$call("AllUnitsFrom", expressionProfilesBuildingBlock, paths)
-  valueOrigins <- epTask$call(
-    "AllValueOriginsFrom",
-    expressionProfilesBuildingBlock,
-    paths
-  )
-
-  expressionParametersDf <- data.frame(
-    "Container Path" = containerPaths,
-    "Parameter Name" = parameterNames,
-    "Value" = values,
-    "Unit" = units,
-    "Value Origin" = valueOrigins,
-    check.names = FALSE,
-    stringsAsFactors = FALSE
-  )
-
-  initialConditionsDf <- bbWithInitialConditionsToDataFrame(
-    expressionProfilesBuildingBlock
-  )
-
-  return(list(
-    expressionParameters = expressionParametersDf,
-    initialConditions = initialConditionsDf
-  ))
+  return(.bbWithParameterValuesToDataFrame(parameterValuesBuildingBlock))
 }
 
 #' Set or add parameter values to an existing Parameter Values building block.

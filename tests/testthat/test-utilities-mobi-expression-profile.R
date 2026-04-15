@@ -1,3 +1,32 @@
+getSimulation <- function(loadFromCache = FALSE) {
+  loadSimulation(
+    aciclovirSimulationPath,
+    loadFromCache = loadFromCache,
+    addToCache = loadFromCache
+  )
+}
+
+cachedEPBB <- getSimulation()$configuration$expressionProfiles[[1]]
+cachedICBB <- getSimulation()$configuration$modules[[
+  1
+]]$getInitialConditionsBBs()[[1]]
+
+# expressionProfileBBToDataFrame
+
+test_that("expressionProfileBBToDataFrame returns a list with expressionParameters and initialConditions data frames", {
+  result <- expressionProfileBBToDataFrame(cachedEPBB)
+  expect_named(result, c("expressionParameters", "initialConditions"))
+  expect_snapshot(result$expressionParameters)
+  expect_snapshot(result$initialConditions)
+})
+
+test_that("expressionProfileBBToDataFrame throws an error if the building block is not of type Expression Profiles", {
+  expect_error(
+    expressionProfileBBToDataFrame(cachedICBB),
+    regexp = "Expression Profile"
+  )
+})
+
 # createMoBiExpressionProfileBuildingBlock
 
 test_that("createMoBiExpressionProfileBuildingBlock creates a building block", {

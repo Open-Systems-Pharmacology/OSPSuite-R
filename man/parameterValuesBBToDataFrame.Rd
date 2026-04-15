@@ -7,7 +7,7 @@
 parameterValuesBBToDataFrame(parameterValuesBuildingBlock)
 }
 \arguments{
-\item{parameterValuesBuildingBlock}{A \code{BuildingBlock} object of type \verb{Parameter Values} or \code{Individual}.}
+\item{parameterValuesBuildingBlock}{A \code{BuildingBlock} object of type \verb{Parameter Values}, \code{Individual}, or \verb{Expression Profile}.}
 }
 \value{
 A data frame with the following columns:

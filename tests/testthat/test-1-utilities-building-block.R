@@ -22,7 +22,6 @@ getFreshPVBB <- function(simulation = getSimulation()) {
 # Used for non-mutable tests that just need to read the building blocks without modifying them. This avoids the overhead of loading the simulation multiple times.
 cachedICBB <- getFreshICBB()
 cachedPVBB <- getFreshPVBB()
-cachedEPBB <- getSimulation()$configuration$expressionProfiles[[1]]
 
 test_that("initialConditionsBBToDataFrame returns a data frame with the expected columns", {
   df <- initialConditionsBBToDataFrame(cachedICBB)
@@ -45,20 +44,6 @@ test_that("parameterValuesBBToDataFrame throws an error if the building block is
   expect_error(
     parameterValuesBBToDataFrame(cachedICBB),
     regexp = "Parameter Values"
-  )
-})
-
-test_that("expressionProfileBBToDataFrame returns a list with expressionParameters and initialConditions data frames", {
-  result <- expressionProfileBBToDataFrame(cachedEPBB)
-  expect_named(result, c("expressionParameters", "initialConditions"))
-  expect_snapshot(result$expressionParameters)
-  expect_snapshot(result$initialConditions)
-})
-
-test_that("expressionProfileBBToDataFrame throws an error if the building block is not of type Expression Profiles", {
-  expect_error(
-    expressionProfileBBToDataFrame(cachedICBB),
-    regexp = "Expression Profile"
   )
 })
 

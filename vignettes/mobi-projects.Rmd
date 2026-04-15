@@ -107,9 +107,11 @@ individualDf <- individualsBBToDataFrame(individual)
 head(individualDf)
 
 expProfiles <- myProject$getExpressionProfiles("UDPGT1|Human|Healthy")
-# expProfilesDf <- expressionProfilesToDataFrame(expProfiles)
-# # Print the first few rows of the data frame
-# head(expProfilesDf)
+expProfilesDf <- expressionProfilesToDataFrame(expProfiles)
+# Print the first few rows of the data frame
+head(expProfilesDf$expressionParameters)
+
+head(expProfilesDf$initialConditions)
 ```
 
 ## Simulation configurations

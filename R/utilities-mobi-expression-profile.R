@@ -1,3 +1,47 @@
+#' Convert an Expression Profiles Building Block to data frames.
+#'
+#' Returns both the expression parameter values and the initial conditions
+#' contained in the expression profile building block.
+#'
+#' @param expressionProfilesBuildingBlock A `BuildingBlock` object of type `Expression Profile`.
+#'
+#' @returns A named list with two data frames:
+#' - `expressionParameters`: A data frame with the following columns:
+#'   - `Container Path`: Full path to the container where the parameter is located.
+#'   - `Parameter Name`: Name of the parameter.
+#'   - `Value`: Value of the parameter. For values that are defined by a formula, the return value can be `NaN`.
+#'   - `Unit`: Unit of the parameter value.
+#'   - `Value Origin`: Origin of the parameter value.
+#' - `initialConditions`: A data frame with the following columns:
+#'   - `Container Path`: Full path to the container where the molecule is located.
+#'   - `Molecule Name`: Name of the molecule.
+#'   - `Is Present`: Boolean indicating if the molecule is present.
+#'   - `Value`: Initial value of the molecule. For values that are defined by a formula, the return value can be `NaN`.
+#'   - `Unit`: Unit of the initial value.
+#'   - `Scale Divisor`: Scale divisor for the initial value.
+#'   - `Neg. Values Allowed`: Boolean indicating if negative values are allowed.
+#'
+#' @export
+expressionProfileBBToDataFrame <- function(expressionProfilesBuildingBlock) {
+  .validateBuildingBlockType(
+    expressionProfilesBuildingBlock,
+    BuildingBlockTypes$`Expression Profile`
+  )
+
+  expressionParametersDf <- .bbWithParameterValuesToDataFrame(
+    expressionProfilesBuildingBlock
+  )
+
+  initialConditionsDf <- .bbWithInitialConditionsToDataFrame(
+    expressionProfilesBuildingBlock
+  )
+
+  return(list(
+    expressionParameters = expressionParametersDf,
+    initialConditions = initialConditionsDf
+  ))
+}
+
 #' Create a MoBi Expression Profile Building Block
 #'
 #' @title Create a MoBi Expression Profile Building Block
