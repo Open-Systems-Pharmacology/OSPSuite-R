@@ -208,6 +208,28 @@ SimulationConfiguration <- R6::R6Class(
       }
     },
 
+    #' @field partitionCoefficientOverrides A named list of partition coefficient method
+    #' overrides. Names are molecule names, values are the full calculation method names.
+    #' Read-only; use `setPartitionCoefficientMethods()` to modify.
+    partitionCoefficientOverrides = function(value) {
+      if (missing(value)) {
+        return(private$.partitionCoefficientOverrides)
+      } else {
+        stop(messages$errorPropertyReadOnly("partitionCoefficientOverrides"))
+      }
+    },
+
+    #' @field cellularPermeabilityOverrides A named list of cellular permeability method
+    #' overrides. Names are molecule names, values are the full calculation method names.
+    #' Read-only; use `setCellularPermeabilityMethods()` to modify.
+    cellularPermeabilityOverrides = function(value) {
+      if (missing(value)) {
+        return(private$.cellularPermeabilityOverrides)
+      } else {
+        stop(messages$errorPropertyReadOnly("cellularPermeabilityOverrides"))
+      }
+    },
+
     #' @field settings A `SimulationSettings` object defining the simulation settings.
     #' If no settings are provided, default settings will be used upon simulation creation.
     #' Individual properties within the `SimulationSettings` object are read-only, but the entire settings object can be replaced with another `SimulationSettings` instance (or set to `NULL` to use defaults).
@@ -220,34 +242,6 @@ SimulationConfiguration <- R6::R6Class(
         private$.settings <- value
       }
     }
-
-    #' @field partitionCoefficientMethods The method used for calculation of partition coefficients. A named list with names being the molecules used in all modules,
-    #' and the values being one of the `PartitionCoefficientMethods` enum values.
-    #' To set the partition coefficient method for a molecule, provide a named list.
-    #' TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650
-    # partitionCoefficientMethods = function(value) {
-    #   if (missing(value)) {
-    #     return(self$get("PartitionCoefficientMethod"))
-    #   } else {
-    #     # Check that the provided value is a named list with names being the molecules
-    #     # and values being one of the PartitionCoefficientMethods enum values.
-    #     # If not, throw an error.
-    #   }
-    # },
-
-    #' @field cellularPermeabilityMethods The method used for calculation of cellular permeabilities. A named list with names being the molecules used in all modules,
-    #' and the values being one of the `CellularPermeabilityMethods` enum values.
-    #' To set the cellular permeability method for a molecule, provide a named list.
-    #' TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650
-    # cellularPermeabilityMethods = function(value) {
-    #   if (missing(value)) {
-    #     return(self$get("CellularPermeabilityMethod"))
-    #   } else {
-    #     # Check that the provided value is a named list with names being the molecules
-    #     # and values being one of the CellularPermeabilityMethods enum values.
-    #     # If not, throw an error.
-    #   }
-    # }
   ),
   public = list(
     #' @description
@@ -365,6 +359,38 @@ SimulationConfiguration <- R6::R6Class(
     },
 
     #' @description
+    #' Sets the method used for calculation of partition coefficients. This method can be used to specify the partition coefficient method for each molecule used in the modules. If
+    #' not specified, the method set in the Molecules Building Block of the last module in which the molecule is present will be used.
+    #'
+    #' @param moleculeName The name of the molecule for which to set the partition coefficient method.
+    #' @param methodName The name of the method to use for calculation of partition coefficients for the specified molecule. Should be one of the `PartitionCoefficientMethods` enum values.
+    #' Use `NULL` to remove an existing override.
+    setPartitionCoefficientMethods = function(moleculeName, methodName) {
+      private$.setCalculationMethodOverride(
+        moleculeName,
+        methodName,
+        PartitionCoefficientMethods,
+        ".partitionCoefficientOverrides"
+      )
+    },
+
+    #' @description
+    #' Sets the method used for calculation of cellular permeabilities. This method can be used to specify the cellular permeability method for each molecule used in the modules. If
+    #' not specified, the method set in the Molecules Building Block of the last module in which the molecule is present will be used.
+    #'
+    #' @param moleculeName The name of the molecule for which to set the cellular permeability method.
+    #' @param methodName The name of the method to use for calculation of cellular permeabilities for the specified molecule. Should be one of the `CellularPermeabilityMethods` enum values.
+    #' Use `NULL` to remove an existing override.
+    setCellularPermeabilityMethods = function(moleculeName, methodName) {
+      private$.setCalculationMethodOverride(
+        moleculeName,
+        methodName,
+        CellularPermeabilityMethods,
+        ".cellularPermeabilityOverrides"
+      )
+    },
+
+    #' @description
     #' Print the object to the console
     #' @param printClassProperties Logical, whether to print class properties (default: `FALSE`). If `TRUE`, calls first the `print` method of the parent class.
     #' Useful for debugging.
@@ -402,6 +428,34 @@ SimulationConfiguration <- R6::R6Class(
         names(private$.expressionProfiles),
         title = "Expression profiles"
       )
+
+      if (length(private$.partitionCoefficientOverrides) > 0) {
+        displayNames <- vapply(
+          private$.partitionCoefficientOverrides,
+          function(val) enumGetKey(PartitionCoefficientMethods, val),
+          character(1)
+        )
+        overrideList <- as.list(displayNames)
+        names(overrideList) <- names(private$.partitionCoefficientOverrides)
+        ospsuite.utils::ospPrintItems(
+          overrideList,
+          title = "Partition coefficient method overrides"
+        )
+      }
+
+      if (length(private$.cellularPermeabilityOverrides) > 0) {
+        displayNames <- vapply(
+          private$.cellularPermeabilityOverrides,
+          function(val) enumGetKey(CellularPermeabilityMethods, val),
+          character(1)
+        )
+        overrideList <- as.list(displayNames)
+        names(overrideList) <- names(private$.cellularPermeabilityOverrides)
+        ospsuite.utils::ospPrintItems(
+          overrideList,
+          title = "Cellular permeability method overrides"
+        )
+      }
     }
   ),
   private = list(
@@ -410,6 +464,28 @@ SimulationConfiguration <- R6::R6Class(
     .selectedParameterValues = NULL,
     .individual = NULL,
     .expressionProfiles = NULL,
-    .settings = NULL
+    .settings = NULL,
+    .partitionCoefficientOverrides = list(),
+    .cellularPermeabilityOverrides = list(),
+
+    .setCalculationMethodOverride = function(
+      moleculeName,
+      methodName,
+      enumObj,
+      fieldName
+    ) {
+      validateIsString(moleculeName)
+      if (is.null(methodName)) {
+        private[[fieldName]][[moleculeName]] <- NULL
+        return(invisible(self))
+      }
+      validateIsString(methodName)
+      validMethods <- enumValues(enumObj)
+      if (!(methodName %in% validMethods)) {
+        stop(messages$errorInvalidCalculationMethod(methodName, validMethods))
+      }
+      private[[fieldName]][[moleculeName]] <- methodName
+      invisible(self)
+    }
   )
 )
