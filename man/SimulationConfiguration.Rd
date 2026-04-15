@@ -124,7 +124,8 @@ not specified, the method set in the Molecules Building Block of the last module
 \describe{
 \item{\code{moleculeName}}{The name of the molecule for which to set the partition coefficient method.}
 
-\item{\code{methodName}}{The name of the method to use for calculation of partition coefficients for the specified molecule. Should be one of the \code{PartitionCoefficientMethods} enum values.}
+\item{\code{methodName}}{The name of the method to use for calculation of partition coefficients for the specified molecule. Should be one of the \code{PartitionCoefficientMethods} enum values.
+Use \code{NULL} to remove an existing override.}
 }
 \if{html}{\out{</div>}}
 }
@@ -147,7 +148,8 @@ not specified, the method set in the Molecules Building Block of the last module
 \describe{
 \item{\code{moleculeName}}{The name of the molecule for which to set the cellular permeability method.}
 
-\item{\code{methodName}}{The name of the method to use for calculation of cellular permeabilities for the specified molecule. Should be one of the \code{CellularPermeabilityMethods} enum values.}
+\item{\code{methodName}}{The name of the method to use for calculation of cellular permeabilities for the specified molecule. Should be one of the \code{CellularPermeabilityMethods} enum values.
+Use \code{NULL} to remove an existing override.}
 }
 \if{html}{\out{</div>}}
 }

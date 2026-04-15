@@ -364,6 +364,7 @@ SimulationConfiguration <- R6::R6Class(
     #'
     #' @param moleculeName The name of the molecule for which to set the partition coefficient method.
     #' @param methodName The name of the method to use for calculation of partition coefficients for the specified molecule. Should be one of the `PartitionCoefficientMethods` enum values.
+    #' Use `NULL` to remove an existing override.
     setPartitionCoefficientMethods = function(moleculeName, methodName) {
       private$.setCalculationMethodOverride(
         moleculeName,
@@ -379,6 +380,7 @@ SimulationConfiguration <- R6::R6Class(
     #'
     #' @param moleculeName The name of the molecule for which to set the cellular permeability method.
     #' @param methodName The name of the method to use for calculation of cellular permeabilities for the specified molecule. Should be one of the `CellularPermeabilityMethods` enum values.
+    #' Use `NULL` to remove an existing override.
     setCellularPermeabilityMethods = function(moleculeName, methodName) {
       private$.setCalculationMethodOverride(
         moleculeName,
