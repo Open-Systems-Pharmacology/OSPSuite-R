@@ -28,18 +28,17 @@
 <g clip-path='url(#cpNTIuNzh8NTEzLjg0fDIyLjkwfDUzMi41NA==)'>
 <rect x='52.78' y='22.90' width='461.06' height='509.64' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <line x1='52.78' y1='121.66' x2='513.84' y2='121.66' style='stroke-width: 1.07; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
-<circle cx='209.42' cy='95.68' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
-<circle cx='207.83' cy='67.64' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
-<circle cx='199.10' cy='53.62' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
-<circle cx='193.55' cy='57.14' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
-<circle cx='178.46' cy='53.36' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
-<circle cx='162.59' cy='48.60' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
-<circle cx='149.09' cy='51.48' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
-<circle cx='135.60' cy='52.86' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
-<circle cx='110.99' cy='46.07' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
-<circle cx='97.49' cy='67.25' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
-<circle cx='84.00' cy='65.94' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
-<circle cx='78.44' cy='100.67' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
+<polygon points='492.89,120.92 495.52,125.48 490.25,125.48 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
+<polygon points='448.57,124.98 451.21,129.54 445.94,129.54 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
+<polygon points='394.63,123.25 397.26,127.81 391.99,127.81 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
+<polygon points='304.08,121.78 306.71,126.34 301.44,126.34 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
+<polygon points='273.25,132.92 275.88,137.48 270.62,137.48 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
+<polygon points='242.42,147.40 245.06,151.96 239.79,151.96 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
+<polygon points='209.67,141.78 212.30,146.34 207.04,146.34 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
+<polygon points='157.65,139.79 160.28,144.35 155.02,144.35 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
+<polygon points='128.75,163.48 131.38,168.04 126.12,168.04 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
+<polygon points='103.70,163.85 106.34,168.41 101.07,168.41 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
+<polygon points='88.29,171.63 90.92,176.19 85.66,176.19 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
 <polygon points='403.80,136.67 406.25,134.22 403.80,131.77 401.35,134.22 ' style='stroke-width: 0.71; stroke: #D83B01; fill: #D83B01;' />
 <polygon points='340.02,152.47 342.47,150.02 340.02,147.57 337.57,150.02 ' style='stroke-width: 0.71; stroke: #D83B01; fill: #D83B01;' />
 <polygon points='293.78,177.22 296.23,174.77 293.78,172.32 291.33,174.77 ' style='stroke-width: 0.71; stroke: #D83B01; fill: #D83B01;' />
@@ -53,17 +52,18 @@
 <polygon points='91.28,418.10 93.73,415.65 91.28,413.20 88.83,415.65 ' style='stroke-width: 0.71; stroke: #D83B01; fill: #D83B01;' />
 <polygon points='80.12,452.70 82.57,450.25 80.12,447.80 77.67,450.25 ' style='stroke-width: 0.71; stroke: #D83B01; fill: #D83B01;' />
 <polygon points='73.74,511.82 76.19,509.37 73.74,506.92 71.29,509.37 ' style='stroke-width: 0.71; stroke: #D83B01; fill: #D83B01;' />
-<polygon points='492.89,120.92 495.52,125.48 490.25,125.48 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
-<polygon points='448.57,124.98 451.21,129.54 445.94,129.54 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
-<polygon points='394.63,123.25 397.26,127.81 391.99,127.81 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
-<polygon points='304.08,121.78 306.71,126.34 301.44,126.34 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
-<polygon points='273.25,132.92 275.88,137.48 270.62,137.48 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
-<polygon points='242.42,147.40 245.06,151.96 239.79,151.96 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
-<polygon points='209.67,141.78 212.30,146.34 207.04,146.34 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
-<polygon points='157.65,139.79 160.28,144.35 155.02,144.35 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
-<polygon points='128.75,163.48 131.38,168.04 126.12,168.04 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
-<polygon points='103.70,163.85 106.34,168.41 101.07,168.41 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
-<polygon points='88.29,171.63 90.92,176.19 85.66,176.19 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
+<circle cx='209.42' cy='95.68' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
+<circle cx='207.83' cy='67.64' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
+<circle cx='199.10' cy='53.62' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
+<circle cx='193.55' cy='57.14' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
+<circle cx='178.46' cy='53.36' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
+<circle cx='162.59' cy='48.60' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
+<circle cx='149.09' cy='51.48' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
+<circle cx='135.60' cy='52.86' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
+<circle cx='110.99' cy='46.07' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
+<circle cx='97.49' cy='67.25' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
+<circle cx='84.00' cy='65.94' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
+<circle cx='78.44' cy='100.67' r='1.95' style='stroke-width: 0.71; stroke: #0078D7; fill: #0078D7;' />
 <rect x='52.78' y='22.90' width='461.06' height='509.64' style='stroke-width: 1.07; stroke: #333333;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
