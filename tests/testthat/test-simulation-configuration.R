@@ -415,3 +415,162 @@ test_that("SimulationConfiguration selected parameter values throws an error whe
     originalPVs
   )
 })
+
+### Partition Coefficient Method Overrides
+
+test_that("setPartitionCoefficientMethods stores a valid method for a molecule", {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "simple.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
+  config <- simulation$configuration
+  config$setPartitionCoefficientMethods(
+    "A",
+    PartitionCoefficientMethods$Berezhkovskiy
+  )
+  expect_snapshot(config)
+})
+
+test_that("setPartitionCoefficientMethods overwrites silently on repeated call for same molecule", {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "simple.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
+  config <- simulation$configuration
+  config$setPartitionCoefficientMethods(
+    "A",
+    PartitionCoefficientMethods$Berezhkovskiy
+  )
+  config$setPartitionCoefficientMethods(
+    "A",
+    PartitionCoefficientMethods$`Rodgers and Rowland`
+  )
+  expect_snapshot(config)
+})
+
+test_that("setPartitionCoefficientMethods with NULL removes the override", {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "simple.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
+  config <- simulation$configuration
+  config$setPartitionCoefficientMethods(
+    "A",
+    PartitionCoefficientMethods$Berezhkovskiy
+  )
+  config$setPartitionCoefficientMethods("A", NULL)
+  # Print should NOT show partition coefficient overrides section
+  expect_snapshot(config)
+})
+
+test_that("setPartitionCoefficientMethods errors on invalid method name", {
+  config <- simulation$configuration
+  expect_error(
+    config$setPartitionCoefficientMethods("Aciclovir", "InvalidMethod"),
+    regexp = "is not a valid calculation method"
+  )
+})
+
+test_that("setPartitionCoefficientMethods errors on non-string moleculeName", {
+  config <- simulation$configuration
+  expect_error(
+    config$setPartitionCoefficientMethods(
+      123,
+      PartitionCoefficientMethods$Berezhkovskiy
+    )
+  )
+})
+
+test_that("setPartitionCoefficientMethods stores overrides for multiple molecules", {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "simple.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
+  config <- simulation$configuration
+  config$setPartitionCoefficientMethods(
+    "A",
+    PartitionCoefficientMethods$Berezhkovskiy
+  )
+  config$setPartitionCoefficientMethods(
+    "B",
+    PartitionCoefficientMethods$Schmitt
+  )
+  expect_snapshot(config)
+})
+
+### Cellular Permeability Method Overrides
+
+test_that("setCellularPermeabilityMethods stores a valid method for a molecule", {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "simple.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
+  config <- simulation$configuration
+  config$setCellularPermeabilityMethods(
+    "A",
+    CellularPermeabilityMethods$`Charge dependent Schmitt`
+  )
+  expect_snapshot(config)
+})
+
+test_that("setCellularPermeabilityMethods with NULL removes the override", {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "simple.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
+  config <- simulation$configuration
+  config$setCellularPermeabilityMethods(
+    "A",
+    CellularPermeabilityMethods$`PK-Sim Standard`
+  )
+  config$setCellularPermeabilityMethods("A", NULL)
+  expect_snapshot(config)
+})
+
+test_that("setCellularPermeabilityMethods errors on invalid method name", {
+  config <- simulation$configuration
+  expect_error(
+    config$setCellularPermeabilityMethods("Aciclovir", "InvalidMethod"),
+    regexp = "is not a valid calculation method"
+  )
+})
+### Return value
+
+test_that("setPartitionCoefficientMethods returns invisible self for chaining", {
+  config <- simulation$configuration
+  result <- config$setPartitionCoefficientMethods(
+    "Aciclovir",
+    PartitionCoefficientMethods$Berezhkovskiy
+  )
+  expect_identical(result, config)
+})

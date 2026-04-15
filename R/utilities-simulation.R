@@ -54,6 +54,28 @@ createSimulation <- function(
     createAllProcessRateParameters
   )
 
+  # Apply molecule-specific calculation method overrides
+  for (moleculeName in names(
+    simulationConfiguration$partitionCoefficientOverrides
+  )) {
+    simRequest$call(
+      "AddMoleculeUsedCalculationMethod",
+      moleculeName,
+      "DistributionCellular",
+      simulationConfiguration$partitionCoefficientOverrides[[moleculeName]]
+    )
+  }
+  for (moleculeName in names(
+    simulationConfiguration$cellularPermeabilityOverrides
+  )) {
+    simRequest$call(
+      "AddMoleculeUsedCalculationMethod",
+      moleculeName,
+      "DiffusionIntCell",
+      simulationConfiguration$cellularPermeabilityOverrides[[moleculeName]]
+    )
+  }
+
   # Try to create a simulation from the simulation request
   createSimulationResult <- simulationTask$call(
     "CreateSimulationAndValidateFrom",
