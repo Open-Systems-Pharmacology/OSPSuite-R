@@ -82,6 +82,16 @@
 # createSimulation throws an error when simulation cannot be created
 
     Code
-      expect_error(newSimulation <- createSimulation(simulationConfiguration = simConfig,
-        simulationName = "MySim"))
+      newSimulation <- createSimulation(simulationConfiguration = simConfig,
+        simulationName = "MySim")
+    Condition
+      Error in `createSimulation()`:
+      ! Cannot create simulation. The following errors were generated during simulation creation:
+       Cannot create application 'Intravenous_Transport': molecule 'Aciclovir' not available in the target container 'Plasma'
+
+# createSimulation shows warnings when simulation creation issues warnings
+
+    Code
+      newSimulation <- createSimulation(simulationConfiguration = simConfig,
+        simulationName = "MySim")
 
