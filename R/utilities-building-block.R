@@ -41,6 +41,8 @@
     stop(messages$errorDirectoryDoesNotExist(outputDirectory))
   }
   buildingBlockTask <- .getPKSimNetTask(taskName)
+  # Use the underlying .NET reference when available, while keeping compatibility
+  # with wrappers that can be passed directly to rSharp.
   netBuildingBlock <- tryCatch(buildingBlock$ref, error = function(e) NULL)
   if (is.null(netBuildingBlock)) {
     netBuildingBlock <- buildingBlock

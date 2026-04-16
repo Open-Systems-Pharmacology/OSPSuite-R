@@ -5,24 +5,24 @@
   doc <- xml2::read_xml(filePath)
   nodesWithId <- xml2::xml_find_all(doc, ".//*[@id]")
   # IDs are generated identifiers and can change after import/export round-trips.
-  xml2::xml_attr(nodesWithId, "id") <- ""
+  xml2::xml_attr(nodesWithId, "id") <- "NORMALIZED_ID"
   xml2::as_list(doc)
 }
 
 .expectBuildingBlockRoundTrip <- function(loadFunction, saveFunction, filePath) {
   originalBuildingBlock <- loadFunction(filePath)
-  exportedFilePath <- tempfile(fileext = ".pkml")
-  reExportedFilePath <- tempfile(fileext = ".pkml")
-  on.exit(unlink(c(exportedFilePath, reExportedFilePath), force = TRUE), add = TRUE)
+  firstExportPath <- tempfile(fileext = ".pkml")
+  secondExportPath <- tempfile(fileext = ".pkml")
+  on.exit(unlink(c(firstExportPath, secondExportPath), force = TRUE), add = TRUE)
 
-  saveFunction(originalBuildingBlock, exportedFilePath)
-  exportedBuildingBlock <- loadFunction(exportedFilePath)
-  saveFunction(exportedBuildingBlock, reExportedFilePath)
+  saveFunction(originalBuildingBlock, firstExportPath)
+  exportedBuildingBlock <- loadFunction(firstExportPath)
+  saveFunction(exportedBuildingBlock, secondExportPath)
 
   expect_equal(originalBuildingBlock$name, exportedBuildingBlock$name)
   expect_equal(
-    .normalizePKMLForComparison(exportedFilePath),
-    .normalizePKMLForComparison(reExportedFilePath)
+    .normalizePKMLForComparison(firstExportPath),
+    .normalizePKMLForComparison(secondExportPath)
   )
 }
 
