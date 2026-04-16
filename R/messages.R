@@ -279,3 +279,18 @@ messages$errorIndividualIdsNotFoundInPopulation <- function(missingIds) {
     "'"
   )
 }
+
+messages$errorDirectoryDoesNotExist <- function(directoryPath) {
+  paste0("Directory does not exist: '", directoryPath, "'")
+}
+
+messages$errorExportBuildingBlockToPKML <- function(type, filePath, errorMessage) {
+  paste0(
+    "Failed to export ",
+    type,
+    " to '",
+    filePath,
+    "'. Error: ",
+    errorMessage
+  )
+}

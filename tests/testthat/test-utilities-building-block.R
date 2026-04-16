@@ -1,4 +1,7 @@
 normalizePKMLForComparison <- function(filePath) {
+  if (!file.exists(filePath)) {
+    stop(paste0("File does not exist: '", filePath, "'"))
+  }
   doc <- xml2::read_xml(filePath)
   nodesWithId <- xml2::xml_find_all(doc, ".//*[@id]")
   xml2::xml_attr(nodesWithId, "id") <- ""
@@ -9,7 +12,7 @@ expectBuildingBlockRoundTrip <- function(loadFunction, saveFunction, filePath) {
   originalBuildingBlock <- loadFunction(filePath)
   exportedFilePath <- tempfile(fileext = ".pkml")
   reExportedFilePath <- tempfile(fileext = ".pkml")
-  on.exit(file.remove(c(exportedFilePath, reExportedFilePath)), add = TRUE)
+  on.exit(unlink(c(exportedFilePath, reExportedFilePath), force = TRUE), add = TRUE)
 
   saveFunction(originalBuildingBlock, exportedFilePath)
   exportedBuildingBlock <- loadFunction(exportedFilePath)

@@ -15,8 +15,19 @@
   validateIsOfType(buildingBlock, type = type)
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
+  outputDirectory <- dirname(filePath)
+  if (!dir.exists(outputDirectory)) {
+    stop(messages$errorDirectoryDoesNotExist(outputDirectory))
+  }
   buildingBlockTask <- .getPKSimNetTask(taskName)
-  buildingBlockTask$call("ExportToPKML", buildingBlock, filePath)
+  tryCatch(
+    {
+      buildingBlockTask$call("ExportToPKML", buildingBlock, filePath)
+    },
+    error = function(e) {
+      stop(messages$errorExportBuildingBlockToPKML(type, filePath, e$message))
+    }
+  )
   invisible()
 }
 
