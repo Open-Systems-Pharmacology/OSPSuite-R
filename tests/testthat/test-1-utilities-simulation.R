@@ -806,6 +806,25 @@ test_that("createSimulation throws an error when simulation cannot be created", 
   )
 })
 
+test_that("createSimulation shows warnings when simulation creation issues warnings", {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "Aciclovir.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = TRUE
+  )
+  simConfig <- simulation$configuration
+
+  expect_snapshot(
+    newSimulation <- createSimulation(
+      simulationConfiguration = simConfig,
+      simulationName = "MySim"
+    )
+  )
+})
+
 # Test for process rate parameters
 test_that("createSimulation can create process rate parameters when requested", {
   simulation <- loadSimulation(
