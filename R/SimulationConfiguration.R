@@ -60,7 +60,7 @@ SimulationConfiguration <- R6::R6Class(
       }
     },
 
-    #' @field modules A named list of `Module` objects from which to create the simulation.
+    #' @field modules A named list of `MoBiModule` objects from which to create the simulation.
     #' The order of modules defines the order in which the modules will be combined to a simulation!
     #' When setting the modules, the selection of Initial Conditions and Parameter Values
     #' is reset to the first available ones in the modules.

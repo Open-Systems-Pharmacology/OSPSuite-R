@@ -20,7 +20,7 @@ Can be \code{NULL} if no Individual should be applied.}
 \item{\code{expressionProfiles}}{A list of building blocks of type "Expression Profile"
 used in the configuration. Only one profile per protein is allowed.}
 
-\item{\code{modules}}{A named list of \code{Module} objects from which to create the simulation.
+\item{\code{modules}}{A named list of \code{MoBiModule} objects from which to create the simulation.
 The order of modules defines the order in which the modules will be combined to a simulation!
 When setting the modules, the selection of Initial Conditions and Parameter Values
 is reset to the first available ones in the modules.}
