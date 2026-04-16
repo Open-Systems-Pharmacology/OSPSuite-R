@@ -1,27 +1,3 @@
-#' Available methods for calculation of partition coefficients.
-#'
-#' MUST WE DEFINE IT HERE, OR CAN WE GET IT FROM .NET SOMEHOW?
-#'
-#' @export
-PartitionCoefficientMethods <- enum(c(
-  "PK-Sim Standard" = "Cellular partition coefficient method - PK-Sim Standard",
-  "Rodgers and Rowland" = "Cellular partition coefficient method - Rodgers and Rowland",
-  "Schmitt" = "Cellular partition coefficient method - Schmitt",
-  "Poulin and Theil" = "Cellular partition coefficient method - Poulin and Theil",
-  "Berezhkovskiy" = "Cellular partition coefficient method - Berezhkovskiy"
-))
-
-#' Available methods for calculation of cellular permeabilities.
-#'
-#' MUST WE DEFINE IT HERE, OR CAN WE GET IT FROM .NET SOMEHOW?
-#'
-#' @export
-CellularPermeabilityMethods <- enum(c(
-  "PK-Sim Standard" = "Cellular permeability - PK-Sim Standard",
-  "Charge dependent Schmitt" = "Cellular permeability - Charge dependent Schmitt",
-  "Charge dependent Schmitt normalized to PK-Sim" = "Cellular permeability - Charge dependent Schmitt normalized to PK-Sim"
-))
-
 #' @title Simulation configuration
 #' @docType class
 #' @description Configuration of a simulation. Contains description of the modules used for

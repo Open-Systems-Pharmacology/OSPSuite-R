@@ -1,97 +1,155 @@
-#' Create a MoBi Expression Profile Building Block
+#' Convert Expression Profile Building Blocks to data frames
 #'
-#' @title Create a MoBi Expression Profile Building Block
+#' Returns both the expression parameter values and the initial conditions
+#' contained in the expression profile building block(s).
 #'
-#' @description
+#' @param expressionProfilesBuildingBlock A single `BuildingBlock` object of
+#'   type `Expression Profile`, or a list of such objects. When a list is
+#'   provided, the resulting data frames are row-bound across all building
+#'   blocks.
+#'
+#' @returns A named list with two data frames:
+#' - `expressionParameters`: A data frame with the following columns:
+#'   - `Container Path`: Full path to the container where the parameter is located.
+#'   - `Parameter Name`: Name of the parameter.
+#'   - `Value`: Value of the parameter. For values that are defined by a formula, the return value can be `NaN`.
+#'   - `Unit`: Unit of the parameter value.
+#'   - `Value Origin`: Origin of the parameter value.
+#' - `initialConditions`: A data frame with the following columns:
+#'   - `Container Path`: Full path to the container where the molecule is located.
+#'   - `Molecule Name`: Name of the molecule.
+#'   - `Is Present`: Boolean indicating if the molecule is present.
+#'   - `Value`: Initial value of the molecule. For values that are defined by a formula, the return value can be `NaN`.
+#'   - `Unit`: Unit of the initial value.
+#'   - `Scale Divisor`: Scale divisor for the initial value.
+#'   - `Neg. Values Allowed`: Boolean indicating if negative values are allowed.
+#'
+#' @export
+#' @examples
+#' expressionProfile <- createExpressionProfileBuildingBlock(
+#'   type = ExpressionProfileCategories$`Metabolizing Enzyme`,
+#'   moleculeName = "CYP3A4",
+#'   speciesName = "Human"
+#' )
+#' result <- expressionProfileBBToDataFrame(expressionProfile)
+#' # Access the expression parameters
+#' result$expressionParameters
+#' # Access the initial conditions
+#' result$initialConditions
+expressionProfileBBToDataFrame <- function(expressionProfilesBuildingBlock) {
+  buildingBlocks <- toList(expressionProfilesBuildingBlock)
+
+  expressionParametersList <- list()
+  initialConditionsList <- list()
+
+  for (bb in buildingBlocks) {
+    .validateBuildingBlockType(bb, BuildingBlockTypes$`Expression Profile`)
+
+    expressionParametersList <- c(
+      expressionParametersList,
+      list(.bbWithParameterValuesToDataFrame(bb))
+    )
+    initialConditionsList <- c(
+      initialConditionsList,
+      list(.bbWithInitialConditionsToDataFrame(bb))
+    )
+  }
+
+  return(list(
+    expressionParameters = dplyr::bind_rows(expressionParametersList),
+    initialConditions = dplyr::bind_rows(initialConditionsList)
+  ))
+}
+
+#' Create an Expression Profile Building Block
+#'
 #' Creates an expression profile building block in MoBi for a given molecule,
-#' species, and category by calling the MoBi `ExpressionProfileTask`.
+#' species, and category. The expression profile is created with default parameter values, which can be modified using `setExpressionProfileParameters()`.
+#' Important: The expression profile is not queried from the expression database.
 #'
-#' @param category Category of the expression profile.
-#' @param moleculeName Name of the molecule.
-#' @param speciesName Name of the species.
+#' Disease states are currently not supported.
+#'
+#' @param type String. Type of the protein the profile will be created for. Must be one of the values defined in the `ExpressionProfileCategories` enum.
+#' @param moleculeName Name of the protein molecule.
+#' @param speciesName Name of the species. Must be one of the values defined in the `Species` enum.
 #'
 #' @return A `BuildingBlock` object representing the created expression profile.
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' expressionProfile <- createMoBiExpressionProfileBuildingBlock(
-#'   category = "MyCategory",
+#' expressionProfile <- createExpressionProfileBuildingBlock(
+#'   type = ExpressionProfileCategories$`Metabolizing Enzyme`,
 #'   moleculeName = "CYP3A4",
 #'   speciesName = "Human"
 #' )
-#' }
-createMoBiExpressionProfileBuildingBlock <- function(
-  category,
+createExpressionProfileBuildingBlock <- function(
+  type,
   moleculeName,
   speciesName
 ) {
-  ospsuite.utils::validateHasOnlyNonEmptyStrings(category)
+  validateEnumValue(type, ExpressionProfileCategories)
+  validateIsString(moleculeName)
   ospsuite.utils::validateHasOnlyNonEmptyStrings(moleculeName)
   validateEnumValue(speciesName, Species)
 
   netTask <- .getMoBiTaskFromCache("ExpressionProfileTask")
   netObject <- netTask$call(
     "CreateExpressionProfile",
-    category,
+    type,
     moleculeName,
     speciesName
   )
 
   return(BuildingBlock$new(
     netObject,
-    type = BuildingBlockTypes$ExpressionProfile
+    type = BuildingBlockTypes$`Expression Profile`
   ))
 }
 
-#' Set Parameters of a MoBi Expression Profile Building Block
+#' Set Parameters of an Expression Profile Building Block
 #'
-#' @title Set Parameters of a MoBi Expression Profile Building Block
-#'
-#' @description
 #' Sets one or more parameter values in an expression profile building block
 #' by providing the corresponding quantity paths and values. The number of
 #' paths and values must be equal.
 #'
+#' Note: Setting initial conditions of an expression profile is currently not supported.
+#'
 #' @param expressionProfileBuildingBlock A `BuildingBlock` object as returned
-#'   by `createMoBiExpressionProfileBuildingBlock()`.
+#'   by `createExpressionProfileBuildingBlock()`.
 #' @param quantityPaths A character vector of quantity paths to set.
 #' @param quantityValues A numeric vector of values to assign. Must have the
 #'   same length as `quantityPaths`.
+#' @param units A character vector of units corresponding to the quantity values. Must have the same length as `quantityPaths`. Units must be compatible with the dimensions of the corresponding quantities in the building block. If a single string is provided, it will be used for all quantities.
 #'
 #' @return `expressionProfileBuildingBlock`, invisibly.
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' expressionProfile <- createMoBiExpressionProfileBuildingBlock(
-#'   category = "MyCategory",
+#' expressionProfile <- createExpressionProfileBuildingBlock(
+#'   type = ExpressionProfileCategories$`Metabolizing Enzyme`,
 #'   moleculeName = "CYP3A4",
 #'   speciesName = "Human"
 #' )
-#' setMoBiExpressionProfileParameters(
+#' setExpressionProfileParameters(
 #'   expressionProfile,
-#'   quantityPaths = c("Liver|Intracellular|CYP3A4|RelativeExpression"),
-#'   quantityValues = c(1.0)
+#'   quantityPaths = c("Organism|Kidney|Intracellular|CYP3A4|Relative expression"),
+#'   quantityValues = c(1.0),
+#'   units = ""
 #' )
-#' }
-setMoBiExpressionProfileParameters <- function(
+setExpressionProfileParameters <- function(
   expressionProfileBuildingBlock,
   quantityPaths,
-  quantityValues
+  quantityValues,
+  units
 ) {
-  validateIsOfType(expressionProfileBuildingBlock, "BuildingBlock")
-  validateIsString(quantityPaths)
-  validateIsNumeric(quantityValues)
-  validateIsSameLength(quantityPaths, quantityValues)
-
-  netTask <- .getMoBiTaskFromCache("ExpressionProfileTask")
-  netTask$call(
-    "SetExpressionParameter",
-    expressionProfileBuildingBlock,
-    quantityPaths,
-    quantityValues
+  .setParameterValuesInBBInternal(
+    buildingBlock = expressionProfileBuildingBlock,
+    quantityPaths = quantityPaths,
+    quantityValues = quantityValues,
+    units = units,
+    expectedType = BuildingBlockTypes$`Expression Profile`,
+    taskName = "ExpressionProfileTask",
+    setMethodName = "SetExpressionParameter",
+    bbLabel = "Expression Profile"
   )
-
-  invisible(expressionProfileBuildingBlock)
 }
