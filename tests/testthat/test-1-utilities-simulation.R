@@ -798,12 +798,11 @@ test_that("createSimulation throws an error when simulation cannot be created", 
   simConfig$selectedInitialConditions <- list("Vergin 1995 IV" = NULL)
 
   expect_snapshot(
-    expect_error(
-      newSimulation <- createSimulation(
-        simulationConfiguration = simConfig,
-        simulationName = "MySim"
-      )
-    )
+    newSimulation <- createSimulation(
+      simulationConfiguration = simConfig,
+      simulationName = "MySim"
+    ),
+    error = TRUE
   )
 })
 
