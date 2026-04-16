@@ -2,7 +2,7 @@
 #'
 #' This function calls the `SimulationConfiguration` constructor.
 #'
-#' @param modules A list of `Module` objects from which to create the simulation.
+#' @param modules A list of `MoBiModule` objects from which to create the simulation.
 #' The order of modules defines the order in which the modules will be combined to a simulation!
 #' @param individual Optional, an individual building block
 #' @param expressionProfiles Optional, a list of expression profiles to apply to the simulation.

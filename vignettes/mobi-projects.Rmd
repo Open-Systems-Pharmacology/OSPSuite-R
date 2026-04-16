@@ -180,7 +180,7 @@ simConfiguration <- myProject$createSimulationConfiguration(
 
 ### Create simulation configuration from modules
 
-An alternative to creating simulation configurations from modules from a project is to use the function `createSimulationConfiguration()` and provide a list of `Module` objects. This allows to create simulations from modules contained in different projects, or from modules that are stored as pkml files. In the following example, we will create a simulation configuration using the modules from the project as in the example before, but the extension module "Thyroid" will be loaded from a pkml file, and a new individual will be created.
+An alternative to creating simulation configurations from modules from a project is to use the function `createSimulationConfiguration()` and provide a list of `MoBiModule` objects. This allows to create simulations from modules contained in different projects, or from modules that are stored as pkml files. In the following example, we will create a simulation configuration using the modules from the project as in the example before, but the extension module "Thyroid" will be loaded from a pkml file, and a new individual will be created.
 
 ```{r extractModulesAndCreateIndividual}
 # # Get modules from the project

@@ -223,7 +223,7 @@ SimulationConfiguration <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class
     #'
-    #' @param modules A list of `Module` objects from which to create in simulation.
+    #' @param modules A list of `MoBiModule` objects from which to create in simulation.
     #' The order of modules defines the order in which the modules will be combined to a simulation!
     #' @param individual Optional, an individual building block
     #' @param expressionProfiles Optional, a list of expression profiles to apply to the simulation.
@@ -263,6 +263,7 @@ SimulationConfiguration <- R6::R6Class(
         .validateBuildingBlockType(bb, "Expression Profile")
       }
 
+      names(modules) <- vapply(modules, function(m) m$name, character(1))
       self$modules <- modules
       self$individual <- individual
       self$expressionProfiles <- expressionProfiles
