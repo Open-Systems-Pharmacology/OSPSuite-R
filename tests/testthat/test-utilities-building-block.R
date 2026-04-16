@@ -1,4 +1,4 @@
-normalizePKMLForComparison <- function(filePath) {
+.normalizePKMLForComparison <- function(filePath) {
   if (!file.exists(filePath)) {
     stop(messages$errorFileDoesNotExist(filePath))
   }
@@ -8,7 +8,7 @@ normalizePKMLForComparison <- function(filePath) {
   gsub("\\s+", " ", as.character(doc))
 }
 
-expectBuildingBlockRoundTrip <- function(loadFunction, saveFunction, filePath) {
+.expectBuildingBlockRoundTrip <- function(loadFunction, saveFunction, filePath) {
   originalBuildingBlock <- loadFunction(filePath)
   exportedFilePath <- tempfile(fileext = ".pkml")
   reExportedFilePath <- tempfile(fileext = ".pkml")
@@ -20,13 +20,13 @@ expectBuildingBlockRoundTrip <- function(loadFunction, saveFunction, filePath) {
 
   expect_equal(originalBuildingBlock$name, exportedBuildingBlock$name)
   expect_equal(
-    normalizePKMLForComparison(exportedFilePath),
-    normalizePKMLForComparison(reExportedFilePath)
+    .normalizePKMLForComparison(exportedFilePath),
+    .normalizePKMLForComparison(reExportedFilePath)
   )
 }
 
 test_that("it can save expression profile building blocks as pkml", {
-  expectBuildingBlockRoundTrip(
+  .expectBuildingBlockRoundTrip(
     loadFunction = loadExpressionProfileFromPKML,
     saveFunction = saveExpressionProfileToPKML,
     filePath = aciclovirSimulationPath
@@ -34,7 +34,7 @@ test_that("it can save expression profile building blocks as pkml", {
 })
 
 test_that("it can save individual building blocks as pkml", {
-  expectBuildingBlockRoundTrip(
+  .expectBuildingBlockRoundTrip(
     loadFunction = loadIndividualFromPKML,
     saveFunction = saveIndividualToPKML,
     filePath = aciclovirSimulationPath
@@ -42,7 +42,7 @@ test_that("it can save individual building blocks as pkml", {
 })
 
 test_that("it can save initial conditions building blocks as pkml", {
-  expectBuildingBlockRoundTrip(
+  .expectBuildingBlockRoundTrip(
     loadFunction = loadInitialConditionsFromPKML,
     saveFunction = saveInitialConditionsToPKML,
     filePath = aciclovirSimulationPath
@@ -50,7 +50,7 @@ test_that("it can save initial conditions building blocks as pkml", {
 })
 
 test_that("it can save parameter values building blocks as pkml", {
-  expectBuildingBlockRoundTrip(
+  .expectBuildingBlockRoundTrip(
     loadFunction = loadParameterValuesFromPKML,
     saveFunction = saveParameterValuesToPKML,
     filePath = aciclovirSimulationPath
