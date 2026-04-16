@@ -293,26 +293,6 @@ messages$modulesNotPresentInProject <- function(modules) {
   )
 }
 
-messages$icBBNotPresentInModule <- function(moduleName, icBBName) {
-  paste0(
-    "Initial Condition Building Block with the name '",
-    icBBName,
-    "' is not present in the module '",
-    moduleName,
-    "'!"
-  )
-}
-
-messages$pvBBNotPresentInModule <- function(moduleName, pvBBName) {
-  paste0(
-    "Parameter Value Building Block with the name '",
-    pvBBName,
-    "' is not present in the module '",
-    moduleName,
-    "'!"
-  )
-}
-
 messages$errorSimulationNotFound <- function(simulationName) {
   paste0(
     "Simulation with the name '",

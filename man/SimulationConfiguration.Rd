@@ -20,7 +20,7 @@ Can be \code{NULL} if no Individual should be applied.}
 \item{\code{expressionProfiles}}{A list of building blocks of type "Expression Profile"
 used in the configuration. Only one profile per protein is allowed.}
 
-\item{\code{modules}}{A named list of \code{Module} objects from which to create in simulation.
+\item{\code{modules}}{A named list of \code{MoBiModule} objects from which to create the simulation.
 The order of modules defines the order in which the modules will be combined to a simulation!
 When setting the modules, the selection of Initial Conditions and Parameter Values
 is reset to the first available ones in the modules.}
@@ -62,9 +62,6 @@ Setting the solver settings, output intervals, and output selections must be don
 \if{latex}{\out{\hypertarget{method-SimulationConfiguration-new}{}}}
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
-
-Should not be directly used. Instead, use function \code{createSimulationConfiguration()} or the method \code{createSimulationConfiguration()}
-from the class \code{MoBiProject}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimulationConfiguration$new(
   modules,
@@ -79,7 +76,7 @@ from the class \code{MoBiProject}.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{modules}}{A list of \code{Module} objects from which to create in simulation.
+\item{\code{modules}}{A list of \code{MoBiModule} objects from which to create in simulation.
 The order of modules defines the order in which the modules will be combined to a simulation!}
 
 \item{\code{individual}}{Optional, an individual building block}
@@ -160,15 +157,12 @@ Use \code{NULL} to remove an existing override.}
 \subsection{Method \code{print()}}{
 Print the object to the console
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationConfiguration$print(printClassProperties = FALSE, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SimulationConfiguration$print(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{printClassProperties}}{Logical, whether to print class properties (default: \code{FALSE}). If \code{TRUE}, calls first the \code{print} method of the parent class.
-Useful for debugging.}
-
 \item{\code{...}}{Rest arguments.}
 }
 \if{html}{\out{</div>}}
