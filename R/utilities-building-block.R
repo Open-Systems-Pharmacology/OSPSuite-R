@@ -20,6 +20,7 @@
     stop(messages$errorFileDoesNotExist(filePath))
   }
   buildingBlockTask <- .getPKSimNetTask(taskName)
+  # ImportFromPKML returns a .NET object which is wrapped in the target R6 class.
   buildingBlock <- buildingBlockTask$call("ImportFromPKML", filePath)
   buildingBlockClass$new(buildingBlock)
 }
@@ -40,9 +41,13 @@
     stop(messages$errorDirectoryDoesNotExist(outputDirectory))
   }
   buildingBlockTask <- .getPKSimNetTask(taskName)
+  netBuildingBlock <- tryCatch(buildingBlock$ref, error = function(e) NULL)
+  if (is.null(netBuildingBlock)) {
+    netBuildingBlock <- buildingBlock
+  }
   tryCatch(
     {
-      buildingBlockTask$call("ExportToPKML", buildingBlock, filePath)
+      buildingBlockTask$call("ExportToPKML", netBuildingBlock, filePath)
     },
     error = function(e) {
       stop(messages$errorExportBuildingBlockToPKML(type, filePath, e$message))
