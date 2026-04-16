@@ -1,8 +1,18 @@
+#' Returns a PK-Sim task instance from `PKSim.R.Api`
+#'
+#' @param taskName Task name suffix (without the `Get` prefix), for example `ExpressionProfileTask`.
+#' @keywords internal
 .getPKSimNetTask <- function(taskName) {
   initPKSim()
   rSharp::callStatic("PKSim.R.Api", paste0("Get", taskName))
 }
 
+#' Loads a PK-Sim building block from PKML
+#'
+#' @param filePath Full path of PKML file to load.
+#' @param taskName PK-Sim task name suffix used to load the building block.
+#' @param buildingBlockClass R6 wrapper class for the loaded building block.
+#' @keywords internal
 .loadBuildingBlockFromPKML <- function(filePath, taskName, buildingBlockClass) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
@@ -11,6 +21,13 @@
   buildingBlockClass$new(buildingBlock)
 }
 
+#' Saves a PK-Sim building block to PKML
+#'
+#' @param buildingBlock Building block object to save.
+#' @param filePath Full path where the PKML file will be created.
+#' @param taskName PK-Sim task name suffix used to save the building block.
+#' @param type Expected type name of `buildingBlock`.
+#' @keywords internal
 .saveBuildingBlockToPKML <- function(buildingBlock, filePath, taskName, type) {
   validateIsOfType(buildingBlock, type = type)
   validateIsString(filePath)

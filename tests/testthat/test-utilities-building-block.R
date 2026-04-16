@@ -1,6 +1,6 @@
 normalizePKMLForComparison <- function(filePath) {
   if (!file.exists(filePath)) {
-    stop(paste0("File does not exist: '", filePath, "'"))
+    stop(messages$errorFileDoesNotExist(filePath))
   }
   doc <- xml2::read_xml(filePath)
   nodesWithId <- xml2::xml_find_all(doc, ".//*[@id]")

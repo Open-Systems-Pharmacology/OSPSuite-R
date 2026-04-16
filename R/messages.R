@@ -294,3 +294,7 @@ messages$errorExportBuildingBlockToPKML <- function(type, filePath, errorMessage
     errorMessage
   )
 }
+
+messages$errorFileDoesNotExist <- function(filePath) {
+  paste0("File does not exist: '", filePath, "'")
+}
