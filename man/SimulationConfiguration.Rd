@@ -76,7 +76,7 @@ Initialize a new instance of the class
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{modules}}{A list of \code{Module} objects from which to create in simulation.
+\item{\code{modules}}{A list of \code{MoBiModule} objects from which to create in simulation.
 The order of modules defines the order in which the modules will be combined to a simulation!}
 
 \item{\code{individual}}{Optional, an individual building block}

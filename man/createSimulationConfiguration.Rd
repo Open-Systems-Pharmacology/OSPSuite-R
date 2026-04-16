@@ -14,7 +14,7 @@ createSimulationConfiguration(
 )
 }
 \arguments{
-\item{modules}{A list of \code{Module} objects from which to create the simulation.
+\item{modules}{A list of \code{MoBiModule} objects from which to create the simulation.
 The order of modules defines the order in which the modules will be combined to a simulation!}
 
 \item{individual}{Optional, an individual building block}
