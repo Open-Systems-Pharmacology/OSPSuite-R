@@ -798,11 +798,29 @@ test_that("createSimulation throws an error when simulation cannot be created", 
   simConfig$selectedInitialConditions <- list("Vergin 1995 IV" = NULL)
 
   expect_snapshot(
-    expect_error(
-      newSimulation <- createSimulation(
-        simulationConfiguration = simConfig,
-        simulationName = "MySim"
-      )
+    newSimulation <- createSimulation(
+      simulationConfiguration = simConfig,
+      simulationName = "MySim"
+    ),
+    error = TRUE
+  )
+})
+
+test_that("createSimulation shows warnings when simulation creation issues warnings", {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "Aciclovir.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = TRUE
+  )
+  simConfig <- simulation$configuration
+
+  expect_snapshot(
+    newSimulation <- createSimulation(
+      simulationConfiguration = simConfig,
+      simulationName = "MySim"
     )
   )
 })
