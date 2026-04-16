@@ -11,6 +11,8 @@
       
         * Selected Initial Conditions: Initial Conditions
         * Selected Parameter Values: Parameter Values
+      
+      --------------------------------------------------------------------------------
       Individual:
         * Vergin_1995_IV
       Expression profiles:
@@ -34,6 +36,8 @@
       
         * Selected Initial Conditions: IC1
         * Selected Parameter Values: PV1
+      
+      --------------------------------------------------------------------------------
       Individual:
         * DefaultIndividual
       Expression profiles:
@@ -58,6 +62,8 @@
       
         * Selected Initial Conditions: NULL
         * Selected Parameter Values: PV2
+      
+      --------------------------------------------------------------------------------
       Individual:
         * DefaultIndividual
       Expression profiles:
@@ -77,6 +83,8 @@
       
         * Selected Initial Conditions: S
         * Selected Parameter Values: S
+      
+      --------------------------------------------------------------------------------
       Individual:
       Expression profiles:
       Partition coefficient method overrides:
@@ -95,6 +103,8 @@
       
         * Selected Initial Conditions: S
         * Selected Parameter Values: S
+      
+      --------------------------------------------------------------------------------
       Individual:
       Expression profiles:
       Partition coefficient method overrides:
@@ -113,6 +123,8 @@
       
         * Selected Initial Conditions: S
         * Selected Parameter Values: S
+      
+      --------------------------------------------------------------------------------
       Individual:
       Expression profiles:
 
@@ -129,6 +141,8 @@
       
         * Selected Initial Conditions: S
         * Selected Parameter Values: S
+      
+      --------------------------------------------------------------------------------
       Individual:
       Expression profiles:
       Partition coefficient method overrides:
@@ -148,6 +162,8 @@
       
         * Selected Initial Conditions: S
         * Selected Parameter Values: S
+      
+      --------------------------------------------------------------------------------
       Individual:
       Expression profiles:
       Cellular permeability method overrides:
@@ -166,6 +182,8 @@
       
         * Selected Initial Conditions: S
         * Selected Parameter Values: S
+      
+      --------------------------------------------------------------------------------
       Individual:
       Expression profiles:
 
