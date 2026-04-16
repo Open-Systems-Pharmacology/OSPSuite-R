@@ -128,7 +128,8 @@ test_that("It creates default plots as expected", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "defaults as QQ-Plot",
-    fig = plotQuantileQuantilePlot(myCombDat, residualScale = "linear")
+    fig = plotQuantileQuantilePlot(myCombDat, residualScale = "linear") +
+      ggplot2::labs(y = 'residuals\npredicted - observed')
   )
 })
 
