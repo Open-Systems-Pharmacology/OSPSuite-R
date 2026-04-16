@@ -5,7 +5,7 @@
   doc <- xml2::read_xml(filePath)
   nodesWithId <- xml2::xml_find_all(doc, ".//*[@id]")
   xml2::xml_attr(nodesWithId, "id") <- ""
-  gsub("\\s+", " ", as.character(doc))
+  xml2::as_list(doc)
 }
 
 .expectBuildingBlockRoundTrip <- function(loadFunction, saveFunction, filePath) {

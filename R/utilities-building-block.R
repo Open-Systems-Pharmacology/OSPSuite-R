@@ -16,6 +16,9 @@
 .loadBuildingBlockFromPKML <- function(filePath, taskName, buildingBlockClass) {
   validateIsString(filePath)
   filePath <- .expandPath(filePath)
+  if (!file.exists(filePath)) {
+    stop(messages$errorFileDoesNotExist(filePath))
+  }
   buildingBlockTask <- .getPKSimNetTask(taskName)
   buildingBlock <- buildingBlockTask$call("ImportFromPKML", filePath)
   buildingBlockClass$new(buildingBlock)
