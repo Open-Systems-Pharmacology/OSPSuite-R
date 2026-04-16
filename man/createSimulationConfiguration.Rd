@@ -8,33 +8,41 @@ createSimulationConfiguration(
   modules,
   individual = NULL,
   expressionProfiles = NULL,
-  initialConditions = NULL,
-  parameterValues = NULL
+  selectedInitialConditions = NULL,
+  selectedParameterValues = NULL,
+  settings = NULL
 )
 }
 \arguments{
-\item{modules}{A list of \code{Module} objects from which to create in simulation.
+\item{modules}{A list of \code{Module} objects from which to create the simulation.
 The order of modules defines the order in which the modules will be combined to a simulation!}
 
 \item{individual}{Optional, an individual building block}
 
 \item{expressionProfiles}{Optional, a list of expression profiles to apply to the simulation.}
 
-\item{initialConditions}{By default, the first Initial Conditions
+\item{selectedInitialConditions}{By default, the first Initial Conditions
 (IC) building block (BB) of each module will be selected. If a module has multiple
 IC BBs, it is possible to specify which IC BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the IC BB.
-By setting the value to \code{NULL}, no IC BB from the specified module will be applied.}
+If \code{NULL}, all modules will use the first IC BB, if available. When providing a list,
+the value can also be set to \code{NULL}, which means that no IC BB from the specified module
+will be selected.}
 
-\item{parameterValues}{By default, the first Parameter Values
+\item{selectedParameterValues}{By default, the first Parameter Values
 (PV) building block (BB) of each module will be selected. If a module has multiple
 PV BBs, it is possible to specify which PV BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the PV BB.
-By setting the value to \code{NULL}, no PV BB from the specified module will be applied.}
+If \code{NULL}, all modules will use the first PV BB, if available. When providing a list,
+the value can also be set to \code{NULL}, which means that no PV BB from the specified module
+will be selected.}
+
+\item{settings}{Optional, a \code{SimulationSettings} object defining the simulation settings. If no settings are provided,
+default settings will be used upon simulation creation.}
 }
 \value{
 A \code{SimulationConfiguration} object.
 }
 \description{
-2DO
+This function calls the \code{SimulationConfiguration} constructor.
 }

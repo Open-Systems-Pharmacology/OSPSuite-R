@@ -64,6 +64,19 @@ test_that("It can get expression profiles names from a MoBi project", {
   )
 })
 
+# Test for MoBiProject$defaultSimulationSettings
+test_that("It can get default simulation settings from a MoBi project", {
+  simSettings <- globalTestMoBiProject$defaultSimulationSettings
+  expect_true(isOfType(simSettings, "SimulationSettings"))
+})
+
+test_that("defaultSimulationSettings is read-only", {
+  expect_error(
+    globalTestMoBiProject$defaultSimulationSettings <- "newValue",
+    "Property 'defaultSimulationSettings' is read-only"
+  )
+})
+
 # Test for MoBiProject$getModules
 test_that("It can get all modules from a MoBi project", {
   expectedNames <- c(
@@ -338,8 +351,8 @@ test_that("It can create a simulation configuration with expression profiles", {
 test_that("It can create a simulation configuration with specific IC and PV BBs", {
   simConfig <- globalTestMoBiProject$createSimulationConfiguration(
     modulesNames = "ExtModule_3IC_3PV",
-    initialConditions = list("ExtModule_3IC_3PV" = "IC2"),
-    parameterValues = list("ExtModule_3IC_3PV" = "PV3")
+    selectedInitialConditions = list("ExtModule_3IC_3PV" = "IC2"),
+    selectedParameterValues = list("ExtModule_3IC_3PV" = "PV3")
   )
   expect_true(isOfType(simConfig, "SimulationConfiguration"))
   expect_equal(
@@ -355,8 +368,8 @@ test_that("It can create a simulation configuration with specific IC and PV BBs"
 test_that("It can create a simulation configuration with IC and PV explicitly set to NULL", {
   simConfig <- globalTestMoBiProject$createSimulationConfiguration(
     modulesNames = "ExtModule_3IC_3PV",
-    initialConditions = list("ExtModule_3IC_3PV" = NULL),
-    parameterValues = list("ExtModule_3IC_3PV" = NULL)
+    selectedInitialConditions = list("ExtModule_3IC_3PV" = NULL),
+    selectedParameterValues = list("ExtModule_3IC_3PV" = NULL)
   )
   expect_true(isOfType(simConfig, "SimulationConfiguration"))
   expect_equal(
@@ -404,9 +417,12 @@ test_that("It throws an error when specifying a non-existing IC BB for a module"
   expect_error(
     globalTestMoBiProject$createSimulationConfiguration(
       modulesNames = "ExtModule_3IC_3PV",
-      initialConditions = list("ExtModule_3IC_3PV" = "NonExistingIC")
+      selectedInitialConditions = list("ExtModule_3IC_3PV" = "NonExistingIC")
     ),
-    messages$icBBNotPresentInModule("ExtModule_3IC_3PV", "NonExistingIC"),
+    regexp = messages$errorICNotFoundInModule(
+      "NonExistingIC",
+      "ExtModule_3IC_3PV"
+    ),
     fixed = TRUE
   )
 })
@@ -415,9 +431,9 @@ test_that("It throws an error when specifying a non-existing PV BB for a module"
   expect_error(
     globalTestMoBiProject$createSimulationConfiguration(
       modulesNames = "ExtModule_3IC_3PV",
-      parameterValues = list("ExtModule_3IC_3PV" = "NonExistingPV")
+      selectedParameterValues = list("ExtModule_3IC_3PV" = "NonExistingPV")
     ),
-    messages$pvBBNotPresentInModule("ExtModule_3IC_3PV", "NonExistingPV"),
+    messages$errorPVNotFoundInModule("NonExistingPV", "ExtModule_3IC_3PV"),
     fixed = TRUE
   )
 })

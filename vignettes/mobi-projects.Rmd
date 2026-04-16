@@ -174,7 +174,7 @@ simConfiguration <- myProject$createSimulationConfiguration(
     "DIO3|Human|Healthy",
     "UDPGT2|Human|Healthy"
   ),
-  parameterValues = list("Thyroid" = "Rat")
+  selectedParameterValues = list("Thyroid" = "Rat")
 )
 ```
 
@@ -290,23 +290,22 @@ setParameterValuesInBB(
 Finally, we can create a simulation configuration from the modules and the individual we created:
 
 ```{r createSimulationFromModules}
-# simulationConfigurationHuman <- createSimulationConfiguration(
-#   simulationName = "Thyroid_QST_human",
-#   modules = c(
-#     modules[["Thyroid_QST"]],
-#     thyroidModule,
-#     modules[["Pituitary"]],
-#     modules[["Endogenous_TH"]],
-#     modules[["TH_activeTransports"]],
-#     modules[["TH_plasma_binding"]]
-#   ),
-#   individual = myIndividual,
-#   expressionProfiles = expressionProfiles,
-#   parameterValues = list("Thyroid" = "Human")
-# )
-```
+simulationConfigurationHuman <- createSimulationConfiguration(
+  modules = c(
+    modules[["Thyroid_QST"]],
+    thyroidModule,
+    modules[["Pituitary"]],
+    modules[["Endogenous_TH"]],
+    modules[["TH_activeTransports"]],
+    modules[["TH_plasma_binding"]]
+  ),
+  individual = myIndividual,
+  expressionProfiles = expressionProfiles,
+  selectedParameterValues = list("Thyroid" = "Human")
+)
 
-Expression profile BBs cannot be created from R but can be loaded from PKML. (Tier 3 or so).
+print(simulationConfigurationHuman)
+```
 
 ## Creating simulations
 

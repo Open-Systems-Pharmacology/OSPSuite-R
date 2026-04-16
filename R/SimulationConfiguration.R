@@ -60,7 +60,7 @@ SimulationConfiguration <- R6::R6Class(
       }
     },
 
-    #' @field modules A named list of `Module` objects from which to create in simulation.
+    #' @field modules A named list of `Module` objects from which to create the simulation.
     #' The order of modules defines the order in which the modules will be combined to a simulation!
     #' When setting the modules, the selection of Initial Conditions and Parameter Values
     #' is reset to the first available ones in the modules.
@@ -223,8 +223,6 @@ SimulationConfiguration <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class
     #'
-    #' Should not be directly used. Instead, use function `createSimulationConfiguration()` or the method `createSimulationConfiguration()`
-    #' from the class `MoBiProject`.
     #' @param modules A list of `Module` objects from which to create in simulation.
     #' The order of modules defines the order in which the modules will be combined to a simulation!
     #' @param individual Optional, an individual building block
@@ -256,10 +254,10 @@ SimulationConfiguration <- R6::R6Class(
     ) {
       # This class does not wrap the .NET domain object. Instead, it is used as a container
       # for the simulation configuration data before creating the actual simulation in .NET.
-
+      validateIsOfType(settings, "SimulationSettings", nullAllowed = TRUE)
       validateIsOfType(modules, "MoBiModule")
       validateIsOfType(individual, "BuildingBlock", nullAllowed = TRUE)
-      .validateBuildingBlockType(individual, "Individual")
+      .validateBuildingBlockType(individual, "Individual", nullAllowed = TRUE)
       validateIsOfType(expressionProfiles, "BuildingBlock", nullAllowed = TRUE)
       for (bb in expressionProfiles) {
         .validateBuildingBlockType(bb, "Expression Profile")
@@ -338,7 +336,6 @@ SimulationConfiguration <- R6::R6Class(
       names(private$.selectedParameterValues) <- moduleNames
 
       # Set simulation settings
-      validateIsOfType(settings, "SimulationSettings", nullAllowed = TRUE)
       private$.settings <- settings
     },
 
@@ -376,33 +373,29 @@ SimulationConfiguration <- R6::R6Class(
 
     #' @description
     #' Print the object to the console
-    #' @param printClassProperties Logical, whether to print class properties (default: `FALSE`). If `TRUE`, calls first the `print` method of the parent class.
-    #' Useful for debugging.
     #' @param ... Rest arguments.
-    print = function(printClassProperties = FALSE, ...) {
-      if (printClassProperties) {
-        super$print(...)
-      }
+    print = function(...) {
       ospsuite.utils::ospPrintClass(self)
       ospsuite.utils::ospPrintHeader("Modules")
-      for (module in names(private$.modules)) {
+      for (module in private$.modules) {
+        name <- module$name
         ospsuite.utils::ospPrintHeader(
-          module,
+          name,
           level = 2
         )
         ospsuite.utils::ospPrintItems(
           list(
             "Selected Initial Conditions" = private$.selectedInitialConditions[[
-              module
+              name
             ]],
             "Selected Parameter Values" = private$.selectedParameterValues[[
-              module
+              name
             ]]
           ),
           print_empty = TRUE
         )
       }
-
+      ospsuite.utils::ospPrintHeader("", level = 1)
       ospsuite.utils::ospPrintItems(
         private$.individual$name,
         "Individual",
