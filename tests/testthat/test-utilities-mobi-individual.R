@@ -128,7 +128,7 @@ test_that("setParameterValuesInIndividualBB throws an error when quantityPaths a
       quantityValues = 30,
       units = c("year(s)", "kg/m²")
     ),
-    "The length of quantityPaths should be equal to the length of quantityValues"
+    "must have the same length, but they don't!"
   )
 })
 

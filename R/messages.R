@@ -419,3 +419,12 @@ messages$errorModuleNotInConfiguration <- function(moduleName) {
     "' is not part of the simulation configuration."
   )
 }
+
+messages$errorInvalidCalculationMethod <- function(methodName, validMethods) {
+  paste0(
+    "'",
+    methodName,
+    "' is not a valid calculation method. Valid methods are: ",
+    paste0("'", validMethods, "'", collapse = ", ")
+  )
+}

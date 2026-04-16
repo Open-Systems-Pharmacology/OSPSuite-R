@@ -809,16 +809,6 @@
   }
 }
 
-#' Names of aggregation available for plotPopulationTimeProfile()
-#'
-#' @export
-DataAggregationMethods <-
-  ospsuite.utils::enum(c(
-    "quantiles",
-    "arithmetic",
-    "geometric"
-  ))
-
 #' Quantile Range
 #'
 #' @inheritParams stats::quantile

@@ -1,11 +1,3 @@
-#' Supported types of the error
-#'
-#' @export
-DataErrorType <- enum(c(
-  "ArithmeticStdDev",
-  "GeometricStdDev"
-))
-
 #' @title DataSet
 #' @docType class
 #' @description A class for storage of numerical x- and y-value pairs and

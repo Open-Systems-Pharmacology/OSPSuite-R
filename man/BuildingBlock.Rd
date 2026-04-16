@@ -52,7 +52,7 @@ A representation of a building block
 \subsection{Method \code{new()}}{
 Initialize a new instance of the class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BuildingBlock$new(netObject, type = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{BuildingBlock$new(netObject, type)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -60,8 +60,7 @@ Initialize a new instance of the class
 \describe{
 \item{\code{netObject}}{Reference to \code{NetObject} .NET object representing a building block.}
 
-\item{\code{type}}{Type of the building block (optional, defaults to \code{NULL}).
-Must be one of the \code{BuildingBlockTypes}.}
+\item{\code{type}}{Type of the building block. Must be one of the \code{BuildingBlockTypes}.}
 }
 \if{html}{\out{</div>}}
 }

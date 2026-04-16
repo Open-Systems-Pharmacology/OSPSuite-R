@@ -1,12 +1,3 @@
-#' How should comparison of entities be performed
-#'
-#' @export
-CompareBy <- enum(c(
-  "id",
-  "name",
-  "path"
-))
-
 #' Names of the `.NET` container tasks of the type `"AllXXXMatching"`
 #'
 #' @keywords internal

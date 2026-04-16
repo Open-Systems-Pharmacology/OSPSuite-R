@@ -82,7 +82,7 @@ individualsBBToDataFrame <- function(individualBuildingBlock) {
     individualBuildingBlock,
     BuildingBlockTypes$Individual
   )
-  parameterValuesBBToDataFrame(individualBuildingBlock)
+  .bbWithParameterValuesToDataFrame(individualBuildingBlock)
 }
 
 
@@ -121,60 +121,14 @@ setParameterValuesInIndividualBB <- function(
   quantityValues,
   units
 ) {
-  .validateBuildingBlockType(
-    individualBuildingBlock,
-    BuildingBlockTypes$`Individual`
+  .setParameterValuesInBBInternal(
+    buildingBlock = individualBuildingBlock,
+    quantityPaths = quantityPaths,
+    quantityValues = quantityValues,
+    units = units,
+    expectedType = BuildingBlockTypes$Individual,
+    taskName = "IndividualTask",
+    setMethodName = "SetIndividualParameter",
+    bbLabel = "Building Block"
   )
-  # Exit early if no quantity paths are provided
-  if (length(quantityPaths) == 0) {
-    return(invisible(individualBuildingBlock))
-  }
-  netTask <- .getMoBiTaskFromCache("IndividualTask")
-  # Check if all provided paths exist in the Individual BB. If any path does not exist, an error is thrown.
-  allPaths <- netTask$call(
-    "AllPathsFrom",
-    individualBuildingBlock
-  )
-  if (!all(quantityPaths %in% allPaths)) {
-    missingPaths <- quantityPaths[!quantityPaths %in% allPaths]
-    stop(
-      sprintf(
-        "Cannot add new entries to the Building Block. Only setting of the existing entries is supported. The following quantity paths are not present in the building block: %s",
-        paste(missingPaths, collapse = ", ")
-      )
-    )
-  }
-
-  validatedInputs <- .validatePVBBInputs(
-    individualBuildingBlock,
-    quantityPaths,
-    quantityValues,
-    units,
-    dimensions = NULL
-  )
-  baseValues <- validatedInputs$baseValues
-  dimensions <- validatedInputs$dimensions
-
-  # Get the dimensions for the provided paths from the building block
-  refDimensions <- netTask$call(
-    "AllDimensionsFrom",
-    individualBuildingBlock,
-    quantityPaths
-  )
-  # Check if units are compatible with the reference dimensions. In contrast to the `setParameterValuesInBB` function, changing of dimensions of existing entries is not allowed.
-  invisible(sapply(
-    seq_along(quantityPaths),
-    function(x) {
-      validateUnit(units[x], refDimensions[x])
-    },
-    USE.NAMES = FALSE
-  ))
-  netTask$call(
-    "SetIndividualParameter",
-    individualBuildingBlock,
-    quantityPaths,
-    baseValues
-  )
-
-  invisible(individualBuildingBlock)
 }

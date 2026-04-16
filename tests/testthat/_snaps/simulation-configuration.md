@@ -64,3 +64,108 @@
         * UGT2B6|Human|Healthy
         * CYP3A4|Human|Healthy
 
+# setPartitionCoefficientMethods stores a valid method for a molecule
+
+    Code
+      config
+    Output
+      <SimulationConfiguration>
+      
+      -- Modules ---------------------------------------------------------------------
+      
+      -- Simple --
+      
+        * Selected Initial Conditions: S
+        * Selected Parameter Values: S
+      Individual:
+      Expression profiles:
+      Partition coefficient method overrides:
+        * A: Berezhkovskiy
+
+# setPartitionCoefficientMethods overwrites silently on repeated call for same molecule
+
+    Code
+      config
+    Output
+      <SimulationConfiguration>
+      
+      -- Modules ---------------------------------------------------------------------
+      
+      -- Simple --
+      
+        * Selected Initial Conditions: S
+        * Selected Parameter Values: S
+      Individual:
+      Expression profiles:
+      Partition coefficient method overrides:
+        * A: Rodgers and Rowland
+
+# setPartitionCoefficientMethods with NULL removes the override
+
+    Code
+      config
+    Output
+      <SimulationConfiguration>
+      
+      -- Modules ---------------------------------------------------------------------
+      
+      -- Simple --
+      
+        * Selected Initial Conditions: S
+        * Selected Parameter Values: S
+      Individual:
+      Expression profiles:
+
+# setPartitionCoefficientMethods stores overrides for multiple molecules
+
+    Code
+      config
+    Output
+      <SimulationConfiguration>
+      
+      -- Modules ---------------------------------------------------------------------
+      
+      -- Simple --
+      
+        * Selected Initial Conditions: S
+        * Selected Parameter Values: S
+      Individual:
+      Expression profiles:
+      Partition coefficient method overrides:
+        * A: Berezhkovskiy
+        * B: Schmitt
+
+# setCellularPermeabilityMethods stores a valid method for a molecule
+
+    Code
+      config
+    Output
+      <SimulationConfiguration>
+      
+      -- Modules ---------------------------------------------------------------------
+      
+      -- Simple --
+      
+        * Selected Initial Conditions: S
+        * Selected Parameter Values: S
+      Individual:
+      Expression profiles:
+      Cellular permeability method overrides:
+        * A: Charge dependent Schmitt
+
+# setCellularPermeabilityMethods with NULL removes the override
+
+    Code
+      config
+    Output
+      <SimulationConfiguration>
+      
+      -- Modules ---------------------------------------------------------------------
+      
+      -- Simple --
+      
+        * Selected Initial Conditions: S
+        * Selected Parameter Values: S
+      Individual:
+      Expression profiles:
+
