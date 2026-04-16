@@ -435,7 +435,7 @@ extendInitialConditionsBB <- function(
 
 #' Convert a Parameter Values Building Block to a data frame.
 #'
-#' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values`, `Individual`, or `Expression Profile`.
+#' @param parameterValuesBuildingBlock A `Parameter Values` Building Block.
 #'
 #' @inherit .bbWithParameterValuesToDataFrame return
 #'

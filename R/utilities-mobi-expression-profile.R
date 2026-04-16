@@ -25,6 +25,17 @@
 #'   - `Neg. Values Allowed`: Boolean indicating if negative values are allowed.
 #'
 #' @export
+#' @examples
+#' expressionProfile <- createExpressionProfileBuildingBlock(
+#'   type = ExpressionProfileCategories$`Metabolizing Enzyme`,
+#'   moleculeName = "CYP3A4",
+#'   speciesName = "Human"
+#' )
+#' result <- expressionProfileBBToDataFrame(expressionProfile)
+#' # Access the expression parameters
+#' result$expressionParameters
+#' # Access the initial conditions
+#' result$initialConditions
 expressionProfileBBToDataFrame <- function(expressionProfilesBuildingBlock) {
   buildingBlocks <- toList(expressionProfilesBuildingBlock)
 

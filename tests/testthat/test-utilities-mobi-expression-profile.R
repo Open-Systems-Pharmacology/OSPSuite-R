@@ -1,13 +1,10 @@
-getSimulation <- function(loadFromCache = FALSE) {
-  loadSimulation(
-    aciclovirSimulationPath,
-    loadFromCache = loadFromCache,
-    addToCache = loadFromCache
-  )
-}
+sim <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE
+)
 
-cachedEPBB <- getSimulation()$configuration$expressionProfiles[[1]]
-cachedICBB <- getSimulation()$configuration$modules[[
+cachedEPBB <- sim$configuration$expressionProfiles[[1]]
+cachedICBB <- sim$configuration$modules[[
   1
 ]]$getInitialConditionsBBs()[[1]]
 

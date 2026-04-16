@@ -11,6 +11,6 @@ An object of class \code{list} of length 5.
 PartitionCoefficientMethods
 }
 \description{
-MUST WE DEFINE IT HERE, OR CAN WE GET IT FROM .NET SOMEHOW?
+Available methods for calculation of partition coefficients.
 }
 \keyword{datasets}

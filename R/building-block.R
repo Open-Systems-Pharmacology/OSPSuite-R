@@ -25,10 +25,9 @@ BuildingBlock <- R6::R6Class(
     #' Initialize a new instance of the class
     #'
     #' @param netObject Reference to `NetObject` .NET object representing a building block.
-    #' @param type Type of the building block (optional, defaults to `NULL`).
-    #' Must be one of the `BuildingBlockTypes`.
+    #' @param type Type of the building block. Must be one of the `BuildingBlockTypes`.
     #' @return A new `BuildingBlock` object.
-    initialize = function(netObject, type = NULL) {
+    initialize = function(netObject, type) {
       validateEnumValue(type, enum = BuildingBlockTypes, nullAllowed = TRUE)
 
       super$initialize(netObject)

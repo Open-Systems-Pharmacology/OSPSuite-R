@@ -106,8 +106,6 @@ MoleculeParameter <- enum(c(
 
 #' Available methods for calculation of partition coefficients.
 #'
-#' MUST WE DEFINE IT HERE, OR CAN WE GET IT FROM .NET SOMEHOW?
-#'
 #' @export
 PartitionCoefficientMethods <- enum(c(
   "PK-Sim Standard" = "Cellular partition coefficient method - PK-Sim Standard",

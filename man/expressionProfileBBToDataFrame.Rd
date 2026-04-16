@@ -39,3 +39,15 @@ A named list with two data frames:
 Returns both the expression parameter values and the initial conditions
 contained in the expression profile building block(s).
 }
+\examples{
+expressionProfile <- createExpressionProfileBuildingBlock(
+  type = ExpressionProfileCategories$`Metabolizing Enzyme`,
+  moleculeName = "CYP3A4",
+  speciesName = "Human"
+)
+result <- expressionProfileBBToDataFrame(expressionProfile)
+# Access the expression parameters
+result$expressionParameters
+# Access the initial conditions
+result$initialConditions
+}
