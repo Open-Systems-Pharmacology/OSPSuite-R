@@ -20,6 +20,42 @@ test_that("expressionProfileBBToDataFrame returns a list with expressionParamete
   expect_snapshot(result$initialConditions)
 })
 
+test_that("expressionProfileBBToDataFrame accepts a list of building blocks and appends data frames", {
+  ep1 <- createExpressionProfileBuildingBlock(
+    type = "Metabolizing Enzyme",
+    moleculeName = "CYP3A4",
+    speciesName = "Human"
+  )
+  ep2 <- createExpressionProfileBuildingBlock(
+    type = "Transport Protein",
+    moleculeName = "ABCB1",
+    speciesName = "Human"
+  )
+
+  resultSingle1 <- expressionProfileBBToDataFrame(ep1)
+  resultSingle2 <- expressionProfileBBToDataFrame(ep2)
+  resultList <- expressionProfileBBToDataFrame(list(ep1, ep2))
+
+  expect_equal(
+    nrow(resultList$expressionParameters),
+    nrow(resultSingle1$expressionParameters) +
+      nrow(resultSingle2$expressionParameters)
+  )
+  expect_equal(
+    nrow(resultList$initialConditions),
+    nrow(resultSingle1$initialConditions) +
+      nrow(resultSingle2$initialConditions)
+  )
+  expect_equal(
+    colnames(resultList$expressionParameters),
+    colnames(resultSingle1$expressionParameters)
+  )
+  expect_equal(
+    colnames(resultList$initialConditions),
+    colnames(resultSingle1$initialConditions)
+  )
+})
+
 test_that("expressionProfileBBToDataFrame throws an error if the building block is not of type Expression Profiles", {
   expect_error(
     expressionProfileBBToDataFrame(cachedICBB),

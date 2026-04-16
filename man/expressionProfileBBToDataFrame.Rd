@@ -2,12 +2,15 @@
 % Please edit documentation in R/utilities-mobi-expression-profile.R
 \name{expressionProfileBBToDataFrame}
 \alias{expressionProfileBBToDataFrame}
-\title{Convert an Expression Profiles Building Block to data frames}
+\title{Convert Expression Profile Building Blocks to data frames}
 \usage{
 expressionProfileBBToDataFrame(expressionProfilesBuildingBlock)
 }
 \arguments{
-\item{expressionProfilesBuildingBlock}{A \code{BuildingBlock} object of type \verb{Expression Profile}.}
+\item{expressionProfilesBuildingBlock}{A single \code{BuildingBlock} object of
+type \verb{Expression Profile}, or a list of such objects. When a list is
+provided, the resulting data frames are row-bound across all building
+blocks.}
 }
 \value{
 A named list with two data frames:
@@ -34,5 +37,5 @@ A named list with two data frames:
 }
 \description{
 Returns both the expression parameter values and the initial conditions
-contained in the expression profile building block.
+contained in the expression profile building block(s).
 }

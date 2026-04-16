@@ -107,7 +107,7 @@ individualDf <- individualsBBToDataFrame(individual)
 head(individualDf)
 
 expProfiles <- myProject$getExpressionProfiles("UDPGT1|Human|Healthy")
-expProfilesDf <- expressionProfilesToDataFrame(expProfiles)
+expProfilesDf <- expressionProfileBBToDataFrame(expProfiles)
 # Print the first few rows of the data frame
 head(expProfilesDf$expressionParameters)
 

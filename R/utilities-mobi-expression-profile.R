@@ -1,9 +1,12 @@
-#' Convert an Expression Profiles Building Block to data frames
+#' Convert Expression Profile Building Blocks to data frames
 #'
 #' Returns both the expression parameter values and the initial conditions
-#' contained in the expression profile building block.
+#' contained in the expression profile building block(s).
 #'
-#' @param expressionProfilesBuildingBlock A `BuildingBlock` object of type `Expression Profile`.
+#' @param expressionProfilesBuildingBlock A single `BuildingBlock` object of
+#'   type `Expression Profile`, or a list of such objects. When a list is
+#'   provided, the resulting data frames are row-bound across all building
+#'   blocks.
 #'
 #' @returns A named list with two data frames:
 #' - `expressionParameters`: A data frame with the following columns:
@@ -23,22 +26,27 @@
 #'
 #' @export
 expressionProfileBBToDataFrame <- function(expressionProfilesBuildingBlock) {
-  .validateBuildingBlockType(
-    expressionProfilesBuildingBlock,
-    BuildingBlockTypes$`Expression Profile`
-  )
+  buildingBlocks <- toList(expressionProfilesBuildingBlock)
 
-  expressionParametersDf <- .bbWithParameterValuesToDataFrame(
-    expressionProfilesBuildingBlock
-  )
+  expressionParametersList <- list()
+  initialConditionsList <- list()
 
-  initialConditionsDf <- .bbWithInitialConditionsToDataFrame(
-    expressionProfilesBuildingBlock
-  )
+  for (bb in buildingBlocks) {
+    .validateBuildingBlockType(bb, BuildingBlockTypes$`Expression Profile`)
+
+    expressionParametersList <- c(
+      expressionParametersList,
+      list(.bbWithParameterValuesToDataFrame(bb))
+    )
+    initialConditionsList <- c(
+      initialConditionsList,
+      list(.bbWithInitialConditionsToDataFrame(bb))
+    )
+  }
 
   return(list(
-    expressionParameters = expressionParametersDf,
-    initialConditions = initialConditionsDf
+    expressionParameters = dplyr::bind_rows(expressionParametersList),
+    initialConditions = dplyr::bind_rows(initialConditionsList)
   ))
 }
 
