@@ -324,7 +324,7 @@ simulation <- createSimulation(
 
 ### Warnings and errors during simulation creation
 
-`createSimulation()` validates the simulation configuration and reports any issues encountered during the creation process. If the simulation cannot be created (e.g., due to invalid or inconsistent configuration), an error is thrown with a description of all issues. If the simulation is created successfully but with non-critical issues, these are collected as warnings. To display them, set `showWarnings = TRUE`:
+`createSimulation()` validates the simulation configuration and reports any issues encountered during the creation process. If the simulation cannot be created (e.g., due to invalid or inconsistent configuration), an error is thrown with a description of all issues. If the simulation is created successfully but with non-critical issues, these are collected as warnings and can be displayed by setting `showWarnings = TRUE`. The following example demonstrates an error case:
 
 ```{r createSimulationWithErrors, error = TRUE}
 simulation <- loadSimulation(
@@ -342,7 +342,8 @@ simConfig$selectedInitialConditions <- list("Vergin 1995 IV" = NULL)
 
 newSimulation <- createSimulation(
   simulationConfiguration = simConfig,
-  simulationName = "MySim"
+  simulationName = "MySim",
+  showWarnings = TRUE
 )
 ```
 
