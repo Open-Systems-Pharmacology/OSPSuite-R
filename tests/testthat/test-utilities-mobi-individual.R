@@ -184,3 +184,44 @@ test_that("setParameterValuesInIndividualBB throws an error if trying to set a p
     regexp = "are not present in the building block: Organism|NonExistingParameter, SecondNonExistingParameter"
   )
 })
+
+# saveIndividualToPKML tests
+
+test_that("saveIndividualToPKML writes a non-empty pkml file and returns the path invisibly", {
+  individual <- createIndividualBuildingBlock(
+    species = Species$Human,
+    population = HumanPopulation$European_ICRP_2002,
+    gender = Gender$Male,
+    weight = 73,
+    age = 30,
+    seed = 42
+  )
+  filePath <- withr::local_tempfile(fileext = ".pkml")
+  result <- saveIndividualToPKML(individual, filePath)
+
+  expect_true(file.exists(filePath))
+  expect_gt(file.info(filePath)$size, 0)
+  expect_equal(result, .expandPath(filePath))
+})
+
+test_that("saveIndividualToPKML errors when given a non-Individual BB", {
+  expressionProfile <- createExpressionProfileBuildingBlock(
+    type = ExpressionProfileCategories$`Metabolizing Enzyme`,
+    moleculeName = "CYP3A4",
+    speciesName = "Human"
+  )
+  filePath <- withr::local_tempfile(fileext = ".pkml")
+  expect_error(
+    saveIndividualToPKML(expressionProfile, filePath),
+    regexp = "Individual"
+  )
+})
+
+test_that("saveIndividualToPKML errors when file extension is not pkml", {
+  individual <- createIndividualBuildingBlock(species = Species$Beagle)
+  filePath <- withr::local_tempfile(fileext = ".txt")
+  expect_error(
+    saveIndividualToPKML(individual, filePath),
+    regexp = "extension 'txt', while 'pkml' was expected"
+  )
+})

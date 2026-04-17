@@ -220,6 +220,8 @@ Following functionalities are available for the Parameter Values (PV) BBs:
 -   `addLocalMoleculeParametersToParameterValuesBB()`: Extending a PV BB by entries for local parameters of specified molecules in all physical containers of a spatial structure. This function does not add parameters whose values are defined by a formula", e.g., the "Relative expression" parameters for proteins.
 -   `addProteinExpressionToParameterValuesBB()`: Extending a PV BB by parameters defining expression of protein molecules in selected organs.
 
+Furthermore, for building blocks of type "Parameter Values", "Initial Conditions", "Expression Profiles", and "Individual", there are functions to export them to a PKML (`.pkml`) file.
+
 So in the first step we load the extension module "Thyroid" from a pkml file:
 
 ```{r loadThyroidModule}
