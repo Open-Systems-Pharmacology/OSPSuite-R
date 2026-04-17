@@ -59,7 +59,7 @@ createSimulation <- function(
     simRequest$call(
       "AddMoleculeUsedCalculationMethod",
       moleculeName,
-      "DistributionCellular",
+      CalculationMethodCategories$PartitionCoefficient,
       simulationConfiguration$partitionCoefficientOverrides[[moleculeName]]
     )
   }
@@ -69,7 +69,7 @@ createSimulation <- function(
     simRequest$call(
       "AddMoleculeUsedCalculationMethod",
       moleculeName,
-      "DiffusionIntCell",
+      CalculationMethodCategories$CellularPermeability,
       simulationConfiguration$cellularPermeabilityOverrides[[moleculeName]]
     )
   }

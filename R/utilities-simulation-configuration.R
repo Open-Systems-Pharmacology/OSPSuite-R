@@ -114,11 +114,6 @@ createSimulationConfiguration <- function(
 
   simSettings <- netObj$get("SimulationSettings")
 
-  # TODO: Extract molecule-specific calculation method overrides from netObj
-  # and apply them to the SimulationConfiguration via setPartitionCoefficientMethods /
-  # setCellularPermeabilityMethods. Requires clarifying the .NET read API.
-  # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1872
-
   return(SimulationConfiguration$new(
     modules,
     individual = individual,

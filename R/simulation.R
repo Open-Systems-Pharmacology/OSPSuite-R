@@ -92,7 +92,31 @@ Simulation <- R6::R6Class(
           ))
         }
         netObj <- self$get("Configuration")
-        return(.createSimulationConfigurationFromNetObject(netObj))
+        config <- .createSimulationConfigurationFromNetObject(netObj)
+
+        # Get calculation method overrides for molecules and apply them to the config.
+        moleculeNames <- unique(c(
+          self$allFloatingMoleculeNames(),
+          self$allStationaryMoleculeNames()
+        ))
+        for (moleculeName in moleculeNames) {
+          pcMethod <- self$calculationMethodFor(
+            moleculeName,
+            CalculationMethodCategories$PartitionCoefficient
+          )
+          if (!is.null(pcMethod)) {
+            config$setPartitionCoefficientMethods(moleculeName, pcMethod)
+          }
+          cpMethod <- self$calculationMethodFor(
+            moleculeName,
+            CalculationMethodCategories$CellularPermeability
+          )
+          if (!is.null(cpMethod)) {
+            config$setCellularPermeabilityMethods(moleculeName, cpMethod)
+          }
+        }
+
+        return(config)
       } else {
         private$.throwPropertyIsReadonly("configuration")
       }
@@ -148,6 +172,26 @@ Simulation <- R6::R6Class(
       validateIsString(quantityPath)
       mw <- self$call("MolWeightFor", quantityPath)
       mw %||% NA_real_
+    },
+    #' @description
+    #' Returns the calculation method name used for the given molecule and
+    #' category, or `NULL` if no override is set.
+    #' @param moleculeName Name of the molecule.
+    #' @param category One of the `CalculationMethodCategories` enum values
+    #' (e.g. `CalculationMethodCategories$PartitionCoefficient`).
+    calculationMethodFor = function(moleculeName, category) {
+      validateIsString(moleculeName)
+      validateEnumValue(category, CalculationMethodCategories)
+      supportedVersion <- 12
+      simVersion <- as.numeric(self$get("Creation")$get("Version"))
+      if (simVersion < supportedVersion) {
+        stop(messages$errorFeatureNotSupportedBySimulation(
+          "calculationMethodFor",
+          simVersion,
+          supportedVersion
+        ))
+      }
+      self$call("CalculationMethodFor", moleculeName, category)
     },
     #' @description
     #' Returns the applications ordered by start time associated to the quantity with path `quantityPath` or an empty list if not found

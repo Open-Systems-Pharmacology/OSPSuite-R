@@ -14,6 +14,15 @@ BuildingBlockTypes <- enum(c(
   "Individual"
 ))
 
+#' Categories of molecule calculation methods that can be overridden on a
+#' per-molecule basis in a simulation configuration.
+#'
+#' @export
+CalculationMethodCategories <- enum(c(
+  PartitionCoefficient = "DistributionCellular",
+  CellularPermeability = "DiffusionIntCell"
+))
+
 #' Available methods for calculation of cellular permeabilities.
 #'
 #' @export

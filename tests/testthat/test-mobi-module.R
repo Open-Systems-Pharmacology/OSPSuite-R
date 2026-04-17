@@ -40,7 +40,7 @@ test_that("MoBiModule mergeBehavior works correctly", {
     "Property 'mergeBehavior' is read-only"
   )
 
-  # TODO
+  # TODO: https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1591
   # # Test setting merge behavior
   # testModuleGlobal$mergeBehavior <- "Overwrite"
   # expect_equal(testModuleGlobal$mergeBehavior, "Overwrite")
