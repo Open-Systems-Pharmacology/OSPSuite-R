@@ -870,8 +870,16 @@ test_that("It creates a simulation with overridden PC and CP methods", {
     simulationConfiguration = config,
     simulationName = "MySim"
   )
-  # TODO add test for correct application of the methods once the logic to retrieve them in the simulation is implemented
-  # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1872
+
+  newConfig <- newSim$configuration
+  expect_identical(
+    newConfig$partitionCoefficientOverrides[["A"]],
+    PartitionCoefficientMethods$`Rodgers and Rowland`
+  )
+  expect_identical(
+    newConfig$cellularPermeabilityOverrides[["A"]],
+    CellularPermeabilityMethods$`Charge dependent Schmitt`
+  )
 })
 
 test_that("It ignores molecules that are not present in the simulation when overriding PC and CP methods", {
@@ -898,6 +906,16 @@ test_that("It ignores molecules that are not present in the simulation when over
     simulationConfiguration = config,
     simulationName = "MySim"
   )
-  # TODO add test for correct application of the methods once the logic to retrieve them in the simulation is implemented
-  # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1872
+
+  newConfig <- newSim$configuration
+  expect_false("foo" %in% names(newConfig$partitionCoefficientOverrides))
+  expect_false("foo" %in% names(newConfig$cellularPermeabilityOverrides))
+  expect_identical(
+    newConfig$partitionCoefficientOverrides[["B"]],
+    PartitionCoefficientMethods$`Rodgers and Rowland`
+  )
+  expect_identical(
+    newConfig$cellularPermeabilityOverrides[["B"]],
+    CellularPermeabilityMethods$`Charge dependent Schmitt`
+  )
 })

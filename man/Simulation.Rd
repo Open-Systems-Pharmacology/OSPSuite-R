@@ -41,6 +41,7 @@ describing the modules used for the simulation, selected Parameter Values (PV) a
 \item \href{#method-Simulation-allStationaryMoleculeNames}{\code{Simulation$allStationaryMoleculeNames()}}
 \item \href{#method-Simulation-allFloatingMoleculeNames}{\code{Simulation$allFloatingMoleculeNames()}}
 \item \href{#method-Simulation-molWeightFor}{\code{Simulation$molWeightFor()}}
+\item \href{#method-Simulation-calculationMethodFor}{\code{Simulation$calculationMethodFor()}}
 \item \href{#method-Simulation-allApplicationsFor}{\code{Simulation$allApplicationsFor()}}
 \item \href{#method-Simulation-print}{\code{Simulation$print()}}
 }
@@ -140,6 +141,27 @@ Returns the mol weight value (in core unit) associated to the quantity with give
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{quantityPath}}{Path of quantity used to retrieve the molecular weight}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Simulation-calculationMethodFor"></a>}}
+\if{latex}{\out{\hypertarget{method-Simulation-calculationMethodFor}{}}}
+\subsection{Method \code{calculationMethodFor()}}{
+Returns the calculation method name used for the given molecule and
+category, or \code{NULL} if no override is set.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Simulation$calculationMethodFor(moleculeName, category)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{moleculeName}}{Name of the molecule.}
+
+\item{\code{category}}{One of the \code{CalculationMethodCategories} enum values
+(e.g. \code{CalculationMethodCategories$PartitionCoefficient}).}
 }
 \if{html}{\out{</div>}}
 }

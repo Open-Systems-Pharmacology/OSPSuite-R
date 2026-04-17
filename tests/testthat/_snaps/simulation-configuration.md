@@ -17,6 +17,10 @@
         * Vergin_1995_IV
       Expression profiles:
         * CYP3A4|Human|Healthy
+      Partition coefficient method overrides:
+        * Aciclovir: PK-Sim Standard
+      Cellular permeability method overrides:
+        * Aciclovir: PK-Sim Standard
 
 # SimulationConfiguration can be created from a simulation loaded from a MoBi project with selected IC and PV BBs
 
