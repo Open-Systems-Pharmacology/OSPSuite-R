@@ -1,6 +1,6 @@
 #' @title DataImporterConfiguration
 #' @docType class
-#' @description Configuration of data import from excel or csv files. To be used with #TODO
+#' @description Configuration of data import from excel or csv files. To be used with `loadDataSetsFromExcel`.
 #' @export
 #' @format NULL
 DataImporterConfiguration <- R6::R6Class(

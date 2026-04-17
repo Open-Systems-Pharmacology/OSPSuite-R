@@ -27,10 +27,6 @@ messages$errorInvalidDataSetNames <- function() {
   "The 'name' column must not contain NA or empty string values."
 }
 
-messages$errorEmptyString <- function(varName) {
-  paste0("The `", varName, "` argument must not be an empty string.")
-}
-
 messages$noDatasetsToGroup <- function() {
   "There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods."
 }
