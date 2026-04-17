@@ -574,3 +574,40 @@ test_that("setPartitionCoefficientMethods returns invisible self for chaining", 
   )
   expect_identical(result, config)
 })
+
+### createSimulationConfiguration() free function
+
+test_that("createSimulationConfiguration() creates a configuration from modules", {
+  modules <- globalTestMoBiProject$getModules(c(
+    "ExtModule_3IC_3PV",
+    "ExtModule_noIC_noPV"
+  ))
+  individual <- globalTestMoBiProject$getIndividual("DefaultIndividual")
+  expressionProfiles <- globalTestMoBiProject$getExpressionProfiles(
+    "CYP3A4|Human|Healthy"
+  )
+
+  config <- createSimulationConfiguration(
+    modules = modules,
+    individual = individual,
+    expressionProfiles = expressionProfiles,
+    selectedInitialConditions = list("ExtModule_3IC_3PV" = "IC2"),
+    selectedParameterValues = list("ExtModule_3IC_3PV" = "PV3")
+  )
+
+  expect_true(isOfType(config, "SimulationConfiguration"))
+  expect_named(
+    config$modules,
+    c("ExtModule_3IC_3PV", "ExtModule_noIC_noPV")
+  )
+  expect_equal(config$individual$name, "DefaultIndividual")
+  expect_named(config$expressionProfiles, "CYP3A4|Human|Healthy")
+  expect_equal(
+    config$selectedInitialConditions,
+    list("ExtModule_3IC_3PV" = "IC2", "ExtModule_noIC_noPV" = NULL)
+  )
+  expect_equal(
+    config$selectedParameterValues,
+    list("ExtModule_3IC_3PV" = "PV3", "ExtModule_noIC_noPV" = NULL)
+  )
+})

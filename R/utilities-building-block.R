@@ -704,14 +704,16 @@ addProteinExpressionToParameterValuesBB <- function(
 #'
 #' @param buildingBlock A `BuildingBlock` object to validate.
 #' @param expectedTypes A character vector indicating the expected types of the building block.
+#' @param nullAllowed A boolean indicating whether `NULL` is an allowed value for the building block. Default is `FALSE`.
 #'
 #' @keywords internal
 #' @noRd
 .validateBuildingBlockType <- function(
   buildingBlock,
-  expectedTypes
+  expectedTypes,
+  nullAllowed = FALSE
 ) {
-  validateIsOfType(buildingBlock, "BuildingBlock")
+  validateIsOfType(buildingBlock, "BuildingBlock", nullAllowed = nullAllowed)
   if (is.null(buildingBlock)) {
     return(invisible(TRUE))
   }

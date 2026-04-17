@@ -157,30 +157,30 @@ When retrieving a simulation configuration from a simulation, the simulation set
 The user can create new simulation configuration from the modules available in the project. In this example, we create a simulation for the rat species from the modules "Thyroid_QST", "Rat physiology", "Thyroid", "Pituitary", "Endogenous_TH", "TH_activeTransports", and "TH_plasma_binding". We will select the expression profiles "UDPGT1\|Human\|Healthy", "DIO1\|Human\|Healthy", "DIO3\|Human\|Healthy", "UDPGT2\|Human\|Healthy", and specify the parameter values building block "Rat" from the module "Thyroid":
 
 ```{r createSimulationFromProject}
-# sim1 <- myProject$createSimulationConfiguration(
-#   modulesNames = c(
-#     "Thyroid_QST",
-#     "Rat physiology",
-#     "Thyroid",
-#     "Pituitary",
-#     "Endogenous_TH",
-#     "TH_activeTransports",
-#     "TH_plasma_binding"
-#   ),
-#   individualName = "Rat",
-#   expressionProfilesNames = c(
-#     "UDPGT1|Human|Healthy",
-#     "DIO1|Human|Healthy",
-#     "DIO3|Human|Healthy",
-#     "UDPGT2|Human|Healthy"
-#   ),
-#   parameterValues = list("Thyroid" = "Rat")
-# )
+simConfiguration <- myProject$createSimulationConfiguration(
+  modulesNames = c(
+    "Thyroid_QST",
+    "Rat physiology",
+    "Thyroid",
+    "Pituitary",
+    "Endogenous_TH",
+    "TH_activeTransports",
+    "TH_plasma_binding"
+  ),
+  individualName = "Rat",
+  expressionProfilesNames = c(
+    "UDPGT1|Human|Healthy",
+    "DIO1|Human|Healthy",
+    "DIO3|Human|Healthy",
+    "UDPGT2|Human|Healthy"
+  ),
+  selectedParameterValues = list("Thyroid" = "Rat")
+)
 ```
 
 ### Create simulation configuration from modules
 
-An alternative to creating simulation configurations from modules from a project is to use the function `createSimulationConfiguration()` and provide a list of `Module` objects. This allows to create simulations from modules contained in different projects, or from modules that are stored as pkml files. In the following example, we will create a simulation configuration using the modules from the project as in the example before, but the extension module "Thyroid" will be loaded from a pkml file, and a new individual will be created.
+An alternative to creating simulation configurations from modules from a project is to use the function `createSimulationConfiguration()` and provide a list of `MoBiModule` objects. This allows to create simulations from modules contained in different projects, or from modules that are stored as pkml files. In the following example, we will create a simulation configuration using the modules from the project as in the example before, but the extension module "Thyroid" will be loaded from a pkml file, and a new individual will be created.
 
 ```{r extractModulesAndCreateIndividual}
 # # Get modules from the project
@@ -194,7 +194,7 @@ expressionProfiles <- myProject$getExpressionProfiles(
     "UDPGT2|Human|Healthy"
   )
 )
-# # Create an individual building block
+# Create an individual building block
 myIndividual <- createIndividualBuildingBlock(
   species = Species$Human,
   population = HumanPopulation$Asian_Tanaka_1996,
@@ -292,23 +292,22 @@ setParameterValuesInBB(
 Finally, we can create a simulation configuration from the modules and the individual we created:
 
 ```{r createSimulationFromModules}
-# simulationConfigurationHuman <- createSimulationConfiguration(
-#   simulationName = "Thyroid_QST_human",
-#   modules = c(
-#     modules[["Thyroid_QST"]],
-#     thyroidModule,
-#     modules[["Pituitary"]],
-#     modules[["Endogenous_TH"]],
-#     modules[["TH_activeTransports"]],
-#     modules[["TH_plasma_binding"]]
-#   ),
-#   individual = myIndividual,
-#   expressionProfiles = expressionProfiles,
-#   parameterValues = list("Thyroid" = "Human")
-# )
-```
+simulationConfigurationHuman <- createSimulationConfiguration(
+  modules = c(
+    modules[["Thyroid_QST"]],
+    thyroidModule,
+    modules[["Pituitary"]],
+    modules[["Endogenous_TH"]],
+    modules[["TH_activeTransports"]],
+    modules[["TH_plasma_binding"]]
+  ),
+  individual = myIndividual,
+  expressionProfiles = expressionProfiles,
+  selectedParameterValues = list("Thyroid" = "Human")
+)
 
-Expression profile BBs cannot be created from R but can be loaded from PKML. (Tier 3 or so).
+print(simulationConfigurationHuman)
+```
 
 ## Creating simulations
 
@@ -323,6 +322,33 @@ simulation <- createSimulation(
   configuration
 )
 ```
+
+### Warnings and errors during simulation creation
+
+`createSimulation()` validates the simulation configuration and reports any issues encountered during the creation process. If the simulation cannot be created (e.g., due to invalid or inconsistent configuration), an error is thrown with a description of all issues. If the simulation is created successfully but with non-critical issues, these are collected as warnings and can be displayed by setting `showWarnings = TRUE`. The following example demonstrates an error case:
+
+```{r createSimulationWithErrors, error = TRUE}
+simulation <- loadSimulation(
+  system.file(
+    "extdata",
+    "Aciclovir.pkml",
+    package = "ospsuite"
+  ),
+  loadFromCache = TRUE
+)
+simConfig <- simulation$configuration
+
+# Introduce an error in the configuration
+simConfig$selectedInitialConditions <- list("Vergin 1995 IV" = NULL)
+
+newSimulation <- createSimulation(
+  simulationConfiguration = simConfig,
+  simulationName = "MySim",
+  showWarnings = TRUE
+)
+```
+
+### Setting calculation methods and creating process rate parameters
 
 Before creating a simulation from configuration, the user can change the calculation methods for molecules in the simulation. Available methods are listed in the enums `PartitionCoefficientMethods` and `CellularPermeabilityMethods`. Methods are set per molecule using the `setPartitionCoefficientMethods()` and `setCellularPermeabilityMethods()` methods of the simulation configuration. Additionally, the user can select whether to create all process rate parameters in the simulation or not by setting the argument `createAllProcessRateParameters` in the function `createSimulation()`. These parameters can be used for model debugging and analysis.
 

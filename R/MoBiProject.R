@@ -14,7 +14,7 @@ MoBiProject <- R6::R6Class(
     #' @field simulationNames Names of the simulations that are present in the project (read-only)
     simulationNames = function(value) {
       if (missing(value)) {
-        # Get ass simulation names using ProjectTask
+        # Get all simulation names using ProjectTask
         values <- .callProjectTask(property = "AllSimulationNames", self)
         return(values)
       } else {
@@ -61,6 +61,15 @@ MoBiProject <- R6::R6Class(
         return(values)
       } else {
         private$.throwPropertyIsReadonly("expressionProfilesNames")
+      }
+    },
+    #' @field defaultSimulationSettings Default simulation settings of the project (read-only)
+    defaultSimulationSettings = function(value) {
+      if (missing(value)) {
+        simSettings <- self$get("SimulationSettings")
+        return(SimulationSettings$new(simSettings))
+      } else {
+        private$.throwPropertyIsReadonly("defaultSimulationSettings")
       }
     }
   ),
@@ -234,39 +243,35 @@ MoBiProject <- R6::R6Class(
     #' Create a simulation configuration.
     #'
     #'
-    #' @param modulesNames A list of the modules from which to create in simulation.
+    #' @param modulesNames A list of the modules from which to create the simulation.
     #' All defined modules must be present in the project. The order of module names defines the order in which the modules will be combined to a simulation!
     #' @param individualName Optional, name of the individual.
     #' @param expressionProfilesNames Optional, list of expression profiles to apply to the simulation.
-    #' @param initialConditions By default, the first Initial Conditions
+    #' @param selectedInitialConditions By default, the first Initial Conditions
     #' (IC) building block (BB) of each module will be selected. If a module has multiple
     #' IC BBs, it is possible to specify which IC BB to apply by providing a named list,
     #' where the name should be the name of the module and the value the name of the IC BB.
-    #' If `NULL`, all modules will use the first IC BB, if available. When providing a list,
-    #' the value can also be set to `NULL`, which means that no IC BB from the specified module
-    #' will be selected.
-    #' @param parameterValues By default, the first Parameter Values
+    #' By explicitly setting the value for a specific module to `NULL`, no IC BB from the specified module will be applied.
+    #' If the list contains a module name that is not part of the provided modules, it will be ignored.
+    #' @param selectedParameterValues By default, the first Parameter Values
     #' (PV) building block (BB) of each module will be selected. If a module has multiple
     #' PV BBs, it is possible to specify which PV BB to apply by providing a named list,
     #' where the name should be the name of the module and the value the name of the PV BB.
-    #' If `NULL`, all modules will use the first PV BB, if available. When providing a list,
-    #' the value can also be set to `NULL`, which means that no PV BB from the specified module
-    #' will be selected.
-    #'
+    #' By explicitly setting the value for a specific module to `NULL`, no PV BB from the specified module will be applied.
+    #' If the list contains a module name that is not part of the provided modules, it will be ignored.
+    #' @param settings Optional, a `SimulationSettings` object defining the simulation settings.
+    #' If `NULL` (default), the default simulation settings of the project will be used.
     #' @returns A `SimulationConfiguration` object.
     createSimulationConfiguration = function(
       modulesNames,
       individualName = NULL,
       expressionProfilesNames = NULL,
-      initialConditions = NULL,
-      parameterValues = NULL
+      selectedInitialConditions = NULL,
+      selectedParameterValues = NULL,
+      settings = NULL
     ) {
-      modules <- self$getModules()
-      # Throw an error when a specified module is not present in the project
-      missingModules <- setdiff(modulesNames, names(modules))
-      if (length(missingModules) > 0) {
-        stop(messages$modulesNotPresentInProject(missingModules))
-      }
+      validateIsOfType(settings, "SimulationSettings", nullAllowed = TRUE)
+      modules <- self$getModules(modulesNames)
 
       # Get the specified individual
       individual <- NULL
@@ -282,108 +287,40 @@ MoBiProject <- R6::R6Class(
         )
       }
 
-      # Create module configurations for each module
-      moduleConfigurations <- lapply(modulesNames, function(moduleName) {
-        module <- modules[[moduleName]]
+      settings <- if (is.null(settings)) {
+        self$defaultSimulationSettings
+      } else {
+        settings
+      }
 
-        icBB <- NULL
-        # If no IC BB is specified, use the first IC BB available in the module
-        if (is.null(initialConditions)) {
-          # First get the list of all IC BBs
-          icBBs <- .callModuleTask("AllInitialConditionsFromModule", module)
-          # Select the first IC BB if available
-          if (length(icBBs) > 0) {
-            icBB <- icBBs[[1]]
-          }
-        } else {
-          # If initial conditions selection have been provided, use them.
-          # If the name of the module is in the names of 'initialConditions',
-          # get the value. The value could be NULL, of no IC BB should be selected.
-          if (moduleName %in% names(initialConditions)) {
-            selectedICName <- initialConditions[[moduleName]]
-            if (!is.null(selectedICName)) {
-              icBB <- .callModuleTask(
-                "InitialConditionBuildingBlockByName",
-                module,
-                selectedICName
-              )
-              # Cannot create configuration if the speciefied IC BB is not available
-              if (is.null(icBB)) {
-                stop(messages$icBBNotPresentInModule(
-                  moduleName,
-                  selectedICName
-                ))
-              }
-            }
-          }
-        }
-
-        pvBB <- NULL
-        # If no PV BB is specified, use the first PV BB available in the module
-        if (is.null(parameterValues)) {
-          # First get the list of all PV BBs
-          pvBBs <- .callModuleTask("AllParameterValuesFromModule", module)
-          # Select the first IC BB if available
-          if (length(pvBBs) > 0) {
-            pvBB <- pvBBs[[1]]
-          }
-        } else {
-          # If parameter values selection have been provided, use them.
-          # If the name of the module is in the names of 'parameterValues',
-          # get the value. The value could be NULL, of no PV BB should be selected.
-          if (moduleName %in% names(parameterValues)) {
-            selectedPVName <- parameterValues[[moduleName]]
-            if (!is.null(selectedPVName)) {
-              pvBB <- .callModuleTask(
-                "ParameterValueBuildingBlockByName",
-                module,
-                selectedPVName
-              )
-              # Cannot create configuration if the speciefied PV BB is not available
-              if (is.null(pvBB) && !is.null(selectedPVName)) {
-                stop(messages$pvBBNotPresentInModule(
-                  moduleName,
-                  selectedPVName
-                ))
-              }
-            }
-          }
-        }
-        # Create module configuration with default IC and PV BBs
-        moduleConfiguration <- .createModuleConfiguration(
-          module,
-          selectedParameterValue = pvBB,
-          selectedInitialCondition = icBB
-        )
-        return(moduleConfiguration)
-      })
-      netTask <- .getMoBiTaskFromCache("SimulationTask")
-      # TODO: remove simulation name after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2018
-      # TODO: does not work until https://github.com/Open-Systems-Pharmacology/MoBi/issues/2024 is fixed
-      netConfiguration <- netTask$call(
-        "CreateConfiguration",
-        "dummyName",
-        moduleConfigurations,
-        expressionProfiles,
-        individual
+      configuration <- SimulationConfiguration$new(
+        modules = modules,
+        individual = individual,
+        expressionProfiles = expressionProfiles,
+        selectedInitialConditions = selectedInitialConditions,
+        selectedParameterValues = selectedParameterValues,
+        settings = settings
       )
-      configuration <- SimulationConfiguration$new(netConfiguration)
-
       return(configuration)
     },
 
     #' @description
     #' Print the object to the console
+    #' @param printClassProperties Whether to print class properties.
     #' @param ... Rest arguments.
-    print = function(...) {
+    print = function(printClassProperties = FALSE, ...) {
+      if (printClassProperties) {
+        super$print(...)
+      }
       ospsuite.utils::ospPrintClass(self)
       ospsuite.utils::ospPrintItems(list(
         "Source file" = self$sourceFile
       ))
       ospsuite.utils::ospPrintItems(self$simulationNames, title = "Simulations")
-      # ospsuite.utils::ospPrintItems(
-      #   self$parameterIdentificationNames, title = "Parameter identifications"
-      # )
+      ospsuite.utils::ospPrintItems(
+        self$parameterIdentificationNames,
+        title = "Parameter identifications"
+      )
       ospsuite.utils::ospPrintItems(self$individualNames, title = "Individuals")
       ospsuite.utils::ospPrintItems(
         self$expressionProfilesNames,

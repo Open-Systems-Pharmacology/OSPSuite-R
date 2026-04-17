@@ -8,6 +8,8 @@
       Simulations:
         * TestSim_2Modules
         * TestSim_2Modules_noICSelected
+      Parameter identifications:
+        * Parameter Identification 1
       Individuals:
         * DefaultIndividual
       Expression profiles:
