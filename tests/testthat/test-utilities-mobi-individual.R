@@ -220,5 +220,8 @@ test_that("saveIndividualToPKML errors when given a non-Individual BB", {
 test_that("saveIndividualToPKML errors when file extension is not pkml", {
   individual <- createIndividualBuildingBlock(species = Species$Beagle)
   filePath <- withr::local_tempfile(fileext = ".txt")
-  expect_error(saveIndividualToPKML(individual, filePath))
+  expect_error(
+    saveIndividualToPKML(individual, filePath),
+    regexp = "extension 'txt', while 'pkml' was expected"
+  )
 })

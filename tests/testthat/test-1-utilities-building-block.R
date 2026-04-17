@@ -792,7 +792,10 @@ test_that("saveInitialConditionsToPKML errors when given a non-Initial-Condition
 
 test_that("saveInitialConditionsToPKML errors when file extension is not pkml", {
   filePath <- withr::local_tempfile(fileext = ".txt")
-  expect_error(saveInitialConditionsToPKML(cachedICBB, filePath))
+  expect_error(
+    saveInitialConditionsToPKML(cachedICBB, filePath),
+    regexp = "extension 'txt', while 'pkml' was expected"
+  )
 })
 
 # saveParameterValuesToPKML tests
@@ -816,5 +819,8 @@ test_that("saveParameterValuesToPKML errors when given a non-Parameter-Values BB
 
 test_that("saveParameterValuesToPKML errors when file extension is not pkml", {
   filePath <- withr::local_tempfile(fileext = ".txt")
-  expect_error(saveParameterValuesToPKML(cachedPVBB, filePath))
+  expect_error(
+    saveParameterValuesToPKML(cachedPVBB, filePath),
+    regexp = "extension 'txt', while 'pkml' was expected"
+  )
 })

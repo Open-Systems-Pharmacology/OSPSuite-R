@@ -328,5 +328,8 @@ test_that("saveExpressionProfileToPKML errors when file extension is not pkml", 
     speciesName = "Human"
   )
   filePath <- withr::local_tempfile(fileext = ".txt")
-  expect_error(saveExpressionProfileToPKML(expressionProfile, filePath))
+  expect_error(
+    saveExpressionProfileToPKML(expressionProfile, filePath),
+    regexp = "extension 'txt', while 'pkml' was expected"
+  )
 })
