@@ -7,8 +7,6 @@
 #'
 #' @returns A `Simulation` object
 #' @export
-#'
-#' @examples
 createSimulation <- function(
   simulationName,
   simulationConfiguration,

@@ -19,8 +19,6 @@
 #'
 #' @returns A `SimulationConfiguration` object.
 #' @export
-#'
-#' @examples
 createSimulationConfiguration <- function(
   modules,
   individual = NULL,
