@@ -770,3 +770,51 @@ test_that("addLocalMoleculeParametersToParameterValuesBB ignores molecules that 
   expect_true(all(grepl("\\|A\\|", newPaths)))
   expect_false(any(grepl("\\|NonExistentMolecule\\|", newPaths)))
 })
+
+# saveInitialConditionsToPKML tests
+
+test_that("saveInitialConditionsToPKML writes a non-empty pkml file and returns the path invisibly", {
+  filePath <- withr::local_tempfile(fileext = ".pkml")
+  result <- saveInitialConditionsToPKML(cachedICBB, filePath)
+
+  expect_true(file.exists(filePath))
+  expect_gt(file.info(filePath)$size, 0)
+  expect_equal(result, .expandPath(filePath))
+})
+
+test_that("saveInitialConditionsToPKML errors when given a non-Initial-Conditions BB", {
+  filePath <- withr::local_tempfile(fileext = ".pkml")
+  expect_error(
+    saveInitialConditionsToPKML(cachedPVBB, filePath),
+    regexp = "Initial Conditions"
+  )
+})
+
+test_that("saveInitialConditionsToPKML errors when file extension is not pkml", {
+  filePath <- withr::local_tempfile(fileext = ".txt")
+  expect_error(saveInitialConditionsToPKML(cachedICBB, filePath))
+})
+
+# saveParameterValuesToPKML tests
+
+test_that("saveParameterValuesToPKML writes a non-empty pkml file and returns the path invisibly", {
+  filePath <- withr::local_tempfile(fileext = ".pkml")
+  result <- saveParameterValuesToPKML(cachedPVBB, filePath)
+
+  expect_true(file.exists(filePath))
+  expect_gt(file.info(filePath)$size, 0)
+  expect_equal(result, .expandPath(filePath))
+})
+
+test_that("saveParameterValuesToPKML errors when given a non-Parameter-Values BB", {
+  filePath <- withr::local_tempfile(fileext = ".pkml")
+  expect_error(
+    saveParameterValuesToPKML(cachedICBB, filePath),
+    regexp = "Parameter Values"
+  )
+})
+
+test_that("saveParameterValuesToPKML errors when file extension is not pkml", {
+  filePath <- withr::local_tempfile(fileext = ".txt")
+  expect_error(saveParameterValuesToPKML(cachedPVBB, filePath))
+})

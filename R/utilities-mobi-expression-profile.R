@@ -153,3 +153,37 @@ setExpressionProfileParameters <- function(
     bbLabel = "Expression Profile"
   )
 }
+
+#' Save an Expression Profile Building Block to pkml
+#'
+#' Exports an `Expression Profile` building block to a pkml file that can be
+#' loaded by MoBi.
+#'
+#' @param expressionProfileBuildingBlock A `BuildingBlock` object of type
+#'   `Expression Profile`, as returned by `createExpressionProfileBuildingBlock()`.
+#' @param filePath Path where the pkml file will be created. Must end with the
+#'   `.pkml` extension.
+#'
+#' @returns `filePath`, invisibly.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' expressionProfile <- createExpressionProfileBuildingBlock(
+#'   type = ExpressionProfileCategories$`Metabolizing Enzyme`,
+#'   moleculeName = "CYP3A4",
+#'   speciesName = "Human"
+#' )
+#' saveExpressionProfileToPKML(expressionProfile, "CYP3A4-Human.pkml")
+#' }
+saveExpressionProfileToPKML <- function(
+  expressionProfileBuildingBlock,
+  filePath
+) {
+  .saveBuildingBlockToPKML(
+    buildingBlock = expressionProfileBuildingBlock,
+    filePath = filePath,
+    expectedType = BuildingBlockTypes$`Expression Profile`,
+    taskName = "ExpressionProfileTask"
+  )
+}

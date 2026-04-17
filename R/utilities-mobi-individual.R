@@ -132,3 +132,33 @@ setParameterValuesInIndividualBB <- function(
     bbLabel = "Building Block"
   )
 }
+
+#' Save an Individual Building Block to pkml
+#'
+#' Exports an `Individual` building block to a pkml file that can be loaded by
+#' MoBi.
+#'
+#' @param individualBuildingBlock A `BuildingBlock` object of type `Individual`,
+#'   as returned by `createIndividualBuildingBlock()`.
+#' @param filePath Path where the pkml file will be created. Must end with the
+#'   `.pkml` extension.
+#'
+#' @returns `filePath`, invisibly.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' individual <- createIndividualBuildingBlock(
+#'   species = Species$Human,
+#'   population = HumanPopulation$European_ICRP_2002
+#' )
+#' saveIndividualToPKML(individual, "Individual.pkml")
+#' }
+saveIndividualToPKML <- function(individualBuildingBlock, filePath) {
+  .saveBuildingBlockToPKML(
+    buildingBlock = individualBuildingBlock,
+    filePath = filePath,
+    expectedType = BuildingBlockTypes$Individual,
+    taskName = "IndividualTask"
+  )
+}

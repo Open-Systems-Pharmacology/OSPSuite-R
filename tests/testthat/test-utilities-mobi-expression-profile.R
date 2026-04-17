@@ -300,3 +300,33 @@ test_that("setExpressionProfileParameters throws an error when quantityPaths and
     regexp = "must have the same length"
   )
 })
+
+# saveExpressionProfileToPKML tests
+
+test_that("saveExpressionProfileToPKML writes a non-empty pkml file and returns the path invisibly", {
+  filePath <- withr::local_tempfile(fileext = ".pkml")
+  result <- saveExpressionProfileToPKML(cachedEPBB, filePath)
+
+  expect_true(file.exists(filePath))
+  expect_gt(file.info(filePath)$size, 0)
+  expect_equal(result, .expandPath(filePath))
+})
+
+test_that("saveExpressionProfileToPKML errors when given a non-Expression-Profile BB", {
+  individual <- createIndividualBuildingBlock(species = Species$Beagle)
+  filePath <- withr::local_tempfile(fileext = ".pkml")
+  expect_error(
+    saveExpressionProfileToPKML(individual, filePath),
+    regexp = "Expression Profile"
+  )
+})
+
+test_that("saveExpressionProfileToPKML errors when file extension is not pkml", {
+  expressionProfile <- createExpressionProfileBuildingBlock(
+    type = ExpressionProfileCategories$`Metabolizing Enzyme`,
+    moleculeName = "CYP3A4",
+    speciesName = "Human"
+  )
+  filePath <- withr::local_tempfile(fileext = ".txt")
+  expect_error(saveExpressionProfileToPKML(expressionProfile, filePath))
+})

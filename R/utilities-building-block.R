@@ -904,3 +904,96 @@ addProteinExpressionToParameterValuesBB <- function(
   netTask$call(setMethodName, buildingBlock, quantityPaths, baseValues)
   invisible(buildingBlock)
 }
+
+#' Save a Building Block to a pkml file
+#'
+#' Shared implementation for the `save*ToPKML` wrappers. Validates inputs and
+#' calls `ExportToPKML` on the specified MoBi task.
+#'
+#' @param buildingBlock A `BuildingBlock` object.
+#' @param filePath Path where the pkml file will be created.
+#' @param expectedType The expected `BuildingBlockTypes` value.
+#' @param taskName .NET task name (e.g. `"ParameterValuesTask"`).
+#'
+#' @returns `filePath`, invisibly.
+#' @keywords internal
+#'
+#' @noRd
+.saveBuildingBlockToPKML <- function(
+  buildingBlock,
+  filePath,
+  expectedType,
+  taskName
+) {
+  validateIsString(filePath)
+  validateIsFileExtension(filePath, "pkml")
+  .validateBuildingBlockType(buildingBlock, expectedType)
+  filePath <- .expandPath(filePath)
+
+  netTask <- .getMoBiTaskFromCache(taskName)
+  netTask$call("ExportToPKML", buildingBlock, filePath)
+
+  return(invisible(filePath))
+}
+
+#' Save an Initial Conditions Building Block to pkml
+#'
+#' Exports an `Initial Conditions` building block to a pkml file that can be
+#' loaded by MoBi.
+#'
+#' @param initialConditionsBuildingBlock A `BuildingBlock` object of type
+#'   `Initial Conditions`.
+#' @param filePath Path where the pkml file will be created. Must end with the
+#'   `.pkml` extension.
+#'
+#' @returns `filePath`, invisibly.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' simulation <- loadSimulation("path/to/simulation.pkml")
+#' icBB <- simulation$configuration$modules[[1]]$getInitialConditionsBBs()[[1]]
+#' saveInitialConditionsToPKML(icBB, "InitialConditions.pkml")
+#' }
+saveInitialConditionsToPKML <- function(
+  initialConditionsBuildingBlock,
+  filePath
+) {
+  .saveBuildingBlockToPKML(
+    buildingBlock = initialConditionsBuildingBlock,
+    filePath = filePath,
+    expectedType = BuildingBlockTypes$`Initial Conditions`,
+    taskName = "InitialConditionsTask"
+  )
+}
+
+#' Save a Parameter Values Building Block to pkml
+#'
+#' Exports a `Parameter Values` building block to a pkml file that can be
+#' loaded by MoBi.
+#'
+#' @param parameterValuesBuildingBlock A `BuildingBlock` object of type
+#'   `Parameter Values`.
+#' @param filePath Path where the pkml file will be created. Must end with the
+#'   `.pkml` extension.
+#'
+#' @returns `filePath`, invisibly.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' simulation <- loadSimulation("path/to/simulation.pkml")
+#' pvBB <- simulation$configuration$modules[[1]]$getParameterValuesBBs()[[1]]
+#' saveParameterValuesToPKML(pvBB, "ParameterValues.pkml")
+#' }
+saveParameterValuesToPKML <- function(
+  parameterValuesBuildingBlock,
+  filePath
+) {
+  .saveBuildingBlockToPKML(
+    buildingBlock = parameterValuesBuildingBlock,
+    filePath = filePath,
+    expectedType = BuildingBlockTypes$`Parameter Values`,
+    taskName = "ParameterValuesTask"
+  )
+}
