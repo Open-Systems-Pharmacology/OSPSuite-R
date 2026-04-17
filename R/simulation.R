@@ -182,6 +182,15 @@ Simulation <- R6::R6Class(
     calculationMethodFor = function(moleculeName, category) {
       validateIsString(moleculeName)
       validateEnumValue(category, CalculationMethodCategories)
+      supportedVersion <- 12
+      simVersion <- as.numeric(self$get("Creation")$get("Version"))
+      if (simVersion < supportedVersion) {
+        stop(messages$errorFeatureNotSupportedBySimulation(
+          "calculationMethodFor",
+          simVersion,
+          supportedVersion
+        ))
+      }
       self$call("CalculationMethodFor", moleculeName, category)
     },
     #' @description
