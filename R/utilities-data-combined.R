@@ -451,7 +451,7 @@ calculateResiduals <- function(
     resultList[[i]] <- dplyr::filter(pairedData, !is.na(residualValues))
   }
 
-  return(dplyr::bind_rows(resultList))
+  return(rbindlist(resultList))
 }
 
 #' Remove unpairable datasets for computing residuals

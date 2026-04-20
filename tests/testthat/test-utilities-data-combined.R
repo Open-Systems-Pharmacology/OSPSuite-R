@@ -128,7 +128,7 @@ test_that("calculateResiduals computes all observed, simulated data pairs correc
   )
 
   expect_equal(
-    residuals$residualValues,
+    as.vector(residuals$residualValues),
     rep(c(0, 0.1000000, -0.0999999, 0.0, -0.1999998, -1), 2),
     tolerance = 1e-5
   )

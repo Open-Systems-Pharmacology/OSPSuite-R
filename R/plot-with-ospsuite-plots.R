@@ -301,7 +301,6 @@ plotPredictedVsObserved <- function(
       list(
         data = plotData,
         mapping = mapping,
-        residualScale = NULL,
         metaData = metaData,
         xScale = xyScale,
         yScale = xyScale,
@@ -440,11 +439,11 @@ plotResidualsVsCovariate <- function(
 
   # Set x-axis mapping based on xAxis parameter
   xMapping <- if (xAxis == "time") {
-    ggplot2::aes(x = xValues)
+    ggplot2::aes(x = xValues, y = residualValues)
   } else if (xAxis == "observed") {
-    ggplot2::aes(x = yValues)
+    ggplot2::aes(x = yValues, y = residualValues)
   } else {
-    ggplot2::aes(x = predicted)
+    ggplot2::aes(x = predicted, y = residualValues)
   }
 
   mapping <- .getMappingForResiduals(
@@ -465,8 +464,7 @@ plotResidualsVsCovariate <- function(
       list(
         data = plotData,
         mapping = mapping,
-        metaData = metaData,
-        residualScale = residualScale
+        metaData = metaData
       ),
       additionalArgs
     )
@@ -534,7 +532,7 @@ plotResidualsAsHistogram <- function(
   additionalArgs <- list(...)
 
   mapping <- .getMappingForResiduals(
-    xMapping = ggplot2::aes(),
+    xMapping = ggplot2::aes(x = residualValues),
     userMapping = mapping
   )
 
@@ -550,7 +548,6 @@ plotResidualsAsHistogram <- function(
         data = plotData,
         mapping = mapping,
         metaData = metaData,
-        residualScale = residualScale,
         distribution = distribution
       ),
       additionalArgs
@@ -614,7 +611,7 @@ plotQuantileQuantilePlot <- function(
   additionalArgs <- list(...)
 
   mapping <- .getMappingForResiduals(
-    xMapping = ggplot2::aes(),
+    xMapping = ggplot2::aes(sample = residualValues),
     userMapping = mapping
   )
 
@@ -630,8 +627,7 @@ plotQuantileQuantilePlot <- function(
       list(
         data = plotData,
         mapping = mapping,
-        metaData = metaData,
-        residualScale = residualScale
+        metaData = metaData
       ),
       additionalArgs
     )
@@ -1108,11 +1104,12 @@ plotQuantileQuantilePlot <- function(
     return(NULL)
   }
 
-  pairedData <- plotData %>%
-    dplyr::group_by(group) %>%
-    dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) %>%
-    dplyr::ungroup() %>%
-    dplyr::relocate(group, name, nameSimulated)
+  pairedData <- rbindlist(
+    lapply(split(setDT(plotData), by = 'group'), function(data) {
+      .extractResidualsToTibble(data = data, scaling = scaling)
+    }),
+    idcol = 'group'
+  )
 
   return(pairedData)
 }
@@ -1310,8 +1307,6 @@ plotQuantileQuantilePlot <- function(
     c(
       xMapping,
       ggplot2::aes(
-        predicted = predicted,
-        observed = yValues,
         groupby = group
       )
     ),

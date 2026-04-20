@@ -730,17 +730,6 @@ test_that("It allows user mapping to override defaults", {
   expect_equal(rlang::as_label(result$colour), "group")
 })
 
-test_that("It works with empty x mapping for histogram", {
-  xMapping <- ggplot2::aes()
-  userMapping <- ggplot2::aes()
-
-  result <- .getMappingForResiduals(xMapping, userMapping)
-
-  expect_false("x" %in% names(result))
-  expect_equal(rlang::as_label(result$predicted), "predicted")
-  expect_equal(rlang::as_label(result$observed), "yValues")
-})
-
 # .getMappingForPredictedVsObserved
 
 test_that("It creates pred vs obs mapping with lloq", {
