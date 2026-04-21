@@ -1113,9 +1113,9 @@
       expressionProfile
     Output
       <BuildingBlock>
-        * Name: CYP3A4|Human|Metabolizing Enzyme
+        * Name: CYP3A4|Human|healthy
         * Type: Expression Profile
-        * Protein type: Metabolizing Enzyme
+        * Protein type: healthy
         * Molecule: CYP3A4
         * Species: Human
 

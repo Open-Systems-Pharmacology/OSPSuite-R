@@ -72,7 +72,7 @@ expressionProfileBBToDataFrame <- function(expressionProfilesBuildingBlock) {
 #' @param type String. Type of the protein the profile will be created for. Must be one of the values defined in the `ExpressionProfileCategories` enum.
 #' @param moleculeName Name of the protein molecule.
 #' @param speciesName Name of the species. Must be one of the values defined in the `Species` enum.
-#' @param phenotype Phenotype of the expression profile. Defaults to `"healthy"`.
+#' @param phenotype Phenotype of the expression profile. Defaults to `"Healthy"`.
 #'
 #' @return A `BuildingBlock` object representing the created expression profile.
 #' @export
@@ -87,7 +87,7 @@ createExpressionProfileBuildingBlock <- function(
   type,
   moleculeName,
   speciesName,
-  phenotype = "healthy"
+  phenotype = "Healthy"
 ) {
   validateEnumValue(type, ExpressionProfileCategories)
   validateIsString(moleculeName)
