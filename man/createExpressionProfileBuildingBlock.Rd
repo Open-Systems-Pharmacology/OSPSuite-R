@@ -13,7 +13,7 @@ createExpressionProfileBuildingBlock(type, moleculeName, speciesName, phenotype 
 
 \item{speciesName}{Name of the species. Must be one of the values defined in the \code{Species} enum.}
 
-\item{phenotype}{Phenotype of the expression profile. Defaults to \code{"Healthy"}.}
+\item{phenotype}{Phenotype of the expression profile. Defaults to \code{"Healthy"}. Used for naming only; it has no other implication.}
 }
 \value{
 A \code{BuildingBlock} object representing the created expression profile.
