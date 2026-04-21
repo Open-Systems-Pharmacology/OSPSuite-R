@@ -90,11 +90,11 @@ loadModuleFromPKML <- function(path) {
 ) {
   if (bbType == BuildingBlockTypes$`Parameter Values`) {
     allNames <- module$parameterValuesBBnames
-    allMethodName <- "AllParameterValuesFromModule"
-    byNameMethodName <- "ParameterValueBuildingBlockByName"
+    allMethodName <- "AllParameterValuesBuildingBlocksFromModule"
+    byNameMethodName <- "ParameterValuesBuildingBlockByName"
   } else if (bbType == BuildingBlockTypes$`Initial Conditions`) {
     allNames <- module$initialConditionsBBnames
-    allMethodName <- "AllInitialConditionsFromModule"
+    allMethodName <- "AllInitialConditionsBuildingBlocksFromModule"
     byNameMethodName <- "InitialConditionBuildingBlockByName"
   } else {
     stop(
