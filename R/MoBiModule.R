@@ -41,7 +41,7 @@ MoBiModule <- R6::R6Class(
     #' @field parameterValuesBBnames Names of the Parameter Values Building Blocks (PV BBs) in the module (read-only)
     parameterValuesBBnames = function(value) {
       if (missing(value)) {
-        return(.callModuleTask("AllParameterValueBuildingBlockNames", self))
+        return(.callModuleTask("AllParameterValuesBuildingBlockNames", self))
       } else {
         private$.throwPropertyIsReadonly("parameterValuesBBnames")
       }

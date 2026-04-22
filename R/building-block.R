@@ -51,7 +51,7 @@ BuildingBlock <- R6::R6Class(
 
       if (self$type == BuildingBlockTypes$`Expression Profile`) {
         ospsuite.utils::ospPrintItems(list(
-          "Protein type" = self$get("Category"),
+          "Protein type" = self$get("Type")$call("ToString"),
           "Molecule" = self$get("MoleculeName"),
           "Species" = self$get("Species")
         ))
