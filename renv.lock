@@ -3,10 +3,6 @@
     "Version": "4.5.3",
     "Repositories": [
       {
-        "Name": "CRAN",
-        "URL": "https://cran.rstudio.com"
-      },
-      {
         "Name": "PPM",
         "URL": "https://packagemanager.posit.co/cran/latest"
       }
@@ -47,8 +43,7 @@
       "NeedsCompilation": "yes",
       "Author": "Brian Ripley [aut, cre, cph], Bill Venables [aut, cph], Douglas M. Bates [ctb], Kurt Hornik [trl] (partial port ca 1998), Albrecht Gebhardt [trl] (partial port ca 1998), David Firth [ctb] (support functions for polr)",
       "Maintainer": "Brian Ripley <Brian.Ripley@R-project.org>",
-      "Repository": "PPM",
-      "Encoding": "UTF-8"
+      "Repository": "CRAN"
     },
     "Matrix": {
       "Package": "Matrix",
@@ -136,7 +131,8 @@
       "Description": "Provides color schemes for maps (and other graphics) designed by Cynthia Brewer as described at http://colorbrewer2.org.",
       "License": "Apache License 2.0",
       "NeedsCompilation": "no",
-      "Repository": "CRAN"
+      "Repository": "CRAN",
+      "Encoding": "UTF-8"
     },
     "Rcpp": {
       "Package": "Rcpp",
@@ -169,7 +165,7 @@
       "NeedsCompilation": "yes",
       "Author": "Dirk Eddelbuettel [aut, cre] (ORCID: <https://orcid.org/0000-0001-6419-907X>), Romain Francois [aut] (ORCID: <https://orcid.org/0000-0002-2444-4226>), JJ Allaire [aut] (ORCID: <https://orcid.org/0000-0003-0174-9868>), Kevin Ushey [aut] (ORCID: <https://orcid.org/0000-0003-2880-7407>), Qiang Kou [aut] (ORCID: <https://orcid.org/0000-0001-6786-5453>), Nathan Russell [aut], Iñaki Ucar [aut] (ORCID: <https://orcid.org/0000-0001-6403-5550>), Doug Bates [aut] (ORCID: <https://orcid.org/0000-0001-8316-9503>), John Chambers [aut]",
       "Maintainer": "Dirk Eddelbuettel <edd@debian.org>",
-      "Repository": "PPM"
+      "Repository": "https://packagemanager.posit.co/cran/__linux__/noble/latest"
     },
     "S7": {
       "Package": "S7",
@@ -208,7 +204,7 @@
       "NeedsCompilation": "yes",
       "Author": "Object-Oriented Programming Working Group [cph], Davis Vaughan [aut], Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>), Tomasz Kalinowski [aut], Will Landau [aut], Michael Lawrence [aut], Martin Maechler [aut] (ORCID: <https://orcid.org/0000-0002-8685-9910>), Luke Tierney [aut], Hadley Wickham [aut, cre] (ORCID: <https://orcid.org/0000-0003-4757-117X>)",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "PPM"
+      "Repository": "https://packagemanager.posit.co/cran/__linux__/noble/latest"
     },
     "askpass": {
       "Package": "askpass",
@@ -276,7 +272,8 @@
       "URL": "https://www.rforge.net/base64enc",
       "BugReports": "https://github.com/s-u/base64enc/issues",
       "NeedsCompilation": "yes",
-      "Repository": "CRAN"
+      "Repository": "CRAN",
+      "Encoding": "UTF-8"
     },
     "bit": {
       "Package": "bit",
@@ -661,58 +658,6 @@
       "NeedsCompilation": "yes",
       "Author": "Jeroen Ooms [aut, cre] (ORCID: <https://orcid.org/0000-0002-4035-0289>), John MacFarlane [cph] (Author of cmark)",
       "Maintainer": "Jeroen Ooms <jeroenooms@gmail.com>",
-      "Repository": "CRAN"
-    },
-    "covr": {
-      "Package": "covr",
-      "Version": "3.6.5",
-      "Source": "Repository",
-      "Encoding": "UTF-8",
-      "Title": "Test Coverage for Packages",
-      "Authors@R": "c( person(\"Jim\", \"Hester\", email = \"james.f.hester@gmail.com\", role = c(\"aut\", \"cre\")), person(\"Willem\", \"Ligtenberg\", role = \"ctb\"), person(\"Kirill\", \"Müller\", role = \"ctb\"), person(\"Henrik\", \"Bengtsson\", role = \"ctb\"), person(\"Steve\", \"Peak\", role = \"ctb\"), person(\"Kirill\", \"Sevastyanenko\", role = \"ctb\"), person(\"Jon\", \"Clayden\", role = \"ctb\"), person(\"Robert\", \"Flight\", role = \"ctb\"), person(\"Eric\", \"Brown\", role = \"ctb\"), person(\"Brodie\", \"Gaslam\", role = \"ctb\"), person(\"Will\", \"Beasley\", role = \"ctb\"), person(\"Robert\", \"Krzyzanowski\", role = \"ctb\"), person(\"Markus\", \"Wamser\", role = \"ctb\"), person(\"Karl\", \"Forner\", role = \"ctb\"), person(\"Gergely\", \"Daróczi\", role = \"ctb\"), person(\"Jouni\", \"Helske\", role = \"ctb\"), person(\"Kun\", \"Ren\", role = \"ctb\"), person(\"Jeroen\", \"Ooms\", role = \"ctb\"), person(\"Ken\", \"Williams\", role = \"ctb\"), person(\"Chris\", \"Campbell\", role = \"ctb\"), person(\"David\", \"Hugh-Jones\", role = \"ctb\"), person(\"Qin\", \"Wang\", role = \"ctb\"), person(\"Doug\", \"Kelkhoff\", role = \"ctb\"), person(\"Ivan\", \"Sagalaev\", role = c(\"ctb\", \"cph\"), comment = \"highlight.js library\"), person(\"Mark\", \"Otto\", role = \"ctb\", comment = \"Bootstrap library\"), person(\"Jacob\", \"Thornton\", role = \"ctb\", comment = \"Bootstrap library\"), person(family = \"Bootstrap contributors\", role = \"ctb\", comment = \"Bootstrap library\"), person(family = \"Twitter, Inc\", role = \"cph\", comment = \"Bootstrap library\") )",
-      "Description": "Track and report code coverage for your package and (optionally) upload the results to a coverage service like 'Codecov' <https://about.codecov.io> or 'Coveralls' <https://coveralls.io>. Code coverage is a measure of the amount of code being exercised by a set of tests. It is an indirect measure of test quality and completeness. This package is compatible with any testing methodology or framework and tracks coverage of both R code and compiled C/C++/FORTRAN code.",
-      "URL": "https://covr.r-lib.org, https://github.com/r-lib/covr",
-      "BugReports": "https://github.com/r-lib/covr/issues",
-      "Depends": [
-        "R (>= 3.1.0)",
-        "methods"
-      ],
-      "Imports": [
-        "digest",
-        "stats",
-        "utils",
-        "jsonlite",
-        "rex",
-        "httr",
-        "cli",
-        "withr (>= 1.0.2)",
-        "yaml"
-      ],
-      "Suggests": [
-        "R6",
-        "S7 (>= 0.2.0)",
-        "curl",
-        "knitr",
-        "rmarkdown",
-        "htmltools",
-        "DT (>= 0.2)",
-        "testthat (>= 3.0.0)",
-        "rlang",
-        "rstudioapi (>= 0.2)",
-        "xml2 (>= 1.0.0)",
-        "parallel",
-        "memoise",
-        "covr",
-        "box (>= 1.2.0)"
-      ],
-      "License": "MIT + file LICENSE",
-      "VignetteBuilder": "knitr",
-      "RoxygenNote": "7.3.3",
-      "Config/testthat/edition": "3",
-      "Config/testthat/parallel": "TRUE",
-      "NeedsCompilation": "yes",
-      "Author": "Jim Hester [aut, cre], Willem Ligtenberg [ctb], Kirill Müller [ctb], Henrik Bengtsson [ctb], Steve Peak [ctb], Kirill Sevastyanenko [ctb], Jon Clayden [ctb], Robert Flight [ctb], Eric Brown [ctb], Brodie Gaslam [ctb], Will Beasley [ctb], Robert Krzyzanowski [ctb], Markus Wamser [ctb], Karl Forner [ctb], Gergely Daróczi [ctb], Jouni Helske [ctb], Kun Ren [ctb], Jeroen Ooms [ctb], Ken Williams [ctb], Chris Campbell [ctb], David Hugh-Jones [ctb], Qin Wang [ctb], Doug Kelkhoff [ctb], Ivan Sagalaev [ctb, cph] (highlight.js library), Mark Otto [ctb] (Bootstrap library), Jacob Thornton [ctb] (Bootstrap library), Bootstrap contributors [ctb] (Bootstrap library), Twitter, Inc [cph] (Bootstrap library)",
-      "Maintainer": "Jim Hester <james.f.hester@gmail.com>",
       "Repository": "CRAN"
     },
     "cowplot": {
@@ -1498,7 +1443,7 @@
       "NeedsCompilation": "yes",
       "Author": "Jim Hester [aut], Hadley Wickham [aut], Gábor Csárdi [aut], Jeroen Ooms [cre], libuv project contributors [cph] (libuv library), Joyent, Inc. and other Node contributors [cph] (libuv library), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Jeroen Ooms <jeroenooms@gmail.com>",
-      "Repository": "PPM"
+      "Repository": "CRAN"
     },
     "generics": {
       "Package": "generics",
@@ -1867,7 +1812,7 @@
       "NeedsCompilation": "yes",
       "Author": "Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>), Jennifer Bryan [aut, cre] (ORCID: <https://orcid.org/0000-0002-6983-2759>), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Jennifer Bryan <jenny@posit.co>",
-      "Repository": "PPM"
+      "Repository": "CRAN"
     },
     "gridtext": {
       "Package": "gridtext",
@@ -2136,46 +2081,6 @@
       "Maintainer": "Winston Chang <winston@posit.co>",
       "Repository": "CRAN"
     },
-    "httr": {
-      "Package": "httr",
-      "Version": "1.4.8",
-      "Source": "Repository",
-      "Title": "Tools for Working with URLs and HTTP",
-      "Authors@R": "c( person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\")), person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")) )",
-      "Description": "Useful tools for working with HTTP organised by HTTP verbs (GET(), POST(), etc). Configuration functions make it easy to control additional request components (authenticate(), add_headers() and so on).",
-      "License": "MIT + file LICENSE",
-      "URL": "https://httr.r-lib.org/, https://github.com/r-lib/httr",
-      "BugReports": "https://github.com/r-lib/httr/issues",
-      "Depends": [
-        "R (>= 3.6)"
-      ],
-      "Imports": [
-        "curl (>= 5.1.0)",
-        "jsonlite",
-        "mime",
-        "openssl (>= 0.8)",
-        "R6"
-      ],
-      "Suggests": [
-        "covr",
-        "httpuv",
-        "jpeg",
-        "knitr",
-        "png",
-        "readr",
-        "rmarkdown",
-        "testthat (>= 0.8.0)",
-        "xml2"
-      ],
-      "VignetteBuilder": "knitr",
-      "Config/Needs/website": "tidyverse/tidytemplate",
-      "Encoding": "UTF-8",
-      "RoxygenNote": "7.3.3",
-      "NeedsCompilation": "no",
-      "Author": "Hadley Wickham [aut, cre], Posit Software, PBC [cph, fnd]",
-      "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "CRAN"
-    },
     "httr2": {
       "Package": "httr2",
       "Version": "1.2.2",
@@ -2255,7 +2160,8 @@
         "testthat"
       ],
       "NeedsCompilation": "no",
-      "Repository": "CRAN"
+      "Repository": "CRAN",
+      "Encoding": "UTF-8"
     },
     "isoband": {
       "Package": "isoband",
@@ -2452,7 +2358,8 @@
         "stats",
         "graphics"
       ],
-      "Repository": "CRAN"
+      "Repository": "CRAN",
+      "Encoding": "UTF-8"
     },
     "later": {
       "Package": "later",
@@ -2531,8 +2438,7 @@
       "NeedsCompilation": "yes",
       "Author": "Deepayan Sarkar [aut, cre] (ORCID: <https://orcid.org/0000-0003-4107-1553>), Felix Andrews [ctb], Kevin Wright [ctb] (documentation), Neil Klepeis [ctb], Johan Larsson [ctb] (miscellaneous improvements), Zhijian (Jason) Wen [cph] (filled contour code), Paul Murrell [ctb], Stefan Eng [ctb] (violin plot improvements), Achim Zeileis [ctb] (modern colors), Alexandre Courtiol [ctb] (generics for larrows, lpolygon, lrect and lsegments)",
       "Maintainer": "Deepayan Sarkar <deepayan.sarkar@r-project.org>",
-      "Repository": "PPM",
-      "Encoding": "UTF-8"
+      "Repository": "CRAN"
     },
     "lifecycle": {
       "Package": "lifecycle",
@@ -2831,7 +2737,7 @@
       "NeedsCompilation": "yes",
       "Author": "Jeroen Ooms [aut, cre] (ORCID: <https://orcid.org/0000-0002-4035-0289>), Oliver Keyes [ctb]",
       "Maintainer": "Jeroen Ooms <jeroenooms@gmail.com>",
-      "Repository": "PPM"
+      "Repository": "CRAN"
     },
     "openxlsx": {
       "Package": "openxlsx",
@@ -3432,7 +3338,8 @@
       ],
       "Collate": "'adjective.R' 'adverb.R' 'exclamation.R' 'verb.R' 'rpackage.R' 'package.R'",
       "NeedsCompilation": "no",
-      "Repository": "CRAN"
+      "Repository": "CRAN",
+      "Encoding": "UTF-8"
     },
     "prettyunits": {
       "Package": "prettyunits",
@@ -3617,7 +3524,7 @@
     },
     "ps": {
       "Package": "ps",
-      "Version": "1.9.2",
+      "Version": "1.9.3",
       "Source": "Repository",
       "Title": "List, Query, Manipulate System Processes",
       "Authors@R": "c( person(\"Jay\", \"Loden\", role = \"aut\"), person(\"Dave\", \"Daeschler\", role = \"aut\"), person(\"Giampaolo\", \"Rodola'\", role = \"aut\"), person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = c(\"aut\", \"cre\")), person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"), comment = c(ROR = \"03wc8by49\")) )",
@@ -3649,7 +3556,7 @@
       "Config/testthat/edition": "3",
       "Config/usethis/last-upkeep": "2025-04-28",
       "Encoding": "UTF-8",
-      "RoxygenNote": "7.3.2",
+      "RoxygenNote": "7.3.3",
       "NeedsCompilation": "yes",
       "Author": "Jay Loden [aut], Dave Daeschler [aut], Giampaolo Rodola' [aut], Gábor Csárdi [aut, cre], Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
@@ -3963,94 +3870,9 @@
     "renv": {
       "Package": "renv",
       "Version": "1.2.2",
-      "Source": "Repository",
-      "Type": "Package",
-      "Title": "Project Environments",
-      "Authors@R": "c( person(\"Kevin\", \"Ushey\", role = c(\"aut\", \"cre\"), email = \"kevin@rstudio.com\", comment = c(ORCID = \"0000-0003-2880-7407\")), person(\"Hadley\", \"Wickham\", role = c(\"aut\"), email = \"hadley@rstudio.com\", comment = c(ORCID = \"0000-0003-4757-117X\")), person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")) )",
-      "Description": "A dependency management toolkit for R. Using 'renv', you can create and manage project-local R libraries, save the state of these libraries to a 'lockfile', and later restore your library as required. Together, these tools can help make your projects more isolated, portable, and reproducible.",
-      "License": "MIT + file LICENSE",
-      "URL": "https://rstudio.github.io/renv/, https://github.com/rstudio/renv",
-      "BugReports": "https://github.com/rstudio/renv/issues",
-      "Imports": [
-        "utils"
-      ],
-      "Suggests": [
-        "BiocManager",
-        "cli",
-        "compiler",
-        "covr",
-        "cpp11",
-        "curl",
-        "devtools",
-        "generics",
-        "gitcreds",
-        "jsonlite",
-        "jsonvalidate",
-        "knitr",
-        "miniUI",
-        "modules",
-        "packrat",
-        "pak",
-        "R6",
-        "remotes",
-        "reticulate",
-        "rmarkdown",
-        "rstudioapi",
-        "shiny",
-        "testthat",
-        "uuid",
-        "waldo",
-        "yaml",
-        "webfakes"
-      ],
-      "Encoding": "UTF-8",
-      "RoxygenNote": "7.3.3",
-      "VignetteBuilder": "knitr",
-      "Config/Needs/website": "tidyverse/tidytemplate",
-      "Config/testthat/edition": "3",
-      "Config/testthat/parallel": "true",
-      "Config/testthat/start-first": "bioconductor,python,install,restore,snapshot,retrieve,remotes",
-      "NeedsCompilation": "no",
-      "Author": "Kevin Ushey [aut, cre] (ORCID: <https://orcid.org/0000-0003-2880-7407>), Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Posit Software, PBC [cph, fnd]",
-      "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
-      "Repository": "PPM"
-    },
-    "rex": {
-      "Package": "rex",
-      "Version": "1.2.2",
-      "Source": "Repository",
-      "Type": "Package",
-      "Title": "Friendly Regular Expressions",
-      "Authors@R": "c( person(\"Kevin\", \"Ushey\", , \"kevin@rstudio.com\", role = c(\"aut\", \"cre\")), person(\"Jim\", \"Hester\", , \"james.f.hester@gmail.com\", role = \"aut\"), person(\"Robert\", \"Krzyzanowski\", , \"rkrzyzanowski@gmail.com\", role = \"aut\") )",
-      "Description": "A friendly interface for the construction of regular expressions.",
-      "License": "MIT + file LICENSE",
-      "URL": "https://rex.r-lib.org, https://github.com/r-lib/rex",
-      "BugReports": "https://github.com/r-lib/rex/issues",
-      "Suggests": [
-        "covr",
-        "dplyr",
-        "ggplot2",
-        "Hmisc",
-        "knitr",
-        "magrittr",
-        "rmarkdown",
-        "roxygen2",
-        "rvest",
-        "stringr",
-        "testthat"
-      ],
-      "VignetteBuilder": "knitr",
-      "Encoding": "UTF-8",
-      "RoxygenNote": "7.1.2",
-      "Collate": "'aaa.R' 'utils.R' 'escape.R' 'capture.R' 'character_class.R' 'counts.R' 'lookarounds.R' 'match.R' 'or.R' 'rex-mode.R' 'rex.R' 'shortcuts.R' 'wildcards.R' 'zzz.R'",
-      "Config/Needs/website": "r-lib/pkgdown, tidyverse/tidytemplate",
-      "Imports": [
-        "withr"
-      ],
-      "NeedsCompilation": "no",
-      "Author": "Kevin Ushey [aut, cre], Jim Hester [aut], Robert Krzyzanowski [aut]",
-      "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
-      "Repository": "CRAN"
+      "OS_type": null,
+      "Repository": "PPM",
+      "Source": "Repository"
     },
     "rlang": {
       "Package": "rlang",
@@ -4676,8 +4498,7 @@
       "NeedsCompilation": "yes",
       "Author": "Terry M Therneau [aut, cre], Thomas Lumley [ctb, trl] (original S->R port and R maintainer until 2009), Atkinson Elizabeth [ctb], Crowson Cynthia [ctb]",
       "Maintainer": "Terry M Therneau <therneau.terry@mayo.edu>",
-      "Repository": "PPM",
-      "Encoding": "UTF-8"
+      "Repository": "CRAN"
     },
     "sys": {
       "Package": "sys",
@@ -5518,7 +5339,8 @@
       ],
       "RoxygenNote": "6.1.1",
       "NeedsCompilation": "no",
-      "Repository": "CRAN"
+      "Repository": "CRAN",
+      "Encoding": "UTF-8"
     },
     "withr": {
       "Package": "withr",
@@ -5704,7 +5526,8 @@
       "License": "GPL (>= 2)",
       "Repository": "CRAN",
       "NeedsCompilation": "no",
-      "Author": "David B. Dahl [aut], David Scott [aut, cre], Charles Roosen [aut], Arni Magnusson [aut], Jonathan Swinton [aut], Ajay Shah [ctb], Arne Henningsen [ctb], Benno Puetz [ctb], Bernhard Pfaff [ctb], Claudio Agostinelli [ctb], Claudius Loehnert [ctb], David Mitchell [ctb], David Whiting [ctb], Fernando da Rosa [ctb], Guido Gay [ctb], Guido Schulz [ctb], Ian Fellows [ctb], Jeff Laake [ctb], John Walker [ctb], Jun Yan [ctb], Liviu Andronic [ctb], Markus Loecher [ctb], Martin Gubri [ctb], Matthieu Stigler [ctb], Robert Castelo [ctb], Seth Falcon [ctb], Stefan Edwards [ctb], Sven Garbade [ctb], Uwe Ligges [ctb]"
+      "Author": "David B. Dahl [aut], David Scott [aut, cre], Charles Roosen [aut], Arni Magnusson [aut], Jonathan Swinton [aut], Ajay Shah [ctb], Arne Henningsen [ctb], Benno Puetz [ctb], Bernhard Pfaff [ctb], Claudio Agostinelli [ctb], Claudius Loehnert [ctb], David Mitchell [ctb], David Whiting [ctb], Fernando da Rosa [ctb], Guido Gay [ctb], Guido Schulz [ctb], Ian Fellows [ctb], Jeff Laake [ctb], John Walker [ctb], Jun Yan [ctb], Liviu Andronic [ctb], Markus Loecher [ctb], Martin Gubri [ctb], Matthieu Stigler [ctb], Robert Castelo [ctb], Seth Falcon [ctb], Stefan Edwards [ctb], Sven Garbade [ctb], Uwe Ligges [ctb]",
+      "Encoding": "UTF-8"
     },
     "yaml": {
       "Package": "yaml",
