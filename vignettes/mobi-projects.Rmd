@@ -90,6 +90,20 @@ icBBs <- module$getInitialConditionsBBs()
 pvBBs <- module$getParameterValuesBBs()
 ```
 
+Each module has a merge behavior that controls how it is combined with other modules when building a simulation. The merge behavior is accessible via the `mergeBehavior` field and can be set to either `"Extend"` (default) or `"Overwrite"`. Details on the merge behavior and how it affects the combination of modules can be found in the [MoBi documentation](https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/modularization-concept#creating-simulations-from-modules-and-combination-rules).
+
+```{r setMergeBehavior}
+# Inspect the current merge behavior
+print(module$mergeBehavior)
+
+# Change the merge behavior to "Overwrite"
+module$mergeBehavior <- "Overwrite"
+print(module$mergeBehavior)
+
+# Reset back to the default
+module$mergeBehavior <- "Extend"
+```
+
 You can easily convert the retrieved initial conditions, parameter values, individuals, and expression profiles to data frames for further processing:
 
 ```{r convertBBsToDataFrames}

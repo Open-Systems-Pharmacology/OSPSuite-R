@@ -23,19 +23,23 @@ MoBiModule <- R6::R6Class(
         private$.throwPropertyIsReadonly("isPKSimModule")
       }
     },
-    #' @field mergeBehavior Merge behavior of the module (read/write)
+    #' @field mergeBehavior Merge behavior of the module. Must be one of "Extend" or "Overwrite".
     mergeBehavior = function(value) {
       if (missing(value)) {
         return(enumGetKey(enum = MergeBehavior, self$get("MergeBehavior")))
       } else {
-        private$.throwPropertyIsReadonly("mergeBehavior")
-        # TODO: https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1591
-        # # Check that the provided merge behavior is either "Extend" or "Overwrite".
-        # if (!(value %in% enumKeys(MergeBehavior))) {
-        #   stop("Invalid value for enum 'MergeBehavior'. Must be one of: ", paste(ospsuite.utils::enumKeys(MergeBehavior), collapse = ", "))
-        # }
-        #
-        # self$set("MergeBehavior", enumGetValue(enum = MergeBehavior, key = value))
+        # Check that the provided merge behavior is either "Extend" or "Overwrite".
+        if (!(value %in% enumKeys(MergeBehavior))) {
+          stop(
+            "Invalid value for enum 'MergeBehavior'. Must be one of: ",
+            paste(ospsuite.utils::enumKeys(MergeBehavior), collapse = ", ")
+          )
+        }
+
+        self$set(
+          "MergeBehavior",
+          as.integer(enumGetValue(enum = MergeBehavior, key = value))
+        )
       }
     },
     #' @field parameterValuesBBnames Names of the Parameter Values Building Blocks (PV BBs) in the module (read-only)
