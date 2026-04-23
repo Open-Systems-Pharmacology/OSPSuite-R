@@ -3,42 +3,52 @@
 \name{addProteinExpressionToParameterValuesBB}
 \alias{addProteinExpressionToParameterValuesBB}
 \title{Extend a Parameter Values Building Block (BB) with protein expression parameters
-for selected protein molecules in the selected organs.}
+for selected protein molecules in selected organs.}
 \usage{
 addProteinExpressionToParameterValuesBB(
   parameterValuesBuildingBlock,
-  spatialStructureBB,
-  organPaths = NULL,
-  moleculesBB,
-  moleculeNames = NULL
+  spatialStructureModule,
+  moleculesModule,
+  moleculeNames,
+  referenceExpressionProfiles,
+  organPaths = NULL
 )
 }
 \arguments{
-\item{parameterValuesBuildingBlock}{A \code{BuildingBlock} object of type \verb{Parameter Values}.}
+\item{parameterValuesBuildingBlock}{A \code{BuildingBlock} object of type \verb{Parameter Values}.
+The entries will be added to this building block.}
 
-\item{spatialStructureBB}{A \code{BuildingBlock} object of type \verb{Spatial Structure}.
-Entries will be created for the selected molecules in all physical containers of this
-spatial structure.}
+\item{spatialStructureModule}{A \code{MoBiModule} containing a \verb{Spatial Structure} building block.
+Expression parameters are created for containers defined by this spatial structure.}
 
-\item{organPaths}{A vector of paths to the organs for which the expression paramters
-will be created. If any of the provided path is not an organ, an error is thrown.
-If \code{NULL} (default), the function will use all organs from the spatial structure.}
+\item{moleculesModule}{A \code{MoBiModule} containing a \code{Molecules} building block.
+Must contain the proteins named in \code{moleculeNames}.}
 
-\item{moleculesBB}{A \code{BuildingBlock} object of type \code{Molecules}. The entries will be
-created for all proteins from this building block, or for a subset of protein molecules
-defined in the \code{moleculeNames} argument.}
+\item{moleculeNames}{Character vector of protein molecule names for which
+expression parameters should be added.}
 
-\item{moleculeNames}{Optional list of protein molecule names. If provided, only the molecules
-with these names will be added to the \code{parameterValuesBuildingBlock}.}
+\item{referenceExpressionProfiles}{A single \code{BuildingBlock} of type
+\verb{Expression Profile}, or a list of such building blocks. The matching
+profile for each molecule in \code{moleculeNames} is identified by the profile's
+\code{MoleculeName} property. Every molecule in \code{moleculeNames} must have a
+matching profile. Profiles whose \code{MoleculeName} is not in \code{moleculeNames}
+are ignored. Duplicate profiles (two entries with the same \code{MoleculeName})
+raise an error.}
+
+\item{organPaths}{Character vector of organ paths under which expression
+parameters are created (e.g. \code{"Organism|Kidney"}). Each path must resolve
+to an existing organ in the spatial structure. The parameters are added for all physical containers under these paths.
+If \code{NULL} (default), expression parameters are created for every organ in
+the spatial structure.}
 }
 \value{
-Path of entries added to the building block.
+Paths of entries added to the building block.
 }
 \description{
-TBD: is a spatial structure required? Option 1 - define the organs as paths
-Option 2 - provide a spatial structure and then define organ paths. Entries will
-be created for all sub-organs.
-}
-\details{
-TBD: Is a molecules BB required? Or just molecule names?
+For each protein in \code{moleculeNames}, parameters defining the protein expression
+(e.g. "Relative expression", "Fraction expressed ...", and "Initial concentration"
+entries) are added to the \code{parameterValuesBuildingBlock} for every physical
+container under each path in \code{organPaths}. Default values are taken from the
+reference expression profile supplied for that molecule. Existing entries are
+not overwritten.
 }

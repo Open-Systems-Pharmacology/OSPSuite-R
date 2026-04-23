@@ -771,6 +771,240 @@ test_that("addLocalMoleculeParametersToParameterValuesBB ignores molecules that 
   expect_false(any(grepl("\\|NonExistentMolecule\\|", newPaths)))
 })
 
+# addProteinExpressionToParameterValuesBB tests
+
+# Fixture: load a fresh copy of Test_Project so the PV BB is pristine for each
+# mutating test. TestModule contains UGT2B7 in its Molecules BB and uses the
+# standard human spatial structure; the matching expression profile is
+# "UGT2B7|Human|Healthy".
+.getFreshProteinExpressionFixture <- function() {
+  project <- loadMoBiProject(getTestDataFilePath(
+    "MoBiProject/Test_Project.mbp3"
+  ))
+  module <- project$getModules("TestModule")[[1]]
+  list(
+    project = project,
+    module = module,
+    pvBB = module$getParameterValuesBBs()[[1]],
+    profiles = list(
+      project$getExpressionProfiles("UGT2B7|Human|Healthy")[[1]]
+    )
+  )
+}
+
+test_that("addProteinExpressionToParameterValuesBB throws error for wrong BB type", {
+  fx <- .getFreshProteinExpressionFixture()
+  expect_error(
+    addProteinExpressionToParameterValuesBB(
+      parameterValuesBuildingBlock = cachedICBB,
+      spatialStructureModule = fx$module,
+      moleculesModule = fx$module,
+      moleculeNames = "UGT2B7",
+      referenceExpressionProfiles = fx$profiles,
+      organPaths = "Organism|Kidney"
+    ),
+    regexp = "Parameter Values"
+  )
+})
+
+test_that("addProteinExpressionToParameterValuesBB throws error for module without spatial structure", {
+  fx <- .getFreshProteinExpressionFixture()
+  emptyModule <- globalTestMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
+  expect_error(
+    addProteinExpressionToParameterValuesBB(
+      parameterValuesBuildingBlock = fx$pvBB,
+      spatialStructureModule = emptyModule,
+      moleculesModule = fx$module,
+      moleculeNames = "UGT2B7",
+      referenceExpressionProfiles = fx$profiles,
+      organPaths = "Organism|Kidney"
+    ),
+    "The provided modules do not contain the required building blocks"
+  )
+})
+
+test_that("addProteinExpressionToParameterValuesBB throws error for module without molecules", {
+  fx <- .getFreshProteinExpressionFixture()
+  emptyModule <- globalTestMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
+  expect_error(
+    addProteinExpressionToParameterValuesBB(
+      parameterValuesBuildingBlock = fx$pvBB,
+      spatialStructureModule = fx$module,
+      moleculesModule = emptyModule,
+      moleculeNames = "UGT2B7",
+      referenceExpressionProfiles = fx$profiles,
+      organPaths = "Organism|Kidney"
+    ),
+    "The provided modules do not contain the required building blocks"
+  )
+})
+
+test_that("addProteinExpressionToParameterValuesBB errors when a molecule has no reference profile", {
+  fx <- .getFreshProteinExpressionFixture()
+  expect_error(
+    addProteinExpressionToParameterValuesBB(
+      parameterValuesBuildingBlock = fx$pvBB,
+      spatialStructureModule = fx$module,
+      moleculesModule = fx$module,
+      moleculeNames = c("UGT2B7", "SomeOtherProtein"),
+      referenceExpressionProfiles = fx$profiles,
+      organPaths = "Organism|Kidney"
+    ),
+    regexp = "No reference expression profile"
+  )
+})
+
+test_that("addProteinExpressionToParameterValuesBB errors on duplicate profiles for the same molecule", {
+  fx <- .getFreshProteinExpressionFixture()
+  expect_error(
+    addProteinExpressionToParameterValuesBB(
+      parameterValuesBuildingBlock = fx$pvBB,
+      spatialStructureModule = fx$module,
+      moleculesModule = fx$module,
+      moleculeNames = "UGT2B7",
+      referenceExpressionProfiles = list(
+        fx$profiles[[1]],
+        fx$profiles[[1]]
+      ),
+      organPaths = "Organism|Kidney"
+    ),
+    regexp = "multiple profiles for the following molecules"
+  )
+})
+
+test_that("addProteinExpressionToParameterValuesBB accepts a single BuildingBlock (not wrapped in a list)", {
+  fx <- .getFreshProteinExpressionFixture()
+  newPaths <- addProteinExpressionToParameterValuesBB(
+    parameterValuesBuildingBlock = fx$pvBB,
+    spatialStructureModule = fx$module,
+    moleculesModule = fx$module,
+    moleculeNames = "UGT2B7",
+    referenceExpressionProfiles = fx$profiles[[1]],
+    organPaths = "Organism|Kidney"
+  )
+
+  expect_gt(length(newPaths), 0)
+  expect_true(all(grepl("\\|UGT2B7\\|", newPaths)))
+})
+
+test_that("addProteinExpressionToParameterValuesBB ignores profiles whose molecule is not in moleculeNames", {
+  fx <- .getFreshProteinExpressionFixture()
+  extraProfile <- fx$project$getExpressionProfiles("CYP3A4|Human|Healthy")[[1]]
+  newPaths <- addProteinExpressionToParameterValuesBB(
+    parameterValuesBuildingBlock = fx$pvBB,
+    spatialStructureModule = fx$module,
+    moleculesModule = fx$module,
+    moleculeNames = "UGT2B7",
+    referenceExpressionProfiles = list(fx$profiles[[1]], extraProfile),
+    organPaths = "Organism|Kidney"
+  )
+
+  expect_gt(length(newPaths), 0)
+  expect_true(all(grepl("\\|UGT2B7\\|", newPaths)))
+  expect_false(any(grepl("\\|CYP3A4\\|", newPaths)))
+})
+
+test_that("addProteinExpressionToParameterValuesBB returns empty character when moleculeNames is empty", {
+  fx <- .getFreshProteinExpressionFixture()
+  dfBefore <- parameterValuesBBToDataFrame(fx$pvBB)
+  newPaths <- addProteinExpressionToParameterValuesBB(
+    parameterValuesBuildingBlock = fx$pvBB,
+    spatialStructureModule = fx$module,
+    moleculesModule = fx$module,
+    moleculeNames = character(0),
+    referenceExpressionProfiles = fx$profiles,
+    organPaths = "Organism|Kidney"
+  )
+  expect_equal(newPaths, character(0))
+  dfAfter <- parameterValuesBBToDataFrame(fx$pvBB)
+  expect_equal(dfAfter, dfBefore)
+})
+
+test_that("addProteinExpressionToParameterValuesBB with NULL organPaths adds entries for all organs in the spatial structure", {
+  fx <- .getFreshProteinExpressionFixture()
+  allPaths <- addProteinExpressionToParameterValuesBB(
+    parameterValuesBuildingBlock = fx$pvBB,
+    spatialStructureModule = fx$module,
+    moleculesModule = fx$module,
+    moleculeNames = "UGT2B7",
+    referenceExpressionProfiles = fx$profiles,
+    organPaths = NULL
+  )
+
+  expect_gt(length(allPaths), 0)
+  expect_true(all(grepl("\\|UGT2B7\\|", allPaths)))
+  # Entries cover more than a single organ when NULL -> all organs
+  organsHit <- unique(vapply(
+    strsplit(allPaths, "\\|"),
+    function(p) p[[2]],
+    character(1)
+  ))
+  expect_gt(length(organsHit), 1)
+})
+
+test_that("addProteinExpressionToParameterValuesBB adds expression parameters for a single protein in a selected organ", {
+  fx <- .getFreshProteinExpressionFixture()
+  newPaths <- addProteinExpressionToParameterValuesBB(
+    parameterValuesBuildingBlock = fx$pvBB,
+    spatialStructureModule = fx$module,
+    moleculesModule = fx$module,
+    moleculeNames = "UGT2B7",
+    referenceExpressionProfiles = fx$profiles,
+    organPaths = "Organism|Kidney"
+  )
+
+  expect_gt(length(newPaths), 0)
+  expect_true(all(grepl("\\|UGT2B7\\|", newPaths)))
+  expect_true(all(startsWith(newPaths, "Organism|Kidney|")))
+
+  pvBB_df <- parameterValuesBBToDataFrame(fx$pvBB)
+  newPaths_df <- pvBB_df[
+    paste0(pvBB_df$`Container Path`, "|", pvBB_df$`Parameter Name`) %in%
+      newPaths,
+  ]
+  expect_snapshot(newPaths_df)
+})
+
+test_that("addProteinExpressionToParameterValuesBB honours multiple organPaths", {
+  fx <- .getFreshProteinExpressionFixture()
+  newPaths <- addProteinExpressionToParameterValuesBB(
+    parameterValuesBuildingBlock = fx$pvBB,
+    spatialStructureModule = fx$module,
+    moleculesModule = fx$module,
+    moleculeNames = "UGT2B7",
+    referenceExpressionProfiles = fx$profiles,
+    organPaths = c("Organism|Kidney", "Organism|Bone")
+  )
+
+  expect_gt(length(newPaths), 0)
+  expect_true(any(startsWith(newPaths, "Organism|Kidney|")))
+  expect_true(any(startsWith(newPaths, "Organism|Bone|")))
+})
+
+test_that("addProteinExpressionToParameterValuesBB does not overwrite existing entries", {
+  fx <- .getFreshProteinExpressionFixture()
+
+  firstPaths <- addProteinExpressionToParameterValuesBB(
+    parameterValuesBuildingBlock = fx$pvBB,
+    spatialStructureModule = fx$module,
+    moleculesModule = fx$module,
+    moleculeNames = "UGT2B7",
+    referenceExpressionProfiles = fx$profiles,
+    organPaths = "Organism|Kidney"
+  )
+  expect_gt(length(firstPaths), 0)
+
+  secondPaths <- addProteinExpressionToParameterValuesBB(
+    parameterValuesBuildingBlock = fx$pvBB,
+    spatialStructureModule = fx$module,
+    moleculesModule = fx$module,
+    moleculeNames = "UGT2B7",
+    referenceExpressionProfiles = fx$profiles,
+    organPaths = "Organism|Kidney"
+  )
+  expect_equal(length(secondPaths), 0)
+})
+
 # saveInitialConditionsToPKML tests
 
 test_that("saveInitialConditionsToPKML writes a non-empty pkml file and returns the path invisibly", {
