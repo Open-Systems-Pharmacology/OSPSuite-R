@@ -204,7 +204,7 @@
       "NeedsCompilation": "yes",
       "Author": "Object-Oriented Programming Working Group [cph], Davis Vaughan [aut], Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>), Tomasz Kalinowski [aut], Will Landau [aut], Michael Lawrence [aut], Martin Maechler [aut] (ORCID: <https://orcid.org/0000-0002-8685-9910>), Luke Tierney [aut], Hadley Wickham [aut, cre] (ORCID: <https://orcid.org/0000-0003-4757-117X>)",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/__linux__/noble/latest"
+      "Repository": "CRAN"
     },
     "askpass": {
       "Package": "askpass",
@@ -310,35 +310,37 @@
     },
     "bit64": {
       "Package": "bit64",
-      "Version": "4.6.0-1",
+      "Version": "4.8.0",
       "Source": "Repository",
       "Title": "A S3 Class for Vectors of 64bit Integers",
-      "Authors@R": "c( person(\"Michael\", \"Chirico\", email = \"michaelchirico4@gmail.com\", role = c(\"aut\", \"cre\")), person(\"Jens\", \"Oehlschlägel\", role = \"aut\"), person(\"Leonardo\", \"Silvestri\", role = \"ctb\"), person(\"Ofek\", \"Shilon\", role = \"ctb\") )",
+      "Authors@R": "c( person(\"Michael\", \"Chirico\", email=\"michaelchirico4@gmail.com\", role=c(\"aut\", \"cre\")), person(\"Jens\", \"Oehlschlägel\", role=\"aut\"), person(\"Leonardo\", \"Silvestri\", role=\"ctb\"), person(\"Ofek\", \"Shilon\", role=\"ctb\"), person(\"Christian\", \"Ullerich\", role=\"ctb\") )",
       "Depends": [
-        "R (>= 3.4.0)",
-        "bit (>= 4.0.0)"
+        "R (>= 3.5.0)"
       ],
       "Description": "Package 'bit64' provides serializable S3 atomic 64bit (signed) integers. These are useful for handling database keys and exact counting in +-2^63. WARNING: do not use them as replacement for 32bit integers, integer64 are not supported for subscripting by R-core and they have different semantics when combined with double, e.g. integer64 + double => integer64. Class integer64 can be used in vectors, matrices, arrays and data.frames. Methods are available for coercion from and to logicals, integers, doubles, characters and factors as well as many elementwise and summary functions. Many fast algorithmic operations such as 'match' and 'order' support inter- active data exploration and manipulation and optionally leverage caching.",
       "License": "GPL-2 | GPL-3",
       "LazyLoad": "yes",
       "ByteCompile": "yes",
-      "URL": "https://github.com/r-lib/bit64",
+      "URL": "https://github.com/r-lib/bit64, https://bit64.r-lib.org",
       "Encoding": "UTF-8",
       "Imports": [
+        "bit (>= 4.0.0)",
         "graphics",
         "methods",
         "stats",
         "utils"
       ],
       "Suggests": [
-        "testthat (>= 3.0.3)",
+        "patrick (>= 0.3.0)",
+        "testthat (>= 3.3.0)",
         "withr"
       ],
       "Config/testthat/edition": "3",
-      "Config/needs/development": "testthat",
-      "RoxygenNote": "7.3.2",
+      "Config/Needs/development": "patrick, testthat",
+      "Config/Needs/website": "tidyverse/tidytemplate",
+      "RoxygenNote": "7.3.3",
       "NeedsCompilation": "yes",
-      "Author": "Michael Chirico [aut, cre], Jens Oehlschlägel [aut], Leonardo Silvestri [ctb], Ofek Shilon [ctb]",
+      "Author": "Michael Chirico [aut, cre], Jens Oehlschlägel [aut], Leonardo Silvestri [ctb], Ofek Shilon [ctb], Christian Ullerich [ctb]",
       "Maintainer": "Michael Chirico <michaelchirico4@gmail.com>",
       "Repository": "CRAN"
     },
@@ -2786,7 +2788,7 @@
     },
     "ospsuite.plots": {
       "Package": "ospsuite.plots",
-      "Version": "1.1.0.9004",
+      "Version": "1.1.0.9005",
       "Source": "GitHub",
       "Type": "Package",
       "Title": "Library for standardized graphs",
@@ -2845,7 +2847,7 @@
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "OSPSuite.Plots",
       "RemoteRef": "HEAD",
-      "RemoteSha": "c38e6f7f732f54777274fedf1ebf29a9d7f52248",
+      "RemoteSha": "3b1882bdc54c4b3607938776212df4b561d4f958",
       "RemoteHost": "api.github.com"
     },
     "ospsuite.utils": {
