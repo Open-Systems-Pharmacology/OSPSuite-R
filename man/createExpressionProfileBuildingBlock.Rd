@@ -4,7 +4,12 @@
 \alias{createExpressionProfileBuildingBlock}
 \title{Create an Expression Profile Building Block}
 \usage{
-createExpressionProfileBuildingBlock(type, moleculeName, speciesName, phenotype = "Healthy")
+createExpressionProfileBuildingBlock(
+  type,
+  moleculeName,
+  speciesName,
+  phenotype = "Healthy"
+)
 }
 \arguments{
 \item{type}{String. Type of the protein the profile will be created for. Must be one of the values defined in the \code{ExpressionProfileCategories} enum.}

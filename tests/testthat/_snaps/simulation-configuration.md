@@ -46,7 +46,7 @@
         * DefaultIndividual
       Expression profiles:
         * CYP3A4|Human|Healthy
-        * UGT2B6|Human|Healthy
+        * UGT2B7|Human|Healthy
 
 # SimulationConfiguration can be created from a simulation loaded from a MoBi project with selected PV but no IC BBs
 
@@ -71,8 +71,8 @@
       Individual:
         * DefaultIndividual
       Expression profiles:
-        * UGT2B6|Human|Healthy
         * CYP3A4|Human|Healthy
+        * UGT2B7|Human|Healthy
 
 # setPartitionCoefficientMethods stores a valid method for a molecule
 

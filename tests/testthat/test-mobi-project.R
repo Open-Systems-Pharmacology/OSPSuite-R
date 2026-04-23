@@ -52,7 +52,7 @@ test_that("It can get individuals names from a MoBi project", {
 # Test for MoBiProject$expressionProfilesNames
 test_that("It can get expression profiles names from a MoBi project", {
   expectedNames <- c(
-    "UGT2B6|Human|Healthy",
+    "UGT2B7|Human|Healthy",
     "CYP3A4|Human|Healthy"
   )
   expect_equal(globalTestMoBiProject$expressionProfilesNames, expectedNames)
@@ -154,7 +154,7 @@ test_that("It correctly handles non-existing simulations", {
 # Test for MoBiProject$getExpressionProfiles
 test_that("It can get expression profiles from a MoBi project", {
   expressionProfiles <- globalTestMoBiProject$getExpressionProfiles(c(
-    "UGT2B6|Human|Healthy"
+    "UGT2B7|Human|Healthy"
   ))
   expect_true(isOfType(expressionProfiles, "BuildingBlock"))
   expect_true(
@@ -162,7 +162,7 @@ test_that("It can get expression profiles from a MoBi project", {
   )
   expect_equal(
     names(expressionProfiles),
-    c("UGT2B6|Human|Healthy")
+    c("UGT2B7|Human|Healthy")
   )
 
   # Test for non-existing expression profile
@@ -177,7 +177,7 @@ test_that("It can get expression profiles from a MoBi project", {
     globalTestMoBiProject$getExpressionProfiles(
       names = c(
         "NonExistingProfile",
-        "UGT2B6|Human|Healthy",
+        "UGT2B7|Human|Healthy",
         "nonExistingTheSecond"
       )
     ),
@@ -199,12 +199,12 @@ test_that("It correctly handles non-existing expression profiles", {
   expressionProfiles <- globalTestMoBiProject$getExpressionProfiles(
     names = c(
       "NonExistingProfile",
-      "UGT2B6|Human|Healthy",
+      "UGT2B7|Human|Healthy",
       "nonExistingTheSecond"
     ),
     stopIfNotFound = FALSE
   )
-  expect_equal(names(expressionProfiles), "UGT2B6|Human|Healthy")
+  expect_equal(names(expressionProfiles), "UGT2B7|Human|Healthy")
 })
 
 # Test for MoBiProject$getDataSets
@@ -338,12 +338,12 @@ test_that("It can create a simulation configuration with an individual", {
 test_that("It can create a simulation configuration with expression profiles", {
   simConfig <- globalTestMoBiProject$createSimulationConfiguration(
     modulesNames = "ExtModule_3IC_3PV",
-    expressionProfilesNames = c("UGT2B6|Human|Healthy", "CYP3A4|Human|Healthy")
+    expressionProfilesNames = c("UGT2B7|Human|Healthy", "CYP3A4|Human|Healthy")
   )
   expect_true(isOfType(simConfig, "SimulationConfiguration"))
   expect_named(
     simConfig$expressionProfiles,
-    c("UGT2B6|Human|Healthy", "CYP3A4|Human|Healthy"),
+    c("UGT2B7|Human|Healthy", "CYP3A4|Human|Healthy"),
     ignore.order = TRUE
   )
 })

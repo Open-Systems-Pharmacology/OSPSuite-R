@@ -448,22 +448,28 @@
                           Container Path Molecule Name Is Present Value Unit
       136        Organism|Thyroid|Plasma             A       TRUE     0 µmol
       137        Organism|Thyroid|Plasma             B       TRUE     0 µmol
-      138        Organism|Thyroid|Plasma        UGT2B6       TRUE     0 µmol
-      139    Organism|Thyroid|BloodCells             A       TRUE     0 µmol
-      140    Organism|Thyroid|BloodCells             B       TRUE     0 µmol
-      141    Organism|Thyroid|BloodCells        UGT2B6       TRUE     0 µmol
-      142  Organism|Thyroid|Interstitial             A       TRUE     0 µmol
-      143  Organism|Thyroid|Interstitial             B       TRUE     0 µmol
-      144  Organism|Thyroid|Interstitial        UGT2B6       TRUE     0 µmol
-      145 Organism|Thyroid|Intracellular             A       TRUE     0 µmol
-      146 Organism|Thyroid|Intracellular             B       TRUE     0 µmol
-      147 Organism|Thyroid|Intracellular        UGT2B6       TRUE     0 µmol
-      148      Organism|Thyroid|Endosome             A       TRUE     0 µmol
-      149      Organism|Thyroid|Endosome             B       TRUE     0 µmol
-      150      Organism|Thyroid|Endosome        UGT2B6       TRUE     0 µmol
-      151         Organism|Thyroid|Lumen             A       TRUE     0 µmol
-      152         Organism|Thyroid|Lumen             B       TRUE     0 µmol
-      153         Organism|Thyroid|Lumen        UGT2B6       TRUE     0 µmol
+      138        Organism|Thyroid|Plasma        UGT2B7       TRUE   NaN µmol
+      139        Organism|Thyroid|Plasma        CYP3A4       TRUE   NaN µmol
+      140    Organism|Thyroid|BloodCells             A       TRUE     0 µmol
+      141    Organism|Thyroid|BloodCells             B       TRUE     0 µmol
+      142    Organism|Thyroid|BloodCells        UGT2B7       TRUE   NaN µmol
+      143    Organism|Thyroid|BloodCells        CYP3A4       TRUE   NaN µmol
+      144  Organism|Thyroid|Interstitial             A       TRUE     0 µmol
+      145  Organism|Thyroid|Interstitial             B       TRUE     0 µmol
+      146  Organism|Thyroid|Interstitial        UGT2B7       TRUE   NaN µmol
+      147  Organism|Thyroid|Interstitial        CYP3A4       TRUE   NaN µmol
+      148 Organism|Thyroid|Intracellular             A       TRUE     0 µmol
+      149 Organism|Thyroid|Intracellular             B       TRUE     0 µmol
+      150 Organism|Thyroid|Intracellular        UGT2B7       TRUE   NaN µmol
+      151 Organism|Thyroid|Intracellular        CYP3A4       TRUE   NaN µmol
+      152      Organism|Thyroid|Endosome             A       TRUE     0 µmol
+      153      Organism|Thyroid|Endosome             B       TRUE     0 µmol
+      154      Organism|Thyroid|Endosome        UGT2B7       TRUE   NaN µmol
+      155      Organism|Thyroid|Endosome        CYP3A4       TRUE   NaN µmol
+      156         Organism|Thyroid|Lumen             A       TRUE     0 µmol
+      157         Organism|Thyroid|Lumen             B       TRUE     0 µmol
+      158         Organism|Thyroid|Lumen        UGT2B7       TRUE   NaN µmol
+      159         Organism|Thyroid|Lumen        CYP3A4       TRUE   NaN µmol
           Scale Divisor Neg. Values Allowed
       136             1               FALSE
       137             1               FALSE
@@ -483,6 +489,12 @@
       151             1               FALSE
       152             1               FALSE
       153             1               FALSE
+      154             1               FALSE
+      155             1               FALSE
+      156             1               FALSE
+      157             1               FALSE
+      158             1               FALSE
+      159             1               FALSE
 
 # extendInitialConditionsBB does not add new entries for existing molecules and compartments
 
@@ -759,520 +771,1248 @@
     Code
       newPaths_df
     Output
-                                                           Container Path
-      1                                            Organism|Gallbladder|A
-      2                                            Organism|Gallbladder|B
-      3                               Organism|ArterialBlood|BloodCells|A
-      4                               Organism|ArterialBlood|BloodCells|B
-      5                                   Organism|ArterialBlood|Plasma|A
-      6                                   Organism|ArterialBlood|Plasma|B
-      7                                      Organism|Bone|Interstitial|A
-      8                                      Organism|Bone|Interstitial|B
-      9                                     Organism|Bone|Intracellular|A
-      10                                    Organism|Bone|Intracellular|B
-      11                                       Organism|Bone|BloodCells|A
-      12                                       Organism|Bone|BloodCells|B
-      13                                           Organism|Bone|Plasma|A
-      14                                           Organism|Bone|Plasma|B
-      15                                      Organism|Brain|BloodCells|A
-      16                                      Organism|Brain|BloodCells|B
-      17                                    Organism|Brain|Interstitial|A
-      18                                    Organism|Brain|Interstitial|B
-      19                                   Organism|Brain|Intracellular|A
-      20                                   Organism|Brain|Intracellular|B
-      21                                          Organism|Brain|Plasma|A
-      22                                          Organism|Brain|Plasma|B
-      23                                        Organism|Fat|BloodCells|A
-      24                                        Organism|Fat|BloodCells|B
-      25                                      Organism|Fat|Interstitial|A
-      26                                      Organism|Fat|Interstitial|B
-      27                                     Organism|Fat|Intracellular|A
-      28                                     Organism|Fat|Intracellular|B
-      29                                            Organism|Fat|Plasma|A
-      30                                            Organism|Fat|Plasma|B
-      31                                     Organism|Gonads|BloodCells|A
-      32                                     Organism|Gonads|BloodCells|B
-      33                                   Organism|Gonads|Interstitial|A
-      34                                   Organism|Gonads|Interstitial|B
-      35                                  Organism|Gonads|Intracellular|A
-      36                                  Organism|Gonads|Intracellular|B
-      37                                         Organism|Gonads|Plasma|A
-      38                                         Organism|Gonads|Plasma|B
-      39                                      Organism|Heart|BloodCells|A
-      40                                      Organism|Heart|BloodCells|B
-      41                                    Organism|Heart|Interstitial|A
-      42                                    Organism|Heart|Interstitial|B
-      43                                   Organism|Heart|Intracellular|A
-      44                                   Organism|Heart|Intracellular|B
-      45                                          Organism|Heart|Plasma|A
-      46                                          Organism|Heart|Plasma|B
-      47                                     Organism|Kidney|BloodCells|A
-      48                                     Organism|Kidney|BloodCells|B
-      49                                   Organism|Kidney|Interstitial|A
-      50                                   Organism|Kidney|Interstitial|B
-      51                                  Organism|Kidney|Intracellular|A
-      52                                  Organism|Kidney|Intracellular|B
-      53                                         Organism|Kidney|Plasma|A
-      54                                         Organism|Kidney|Plasma|B
-      55                             Organism|LargeIntestine|BloodCells|A
-      56                             Organism|LargeIntestine|BloodCells|B
-      57                           Organism|LargeIntestine|Interstitial|A
-      58                           Organism|LargeIntestine|Interstitial|B
-      59                          Organism|LargeIntestine|Intracellular|A
-      60                          Organism|LargeIntestine|Intracellular|B
-      61                                 Organism|LargeIntestine|Plasma|A
-      62                                 Organism|LargeIntestine|Plasma|B
-      63               Organism|LargeIntestine|Mucosa|Caecum|BloodCells|A
-      64               Organism|LargeIntestine|Mucosa|Caecum|BloodCells|B
-      65             Organism|LargeIntestine|Mucosa|Caecum|Interstitial|A
-      66             Organism|LargeIntestine|Mucosa|Caecum|Interstitial|B
-      67            Organism|LargeIntestine|Mucosa|Caecum|Intracellular|A
-      68            Organism|LargeIntestine|Mucosa|Caecum|Intracellular|B
-      69                   Organism|LargeIntestine|Mucosa|Caecum|Plasma|A
-      70                   Organism|LargeIntestine|Mucosa|Caecum|Plasma|B
-      71       Organism|LargeIntestine|Mucosa|ColonAscendens|BloodCells|A
-      72       Organism|LargeIntestine|Mucosa|ColonAscendens|BloodCells|B
-      73     Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial|A
-      74     Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial|B
-      75    Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|A
-      76    Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|B
-      77           Organism|LargeIntestine|Mucosa|ColonAscendens|Plasma|A
-      78           Organism|LargeIntestine|Mucosa|ColonAscendens|Plasma|B
-      79      Organism|LargeIntestine|Mucosa|ColonDescendens|BloodCells|A
-      80      Organism|LargeIntestine|Mucosa|ColonDescendens|BloodCells|B
-      81    Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial|A
-      82    Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial|B
-      83   Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|A
-      84   Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|B
-      85          Organism|LargeIntestine|Mucosa|ColonDescendens|Plasma|A
-      86          Organism|LargeIntestine|Mucosa|ColonDescendens|Plasma|B
-      87         Organism|LargeIntestine|Mucosa|ColonSigmoid|BloodCells|A
-      88         Organism|LargeIntestine|Mucosa|ColonSigmoid|BloodCells|B
-      89       Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial|A
-      90       Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial|B
-      91      Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|A
-      92      Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|B
-      93             Organism|LargeIntestine|Mucosa|ColonSigmoid|Plasma|A
-      94             Organism|LargeIntestine|Mucosa|ColonSigmoid|Plasma|B
-      95     Organism|LargeIntestine|Mucosa|ColonTransversum|BloodCells|A
-      96     Organism|LargeIntestine|Mucosa|ColonTransversum|BloodCells|B
-      97   Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial|A
-      98   Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial|B
-      99  Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|A
-      100 Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|B
-      101        Organism|LargeIntestine|Mucosa|ColonTransversum|Plasma|A
-      102        Organism|LargeIntestine|Mucosa|ColonTransversum|Plasma|B
-      103              Organism|LargeIntestine|Mucosa|Rectum|BloodCells|A
-      104              Organism|LargeIntestine|Mucosa|Rectum|BloodCells|B
-      105            Organism|LargeIntestine|Mucosa|Rectum|Interstitial|A
-      106            Organism|LargeIntestine|Mucosa|Rectum|Interstitial|B
-      107           Organism|LargeIntestine|Mucosa|Rectum|Intracellular|A
-      108           Organism|LargeIntestine|Mucosa|Rectum|Intracellular|B
-      109                  Organism|LargeIntestine|Mucosa|Rectum|Plasma|A
-      110                  Organism|LargeIntestine|Mucosa|Rectum|Plasma|B
-      111                         Organism|Liver|Pericentral|BloodCells|A
-      112                         Organism|Liver|Pericentral|BloodCells|B
-      113                       Organism|Liver|Pericentral|Interstitial|A
-      114                       Organism|Liver|Pericentral|Interstitial|B
-      115                      Organism|Liver|Pericentral|Intracellular|A
-      116                      Organism|Liver|Pericentral|Intracellular|B
-      117                             Organism|Liver|Pericentral|Plasma|A
-      118                             Organism|Liver|Pericentral|Plasma|B
-      119                          Organism|Liver|Periportal|BloodCells|A
-      120                          Organism|Liver|Periportal|BloodCells|B
-      121                        Organism|Liver|Periportal|Interstitial|A
-      122                        Organism|Liver|Periportal|Interstitial|B
-      123                       Organism|Liver|Periportal|Intracellular|A
-      124                       Organism|Liver|Periportal|Intracellular|B
-      125                              Organism|Liver|Periportal|Plasma|A
-      126                              Organism|Liver|Periportal|Plasma|B
-      127                                         Organism|Lumen|Caecum|A
-      128                                         Organism|Lumen|Caecum|B
-      129                                 Organism|Lumen|ColonAscendens|A
-      130                                 Organism|Lumen|ColonAscendens|B
-      131                                Organism|Lumen|ColonDescendens|A
-      132                                Organism|Lumen|ColonDescendens|B
-      133                                   Organism|Lumen|ColonSigmoid|A
-      134                                   Organism|Lumen|ColonSigmoid|B
-      135                               Organism|Lumen|ColonTransversum|A
-      136                               Organism|Lumen|ColonTransversum|B
-      137                                       Organism|Lumen|Duodenum|A
-      138                                       Organism|Lumen|Duodenum|B
-      139                                          Organism|Lumen|Feces|A
-      140                                          Organism|Lumen|Feces|B
-      141                                     Organism|Lumen|LowerIleum|A
-      142                                     Organism|Lumen|LowerIleum|B
-      143                                   Organism|Lumen|LowerJejunum|A
-      144                                   Organism|Lumen|LowerJejunum|B
-      145                                         Organism|Lumen|Rectum|A
-      146                                         Organism|Lumen|Rectum|B
-      147                                        Organism|Lumen|Stomach|A
-      148                                        Organism|Lumen|Stomach|B
-      149                                     Organism|Lumen|UpperIleum|A
-      150                                     Organism|Lumen|UpperIleum|B
-      151                                   Organism|Lumen|UpperJejunum|A
-      152                                   Organism|Lumen|UpperJejunum|B
-      153                                      Organism|Lung|BloodCells|A
-      154                                      Organism|Lung|BloodCells|B
-      155                                    Organism|Lung|Interstitial|A
-      156                                    Organism|Lung|Interstitial|B
-      157                                   Organism|Lung|Intracellular|A
-      158                                   Organism|Lung|Intracellular|B
-      159                                          Organism|Lung|Plasma|A
-      160                                          Organism|Lung|Plasma|B
-      161                                    Organism|Muscle|BloodCells|A
-      162                                    Organism|Muscle|BloodCells|B
-      163                                  Organism|Muscle|Interstitial|A
-      164                                  Organism|Muscle|Interstitial|B
-      165                                 Organism|Muscle|Intracellular|A
-      166                                 Organism|Muscle|Intracellular|B
-      167                                        Organism|Muscle|Plasma|A
-      168                                        Organism|Muscle|Plasma|B
-      169                                  Organism|Pancreas|BloodCells|A
-      170                                  Organism|Pancreas|BloodCells|B
-      171                                Organism|Pancreas|Interstitial|A
-      172                                Organism|Pancreas|Interstitial|B
-      173                               Organism|Pancreas|Intracellular|A
-      174                               Organism|Pancreas|Intracellular|B
-      175                                      Organism|Pancreas|Plasma|A
-      176                                      Organism|Pancreas|Plasma|B
-      177                                Organism|PortalVein|BloodCells|A
-      178                                Organism|PortalVein|BloodCells|B
-      179                                    Organism|PortalVein|Plasma|A
-      180                                    Organism|PortalVein|Plasma|B
-      181                                      Organism|Skin|BloodCells|A
-      182                                      Organism|Skin|BloodCells|B
-      183                                    Organism|Skin|Interstitial|A
-      184                                    Organism|Skin|Interstitial|B
-      185                                   Organism|Skin|Intracellular|A
-      186                                   Organism|Skin|Intracellular|B
-      187                                          Organism|Skin|Plasma|A
-      188                                          Organism|Skin|Plasma|B
-      189                            Organism|SmallIntestine|BloodCells|A
-      190                            Organism|SmallIntestine|BloodCells|B
-      191                          Organism|SmallIntestine|Interstitial|A
-      192                          Organism|SmallIntestine|Interstitial|B
-      193                         Organism|SmallIntestine|Intracellular|A
-      194                         Organism|SmallIntestine|Intracellular|B
-      195                                Organism|SmallIntestine|Plasma|A
-      196                                Organism|SmallIntestine|Plasma|B
-      197            Organism|SmallIntestine|Mucosa|Duodenum|BloodCells|A
-      198            Organism|SmallIntestine|Mucosa|Duodenum|BloodCells|B
-      199          Organism|SmallIntestine|Mucosa|Duodenum|Interstitial|A
-      200          Organism|SmallIntestine|Mucosa|Duodenum|Interstitial|B
-      201         Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|A
-      202         Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|B
-      203                Organism|SmallIntestine|Mucosa|Duodenum|Plasma|A
-      204                Organism|SmallIntestine|Mucosa|Duodenum|Plasma|B
-      205          Organism|SmallIntestine|Mucosa|LowerIleum|BloodCells|A
-      206          Organism|SmallIntestine|Mucosa|LowerIleum|BloodCells|B
-      207        Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial|A
-      208        Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial|B
-      209       Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|A
-      210       Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|B
-      211              Organism|SmallIntestine|Mucosa|LowerIleum|Plasma|A
-      212              Organism|SmallIntestine|Mucosa|LowerIleum|Plasma|B
-      213        Organism|SmallIntestine|Mucosa|LowerJejunum|BloodCells|A
-      214        Organism|SmallIntestine|Mucosa|LowerJejunum|BloodCells|B
-      215      Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial|A
-      216      Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial|B
-      217     Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|A
-      218     Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|B
-      219            Organism|SmallIntestine|Mucosa|LowerJejunum|Plasma|A
-      220            Organism|SmallIntestine|Mucosa|LowerJejunum|Plasma|B
-      221          Organism|SmallIntestine|Mucosa|UpperIleum|BloodCells|A
-      222          Organism|SmallIntestine|Mucosa|UpperIleum|BloodCells|B
-      223        Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial|A
-      224        Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial|B
-      225       Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|A
-      226       Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|B
-      227              Organism|SmallIntestine|Mucosa|UpperIleum|Plasma|A
-      228              Organism|SmallIntestine|Mucosa|UpperIleum|Plasma|B
-      229        Organism|SmallIntestine|Mucosa|UpperJejunum|BloodCells|A
-      230        Organism|SmallIntestine|Mucosa|UpperJejunum|BloodCells|B
-      231      Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial|A
-      232      Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial|B
-      233     Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|A
-      234     Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|B
-      235            Organism|SmallIntestine|Mucosa|UpperJejunum|Plasma|A
-      236            Organism|SmallIntestine|Mucosa|UpperJejunum|Plasma|B
-      237                                    Organism|Spleen|BloodCells|A
-      238                                    Organism|Spleen|BloodCells|B
-      239                                  Organism|Spleen|Interstitial|A
-      240                                  Organism|Spleen|Interstitial|B
-      241                                 Organism|Spleen|Intracellular|A
-      242                                 Organism|Spleen|Intracellular|B
-      243                                        Organism|Spleen|Plasma|A
-      244                                        Organism|Spleen|Plasma|B
-      245                                   Organism|Stomach|BloodCells|A
-      246                                   Organism|Stomach|BloodCells|B
-      247                                 Organism|Stomach|Interstitial|A
-      248                                 Organism|Stomach|Interstitial|B
-      249                                Organism|Stomach|Intracellular|A
-      250                                Organism|Stomach|Intracellular|B
-      251                                       Organism|Stomach|Plasma|A
-      252                                       Organism|Stomach|Plasma|B
-      253                               Organism|VenousBlood|BloodCells|A
-      254                               Organism|VenousBlood|BloodCells|B
-      255                                   Organism|VenousBlood|Plasma|A
-      256                                   Organism|VenousBlood|Plasma|B
-                  Parameter Name Value Unit Value Origin
-      1   LocalMoleculeParameter     0 µmol             
-      2   LocalMoleculeParameter     0 µmol             
-      3   LocalMoleculeParameter     0 µmol             
-      4   LocalMoleculeParameter     0 µmol             
-      5   LocalMoleculeParameter     0 µmol             
-      6   LocalMoleculeParameter     0 µmol             
-      7   LocalMoleculeParameter     0 µmol             
-      8   LocalMoleculeParameter     0 µmol             
-      9   LocalMoleculeParameter     0 µmol             
-      10  LocalMoleculeParameter     0 µmol             
-      11  LocalMoleculeParameter     0 µmol             
-      12  LocalMoleculeParameter     0 µmol             
-      13  LocalMoleculeParameter     0 µmol             
-      14  LocalMoleculeParameter     0 µmol             
-      15  LocalMoleculeParameter     0 µmol             
-      16  LocalMoleculeParameter     0 µmol             
-      17  LocalMoleculeParameter     0 µmol             
-      18  LocalMoleculeParameter     0 µmol             
-      19  LocalMoleculeParameter     0 µmol             
-      20  LocalMoleculeParameter     0 µmol             
-      21  LocalMoleculeParameter     0 µmol             
-      22  LocalMoleculeParameter     0 µmol             
-      23  LocalMoleculeParameter     0 µmol             
-      24  LocalMoleculeParameter     0 µmol             
-      25  LocalMoleculeParameter     0 µmol             
-      26  LocalMoleculeParameter     0 µmol             
-      27  LocalMoleculeParameter     0 µmol             
-      28  LocalMoleculeParameter     0 µmol             
-      29  LocalMoleculeParameter     0 µmol             
-      30  LocalMoleculeParameter     0 µmol             
-      31  LocalMoleculeParameter     0 µmol             
-      32  LocalMoleculeParameter     0 µmol             
-      33  LocalMoleculeParameter     0 µmol             
-      34  LocalMoleculeParameter     0 µmol             
-      35  LocalMoleculeParameter     0 µmol             
-      36  LocalMoleculeParameter     0 µmol             
-      37  LocalMoleculeParameter     0 µmol             
-      38  LocalMoleculeParameter     0 µmol             
-      39  LocalMoleculeParameter     0 µmol             
-      40  LocalMoleculeParameter     0 µmol             
-      41  LocalMoleculeParameter     0 µmol             
-      42  LocalMoleculeParameter     0 µmol             
-      43  LocalMoleculeParameter     0 µmol             
-      44  LocalMoleculeParameter     0 µmol             
-      45  LocalMoleculeParameter     0 µmol             
-      46  LocalMoleculeParameter     0 µmol             
-      47  LocalMoleculeParameter     0 µmol             
-      48  LocalMoleculeParameter     0 µmol             
-      49  LocalMoleculeParameter     0 µmol             
-      50  LocalMoleculeParameter     0 µmol             
-      51  LocalMoleculeParameter     0 µmol             
-      52  LocalMoleculeParameter     0 µmol             
-      53  LocalMoleculeParameter     0 µmol             
-      54  LocalMoleculeParameter     0 µmol             
-      55  LocalMoleculeParameter     0 µmol             
-      56  LocalMoleculeParameter     0 µmol             
-      57  LocalMoleculeParameter     0 µmol             
-      58  LocalMoleculeParameter     0 µmol             
-      59  LocalMoleculeParameter     0 µmol             
-      60  LocalMoleculeParameter     0 µmol             
-      61  LocalMoleculeParameter     0 µmol             
-      62  LocalMoleculeParameter     0 µmol             
-      63  LocalMoleculeParameter     0 µmol             
-      64  LocalMoleculeParameter     0 µmol             
-      65  LocalMoleculeParameter     0 µmol             
-      66  LocalMoleculeParameter     0 µmol             
-      67  LocalMoleculeParameter     0 µmol             
-      68  LocalMoleculeParameter     0 µmol             
-      69  LocalMoleculeParameter     0 µmol             
-      70  LocalMoleculeParameter     0 µmol             
-      71  LocalMoleculeParameter     0 µmol             
-      72  LocalMoleculeParameter     0 µmol             
-      73  LocalMoleculeParameter     0 µmol             
-      74  LocalMoleculeParameter     0 µmol             
-      75  LocalMoleculeParameter     0 µmol             
-      76  LocalMoleculeParameter     0 µmol             
-      77  LocalMoleculeParameter     0 µmol             
-      78  LocalMoleculeParameter     0 µmol             
-      79  LocalMoleculeParameter     0 µmol             
-      80  LocalMoleculeParameter     0 µmol             
-      81  LocalMoleculeParameter     0 µmol             
-      82  LocalMoleculeParameter     0 µmol             
-      83  LocalMoleculeParameter     0 µmol             
-      84  LocalMoleculeParameter     0 µmol             
-      85  LocalMoleculeParameter     0 µmol             
-      86  LocalMoleculeParameter     0 µmol             
-      87  LocalMoleculeParameter     0 µmol             
-      88  LocalMoleculeParameter     0 µmol             
-      89  LocalMoleculeParameter     0 µmol             
-      90  LocalMoleculeParameter     0 µmol             
-      91  LocalMoleculeParameter     0 µmol             
-      92  LocalMoleculeParameter     0 µmol             
-      93  LocalMoleculeParameter     0 µmol             
-      94  LocalMoleculeParameter     0 µmol             
-      95  LocalMoleculeParameter     0 µmol             
-      96  LocalMoleculeParameter     0 µmol             
-      97  LocalMoleculeParameter     0 µmol             
-      98  LocalMoleculeParameter     0 µmol             
-      99  LocalMoleculeParameter     0 µmol             
-      100 LocalMoleculeParameter     0 µmol             
-      101 LocalMoleculeParameter     0 µmol             
-      102 LocalMoleculeParameter     0 µmol             
-      103 LocalMoleculeParameter     0 µmol             
-      104 LocalMoleculeParameter     0 µmol             
-      105 LocalMoleculeParameter     0 µmol             
-      106 LocalMoleculeParameter     0 µmol             
-      107 LocalMoleculeParameter     0 µmol             
-      108 LocalMoleculeParameter     0 µmol             
-      109 LocalMoleculeParameter     0 µmol             
-      110 LocalMoleculeParameter     0 µmol             
-      111 LocalMoleculeParameter     0 µmol             
-      112 LocalMoleculeParameter     0 µmol             
-      113 LocalMoleculeParameter     0 µmol             
-      114 LocalMoleculeParameter     0 µmol             
-      115 LocalMoleculeParameter     0 µmol             
-      116 LocalMoleculeParameter     0 µmol             
-      117 LocalMoleculeParameter     0 µmol             
-      118 LocalMoleculeParameter     0 µmol             
-      119 LocalMoleculeParameter     0 µmol             
-      120 LocalMoleculeParameter     0 µmol             
-      121 LocalMoleculeParameter     0 µmol             
-      122 LocalMoleculeParameter     0 µmol             
-      123 LocalMoleculeParameter     0 µmol             
-      124 LocalMoleculeParameter     0 µmol             
-      125 LocalMoleculeParameter     0 µmol             
-      126 LocalMoleculeParameter     0 µmol             
-      127 LocalMoleculeParameter     0 µmol             
-      128 LocalMoleculeParameter     0 µmol             
-      129 LocalMoleculeParameter     0 µmol             
-      130 LocalMoleculeParameter     0 µmol             
-      131 LocalMoleculeParameter     0 µmol             
-      132 LocalMoleculeParameter     0 µmol             
-      133 LocalMoleculeParameter     0 µmol             
-      134 LocalMoleculeParameter     0 µmol             
-      135 LocalMoleculeParameter     0 µmol             
-      136 LocalMoleculeParameter     0 µmol             
-      137 LocalMoleculeParameter     0 µmol             
-      138 LocalMoleculeParameter     0 µmol             
-      139 LocalMoleculeParameter     0 µmol             
-      140 LocalMoleculeParameter     0 µmol             
-      141 LocalMoleculeParameter     0 µmol             
-      142 LocalMoleculeParameter     0 µmol             
-      143 LocalMoleculeParameter     0 µmol             
-      144 LocalMoleculeParameter     0 µmol             
-      145 LocalMoleculeParameter     0 µmol             
-      146 LocalMoleculeParameter     0 µmol             
-      147 LocalMoleculeParameter     0 µmol             
-      148 LocalMoleculeParameter     0 µmol             
-      149 LocalMoleculeParameter     0 µmol             
-      150 LocalMoleculeParameter     0 µmol             
-      151 LocalMoleculeParameter     0 µmol             
-      152 LocalMoleculeParameter     0 µmol             
-      153 LocalMoleculeParameter     0 µmol             
-      154 LocalMoleculeParameter     0 µmol             
-      155 LocalMoleculeParameter     0 µmol             
-      156 LocalMoleculeParameter     0 µmol             
-      157 LocalMoleculeParameter     0 µmol             
-      158 LocalMoleculeParameter     0 µmol             
-      159 LocalMoleculeParameter     0 µmol             
-      160 LocalMoleculeParameter     0 µmol             
-      161 LocalMoleculeParameter     0 µmol             
-      162 LocalMoleculeParameter     0 µmol             
-      163 LocalMoleculeParameter     0 µmol             
-      164 LocalMoleculeParameter     0 µmol             
-      165 LocalMoleculeParameter     0 µmol             
-      166 LocalMoleculeParameter     0 µmol             
-      167 LocalMoleculeParameter     0 µmol             
-      168 LocalMoleculeParameter     0 µmol             
-      169 LocalMoleculeParameter     0 µmol             
-      170 LocalMoleculeParameter     0 µmol             
-      171 LocalMoleculeParameter     0 µmol             
-      172 LocalMoleculeParameter     0 µmol             
-      173 LocalMoleculeParameter     0 µmol             
-      174 LocalMoleculeParameter     0 µmol             
-      175 LocalMoleculeParameter     0 µmol             
-      176 LocalMoleculeParameter     0 µmol             
-      177 LocalMoleculeParameter     0 µmol             
-      178 LocalMoleculeParameter     0 µmol             
-      179 LocalMoleculeParameter     0 µmol             
-      180 LocalMoleculeParameter     0 µmol             
-      181 LocalMoleculeParameter     0 µmol             
-      182 LocalMoleculeParameter     0 µmol             
-      183 LocalMoleculeParameter     0 µmol             
-      184 LocalMoleculeParameter     0 µmol             
-      185 LocalMoleculeParameter     0 µmol             
-      186 LocalMoleculeParameter     0 µmol             
-      187 LocalMoleculeParameter     0 µmol             
-      188 LocalMoleculeParameter     0 µmol             
-      189 LocalMoleculeParameter     0 µmol             
-      190 LocalMoleculeParameter     0 µmol             
-      191 LocalMoleculeParameter     0 µmol             
-      192 LocalMoleculeParameter     0 µmol             
-      193 LocalMoleculeParameter     0 µmol             
-      194 LocalMoleculeParameter     0 µmol             
-      195 LocalMoleculeParameter     0 µmol             
-      196 LocalMoleculeParameter     0 µmol             
-      197 LocalMoleculeParameter     0 µmol             
-      198 LocalMoleculeParameter     0 µmol             
-      199 LocalMoleculeParameter     0 µmol             
-      200 LocalMoleculeParameter     0 µmol             
-      201 LocalMoleculeParameter     0 µmol             
-      202 LocalMoleculeParameter     0 µmol             
-      203 LocalMoleculeParameter     0 µmol             
-      204 LocalMoleculeParameter     0 µmol             
-      205 LocalMoleculeParameter     0 µmol             
-      206 LocalMoleculeParameter     0 µmol             
-      207 LocalMoleculeParameter     0 µmol             
-      208 LocalMoleculeParameter     0 µmol             
-      209 LocalMoleculeParameter     0 µmol             
-      210 LocalMoleculeParameter     0 µmol             
-      211 LocalMoleculeParameter     0 µmol             
-      212 LocalMoleculeParameter     0 µmol             
-      213 LocalMoleculeParameter     0 µmol             
-      214 LocalMoleculeParameter     0 µmol             
-      215 LocalMoleculeParameter     0 µmol             
-      216 LocalMoleculeParameter     0 µmol             
-      217 LocalMoleculeParameter     0 µmol             
-      218 LocalMoleculeParameter     0 µmol             
-      219 LocalMoleculeParameter     0 µmol             
-      220 LocalMoleculeParameter     0 µmol             
-      221 LocalMoleculeParameter     0 µmol             
-      222 LocalMoleculeParameter     0 µmol             
-      223 LocalMoleculeParameter     0 µmol             
-      224 LocalMoleculeParameter     0 µmol             
-      225 LocalMoleculeParameter     0 µmol             
-      226 LocalMoleculeParameter     0 µmol             
-      227 LocalMoleculeParameter     0 µmol             
-      228 LocalMoleculeParameter     0 µmol             
-      229 LocalMoleculeParameter     0 µmol             
-      230 LocalMoleculeParameter     0 µmol             
-      231 LocalMoleculeParameter     0 µmol             
-      232 LocalMoleculeParameter     0 µmol             
-      233 LocalMoleculeParameter     0 µmol             
-      234 LocalMoleculeParameter     0 µmol             
-      235 LocalMoleculeParameter     0 µmol             
-      236 LocalMoleculeParameter     0 µmol             
-      237 LocalMoleculeParameter     0 µmol             
-      238 LocalMoleculeParameter     0 µmol             
-      239 LocalMoleculeParameter     0 µmol             
-      240 LocalMoleculeParameter     0 µmol             
-      241 LocalMoleculeParameter     0 µmol             
-      242 LocalMoleculeParameter     0 µmol             
-      243 LocalMoleculeParameter     0 µmol             
-      244 LocalMoleculeParameter     0 µmol             
-      245 LocalMoleculeParameter     0 µmol             
-      246 LocalMoleculeParameter     0 µmol             
-      247 LocalMoleculeParameter     0 µmol             
-      248 LocalMoleculeParameter     0 µmol             
-      249 LocalMoleculeParameter     0 µmol             
-      250 LocalMoleculeParameter     0 µmol             
-      251 LocalMoleculeParameter     0 µmol             
-      252 LocalMoleculeParameter     0 µmol             
-      253 LocalMoleculeParameter     0 µmol             
-      254 LocalMoleculeParameter     0 µmol             
-      255 LocalMoleculeParameter     0 µmol             
-      256 LocalMoleculeParameter     0 µmol             
+                                                                Container Path
+      1                                                 Organism|Gallbladder|A
+      2                                                 Organism|Gallbladder|B
+      3                                            Organism|Gallbladder|UGT2B7
+      4                                            Organism|Gallbladder|CYP3A4
+      5                                    Organism|ArterialBlood|BloodCells|A
+      6                                    Organism|ArterialBlood|BloodCells|B
+      7                               Organism|ArterialBlood|BloodCells|UGT2B7
+      8                               Organism|ArterialBlood|BloodCells|CYP3A4
+      9                                        Organism|ArterialBlood|Plasma|A
+      10                                       Organism|ArterialBlood|Plasma|B
+      11                                  Organism|ArterialBlood|Plasma|UGT2B7
+      12                                  Organism|ArterialBlood|Plasma|CYP3A4
+      13                                          Organism|Bone|Interstitial|A
+      14                                          Organism|Bone|Interstitial|B
+      15                                     Organism|Bone|Interstitial|UGT2B7
+      16                                     Organism|Bone|Interstitial|CYP3A4
+      17                                         Organism|Bone|Intracellular|A
+      18                                         Organism|Bone|Intracellular|B
+      19                                    Organism|Bone|Intracellular|UGT2B7
+      20                                    Organism|Bone|Intracellular|UGT2B7
+      21                                    Organism|Bone|Intracellular|UGT2B7
+      22                                    Organism|Bone|Intracellular|CYP3A4
+      23                                    Organism|Bone|Intracellular|CYP3A4
+      24                                    Organism|Bone|Intracellular|CYP3A4
+      25                                            Organism|Bone|BloodCells|A
+      26                                            Organism|Bone|BloodCells|B
+      27                                       Organism|Bone|BloodCells|UGT2B7
+      28                                       Organism|Bone|BloodCells|CYP3A4
+      29                                                Organism|Bone|Plasma|A
+      30                                                Organism|Bone|Plasma|B
+      31                                           Organism|Bone|Plasma|UGT2B7
+      32                                           Organism|Bone|Plasma|CYP3A4
+      33                                           Organism|Brain|BloodCells|A
+      34                                           Organism|Brain|BloodCells|B
+      35                                      Organism|Brain|BloodCells|UGT2B7
+      36                                      Organism|Brain|BloodCells|CYP3A4
+      37                                         Organism|Brain|Interstitial|A
+      38                                         Organism|Brain|Interstitial|B
+      39                                    Organism|Brain|Interstitial|UGT2B7
+      40                                    Organism|Brain|Interstitial|CYP3A4
+      41                                        Organism|Brain|Intracellular|A
+      42                                        Organism|Brain|Intracellular|B
+      43                                   Organism|Brain|Intracellular|UGT2B7
+      44                                   Organism|Brain|Intracellular|UGT2B7
+      45                                   Organism|Brain|Intracellular|UGT2B7
+      46                                   Organism|Brain|Intracellular|CYP3A4
+      47                                   Organism|Brain|Intracellular|CYP3A4
+      48                                   Organism|Brain|Intracellular|CYP3A4
+      49                                               Organism|Brain|Plasma|A
+      50                                               Organism|Brain|Plasma|B
+      51                                          Organism|Brain|Plasma|UGT2B7
+      52                                          Organism|Brain|Plasma|CYP3A4
+      53                                             Organism|Fat|BloodCells|A
+      54                                             Organism|Fat|BloodCells|B
+      55                                        Organism|Fat|BloodCells|UGT2B7
+      56                                        Organism|Fat|BloodCells|CYP3A4
+      57                                           Organism|Fat|Interstitial|A
+      58                                           Organism|Fat|Interstitial|B
+      59                                      Organism|Fat|Interstitial|UGT2B7
+      60                                      Organism|Fat|Interstitial|CYP3A4
+      61                                          Organism|Fat|Intracellular|A
+      62                                          Organism|Fat|Intracellular|B
+      63                                     Organism|Fat|Intracellular|UGT2B7
+      64                                     Organism|Fat|Intracellular|UGT2B7
+      65                                     Organism|Fat|Intracellular|UGT2B7
+      66                                     Organism|Fat|Intracellular|CYP3A4
+      67                                     Organism|Fat|Intracellular|CYP3A4
+      68                                     Organism|Fat|Intracellular|CYP3A4
+      69                                                 Organism|Fat|Plasma|A
+      70                                                 Organism|Fat|Plasma|B
+      71                                            Organism|Fat|Plasma|UGT2B7
+      72                                            Organism|Fat|Plasma|CYP3A4
+      73                                          Organism|Gonads|BloodCells|A
+      74                                          Organism|Gonads|BloodCells|B
+      75                                     Organism|Gonads|BloodCells|UGT2B7
+      76                                     Organism|Gonads|BloodCells|CYP3A4
+      77                                        Organism|Gonads|Interstitial|A
+      78                                        Organism|Gonads|Interstitial|B
+      79                                   Organism|Gonads|Interstitial|UGT2B7
+      80                                   Organism|Gonads|Interstitial|CYP3A4
+      81                                       Organism|Gonads|Intracellular|A
+      82                                       Organism|Gonads|Intracellular|B
+      83                                  Organism|Gonads|Intracellular|UGT2B7
+      84                                  Organism|Gonads|Intracellular|UGT2B7
+      85                                  Organism|Gonads|Intracellular|UGT2B7
+      86                                  Organism|Gonads|Intracellular|CYP3A4
+      87                                  Organism|Gonads|Intracellular|CYP3A4
+      88                                  Organism|Gonads|Intracellular|CYP3A4
+      89                                              Organism|Gonads|Plasma|A
+      90                                              Organism|Gonads|Plasma|B
+      91                                         Organism|Gonads|Plasma|UGT2B7
+      92                                         Organism|Gonads|Plasma|CYP3A4
+      93                                           Organism|Heart|BloodCells|A
+      94                                           Organism|Heart|BloodCells|B
+      95                                      Organism|Heart|BloodCells|UGT2B7
+      96                                      Organism|Heart|BloodCells|CYP3A4
+      97                                         Organism|Heart|Interstitial|A
+      98                                         Organism|Heart|Interstitial|B
+      99                                    Organism|Heart|Interstitial|UGT2B7
+      100                                   Organism|Heart|Interstitial|CYP3A4
+      101                                       Organism|Heart|Intracellular|A
+      102                                       Organism|Heart|Intracellular|B
+      103                                  Organism|Heart|Intracellular|UGT2B7
+      104                                  Organism|Heart|Intracellular|UGT2B7
+      105                                  Organism|Heart|Intracellular|UGT2B7
+      106                                  Organism|Heart|Intracellular|CYP3A4
+      107                                  Organism|Heart|Intracellular|CYP3A4
+      108                                  Organism|Heart|Intracellular|CYP3A4
+      109                                              Organism|Heart|Plasma|A
+      110                                              Organism|Heart|Plasma|B
+      111                                         Organism|Heart|Plasma|UGT2B7
+      112                                         Organism|Heart|Plasma|CYP3A4
+      113                                         Organism|Kidney|BloodCells|A
+      114                                         Organism|Kidney|BloodCells|B
+      115                                    Organism|Kidney|BloodCells|UGT2B7
+      116                                    Organism|Kidney|BloodCells|CYP3A4
+      117                                       Organism|Kidney|Interstitial|A
+      118                                       Organism|Kidney|Interstitial|B
+      119                                  Organism|Kidney|Interstitial|UGT2B7
+      120                                  Organism|Kidney|Interstitial|CYP3A4
+      121                                      Organism|Kidney|Intracellular|A
+      122                                      Organism|Kidney|Intracellular|B
+      123                                 Organism|Kidney|Intracellular|UGT2B7
+      124                                 Organism|Kidney|Intracellular|UGT2B7
+      125                                 Organism|Kidney|Intracellular|UGT2B7
+      126                                 Organism|Kidney|Intracellular|CYP3A4
+      127                                 Organism|Kidney|Intracellular|CYP3A4
+      128                                 Organism|Kidney|Intracellular|CYP3A4
+      129                                             Organism|Kidney|Plasma|A
+      130                                             Organism|Kidney|Plasma|B
+      131                                        Organism|Kidney|Plasma|UGT2B7
+      132                                        Organism|Kidney|Plasma|CYP3A4
+      133                                 Organism|LargeIntestine|BloodCells|A
+      134                                 Organism|LargeIntestine|BloodCells|B
+      135                            Organism|LargeIntestine|BloodCells|UGT2B7
+      136                            Organism|LargeIntestine|BloodCells|CYP3A4
+      137                               Organism|LargeIntestine|Interstitial|A
+      138                               Organism|LargeIntestine|Interstitial|B
+      139                          Organism|LargeIntestine|Interstitial|UGT2B7
+      140                          Organism|LargeIntestine|Interstitial|CYP3A4
+      141                              Organism|LargeIntestine|Intracellular|A
+      142                              Organism|LargeIntestine|Intracellular|B
+      143                         Organism|LargeIntestine|Intracellular|UGT2B7
+      144                         Organism|LargeIntestine|Intracellular|UGT2B7
+      145                         Organism|LargeIntestine|Intracellular|UGT2B7
+      146                         Organism|LargeIntestine|Intracellular|CYP3A4
+      147                         Organism|LargeIntestine|Intracellular|CYP3A4
+      148                         Organism|LargeIntestine|Intracellular|CYP3A4
+      149                                     Organism|LargeIntestine|Plasma|A
+      150                                     Organism|LargeIntestine|Plasma|B
+      151                                Organism|LargeIntestine|Plasma|UGT2B7
+      152                                Organism|LargeIntestine|Plasma|CYP3A4
+      153                   Organism|LargeIntestine|Mucosa|Caecum|BloodCells|A
+      154                   Organism|LargeIntestine|Mucosa|Caecum|BloodCells|B
+      155              Organism|LargeIntestine|Mucosa|Caecum|BloodCells|UGT2B7
+      156              Organism|LargeIntestine|Mucosa|Caecum|BloodCells|CYP3A4
+      157                 Organism|LargeIntestine|Mucosa|Caecum|Interstitial|A
+      158                 Organism|LargeIntestine|Mucosa|Caecum|Interstitial|B
+      159            Organism|LargeIntestine|Mucosa|Caecum|Interstitial|UGT2B7
+      160            Organism|LargeIntestine|Mucosa|Caecum|Interstitial|CYP3A4
+      161                Organism|LargeIntestine|Mucosa|Caecum|Intracellular|A
+      162                Organism|LargeIntestine|Mucosa|Caecum|Intracellular|B
+      163           Organism|LargeIntestine|Mucosa|Caecum|Intracellular|UGT2B7
+      164           Organism|LargeIntestine|Mucosa|Caecum|Intracellular|UGT2B7
+      165           Organism|LargeIntestine|Mucosa|Caecum|Intracellular|UGT2B7
+      166           Organism|LargeIntestine|Mucosa|Caecum|Intracellular|CYP3A4
+      167           Organism|LargeIntestine|Mucosa|Caecum|Intracellular|CYP3A4
+      168           Organism|LargeIntestine|Mucosa|Caecum|Intracellular|CYP3A4
+      169                       Organism|LargeIntestine|Mucosa|Caecum|Plasma|A
+      170                       Organism|LargeIntestine|Mucosa|Caecum|Plasma|B
+      171                  Organism|LargeIntestine|Mucosa|Caecum|Plasma|UGT2B7
+      172                  Organism|LargeIntestine|Mucosa|Caecum|Plasma|CYP3A4
+      173           Organism|LargeIntestine|Mucosa|ColonAscendens|BloodCells|A
+      174           Organism|LargeIntestine|Mucosa|ColonAscendens|BloodCells|B
+      175      Organism|LargeIntestine|Mucosa|ColonAscendens|BloodCells|UGT2B7
+      176      Organism|LargeIntestine|Mucosa|ColonAscendens|BloodCells|CYP3A4
+      177         Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial|A
+      178         Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial|B
+      179    Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial|UGT2B7
+      180    Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial|CYP3A4
+      181        Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|A
+      182        Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|B
+      183   Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|UGT2B7
+      184   Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|UGT2B7
+      185   Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|UGT2B7
+      186   Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|CYP3A4
+      187   Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|CYP3A4
+      188   Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|CYP3A4
+      189               Organism|LargeIntestine|Mucosa|ColonAscendens|Plasma|A
+      190               Organism|LargeIntestine|Mucosa|ColonAscendens|Plasma|B
+      191          Organism|LargeIntestine|Mucosa|ColonAscendens|Plasma|UGT2B7
+      192          Organism|LargeIntestine|Mucosa|ColonAscendens|Plasma|CYP3A4
+      193          Organism|LargeIntestine|Mucosa|ColonDescendens|BloodCells|A
+      194          Organism|LargeIntestine|Mucosa|ColonDescendens|BloodCells|B
+      195     Organism|LargeIntestine|Mucosa|ColonDescendens|BloodCells|UGT2B7
+      196     Organism|LargeIntestine|Mucosa|ColonDescendens|BloodCells|CYP3A4
+      197        Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial|A
+      198        Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial|B
+      199   Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial|UGT2B7
+      200   Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial|CYP3A4
+      201       Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|A
+      202       Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|B
+      203  Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|UGT2B7
+      204  Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|UGT2B7
+      205  Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|UGT2B7
+      206  Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|CYP3A4
+      207  Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|CYP3A4
+      208  Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|CYP3A4
+      209              Organism|LargeIntestine|Mucosa|ColonDescendens|Plasma|A
+      210              Organism|LargeIntestine|Mucosa|ColonDescendens|Plasma|B
+      211         Organism|LargeIntestine|Mucosa|ColonDescendens|Plasma|UGT2B7
+      212         Organism|LargeIntestine|Mucosa|ColonDescendens|Plasma|CYP3A4
+      213             Organism|LargeIntestine|Mucosa|ColonSigmoid|BloodCells|A
+      214             Organism|LargeIntestine|Mucosa|ColonSigmoid|BloodCells|B
+      215        Organism|LargeIntestine|Mucosa|ColonSigmoid|BloodCells|UGT2B7
+      216        Organism|LargeIntestine|Mucosa|ColonSigmoid|BloodCells|CYP3A4
+      217           Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial|A
+      218           Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial|B
+      219      Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial|UGT2B7
+      220      Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial|CYP3A4
+      221          Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|A
+      222          Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|B
+      223     Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|UGT2B7
+      224     Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|UGT2B7
+      225     Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|UGT2B7
+      226     Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|CYP3A4
+      227     Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|CYP3A4
+      228     Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|CYP3A4
+      229                 Organism|LargeIntestine|Mucosa|ColonSigmoid|Plasma|A
+      230                 Organism|LargeIntestine|Mucosa|ColonSigmoid|Plasma|B
+      231            Organism|LargeIntestine|Mucosa|ColonSigmoid|Plasma|UGT2B7
+      232            Organism|LargeIntestine|Mucosa|ColonSigmoid|Plasma|CYP3A4
+      233         Organism|LargeIntestine|Mucosa|ColonTransversum|BloodCells|A
+      234         Organism|LargeIntestine|Mucosa|ColonTransversum|BloodCells|B
+      235    Organism|LargeIntestine|Mucosa|ColonTransversum|BloodCells|UGT2B7
+      236    Organism|LargeIntestine|Mucosa|ColonTransversum|BloodCells|CYP3A4
+      237       Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial|A
+      238       Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial|B
+      239  Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial|UGT2B7
+      240  Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial|CYP3A4
+      241      Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|A
+      242      Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|B
+      243 Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|UGT2B7
+      244 Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|UGT2B7
+      245 Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|UGT2B7
+      246 Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|CYP3A4
+      247 Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|CYP3A4
+      248 Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|CYP3A4
+      249             Organism|LargeIntestine|Mucosa|ColonTransversum|Plasma|A
+      250             Organism|LargeIntestine|Mucosa|ColonTransversum|Plasma|B
+      251        Organism|LargeIntestine|Mucosa|ColonTransversum|Plasma|UGT2B7
+      252        Organism|LargeIntestine|Mucosa|ColonTransversum|Plasma|CYP3A4
+      253                   Organism|LargeIntestine|Mucosa|Rectum|BloodCells|A
+      254                   Organism|LargeIntestine|Mucosa|Rectum|BloodCells|B
+      255              Organism|LargeIntestine|Mucosa|Rectum|BloodCells|UGT2B7
+      256              Organism|LargeIntestine|Mucosa|Rectum|BloodCells|CYP3A4
+      257                 Organism|LargeIntestine|Mucosa|Rectum|Interstitial|A
+      258                 Organism|LargeIntestine|Mucosa|Rectum|Interstitial|B
+      259            Organism|LargeIntestine|Mucosa|Rectum|Interstitial|UGT2B7
+      260            Organism|LargeIntestine|Mucosa|Rectum|Interstitial|CYP3A4
+      261                Organism|LargeIntestine|Mucosa|Rectum|Intracellular|A
+      262                Organism|LargeIntestine|Mucosa|Rectum|Intracellular|B
+      263           Organism|LargeIntestine|Mucosa|Rectum|Intracellular|UGT2B7
+      264           Organism|LargeIntestine|Mucosa|Rectum|Intracellular|UGT2B7
+      265           Organism|LargeIntestine|Mucosa|Rectum|Intracellular|UGT2B7
+      266           Organism|LargeIntestine|Mucosa|Rectum|Intracellular|CYP3A4
+      267           Organism|LargeIntestine|Mucosa|Rectum|Intracellular|CYP3A4
+      268           Organism|LargeIntestine|Mucosa|Rectum|Intracellular|CYP3A4
+      269                       Organism|LargeIntestine|Mucosa|Rectum|Plasma|A
+      270                       Organism|LargeIntestine|Mucosa|Rectum|Plasma|B
+      271                  Organism|LargeIntestine|Mucosa|Rectum|Plasma|UGT2B7
+      272                  Organism|LargeIntestine|Mucosa|Rectum|Plasma|CYP3A4
+      273                              Organism|Liver|Pericentral|BloodCells|A
+      274                              Organism|Liver|Pericentral|BloodCells|B
+      275                         Organism|Liver|Pericentral|BloodCells|UGT2B7
+      276                         Organism|Liver|Pericentral|BloodCells|CYP3A4
+      277                            Organism|Liver|Pericentral|Interstitial|A
+      278                            Organism|Liver|Pericentral|Interstitial|B
+      279                       Organism|Liver|Pericentral|Interstitial|UGT2B7
+      280                       Organism|Liver|Pericentral|Interstitial|CYP3A4
+      281                           Organism|Liver|Pericentral|Intracellular|A
+      282                           Organism|Liver|Pericentral|Intracellular|B
+      283                      Organism|Liver|Pericentral|Intracellular|UGT2B7
+      284                      Organism|Liver|Pericentral|Intracellular|UGT2B7
+      285                      Organism|Liver|Pericentral|Intracellular|UGT2B7
+      286                      Organism|Liver|Pericentral|Intracellular|CYP3A4
+      287                      Organism|Liver|Pericentral|Intracellular|CYP3A4
+      288                      Organism|Liver|Pericentral|Intracellular|CYP3A4
+      289                                  Organism|Liver|Pericentral|Plasma|A
+      290                                  Organism|Liver|Pericentral|Plasma|B
+      291                             Organism|Liver|Pericentral|Plasma|UGT2B7
+      292                             Organism|Liver|Pericentral|Plasma|CYP3A4
+      293                               Organism|Liver|Periportal|BloodCells|A
+      294                               Organism|Liver|Periportal|BloodCells|B
+      295                          Organism|Liver|Periportal|BloodCells|UGT2B7
+      296                          Organism|Liver|Periportal|BloodCells|CYP3A4
+      297                             Organism|Liver|Periportal|Interstitial|A
+      298                             Organism|Liver|Periportal|Interstitial|B
+      299                        Organism|Liver|Periportal|Interstitial|UGT2B7
+      300                        Organism|Liver|Periportal|Interstitial|CYP3A4
+      301                            Organism|Liver|Periportal|Intracellular|A
+      302                            Organism|Liver|Periportal|Intracellular|B
+      303                       Organism|Liver|Periportal|Intracellular|UGT2B7
+      304                       Organism|Liver|Periportal|Intracellular|UGT2B7
+      305                       Organism|Liver|Periportal|Intracellular|UGT2B7
+      306                       Organism|Liver|Periportal|Intracellular|CYP3A4
+      307                       Organism|Liver|Periportal|Intracellular|CYP3A4
+      308                       Organism|Liver|Periportal|Intracellular|CYP3A4
+      309                                   Organism|Liver|Periportal|Plasma|A
+      310                                   Organism|Liver|Periportal|Plasma|B
+      311                              Organism|Liver|Periportal|Plasma|UGT2B7
+      312                              Organism|Liver|Periportal|Plasma|CYP3A4
+      313                                              Organism|Lumen|Caecum|A
+      314                                              Organism|Lumen|Caecum|B
+      315                                         Organism|Lumen|Caecum|UGT2B7
+      316                                         Organism|Lumen|Caecum|CYP3A4
+      317                                      Organism|Lumen|ColonAscendens|A
+      318                                      Organism|Lumen|ColonAscendens|B
+      319                                 Organism|Lumen|ColonAscendens|UGT2B7
+      320                                 Organism|Lumen|ColonAscendens|CYP3A4
+      321                                     Organism|Lumen|ColonDescendens|A
+      322                                     Organism|Lumen|ColonDescendens|B
+      323                                Organism|Lumen|ColonDescendens|UGT2B7
+      324                                Organism|Lumen|ColonDescendens|CYP3A4
+      325                                        Organism|Lumen|ColonSigmoid|A
+      326                                        Organism|Lumen|ColonSigmoid|B
+      327                                   Organism|Lumen|ColonSigmoid|UGT2B7
+      328                                   Organism|Lumen|ColonSigmoid|CYP3A4
+      329                                    Organism|Lumen|ColonTransversum|A
+      330                                    Organism|Lumen|ColonTransversum|B
+      331                               Organism|Lumen|ColonTransversum|UGT2B7
+      332                               Organism|Lumen|ColonTransversum|CYP3A4
+      333                                            Organism|Lumen|Duodenum|A
+      334                                            Organism|Lumen|Duodenum|B
+      335                                       Organism|Lumen|Duodenum|UGT2B7
+      336                                       Organism|Lumen|Duodenum|CYP3A4
+      337                                               Organism|Lumen|Feces|A
+      338                                               Organism|Lumen|Feces|B
+      339                                          Organism|Lumen|Feces|UGT2B7
+      340                                          Organism|Lumen|Feces|CYP3A4
+      341                                          Organism|Lumen|LowerIleum|A
+      342                                          Organism|Lumen|LowerIleum|B
+      343                                     Organism|Lumen|LowerIleum|UGT2B7
+      344                                     Organism|Lumen|LowerIleum|CYP3A4
+      345                                        Organism|Lumen|LowerJejunum|A
+      346                                        Organism|Lumen|LowerJejunum|B
+      347                                   Organism|Lumen|LowerJejunum|UGT2B7
+      348                                   Organism|Lumen|LowerJejunum|CYP3A4
+      349                                              Organism|Lumen|Rectum|A
+      350                                              Organism|Lumen|Rectum|B
+      351                                         Organism|Lumen|Rectum|UGT2B7
+      352                                         Organism|Lumen|Rectum|CYP3A4
+      353                                             Organism|Lumen|Stomach|A
+      354                                             Organism|Lumen|Stomach|B
+      355                                        Organism|Lumen|Stomach|UGT2B7
+      356                                        Organism|Lumen|Stomach|CYP3A4
+      357                                          Organism|Lumen|UpperIleum|A
+      358                                          Organism|Lumen|UpperIleum|B
+      359                                     Organism|Lumen|UpperIleum|UGT2B7
+      360                                     Organism|Lumen|UpperIleum|CYP3A4
+      361                                        Organism|Lumen|UpperJejunum|A
+      362                                        Organism|Lumen|UpperJejunum|B
+      363                                   Organism|Lumen|UpperJejunum|UGT2B7
+      364                                   Organism|Lumen|UpperJejunum|CYP3A4
+      365                                           Organism|Lung|BloodCells|A
+      366                                           Organism|Lung|BloodCells|B
+      367                                      Organism|Lung|BloodCells|UGT2B7
+      368                                      Organism|Lung|BloodCells|CYP3A4
+      369                                         Organism|Lung|Interstitial|A
+      370                                         Organism|Lung|Interstitial|B
+      371                                    Organism|Lung|Interstitial|UGT2B7
+      372                                    Organism|Lung|Interstitial|CYP3A4
+      373                                        Organism|Lung|Intracellular|A
+      374                                        Organism|Lung|Intracellular|B
+      375                                   Organism|Lung|Intracellular|UGT2B7
+      376                                   Organism|Lung|Intracellular|UGT2B7
+      377                                   Organism|Lung|Intracellular|UGT2B7
+      378                                   Organism|Lung|Intracellular|CYP3A4
+      379                                   Organism|Lung|Intracellular|CYP3A4
+      380                                   Organism|Lung|Intracellular|CYP3A4
+      381                                               Organism|Lung|Plasma|A
+      382                                               Organism|Lung|Plasma|B
+      383                                          Organism|Lung|Plasma|UGT2B7
+      384                                          Organism|Lung|Plasma|CYP3A4
+      385                                         Organism|Muscle|BloodCells|A
+      386                                         Organism|Muscle|BloodCells|B
+      387                                    Organism|Muscle|BloodCells|UGT2B7
+      388                                    Organism|Muscle|BloodCells|CYP3A4
+      389                                       Organism|Muscle|Interstitial|A
+      390                                       Organism|Muscle|Interstitial|B
+      391                                  Organism|Muscle|Interstitial|UGT2B7
+      392                                  Organism|Muscle|Interstitial|CYP3A4
+      393                                      Organism|Muscle|Intracellular|A
+      394                                      Organism|Muscle|Intracellular|B
+      395                                 Organism|Muscle|Intracellular|UGT2B7
+      396                                 Organism|Muscle|Intracellular|UGT2B7
+      397                                 Organism|Muscle|Intracellular|UGT2B7
+      398                                 Organism|Muscle|Intracellular|CYP3A4
+      399                                 Organism|Muscle|Intracellular|CYP3A4
+      400                                 Organism|Muscle|Intracellular|CYP3A4
+      401                                             Organism|Muscle|Plasma|A
+      402                                             Organism|Muscle|Plasma|B
+      403                                        Organism|Muscle|Plasma|UGT2B7
+      404                                        Organism|Muscle|Plasma|CYP3A4
+      405                                       Organism|Pancreas|BloodCells|A
+      406                                       Organism|Pancreas|BloodCells|B
+      407                                  Organism|Pancreas|BloodCells|UGT2B7
+      408                                  Organism|Pancreas|BloodCells|CYP3A4
+      409                                     Organism|Pancreas|Interstitial|A
+      410                                     Organism|Pancreas|Interstitial|B
+      411                                Organism|Pancreas|Interstitial|UGT2B7
+      412                                Organism|Pancreas|Interstitial|CYP3A4
+      413                                    Organism|Pancreas|Intracellular|A
+      414                                    Organism|Pancreas|Intracellular|B
+      415                               Organism|Pancreas|Intracellular|UGT2B7
+      416                               Organism|Pancreas|Intracellular|UGT2B7
+      417                               Organism|Pancreas|Intracellular|UGT2B7
+      418                               Organism|Pancreas|Intracellular|CYP3A4
+      419                               Organism|Pancreas|Intracellular|CYP3A4
+      420                               Organism|Pancreas|Intracellular|CYP3A4
+      421                                           Organism|Pancreas|Plasma|A
+      422                                           Organism|Pancreas|Plasma|B
+      423                                      Organism|Pancreas|Plasma|UGT2B7
+      424                                      Organism|Pancreas|Plasma|CYP3A4
+      425                                     Organism|PortalVein|BloodCells|A
+      426                                     Organism|PortalVein|BloodCells|B
+      427                                Organism|PortalVein|BloodCells|UGT2B7
+      428                                Organism|PortalVein|BloodCells|CYP3A4
+      429                                         Organism|PortalVein|Plasma|A
+      430                                         Organism|PortalVein|Plasma|B
+      431                                    Organism|PortalVein|Plasma|UGT2B7
+      432                                    Organism|PortalVein|Plasma|CYP3A4
+      433                                           Organism|Skin|BloodCells|A
+      434                                           Organism|Skin|BloodCells|B
+      435                                      Organism|Skin|BloodCells|UGT2B7
+      436                                      Organism|Skin|BloodCells|CYP3A4
+      437                                         Organism|Skin|Interstitial|A
+      438                                         Organism|Skin|Interstitial|B
+      439                                    Organism|Skin|Interstitial|UGT2B7
+      440                                    Organism|Skin|Interstitial|CYP3A4
+      441                                        Organism|Skin|Intracellular|A
+      442                                        Organism|Skin|Intracellular|B
+      443                                   Organism|Skin|Intracellular|UGT2B7
+      444                                   Organism|Skin|Intracellular|UGT2B7
+      445                                   Organism|Skin|Intracellular|UGT2B7
+      446                                   Organism|Skin|Intracellular|CYP3A4
+      447                                   Organism|Skin|Intracellular|CYP3A4
+      448                                   Organism|Skin|Intracellular|CYP3A4
+      449                                               Organism|Skin|Plasma|A
+      450                                               Organism|Skin|Plasma|B
+      451                                          Organism|Skin|Plasma|UGT2B7
+      452                                          Organism|Skin|Plasma|CYP3A4
+      453                                 Organism|SmallIntestine|BloodCells|A
+      454                                 Organism|SmallIntestine|BloodCells|B
+      455                            Organism|SmallIntestine|BloodCells|UGT2B7
+      456                            Organism|SmallIntestine|BloodCells|CYP3A4
+      457                               Organism|SmallIntestine|Interstitial|A
+      458                               Organism|SmallIntestine|Interstitial|B
+      459                          Organism|SmallIntestine|Interstitial|UGT2B7
+      460                          Organism|SmallIntestine|Interstitial|CYP3A4
+      461                              Organism|SmallIntestine|Intracellular|A
+      462                              Organism|SmallIntestine|Intracellular|B
+      463                         Organism|SmallIntestine|Intracellular|UGT2B7
+      464                         Organism|SmallIntestine|Intracellular|UGT2B7
+      465                         Organism|SmallIntestine|Intracellular|UGT2B7
+      466                         Organism|SmallIntestine|Intracellular|CYP3A4
+      467                         Organism|SmallIntestine|Intracellular|CYP3A4
+      468                         Organism|SmallIntestine|Intracellular|CYP3A4
+      469                                     Organism|SmallIntestine|Plasma|A
+      470                                     Organism|SmallIntestine|Plasma|B
+      471                                Organism|SmallIntestine|Plasma|UGT2B7
+      472                                Organism|SmallIntestine|Plasma|CYP3A4
+      473                 Organism|SmallIntestine|Mucosa|Duodenum|BloodCells|A
+      474                 Organism|SmallIntestine|Mucosa|Duodenum|BloodCells|B
+      475            Organism|SmallIntestine|Mucosa|Duodenum|BloodCells|UGT2B7
+      476            Organism|SmallIntestine|Mucosa|Duodenum|BloodCells|CYP3A4
+      477               Organism|SmallIntestine|Mucosa|Duodenum|Interstitial|A
+      478               Organism|SmallIntestine|Mucosa|Duodenum|Interstitial|B
+      479          Organism|SmallIntestine|Mucosa|Duodenum|Interstitial|UGT2B7
+      480          Organism|SmallIntestine|Mucosa|Duodenum|Interstitial|CYP3A4
+      481              Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|A
+      482              Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|B
+      483         Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|UGT2B7
+      484         Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|UGT2B7
+      485         Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|UGT2B7
+      486         Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|CYP3A4
+      487         Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|CYP3A4
+      488         Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|CYP3A4
+      489                     Organism|SmallIntestine|Mucosa|Duodenum|Plasma|A
+      490                     Organism|SmallIntestine|Mucosa|Duodenum|Plasma|B
+      491                Organism|SmallIntestine|Mucosa|Duodenum|Plasma|UGT2B7
+      492                Organism|SmallIntestine|Mucosa|Duodenum|Plasma|CYP3A4
+      493               Organism|SmallIntestine|Mucosa|LowerIleum|BloodCells|A
+      494               Organism|SmallIntestine|Mucosa|LowerIleum|BloodCells|B
+      495          Organism|SmallIntestine|Mucosa|LowerIleum|BloodCells|UGT2B7
+      496          Organism|SmallIntestine|Mucosa|LowerIleum|BloodCells|CYP3A4
+      497             Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial|A
+      498             Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial|B
+      499        Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial|UGT2B7
+      500        Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial|CYP3A4
+      501            Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|A
+      502            Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|B
+      503       Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|UGT2B7
+      504       Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|UGT2B7
+      505       Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|UGT2B7
+      506       Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|CYP3A4
+      507       Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|CYP3A4
+      508       Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|CYP3A4
+      509                   Organism|SmallIntestine|Mucosa|LowerIleum|Plasma|A
+      510                   Organism|SmallIntestine|Mucosa|LowerIleum|Plasma|B
+      511              Organism|SmallIntestine|Mucosa|LowerIleum|Plasma|UGT2B7
+      512              Organism|SmallIntestine|Mucosa|LowerIleum|Plasma|CYP3A4
+      513             Organism|SmallIntestine|Mucosa|LowerJejunum|BloodCells|A
+      514             Organism|SmallIntestine|Mucosa|LowerJejunum|BloodCells|B
+      515        Organism|SmallIntestine|Mucosa|LowerJejunum|BloodCells|UGT2B7
+      516        Organism|SmallIntestine|Mucosa|LowerJejunum|BloodCells|CYP3A4
+      517           Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial|A
+      518           Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial|B
+      519      Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial|UGT2B7
+      520      Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial|CYP3A4
+      521          Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|A
+      522          Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|B
+      523     Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|UGT2B7
+      524     Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|UGT2B7
+      525     Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|UGT2B7
+      526     Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|CYP3A4
+      527     Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|CYP3A4
+      528     Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|CYP3A4
+      529                 Organism|SmallIntestine|Mucosa|LowerJejunum|Plasma|A
+      530                 Organism|SmallIntestine|Mucosa|LowerJejunum|Plasma|B
+      531            Organism|SmallIntestine|Mucosa|LowerJejunum|Plasma|UGT2B7
+      532            Organism|SmallIntestine|Mucosa|LowerJejunum|Plasma|CYP3A4
+      533               Organism|SmallIntestine|Mucosa|UpperIleum|BloodCells|A
+      534               Organism|SmallIntestine|Mucosa|UpperIleum|BloodCells|B
+      535          Organism|SmallIntestine|Mucosa|UpperIleum|BloodCells|UGT2B7
+      536          Organism|SmallIntestine|Mucosa|UpperIleum|BloodCells|CYP3A4
+      537             Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial|A
+      538             Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial|B
+      539        Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial|UGT2B7
+      540        Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial|CYP3A4
+      541            Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|A
+      542            Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|B
+      543       Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|UGT2B7
+      544       Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|UGT2B7
+      545       Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|UGT2B7
+      546       Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|CYP3A4
+      547       Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|CYP3A4
+      548       Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|CYP3A4
+      549                   Organism|SmallIntestine|Mucosa|UpperIleum|Plasma|A
+      550                   Organism|SmallIntestine|Mucosa|UpperIleum|Plasma|B
+      551              Organism|SmallIntestine|Mucosa|UpperIleum|Plasma|UGT2B7
+      552              Organism|SmallIntestine|Mucosa|UpperIleum|Plasma|CYP3A4
+      553             Organism|SmallIntestine|Mucosa|UpperJejunum|BloodCells|A
+      554             Organism|SmallIntestine|Mucosa|UpperJejunum|BloodCells|B
+      555        Organism|SmallIntestine|Mucosa|UpperJejunum|BloodCells|UGT2B7
+      556        Organism|SmallIntestine|Mucosa|UpperJejunum|BloodCells|CYP3A4
+      557           Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial|A
+      558           Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial|B
+      559      Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial|UGT2B7
+      560      Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial|CYP3A4
+      561          Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|A
+      562          Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|B
+      563     Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|UGT2B7
+      564     Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|UGT2B7
+      565     Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|UGT2B7
+      566     Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|CYP3A4
+      567     Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|CYP3A4
+      568     Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|CYP3A4
+      569                 Organism|SmallIntestine|Mucosa|UpperJejunum|Plasma|A
+      570                 Organism|SmallIntestine|Mucosa|UpperJejunum|Plasma|B
+      571            Organism|SmallIntestine|Mucosa|UpperJejunum|Plasma|UGT2B7
+      572            Organism|SmallIntestine|Mucosa|UpperJejunum|Plasma|CYP3A4
+      573                                         Organism|Spleen|BloodCells|A
+      574                                         Organism|Spleen|BloodCells|B
+      575                                    Organism|Spleen|BloodCells|UGT2B7
+      576                                    Organism|Spleen|BloodCells|CYP3A4
+      577                                       Organism|Spleen|Interstitial|A
+      578                                       Organism|Spleen|Interstitial|B
+      579                                  Organism|Spleen|Interstitial|UGT2B7
+      580                                  Organism|Spleen|Interstitial|CYP3A4
+      581                                      Organism|Spleen|Intracellular|A
+      582                                      Organism|Spleen|Intracellular|B
+      583                                 Organism|Spleen|Intracellular|UGT2B7
+      584                                 Organism|Spleen|Intracellular|UGT2B7
+      585                                 Organism|Spleen|Intracellular|UGT2B7
+      586                                 Organism|Spleen|Intracellular|CYP3A4
+      587                                 Organism|Spleen|Intracellular|CYP3A4
+      588                                 Organism|Spleen|Intracellular|CYP3A4
+      589                                             Organism|Spleen|Plasma|A
+      590                                             Organism|Spleen|Plasma|B
+      591                                        Organism|Spleen|Plasma|UGT2B7
+      592                                        Organism|Spleen|Plasma|CYP3A4
+      593                                        Organism|Stomach|BloodCells|A
+      594                                        Organism|Stomach|BloodCells|B
+      595                                   Organism|Stomach|BloodCells|UGT2B7
+      596                                   Organism|Stomach|BloodCells|CYP3A4
+      597                                      Organism|Stomach|Interstitial|A
+      598                                      Organism|Stomach|Interstitial|B
+      599                                 Organism|Stomach|Interstitial|UGT2B7
+      600                                 Organism|Stomach|Interstitial|CYP3A4
+      601                                     Organism|Stomach|Intracellular|A
+      602                                     Organism|Stomach|Intracellular|B
+      603                                Organism|Stomach|Intracellular|UGT2B7
+      604                                Organism|Stomach|Intracellular|UGT2B7
+      605                                Organism|Stomach|Intracellular|UGT2B7
+      606                                Organism|Stomach|Intracellular|CYP3A4
+      607                                Organism|Stomach|Intracellular|CYP3A4
+      608                                Organism|Stomach|Intracellular|CYP3A4
+      609                                            Organism|Stomach|Plasma|A
+      610                                            Organism|Stomach|Plasma|B
+      611                                       Organism|Stomach|Plasma|UGT2B7
+      612                                       Organism|Stomach|Plasma|CYP3A4
+      613                                    Organism|VenousBlood|BloodCells|A
+      614                                    Organism|VenousBlood|BloodCells|B
+      615                               Organism|VenousBlood|BloodCells|UGT2B7
+      616                               Organism|VenousBlood|BloodCells|CYP3A4
+      617                                        Organism|VenousBlood|Plasma|A
+      618                                        Organism|VenousBlood|Plasma|B
+      619                                   Organism|VenousBlood|Plasma|UGT2B7
+      620                                   Organism|VenousBlood|Plasma|CYP3A4
+                            Parameter Name Value   Unit Value Origin
+      1             LocalMoleculeParameter     0   µmol             
+      2             LocalMoleculeParameter     0   µmol             
+      3              Initial concentration     0 µmol/l             
+      4              Initial concentration     0 µmol/l             
+      5             LocalMoleculeParameter     0   µmol             
+      6             LocalMoleculeParameter     0   µmol             
+      7              Initial concentration     0 µmol/l             
+      8              Initial concentration     0 µmol/l             
+      9             LocalMoleculeParameter     0   µmol             
+      10            LocalMoleculeParameter     0   µmol             
+      11             Initial concentration     0 µmol/l             
+      12             Initial concentration     0 µmol/l             
+      13            LocalMoleculeParameter     0   µmol             
+      14            LocalMoleculeParameter     0   µmol             
+      15             Initial concentration     0 µmol/l             
+      16             Initial concentration     0 µmol/l             
+      17            LocalMoleculeParameter     0   µmol             
+      18            LocalMoleculeParameter     0   µmol             
+      19               Relative expression     0                    
+      20             Initial concentration     0 µmol/l             
+      21  Fraction expressed intracellular     1                    
+      22               Relative expression     0                    
+      23             Initial concentration     0 µmol/l             
+      24  Fraction expressed intracellular     1                    
+      25            LocalMoleculeParameter     0   µmol             
+      26            LocalMoleculeParameter     0   µmol             
+      27             Initial concentration     0 µmol/l             
+      28             Initial concentration     0 µmol/l             
+      29            LocalMoleculeParameter     0   µmol             
+      30            LocalMoleculeParameter     0   µmol             
+      31             Initial concentration     0 µmol/l             
+      32             Initial concentration     0 µmol/l             
+      33            LocalMoleculeParameter     0   µmol             
+      34            LocalMoleculeParameter     0   µmol             
+      35             Initial concentration     0 µmol/l             
+      36             Initial concentration     0 µmol/l             
+      37            LocalMoleculeParameter     0   µmol             
+      38            LocalMoleculeParameter     0   µmol             
+      39             Initial concentration     0 µmol/l             
+      40             Initial concentration     0 µmol/l             
+      41            LocalMoleculeParameter     0   µmol             
+      42            LocalMoleculeParameter     0   µmol             
+      43               Relative expression     0                    
+      44             Initial concentration     0 µmol/l             
+      45  Fraction expressed intracellular     1                    
+      46               Relative expression     0                    
+      47             Initial concentration     0 µmol/l             
+      48  Fraction expressed intracellular     1                    
+      49            LocalMoleculeParameter     0   µmol             
+      50            LocalMoleculeParameter     0   µmol             
+      51             Initial concentration     0 µmol/l             
+      52             Initial concentration     0 µmol/l             
+      53            LocalMoleculeParameter     0   µmol             
+      54            LocalMoleculeParameter     0   µmol             
+      55             Initial concentration     0 µmol/l             
+      56             Initial concentration     0 µmol/l             
+      57            LocalMoleculeParameter     0   µmol             
+      58            LocalMoleculeParameter     0   µmol             
+      59             Initial concentration     0 µmol/l             
+      60             Initial concentration     0 µmol/l             
+      61            LocalMoleculeParameter     0   µmol             
+      62            LocalMoleculeParameter     0   µmol             
+      63               Relative expression     0                    
+      64             Initial concentration     0 µmol/l             
+      65  Fraction expressed intracellular     1                    
+      66               Relative expression     0                    
+      67             Initial concentration     0 µmol/l             
+      68  Fraction expressed intracellular     1                    
+      69            LocalMoleculeParameter     0   µmol             
+      70            LocalMoleculeParameter     0   µmol             
+      71             Initial concentration     0 µmol/l             
+      72             Initial concentration     0 µmol/l             
+      73            LocalMoleculeParameter     0   µmol             
+      74            LocalMoleculeParameter     0   µmol             
+      75             Initial concentration     0 µmol/l             
+      76             Initial concentration     0 µmol/l             
+      77            LocalMoleculeParameter     0   µmol             
+      78            LocalMoleculeParameter     0   µmol             
+      79             Initial concentration     0 µmol/l             
+      80             Initial concentration     0 µmol/l             
+      81            LocalMoleculeParameter     0   µmol             
+      82            LocalMoleculeParameter     0   µmol             
+      83               Relative expression     0                    
+      84             Initial concentration     0 µmol/l             
+      85  Fraction expressed intracellular     1                    
+      86               Relative expression     0                    
+      87             Initial concentration     0 µmol/l             
+      88  Fraction expressed intracellular     1                    
+      89            LocalMoleculeParameter     0   µmol             
+      90            LocalMoleculeParameter     0   µmol             
+      91             Initial concentration     0 µmol/l             
+      92             Initial concentration     0 µmol/l             
+      93            LocalMoleculeParameter     0   µmol             
+      94            LocalMoleculeParameter     0   µmol             
+      95             Initial concentration     0 µmol/l             
+      96             Initial concentration     0 µmol/l             
+      97            LocalMoleculeParameter     0   µmol             
+      98            LocalMoleculeParameter     0   µmol             
+      99             Initial concentration     0 µmol/l             
+      100            Initial concentration     0 µmol/l             
+      101           LocalMoleculeParameter     0   µmol             
+      102           LocalMoleculeParameter     0   µmol             
+      103              Relative expression     0                    
+      104            Initial concentration     0 µmol/l             
+      105 Fraction expressed intracellular     1                    
+      106              Relative expression     0                    
+      107            Initial concentration     0 µmol/l             
+      108 Fraction expressed intracellular     1                    
+      109           LocalMoleculeParameter     0   µmol             
+      110           LocalMoleculeParameter     0   µmol             
+      111            Initial concentration     0 µmol/l             
+      112            Initial concentration     0 µmol/l             
+      113           LocalMoleculeParameter     0   µmol             
+      114           LocalMoleculeParameter     0   µmol             
+      115            Initial concentration     0 µmol/l             
+      116            Initial concentration     0 µmol/l             
+      117           LocalMoleculeParameter     0   µmol             
+      118           LocalMoleculeParameter     0   µmol             
+      119            Initial concentration     0 µmol/l             
+      120            Initial concentration     0 µmol/l             
+      121           LocalMoleculeParameter     0   µmol             
+      122           LocalMoleculeParameter     0   µmol             
+      123              Relative expression     0                    
+      124            Initial concentration     0 µmol/l             
+      125 Fraction expressed intracellular     1                    
+      126              Relative expression     0                    
+      127            Initial concentration     0 µmol/l             
+      128 Fraction expressed intracellular     1                    
+      129           LocalMoleculeParameter     0   µmol             
+      130           LocalMoleculeParameter     0   µmol             
+      131            Initial concentration     0 µmol/l             
+      132            Initial concentration     0 µmol/l             
+      133           LocalMoleculeParameter     0   µmol             
+      134           LocalMoleculeParameter     0   µmol             
+      135            Initial concentration     0 µmol/l             
+      136            Initial concentration     0 µmol/l             
+      137           LocalMoleculeParameter     0   µmol             
+      138           LocalMoleculeParameter     0   µmol             
+      139            Initial concentration     0 µmol/l             
+      140            Initial concentration     0 µmol/l             
+      141           LocalMoleculeParameter     0   µmol             
+      142           LocalMoleculeParameter     0   µmol             
+      143              Relative expression     0                    
+      144            Initial concentration     0 µmol/l             
+      145 Fraction expressed intracellular     1                    
+      146              Relative expression     0                    
+      147            Initial concentration     0 µmol/l             
+      148 Fraction expressed intracellular     1                    
+      149           LocalMoleculeParameter     0   µmol             
+      150           LocalMoleculeParameter     0   µmol             
+      151            Initial concentration     0 µmol/l             
+      152            Initial concentration     0 µmol/l             
+      153           LocalMoleculeParameter     0   µmol             
+      154           LocalMoleculeParameter     0   µmol             
+      155            Initial concentration     0 µmol/l             
+      156            Initial concentration     0 µmol/l             
+      157           LocalMoleculeParameter     0   µmol             
+      158           LocalMoleculeParameter     0   µmol             
+      159            Initial concentration     0 µmol/l             
+      160            Initial concentration     0 µmol/l             
+      161           LocalMoleculeParameter     0   µmol             
+      162           LocalMoleculeParameter     0   µmol             
+      163              Relative expression     0                    
+      164            Initial concentration     0 µmol/l             
+      165 Fraction expressed intracellular     1                    
+      166              Relative expression     0                    
+      167            Initial concentration     0 µmol/l             
+      168 Fraction expressed intracellular     1                    
+      169           LocalMoleculeParameter     0   µmol             
+      170           LocalMoleculeParameter     0   µmol             
+      171            Initial concentration     0 µmol/l             
+      172            Initial concentration     0 µmol/l             
+      173           LocalMoleculeParameter     0   µmol             
+      174           LocalMoleculeParameter     0   µmol             
+      175            Initial concentration     0 µmol/l             
+      176            Initial concentration     0 µmol/l             
+      177           LocalMoleculeParameter     0   µmol             
+      178           LocalMoleculeParameter     0   µmol             
+      179            Initial concentration     0 µmol/l             
+      180            Initial concentration     0 µmol/l             
+      181           LocalMoleculeParameter     0   µmol             
+      182           LocalMoleculeParameter     0   µmol             
+      183              Relative expression     0                    
+      184            Initial concentration     0 µmol/l             
+      185 Fraction expressed intracellular     1                    
+      186              Relative expression     0                    
+      187            Initial concentration     0 µmol/l             
+      188 Fraction expressed intracellular     1                    
+      189           LocalMoleculeParameter     0   µmol             
+      190           LocalMoleculeParameter     0   µmol             
+      191            Initial concentration     0 µmol/l             
+      192            Initial concentration     0 µmol/l             
+      193           LocalMoleculeParameter     0   µmol             
+      194           LocalMoleculeParameter     0   µmol             
+      195            Initial concentration     0 µmol/l             
+      196            Initial concentration     0 µmol/l             
+      197           LocalMoleculeParameter     0   µmol             
+      198           LocalMoleculeParameter     0   µmol             
+      199            Initial concentration     0 µmol/l             
+      200            Initial concentration     0 µmol/l             
+      201           LocalMoleculeParameter     0   µmol             
+      202           LocalMoleculeParameter     0   µmol             
+      203              Relative expression     0                    
+      204            Initial concentration     0 µmol/l             
+      205 Fraction expressed intracellular     1                    
+      206              Relative expression     0                    
+      207            Initial concentration     0 µmol/l             
+      208 Fraction expressed intracellular     1                    
+      209           LocalMoleculeParameter     0   µmol             
+      210           LocalMoleculeParameter     0   µmol             
+      211            Initial concentration     0 µmol/l             
+      212            Initial concentration     0 µmol/l             
+      213           LocalMoleculeParameter     0   µmol             
+      214           LocalMoleculeParameter     0   µmol             
+      215            Initial concentration     0 µmol/l             
+      216            Initial concentration     0 µmol/l             
+      217           LocalMoleculeParameter     0   µmol             
+      218           LocalMoleculeParameter     0   µmol             
+      219            Initial concentration     0 µmol/l             
+      220            Initial concentration     0 µmol/l             
+      221           LocalMoleculeParameter     0   µmol             
+      222           LocalMoleculeParameter     0   µmol             
+      223              Relative expression     0                    
+      224            Initial concentration     0 µmol/l             
+      225 Fraction expressed intracellular     1                    
+      226              Relative expression     0                    
+      227            Initial concentration     0 µmol/l             
+      228 Fraction expressed intracellular     1                    
+      229           LocalMoleculeParameter     0   µmol             
+      230           LocalMoleculeParameter     0   µmol             
+      231            Initial concentration     0 µmol/l             
+      232            Initial concentration     0 µmol/l             
+      233           LocalMoleculeParameter     0   µmol             
+      234           LocalMoleculeParameter     0   µmol             
+      235            Initial concentration     0 µmol/l             
+      236            Initial concentration     0 µmol/l             
+      237           LocalMoleculeParameter     0   µmol             
+      238           LocalMoleculeParameter     0   µmol             
+      239            Initial concentration     0 µmol/l             
+      240            Initial concentration     0 µmol/l             
+      241           LocalMoleculeParameter     0   µmol             
+      242           LocalMoleculeParameter     0   µmol             
+      243              Relative expression     0                    
+      244            Initial concentration     0 µmol/l             
+      245 Fraction expressed intracellular     1                    
+      246              Relative expression     0                    
+      247            Initial concentration     0 µmol/l             
+      248 Fraction expressed intracellular     1                    
+      249           LocalMoleculeParameter     0   µmol             
+      250           LocalMoleculeParameter     0   µmol             
+      251            Initial concentration     0 µmol/l             
+      252            Initial concentration     0 µmol/l             
+      253           LocalMoleculeParameter     0   µmol             
+      254           LocalMoleculeParameter     0   µmol             
+      255            Initial concentration     0 µmol/l             
+      256            Initial concentration     0 µmol/l             
+      257           LocalMoleculeParameter     0   µmol             
+      258           LocalMoleculeParameter     0   µmol             
+      259            Initial concentration     0 µmol/l             
+      260            Initial concentration     0 µmol/l             
+      261           LocalMoleculeParameter     0   µmol             
+      262           LocalMoleculeParameter     0   µmol             
+      263              Relative expression     0                    
+      264            Initial concentration     0 µmol/l             
+      265 Fraction expressed intracellular     1                    
+      266              Relative expression     0                    
+      267            Initial concentration     0 µmol/l             
+      268 Fraction expressed intracellular     1                    
+      269           LocalMoleculeParameter     0   µmol             
+      270           LocalMoleculeParameter     0   µmol             
+      271            Initial concentration     0 µmol/l             
+      272            Initial concentration     0 µmol/l             
+      273           LocalMoleculeParameter     0   µmol             
+      274           LocalMoleculeParameter     0   µmol             
+      275            Initial concentration     0 µmol/l             
+      276            Initial concentration     0 µmol/l             
+      277           LocalMoleculeParameter     0   µmol             
+      278           LocalMoleculeParameter     0   µmol             
+      279            Initial concentration     0 µmol/l             
+      280            Initial concentration     0 µmol/l             
+      281           LocalMoleculeParameter     0   µmol             
+      282           LocalMoleculeParameter     0   µmol             
+      283              Relative expression     0                    
+      284            Initial concentration     0 µmol/l             
+      285 Fraction expressed intracellular     1                    
+      286              Relative expression     0                    
+      287            Initial concentration     0 µmol/l             
+      288 Fraction expressed intracellular     1                    
+      289           LocalMoleculeParameter     0   µmol             
+      290           LocalMoleculeParameter     0   µmol             
+      291            Initial concentration     0 µmol/l             
+      292            Initial concentration     0 µmol/l             
+      293           LocalMoleculeParameter     0   µmol             
+      294           LocalMoleculeParameter     0   µmol             
+      295            Initial concentration     0 µmol/l             
+      296            Initial concentration     0 µmol/l             
+      297           LocalMoleculeParameter     0   µmol             
+      298           LocalMoleculeParameter     0   µmol             
+      299            Initial concentration     0 µmol/l             
+      300            Initial concentration     0 µmol/l             
+      301           LocalMoleculeParameter     0   µmol             
+      302           LocalMoleculeParameter     0   µmol             
+      303              Relative expression     0                    
+      304            Initial concentration     0 µmol/l             
+      305 Fraction expressed intracellular     1                    
+      306              Relative expression     0                    
+      307            Initial concentration     0 µmol/l             
+      308 Fraction expressed intracellular     1                    
+      309           LocalMoleculeParameter     0   µmol             
+      310           LocalMoleculeParameter     0   µmol             
+      311            Initial concentration     0 µmol/l             
+      312            Initial concentration     0 µmol/l             
+      313           LocalMoleculeParameter     0   µmol             
+      314           LocalMoleculeParameter     0   µmol             
+      315            Initial concentration     0 µmol/l             
+      316            Initial concentration     0 µmol/l             
+      317           LocalMoleculeParameter     0   µmol             
+      318           LocalMoleculeParameter     0   µmol             
+      319            Initial concentration     0 µmol/l             
+      320            Initial concentration     0 µmol/l             
+      321           LocalMoleculeParameter     0   µmol             
+      322           LocalMoleculeParameter     0   µmol             
+      323            Initial concentration     0 µmol/l             
+      324            Initial concentration     0 µmol/l             
+      325           LocalMoleculeParameter     0   µmol             
+      326           LocalMoleculeParameter     0   µmol             
+      327            Initial concentration     0 µmol/l             
+      328            Initial concentration     0 µmol/l             
+      329           LocalMoleculeParameter     0   µmol             
+      330           LocalMoleculeParameter     0   µmol             
+      331            Initial concentration     0 µmol/l             
+      332            Initial concentration     0 µmol/l             
+      333           LocalMoleculeParameter     0   µmol             
+      334           LocalMoleculeParameter     0   µmol             
+      335            Initial concentration     0 µmol/l             
+      336            Initial concentration     0 µmol/l             
+      337           LocalMoleculeParameter     0   µmol             
+      338           LocalMoleculeParameter     0   µmol             
+      339            Initial concentration     0 µmol/l             
+      340            Initial concentration     0 µmol/l             
+      341           LocalMoleculeParameter     0   µmol             
+      342           LocalMoleculeParameter     0   µmol             
+      343            Initial concentration     0 µmol/l             
+      344            Initial concentration     0 µmol/l             
+      345           LocalMoleculeParameter     0   µmol             
+      346           LocalMoleculeParameter     0   µmol             
+      347            Initial concentration     0 µmol/l             
+      348            Initial concentration     0 µmol/l             
+      349           LocalMoleculeParameter     0   µmol             
+      350           LocalMoleculeParameter     0   µmol             
+      351            Initial concentration     0 µmol/l             
+      352            Initial concentration     0 µmol/l             
+      353           LocalMoleculeParameter     0   µmol             
+      354           LocalMoleculeParameter     0   µmol             
+      355            Initial concentration     0 µmol/l             
+      356            Initial concentration     0 µmol/l             
+      357           LocalMoleculeParameter     0   µmol             
+      358           LocalMoleculeParameter     0   µmol             
+      359            Initial concentration     0 µmol/l             
+      360            Initial concentration     0 µmol/l             
+      361           LocalMoleculeParameter     0   µmol             
+      362           LocalMoleculeParameter     0   µmol             
+      363            Initial concentration     0 µmol/l             
+      364            Initial concentration     0 µmol/l             
+      365           LocalMoleculeParameter     0   µmol             
+      366           LocalMoleculeParameter     0   µmol             
+      367            Initial concentration     0 µmol/l             
+      368            Initial concentration     0 µmol/l             
+      369           LocalMoleculeParameter     0   µmol             
+      370           LocalMoleculeParameter     0   µmol             
+      371            Initial concentration     0 µmol/l             
+      372            Initial concentration     0 µmol/l             
+      373           LocalMoleculeParameter     0   µmol             
+      374           LocalMoleculeParameter     0   µmol             
+      375              Relative expression     0                    
+      376            Initial concentration     0 µmol/l             
+      377 Fraction expressed intracellular     1                    
+      378              Relative expression     0                    
+      379            Initial concentration     0 µmol/l             
+      380 Fraction expressed intracellular     1                    
+      381           LocalMoleculeParameter     0   µmol             
+      382           LocalMoleculeParameter     0   µmol             
+      383            Initial concentration     0 µmol/l             
+      384            Initial concentration     0 µmol/l             
+      385           LocalMoleculeParameter     0   µmol             
+      386           LocalMoleculeParameter     0   µmol             
+      387            Initial concentration     0 µmol/l             
+      388            Initial concentration     0 µmol/l             
+      389           LocalMoleculeParameter     0   µmol             
+      390           LocalMoleculeParameter     0   µmol             
+      391            Initial concentration     0 µmol/l             
+      392            Initial concentration     0 µmol/l             
+      393           LocalMoleculeParameter     0   µmol             
+      394           LocalMoleculeParameter     0   µmol             
+      395              Relative expression     0                    
+      396            Initial concentration     0 µmol/l             
+      397 Fraction expressed intracellular     1                    
+      398              Relative expression     0                    
+      399            Initial concentration     0 µmol/l             
+      400 Fraction expressed intracellular     1                    
+      401           LocalMoleculeParameter     0   µmol             
+      402           LocalMoleculeParameter     0   µmol             
+      403            Initial concentration     0 µmol/l             
+      404            Initial concentration     0 µmol/l             
+      405           LocalMoleculeParameter     0   µmol             
+      406           LocalMoleculeParameter     0   µmol             
+      407            Initial concentration     0 µmol/l             
+      408            Initial concentration     0 µmol/l             
+      409           LocalMoleculeParameter     0   µmol             
+      410           LocalMoleculeParameter     0   µmol             
+      411            Initial concentration     0 µmol/l             
+      412            Initial concentration     0 µmol/l             
+      413           LocalMoleculeParameter     0   µmol             
+      414           LocalMoleculeParameter     0   µmol             
+      415              Relative expression     0                    
+      416            Initial concentration     0 µmol/l             
+      417 Fraction expressed intracellular     1                    
+      418              Relative expression     0                    
+      419            Initial concentration     0 µmol/l             
+      420 Fraction expressed intracellular     1                    
+      421           LocalMoleculeParameter     0   µmol             
+      422           LocalMoleculeParameter     0   µmol             
+      423            Initial concentration     0 µmol/l             
+      424            Initial concentration     0 µmol/l             
+      425           LocalMoleculeParameter     0   µmol             
+      426           LocalMoleculeParameter     0   µmol             
+      427            Initial concentration     0 µmol/l             
+      428            Initial concentration     0 µmol/l             
+      429           LocalMoleculeParameter     0   µmol             
+      430           LocalMoleculeParameter     0   µmol             
+      431            Initial concentration     0 µmol/l             
+      432            Initial concentration     0 µmol/l             
+      433           LocalMoleculeParameter     0   µmol             
+      434           LocalMoleculeParameter     0   µmol             
+      435            Initial concentration     0 µmol/l             
+      436            Initial concentration     0 µmol/l             
+      437           LocalMoleculeParameter     0   µmol             
+      438           LocalMoleculeParameter     0   µmol             
+      439            Initial concentration     0 µmol/l             
+      440            Initial concentration     0 µmol/l             
+      441           LocalMoleculeParameter     0   µmol             
+      442           LocalMoleculeParameter     0   µmol             
+      443              Relative expression     0                    
+      444            Initial concentration     0 µmol/l             
+      445 Fraction expressed intracellular     1                    
+      446              Relative expression     0                    
+      447            Initial concentration     0 µmol/l             
+      448 Fraction expressed intracellular     1                    
+      449           LocalMoleculeParameter     0   µmol             
+      450           LocalMoleculeParameter     0   µmol             
+      451            Initial concentration     0 µmol/l             
+      452            Initial concentration     0 µmol/l             
+      453           LocalMoleculeParameter     0   µmol             
+      454           LocalMoleculeParameter     0   µmol             
+      455            Initial concentration     0 µmol/l             
+      456            Initial concentration     0 µmol/l             
+      457           LocalMoleculeParameter     0   µmol             
+      458           LocalMoleculeParameter     0   µmol             
+      459            Initial concentration     0 µmol/l             
+      460            Initial concentration     0 µmol/l             
+      461           LocalMoleculeParameter     0   µmol             
+      462           LocalMoleculeParameter     0   µmol             
+      463              Relative expression     0                    
+      464            Initial concentration     0 µmol/l             
+      465 Fraction expressed intracellular     1                    
+      466              Relative expression     0                    
+      467            Initial concentration     0 µmol/l             
+      468 Fraction expressed intracellular     1                    
+      469           LocalMoleculeParameter     0   µmol             
+      470           LocalMoleculeParameter     0   µmol             
+      471            Initial concentration     0 µmol/l             
+      472            Initial concentration     0 µmol/l             
+      473           LocalMoleculeParameter     0   µmol             
+      474           LocalMoleculeParameter     0   µmol             
+      475            Initial concentration     0 µmol/l             
+      476            Initial concentration     0 µmol/l             
+      477           LocalMoleculeParameter     0   µmol             
+      478           LocalMoleculeParameter     0   µmol             
+      479            Initial concentration     0 µmol/l             
+      480            Initial concentration     0 µmol/l             
+      481           LocalMoleculeParameter     0   µmol             
+      482           LocalMoleculeParameter     0   µmol             
+      483              Relative expression     0                    
+      484            Initial concentration     0 µmol/l             
+      485 Fraction expressed intracellular     1                    
+      486              Relative expression     0                    
+      487            Initial concentration     0 µmol/l             
+      488 Fraction expressed intracellular     1                    
+      489           LocalMoleculeParameter     0   µmol             
+      490           LocalMoleculeParameter     0   µmol             
+      491            Initial concentration     0 µmol/l             
+      492            Initial concentration     0 µmol/l             
+      493           LocalMoleculeParameter     0   µmol             
+      494           LocalMoleculeParameter     0   µmol             
+      495            Initial concentration     0 µmol/l             
+      496            Initial concentration     0 µmol/l             
+      497           LocalMoleculeParameter     0   µmol             
+      498           LocalMoleculeParameter     0   µmol             
+      499            Initial concentration     0 µmol/l             
+      500            Initial concentration     0 µmol/l             
+      501           LocalMoleculeParameter     0   µmol             
+      502           LocalMoleculeParameter     0   µmol             
+      503              Relative expression     0                    
+      504            Initial concentration     0 µmol/l             
+      505 Fraction expressed intracellular     1                    
+      506              Relative expression     0                    
+      507            Initial concentration     0 µmol/l             
+      508 Fraction expressed intracellular     1                    
+      509           LocalMoleculeParameter     0   µmol             
+      510           LocalMoleculeParameter     0   µmol             
+      511            Initial concentration     0 µmol/l             
+      512            Initial concentration     0 µmol/l             
+      513           LocalMoleculeParameter     0   µmol             
+      514           LocalMoleculeParameter     0   µmol             
+      515            Initial concentration     0 µmol/l             
+      516            Initial concentration     0 µmol/l             
+      517           LocalMoleculeParameter     0   µmol             
+      518           LocalMoleculeParameter     0   µmol             
+      519            Initial concentration     0 µmol/l             
+      520            Initial concentration     0 µmol/l             
+      521           LocalMoleculeParameter     0   µmol             
+      522           LocalMoleculeParameter     0   µmol             
+      523              Relative expression     0                    
+      524            Initial concentration     0 µmol/l             
+      525 Fraction expressed intracellular     1                    
+      526              Relative expression     0                    
+      527            Initial concentration     0 µmol/l             
+      528 Fraction expressed intracellular     1                    
+      529           LocalMoleculeParameter     0   µmol             
+      530           LocalMoleculeParameter     0   µmol             
+      531            Initial concentration     0 µmol/l             
+      532            Initial concentration     0 µmol/l             
+      533           LocalMoleculeParameter     0   µmol             
+      534           LocalMoleculeParameter     0   µmol             
+      535            Initial concentration     0 µmol/l             
+      536            Initial concentration     0 µmol/l             
+      537           LocalMoleculeParameter     0   µmol             
+      538           LocalMoleculeParameter     0   µmol             
+      539            Initial concentration     0 µmol/l             
+      540            Initial concentration     0 µmol/l             
+      541           LocalMoleculeParameter     0   µmol             
+      542           LocalMoleculeParameter     0   µmol             
+      543              Relative expression     0                    
+      544            Initial concentration     0 µmol/l             
+      545 Fraction expressed intracellular     1                    
+      546              Relative expression     0                    
+      547            Initial concentration     0 µmol/l             
+      548 Fraction expressed intracellular     1                    
+      549           LocalMoleculeParameter     0   µmol             
+      550           LocalMoleculeParameter     0   µmol             
+      551            Initial concentration     0 µmol/l             
+      552            Initial concentration     0 µmol/l             
+      553           LocalMoleculeParameter     0   µmol             
+      554           LocalMoleculeParameter     0   µmol             
+      555            Initial concentration     0 µmol/l             
+      556            Initial concentration     0 µmol/l             
+      557           LocalMoleculeParameter     0   µmol             
+      558           LocalMoleculeParameter     0   µmol             
+      559            Initial concentration     0 µmol/l             
+      560            Initial concentration     0 µmol/l             
+      561           LocalMoleculeParameter     0   µmol             
+      562           LocalMoleculeParameter     0   µmol             
+      563              Relative expression     0                    
+      564            Initial concentration     0 µmol/l             
+      565 Fraction expressed intracellular     1                    
+      566              Relative expression     0                    
+      567            Initial concentration     0 µmol/l             
+      568 Fraction expressed intracellular     1                    
+      569           LocalMoleculeParameter     0   µmol             
+      570           LocalMoleculeParameter     0   µmol             
+      571            Initial concentration     0 µmol/l             
+      572            Initial concentration     0 µmol/l             
+      573           LocalMoleculeParameter     0   µmol             
+      574           LocalMoleculeParameter     0   µmol             
+      575            Initial concentration     0 µmol/l             
+      576            Initial concentration     0 µmol/l             
+      577           LocalMoleculeParameter     0   µmol             
+      578           LocalMoleculeParameter     0   µmol             
+      579            Initial concentration     0 µmol/l             
+      580            Initial concentration     0 µmol/l             
+      581           LocalMoleculeParameter     0   µmol             
+      582           LocalMoleculeParameter     0   µmol             
+      583              Relative expression     0                    
+      584            Initial concentration     0 µmol/l             
+      585 Fraction expressed intracellular     1                    
+      586              Relative expression     0                    
+      587            Initial concentration     0 µmol/l             
+      588 Fraction expressed intracellular     1                    
+      589           LocalMoleculeParameter     0   µmol             
+      590           LocalMoleculeParameter     0   µmol             
+      591            Initial concentration     0 µmol/l             
+      592            Initial concentration     0 µmol/l             
+      593           LocalMoleculeParameter     0   µmol             
+      594           LocalMoleculeParameter     0   µmol             
+      595            Initial concentration     0 µmol/l             
+      596            Initial concentration     0 µmol/l             
+      597           LocalMoleculeParameter     0   µmol             
+      598           LocalMoleculeParameter     0   µmol             
+      599            Initial concentration     0 µmol/l             
+      600            Initial concentration     0 µmol/l             
+      601           LocalMoleculeParameter     0   µmol             
+      602           LocalMoleculeParameter     0   µmol             
+      603              Relative expression     0                    
+      604            Initial concentration     0 µmol/l             
+      605 Fraction expressed intracellular     1                    
+      606              Relative expression     0                    
+      607            Initial concentration     0 µmol/l             
+      608 Fraction expressed intracellular     1                    
+      609           LocalMoleculeParameter     0   µmol             
+      610           LocalMoleculeParameter     0   µmol             
+      611            Initial concentration     0 µmol/l             
+      612            Initial concentration     0 µmol/l             
+      613           LocalMoleculeParameter     0   µmol             
+      614           LocalMoleculeParameter     0   µmol             
+      615            Initial concentration     0 µmol/l             
+      616            Initial concentration     0 µmol/l             
+      617           LocalMoleculeParameter     0   µmol             
+      618           LocalMoleculeParameter     0   µmol             
+      619            Initial concentration     0 µmol/l             
+      620            Initial concentration     0 µmol/l             
 
 # addLocalMoleculeParametersToParameterValuesBB adds parameters only for specified molecules
 
@@ -1537,4 +2277,26 @@
       126 LocalMoleculeParameter     0 µmol             
       127 LocalMoleculeParameter     0 µmol             
       128 LocalMoleculeParameter     0 µmol             
+
+# addProteinExpressionToParameterValuesBB adds expression parameters for a single protein in a selected organ
+
+    Code
+      newPaths_df
+    Output
+                              Container Path                   Parameter Name Value
+      1    Organism|Kidney|BloodCells|UGT2B7            Initial concentration   NaN
+      2  Organism|Kidney|Interstitial|UGT2B7            Initial concentration   NaN
+      3  Organism|Kidney|Interstitial|UGT2B7  Fraction expressed interstitial   NaN
+      4 Organism|Kidney|Intracellular|UGT2B7              Relative expression     0
+      5 Organism|Kidney|Intracellular|UGT2B7            Initial concentration   NaN
+      6 Organism|Kidney|Intracellular|UGT2B7 Fraction expressed intracellular     1
+      7        Organism|Kidney|Plasma|UGT2B7            Initial concentration   NaN
+          Unit Value Origin
+      1 µmol/l             
+      2 µmol/l             
+      3                    
+      4                    
+      5 µmol/l             
+      6                    
+      7 µmol/l             
 

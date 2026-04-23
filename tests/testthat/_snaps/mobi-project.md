@@ -13,7 +13,7 @@
       Individuals:
         * DefaultIndividual
       Expression profiles:
-        * UGT2B6|Human|Healthy
+        * UGT2B7|Human|Healthy
         * CYP3A4|Human|Healthy
       Modules:
         * ExtModule_3IC_3PV

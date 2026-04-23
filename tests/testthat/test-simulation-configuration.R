@@ -94,7 +94,7 @@ test_that("SimulationConfiguration can be created from a simulation loaded from 
   ))
   expect_named(
     configurationFromProject$expressionProfiles,
-    expected = c("UGT2B6|Human|Healthy", "CYP3A4|Human|Healthy"),
+    expected = c("UGT2B7|Human|Healthy", "CYP3A4|Human|Healthy"),
     ignore.order = TRUE
   )
 
@@ -136,7 +136,7 @@ test_that("SimulationConfiguration can be created from a simulation loaded from 
   ))
   expect_named(
     configurationFromProject$expressionProfiles,
-    expected = c("UGT2B6|Human|Healthy", "CYP3A4|Human|Healthy"),
+    expected = c("UGT2B7|Human|Healthy", "CYP3A4|Human|Healthy"),
     ignore.order = TRUE
   )
 
@@ -201,7 +201,7 @@ test_that("SimulationConfiguration can get and set expression profiles", {
 
   expProfiles <- globalTestMoBiProject$getExpressionProfiles(c(
     "CYP3A4|Human|Healthy",
-    "UGT2B6|Human|Healthy"
+    "UGT2B7|Human|Healthy"
   ))
 
   configurationFromPKML$expressionProfiles <- expProfiles
@@ -209,7 +209,7 @@ test_that("SimulationConfiguration can get and set expression profiles", {
   expect_true(isOfType(expProfiles, "BuildingBlock"))
   expect_named(
     configurationFromPKML$expressionProfiles,
-    c("CYP3A4|Human|Healthy", "UGT2B6|Human|Healthy"),
+    c("CYP3A4|Human|Healthy", "UGT2B7|Human|Healthy"),
     ignore.order = TRUE
   )
 })

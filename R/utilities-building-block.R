@@ -609,36 +609,150 @@ addLocalMoleculeParametersToParameterValuesBB <- function(
 }
 
 #' Extend a Parameter Values Building Block (BB) with protein expression parameters
-#' for selected protein molecules in the selected organs.
+#' for selected protein molecules in selected organs.
 #'
-#' TBD: is a spatial structure required? Option 1 - define the organs as paths
-#' Option 2 - provide a spatial structure and then define organ paths. Entries will
-#' be created for all sub-organs.
+#' For each protein in `moleculeNames`, parameters defining the protein expression
+#' (e.g. "Relative expression", "Fraction expressed ...", and "Initial concentration"
+#' entries) are added to the `parameterValuesBuildingBlock` for every physical
+#' container under each path in `organPaths`. Default values are taken from the
+#' reference expression profile supplied for that molecule. Existing entries are
+#' not overwritten.
 #'
-#' TBD: Is a molecules BB required? Or just molecule names?
-#'
-#' @param spatialStructureBB A `BuildingBlock` object of type `Spatial Structure`.
-#' Entries will be created for the selected molecules in all physical containers of this
-#' spatial structure.
-#' @param moleculesBB A `BuildingBlock` object of type `Molecules`. The entries will be
-#' created for all proteins from this building block, or for a subset of protein molecules
-#' defined in the `moleculeNames` argument.
-#' @param moleculeNames Optional list of protein molecule names. If provided, only the molecules
-#' with these names will be added to the `parameterValuesBuildingBlock`.
 #' @param parameterValuesBuildingBlock A `BuildingBlock` object of type `Parameter Values`.
-#' @param organPaths A vector of paths to the organs for which the expression paramters
-#' will be created. If any of the provided path is not an organ, an error is thrown.
-#' If `NULL` (default), the function will use all organs from the spatial structure.
+#' The entries will be added to this building block.
+#' @param spatialStructureModule A `MoBiModule` containing a `Spatial Structure` building block.
+#' Expression parameters are created for containers defined by this spatial structure.
+#' @param moleculesModule A `MoBiModule` containing a `Molecules` building block.
+#' Must contain the proteins named in `moleculeNames`.
+#' @param moleculeNames Character vector of protein molecule names for which
+#' expression parameters should be added.
+#' @param referenceExpressionProfiles A single `BuildingBlock` of type
+#' `Expression Profile`, or a list of such building blocks. The matching
+#' profile for each molecule in `moleculeNames` is identified by the profile's
+#' `MoleculeName` property. Every molecule in `moleculeNames` must have a
+#' matching profile. Profiles whose `MoleculeName` is not in `moleculeNames`
+#' are ignored. Duplicate profiles (two entries with the same `MoleculeName`)
+#' raise an error.
+#' @param organPaths Character vector of organ paths under which expression
+#' parameters are created (e.g. `"Organism|Kidney"`). Each path must resolve
+#' to an existing organ in the spatial structure. The parameters are added for all physical containers under these paths.
+#' If `NULL` (default), expression parameters are created for every organ in
+#' the spatial structure.
 #'
-#' @returns Path of entries added to the building block.
+#' @returns Paths of entries added to the building block.
 #' @export
 addProteinExpressionToParameterValuesBB <- function(
   parameterValuesBuildingBlock,
-  spatialStructureBB,
-  organPaths = NULL,
-  moleculesBB,
-  moleculeNames = NULL
-) {}
+  spatialStructureModule,
+  moleculesModule,
+  moleculeNames,
+  referenceExpressionProfiles,
+  organPaths = NULL
+) {
+  # Early exit if no molecule names are provided
+  validateIsCharacter(moleculeNames)
+  if (length(moleculeNames) == 0) {
+    return(character(0))
+  }
+
+  validateIsOfType(
+    referenceExpressionProfiles,
+    "BuildingBlock",
+    nullAllowed = TRUE
+  )
+  validateIsOfType(
+    c(spatialStructureModule, moleculesModule),
+    "MoBiModule",
+    nullAllowed = FALSE
+  )
+
+  .validateBuildingBlockType(
+    parameterValuesBuildingBlock,
+    BuildingBlockTypes$`Parameter Values`
+  )
+
+  spatialStructureBB <- .getBBFromModule(
+    spatialStructureModule,
+    bbType = "SpatialStructure"
+  )
+  moleculesBB <- .getBBFromModule(moleculesModule, bbType = "Molecules")
+
+  if (is.null(spatialStructureBB) || is.null(moleculesBB)) {
+    missingBBs <- c(
+      if (is.null(spatialStructureBB)) "Spatial Structure",
+      if (is.null(moleculesBB)) "Molecules"
+    )
+    stop(
+      paste0(
+        "The provided modules do not contain the required building blocks: ",
+        paste(missingBBs, collapse = ", "),
+        ". "
+      ),
+      "Please provide modules with the required building blocks to be able to extend the parameter values building block."
+    )
+  }
+
+  referenceExpressionProfiles <- ospsuite.utils::toList(
+    referenceExpressionProfiles
+  )
+  # Validate building block type
+  # Build molecule-name -> profile lookup by reading MoleculeName from each BB.
+  profileMoleculeNames <- character(0)
+  for (profile in referenceExpressionProfiles) {
+    .validateBuildingBlockType(
+      profile,
+      BuildingBlockTypes$`Expression Profile`
+    )
+    profileMoleculeNames <- c(
+      profileMoleculeNames,
+      profile$get("MoleculeName")
+    )
+  }
+
+  duplicates <- unique(
+    profileMoleculeNames[duplicated(profileMoleculeNames)]
+  )
+  if (length(duplicates) > 0) {
+    stop(sprintf(
+      "`referenceExpressionProfiles` contains multiple profiles for the following molecules: %s. Provide at most one profile per molecule.",
+      paste(duplicates, collapse = ", ")
+    ))
+  }
+  names(referenceExpressionProfiles) <- profileMoleculeNames
+
+  missingProfiles <- setdiff(moleculeNames, profileMoleculeNames)
+  if (length(missingProfiles) > 0) {
+    stop(sprintf(
+      "No reference expression profile provided for molecules: %s. Provide an Expression Profile building block whose `MoleculeName` matches each molecule.",
+      paste(missingProfiles, collapse = ", ")
+    ))
+  }
+
+  if (is.null(organPaths)) {
+    organPaths <- character(0)
+  }
+  validateIsCharacter(organPaths, nullAllowed = FALSE)
+  organPaths <- as.vector(organPaths, mode = "character")
+
+  pvTask <- .getMoBiTaskFromCache("ParameterValuesTask")
+
+  newPaths <- unlist(lapply(moleculeNames, function(moleculeName) {
+    pvTask$call(
+      "AddProteinExpressionParameters",
+      parameterValuesBuildingBlock,
+      referenceExpressionProfiles[[moleculeName]],
+      moleculesBB,
+      moleculeName,
+      spatialStructureBB,
+      organPaths
+    )
+  }))
+
+  if (is.null(newPaths)) {
+    return(character(0))
+  }
+  return(as.vector(newPaths, mode = "character"))
+}
 
 
 #' Validate Building Block Type

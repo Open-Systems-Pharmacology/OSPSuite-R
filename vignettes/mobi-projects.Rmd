@@ -262,33 +262,22 @@ newPaths <- extendInitialConditionsBB(
 print(newPaths)
 ```
 
-The molecule "DIO1" that has been added to the IC BB in the previous step is a protein. As the module "Thyroid" adds a new organ for which no protein expression is defined in the Expression Profiles, parameters defining the expression must be added to the PV BB of the new module using the `addProteinExpressionToParameterValuesBB()` function:
+The molecule "DIO1" that has been added to the IC BB in the previous step is a protein. As the module "Thyroid" adds a new organ for which no protein expression is defined in the Expression Profiles, parameters defining the expression must be added to the PV BB of the new module using the `addProteinExpressionToParameterValuesBB()` function. Default values for the added parameters are taken from reference Expression Profiles supplied as a plain list; the function matches each entry to a molecule in `moleculeNames` by reading the profile's `MoleculeName`. The organs for which expression parameters should be created are specified via `organPaths`; each path must resolve to an existing organ in the spatial structure.
 
 ```{r addProteinExpressionToPVBB}
 # Get the PV BB from the Thyroid module
 pvBB <- thyroidModule$getParameterValuesBBs()[["Human"]]
-# # Add protein expression to the PV BB
-# proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(
-#   pvBB,
-#   spatialStructureBB = thyroidModule$getBuildingBlocks(
-#     type = "Spatial Structure"
-#   ),
-#   moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),
-#   moleculeNames = c("DIO1")
-# )
+# Add protein expression to the PV BB
+proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(
+  parameterValuesBuildingBlock = pvBB,
+  spatialStructureModule = thyroidModule,
+  moleculesModule = modules[["Thyroid_QST"]],
+  moleculeNames = c("DIO1"),
+  referenceExpressionProfiles = list(expressionProfiles[["DIO1|Human|Healthy"]]),
+  organPaths = "Organism|Thyroid"
+)
 
-# # EXPECTED BEHAVIOR
-# proteinExpressionPaths <- c(
-#   "Organism|Thyroid|Plasma|DIO1|Initial concentration",
-#   "Organism|Thyroid|BloodCells|DIO1|Initial concentration",
-#   "Organism|Thyroid|Interstitial|DIO1|Initial concentration",
-#   "Organism|Thyroid|Intracellular|DIO1|Initial concentration",
-#   "Organism|Thyroid|Endosome|DIO1|Initial concentration",
-#   "Organism|Thyroid|Lumen|DIO1|Initial concentration",
-#   "Organism|Thyroid|Interstitial|DIO1|Fraction expressed interstitial",
-#   "Organism|Thyroid|Intracellular|DIO1|Fraction expressed intracellular",
-#   "Organism|Thyroid|Intracellular|DIO1|Relative expression"
-# )
+print(proteinExpressionPaths)
 ```
 
 and overwrite the value of "Relative expression":
