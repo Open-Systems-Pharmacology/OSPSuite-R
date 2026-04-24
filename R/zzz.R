@@ -17,5 +17,17 @@
   }
 
   .initPackage()
+  ospsuiteEnv$ggplotDefaults <- NULL
+  tryCatch(
+    ospsuiteEnv$ggplotDefaults <- ospsuite.plots::setDefaults(),
+    error = function(e) {
+      cli::cli_warn(
+        message = c(
+          "x" = "Failed to initialize {.pkg ospsuite.plots} defaults: {conditionMessage(e)}",
+          "i" = "Plotting functions may not behave as expected."
+        )
+      )
+    }
+  )
 }
 # nocov end
