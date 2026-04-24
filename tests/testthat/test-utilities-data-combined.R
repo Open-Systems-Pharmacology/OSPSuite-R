@@ -134,8 +134,7 @@ test_that("calculateResiduals computes all observed, simulated data pairs correc
   )
 })
 
-test_that("calculateResiduals handles single-point observed and simulated
-          datasets correctly", {
+test_that("calculateResiduals handles single-point observed and simulated datasets correctly", {
   myDataSet <- DataSet$new("myDataSet")
   myDataSet$setValues(1, 1)
 
@@ -154,8 +153,7 @@ test_that("calculateResiduals handles single-point observed and simulated
   expect_equal(as.vector(residuals$residualValues), 0, tolerance = 1e-5)
 })
 
-test_that("calculateResiduals drops points when simulated dataset contains a
-          single point with non-matching x-value", {
+test_that("calculateResiduals drops points when simulated dataset contains a single point with non-matching x-value", {
   myDataSet <- DataSet$new("myDataSet")
   myDataSet$setValues(1, 1)
 

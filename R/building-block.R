@@ -1,0 +1,64 @@
+#' @title Building block # ONLY MOBI BBs, or should we consider having PK-Sim BBs as pkml export in the future?
+#' @docType class
+#' @description  A representation of a building block
+#' @format NULL
+BuildingBlock <- R6::R6Class(
+  "BuildingBlock",
+  cloneable = FALSE,
+  inherit = ObjectBase,
+  active = list(
+    #' @field type Type of the building block (Spatial structure, molecules, reactions, etc)
+    type = function(value) {
+      private$.readOnlyProperty("type", value, private$.type)
+    },
+    #' @field id ID of the building block
+    id = function(value) {
+      private$.readOnlyProperty("type", value, self$get("Id"))
+    },
+    #' @field name Name of the building block. Read-only.
+    name = function(value) {
+      private$.readOnlyProperty("name", value, self$get("Name"))
+    }
+  ),
+  public = list(
+    #' @description
+    #' Initialize a new instance of the class
+    #'
+    #' @param netObject Reference to `NetObject` .NET object representing a building block.
+    #' @param type Type of the building block. Must be one of the `BuildingBlockTypes`.
+    #' @return A new `BuildingBlock` object.
+    initialize = function(netObject, type) {
+      validateEnumValue(type, enum = BuildingBlockTypes, nullAllowed = TRUE)
+
+      super$initialize(netObject)
+      private$.type <- type
+    },
+
+    #' @description
+    #' Print the object to the console
+    #' @param printClassProperties Logical, whether to print class properties (default: `FALSE`). If `TRUE`, calls first the `print` method of the parent class.
+    #' Useful for debugging.
+    #' @param ... Rest arguments.
+    print = function(printClassProperties = FALSE, ...) {
+      if (printClassProperties) {
+        super$print(...)
+      }
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
+        "Name" = self$name,
+        "Type" = self$type
+      ))
+
+      if (self$type == BuildingBlockTypes$`Expression Profile`) {
+        ospsuite.utils::ospPrintItems(list(
+          "Protein type" = self$get("Type")$call("ToString"),
+          "Molecule" = self$get("MoleculeName"),
+          "Species" = self$get("Species")
+        ))
+      }
+    }
+  ),
+  private = list(
+    .type = NULL
+  )
+)

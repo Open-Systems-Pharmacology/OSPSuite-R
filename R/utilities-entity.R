@@ -1,12 +1,3 @@
-#' How should comparison of entities be performed
-#'
-#' @export
-CompareBy <- enum(c(
-  "id",
-  "name",
-  "path"
-))
-
 #' Names of the `.NET` container tasks of the type `"AllXXXMatching"`
 #'
 #' @keywords internal
@@ -132,7 +123,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
     ))
   }
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   method <- method %||% AllMatchingMethod[[className]]
 
   findEntitiesByPath <- function(path) {
@@ -171,7 +162,7 @@ uniqueEntities <- function(entities, compareBy = CompareBy$id) {
     ))
   }
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   method <- method %||% AllPathsInMethod[[className]]
 
   task$call(method, container)

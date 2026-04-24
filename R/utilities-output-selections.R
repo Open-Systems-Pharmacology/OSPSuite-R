@@ -30,7 +30,7 @@ addOutputs <- function(quantitiesOrPaths, simulation, stopIfNotFound = TRUE) {
     .validateEntitiesExist(paths, simulation, Quantity)
   }
 
-  task <- .getNetTaskFromCache("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   for (path in paths) {
     task$call(
       "AddQuantitiesToSimulationOutputByPath",

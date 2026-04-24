@@ -1,0 +1,134 @@
+#' @title MoBi Module # OR SHOULD WE CALL IT AN OspModule ?
+#' @docType class
+#' @description  A MoBi module, either loaded from a project or from a pkml file
+#' @format NULL
+MoBiModule <- R6::R6Class(
+  "MoBiModule",
+  cloneable = FALSE,
+  inherit = ObjectBase,
+  active = list(
+    #' @field name Name of the module (read-only)
+    name = function(value) {
+      if (missing(value)) {
+        self$get("Name")
+      } else {
+        private$.throwPropertyIsReadonly("name")
+      }
+    },
+    #' @field isPKSimModule Whether the module is a PK-Sim module (read-only)
+    isPKSimModule = function(value) {
+      if (missing(value)) {
+        self$get("IsPKSimModule")
+      } else {
+        private$.throwPropertyIsReadonly("isPKSimModule")
+      }
+    },
+    #' @field mergeBehavior Merge behavior of the module. Must be one of "Extend" or "Overwrite".
+    mergeBehavior = function(value) {
+      if (missing(value)) {
+        return(enumGetKey(enum = MergeBehavior, self$get("MergeBehavior")))
+      } else {
+        # Check that the provided merge behavior is either "Extend" or "Overwrite".
+        if (!(value %in% enumKeys(MergeBehavior))) {
+          stop(
+            "Invalid value for enum 'MergeBehavior'. Must be one of: ",
+            paste(ospsuite.utils::enumKeys(MergeBehavior), collapse = ", ")
+          )
+        }
+
+        self$set(
+          "MergeBehavior",
+          as.integer(enumGetValue(enum = MergeBehavior, key = value))
+        )
+      }
+    },
+    #' @field parameterValuesBBnames Names of the Parameter Values Building Blocks (PV BBs) in the module (read-only)
+    parameterValuesBBnames = function(value) {
+      if (missing(value)) {
+        return(.callModuleTask("AllParameterValuesBuildingBlockNames", self))
+      } else {
+        private$.throwPropertyIsReadonly("parameterValuesBBnames")
+      }
+    },
+    #' @field initialConditionsBBnames Names of the Initial Conditions Building Blocks (IC BBs) in the module (read-only)
+    initialConditionsBBnames = function(value) {
+      if (missing(value)) {
+        return(.callModuleTask("AllInitialConditionsBuildingBlockNames", self))
+      } else {
+        private$.throwPropertyIsReadonly("initialConditionsBBnames")
+      }
+    }
+  ),
+  public = list(
+    #' @description
+    #' Initialize a new instance of the class
+    #'
+    #' @param netObject Reference to `NetObject` .NET MoBi-module object
+    #' @return A new `MoBiModule` object.
+    initialize = function(netObject) {
+      super$initialize(netObject)
+    },
+
+    #' @description
+    #' Get the list of Parameter Values Building Blocks (PV BBs) in the module.
+    #'
+    #' @param names Optional names of the Parameter Values Building Block to retrieve.
+    #' If `NULL`, returns all PV BBs.
+    #' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
+    #' parameter values BB is not present in the project.
+    #' @returns A named list of `BuildingBlock` objects, with names being the names of the PV BBs.
+    getParameterValuesBBs = function(names = NULL, stopIfNotFound = TRUE) {
+      .getICPVBBsFromModule(
+        self,
+        names = names,
+        bbType = "Parameter Values",
+        stopIfNotFound
+      )
+    },
+
+    #' @description
+    #' Get the list of Initial Conditions Building Blocks (IC BBs) in the module.
+    #'
+    #' @param names Optional names of the Initial Conditions Building Block to retrieve.
+    #' If `NULL`, returns all IC BBs.
+    #' @param stopIfNotFound If `TRUE` (default), an error is thrown if any of the specified
+    #' initial conditions BB is not present in the project.
+    #' @returns A named list of `BuildingBlock` objects, with names being the names of the IC BBs.
+    getInitialConditionsBBs = function(names = NULL, stopIfNotFound = TRUE) {
+      .getICPVBBsFromModule(
+        self,
+        names = names,
+        bbType = "Initial Conditions",
+        stopIfNotFound
+      )
+    },
+
+    #' @description
+    #' Print the object to the console
+    #' @param printClassProperties Logical, whether to print class properties (default: `FALSE`). If `TRUE`, calls first the `print` method of the parent class.
+    #' Useful for debugging.
+    #' @param ... Rest arguments.
+    print = function(printClassProperties = FALSE, ...) {
+      if (printClassProperties) {
+        super$print(...)
+      }
+      ospsuite.utils::ospPrintClass(self)
+      ospsuite.utils::ospPrintItems(list(
+        "Name" = self$name,
+        "PK-Sim module" = self$isPKSimModule,
+        "Merge behavior" = self$mergeBehavior
+      ))
+      ospsuite.utils::ospPrintItems(
+        self$parameterValuesBBnames,
+        title = "Parameter Values Building Blocks",
+        print_empty = FALSE
+      )
+      ospsuite.utils::ospPrintItems(
+        self$initialConditionsBBnames,
+        title = "Initial Conditions Building Blocks",
+        print_empty = FALSE
+      )
+    }
+  ),
+  private = list()
+)

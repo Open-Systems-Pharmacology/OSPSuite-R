@@ -222,8 +222,7 @@ test_that("It returns true for an existing unit in the dimension, false otherwis
 })
 
 # validateUnit
-test_that("It returns NULL when the unit exists in the dimension,
-          or throws an error otherwise", {
+test_that("It returns NULL when the unit exists in the dimension, or throws an error otherwise", {
   expect_null(validateUnit(unit = .encodeUnit("µmol"), dimension = "Amount"))
   expect_error(
     validateUnit(unit = "g", dimension = "Amount"),
@@ -834,4 +833,13 @@ test_that(".extractMostFrequentUnit counts per dataset, not per time point", {
 test_that(".extractMostFrequentUnit uses naive count without dataType column", {
   d <- data.frame(xUnit = c("min", "min", "h"), yUnit = c("mg", "g", "g"))
   expect_equal(.extractMostFrequentUnit(d, "yUnit"), "g")
+})
+
+# isSupportedUnit
+test_that("isSupportedUnit returns true for supported unit", {
+  expect_true(isSupportedUnit("mg"))
+})
+
+test_that("isSupportedUnit returns false for unsupported unit", {
+  expect_false(isSupportedUnit("unsupportedUnit"))
 })
