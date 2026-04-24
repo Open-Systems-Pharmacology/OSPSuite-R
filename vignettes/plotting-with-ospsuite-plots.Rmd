@@ -51,10 +51,10 @@ options(ospsuite.plots.watermarkEnabled = TRUE)
 
 The `setDefaults()` function initializes various plotting defaults that ensure consistent appearance across all plots, and is called automatically on package load. The watermark option controls whether a watermark is added to your plots and must be set before creating plots.
 
-The settings that were in place before `setDefaults()` was called are stored in `ospsuiteEnv$ospSuitePlotsDefaults`. You can restore them at any time using `getOSPSuiteSetting()`, which provides access to any named setting stored in `ospsuiteEnv`:
+The settings that were in place before `setDefaults()` was called are stored in `ospsuiteEnv$ggplotDefaults`. You can restore them at any time using `getOSPSuiteSetting()`, which provides access to any named setting stored in `ospsuiteEnv`:
 
 ```r
-ospsuite.plots::resetDefaults(getOSPSuiteSetting("ospSuitePlotsDefaults"))
+ospsuite.plots::resetDefaults(getOSPSuiteSetting("ggplotDefaults"))
 ```
 
 Refer to the `{ospsuite.plots}` package documentation for details.

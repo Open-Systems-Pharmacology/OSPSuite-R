@@ -1,5 +1,12 @@
-# Update the theme to revers settings by ospsuite.plots::setDefaults()
+# Reverse the panel.border + geom defaults installed by ospsuite.plots::setDefaults()
 originalTheme <- ggplot2::theme_get()
+withr::defer(
+  {
+    ggplot2::theme_set(originalTheme)
+    ospsuite.plots::setDefaults()
+  },
+  teardown_env()
+)
 ggplot2::theme_update(panel.border = ggplot2::element_blank())
 ggplot2::reset_geom_defaults()
 
@@ -192,5 +199,3 @@ test_that("Aggregations are computed and displayed correctly", {
     )
   )
 })
-ggplot2::theme_set(originalTheme)
-ospsuite.plots::setDefaults()

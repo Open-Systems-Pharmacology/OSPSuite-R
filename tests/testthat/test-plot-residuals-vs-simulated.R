@@ -1,6 +1,14 @@
-# Update the theme to revers settings by ospsuite.plots::setDefaults()
+# Reverse the panel.border  installed by ospsuite.plots::setDefaults()
 originalTheme <- ggplot2::theme_get()
+withr::defer(
+  {
+    ggplot2::theme_set(originalTheme)
+    ospsuite.plots::setDefaults()
+  },
+  teardown_env()
+)
 ggplot2::theme_update(panel.border = ggplot2::element_blank())
+
 
 # data to be used ---------------------------------------
 
@@ -210,4 +218,3 @@ test_that("scaling residuals argument works with log", {
     fig = plotResidualsVsSimulated(myCombDat, scaling = "log")
   )
 })
-ggplot2::theme_set(originalTheme)

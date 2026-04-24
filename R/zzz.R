@@ -17,8 +17,9 @@
   }
 
   .initPackage()
+  ospsuiteEnv$ggplotDefaults <- NULL
   tryCatch(
-    ospsuiteEnv$ospSuitePlotsDefaults <- ospsuite.plots::setDefaults(),
+    ospsuiteEnv$ggplotDefaults <- ospsuite.plots::setDefaults(),
     error = function(e) {
       cli::cli_warn(
         message = c(
