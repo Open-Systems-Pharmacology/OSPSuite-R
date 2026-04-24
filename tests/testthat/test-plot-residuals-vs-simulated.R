@@ -1,3 +1,7 @@
+# Update the theme to revers settings by ospsuite.plots::setDefaults()
+originalTheme <- ggplot2::theme_get()
+ggplot2::theme_update(panel.border = ggplot2::element_blank())
+
 # data to be used ---------------------------------------
 
 # plotResidualsVsSimulated")
@@ -206,3 +210,4 @@ test_that("scaling residuals argument works with log", {
     fig = plotResidualsVsSimulated(myCombDat, scaling = "log")
   )
 })
+ggplot2::theme_set(originalTheme)

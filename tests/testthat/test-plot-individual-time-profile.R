@@ -1,5 +1,9 @@
 # plotIndividualTimeProfile
 
+# Update the theme to revers settings by ospsuite.plots::setDefaults()
+originalTheme <- ggplot2::theme_get()
+ggplot2::theme_update(panel.border = ggplot2::element_blank())
+
 # `DataCombined` objects ------------------------
 
 oneObsDC <- readRDS(getTestDataFilePath("oneObsDC"))
@@ -16,7 +20,6 @@ oneObsGeometricDC <- readRDS(getTestDataFilePath("oneObsGeometricDC"))
 customDPC <- readRDS(getTestDataFilePath("customDPC"))
 
 # only observed ------------------------
-
 test_that("It creates default plots as expected for single observed dataset", {
   set.seed(123)
   vdiffr::expect_doppelganger(
@@ -172,3 +175,5 @@ test_that("LLOQ is plotted", {
     fig = plotIndividualTimeProfile(dc, defaultPlotConfiguration = noLLOQ_DPC)
   )
 })
+
+ggplot2::theme_set(originalTheme)
