@@ -40,23 +40,16 @@ For more information on the underlying library:
 
 ## Initial Setup
 
-Before creating plots with `ospsuite.plots`, it's important to initialize the plotting environment properly. This involves two key steps:
-
-1. **Set default plotting options** using `ospsuite.plots::setDefaults()`
-2. **Configure the watermark option** using `options(ospsuite.plots.watermarkEnabled = TRUE)` or `options(ospsuite.plots.watermarkEnabled = FALSE)` 
+Before creating plots with `ospsuite.plots`, it's important to initialize the plotting environment properly. When `ospsuite` is loaded, `ospsuite.plots::setDefaults()` is called automatically. You may additionally configure the watermark option:
 
 ```{r setup-options}
 library(ospsuite)
-
-# Set default plotting options for ospsuite.plots
-# Note: ospsuite.plots is imported by ospsuite, so we use :: for clarity
-ospsuite.plots::setDefaults()
 
 # Enable watermark for plots (optional)
 options(ospsuite.plots.watermarkEnabled = TRUE)
 ```
 
-The `setDefaults()` function initializes various plotting defaults that ensure consistent appearance across all plots. The watermark option allows you to add a watermark to your plots.  
+The `setDefaults()` function initializes various plotting defaults that ensure consistent appearance across all plots, and is called automatically on package load. The watermark option allows you to add a watermark to your plots.  
 Refer to the `{ospsuite.plots}` package documentation for details.
 
 ## Setting up the data
