@@ -31,22 +31,28 @@ test_that("MoBiModule prints correctly", {
 })
 
 # Test for mergeBehavior
-test_that("MoBiModule mergeBehavior works correctly", {
+test_that("MoBiModule mergeBehavior returns the default value", {
   expect_equal(testModule_noIC_noPV$mergeBehavior, "Extend")
+})
 
-  # Test for read only
+test_that("MoBiModule mergeBehavior can be set to a valid value", {
+  module <- globalTestMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
+  original <- module$mergeBehavior
+  on.exit(module$mergeBehavior <- original, add = TRUE)
+
+  module$mergeBehavior <- "Overwrite"
+  expect_equal(module$mergeBehavior, "Overwrite")
+
+  module$mergeBehavior <- "Extend"
+  expect_equal(module$mergeBehavior, "Extend")
+})
+
+test_that("MoBiModule mergeBehavior throws on invalid value", {
+  module <- globalTestMoBiProject$getModules("ExtModule_noIC_noPV")[[1]]
   expect_error(
-    testModule_noIC_noPV$mergeBehavior <- "Overwrite",
-    "Property 'mergeBehavior' is read-only"
+    module$mergeBehavior <- "InvalidBehavior",
+    "Invalid value for enum 'MergeBehavior'"
   )
-
-  # TODO: https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1591
-  # # Test setting merge behavior
-  # testModuleGlobal$mergeBehavior <- "Overwrite"
-  # expect_equal(testModuleGlobal$mergeBehavior, "Overwrite")
-  #
-  # # Test setting invalid merge behavior
-  # expect_error(testModuleGlobal$mergeBehavior <- "InvalidBehavior", "Invalid value for enum 'MergeBehavior'")
 })
 
 #  Test for getParameterValuesBBs
