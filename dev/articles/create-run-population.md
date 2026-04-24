@@ -20,6 +20,12 @@ results](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/run-s
 
 ``` r
 library(ospsuite)
+#> The option 'ospsuite.plots.watermarkEnabled' is not set.
+#> To enable watermarks, add the following to your .Rprofile:
+#>   options(ospsuite.plots.watermarkEnabled = TRUE)
+#> To disable watermarks, add:
+#>   options(ospsuite.plots.watermarkEnabled = FALSE)
+#> You can edit your .Rprofile with usethis::edit_r_profile()
 # Load population information from csv
 popFilePath <- system.file("extdata", "pop.csv", package = "ospsuite")
 myPopulation <- loadPopulation(csvPopulationFile = popFilePath)

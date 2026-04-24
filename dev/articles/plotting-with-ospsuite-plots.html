@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9017</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9018</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,32 +123,28 @@ repository</a></p>
 <h2 id="initial-setup">Initial Setup<a class="anchor" aria-label="anchor" href="#initial-setup"></a>
 </h2>
 <p>Before creating plots with <code>ospsuite.plots</code>, it’s
-important to initialize the plotting environment properly. This involves
-two key steps:</p>
-<ol style="list-style-type: decimal">
-<li>
-<strong>Set default plotting options</strong> using
-<code><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/setDefaults.html" class="external-link">ospsuite.plots::setDefaults()</a></code>
-</li>
-<li>
-<strong>Configure the watermark option</strong> using
-<code>options(ospsuite.plots.watermarkEnabled = TRUE)</code> or
-<code>options(ospsuite.plots.watermarkEnabled = FALSE)</code>
-</li>
-</ol>
+important to initialize the plotting environment properly. When
+<code>ospsuite</code> is loaded,
+<code><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/setDefaults.html" class="external-link">ospsuite.plots::setDefaults()</a></code> is called automatically. You
+must also configure the watermark option:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Set default plotting options for ospsuite.plots</span></span>
-<span><span class="co"># Note: ospsuite.plots is imported by ospsuite, so we use :: for clarity</span></span>
-<span><span class="fu">ospsuite.plots</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/setDefaults.html" class="external-link">setDefaults</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Enable watermark for plots (optional)</span></span>
+<span><span class="co"># Enable or disable watermark for plots</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ospsuite.plots.watermarkEnabled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>setDefaults()</code> function initializes various plotting
-defaults that ensure consistent appearance across all plots. The
-watermark option allows you to add a watermark to your plots.<br>
-Refer to the <a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">ospsuite.plots</a> package documentation for
+defaults that ensure consistent appearance across all plots, and is
+called automatically on package load. The watermark option controls
+whether a watermark is added to your plots and must be set before
+creating plots.</p>
+<p>The settings that were in place before <code>setDefaults()</code> was
+called are stored in <code>ospsuiteEnv$ggplotDefaults</code>. You can
+restore them at any time using <code><a href="../reference/getOSPSuiteSetting.html">getOSPSuiteSetting()</a></code>, which
+provides access to any named setting stored in
+<code>ospsuiteEnv</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">ospsuite.plots</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/resetDefaults.html" class="external-link">resetDefaults</a></span><span class="op">(</span><span class="fu"><a href="../reference/getOSPSuiteSetting.html">getOSPSuiteSetting</a></span><span class="op">(</span><span class="st">"ggplotDefaults"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Refer to the <a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">ospsuite.plots</a> package documentation for
 details.</p>
 </div>
 <div class="section level2">
@@ -156,7 +152,7 @@ details.</p>
 </h2>
 <p>Next, let’s create <code>DataCombined</code> objects that we will use
 throughout this vignette:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load simulation</span></span>
 <span><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></span>
@@ -231,7 +227,7 @@ throughout this vignette:</p>
 </h3>
 <p>For demonstrating population-specific features, let’s also create a
 <code>DataCombined</code> object with population simulation results:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load population from CSV file</span></span>
 <span><span class="va">popFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"pop.csv"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">population</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadPopulation.html">loadPopulation</a></span><span class="op">(</span>csvPopulationFile <span class="op">=</span> <span class="va">popFilePath</span><span class="op">)</span></span>
@@ -263,7 +259,7 @@ throughout this vignette:</p>
 <p>The <code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code> function creates time profile
 plots showing observed and simulated data over time. This is one of the
 most common visualizations in pharmacometric analysis.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/timeprofile-1.png" class="r-plt" alt="" width="100%"></p>
 <div class="section level3">
@@ -284,12 +280,12 @@ deviations</li>
 deviations</li>
 </ul>
 <p>Here’s an example using the population simulation data:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot population data with default quantile aggregation</span></span>
 <span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myPopDataCombined</span>, yScale <span class="op">=</span> <span class="st">'log'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/timeprofile-population-1.png" class="r-plt" alt="" width="100%"></p>
 <p>You can customize the quantiles:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span></span>
 <span>  <span class="va">myPopDataCombined</span>,</span>
 <span>  yScale <span class="op">=</span> <span class="st">'log'</span>,</span>
@@ -299,7 +295,7 @@ deviations</li>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/timeprofile-aggregation-1.png" class="r-plt" alt="" width="100%"></p>
 <p>Alternatively, you can use arithmetic mean aggregation with standard
 deviation bands:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span></span>
 <span>  <span class="va">myPopDataCombined</span>,</span>
 <span>  yScale <span class="op">=</span> <span class="st">'log'</span>,</span>
@@ -316,21 +312,21 @@ differentiates both observed (via <code>shape</code>) and simulated (via
 <code>linetype</code>) datasets in the legend.</p>
 <p>You can customize this behavior using the
 <code>showLegendPerDataset</code> parameter:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Show all individual dataset names (both observed and simulated) - default</span></span>
 <span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombinedMulti</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/timeprofile-legend-per-dataset-1.png" class="r-plt" alt="" width="100%"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># No per-dataset differentiation</span></span>
 <span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombinedMulti</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/timeprofile-legend-per-dataset-2.png" class="r-plt" alt="" width="100%"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Show only observed dataset names (different shapes)</span></span>
 <span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombinedMulti</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"observed"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/timeprofile-legend-per-dataset-3.png" class="r-plt" alt="" width="100%"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Show only simulated dataset names (different line types)</span></span>
 <span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombinedMulti</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"simulated"</span><span class="op">)</span></span></code></pre></div>
@@ -352,7 +348,7 @@ mapping.</li>
 </ul>
 <p>To get the same plots as above you have to set the aesthetics as
 following:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Show all individual dataset names (both observed and simulated)</span></span>
 <span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span></span>
 <span>  <span class="va">myDataCombinedMulti</span>,</span>
@@ -375,7 +371,7 @@ following:</p>
 <p>You can further customize the plot appearance using
 <code>ggplot2</code> aesthetic mappings and all columns available in
 <code>myDataCombinedMulti$toDataFrame()</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Customize aesthetics</span></span>
 <span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span></span>
 <span>  <span class="va">myDataCombinedMulti</span>,</span>
@@ -392,7 +388,7 @@ goodness-of-fit plots. The <code><a href="../reference/plotPredictedVsObserved.h
 function creates scatter plots comparing predicted (simulated) values to
 observed values. This helps assess model performance and identify
 systematic biases.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/predvsobs-1.png" class="r-plt" alt="" width="100%"></p>
 <p>By default, the plot shows: - Identity line (perfect agreement) -
@@ -402,7 +398,7 @@ Fold-distance lines (default: 2-fold range)</p>
 </h3>
 <p>You can customize the fold-distance lines using the
 <code>comparisonLineVector</code> parameter:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Show 1.5-fold and 3-fold ranges</span></span>
 <span><span class="fu"><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved</a></span><span class="op">(</span></span>
 <span>  <span class="va">myDataCombined</span>,</span>
@@ -416,7 +412,7 @@ Fold-distance lines (default: 2-fold range)</p>
 <p>By default, predicted values are on the y-axis and observed on the
 x-axis. You can swap these using the <code>predictedAxis</code>
 parameter:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Put predicted on x-axis, observed on y-axis</span></span>
 <span><span class="fu"><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved</a></span><span class="op">(</span><span class="va">myDataCombined</span>, predictedAxis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/predvsobs-swap-1.png" class="r-plt" alt="" width="100%"></p>
@@ -425,7 +421,7 @@ parameter:</p>
 <h3 id="scaling-options">Scaling Options<a class="anchor" aria-label="anchor" href="#scaling-options"></a>
 </h3>
 <p>The <code>xyScale</code> parameter controls the axis scaling:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Use linear scale instead of log</span></span>
 <span><span class="fu"><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved</a></span><span class="op">(</span><span class="va">myDataCombined</span>, xyScale <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/predvsobs-scale-1.png" class="r-plt" alt="" width="100%"></p>
@@ -436,7 +432,7 @@ parameter:</p>
 <p>Similar to <code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code>, you can display individual
 dataset names in the legend using the <code>showLegendPerDataset</code>
 parameter:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Show individual observed dataset names (different shapes) (default)</span></span>
 <span><span class="fu"><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved</a></span><span class="op">(</span><span class="va">myDataCombined</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span></span>
@@ -453,21 +449,21 @@ against time, observed values, or predicted values.</p>
 <div class="section level3">
 <h3 id="residuals-vs-observed-values">Residuals vs Observed Values<a class="anchor" aria-label="anchor" href="#residuals-vs-observed-values"></a>
 </h3>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate</a></span><span class="op">(</span><span class="va">myDataCombined</span>, xAxis <span class="op">=</span> <span class="st">"observed"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/resvsobs-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="residuals-vs-time">Residuals vs Time<a class="anchor" aria-label="anchor" href="#residuals-vs-time"></a>
 </h3>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate</a></span><span class="op">(</span><span class="va">myDataCombined</span>, xAxis <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/resvstime-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="residuals-vs-predicted-values">Residuals vs Predicted Values<a class="anchor" aria-label="anchor" href="#residuals-vs-predicted-values"></a>
 </h3>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate</a></span><span class="op">(</span><span class="va">myDataCombined</span>, xAxis <span class="op">=</span> <span class="st">"predicted"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/resvspred-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
@@ -491,7 +487,7 @@ calculated and displayed (this same parameter is used in
 <code>"ratio"</code> - Ratio: <code>observed/predicted</code>
 </li>
 </ul>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Use linear residuals</span></span>
 <span><span class="fu"><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate</a></span><span class="op">(</span></span>
 <span>  <span class="va">myDataCombined</span>,</span>
@@ -505,7 +501,7 @@ calculated and displayed (this same parameter is used in
 </h3>
 <p>You can display individual dataset names in the legend using the
 <code>showLegendPerDataset</code> parameter:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Show individual observed dataset names (different shapes) (default)</span></span>
 <span><span class="fu"><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate</a></span><span class="op">(</span><span class="va">myDataCombined</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span></span>
@@ -519,18 +515,18 @@ calculated and displayed (this same parameter is used in
 <p>The <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code> function creates a
 histogram of residuals, which helps assess the distribution of
 errors.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/reshist-1.png" class="r-plt" alt="" width="100%"></p>
 <p>By default, a normal distribution overlay is added to help assess
 normality. You can control this using the <code>distribution</code>
 parameter:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Without distribution overlay</span></span>
 <span><span class="fu"><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram</a></span><span class="op">(</span><span class="va">myDataCombined</span>, distribution <span class="op">=</span> <span class="st">'none'</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>residualScale</code> parameter works the same as in
 <code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Linear residuals histogram</span></span>
 <span><span class="fu"><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram</a></span><span class="op">(</span><span class="va">myDataCombined</span>, residualScale <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -539,12 +535,12 @@ parameter:</p>
 </h2>
 <p>The <code><a href="../reference/plotQuantileQuantilePlot.html">plotQuantileQuantilePlot()</a></code> function creates a Q-Q
 plot to assess whether residuals follow a normal distribution.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotQuantileQuantilePlot.html">plotQuantileQuantilePlot</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/qqplot-1.png" class="r-plt" alt="" width="100%"></p>
 <p>Points falling along the diagonal line indicate that the residuals
 follow a normal distribution. Deviations suggest non-normality.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Use linear residuals</span></span>
 <span><span class="fu"><a href="../reference/plotQuantileQuantilePlot.html">plotQuantileQuantilePlot</a></span><span class="op">(</span><span class="va">myDataCombined</span>, residualScale <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -591,17 +587,17 @@ alongside <code>Concentration</code>). The function
 <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code>,
 <code><a href="../reference/plotQuantileQuantilePlot.html">plotQuantileQuantilePlot()</a></code>) support <code>yUnit</code>
 only.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Default: auto-detected units (e.g. µmol/l and h from the data)</span></span>
 <span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/units-direct-1.png" class="r-plt" alt="" width="100%"></p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Override x-axis unit: display time in minutes instead of hours</span></span>
 <span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span>, xUnit <span class="op">=</span> <span class="st">"min"</span>, yUnit <span class="op">=</span> <span class="st">"mg/l"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-with-ospsuite-plots_files/figure-html/units-set-1.png" class="r-plt" alt="" width="100%"></p>
 <p>Passing units directly is equivalent to pre-converting the data with
 <code><a href="../reference/convertUnits.html">convertUnits()</a></code>:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="fu"><a href="../reference/convertUnits.html">convertUnits</a></span><span class="op">(</span><span class="va">myDataCombined</span>, xUnit <span class="op">=</span> <span class="st">"min"</span>, yUnit <span class="op">=</span> <span class="st">"mg/l"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -673,7 +669,7 @@ package documentation for details.</p>
 <p>Additionally, since all functions return <code>ggplot2</code>
 objects, you can further modify them using standard <code>ggplot2</code>
 functions:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create a plot and customize it</span></span>
@@ -692,7 +688,7 @@ functions:</p>
 </h2>
 <p>Since all functions return <code>ggplot2</code> objects, you can save
 them using <code><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/exportPlot.html" class="external-link">ospsuite.plots::exportPlot()</a></code>:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create a plot</span></span>
 <span><span class="va">myPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span>
 <span></span>
@@ -709,7 +705,7 @@ automatically adjusts the plot height based on content when
 <code>height = NULL</code>.</p>
 <p>Alternatively, you can use directly the standard
 <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave()</a></code> function from <code>ggplot2</code>:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Save using ggsave</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave</a></span><span class="op">(</span><span class="st">"timeprofile.png"</span>, <span class="va">myPlot</span>, width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">6</span>, dpi <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></code></pre></div>
 </div>

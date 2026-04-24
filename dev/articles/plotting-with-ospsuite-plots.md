@@ -34,29 +34,32 @@ repository](https://github.com/Open-Systems-Pharmacology/OSPSuite.Plots)
 ## Initial Setup
 
 Before creating plots with `ospsuite.plots`, it’s important to
-initialize the plotting environment properly. This involves two key
-steps:
-
-1.  **Set default plotting options** using
-    [`ospsuite.plots::setDefaults()`](https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/setDefaults.html)
-2.  **Configure the watermark option** using
-    `options(ospsuite.plots.watermarkEnabled = TRUE)` or
-    `options(ospsuite.plots.watermarkEnabled = FALSE)`
+initialize the plotting environment properly. When `ospsuite` is loaded,
+[`ospsuite.plots::setDefaults()`](https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/setDefaults.html)
+is called automatically. You must also configure the watermark option:
 
 ``` r
 library(ospsuite)
 
-# Set default plotting options for ospsuite.plots
-# Note: ospsuite.plots is imported by ospsuite, so we use :: for clarity
-ospsuite.plots::setDefaults()
-
-# Enable watermark for plots (optional)
+# Enable or disable watermark for plots
 options(ospsuite.plots.watermarkEnabled = TRUE)
 ```
 
 The `setDefaults()` function initializes various plotting defaults that
-ensure consistent appearance across all plots. The watermark option
-allows you to add a watermark to your plots.  
+ensure consistent appearance across all plots, and is called
+automatically on package load. The watermark option controls whether a
+watermark is added to your plots and must be set before creating plots.
+
+The settings that were in place before `setDefaults()` was called are
+stored in `ospsuiteEnv$ggplotDefaults`. You can restore them at any time
+using
+[`getOSPSuiteSetting()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getOSPSuiteSetting.md),
+which provides access to any named setting stored in `ospsuiteEnv`:
+
+``` r
+ospsuite.plots::resetDefaults(getOSPSuiteSetting("ggplotDefaults"))
+```
+
 Refer to the
 [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)
 package documentation for details.

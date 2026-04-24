@@ -53,6 +53,12 @@ is calculated for each dose of interest.
 
 ``` r
 library(ospsuite)
+#> The option 'ospsuite.plots.watermarkEnabled' is not set.
+#> To enable watermarks, add the following to your .Rprofile:
+#>   options(ospsuite.plots.watermarkEnabled = TRUE)
+#> To disable watermarks, add:
+#>   options(ospsuite.plots.watermarkEnabled = FALSE)
+#> You can edit your .Rprofile with usethis::edit_r_profile()
 
 # Load and run the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
@@ -201,21 +207,21 @@ performance.
 # now setting some parameter run values (the size of the array should match
 # the number of parameters to vary for each batch
 simBatch1$addRunValues(parameterValues = c(1, 2))
-#> [1] "0d52c3f0-d4e3-4a48-bb88-ab403902c968"
+#> [1] "02404bdb-82fe-448a-8838-c23ad7baa3f5"
 simBatch1$addRunValues(parameterValues = c(3, 4))
-#> [1] "46c21964-07f7-4b0e-8f82-3cd5d4bf881f"
+#> [1] "b86ed4cb-5e50-4873-a3ea-54a93ae8fc49"
 simBatch1$addRunValues(parameterValues = c(5, 6))
-#> [1] "4af4683a-4be8-4815-aa59-9dde1686057d"
+#> [1] "5b6cdc83-67e6-42a5-826b-c32bd1f2d370"
 
 # We only have one parameter to vary for simBatch2, therefore only one value to set
 simBatch2$addRunValues(parameterValues = 150)
-#> [1] "89997354-5dd8-4675-b20d-ac6e0ffa0f17"
+#> [1] "7732e73f-7694-47d6-ac00-663cf35f4799"
 simBatch2$addRunValues(parameterValues = 200)
-#> [1] "24db23c8-b6a6-4089-8101-f2ab2860cd4d"
+#> [1] "6991180c-ec6f-4780-b26b-a5a2b7d13d85"
 simBatch2$addRunValues(parameterValues = 300)
-#> [1] "f9f761cb-b718-4c12-999f-bf1838deb83b"
+#> [1] "5fc53615-5580-4c0c-ac52-6954fa2c4292"
 simBatch2$addRunValues(parameterValues = 400)
-#> [1] "b66855a5-4a6d-418e-8bb2-d6fd91d4d6f3"
+#> [1] "d4ec1bfc-107c-45c2-9605-b652e8286333"
 ```
 
 So far, we created 2 simulation batches, one with 3 parameter sets and
@@ -231,13 +237,13 @@ simulated set of parameters.
 # The resulting output is a named list, where the names are the ids of the enqueued runs.
 results <- runSimulationBatches(simulationBatches)
 print(names(unlist(results)))
-#> [1] "7884ef1b-8943-42bf-a11c-7c466bc24682.0d52c3f0-d4e3-4a48-bb88-ab403902c968"
-#> [2] "7884ef1b-8943-42bf-a11c-7c466bc24682.46c21964-07f7-4b0e-8f82-3cd5d4bf881f"
-#> [3] "7884ef1b-8943-42bf-a11c-7c466bc24682.4af4683a-4be8-4815-aa59-9dde1686057d"
-#> [4] "cea81082-6e27-470b-a989-d26193bdb8f7.89997354-5dd8-4675-b20d-ac6e0ffa0f17"
-#> [5] "cea81082-6e27-470b-a989-d26193bdb8f7.24db23c8-b6a6-4089-8101-f2ab2860cd4d"
-#> [6] "cea81082-6e27-470b-a989-d26193bdb8f7.f9f761cb-b718-4c12-999f-bf1838deb83b"
-#> [7] "cea81082-6e27-470b-a989-d26193bdb8f7.b66855a5-4a6d-418e-8bb2-d6fd91d4d6f3"
+#> [1] "4fbf0a66-d8ad-4ada-aa67-4e5b0fb97b24.02404bdb-82fe-448a-8838-c23ad7baa3f5"
+#> [2] "4fbf0a66-d8ad-4ada-aa67-4e5b0fb97b24.b86ed4cb-5e50-4873-a3ea-54a93ae8fc49"
+#> [3] "4fbf0a66-d8ad-4ada-aa67-4e5b0fb97b24.5b6cdc83-67e6-42a5-826b-c32bd1f2d370"
+#> [4] "fca17f9b-1451-4473-b7bb-9fbeecdd23cf.7732e73f-7694-47d6-ac00-663cf35f4799"
+#> [5] "fca17f9b-1451-4473-b7bb-9fbeecdd23cf.6991180c-ec6f-4780-b26b-a5a2b7d13d85"
+#> [6] "fca17f9b-1451-4473-b7bb-9fbeecdd23cf.5fc53615-5580-4c0c-ac52-6954fa2c4292"
+#> [7] "fca17f9b-1451-4473-b7bb-9fbeecdd23cf.d4ec1bfc-107c-45c2-9605-b652e8286333"
 ```
 
 The enqueued run values are cleared after calling
@@ -251,13 +257,13 @@ is called.
 
 ``` r
 simBatch1$addRunValues(parameterValues = c(10, 20))
-#> [1] "f587d14f-8216-4623-812d-423228058bc5"
+#> [1] "db87968b-40fb-4894-b0f9-f817ccd117f6"
 simBatch1$addRunValues(parameterValues = c(30, 40))
-#> [1] "0e7e22f3-6133-4dfc-a7fd-c80047d69f09"
+#> [1] "df536e14-b29f-464a-82bd-bace9b9658b6"
 simBatch2$addRunValues(parameterValues = 500)
-#> [1] "8b88766c-c48d-481a-9502-5392ecf6bec2"
+#> [1] "f600bb01-86c6-4f11-907a-7c5a60a69b52"
 simBatch2$addRunValues(parameterValues = 200)
-#> [1] "1f8ec2be-f2e5-4a1b-9289-a41e9d9a427f"
+#> [1] "56f030bf-6ab0-43cb-ba09-9c05a5f871ea"
 
 # this run will be much faster as the simulation won't be initialized again.
 # Only the new value will be set as specified when adding new run values with addRunValues

@@ -40,6 +40,12 @@ creating an Individual-Building Block.
 
 ``` r
 library(ospsuite)
+#> The option 'ospsuite.plots.watermarkEnabled' is not set.
+#> To enable watermarks, add the following to your .Rprofile:
+#>   options(ospsuite.plots.watermarkEnabled = TRUE)
+#> To disable watermarks, add:
+#>   options(ospsuite.plots.watermarkEnabled = FALSE)
+#> You can edit your .Rprofile with usethis::edit_r_profile()
 
 # If no unit is specified, the default units are used. For "weight" it is "kg", for "age" it is "year(s)".
 individualCharacteristics <- createIndividualCharacteristics(
