@@ -18,7 +18,7 @@
 
   .initPackage()
   tryCatch(
-    ospsuite.plots::setDefaults(),
+    ospsuiteEnv$ospSuitePlotsDefaults <- ospsuite.plots::setDefaults(),
     error = function(e) {
       cli::cli_warn(
         message = c(
