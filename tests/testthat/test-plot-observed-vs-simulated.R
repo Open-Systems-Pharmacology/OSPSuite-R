@@ -331,5 +331,3 @@ test_that("LLOQ is plotted", {
     )
   )
 })
-
-ggplot2::theme_set(originalTheme)
