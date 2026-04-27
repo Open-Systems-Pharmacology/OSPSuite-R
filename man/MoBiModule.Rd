@@ -74,7 +74,7 @@ Initialize a new instance of the class
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{netObject}}{Reference to \code{NetObject} .NET MoBi-module object}
+\item{\code{netObject}}{Underlying reference to the MoBi module in the simulation engine.}
 }
 \if{html}{\out{</div>}}
 }

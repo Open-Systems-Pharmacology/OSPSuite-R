@@ -58,7 +58,7 @@ Initialize a new instance of the class
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{netObject}}{Reference to \code{NetObject} .NET object representing a building block.}
+\item{\code{netObject}}{Underlying reference to the building block in the simulation engine.}
 
 \item{\code{type}}{Type of the building block. Must be one of the \code{BuildingBlockTypes}.}
 }

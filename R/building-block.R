@@ -24,7 +24,7 @@ BuildingBlock <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class
     #'
-    #' @param netObject Reference to `NetObject` .NET object representing a building block.
+    #' @param netObject Underlying reference to the building block in the simulation engine.
     #' @param type Type of the building block. Must be one of the `BuildingBlockTypes`.
     #' @return A new `BuildingBlock` object.
     initialize = function(netObject, type) {
