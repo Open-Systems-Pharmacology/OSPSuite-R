@@ -181,6 +181,80 @@ darwin — confirming they are Windows-only. Because `inst/lib` is shared
 across platforms, removing them would still affect Windows; defer to
 Phase C.
 
+## Linux (Ubuntu) results
+
+Captured on Ubuntu (Linux 7.0.0-14-generic) with R 4.5.2 and the .NET 8
+runtime at `/usr/lib/dotnet/shared/Microsoft.NETCore.App/8.0.26/`.
+Test suite: `FAIL 0 | WARN 95 | SKIP 0 | PASS 2011` (matches Windows / darwin).
+
+Reproduce:
+
+```bash
+OSPSUITE_AUDIT_ASSEMBLIES=1 Rscript -e 'devtools::test()'
+```
+
+Logs: [`logs/loaded-assemblies-linux-pid6970.log`](logs/loaded-assemblies-linux-pid6970.log),
+[`logs/loaded-assemblies-linux-pid6972.log`](logs/loaded-assemblies-linux-pid6972.log),
+union [`logs/loaded-assemblies-linux-union.log`](logs/loaded-assemblies-linux-union.log).
+
+### Counts (linux)
+
+| Bucket | Count |
+|---|---|
+| Total managed DLLs in `inst/lib` | 97 |
+| Loaded from `inst/lib` during tests | 66 |
+| Loaded but resolved from .NET 8 runtime instead of `inst/lib` | 2 |
+| Never loaded (managed) | 29 |
+| Native `.dll` not visible to `GetAssemblies()` (`.so` loaded via `dyn.load`; KEEP) | 4 |
+
+`inst/lib` had 101 `.dll` files at audit time vs. 103 on darwin and 104 on
+Windows. Two files that darwin had — `System.Text.Json.dll` and
+`System.Data.SQLite.dll` — are absent from this Linux working tree. They
+are not present in this snapshot's never-loaded numbers; cross-platform
+removal decisions should still account for them based on Windows / darwin.
+
+### Never loaded on linux (29 managed)
+
+The linux never-loaded set is **identical to the darwin / Windows set**
+minus `System.Text.Json` and `System.Data.SQLite` (neither file is in
+`inst/lib` on this checkout). Same 4 native `.dll` files appear as "not
+loaded" by `GetAssemblies()`; on Linux the corresponding `.so` is loaded
+via `dyn.load` (`libOSPSuite.FuncParserNative.so`,
+`libOSPSuite.SimModelNative.so`,
+`libOSPSuite.SimModelSolver_CVODES.so`, `libe_sqlite3.so`), so the `.dll`
+shipped alongside isn't read on this platform — KEEP regardless.
+
+No linux-only or platform-divergent never-loaded entries.
+
+### Runtime-shadowed on linux (2 files, ~734 KB)
+
+| DLL | Size | Resolved from |
+|---|---:|---|
+| System.Reflection.Metadata.dll | 489 KB | `/usr/lib/dotnet/shared/Microsoft.NETCore.App/8.0.26/` |
+| System.Collections.Immutable.dll | 245 KB | `/usr/lib/dotnet/shared/Microsoft.NETCore.App/8.0.26/` |
+
+These match the two assemblies shadowed on Windows. `System.Text.Json` is
+loaded from the .NET runtime path on Linux as well, but since its `.dll`
+isn't in `inst/lib` on this checkout, it doesn't count toward the
+runtime-shadowed bucket here — re-confirm on a checkout that has it (per
+the darwin section's note).
+
+### Cross-platform divergence
+
+Loaded-assembly *names* on Linux and darwin are identical (144 unique
+names each, same set). The only differences are file-system locations
+(.NET runtime path under `/usr/lib/dotnet/...` on this Ubuntu install vs
+`/usr/local/share/dotnet/...` on darwin) and the absence of
+`System.Text.Json.dll` / `System.Data.SQLite.dll` from `inst/lib` on
+this Linux working tree.
+
+Windows-only entries already on the `inst/lib` never-loaded list
+(`Microsoft.Win32.SystemEvents`, `System.Diagnostics.EventLog`,
+`System.Security.Cryptography.ProtectedData`) are also never loaded on
+Linux — confirming they are Windows-only across both non-Windows
+platforms. Because `inst/lib` ships unified across platforms, removing
+them would still affect Windows; defer to Phase C.
+
 ## Risks before excluding
 
 The Phase A capture is **necessary but not sufficient**. Things it does not catch:
@@ -188,9 +262,10 @@ The Phase A capture is **necessary but not sufficient**. Things it does not catc
 1. **Code paths the test suite doesn't cover.** Some user workflows (vignettes,
    undocumented use of imports/exports, some snapshot edge cases) may load
    assemblies the tests don't. Cross-check with vignette renders before excluding.
-2. **Per-platform variance.** Windows and macOS arm64 captures are now in
-   place and the never-loaded set is identical between them. Linux is still
-   pending — re-run the capture there before excluding.
+2. **Per-platform variance.** Windows, macOS arm64, and Ubuntu Linux
+   captures are now all in place. The never-loaded set is identical
+   across platforms (modulo files not present in `inst/lib` on a given
+   checkout). Safe to proceed to Phase C.
 3. **Lazy `initPKSim()` paths.** `initPKSim()` is invoked implicitly by
    several tests (createIndividual, createPopulation, snapshots, parameter-range)
    so PK-Sim assemblies *are* covered. Verified — `PKSim.R`, `PKSim.Core`,
