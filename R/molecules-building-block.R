@@ -11,7 +11,7 @@ MoleculesBuildingBlock <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class.
     #'
-    #' @param netObject Reference to a `.NET` `MoleculeBuildingBlock` object.
+    #' @param netObject Reference to the underlying `Molecules` building block.
     #' @return A new `MoleculesBuildingBlock` object.
     initialize = function(netObject) {
       super$initialize(netObject, type = BuildingBlockTypes$Molecules)
@@ -93,9 +93,9 @@ MoleculesBuildingBlock <- R6::R6Class(
   .getMoBiTaskFromCache("MoleculesTask")
 }
 
-#' Convert a `MoleculeType` integer flag value to a `.NET`
-#' `OSPSuite.Core.Domain.QuantityType` enum object so that it can be passed to
-#' .NET methods whose parameter type is `QuantityType`.
+#' Convert a `MoleculeType` integer flag value to the underlying
+#' `OSPSuite.Core.Domain.QuantityType` enum object that the engine accepts as a
+#' parameter.
 #' @keywords internal
 .quantityTypeNetObject <- function(moleculeType) {
   rSharp::callStatic(
@@ -106,9 +106,9 @@ MoleculesBuildingBlock <- R6::R6Class(
   )
 }
 
-#' Translate a .NET `QuantityType` name to its user-facing label.
-#' The .NET `OtherProtein` flag is exposed as `"Binding Partner"`; all other
-#' names pass through unchanged.
+#' Translate an internal `QuantityType` name to its user-facing label.
+#' The internal `OtherProtein` flag is exposed as `"Binding Partner"`; all
+#' other names pass through unchanged.
 #' @keywords internal
 .netMoleculeTypeToDisplay <- function(netType) {
   if (identical(netType, "OtherProtein")) "Binding Partner" else netType

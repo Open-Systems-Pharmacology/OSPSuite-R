@@ -68,7 +68,11 @@ ExpressionProfileCategories <- enum(list(
 ))
 
 #' @title Molecule Types
-#' @description Allowed types for molecules.
+#' @description Allowed types for molecules in a `Molecules` building block.
+#' Values are `Drug`, `Metabolite`, `Enzyme`, `Transporter`, `Binding Partner`,
+#' `Complex`, and the umbrella `Protein` (= `Enzyme` + `Transporter` +
+#' `Binding Partner`). Used to filter molecule names via
+#' `MoleculesBuildingBlock$allMoleculeNamesOfType()`.
 #' @export
 MoleculeType <- NULL
 

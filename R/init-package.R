@@ -82,12 +82,12 @@
   # Enum with the merge behaviors for modules available in MoBi
   MergeBehavior <<- enum(mergeBehaviorNetEnum)
 
-  # MoleculeType: curated subset of OSPSuite.Core.Domain.QuantityType flag
-  # values, with names mapped to the integer flag value defined in .NET.
+  # MoleculeType: curated subset of the underlying QuantityType flag values,
+  # with user-facing names mapped to the integer flag value.
   MoleculeType <<- .loadMoleculeTypeEnum()
 }
 
-#' Build the `MoleculeType` enum by reading flag values from the .NET
+#' Build the `MoleculeType` enum by reading flag values from the underlying
 #' `OSPSuite.Core.Domain.QuantityType` enum and keeping only molecule-relevant
 #' members.
 #' @keywords internal
@@ -101,8 +101,8 @@
       "System.Convert", "ToInt32", netValue
     ))
   }
-  # Mapping of user-facing names to .NET flag names. `Binding Partner` is the
-  # public label for the .NET `OtherProtein` flag.
+  # Mapping of user-facing names to internal flag names. `Binding Partner` is
+  # the public label for the internal `OtherProtein` flag.
   curatedNames <- c(
     "Drug" = "Drug",
     "Metabolite" = "Metabolite",
@@ -115,7 +115,7 @@
   curated <- vapply(curatedNames, function(netKey) {
     if (is.null(flagByName[[netKey]])) {
       stop(sprintf(
-        "QuantityType flag '%s' was not found in the .NET enum.",
+        "QuantityType flag '%s' was not found in the engine enum.",
         netKey
       ))
     }

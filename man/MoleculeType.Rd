@@ -11,6 +11,10 @@ An object of class \code{list} of length 7.
 MoleculeType
 }
 \description{
-Allowed types for molecules.
+Allowed types for molecules in a \code{Molecules} building block.
+Values are \code{Drug}, \code{Metabolite}, \code{Enzyme}, \code{Transporter}, \verb{Binding Partner},
+\code{Complex}, and the umbrella \code{Protein} (= \code{Enzyme} + \code{Transporter} +
+\verb{Binding Partner}). Used to filter molecule names via
+\code{MoleculesBuildingBlock$allMoleculeNamesOfType()}.
 }
 \keyword{datasets}

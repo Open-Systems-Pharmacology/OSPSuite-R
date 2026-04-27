@@ -2,15 +2,15 @@
 % Please edit documentation in R/molecules-building-block.R
 \name{.quantityTypeNetObject}
 \alias{.quantityTypeNetObject}
-\title{Convert a \code{MoleculeType} integer flag value to a \code{.NET}
-\code{OSPSuite.Core.Domain.QuantityType} enum object so that it can be passed to
-.NET methods whose parameter type is \code{QuantityType}.}
+\title{Convert a \code{MoleculeType} integer flag value to the underlying
+\code{OSPSuite.Core.Domain.QuantityType} enum object that the engine accepts as a
+parameter.}
 \usage{
 .quantityTypeNetObject(moleculeType)
 }
 \description{
-Convert a \code{MoleculeType} integer flag value to a \code{.NET}
-\code{OSPSuite.Core.Domain.QuantityType} enum object so that it can be passed to
-.NET methods whose parameter type is \code{QuantityType}.
+Convert a \code{MoleculeType} integer flag value to the underlying
+\code{OSPSuite.Core.Domain.QuantityType} enum object that the engine accepts as a
+parameter.
 }
 \keyword{internal}

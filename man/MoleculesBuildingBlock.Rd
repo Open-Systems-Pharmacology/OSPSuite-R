@@ -54,7 +54,7 @@ Initialize a new instance of the class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{netObject}}{Reference to a \code{.NET} \code{MoleculeBuildingBlock} object.}
+\item{\code{netObject}}{Reference to the underlying \code{Molecules} building block.}
 }
 \if{html}{\out{</div>}}
 }

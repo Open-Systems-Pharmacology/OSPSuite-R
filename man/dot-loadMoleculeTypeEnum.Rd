@@ -2,14 +2,14 @@
 % Please edit documentation in R/init-package.R
 \name{.loadMoleculeTypeEnum}
 \alias{.loadMoleculeTypeEnum}
-\title{Build the \code{MoleculeType} enum by reading flag values from the .NET
+\title{Build the \code{MoleculeType} enum by reading flag values from the underlying
 \code{OSPSuite.Core.Domain.QuantityType} enum and keeping only molecule-relevant
 members.}
 \usage{
 .loadMoleculeTypeEnum()
 }
 \description{
-Build the \code{MoleculeType} enum by reading flag values from the .NET
+Build the \code{MoleculeType} enum by reading flag values from the underlying
 \code{OSPSuite.Core.Domain.QuantityType} enum and keeping only molecule-relevant
 members.
 }

@@ -2,15 +2,15 @@
 % Please edit documentation in R/molecules-building-block.R
 \name{.netMoleculeTypeToDisplay}
 \alias{.netMoleculeTypeToDisplay}
-\title{Translate a .NET \code{QuantityType} name to its user-facing label.
-The .NET \code{OtherProtein} flag is exposed as \code{"Binding Partner"}; all other
-names pass through unchanged.}
+\title{Translate an internal \code{QuantityType} name to its user-facing label.
+The internal \code{OtherProtein} flag is exposed as \code{"Binding Partner"}; all
+other names pass through unchanged.}
 \usage{
 .netMoleculeTypeToDisplay(netType)
 }
 \description{
-Translate a .NET \code{QuantityType} name to its user-facing label.
-The .NET \code{OtherProtein} flag is exposed as \code{"Binding Partner"}; all other
-names pass through unchanged.
+Translate an internal \code{QuantityType} name to its user-facing label.
+The internal \code{OtherProtein} flag is exposed as \code{"Binding Partner"}; all
+other names pass through unchanged.
 }
 \keyword{internal}
