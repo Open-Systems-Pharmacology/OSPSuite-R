@@ -23,6 +23,25 @@ getFreshPVBB <- function(simulation = getSimulation()) {
 cachedICBB <- getFreshICBB()
 cachedPVBB <- getFreshPVBB()
 
+# Fixture: load a fresh copy of Test_Project so the PV BB is pristine for each
+# mutating test. TestModule contains UGT2B7 in its Molecules BB and uses the
+# standard human spatial structure; the matching expression profile is
+# "UGT2B7|Human|Healthy".
+.getFreshProteinExpressionFixture <- function() {
+  project <- loadMoBiProject(getTestDataFilePath(
+    "MoBiProject/Test_Project.mbp3"
+  ))
+  module <- project$getModules("TestModule")[[1]]
+  list(
+    project = project,
+    module = module,
+    pvBB = module$getParameterValuesBBs()[[1]],
+    profiles = list(
+      project$getExpressionProfiles("UGT2B7|Human|Healthy")[[1]]
+    )
+  )
+}
+
 test_that("initialConditionsBBToDataFrame returns a data frame with the expected columns", {
   df <- initialConditionsBBToDataFrame(cachedICBB)
   expect_snapshot(df)
@@ -772,26 +791,6 @@ test_that("addLocalMoleculeParametersToParameterValuesBB ignores molecules that 
 })
 
 # addProteinExpressionToParameterValuesBB tests
-
-# Fixture: load a fresh copy of Test_Project so the PV BB is pristine for each
-# mutating test. TestModule contains UGT2B7 in its Molecules BB and uses the
-# standard human spatial structure; the matching expression profile is
-# "UGT2B7|Human|Healthy".
-.getFreshProteinExpressionFixture <- function() {
-  project <- loadMoBiProject(getTestDataFilePath(
-    "MoBiProject/Test_Project.mbp3"
-  ))
-  module <- project$getModules("TestModule")[[1]]
-  list(
-    project = project,
-    module = module,
-    pvBB = module$getParameterValuesBBs()[[1]],
-    profiles = list(
-      project$getExpressionProfiles("UGT2B7|Human|Healthy")[[1]]
-    )
-  )
-}
-
 test_that("addProteinExpressionToParameterValuesBB throws error for wrong BB type", {
   fx <- .getFreshProteinExpressionFixture()
   expect_error(
@@ -849,7 +848,8 @@ test_that("addProteinExpressionToParameterValuesBB errors when an unknown molecu
       moleculeNames = c("UGT2B7", "SomeOtherProtein"),
       referenceExpressionProfiles = fx$profiles,
       organPaths = "Organism|Kidney"
-    )
+    ),
+    "Molecule 'SomeOtherProtein' was not found in the molecule building block"
   )
 })
 
@@ -1034,6 +1034,8 @@ test_that("addProteinExpressionToParameterValuesBB with NULL moleculeNames uses 
   expect_gt(length(newPaths), 0)
   expect_true(any(grepl("\\|UGT2B7\\|", newPaths)))
   expect_true(any(grepl("\\|CYP3A4\\|", newPaths)))
+  expect_true(any(grepl("\\|BindingPartner\\|", newPaths)))
+  expect_true(any(grepl("\\|OATP1B1\\|", newPaths)))
 })
 
 test_that("addProteinExpressionToParameterValuesBB with NULL referenceExpressionProfiles auto-creates default profiles", {
@@ -1044,20 +1046,6 @@ test_that("addProteinExpressionToParameterValuesBB with NULL referenceExpression
     moleculesModule = fx$module,
     moleculeNames = c("UGT2B7", "CYP3A4"),
     referenceExpressionProfiles = NULL,
-    organPaths = "Organism|Kidney"
-  )
-
-  expect_gt(length(newPaths), 0)
-  expect_true(any(grepl("\\|UGT2B7\\|", newPaths)))
-  expect_true(any(grepl("\\|CYP3A4\\|", newPaths)))
-})
-
-test_that("addProteinExpressionToParameterValuesBB with both NULL arguments uses all proteins and default profiles", {
-  fx <- .getFreshProteinExpressionFixture()
-  newPaths <- addProteinExpressionToParameterValuesBB(
-    parameterValuesBuildingBlock = fx$pvBB,
-    spatialStructureModule = fx$module,
-    moleculesModule = fx$module,
     organPaths = "Organism|Kidney"
   )
 

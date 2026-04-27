@@ -9,9 +9,6 @@ If no original PK-Sim project or snapshot are available, the user should use the
 
 ## Minor improvements and bug fixes
 
-- New `MoleculesBuildingBlock` class is returned by accessors for the `Molecules` building block of a `MoBiModule`. It exposes `allMoleculeNames()`, `allFloatingMoleculeNames()`, `allStationaryMoleculeNames()`, `allMoleculeNamesOfType()`, `allXenobioticFloatingMoleculeNames()`, `allEndogenousStationaryMoleculeNames()`, and `moleculeTypeFor()`. A new `MoleculeType` enum (`Drug`, `Metabolite`, `Enzyme`, `Transporter`, `Binding Partner`, `Complex`, `Protein`) parameterises `allMoleculeNamesOfType()` (#1900).
-- `addProteinExpressionToParameterValuesBB()` now accepts `moleculeNames = NULL` (default), in which case all proteins defined in the `Molecules` building block of `moleculesModule` are used (#1901).
-- `addProteinExpressionToParameterValuesBB()` now accepts `referenceExpressionProfiles = NULL` or a partial list. Default expression profiles for species `"Human"` are auto-created via `createExpressionProfileBuildingBlock()` for any molecule without a supplied profile (#1902).
 - `plotTimeProfile()` now defaults to `showLegendPerDataset = "all"`, showing individual dataset names for both observed and simulated data by default (#1844).
 - `DataSet$setValues()` and plotting functions (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, `plotQuantileQuantilePlot()`) now warn and replace negative `yErrorValues` with `NA` instead of silently accepting them (#1756).
 - Fixed `plotPredictedVsObserved()` error bar mapping: when `predictedAxis = "x"`, error bars are now correctly placed on the y-axis (#1715).

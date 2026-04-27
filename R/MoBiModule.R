@@ -104,6 +104,15 @@ MoBiModule <- R6::R6Class(
     },
 
     #' @description
+    #' Get the `Molecules` Building Block of the module, if any.
+    #' @returns A `MoleculesBuildingBlock` object exposing molecule-name
+    #' queries (e.g. `allMoleculeNames()`, `allMoleculeNamesOfType()`,
+    #' `moleculeTypeFor()`), or `NULL` if the module has no Molecules BB.
+    getMoleculesBB = function() {
+      .getBBFromModule(self, bbType = BuildingBlockTypes$Molecules)
+    },
+
+    #' @description
     #' Print the object to the console
     #' @param printClassProperties Logical, whether to print class properties (default: `FALSE`). If `TRUE`, calls first the `print` method of the parent class.
     #' Useful for debugging.

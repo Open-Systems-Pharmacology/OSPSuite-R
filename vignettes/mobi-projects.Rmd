@@ -221,6 +221,20 @@ myIndividual <- createIndividualBuildingBlock(
 
 Modules that are intended to be used in combination with a variety of other modules, especially with every generic PBPK module, are usually set up in a generic way and require some extensions in order to be used directly. For example, the initial conditions of the module "Thyroid" must be extended by the molecules of the model it will be used with. Similarly, some compound-specific parameter could require manual adjustments. Therefore, initial conditions and parameter values building block can be modified from R.
 
+A module's `Molecules` building block is exposed via `MoBiModule$getMoleculesBB()`, which returns a `MoleculesBuildingBlock` object. The methods below let you query molecule names without inspecting the underlying .NET object directly, which is useful when extending other building blocks (initial conditions, parameter values, expression parameters) for the molecules defined in the module:
+
+-   `allMoleculeNames()`, `allFloatingMoleculeNames()`, `allStationaryMoleculeNames()`: Names of all molecules, all floating molecules (e.g., drugs, metabolites), or all stationary molecules (e.g., enzymes, transporters).
+-   `allMoleculeNamesOfType(MoleculeType$<type>)`: Names of all molecules of a given type. Pass `MoleculeType$Protein` for the union of `Enzyme`, `Transporter`, and `Binding Partner`. Other supported keys are `Drug`, `Metabolite`, `Enzyme`, `Transporter`, `Binding Partner`, and `Complex`.
+-   `allXenobioticFloatingMoleculeNames()`, `allEndogenousStationaryMoleculeNames()`: Names of xenobiotic floating (drug-like) or endogenous stationary (protein-like) molecules.
+-   `moleculeTypeFor(moleculeName)`: Type of a single molecule by name (e.g., `"Drug"`, `"Enzyme"`, `"Transporter"`, `"Binding Partner"`).
+
+```{r moleculesBBQueries, eval = FALSE}
+moleculesBB <- modules[["Thyroid_QST"]]$getMoleculesBB()
+moleculesBB$allMoleculeNames()
+moleculesBB$allMoleculeNamesOfType(MoleculeType$Protein)
+moleculesBB$moleculeTypeFor("DIO1")
+```
+
 Following functionalities are available for the Initial Conditions BBs:
 
 -   `setInitialConditionsInBB()`: Allows adding new entries or changing the values of existing entries in the Initial Conditions BB.
@@ -264,6 +278,11 @@ print(newPaths)
 
 The molecule "DIO1" that has been added to the IC BB in the previous step is a protein. As the module "Thyroid" adds a new organ for which no protein expression is defined in the Expression Profiles, parameters defining the expression must be added to the PV BB of the new module using the `addProteinExpressionToParameterValuesBB()` function. Default values for the added parameters are taken from reference Expression Profiles supplied as a plain list; the function matches each entry to a molecule in `moleculeNames` by reading the profile's `MoleculeName`. The organs for which expression parameters should be created are specified via `organPaths`; each path must resolve to an existing organ in the spatial structure.
 
+Both `moleculeNames` and `referenceExpressionProfiles` are optional:
+
+-   When `moleculeNames = NULL` (default), all proteins (`Enzyme`, `Transporter`, `Binding Partner`) defined in the Molecules building block of `moleculesModule` are used.
+-   When `referenceExpressionProfiles = NULL` or only a subset of profiles is supplied, default expression profiles for species `"Human"` are auto-created via `createExpressionProfileBuildingBlock()` for each molecule without a supplied profile. The profile category is derived from `moleculeTypeFor()`: `Enzyme` -> `Metabolizing Enzyme`, `Transporter` -> `Transport Protein`, `Binding Partner` -> `Protein Binding Partner`.
+
 ```{r addProteinExpressionToPVBB}
 # Get the PV BB from the Thyroid module
 pvBB <- thyroidModule$getParameterValuesBBs()[["Human"]]
@@ -278,6 +297,17 @@ proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(
 )
 
 print(proteinExpressionPaths)
+```
+
+The same call without explicit `moleculeNames` or `referenceExpressionProfiles` adds expression parameters for every protein defined in the molecules module, using auto-created `"Human"` default profiles for any molecule without a supplied reference profile:
+
+```{r addProteinExpressionToPVBBDefaults, eval = FALSE}
+addProteinExpressionToParameterValuesBB(
+  parameterValuesBuildingBlock = pvBB,
+  spatialStructureModule = thyroidModule,
+  moleculesModule = modules[["Thyroid_QST"]],
+  organPaths = "Organism|Thyroid"
+)
 ```
 
 and overwrite the value of "Relative expression":
