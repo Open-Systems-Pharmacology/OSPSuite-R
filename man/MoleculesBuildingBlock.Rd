@@ -111,7 +111,7 @@ Character vector of molecule names.
 \subsection{Method \code{allMoleculeNamesOfType()}}{
 Returns the names of all molecules of the given type. Pass
 \code{MoleculeType$Protein} to obtain all proteins (the union of
-\code{Enzyme}, \code{Transporter}, and \code{OtherProtein}).
+\code{Enzyme}, \code{Transporter}, and \verb{Binding Partner}).
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MoleculesBuildingBlock$allMoleculeNamesOfType(moleculeType)}\if{html}{\out{</div>}}
 }
@@ -120,7 +120,7 @@ Returns the names of all molecules of the given type. Pass
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{moleculeType}}{One of the values defined in the internal \code{MoleculeType} enum
-(e.g. \code{Drug}, \code{Metabolite}, \code{Enzyme}, \code{Transporter}, \code{OtherProtein},
+(e.g. \code{Drug}, \code{Metabolite}, \code{Enzyme}, \code{Transporter}, \verb{Binding Partner},
 \code{Complex}, \code{Protein}).}
 }
 \if{html}{\out{</div>}}
@@ -163,7 +163,7 @@ Character vector of molecule names.
 \subsection{Method \code{moleculeTypeFor()}}{
 Returns the type of a molecule by name as it is recorded in the
 building block (e.g. \code{"Drug"}, \code{"Enzyme"}, \code{"Transporter"},
-\code{"OtherProtein"}). Throws an error if the molecule is not present.
+\code{"Binding Partner"}). Throws an error if the molecule is not present.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MoleculesBuildingBlock$moleculeTypeFor(moleculeName)}\if{html}{\out{</div>}}
 }

@@ -101,23 +101,26 @@
       "System.Convert", "ToInt32", netValue
     ))
   }
-  curatedKeys <- c(
-    "Drug",
-    "Metabolite",
-    "Enzyme",
-    "Transporter",
-    "OtherProtein",
-    "Complex",
-    "Protein"
+  # Mapping of user-facing names to .NET flag names. `Binding Partner` is the
+  # public label for the .NET `OtherProtein` flag.
+  curatedNames <- c(
+    "Drug" = "Drug",
+    "Metabolite" = "Metabolite",
+    "Enzyme" = "Enzyme",
+    "Transporter" = "Transporter",
+    "Binding Partner" = "OtherProtein",
+    "Complex" = "Complex",
+    "Protein" = "Protein"
   )
-  curated <- vapply(curatedKeys, function(key) {
-    if (is.null(flagByName[[key]])) {
+  curated <- vapply(curatedNames, function(netKey) {
+    if (is.null(flagByName[[netKey]])) {
       stop(sprintf(
         "QuantityType flag '%s' was not found in the .NET enum.",
-        key
+        netKey
       ))
     }
-    flagByName[[key]]
+    flagByName[[netKey]]
   }, integer(1))
+  names(curated) <- names(curatedNames)
   enum(curated)
 }

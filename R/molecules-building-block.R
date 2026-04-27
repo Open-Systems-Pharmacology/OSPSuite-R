@@ -45,9 +45,9 @@ MoleculesBuildingBlock <- R6::R6Class(
     #' @description
     #' Returns the names of all molecules of the given type. Pass
     #' `MoleculeType$Protein` to obtain all proteins (the union of
-    #' `Enzyme`, `Transporter`, and `OtherProtein`).
+    #' `Enzyme`, `Transporter`, and `Binding Partner`).
     #' @param moleculeType One of the values defined in the internal `MoleculeType` enum
-    #' (e.g. `Drug`, `Metabolite`, `Enzyme`, `Transporter`, `OtherProtein`,
+    #' (e.g. `Drug`, `Metabolite`, `Enzyme`, `Transporter`, `Binding Partner`,
     #' `Complex`, `Protein`).
     #' @return Character vector of molecule names.
     allMoleculeNamesOfType = function(moleculeType) {
@@ -78,12 +78,13 @@ MoleculesBuildingBlock <- R6::R6Class(
     #' @description
     #' Returns the type of a molecule by name as it is recorded in the
     #' building block (e.g. `"Drug"`, `"Enzyme"`, `"Transporter"`,
-    #' `"OtherProtein"`). Throws an error if the molecule is not present.
+    #' `"Binding Partner"`). Throws an error if the molecule is not present.
     #' @param moleculeName Name of the molecule to look up.
     #' @return Character string with the molecule type.
     moleculeTypeFor = function(moleculeName) {
       validateIsString(moleculeName)
-      .moleculesTask()$call("MoleculeTypeFor", self, moleculeName)
+      netType <- .moleculesTask()$call("MoleculeTypeFor", self, moleculeName)
+      .netMoleculeTypeToDisplay(netType)
     }
   )
 )
@@ -105,4 +106,12 @@ MoleculesBuildingBlock <- R6::R6Class(
     rSharp::getType("OSPSuite.Core.Domain.QuantityType"),
     as.integer(moleculeType)
   )
+}
+
+#' Translate a .NET `QuantityType` name to its user-facing label.
+#' The .NET `OtherProtein` flag is exposed as `"Binding Partner"`; all other
+#' names pass through unchanged.
+#' @keywords internal
+.netMoleculeTypeToDisplay <- function(netType) {
+  if (identical(netType, "OtherProtein")) "Binding Partner" else netType
 }

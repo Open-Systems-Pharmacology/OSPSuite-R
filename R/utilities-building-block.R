@@ -626,8 +626,8 @@ addLocalMoleculeParametersToParameterValuesBB <- function(
 #' Must contain the proteins named in `moleculeNames`.
 #' @param moleculeNames Character vector of protein molecule names for which
 #' expression parameters should be added. If `NULL` (default), all proteins
-#' (i.e. molecules of type `Enzyme`, `Transporter`, or `OtherProtein`) defined
-#' in the Molecules building block of `moleculesModule` are used.
+#' (i.e. molecules of type `Enzyme`, `Transporter`, or `Binding Partner`)
+#' defined in the Molecules building block of `moleculesModule` are used.
 #' @param referenceExpressionProfiles A single `BuildingBlock` of type
 #' `Expression Profile`, a list of such building blocks, or `NULL`. The matching
 #' profile for each molecule in `moleculeNames` is identified by the profile's
@@ -635,7 +635,7 @@ addLocalMoleculeParametersToParameterValuesBB <- function(
 #' supplied profile (or when this argument is `NULL`), a default profile is
 #' created via [createExpressionProfileBuildingBlock()] for species `"Human"`,
 #' using the molecule's protein type to choose the profile category (Enzyme ->
-#' Metabolizing Enzyme, Transporter -> Transport Protein, OtherProtein ->
+#' Metabolizing Enzyme, Transporter -> Transport Protein, Binding Partner ->
 #' Protein Binding Partner). Profiles whose `MoleculeName` is not in
 #' `moleculeNames` are ignored. Duplicate profiles (two entries with the same
 #' `MoleculeName`) raise an error.
@@ -780,9 +780,9 @@ addProteinExpressionToParameterValuesBB <- function(
     moleculeType,
     "Enzyme" = ExpressionProfileCategories$`Metabolizing Enzyme`,
     "Transporter" = ExpressionProfileCategories$`Transport Protein`,
-    "OtherProtein" = ExpressionProfileCategories$`Protein Binding Partner`,
+    "Binding Partner" = ExpressionProfileCategories$`Protein Binding Partner`,
     stop(sprintf(
-      "Cannot create a default expression profile for molecule type '%s'. Only 'Enzyme', 'Transporter', and 'OtherProtein' are supported.",
+      "Cannot create a default expression profile for molecule type '%s'. Only 'Enzyme', 'Transporter', and 'Binding Partner' are supported.",
       moleculeType
     ))
   )

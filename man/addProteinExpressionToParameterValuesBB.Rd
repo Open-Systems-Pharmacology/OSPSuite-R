@@ -26,8 +26,8 @@ Must contain the proteins named in \code{moleculeNames}.}
 
 \item{moleculeNames}{Character vector of protein molecule names for which
 expression parameters should be added. If \code{NULL} (default), all proteins
-(i.e. molecules of type \code{Enzyme}, \code{Transporter}, or \code{OtherProtein}) defined
-in the Molecules building block of \code{moleculesModule} are used.}
+(i.e. molecules of type \code{Enzyme}, \code{Transporter}, or \verb{Binding Partner})
+defined in the Molecules building block of \code{moleculesModule} are used.}
 
 \item{referenceExpressionProfiles}{A single \code{BuildingBlock} of type
 \verb{Expression Profile}, a list of such building blocks, or \code{NULL}. The matching
@@ -36,7 +36,7 @@ profile for each molecule in \code{moleculeNames} is identified by the profile's
 supplied profile (or when this argument is \code{NULL}), a default profile is
 created via \code{\link[=createExpressionProfileBuildingBlock]{createExpressionProfileBuildingBlock()}} for species \code{"Human"},
 using the molecule's protein type to choose the profile category (Enzyme ->
-Metabolizing Enzyme, Transporter -> Transport Protein, OtherProtein ->
+Metabolizing Enzyme, Transporter -> Transport Protein, Binding Partner ->
 Protein Binding Partner). Profiles whose \code{MoleculeName} is not in
 \code{moleculeNames} are ignored. Duplicate profiles (two entries with the same
 \code{MoleculeName}) raise an error.}
