@@ -1,7 +1,7 @@
 # Phase A — Loaded-assembly audit results
 
 Captures from `AppDomain.CurrentDomain.GetAssemblies()` taken at the end of the
-testthat run on Windows. See issue
+testthat run on Windows and macOS arm64. See issue
 [#1587](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1587).
 
 ## Methodology
@@ -106,6 +106,81 @@ Plus their Linux (`.so`) and macOS arm64 (`.dylib`) counterparts.
 See [`logs/loaded-assemblies-windows-union.log`](logs/loaded-assemblies-windows-union.log)
 for the full list with versions and locations.
 
+## macOS arm64 (darwin) results
+
+Captured on Apple Silicon (`uname -m: arm64`) with R 4.5.1 and the .NET 8
+runtime at `/usr/local/share/dotnet/shared/Microsoft.NETCore.App/8.0.7/`.
+Test suite: `FAIL 0 | WARN 95 | SKIP 0 | PASS 2011` (matches Windows).
+
+Reproduce:
+
+```bash
+OSPSUITE_AUDIT_ASSEMBLIES=1 Rscript -e 'devtools::test()'
+```
+
+Logs: [`logs/loaded-assemblies-darwin-pid4117.log`](logs/loaded-assemblies-darwin-pid4117.log),
+[`logs/loaded-assemblies-darwin-pid4118.log`](logs/loaded-assemblies-darwin-pid4118.log),
+union [`logs/loaded-assemblies-darwin-union.log`](logs/loaded-assemblies-darwin-union.log).
+
+### Counts (darwin)
+
+| Bucket | Count |
+|---|---|
+| Total managed DLLs in `inst/lib` | 99 |
+| Loaded from `inst/lib` during tests | 66 |
+| Loaded but resolved from .NET 8 runtime instead of `inst/lib` | 3 |
+| Never loaded (managed) | 30 |
+| Native `.dll` not visible to `GetAssemblies()` (P/Invoke; KEEP) | 4 |
+
+`inst/lib` had 103 `.dll` files at audit time vs. 100 in the Windows table:
+`System.Text.Json.dll` was added since the Windows capture (it shadows on
+darwin — see below) and `System.Data.SQLite.dll` was already on the
+never-loaded list and is now also gitignored locally; both still ship via
+the directory listing.
+
+### Never loaded on darwin (30 managed)
+
+The darwin never-loaded set is **identical to Windows** — same 30 managed
+DLLs (plus the 4 natives which are loaded via `dyn.load` of their `.dylib`
+counterparts and so don't appear in `GetAssemblies()` on either platform).
+Refer to the size-sorted table under "Removable DLLs → Never loaded" above.
+
+No darwin-only or Windows-only entries on this list.
+
+### Runtime-shadowed on darwin (3 files, ~1.27 MB)
+
+| DLL | Size | Resolved from |
+|---|---:|---|
+| System.Text.Json.dll | 567 KB | `/usr/local/share/dotnet/shared/Microsoft.NETCore.App/8.0.7/` |
+| System.Reflection.Metadata.dll | 489 KB | `/usr/local/share/dotnet/shared/Microsoft.NETCore.App/8.0.7/` |
+| System.Collections.Immutable.dll | 245 KB | `/usr/local/share/dotnet/shared/Microsoft.NETCore.App/8.0.7/` |
+
+`System.Reflection.Metadata` and `System.Collections.Immutable` shadow on
+both platforms. `System.Text.Json` is **new** vs. the Windows capture
+(added to `inst/lib` after that run); re-run the Windows capture to
+confirm it shadows there too before listing it as removable.
+
+### Cross-platform divergence
+
+Windows-specific runtime resolutions that do not appear on darwin (none
+in `inst/lib`, so they don't affect removal candidates either way):
+
+- `Microsoft.Win32.Registry`
+- `System.Security.AccessControl`
+- `System.Security.Claims`
+- `System.Security.Principal.Windows`
+
+Darwin extras not seen on Windows (also not in `inst/lib`):
+
+- `System.IO.Pipes`
+
+The Windows-only entries already on the `inst/lib` never-loaded list
+(`Microsoft.Win32.SystemEvents`, `System.Diagnostics.EventLog`,
+`System.Security.Cryptography.ProtectedData`) are also never loaded on
+darwin — confirming they are Windows-only. Because `inst/lib` is shared
+across platforms, removing them would still affect Windows; defer to
+Phase C.
+
 ## Risks before excluding
 
 The Phase A capture is **necessary but not sufficient**. Things it does not catch:
@@ -113,9 +188,9 @@ The Phase A capture is **necessary but not sufficient**. Things it does not catc
 1. **Code paths the test suite doesn't cover.** Some user workflows (vignettes,
    undocumented use of imports/exports, some snapshot edge cases) may load
    assemblies the tests don't. Cross-check with vignette renders before excluding.
-2. **Per-platform variance.** The capture above is Windows-only. Linux and
-   macOS arm64 may resolve different assemblies (e.g. some `System.*` libs are
-   Windows-shipped only). Re-run the capture on each platform before excluding.
+2. **Per-platform variance.** Windows and macOS arm64 captures are now in
+   place and the never-loaded set is identical between them. Linux is still
+   pending — re-run the capture there before excluding.
 3. **Lazy `initPKSim()` paths.** `initPKSim()` is invoked implicitly by
    several tests (createIndividual, createPopulation, snapshots, parameter-range)
    so PK-Sim assemblies *are* covered. Verified — `PKSim.R`, `PKSim.Core`,
