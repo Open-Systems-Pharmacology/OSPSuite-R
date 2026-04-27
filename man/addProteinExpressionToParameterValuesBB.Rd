@@ -9,8 +9,8 @@ addProteinExpressionToParameterValuesBB(
   parameterValuesBuildingBlock,
   spatialStructureModule,
   moleculesModule,
-  moleculeNames,
-  referenceExpressionProfiles,
+  moleculeNames = NULL,
+  referenceExpressionProfiles = NULL,
   organPaths = NULL
 )
 }
@@ -25,15 +25,21 @@ Expression parameters are created for containers defined by this spatial structu
 Must contain the proteins named in \code{moleculeNames}.}
 
 \item{moleculeNames}{Character vector of protein molecule names for which
-expression parameters should be added.}
+expression parameters should be added. If \code{NULL} (default), all proteins
+(i.e. molecules of type \code{Enzyme}, \code{Transporter}, or \code{OtherProtein}) defined
+in the Molecules building block of \code{moleculesModule} are used.}
 
 \item{referenceExpressionProfiles}{A single \code{BuildingBlock} of type
-\verb{Expression Profile}, or a list of such building blocks. The matching
+\verb{Expression Profile}, a list of such building blocks, or \code{NULL}. The matching
 profile for each molecule in \code{moleculeNames} is identified by the profile's
-\code{MoleculeName} property. Every molecule in \code{moleculeNames} must have a
-matching profile. Profiles whose \code{MoleculeName} is not in \code{moleculeNames}
-are ignored. Duplicate profiles (two entries with the same \code{MoleculeName})
-raise an error.}
+\code{MoleculeName} property. For every molecule in \code{moleculeNames} without a
+supplied profile (or when this argument is \code{NULL}), a default profile is
+created via \code{\link[=createExpressionProfileBuildingBlock]{createExpressionProfileBuildingBlock()}} for species \code{"Human"},
+using the molecule's protein type to choose the profile category (Enzyme ->
+Metabolizing Enzyme, Transporter -> Transport Protein, OtherProtein ->
+Protein Binding Partner). Profiles whose \code{MoleculeName} is not in
+\code{moleculeNames} are ignored. Duplicate profiles (two entries with the same
+\code{MoleculeName}) raise an error.}
 
 \item{organPaths}{Character vector of organ paths under which expression
 parameters are created (e.g. \code{"Organism|Kidney"}). Each path must resolve

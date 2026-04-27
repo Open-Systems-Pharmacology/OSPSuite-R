@@ -81,4 +81,43 @@
   ))
   # Enum with the merge behaviors for modules available in MoBi
   MergeBehavior <<- enum(mergeBehaviorNetEnum)
+
+  # MoleculeType: curated subset of OSPSuite.Core.Domain.QuantityType flag
+  # values, with names mapped to the integer flag value defined in .NET.
+  MoleculeType <<- .loadMoleculeTypeEnum()
+}
+
+#' Build the `MoleculeType` enum by reading flag values from the .NET
+#' `OSPSuite.Core.Domain.QuantityType` enum and keeping only molecule-relevant
+#' members.
+#' @keywords internal
+.loadMoleculeTypeEnum <- function() {
+  quantityType <- rSharp::getType("OSPSuite.Core.Domain.QuantityType")
+  netValues <- rSharp::callStatic("System.Enum", "GetValues", quantityType)
+  flagByName <- list()
+  for (netValue in netValues) {
+    name <- netValue$call("ToString")
+    flagByName[[name]] <- as.integer(rSharp::callStatic(
+      "System.Convert", "ToInt32", netValue
+    ))
+  }
+  curatedKeys <- c(
+    "Drug",
+    "Metabolite",
+    "Enzyme",
+    "Transporter",
+    "OtherProtein",
+    "Complex",
+    "Protein"
+  )
+  curated <- vapply(curatedKeys, function(key) {
+    if (is.null(flagByName[[key]])) {
+      stop(sprintf(
+        "QuantityType flag '%s' was not found in the .NET enum.",
+        key
+      ))
+    }
+    flagByName[[key]]
+  }, integer(1))
+  enum(curated)
 }

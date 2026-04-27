@@ -22,7 +22,7 @@ A MoBi module, either loaded from a project or from a pkml file
 
 \item{\code{isPKSimModule}}{Whether the module is a PK-Sim module (read-only)}
 
-\item{\code{mergeBehavior}}{Merge behavior of the module (read/write)}
+\item{\code{mergeBehavior}}{Merge behavior of the module. Must be one of "Extend" or "Overwrite".}
 
 \item{\code{parameterValuesBBnames}}{Names of the Parameter Values Building Blocks (PV BBs) in the module (read-only)}
 

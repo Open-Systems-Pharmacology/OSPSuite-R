@@ -839,7 +839,7 @@ test_that("addProteinExpressionToParameterValuesBB throws error for module witho
   )
 })
 
-test_that("addProteinExpressionToParameterValuesBB errors when a molecule has no reference profile", {
+test_that("addProteinExpressionToParameterValuesBB errors when an unknown molecule has no reference profile and is not in the Molecules BB", {
   fx <- .getFreshProteinExpressionFixture()
   expect_error(
     addProteinExpressionToParameterValuesBB(
@@ -849,8 +849,22 @@ test_that("addProteinExpressionToParameterValuesBB errors when a molecule has no
       moleculeNames = c("UGT2B7", "SomeOtherProtein"),
       referenceExpressionProfiles = fx$profiles,
       organPaths = "Organism|Kidney"
+    )
+  )
+})
+
+test_that("addProteinExpressionToParameterValuesBB errors when default profile cannot be derived for a non-protein molecule", {
+  fx <- .getFreshProteinExpressionFixture()
+  expect_error(
+    addProteinExpressionToParameterValuesBB(
+      parameterValuesBuildingBlock = fx$pvBB,
+      spatialStructureModule = fx$module,
+      moleculesModule = fx$module,
+      moleculeNames = "A",
+      referenceExpressionProfiles = NULL,
+      organPaths = "Organism|Kidney"
     ),
-    regexp = "No reference expression profile"
+    regexp = "Cannot create a default expression profile"
   )
 })
 
@@ -1003,6 +1017,69 @@ test_that("addProteinExpressionToParameterValuesBB does not overwrite existing e
     organPaths = "Organism|Kidney"
   )
   expect_equal(length(secondPaths), 0)
+})
+
+test_that("addProteinExpressionToParameterValuesBB with NULL moleculeNames uses all proteins from the Molecules BB", {
+  fx <- .getFreshProteinExpressionFixture()
+  cyp3a4 <- fx$project$getExpressionProfiles("CYP3A4|Human|Healthy")[[1]]
+  newPaths <- addProteinExpressionToParameterValuesBB(
+    parameterValuesBuildingBlock = fx$pvBB,
+    spatialStructureModule = fx$module,
+    moleculesModule = fx$module,
+    moleculeNames = NULL,
+    referenceExpressionProfiles = list(fx$profiles[[1]], cyp3a4),
+    organPaths = "Organism|Kidney"
+  )
+
+  expect_gt(length(newPaths), 0)
+  expect_true(any(grepl("\\|UGT2B7\\|", newPaths)))
+  expect_true(any(grepl("\\|CYP3A4\\|", newPaths)))
+})
+
+test_that("addProteinExpressionToParameterValuesBB with NULL referenceExpressionProfiles auto-creates default profiles", {
+  fx <- .getFreshProteinExpressionFixture()
+  newPaths <- addProteinExpressionToParameterValuesBB(
+    parameterValuesBuildingBlock = fx$pvBB,
+    spatialStructureModule = fx$module,
+    moleculesModule = fx$module,
+    moleculeNames = c("UGT2B7", "CYP3A4"),
+    referenceExpressionProfiles = NULL,
+    organPaths = "Organism|Kidney"
+  )
+
+  expect_gt(length(newPaths), 0)
+  expect_true(any(grepl("\\|UGT2B7\\|", newPaths)))
+  expect_true(any(grepl("\\|CYP3A4\\|", newPaths)))
+})
+
+test_that("addProteinExpressionToParameterValuesBB with both NULL arguments uses all proteins and default profiles", {
+  fx <- .getFreshProteinExpressionFixture()
+  newPaths <- addProteinExpressionToParameterValuesBB(
+    parameterValuesBuildingBlock = fx$pvBB,
+    spatialStructureModule = fx$module,
+    moleculesModule = fx$module,
+    organPaths = "Organism|Kidney"
+  )
+
+  expect_gt(length(newPaths), 0)
+  expect_true(any(grepl("\\|UGT2B7\\|", newPaths)))
+  expect_true(any(grepl("\\|CYP3A4\\|", newPaths)))
+})
+
+test_that("addProteinExpressionToParameterValuesBB creates defaults only for molecules without a supplied profile", {
+  fx <- .getFreshProteinExpressionFixture()
+  newPaths <- addProteinExpressionToParameterValuesBB(
+    parameterValuesBuildingBlock = fx$pvBB,
+    spatialStructureModule = fx$module,
+    moleculesModule = fx$module,
+    moleculeNames = c("UGT2B7", "CYP3A4"),
+    referenceExpressionProfiles = fx$profiles,
+    organPaths = "Organism|Kidney"
+  )
+
+  expect_gt(length(newPaths), 0)
+  expect_true(any(grepl("\\|UGT2B7\\|", newPaths)))
+  expect_true(any(grepl("\\|CYP3A4\\|", newPaths)))
 })
 
 # saveInitialConditionsToPKML tests

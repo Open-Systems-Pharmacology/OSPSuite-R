@@ -67,6 +67,16 @@ ExpressionProfileCategories <- enum(list(
   "Protein Binding Partner"
 ))
 
+#' @title MoleculeType
+#' @description Subset of the .NET `OSPSuite.Core.Domain.QuantityType` flag
+#' values used to filter molecules in a `Molecules` building block.
+#' Values are integer flags as defined in .NET. `Protein` is the umbrella
+#' flag covering `Enzyme`, `Transporter`, and `OtherProtein`.
+#' Populated at package load time from the bundled .NET assembly via
+#' `.loadEnums()`; defined here as a placeholder for documentation.
+#' @export
+MoleculeType <- NULL
+
 #' Default genders  defined in PK-Sim
 #'
 #'
