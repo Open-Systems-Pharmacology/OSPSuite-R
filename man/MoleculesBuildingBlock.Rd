@@ -119,7 +119,9 @@ Returns the names of all molecules of the given type. Pass
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{moleculeType}}{One of the values defined in the \link{MoleculeType} enum.}
+\item{\code{moleculeType}}{One of the values defined in the internal \code{MoleculeType} enum
+(e.g. \code{Drug}, \code{Metabolite}, \code{Enzyme}, \code{Transporter}, \code{OtherProtein},
+\code{Complex}, \code{Protein}).}
 }
 \if{html}{\out{</div>}}
 }

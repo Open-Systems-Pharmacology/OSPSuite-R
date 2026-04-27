@@ -46,7 +46,9 @@ MoleculesBuildingBlock <- R6::R6Class(
     #' Returns the names of all molecules of the given type. Pass
     #' `MoleculeType$Protein` to obtain all proteins (the union of
     #' `Enzyme`, `Transporter`, and `OtherProtein`).
-    #' @param moleculeType One of the values defined in the [MoleculeType] enum.
+    #' @param moleculeType One of the values defined in the internal `MoleculeType` enum
+    #' (e.g. `Drug`, `Metabolite`, `Enzyme`, `Transporter`, `OtherProtein`,
+    #' `Complex`, `Protein`).
     #' @return Character vector of molecule names.
     allMoleculeNamesOfType = function(moleculeType) {
       validateEnumValue(moleculeType, MoleculeType)
@@ -92,7 +94,7 @@ MoleculesBuildingBlock <- R6::R6Class(
   .getMoBiTaskFromCache("MoleculesTask")
 }
 
-#' Convert a [MoleculeType] integer flag value to a `.NET`
+#' Convert a `MoleculeType` integer flag value to a `.NET`
 #' `OSPSuite.Core.Domain.QuantityType` enum object so that it can be passed to
 #' .NET methods whose parameter type is `QuantityType`.
 #' @keywords internal
