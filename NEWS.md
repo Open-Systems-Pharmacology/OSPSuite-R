@@ -1,5 +1,9 @@
 # ospsuite (development version)
 
+## Major changes
+
+- Added MoBi project support: load `.mbp3` projects, query modules, individuals, expression profiles, and simulations, and assemble simulations from project building blocks. New classes `MoBiProject`, `MoBiModule`, `SimulationConfiguration`, `MoleculesBuildingBlock`, plus helpers for creating and saving Initial Conditions, Parameter Values, Individual, and Expression Profile building blocks. See `vignette("mobi-projects")` for an end-to-end walkthrough.
+
 ## Breaking changes
 
 - `createIndividual()` and `createPopulation()` will not work with models developed prior to version 13.
