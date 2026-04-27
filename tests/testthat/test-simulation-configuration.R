@@ -214,6 +214,57 @@ test_that("SimulationConfiguration can get and set expression profiles", {
   )
 })
 
+test_that("SimulationConfiguration expressionProfiles setter accepts a single BuildingBlock", {
+  configurationFromPKML <- simulation$configuration
+
+  singleProfile <- globalTestMoBiProject$getExpressionProfiles(
+    "CYP3A4|Human|Healthy"
+  )[[1]]
+
+  configurationFromPKML$expressionProfiles <- singleProfile
+  expect_named(
+    configurationFromPKML$expressionProfiles,
+    "CYP3A4|Human|Healthy"
+  )
+})
+
+test_that("createSimulationConfiguration accepts a single expression profile BB", {
+  modules <- globalTestMoBiProject$getModules("ExtModule_3IC_3PV")
+  singleProfile <- globalTestMoBiProject$getExpressionProfiles(
+    "CYP3A4|Human|Healthy"
+  )[[1]]
+
+  config <- createSimulationConfiguration(
+    modules = modules,
+    expressionProfiles = singleProfile
+  )
+  expect_named(config$expressionProfiles, "CYP3A4|Human|Healthy")
+})
+
+test_that("SimulationConfiguration$new errors on unknown module names in IC selection", {
+  modules <- globalTestMoBiProject$getModules("ExtModule_3IC_3PV")
+  expect_error(
+    createSimulationConfiguration(
+      modules = modules,
+      selectedInitialConditions = list("Bogus" = "IC1")
+    ),
+    regexp = messages$errorModuleNotInConfiguration("Bogus"),
+    fixed = TRUE
+  )
+})
+
+test_that("SimulationConfiguration$new errors on unknown module names in PV selection", {
+  modules <- globalTestMoBiProject$getModules("ExtModule_3IC_3PV")
+  expect_error(
+    createSimulationConfiguration(
+      modules = modules,
+      selectedParameterValues = list("Bogus" = "PV1")
+    ),
+    regexp = messages$errorModuleNotInConfiguration("Bogus"),
+    fixed = TRUE
+  )
+})
+
 # it throws an error when trying to set a profile for the same enzyme multiple times
 test_that("SimulationConfiguration expression profiles throws an error when setting multiple profiles for the same protein", {
   configurationFromPKML <- simulation$configuration

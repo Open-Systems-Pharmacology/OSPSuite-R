@@ -88,14 +88,14 @@ The order of modules defines the order in which the modules will be combined to 
 IC BBs, it is possible to specify which IC BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the IC BB.
 By explicitly setting the value for a specific module to \code{NULL}, no IC BB from the specified module will be applied.
-If the list contains a module name that is not part of the provided modules, it will be ignored.}
+Names that do not match any module passed via \code{modules} raise an error.}
 
 \item{\code{selectedParameterValues}}{By default, the first Parameter Values
 (PV) building block (BB) of each module will be selected. If a module has multiple
 PV BBs, it is possible to specify which PV BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the PV BB.
 By explicitly setting the value for a specific module to \code{NULL}, no PV BB from the specified module will be applied.
-If the list contains a module name that is not part of the provided modules, it will be ignored.}
+Names that do not match any module passed via \code{modules} raise an error.}
 
 \item{\code{settings}}{Optional, a \code{SimulationSettings} object defining the simulation settings. If no settings are provided,
 default settings will be used upon simulation creation.}

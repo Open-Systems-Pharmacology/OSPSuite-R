@@ -37,6 +37,14 @@ SimulationConfiguration <- R6::R6Class(
           "BuildingBlock",
           nullAllowed = TRUE
         )
+        # Accept a single BuildingBlock or a list of them. R6 objects are
+        # environments, so `for (bb in singleBB)` does not iterate as expected
+        # without coercion. `toList(NULL)` yields `list(NULL)`, so guard.
+        if (is.null(value)) {
+          value <- list()
+        } else {
+          value <- ospsuite.utils::toList(value)
+        }
         # Store protein names to check for duplicates
         proteinNames <- c()
         profilesNames <- c()
@@ -232,13 +240,13 @@ SimulationConfiguration <- R6::R6Class(
     #' IC BBs, it is possible to specify which IC BB to apply by providing a named list,
     #' where the name should be the name of the module and the value the name of the IC BB.
     #' By explicitly setting the value for a specific module to `NULL`, no IC BB from the specified module will be applied.
-    #' If the list contains a module name that is not part of the provided modules, it will be ignored.
+    #' Names that do not match any module passed via `modules` raise an error.
     #' @param selectedParameterValues By default, the first Parameter Values
     #' (PV) building block (BB) of each module will be selected. If a module has multiple
     #' PV BBs, it is possible to specify which PV BB to apply by providing a named list,
     #' where the name should be the name of the module and the value the name of the PV BB.
     #' By explicitly setting the value for a specific module to `NULL`, no PV BB from the specified module will be applied.
-    #' If the list contains a module name that is not part of the provided modules, it will be ignored.
+    #' Names that do not match any module passed via `modules` raise an error.
     #'
     #' @param settings Optional, a `SimulationSettings` object defining the simulation settings. If no settings are provided,
     #' default settings will be used upon simulation creation.
@@ -259,6 +267,14 @@ SimulationConfiguration <- R6::R6Class(
       validateIsOfType(individual, "BuildingBlock", nullAllowed = TRUE)
       .validateBuildingBlockType(individual, "Individual", nullAllowed = TRUE)
       validateIsOfType(expressionProfiles, "BuildingBlock", nullAllowed = TRUE)
+      # Coerce a single BuildingBlock into a 1-element list. R6 objects are
+      # environments and would not iterate correctly otherwise.
+      # `toList(NULL)` would yield `list(NULL)`, so guard explicitly.
+      if (is.null(expressionProfiles)) {
+        expressionProfiles <- list()
+      } else {
+        expressionProfiles <- ospsuite.utils::toList(expressionProfiles)
+      }
       for (bb in expressionProfiles) {
         .validateBuildingBlockType(bb, "Expression Profile")
       }
@@ -267,6 +283,21 @@ SimulationConfiguration <- R6::R6Class(
       self$modules <- modules
       self$individual <- individual
       self$expressionProfiles <- expressionProfiles
+
+      # Reject IC/PV selections that reference modules not in the configuration.
+      # Matches the behaviour of the active-field setters.
+      unknownIC <- setdiff(names(selectedInitialConditions), names(modules))
+      if (length(unknownIC) > 0) {
+        stop(messages$errorModuleNotInConfiguration(
+          paste(unknownIC, collapse = ", ")
+        ))
+      }
+      unknownPV <- setdiff(names(selectedParameterValues), names(modules))
+      if (length(unknownPV) > 0) {
+        stop(messages$errorModuleNotInConfiguration(
+          paste(unknownPV, collapse = ", ")
+        ))
+      }
 
       # Get the list of IC and PV BBs from the modules and set the first one as selected
       private$.selectedInitialConditions <- vector("list", length(modules))
