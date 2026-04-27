@@ -445,31 +445,37 @@
     Code
       newPaths_df
     Output
-                          Container Path Molecule Name Is Present Value Unit
-      136        Organism|Thyroid|Plasma             A       TRUE     0 µmol
-      137        Organism|Thyroid|Plasma             B       TRUE     0 µmol
-      138        Organism|Thyroid|Plasma        UGT2B7       TRUE   NaN µmol
-      139        Organism|Thyroid|Plasma        CYP3A4       TRUE   NaN µmol
-      140    Organism|Thyroid|BloodCells             A       TRUE     0 µmol
-      141    Organism|Thyroid|BloodCells             B       TRUE     0 µmol
-      142    Organism|Thyroid|BloodCells        UGT2B7       TRUE   NaN µmol
-      143    Organism|Thyroid|BloodCells        CYP3A4       TRUE   NaN µmol
-      144  Organism|Thyroid|Interstitial             A       TRUE     0 µmol
-      145  Organism|Thyroid|Interstitial             B       TRUE     0 µmol
-      146  Organism|Thyroid|Interstitial        UGT2B7       TRUE   NaN µmol
-      147  Organism|Thyroid|Interstitial        CYP3A4       TRUE   NaN µmol
-      148 Organism|Thyroid|Intracellular             A       TRUE     0 µmol
-      149 Organism|Thyroid|Intracellular             B       TRUE     0 µmol
-      150 Organism|Thyroid|Intracellular        UGT2B7       TRUE   NaN µmol
-      151 Organism|Thyroid|Intracellular        CYP3A4       TRUE   NaN µmol
-      152      Organism|Thyroid|Endosome             A       TRUE     0 µmol
-      153      Organism|Thyroid|Endosome             B       TRUE     0 µmol
-      154      Organism|Thyroid|Endosome        UGT2B7       TRUE   NaN µmol
-      155      Organism|Thyroid|Endosome        CYP3A4       TRUE   NaN µmol
-      156         Organism|Thyroid|Lumen             A       TRUE     0 µmol
-      157         Organism|Thyroid|Lumen             B       TRUE     0 µmol
-      158         Organism|Thyroid|Lumen        UGT2B7       TRUE   NaN µmol
-      159         Organism|Thyroid|Lumen        CYP3A4       TRUE   NaN µmol
+                          Container Path    Molecule Name Is Present Value Unit
+      136        Organism|Thyroid|Plasma                A       TRUE     0 µmol
+      137        Organism|Thyroid|Plasma                B       TRUE     0 µmol
+      138        Organism|Thyroid|Plasma           UGT2B7       TRUE   NaN µmol
+      139        Organism|Thyroid|Plasma           CYP3A4       TRUE   NaN µmol
+      140        Organism|Thyroid|Plasma FloatingMolecule       TRUE     0 µmol
+      141    Organism|Thyroid|BloodCells                A       TRUE     0 µmol
+      142    Organism|Thyroid|BloodCells                B       TRUE     0 µmol
+      143    Organism|Thyroid|BloodCells           UGT2B7       TRUE   NaN µmol
+      144    Organism|Thyroid|BloodCells           CYP3A4       TRUE   NaN µmol
+      145    Organism|Thyroid|BloodCells FloatingMolecule       TRUE     0 µmol
+      146  Organism|Thyroid|Interstitial                A       TRUE     0 µmol
+      147  Organism|Thyroid|Interstitial                B       TRUE     0 µmol
+      148  Organism|Thyroid|Interstitial           UGT2B7       TRUE   NaN µmol
+      149  Organism|Thyroid|Interstitial           CYP3A4       TRUE   NaN µmol
+      150  Organism|Thyroid|Interstitial FloatingMolecule       TRUE     0 µmol
+      151 Organism|Thyroid|Intracellular                A       TRUE     0 µmol
+      152 Organism|Thyroid|Intracellular                B       TRUE     0 µmol
+      153 Organism|Thyroid|Intracellular           UGT2B7       TRUE   NaN µmol
+      154 Organism|Thyroid|Intracellular           CYP3A4       TRUE   NaN µmol
+      155 Organism|Thyroid|Intracellular FloatingMolecule       TRUE     0 µmol
+      156      Organism|Thyroid|Endosome                A       TRUE     0 µmol
+      157      Organism|Thyroid|Endosome                B       TRUE     0 µmol
+      158      Organism|Thyroid|Endosome           UGT2B7       TRUE   NaN µmol
+      159      Organism|Thyroid|Endosome           CYP3A4       TRUE   NaN µmol
+      160      Organism|Thyroid|Endosome FloatingMolecule       TRUE     0 µmol
+      161         Organism|Thyroid|Lumen                A       TRUE     0 µmol
+      162         Organism|Thyroid|Lumen                B       TRUE     0 µmol
+      163         Organism|Thyroid|Lumen           UGT2B7       TRUE   NaN µmol
+      164         Organism|Thyroid|Lumen           CYP3A4       TRUE   NaN µmol
+      165         Organism|Thyroid|Lumen FloatingMolecule       TRUE     0 µmol
           Scale Divisor Neg. Values Allowed
       136             1               FALSE
       137             1               FALSE
@@ -495,6 +501,12 @@
       157             1               FALSE
       158             1               FALSE
       159             1               FALSE
+      160             1               FALSE
+      161             1               FALSE
+      162             1               FALSE
+      163             1               FALSE
+      164             1               FALSE
+      165             1               FALSE
 
 # extendInitialConditionsBB does not add new entries for existing molecules and compartments
 

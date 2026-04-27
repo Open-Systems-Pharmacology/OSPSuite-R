@@ -5,9 +5,7 @@
 \alias{MoleculesBuildingBlock}
 \title{MoleculesBuildingBlock}
 \description{
-A \code{Molecules} building block. Subclass of \link{BuildingBlock}
-returned by \code{getMoleculesBB()}-style accessors; exposes molecule-name
-queries backed by the .NET \code{MoBi.R.Services.MoleculesTask}.
+A \code{Molecules} building block. Subclass of \link{BuildingBlock}.
 }
 \section{Super classes}{
 \code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:BuildingBlock]{ospsuite::BuildingBlock}} -> \code{MoleculesBuildingBlock}
@@ -119,7 +117,7 @@ Returns the names of all molecules of the given type. Pass
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{moleculeType}}{One of the values defined in the internal \code{MoleculeType} enum
+\item{\code{moleculeType}}{One of the values defined in the \code{MoleculeType} enum
 (e.g. \code{Drug}, \code{Metabolite}, \code{Enzyme}, \code{Transporter}, \verb{Binding Partner},
 \code{Complex}, \code{Protein}).}
 }

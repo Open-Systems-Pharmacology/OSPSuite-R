@@ -1,8 +1,6 @@
 #' @title MoleculesBuildingBlock
 #' @docType class
-#' @description A `Molecules` building block. Subclass of [BuildingBlock]
-#' returned by `getMoleculesBB()`-style accessors; exposes molecule-name
-#' queries backed by the .NET `MoBi.R.Services.MoleculesTask`.
+#' @description A `Molecules` building block. Subclass of [BuildingBlock].
 #' @format NULL
 #' @export
 MoleculesBuildingBlock <- R6::R6Class(
@@ -46,7 +44,7 @@ MoleculesBuildingBlock <- R6::R6Class(
     #' Returns the names of all molecules of the given type. Pass
     #' `MoleculeType$Protein` to obtain all proteins (the union of
     #' `Enzyme`, `Transporter`, and `Binding Partner`).
-    #' @param moleculeType One of the values defined in the internal `MoleculeType` enum
+    #' @param moleculeType One of the values defined in the `MoleculeType` enum
     #' (e.g. `Drug`, `Metabolite`, `Enzyme`, `Transporter`, `Binding Partner`,
     #' `Complex`, `Protein`).
     #' @return Character vector of molecule names.

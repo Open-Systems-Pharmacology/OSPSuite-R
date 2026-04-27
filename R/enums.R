@@ -67,13 +67,9 @@ ExpressionProfileCategories <- enum(list(
   "Protein Binding Partner"
 ))
 
-#' Internal `MoleculeType` enum.
-#'
-#' Curated subset of the .NET `OSPSuite.Core.Domain.QuantityType` flag values
-#' used to filter molecules in a `Molecules` building block. Populated at
-#' package load time by `.loadEnums()`. Not exported.
-#' @keywords internal
-#' @noRd
+#' @title Molecule Types
+#' @description Allowed types for molecules.
+#' @export
 MoleculeType <- NULL
 
 #' Default genders  defined in PK-Sim

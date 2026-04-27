@@ -1,25 +1,26 @@
 .getMoleculesBBFixture <- function() {
   module <- globalTestMoBiProject$getModules("TestModule")[[1]]
-  ospsuite:::.getBBFromModule(module, bbType = "Molecules")
+  .getBBFromModule(module, bbType = "Molecules")
 }
 
 test_that("MoleculesBuildingBlock is returned by .getBBFromModule for Molecules type", {
   mBB <- .getMoleculesBBFixture()
-  expect_s3_class(mBB, "MoleculesBuildingBlock")
-  expect_s3_class(mBB, "BuildingBlock")
+  expect_true(isOfType(mBB, "MoleculesBuildingBlock"))
   expect_equal(mBB$type, BuildingBlockTypes$Molecules)
 })
 
 test_that("allMoleculeNames returns all molecule names of the building block", {
   mBB <- .getMoleculesBBFixture()
   names <- mBB$allMoleculeNames()
-  expect_setequal(names, c("A", "B", "UGT2B7", "CYP3A4"))
+  expect_setequal(
+    names,
+    c("A", "B", "UGT2B7", "CYP3A4", "FloatingMolecule")
+  )
 })
 
 test_that("allFloatingMoleculeNames returns only floating molecules", {
   mBB <- .getMoleculesBBFixture()
-  # The fixture has all molecules stored as stationary (IsFloating = FALSE).
-  expect_equal(mBB$allFloatingMoleculeNames(), character(0))
+  expect_equal(mBB$allFloatingMoleculeNames(), "FloatingMolecule")
 })
 
 test_that("allStationaryMoleculeNames returns only stationary molecules", {
@@ -42,7 +43,7 @@ test_that("allMoleculeNamesOfType(Drug) returns only drugs", {
   mBB <- .getMoleculesBBFixture()
   expect_setequal(
     mBB$allMoleculeNamesOfType(MoleculeType$Drug),
-    c("A", "B")
+    c("A", "B", "FloatingMolecule")
   )
 })
 
@@ -69,8 +70,7 @@ test_that("allMoleculeNamesOfType validates the moleculeType argument", {
 
 test_that("allXenobioticFloatingMoleculeNames returns xenobiotic floating molecules", {
   mBB <- .getMoleculesBBFixture()
-  # The fixture has no xenobiotic + floating molecules.
-  expect_equal(mBB$allXenobioticFloatingMoleculeNames(), character(0))
+  expect_equal(mBB$allXenobioticFloatingMoleculeNames(), "FloatingMolecule")
 })
 
 test_that("allEndogenousStationaryMoleculeNames returns endogenous stationary molecules", {
