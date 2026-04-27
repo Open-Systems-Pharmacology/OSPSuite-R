@@ -170,6 +170,11 @@ loadModuleFromPKML <- function(path) {
     return(NULL)
   }
 
+  # Molecules BBs use a dedicated subclass exposing molecule-name queries.
+  if (bbType == BuildingBlockTypes$Molecules) {
+    return(MoleculesBuildingBlock$new(bbNet))
+  }
+
   # Create BuildingBlock object
   return(BuildingBlock$new(bbNet, type = bbType))
 }

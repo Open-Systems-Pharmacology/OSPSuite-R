@@ -3,11 +3,15 @@
 \docType{class}
 \name{MoBiModule}
 \alias{MoBiModule}
-\title{MoBi Module # OR SHOULD WE CALL IT AN OspModule ?}
+\title{MoBi Module}
 \value{
 A named list of \code{BuildingBlock} objects, with names being the names of the PV BBs.
 
 A named list of \code{BuildingBlock} objects, with names being the names of the IC BBs.
+
+A \code{MoleculesBuildingBlock} object exposing molecule-name
+queries (e.g. \code{allMoleculeNames()}, \code{allMoleculeNamesOfType()},
+\code{moleculeTypeFor()}), or \code{NULL} if the module has no Molecules BB.
 }
 \description{
 A MoBi module, either loaded from a project or from a pkml file
@@ -22,7 +26,7 @@ A MoBi module, either loaded from a project or from a pkml file
 
 \item{\code{isPKSimModule}}{Whether the module is a PK-Sim module (read-only)}
 
-\item{\code{mergeBehavior}}{Merge behavior of the module (read/write)}
+\item{\code{mergeBehavior}}{Merge behavior of the module. Must be one of "Extend" or "Overwrite".}
 
 \item{\code{parameterValuesBBnames}}{Names of the Parameter Values Building Blocks (PV BBs) in the module (read-only)}
 
@@ -36,6 +40,7 @@ A MoBi module, either loaded from a project or from a pkml file
 \item \href{#method-MoBiModule-new}{\code{MoBiModule$new()}}
 \item \href{#method-MoBiModule-getParameterValuesBBs}{\code{MoBiModule$getParameterValuesBBs()}}
 \item \href{#method-MoBiModule-getInitialConditionsBBs}{\code{MoBiModule$getInitialConditionsBBs()}}
+\item \href{#method-MoBiModule-getMoleculesBB}{\code{MoBiModule$getMoleculesBB()}}
 \item \href{#method-MoBiModule-print}{\code{MoBiModule$print()}}
 }
 }
@@ -118,6 +123,16 @@ initial conditions BB is not present in the project.}
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-MoBiModule-getMoleculesBB"></a>}}
+\if{latex}{\out{\hypertarget{method-MoBiModule-getMoleculesBB}{}}}
+\subsection{Method \code{getMoleculesBB()}}{
+Get the \code{Molecules} Building Block of the module, if any.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$getMoleculesBB()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-MoBiModule-print"></a>}}
