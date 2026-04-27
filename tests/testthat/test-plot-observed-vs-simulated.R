@@ -1,7 +1,3 @@
-# Update the theme to revers settings by ospsuite.plots::setDefaults()
-originalTheme <- ggplot2::theme_get()
-ggplot2::theme_update(panel.border = ggplot2::element_blank())
-
 # data to be used ---------------------------------------
 
 # plotObservedVsSimulated
@@ -335,5 +331,3 @@ test_that("LLOQ is plotted", {
     )
   )
 })
-
-ggplot2::theme_set(originalTheme)
