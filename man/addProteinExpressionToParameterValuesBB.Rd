@@ -58,3 +58,29 @@ container under each path in \code{organPaths}. Default values are taken from th
 reference expression profile supplied for that molecule. Existing entries are
 not overwritten.
 }
+\examples{
+\dontrun{
+project <- loadMoBiProject("path/to/project.mbp3")
+module <- project$getModules("TestModule")[[1]]
+pvBB <- module$getParameterValuesBBs()[[1]]
+profile <- project$getExpressionProfiles("CYP3A4|Human|Healthy")[[1]]
+
+# Use a supplied reference profile and target one organ.
+newPaths <- addProteinExpressionToParameterValuesBB(
+  parameterValuesBuildingBlock = pvBB,
+  spatialStructureModule = module,
+  moleculesModule = module,
+  moleculeNames = "CYP3A4",
+  referenceExpressionProfiles = profile,
+  organPaths = "Organism|Kidney"
+)
+
+# Auto-resolve protein names from the Molecules BB and create default
+# `Human` profiles for any molecule without a supplied reference profile.
+newPaths <- addProteinExpressionToParameterValuesBB(
+  parameterValuesBuildingBlock = pvBB,
+  spatialStructureModule = module,
+  moleculesModule = module
+)
+}
+}
