@@ -7,7 +7,7 @@ Regen: `Rscript tests/data/MoBiProject/introspect_test_project.R`.
 
 | Name | isPKSim | merge | PV BBs | IC BBs | Molecules BB (known) | SpatialStructure |
 |---|---|---|---|---|---|---|
-| `TestModule` | FALSE | Extend | `Parameter Values` (empty) | `Initial Conditions` (empty) | `A`, `B`, `UGT2B7`, `CYP3A4` | standard PK-Sim human (organs: Kidney, Liver, Bone, Brain, Fat, Gallbladder, Gonads, Heart, LargeIntestine, SmallIntestine, Lung, Muscle, Pancreas, Skin, Spleen, Stomach, VenousBlood, ArterialBlood, PortalVein, Lumen) |
+| `TestModule` | FALSE | Extend | `Parameter Values` (empty) | `Initial Conditions` (empty) | `A`, `B`, `UGT2B7`, `CYP3A4`, `FloatingMolecule`, `BindingPartner`, `OATP1B1` | standard PK-Sim human (organs: Kidney, Liver, Bone, Brain, Fat, Gallbladder, Gonads, Heart, LargeIntestine, SmallIntestine, Lung, Muscle, Pancreas, Skin, Spleen, Stomach, VenousBlood, ArterialBlood, PortalVein, Lumen) |
 
 | `ExtModule_3IC_3PV` | FALSE | Extend | `PV1`, `PV2`, `PV3` (all empty) | `IC1`, `IC2`, `IC3` (all empty) | ? | ? |
 | `ExtModule_noIC_noPV` | FALSE | Extend | none | none | ? | ? |
@@ -15,8 +15,14 @@ Regen: `Rscript tests/data/MoBiProject/introspect_test_project.R`.
 Molecules BB contents not enumerable via public R API; table lists known entries only.
 
 Protein configuration (verified via `AddProteinExpressionParameters`):
-- `UGT2B7` — configured as protein, works with `UGT2B7|Human|Healthy` profile.
-- `CYP3A4` — configured as protein, works with `CYP3A4|Human|Healthy` profile.
+- `UGT2B7` — configured as protein (Enzyme, stationary, endogenous), works with `UGT2B7|Human|Healthy` profile.
+- `CYP3A4` — configured as protein (Enzyme, stationary, endogenous), works with `CYP3A4|Human|Healthy` profile.
+
+Other molecules:
+- `A`, `B` — `Drug`, stationary, xenobiotic.
+- `FloatingMolecule` — `Drug`, floating (`IsFloating = TRUE`), xenobiotic. Use to exercise floating / xenobiotic-floating queries.
+- `OATP1B1` — `Transporter`, stationary, endogenous. Use to exercise transporter queries and default-profile creation (`Transport Protein` category).
+- `BindingPartner` — `OtherProtein` (exposed as `Binding Partner`), stationary, endogenous. Use to exercise binding-partner queries and default-profile creation (`Protein Binding Partner` category).
 
 ## Individuals
 

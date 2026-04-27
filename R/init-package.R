@@ -81,4 +81,46 @@
   ))
   # Enum with the merge behaviors for modules available in MoBi
   MergeBehavior <<- enum(mergeBehaviorNetEnum)
+
+  # MoleculeType: curated subset of the underlying QuantityType flag values,
+  # with user-facing names mapped to the integer flag value.
+  MoleculeType <<- .loadMoleculeTypeEnum()
+}
+
+#' Build the `MoleculeType` enum by reading flag values from the underlying
+#' `OSPSuite.Core.Domain.QuantityType` enum and keeping only molecule-relevant
+#' members.
+#' @keywords internal
+.loadMoleculeTypeEnum <- function() {
+  quantityType <- rSharp::getType("OSPSuite.Core.Domain.QuantityType")
+  netValues <- rSharp::callStatic("System.Enum", "GetValues", quantityType)
+  flagByName <- list()
+  for (netValue in netValues) {
+    name <- netValue$call("ToString")
+    flagByName[[name]] <- as.integer(rSharp::callStatic(
+      "System.Convert", "ToInt32", netValue
+    ))
+  }
+  # Mapping of user-facing names to internal flag names. `Binding Partner` is
+  # the public label for the internal `OtherProtein` flag.
+  curatedNames <- c(
+    "Drug" = "Drug",
+    "Metabolite" = "Metabolite",
+    "Enzyme" = "Enzyme",
+    "Transporter" = "Transporter",
+    "Binding Partner" = "OtherProtein",
+    "Complex" = "Complex",
+    "Protein" = "Protein"
+  )
+  curated <- vapply(curatedNames, function(netKey) {
+    if (is.null(flagByName[[netKey]])) {
+      stop(sprintf(
+        "QuantityType flag '%s' was not found in the engine enum.",
+        netKey
+      ))
+    }
+    flagByName[[netKey]]
+  }, integer(1))
+  names(curated) <- names(curatedNames)
+  enum(curated)
 }

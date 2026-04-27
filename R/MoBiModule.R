@@ -1,4 +1,4 @@
-#' @title MoBi Module # OR SHOULD WE CALL IT AN OspModule ?
+#' @title MoBi Module
 #' @docType class
 #' @description  A MoBi module, either loaded from a project or from a pkml file
 #' @format NULL
@@ -101,6 +101,15 @@ MoBiModule <- R6::R6Class(
         bbType = "Initial Conditions",
         stopIfNotFound
       )
+    },
+
+    #' @description
+    #' Get the `Molecules` Building Block of the module, if any.
+    #' @returns A `MoleculesBuildingBlock` object exposing molecule-name
+    #' queries (e.g. `allMoleculeNames()`, `allMoleculeNamesOfType()`,
+    #' `moleculeTypeFor()`), or `NULL` if the module has no Molecules BB.
+    getMoleculesBB = function() {
+      .getBBFromModule(self, bbType = BuildingBlockTypes$Molecules)
     },
 
     #' @description
