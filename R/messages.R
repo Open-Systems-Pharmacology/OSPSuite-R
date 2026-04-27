@@ -318,6 +318,14 @@ messages$errorIndividualNotFound <- function(name) {
   paste0("Individual with the name ", name, " is not present in the project!")
 }
 
+messages$errorMissingRequiredBBs <- function(missing) {
+  paste0(
+    "The provided modules do not contain the required building blocks: ",
+    paste(missing, collapse = ", "),
+    ". Please provide modules with the required building blocks."
+  )
+}
+
 messages$errorWrongBuildingBlockType <- function(
   bbName,
   expectedType,

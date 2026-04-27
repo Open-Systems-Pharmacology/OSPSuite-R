@@ -346,6 +346,20 @@ deleteInitialConditionsFromBB <- function(
 #'
 #' @returns Paths of entries added to the building block.
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' project <- loadMoBiProject("path/to/project.mbp3")
+#' module <- project$getModules("TestModule")[[1]]
+#' icBB <- module$getInitialConditionsBBs()[[1]]
+#'
+#' newPaths <- extendInitialConditionsBB(
+#'   initialConditionsBuildingBlock = icBB,
+#'   spatialStructureModule = module,
+#'   moleculesModule = module,
+#'   moleculeNames = c("CYP3A4", "UGT2B7")
+#' )
+#' }
 extendInitialConditionsBB <- function(
   initialConditionsBuildingBlock,
   spatialStructureModule,
@@ -374,14 +388,7 @@ extendInitialConditionsBB <- function(
       if (is.null(spatialStructureBB)) "Spatial Structure",
       if (is.null(moleculesBB)) "Molecules"
     )
-    stop(
-      paste0(
-        "The provided modules do not contain the required building blocks: ",
-        paste(missingBBs, collapse = ", "),
-        ". "
-      ),
-      "Please provide modules with the required building blocks to be able to extend the initial conditions building block."
-    )
+    stop(messages$errorMissingRequiredBBs(missingBBs))
   }
 
   # Get InitialConditionsTask
@@ -556,6 +563,20 @@ deleteParameterValuesFromBB <- function(
 #'
 #' @returns Path of entries added to the building block.
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' project <- loadMoBiProject("path/to/project.mbp3")
+#' module <- project$getModules("TestModule")[[1]]
+#' pvBB <- module$getParameterValuesBBs()[[1]]
+#'
+#' newPaths <- addLocalMoleculeParametersToParameterValuesBB(
+#'   parameterValuesBuildingBlock = pvBB,
+#'   spatialStructureModule = module,
+#'   moleculesModule = module,
+#'   moleculeNames = c("CYP3A4")
+#' )
+#' }
 addLocalMoleculeParametersToParameterValuesBB <- function(
   parameterValuesBuildingBlock,
   spatialStructureModule,
@@ -584,14 +605,7 @@ addLocalMoleculeParametersToParameterValuesBB <- function(
       if (is.null(spatialStructureBB)) "Spatial Structure",
       if (is.null(moleculesBB)) "Molecules"
     )
-    stop(
-      paste0(
-        "The provided modules do not contain the required building blocks: ",
-        paste(missingBBs, collapse = ", "),
-        ". "
-      ),
-      "Please provide modules with the required building blocks to be able to extend the parameter values building block."
-    )
+    stop(messages$errorMissingRequiredBBs(missingBBs))
   }
 
   # Get ParameterValuesTask
@@ -647,6 +661,32 @@ addLocalMoleculeParametersToParameterValuesBB <- function(
 #'
 #' @returns Paths of entries added to the building block.
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' project <- loadMoBiProject("path/to/project.mbp3")
+#' module <- project$getModules("TestModule")[[1]]
+#' pvBB <- module$getParameterValuesBBs()[[1]]
+#' profile <- project$getExpressionProfiles("CYP3A4|Human|Healthy")[[1]]
+#'
+#' # Use a supplied reference profile and target one organ.
+#' newPaths <- addProteinExpressionToParameterValuesBB(
+#'   parameterValuesBuildingBlock = pvBB,
+#'   spatialStructureModule = module,
+#'   moleculesModule = module,
+#'   moleculeNames = "CYP3A4",
+#'   referenceExpressionProfiles = profile,
+#'   organPaths = "Organism|Kidney"
+#' )
+#'
+#' # Auto-resolve protein names from the Molecules BB and create default
+#' # `Human` profiles for any molecule without a supplied reference profile.
+#' newPaths <- addProteinExpressionToParameterValuesBB(
+#'   parameterValuesBuildingBlock = pvBB,
+#'   spatialStructureModule = module,
+#'   moleculesModule = module
+#' )
+#' }
 addProteinExpressionToParameterValuesBB <- function(
   parameterValuesBuildingBlock,
   spatialStructureModule,
@@ -682,14 +722,7 @@ addProteinExpressionToParameterValuesBB <- function(
       if (is.null(spatialStructureBB)) "Spatial Structure",
       if (is.null(moleculesBB)) "Molecules"
     )
-    stop(
-      paste0(
-        "The provided modules do not contain the required building blocks: ",
-        paste(missingBBs, collapse = ", "),
-        ". "
-      ),
-      "Please provide modules with the required building blocks to be able to extend the parameter values building block."
-    )
+    stop(messages$errorMissingRequiredBBs(missingBBs))
   }
 
   if (is.null(moleculeNames)) {
