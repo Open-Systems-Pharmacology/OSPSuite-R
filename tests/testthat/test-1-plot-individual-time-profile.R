@@ -1,20 +1,5 @@
 # plotIndividualTimeProfile
 
-# `DataCombined` objects ------------------------
-
-oneObsDC <- readRDS(getTestDataFilePath("oneObsDC"))
-manyObsDC <- readRDS(getTestDataFilePath("manyObsDC"))
-
-oneSimDC <- readRDS(getTestDataFilePath("oneSimDC"))
-manySimDC <- readRDS(getTestDataFilePath("manySimDC"))
-
-oneObsSimDC <- readRDS(getTestDataFilePath("oneObsSimDC"))
-manyObsSimDC <- readRDS(getTestDataFilePath("manyObsSimDC"))
-
-oneObsGeometricDC <- readRDS(getTestDataFilePath("oneObsGeometricDC"))
-
-customDPC <- readRDS(getTestDataFilePath("customDPC"))
-
 # only observed ------------------------
 test_that("It creates default plots as expected for single observed dataset", {
   set.seed(123)
