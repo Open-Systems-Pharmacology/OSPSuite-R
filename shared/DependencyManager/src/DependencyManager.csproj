@@ -153,12 +153,10 @@
       <AllowedAssembly Include="SQLitePCLRaw.provider.e_sqlite3" />
       <AllowedAssembly Include="SixLabors.Fonts" />
       <AllowedAssembly Include="SixLabors.ImageSharp" />
-      <AllowedAssembly Include="System.Collections.Immutable" />
       <AllowedAssembly Include="System.Configuration.ConfigurationManager" />
       <AllowedAssembly Include="System.Data.SQLite" />
       <AllowedAssembly Include="System.Drawing.Common" />
       <AllowedAssembly Include="System.Formats.Nrbf" />
-      <AllowedAssembly Include="System.Reflection.Metadata" />
       <AllowedAssembly Include="System.Resources.Extensions" />
       <AllowedAssembly Include="System.Windows.Extensions" />
       <AllowedAssembly Include="ZString" />
