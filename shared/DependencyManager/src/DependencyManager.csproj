@@ -161,17 +161,10 @@
       <AllowedAssembly Include="System.Collections.Immutable" />
       <AllowedAssembly Include="System.Configuration.ConfigurationManager" />
       <AllowedAssembly Include="System.Data.SQLite" />
-      <AllowedAssembly Include="System.Diagnostics.DiagnosticSource" />
-      <AllowedAssembly Include="System.Diagnostics.EventLog" />
-      <AllowedAssembly Include="System.Diagnostics.PerformanceCounter" />
       <AllowedAssembly Include="System.Drawing.Common" />
       <AllowedAssembly Include="System.Formats.Nrbf" />
       <AllowedAssembly Include="System.Reflection.Metadata" />
       <AllowedAssembly Include="System.Resources.Extensions" />
-      <AllowedAssembly Include="System.Security.Cryptography.Pkcs" />
-      <AllowedAssembly Include="System.Security.Cryptography.ProtectedData" />
-      <AllowedAssembly Include="System.Security.Cryptography.Xml" />
-      <AllowedAssembly Include="System.Security.Permissions" />
       <AllowedAssembly Include="System.Windows.Extensions" />
       <AllowedAssembly Include="ZString" />
       <AllowedAssembly Include="e_sqlite3" />
