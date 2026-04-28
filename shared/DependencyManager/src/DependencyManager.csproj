@@ -99,7 +99,6 @@
       <AllowedAssembly Include="Microsoft.Extensions.Logging" />
       <AllowedAssembly Include="Microsoft.Extensions.Logging.Abstractions" />
       <AllowedAssembly Include="Microsoft.Extensions.Options" />
-      <AllowedAssembly Include="Microsoft.Win32.SystemEvents" />
       <AllowedAssembly Include="MoBi.Assets" />
       <AllowedAssembly Include="MoBi.CLI.Core" />
       <AllowedAssembly Include="MoBi.Core" />
@@ -124,7 +123,6 @@
       <AllowedAssembly Include="OSPSuite.Infrastructure.Castle" />
       <AllowedAssembly Include="OSPSuite.Infrastructure.Export" />
       <AllowedAssembly Include="OSPSuite.Infrastructure.Import" />
-      <AllowedAssembly Include="OSPSuite.Infrastructure.Reporting" />
       <AllowedAssembly Include="OSPSuite.Infrastructure.Serialization" />
       <AllowedAssembly Include="OSPSuite.Presentation" />
       <AllowedAssembly Include="OSPSuite.Presentation.Serialization" />
@@ -150,9 +148,6 @@
       <AllowedAssembly Include="SixLabors.ImageSharp" />
       <AllowedAssembly Include="System.Configuration.ConfigurationManager" />
       <AllowedAssembly Include="System.Drawing.Common" />
-      <AllowedAssembly Include="System.Formats.Nrbf" />
-      <AllowedAssembly Include="System.Resources.Extensions" />
-      <AllowedAssembly Include="System.Windows.Extensions" />
       <AllowedAssembly Include="ZString" />
       <AllowedAssembly Include="e_sqlite3" />
    </ItemGroup>
