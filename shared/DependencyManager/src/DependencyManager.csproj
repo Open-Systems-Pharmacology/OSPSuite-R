@@ -156,13 +156,6 @@
       <AllowedAssembly Include="SQLitePCLRaw.batteries_v2" />
       <AllowedAssembly Include="SQLitePCLRaw.core" />
       <AllowedAssembly Include="SQLitePCLRaw.provider.e_sqlite3" />
-      <AllowedAssembly Include="Serilog" />
-      <AllowedAssembly Include="Serilog.Extensions.Logging" />
-      <AllowedAssembly Include="Serilog.Extensions.Logging.File" />
-      <AllowedAssembly Include="Serilog.Formatting.Compact" />
-      <AllowedAssembly Include="Serilog.Sinks.Async" />
-      <AllowedAssembly Include="Serilog.Sinks.File" />
-      <AllowedAssembly Include="Serilog.Sinks.RollingFile" />
       <AllowedAssembly Include="SixLabors.Fonts" />
       <AllowedAssembly Include="SixLabors.ImageSharp" />
       <AllowedAssembly Include="System.Collections.Immutable" />
