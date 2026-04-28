@@ -72,6 +72,85 @@
      <IsPublishable>True</IsPublishable>
    </PropertyGroup>
 
+   <!--
+     Allow-list of *.dll filenames (without extension) permitted in inst/lib.
+     The PostBuild target deletes any inst/lib *.dll whose name is not here, so
+     a new upstream transitive dependency surfaces as a test-time
+     FileNotFoundException rather than silently bloating the package.
+     Remove an entry to drop a DLL from the shipped set. See issue #1587.
+   -->
+   <ItemGroup>
+      <AllowedAssembly Include="Antlr3.Runtime" />
+      <AllowedAssembly Include="Autofac" />
+      <AllowedAssembly Include="BouncyCastle.Cryptography" />
+      <AllowedAssembly Include="Castle.Core" />
+      <AllowedAssembly Include="Castle.Windsor" />
+      <AllowedAssembly Include="DevExpress.Data.v21.2" />
+      <AllowedAssembly Include="ExtendedNumerics.BigDecimal" />
+      <AllowedAssembly Include="FluentNHibernate" />
+      <AllowedAssembly Include="ICSharpCode.SharpZipLib" />
+      <AllowedAssembly Include="Iesi.Collections" />
+      <AllowedAssembly Include="LumenWorks.Framework.IO" />
+      <AllowedAssembly Include="MarkdownLog" />
+      <AllowedAssembly Include="Microsoft.Data.Sqlite" />
+      <AllowedAssembly Include="Microsoft.Extensions.DependencyInjection" />
+      <AllowedAssembly Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+      <AllowedAssembly Include="Microsoft.Extensions.Logging" />
+      <AllowedAssembly Include="Microsoft.Extensions.Logging.Abstractions" />
+      <AllowedAssembly Include="Microsoft.Extensions.Options" />
+      <AllowedAssembly Include="MoBi.Assets" />
+      <AllowedAssembly Include="MoBi.CLI.Core" />
+      <AllowedAssembly Include="MoBi.Core" />
+      <AllowedAssembly Include="MoBi.Presentation" />
+      <AllowedAssembly Include="MoBi.R" />
+      <AllowedAssembly Include="NHibernate" />
+      <AllowedAssembly Include="NHibernate.Extensions.Sqlite" />
+      <AllowedAssembly Include="NPOI.Core" />
+      <AllowedAssembly Include="NPOI.OOXML" />
+      <AllowedAssembly Include="NPOI.OpenXml4Net" />
+      <AllowedAssembly Include="NPOI.OpenXmlFormats" />
+      <AllowedAssembly Include="Newtonsoft.Json" />
+      <AllowedAssembly Include="Newtonsoft.Json.Schema" />
+      <AllowedAssembly Include="OSPSuite.Assets" />
+      <AllowedAssembly Include="OSPSuite.Assets.Images" />
+      <AllowedAssembly Include="OSPSuite.CLI.Core" />
+      <AllowedAssembly Include="OSPSuite.Core" />
+      <AllowedAssembly Include="OSPSuite.FuncParser" />
+      <AllowedAssembly Include="OSPSuite.FuncParserNative" />
+      <AllowedAssembly Include="OSPSuite.Infrastructure" />
+      <AllowedAssembly Include="OSPSuite.Infrastructure.Autofac" />
+      <AllowedAssembly Include="OSPSuite.Infrastructure.Castle" />
+      <AllowedAssembly Include="OSPSuite.Infrastructure.Export" />
+      <AllowedAssembly Include="OSPSuite.Infrastructure.Import" />
+      <AllowedAssembly Include="OSPSuite.Infrastructure.Serialization" />
+      <AllowedAssembly Include="OSPSuite.Presentation" />
+      <AllowedAssembly Include="OSPSuite.Presentation.Serialization" />
+      <AllowedAssembly Include="OSPSuite.R" />
+      <AllowedAssembly Include="OSPSuite.Serializer" />
+      <AllowedAssembly Include="OSPSuite.SimModel" />
+      <AllowedAssembly Include="OSPSuite.SimModelNative" />
+      <AllowedAssembly Include="OSPSuite.SimModelSolver_CVODES" />
+      <AllowedAssembly Include="OSPSuite.TeXReporting" />
+      <AllowedAssembly Include="OSPSuite.Utility" />
+      <AllowedAssembly Include="PKSim.Assets" />
+      <AllowedAssembly Include="PKSim.CLI.Core" />
+      <AllowedAssembly Include="PKSim.Core" />
+      <AllowedAssembly Include="PKSim.Infrastructure" />
+      <AllowedAssembly Include="PKSim.Presentation" />
+      <AllowedAssembly Include="PKSim.R" />
+      <AllowedAssembly Include="Remotion.Linq" />
+      <AllowedAssembly Include="Remotion.Linq.EagerFetching" />
+      <AllowedAssembly Include="SQLitePCLRaw.batteries_v2" />
+      <AllowedAssembly Include="SQLitePCLRaw.core" />
+      <AllowedAssembly Include="SQLitePCLRaw.provider.e_sqlite3" />
+      <AllowedAssembly Include="SixLabors.Fonts" />
+      <AllowedAssembly Include="SixLabors.ImageSharp" />
+      <AllowedAssembly Include="System.Configuration.ConfigurationManager" />
+      <AllowedAssembly Include="System.Drawing.Common" />
+      <AllowedAssembly Include="ZString" />
+      <AllowedAssembly Include="e_sqlite3" />
+   </ItemGroup>
+
    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
       <ItemGroup>
          <AssemblyFiles Include="$(TargetDir)*.dll;$(TargetDir)\runtimes\win-x64\native\*.dll" />
@@ -83,6 +162,14 @@
       <Copy SourceFiles="@(AssemblyFiles); @(NativeMacFiles); @(NativeLinuxFiles); @(ConfigFiles); @(PKSimDataBaseFile)" DestinationFolder="$(SolutionDir)..\..\inst\lib\" />
       <Copy SourceFiles="$(TargetDir)\runtimes\linux-x64\native\libe_sqlite3.so" DestinationFiles="$(SolutionDir)..\..\inst\lib\libe_sqlite3.so" />
       <Copy SourceFiles="$(TargetDir)\runtimes\osx-arm64\native\libe_sqlite3.dylib" DestinationFiles="$(SolutionDir)..\..\inst\lib\libe_sqlite3.dylib" />
-      <Delete Files="$(SolutionDir)..\..\inst\lib\DependencyManager.dll" />
+
+      <!-- Allow-list enforcement: delete any inst/lib *.dll whose name is not in @(AllowedAssembly). -->
+      <ItemGroup>
+         <_ShippedDll Include="$(SolutionDir)..\..\inst\lib\*.dll" />
+         <_AllowedPath Include="@(AllowedAssembly->'$(SolutionDir)..\..\inst\lib\%(Identity).dll')" />
+         <_DeniedDll Include="@(_ShippedDll)" Exclude="@(_AllowedPath)" />
+      </ItemGroup>
+      <Message Importance="high" Text="Allow-list sweep: deleting %(_DeniedDll.Filename)%(_DeniedDll.Extension)" Condition="'@(_DeniedDll)' != ''" />
+      <Delete Files="@(_DeniedDll)" />
    </Target>
 </Project>
