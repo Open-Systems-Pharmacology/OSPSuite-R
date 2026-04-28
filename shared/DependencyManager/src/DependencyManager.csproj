@@ -98,16 +98,11 @@
       <AllowedAssembly Include="MarkdownLog" />
       <AllowedAssembly Include="MathNet.Numerics" />
       <AllowedAssembly Include="Microsoft.Data.Sqlite" />
-      <AllowedAssembly Include="Microsoft.Extensions.Configuration.Abstractions" />
-      <AllowedAssembly Include="Microsoft.Extensions.Configuration.Binder" />
       <AllowedAssembly Include="Microsoft.Extensions.DependencyInjection" />
       <AllowedAssembly Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-      <AllowedAssembly Include="Microsoft.Extensions.DependencyModel" />
       <AllowedAssembly Include="Microsoft.Extensions.Logging" />
       <AllowedAssembly Include="Microsoft.Extensions.Logging.Abstractions" />
       <AllowedAssembly Include="Microsoft.Extensions.Options" />
-      <AllowedAssembly Include="Microsoft.Extensions.Primitives" />
-      <AllowedAssembly Include="Microsoft.IO.RecyclableMemoryStream" />
       <AllowedAssembly Include="Microsoft.Win32.SystemEvents" />
       <AllowedAssembly Include="MoBi.Assets" />
       <AllowedAssembly Include="MoBi.CLI.Core" />
