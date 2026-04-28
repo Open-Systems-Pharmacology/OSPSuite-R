@@ -1054,7 +1054,7 @@ addProteinExpressionToParameterValuesBB <- function(
   validateIsString(filePath)
   validateIsFileExtension(filePath, "pkml")
   .validateBuildingBlockType(buildingBlock, expectedType)
-  filePath <- .expandPath(filePath)
+  filePath <- path.expand(filePath)
 
   netTask <- .getMoBiTaskFromCache(taskName)
   netTask$call("ExportToPKML", buildingBlock, filePath)
@@ -1122,4 +1122,114 @@ saveParameterValuesToPKML <- function(
     expectedType = BuildingBlockTypes$`Parameter Values`,
     taskName = "ParameterValuesTask"
   )
+}
+
+###### Loading BB from pkml#######
+
+#' Load a building block from a pkml file
+#'
+#' @param filePath Path of the `pkml` file containing a single building block.
+#' @param type Optional building block type to load. Must be one of the values
+#' defined in `BuildingBlockTypes`. If `NULL` (default), the type is determined
+#' automatically. When the type cannot be auto-detected, an error is thrown
+#' asking the caller to specify `type` explicitly.
+#'
+#' @returns A `BuildingBlock` object (or a `MoleculesBuildingBlock` when the
+#' loaded building block is of type `Molecules`).
+#'
+#' @details If `type` is supplied, an error is thrown when the file does not
+#' contain a single building block of that type. The pkml must contain exactly
+#' one building block; files with multiple building blocks (such as a full
+#' simulation export) are not supported.
+#'
+#' Supplying `type` is faster than auto-detect: with `type = NULL`, each
+#' candidate type is tried in turn until one succeeds, which adds overhead for
+#' every type tried before the match. Pass `type` explicitly when known.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Load with explicit type
+#' bb <- loadBuildingBlockFromPKML(
+#'   filePath = "molecules.pkml",
+#'   type = BuildingBlockTypes$Molecules
+#' )
+#'
+#' # Auto-detect the type
+#' bb <- loadBuildingBlockFromPKML("molecules.pkml")
+#' }
+loadBuildingBlockFromPKML <- function(filePath, type = NULL) {
+  if (!file.exists(filePath)) {
+    stop(paste0("File does not exist: ", filePath))
+  }
+  validateIsFileExtension(filePath, "pkml")
+  validateEnumValue(type, enum = BuildingBlockTypes, nullAllowed = TRUE)
+
+  expandedPath <- path.expand(filePath)
+
+  if (!is.null(type)) {
+    bbNet <- .loadBBNetWithType(expandedPath, type)
+    return(.wrapLoadedBB(bbNet, type))
+  }
+
+  detected <- .autoDetectAndLoadBB(expandedPath)
+  .wrapLoadedBB(detected$net, detected$type)
+}
+
+#' Mapping from a `BuildingBlockTypes` value to the name of the MoBi task that
+#' implements `LoadFromPKML` for that type.
+#' @keywords internal
+.bbTypeToTaskName <- function(type) {
+  taskByType <- list(
+    "SpatialStructure" = "SpatialStructureTask",
+    "Molecules" = "MoleculesTask",
+    "Reactions" = "ReactionsTask",
+    "Passive Transports" = "PassiveTransportsTask",
+    "Observers" = "ObserversTask",
+    "EventGroups" = "EventGroupsTask",
+    "Initial Conditions" = "InitialConditionsTask",
+    "Parameter Values" = "ParameterValuesTask",
+    "Expression Profile" = "ExpressionProfileTask",
+    "Individual" = "IndividualTask"
+  )
+  taskByType[[type]]
+}
+
+#' Load a building block of a known type via the matching MoBi task.
+#' @keywords internal
+.loadBBNetWithType <- function(expandedPath, type) {
+  taskName <- .bbTypeToTaskName(type)
+  netTask <- .getMoBiTaskFromCache(taskName)
+  netTask$call("LoadFromPKML", expandedPath)
+}
+
+#' Auto-detect the building block type stored in a pkml file and load it.
+#' Returns a list with `net` (the loaded reference) and `type` (the resolved
+#' `BuildingBlockTypes` value).
+#' @keywords internal
+.autoDetectAndLoadBB <- function(expandedPath) {
+  for (typeKey in names(BuildingBlockTypes)) {
+    type <- BuildingBlockTypes[[typeKey]]
+    netBB <- tryCatch(
+      .loadBBNetWithType(expandedPath, type),
+      error = function(e) NULL
+    )
+    if (!is.null(netBB)) {
+      return(list(net = netBB, type = type))
+    }
+  }
+  stop(messages$errorBBTypeAutoDetectFailed(expandedPath))
+}
+
+#' Wrap a loaded .NET building block reference in the appropriate R6 class.
+#' Molecules building blocks are wrapped in `MoleculesBuildingBlock` so the
+#' molecule-name queries are available; all other types use the generic
+#' `BuildingBlock` wrapper.
+#' @keywords internal
+.wrapLoadedBB <- function(netBB, type) {
+  if (type == BuildingBlockTypes$Molecules) {
+    return(MoleculesBuildingBlock$new(netBB))
+  }
+  BuildingBlock$new(netBB, type = type)
 }
