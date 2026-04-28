@@ -3652,8 +3652,8 @@
       "RemoteHost": "api.github.com",
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "rSharp",
-      "RemoteRef": "main",
-      "RemoteSha": "905d246a2e0d6edd1a847fff8e22e7983f479316"
+      "RemoteRef": "fix-slotnames-namespace",
+      "RemoteSha": "eccf92d24c4cc226399ff6f0b554f6a42452e432"
     },
     "ragg": {
       "Package": "ragg",
