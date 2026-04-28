@@ -85,7 +85,6 @@
       <AllowedAssembly Include="BouncyCastle.Cryptography" />
       <AllowedAssembly Include="Castle.Core" />
       <AllowedAssembly Include="Castle.Windsor" />
-      <AllowedAssembly Include="DependencyManager" />
       <AllowedAssembly Include="DevExpress.Data.v21.2" />
       <AllowedAssembly Include="ExtendedNumerics.BigDecimal" />
       <AllowedAssembly Include="FluentNHibernate" />
