@@ -1,6 +1,6 @@
 # Available disease states
 
-MUST WE DEFINE IT HERE, OR CAN WE GET IT FROM .NET SOMEHOW?
+Available disease states
 
 ## Usage
 

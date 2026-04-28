@@ -1,4 +1,4 @@
-# MoBi Module \# OR SHOULD WE CALL IT AN OspModule ?
+# MoBi Module
 
 A MoBi module, either loaded from a project or from a pkml file
 
@@ -10,8 +10,9 @@ the PV BBs.
 A named list of `BuildingBlock` objects, with names being the names of
 the IC BBs.
 
-A named list of `BuildingBlock` objects, with names being the names of
-the PV BBs.
+A `MoleculesBuildingBlock` object exposing molecule-name queries (e.g.
+`allMoleculeNames()`, `allMoleculeNamesOfType()`, `moleculeTypeFor()`),
+or `NULL` if the module has no Molecules BB.
 
 ## Super classes
 
@@ -34,7 +35,7 @@ the PV BBs.
 
 - `mergeBehavior`:
 
-  Merge behavior of the module (read/write)
+  Merge behavior of the module. Must be one of "Extend" or "Overwrite".
 
 - `parameterValuesBBnames`:
 
@@ -55,6 +56,8 @@ the PV BBs.
 - [`MoBiModule$getParameterValuesBBs()`](#method-MoBiModule-getParameterValuesBBs)
 
 - [`MoBiModule$getInitialConditionsBBs()`](#method-MoBiModule-getInitialConditionsBBs)
+
+- [`MoBiModule$getMoleculesBB()`](#method-MoBiModule-getMoleculesBB)
 
 - [`MoBiModule$print()`](#method-MoBiModule-print)
 
@@ -140,15 +143,31 @@ module.
 
 ------------------------------------------------------------------------
 
+### Method `getMoleculesBB()`
+
+Get the `Molecules` Building Block of the module, if any.
+
+#### Usage
+
+    MoBiModule$getMoleculesBB()
+
+------------------------------------------------------------------------
+
 ### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 
 #### Usage
 
-    MoBiModule$print(...)
+    MoBiModule$print(printClassProperties = FALSE, ...)
 
 #### Arguments
+
+- `printClassProperties`:
+
+  Logical, whether to print class properties (default: `FALSE`). If
+  `TRUE`, calls first the `print` method of the parent class. Useful for
+  debugging.
 
 - `...`:
 

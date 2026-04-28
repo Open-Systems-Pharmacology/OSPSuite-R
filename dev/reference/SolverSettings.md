@@ -40,6 +40,10 @@ Solver settings associated with a given simulation
 
   Absolute tolerance of unknowns
 
+- `checkForNegativeValues`:
+
+  Should the solver check for negative values
+
 ## Methods
 
 ### Public methods

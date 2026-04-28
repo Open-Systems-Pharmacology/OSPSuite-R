@@ -154,11 +154,11 @@ for the specific simulation
 # Get the id of the second simulation
 id <- sim2$id
 print(id)
-#> [1] "zJGmYSfGC0yuzuIdA36yRQ"
+#> [1] "cyGIhIV5cU6Jm-f1dn0QPA"
 # get the corresponding result
 sim2Results <- simulationResults[[id]]
 print(sim2Results$simulation$id)
-#> [1] "zJGmYSfGC0yuzuIdA36yRQ"
+#> [1] "cyGIhIV5cU6Jm-f1dn0QPA"
 ```
 
 ## Adding new outputs
@@ -344,6 +344,7 @@ print(sim$solver)
 #>   • mxStep: 100000
 #>   • relTol: 1e-05
 #>   • absTol: 1e-10
+#>   • checkForNegativeValues: TRUE
 ```
 
 In some cases, a simulation may fail to run successfully due to

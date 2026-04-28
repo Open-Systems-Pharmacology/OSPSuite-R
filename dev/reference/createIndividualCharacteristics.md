@@ -73,17 +73,17 @@ createIndividualCharacteristics(
 - moleculeOntogenies:
 
   Optional list of `MoleculeOntogeny` that will be used to retrieve
-  ontogeny information for molecules.
-
-- seed:
-
-  Optional seed parameter to use to generate start values for the
-  created individual algorithm. A `MoleculeOntogeny` is an object with
-  the name a `molecule` property (e.g the name of the molecule as
+  ontogeny information for molecules. A `MoleculeOntogeny` is an object
+  with the name a `molecule` property (e.g the name of the molecule as
   defined in your simulation) and an `ontogeny` property (e.g. the name
   of the predefined ontogeny to use for this molecule). The list of all
   available ontogenies can be accessed programmatically using the enum
   `StandardOntogeny`
+
+- seed:
+
+  Optional seed parameter to use to generate start values for the
+  created individual algorithm.
 
 ## Value
 

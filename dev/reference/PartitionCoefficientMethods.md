@@ -1,6 +1,6 @@
 # Available methods for calculation of partition coefficients.
 
-MUST WE DEFINE IT HERE, OR CAN WE GET IT FROM .NET SOMEHOW?
+Available methods for calculation of partition coefficients.
 
 ## Usage
 

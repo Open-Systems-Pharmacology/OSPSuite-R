@@ -51,22 +51,20 @@ ontogenies can be added as described in the vignette [Creating
 individuals](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/create-individual.md).
 
 ``` r
-library(ospsuite)
-
 # If no unit is specified, the default units are used. For "height" it is "dm", for "weight" it is "kg", for "age" it is "year(s)".
 populationCharacteristics <- createPopulationCharacteristics(
-  species             = Species$Human,
-  population          = HumanPopulation$Asian_Tanaka_1996,
+  species = Species$Human,
+  population = HumanPopulation$Asian_Tanaka_1996,
   numberOfIndividuals = 50,
   proportionOfFemales = 50,
-  weightMin           = 30,
-  weightMax           = 98,
-  weightUnit          = "kg",
-  heightMin           = NULL,
-  heightMax           = NULL,
-  ageMin              = 0,
-  ageMax              = 80,
-  ageUnit             = "year(s)"
+  weightMin = 30,
+  weightMax = 98,
+  weightUnit = "kg",
+  heightMin = NULL,
+  heightMax = NULL,
+  ageMin = 0,
+  ageMax = 80,
+  ageUnit = "year(s)"
 )
 print(populationCharacteristics)
 #> <PopulationCharacteristics>
@@ -81,7 +79,9 @@ print(populationCharacteristics)
 #>   • BMI: ]-Inf..+Inf[
 
 # Create population from population characteristics
-result <- createPopulation(populationCharacteristics = populationCharacteristics)
+result <- createPopulation(
+  populationCharacteristics = populationCharacteristics
+)
 myPopulation <- result$population
 print(myPopulation)
 #> <Population>
@@ -96,14 +96,15 @@ To run a population simulation, the `Population` object created by the
 method:
 
 ``` r
-library(ospsuite)
-
 # Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Run population simulation
-simulationResults <- runSimulations(simulations = sim, population = myPopulation)[[1]]
+simulationResults <- runSimulations(
+  simulations = sim,
+  population = myPopulation
+)[[1]]
 print(simulationResults)
 #> <SimulationResults>
 #>   • Number of individuals: 50
@@ -130,7 +131,6 @@ simRunOptions <- SimulationRunOptions$new()
 print(simRunOptions)
 #> <SimulationRunOptions>
 #>   • numberOfCores: 3
-#>   • checkForNegativeValues: TRUE
 #>   • showProgress: FALSE
 
 # Change the maximal number of cores to use and show a progress bar during simulation
@@ -138,7 +138,11 @@ simRunOptions$numberOfCores <- 3
 simRunOptions$showProgress <- TRUE
 
 # Run population simulation with custom options
-populationResults <- runSimulations(simulations = sim, population = myPopulation, simulationRunOptions = simRunOptions)[[1]]
+populationResults <- runSimulations(
+  simulations = sim,
+  population = myPopulation,
+  simulationRunOptions = simRunOptions
+)[[1]]
 print(populationResults)
 #> <SimulationResults>
 #>   • Number of individuals: 50
@@ -184,7 +188,10 @@ resultsPath <- populationResults$allQuantityPaths[[1]]
 print(resultsPath)
 #> [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 
-resultsData <- getOutputValues(populationResults, quantitiesOrPaths = resultsPath)
+resultsData <- getOutputValues(
+  populationResults,
+  quantitiesOrPaths = resultsPath
+)
 
 resultsTime <- resultsData$data$Time
 resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
@@ -206,7 +213,11 @@ print(resultsPath)
 #> [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 
 # Get only the results for individuals with IDs 1 and 2
-resultsData <- getOutputValues(populationResults, quantitiesOrPaths = resultsPath, individualIds = c(1, 2))
+resultsData <- getOutputValues(
+  populationResults,
+  quantitiesOrPaths = resultsPath,
+  individualIds = c(1, 2)
+)
 
 resultsTime <- resultsData$data$Time
 resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`

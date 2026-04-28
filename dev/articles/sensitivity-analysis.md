@@ -72,7 +72,10 @@ print(sa)
 #>   • Number of parameters to vary: Will be estimated at run time
 
 # Create a `SensitivityAnalysis` with specified parameters
-sa <- SensitivityAnalysis$new(simulation = sim, parameterPaths = c("Organism|Q", "Organism|Volume"))
+sa <- SensitivityAnalysis$new(
+  simulation = sim,
+  parameterPaths = c("Organism|Q", "Organism|Volume")
+)
 print(sa)
 #> <SensitivityAnalysis>
 #>   • Number of steps: 2
@@ -93,17 +96,18 @@ calculation parameters are considered. - In such cases, calling
 `addParameterPaths()` will only vary the newly added parameters.
 
 ``` r
-library(ospsuite)
-
 # Load simulation
 simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Create a `SensitivityAnalysis` with specified parameters
-sa <- SensitivityAnalysis$new(simulation = sim, parameterPaths = c(
-  "Organism|Q",
-  "Organism|Volume"
-))
+sa <- SensitivityAnalysis$new(
+  simulation = sim,
+  parameterPaths = c(
+    "Organism|Q",
+    "Organism|Volume"
+  )
+)
 # Add new parameter
 sa$addParameterPaths("R1|k1")
 
@@ -223,7 +227,11 @@ print(saResult)
 
 # Get sensitivities for the parameter "AUC_inf" of the simulated output with a threshold of 0.8
 outputPath <- sim$outputSelections$allOutputs[[1]]$path
-sensitivities <- saResult$allPKParameterSensitivitiesFor(pkParameterName = "AUC_inf", outputPath = outputPath, totalSensitivityThreshold = 0.8)
+sensitivities <- saResult$allPKParameterSensitivitiesFor(
+  pkParameterName = "AUC_inf",
+  outputPath = outputPath,
+  totalSensitivityThreshold = 0.8
+)
 print(sensitivities)
 #> [[1]]
 #> <PKParameterSensitivity>
@@ -258,8 +266,14 @@ saResult <- runSensitivityAnalysis(sa)
 
 # Export to csv
 saResultPath <- system.file("extdata", "SAResult.csv", package = "ospsuite")
-exportSensitivityAnalysisResultsToCSV(results = saResult, filePath = saResultPath)
+exportSensitivityAnalysisResultsToCSV(
+  results = saResult,
+  filePath = saResultPath
+)
 
 # Load from csv
-saResultLoaded <- importSensitivityAnalysisResultsFromCSV(filePaths = saResultPath, simulation = sim)
+saResultLoaded <- importSensitivityAnalysisResultsFromCSV(
+  filePaths = saResultPath,
+  simulation = sim
+)
 ```

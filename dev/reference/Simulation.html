@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9020</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,10 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -54,7 +57,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Simulation</h1>
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/R/simulation.R" class="external-link"><code>R/simulation.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/R/simulation.R" class="external-link"><code>R/simulation.R</code></a></small>
       <div class="d-none name"><code>Simulation.Rd</code></div>
     </div>
 
@@ -97,6 +100,11 @@
 <dd><p>Name of the simulation</p></dd>
 
 
+<dt><code>configuration</code></dt>
+<dd><p>An object of the type <code>SimulationConfiguration</code>,
+describing the modules used for the simulation, selected Parameter Values (PV) and Initial Conditions (IC).</p></dd>
+
+
 </dl><p></p></div>
     </div>
     <div class="section level2">
@@ -111,6 +119,7 @@
 <li><p><a href="#method-Simulation-allStationaryMoleculeNames"><code>Simulation$allStationaryMoleculeNames()</code></a></p></li>
 <li><p><a href="#method-Simulation-allFloatingMoleculeNames"><code>Simulation$allFloatingMoleculeNames()</code></a></p></li>
 <li><p><a href="#method-Simulation-molWeightFor"><code>Simulation$molWeightFor()</code></a></p></li>
+<li><p><a href="#method-Simulation-calculationMethodFor"><code>Simulation$calculationMethodFor()</code></a></p></li>
 <li><p><a href="#method-Simulation-allApplicationsFor"><code>Simulation$allApplicationsFor()</code></a></p></li>
 <li><p><a href="#method-Simulation-print"><code>Simulation$print()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href="../../rSharp/html/NetObject.html#method-NetObject-.printClass"><code>rSharp::NetObject$.printClass()</code></a></span></li>
@@ -199,15 +208,37 @@ This is typically a molecule that is being explicitly simulated such as Compound
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-Simulation-allApplicationsFor"></a><div class="section">
-<h3 id="method-allapplicationsfor-">Method <code>allApplicationsFor()</code><a class="anchor" aria-label="anchor" href="#method-allapplicationsfor-"></a></h3>
-<p>Returns the applications ordered by start time associated to the quantity with path <code>quantityPath</code> or an empty list if not found</p><div class="section">
+</div><p></p><hr><a id="method-Simulation-calculationMethodFor"></a><div class="section">
+<h3 id="method-calculationmethodfor-">Method <code>calculationMethodFor()</code><a class="anchor" aria-label="anchor" href="#method-calculationmethodfor-"></a></h3>
+<p>Returns the calculation method name used for the given molecule and
+category, or <code>NULL</code> if no override is set.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Simulation</span><span class="op">$</span><span class="fu">allApplicationsFor</span><span class="op">(</span><span class="va">quantityPath</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Simulation</span><span class="op">$</span><span class="fu">calculationMethodFor</span><span class="op">(</span><span class="va">moleculeName</span>, <span class="va">category</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>moleculeName</code></dt>
+<dd><p>Name of the molecule.</p></dd>
+
+
+<dt><code>category</code></dt>
+<dd><p>One of the <code>CalculationMethodCategories</code> enum values
+(e.g. <code>CalculationMethodCategories$PartitionCoefficient</code>).</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div><p></p><hr><a id="method-Simulation-allApplicationsFor"></a><div class="section">
+<h3 id="method-allapplicationsfor-">Method <code>allApplicationsFor()</code><a class="anchor" aria-label="anchor" href="#method-allapplicationsfor-"></a></h3>
+<p>Returns the applications ordered by start time associated to the quantity with path <code>quantityPath</code> or an empty list if not found</p><div class="section">
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Simulation</span><span class="op">$</span><span class="fu">allApplicationsFor</span><span class="op">(</span><span class="va">quantityPath</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>quantityPath</code></dt>
 <dd><p>Path of quantity used to retrieve the applications (e.g. applications resulting in this quantity being applied)</p></dd>
 
@@ -218,13 +249,18 @@ This is typically a molecule that is being explicitly simulated such as Compound
 </div><p></p><hr><a id="method-Simulation-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Print the object to the console</p><div class="section">
-<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Simulation</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Simulation</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span>printClassProperties <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>...</code></dt>
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>printClassProperties</code></dt>
+<dd><p>Logical, whether to print class properties (default: <code>FALSE</code>). If <code>TRUE</code>, calls first the <code>print</code> method of the parent class.
+Useful for debugging.</p></dd>
+
+
+<dt><code>...</code></dt>
 <dd><p>Rest arguments.</p></dd>
 
 

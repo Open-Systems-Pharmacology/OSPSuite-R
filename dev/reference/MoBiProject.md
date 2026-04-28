@@ -60,6 +60,10 @@ A `SimulationConfiguration` object.
   Names of the expression profiles that are present in the project
   (read-only)
 
+- `defaultSimulationSettings`:
+
+  Default simulation settings of the project (read-only)
+
 ## Methods
 
 ### Public methods
@@ -241,15 +245,16 @@ Create a simulation configuration.
       modulesNames,
       individualName = NULL,
       expressionProfilesNames = NULL,
-      initialConditions = NULL,
-      parameterValues = NULL
+      selectedInitialConditions = NULL,
+      selectedParameterValues = NULL,
+      settings = NULL
     )
 
 #### Arguments
 
 - `modulesNames`:
 
-  A list of the modules from which to create in simulation. All defined
+  A list of the modules from which to create the simulation. All defined
   modules must be present in the project. The order of module names
   defines the order in which the modules will be combined to a
   simulation!
@@ -262,25 +267,33 @@ Create a simulation configuration.
 
   Optional, list of expression profiles to apply to the simulation.
 
-- `initialConditions`:
+- `selectedInitialConditions`:
 
   By default, the first Initial Conditions (IC) building block (BB) of
   each module will be selected. If a module has multiple IC BBs, it is
   possible to specify which IC BB to apply by providing a named list,
   where the name should be the name of the module and the value the name
-  of the IC BB. If `NULL`, all modules will use the first IC BB, if
-  available. When providing a list, the value can also be set to `NULL`,
-  which means that no IC BB from the specified module will be selected.
+  of the IC BB. By explicitly setting the value for a specific module to
+  `NULL`, no IC BB from the specified module will be applied. If the
+  list contains a module name that is not part of the provided modules,
+  it will be ignored.
 
-- `parameterValues`:
+- `selectedParameterValues`:
 
   By default, the first Parameter Values (PV) building block (BB) of
   each module will be selected. If a module has multiple PV BBs, it is
   possible to specify which PV BB to apply by providing a named list,
   where the name should be the name of the module and the value the name
-  of the PV BB. If `NULL`, all modules will use the first PV BB, if
-  available. When providing a list, the value can also be set to `NULL`,
-  which means that no PV BB from the specified module will be selected.
+  of the PV BB. By explicitly setting the value for a specific module to
+  `NULL`, no PV BB from the specified module will be applied. If the
+  list contains a module name that is not part of the provided modules,
+  it will be ignored.
+
+- `settings`:
+
+  Optional, a `SimulationSettings` object defining the simulation
+  settings. If `NULL` (default), the default simulation settings of the
+  project will be used.
 
 ------------------------------------------------------------------------
 
@@ -290,9 +303,13 @@ Print the object to the console
 
 #### Usage
 
-    MoBiProject$print(...)
+    MoBiProject$print(printClassProperties = FALSE, ...)
 
 #### Arguments
+
+- `printClassProperties`:
+
+  Whether to print class properties.
 
 - `...`:
 

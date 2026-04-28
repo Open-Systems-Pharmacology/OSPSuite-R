@@ -96,9 +96,15 @@
 <p>First, load a MoBi project:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load the ospsuite package</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">projectPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## The option 'ospsuite.plots.watermarkEnabled' is not set.</span></span>
+<span><span class="co">## To enable watermarks, add the following to your .Rprofile:</span></span>
+<span><span class="co">##   options(ospsuite.plots.watermarkEnabled = TRUE)</span></span>
+<span><span class="co">## To disable watermarks, add:</span></span>
+<span><span class="co">##   options(ospsuite.plots.watermarkEnabled = FALSE)</span></span>
+<span><span class="co">## You can edit your .Rprofile with usethis::edit_r_profile()</span></span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">projectPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
 <span>  <span class="st">"extdata"</span>,</span>
 <span>  <span class="st">"TH_QST_Platform.mbp3"</span>,</span>
 <span>  package <span class="op">=</span> <span class="st">"ospsuite"</span></span>
@@ -106,7 +112,7 @@
 <span><span class="va">myProject</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadMoBiProject.html">loadMoBiProject</a></span><span class="op">(</span><span class="va">projectPath</span><span class="op">)</span></span></code></pre></div>
 <p>We can browse the contents of the project, e.g., get the list of
 simulations in the project:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulationsInProject</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="va">simulationNames</span></span>
 <span></span>
 <span><span class="fu">ospsuite.utils</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/ospPrintItems.html" class="external-link">ospPrintItems</a></span><span class="op">(</span><span class="va">simulationsInProject</span>, title <span class="op">=</span> <span class="st">"Simulations"</span><span class="op">)</span></span></code></pre></div>
@@ -114,7 +120,7 @@ simulations in the project:</p>
 <span><span class="co">##   • Thyroid_QST_Human</span></span>
 <span><span class="co">##   • Thyroid_QST_Phenobarbital</span></span></code></pre>
 <p>get the list of parameter identifications:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">PIs</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="va">parameterIdentificationNames</span></span>
 <span></span>
 <span><span class="fu">ospsuite.utils</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/ospPrintItems.html" class="external-link">ospPrintItems</a></span><span class="op">(</span></span>
@@ -125,7 +131,7 @@ simulations in the project:</p>
 <span><span class="co">##   • Parameter Identification 1</span></span></code></pre>
 <p>get observed data from the project as <code>DataSet</code>
 objects:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obsData</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getObservedData</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">obsData</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -146,7 +152,7 @@ objects:</p>
 <span><span class="co">## [15] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_179 mg/kg/day_po_Fig.2"</span></span></code></pre>
 <p>get the names of individuals and expression profiles from the
 project:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">individualsInProject</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="va">individualNames</span></span>
 <span><span class="va">expProfilesInProject</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="va">expressionProfilesNames</span></span>
 <span></span>
@@ -154,7 +160,7 @@ project:</p>
 <pre><code><span><span class="co">## <span style="font-weight: bold;">Individuals names</span>:</span></span>
 <span><span class="co">##   • Human</span></span>
 <span><span class="co">##   • Rat</span></span></code></pre>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ospsuite.utils</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/ospPrintItems.html" class="external-link">ospPrintItems</a></span><span class="op">(</span></span>
 <span>  <span class="va">expProfilesInProject</span>,</span>
 <span>  title <span class="op">=</span> <span class="st">"Expression profiles names"</span></span>
@@ -167,7 +173,7 @@ project:</p>
 <span><span class="co">##   • UGT1A1|Rat|Healthy</span></span>
 <span><span class="co">##   • PB-LiverBindingPartner|Human|Healthy</span></span></code></pre>
 <p>get the names of the modules in the project:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modulesInProject</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="va">moduleNames</span></span>
 <span></span>
 <span><span class="fu">ospsuite.utils</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/ospPrintItems.html" class="external-link">ospPrintItems</a></span><span class="op">(</span><span class="va">modulesInProject</span>, title <span class="op">=</span> <span class="st">"Modules"</span><span class="op">)</span></span></code></pre></div>
@@ -187,7 +193,7 @@ project:</p>
 <code>getModules</code>.</p>
 <p>For modules, it is possible to retrieve the initial conditions and
 parameter values building blocks:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the module "Thyroid" from the project</span></span>
 <span><span class="va">module</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getModules</span><span class="op">(</span><span class="st">"Thyroid"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">module</span><span class="op">)</span></span></code></pre></div>
@@ -200,11 +206,123 @@ parameter values building blocks:</p>
 <span><span class="co">##   • Rat</span></span>
 <span><span class="co">## <span style="font-weight: bold;">Initial Conditions Building Blocks</span>:</span></span>
 <span><span class="co">##   • Human</span></span></code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">icBBs</span> <span class="op">&lt;-</span> <span class="va">module</span><span class="op">$</span><span class="fu">getInitialConditionsBBs</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Get all parameter values BBs</span></span>
 <span><span class="va">pvBBs</span> <span class="op">&lt;-</span> <span class="va">module</span><span class="op">$</span><span class="fu">getParameterValuesBBs</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Each module has a merge behavior that controls how it is combined
+with other modules when building a simulation. The merge behavior is
+accessible via the <code>mergeBehavior</code> field and can be set to
+either <code>"Extend"</code> (default) or <code>"Overwrite"</code>.
+Details on the merge behavior and how it affects the combination of
+modules can be found in the <a href="https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/modularization-concept#creating-simulations-from-modules-and-combination-rules" class="external-link">MoBi
+documentation</a>.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Inspect the current merge behavior</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">module</span><span class="op">$</span><span class="va">mergeBehavior</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Extend"</span></span></code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Change the merge behavior to "Overwrite"</span></span>
+<span><span class="va">module</span><span class="op">$</span><span class="va">mergeBehavior</span> <span class="op">&lt;-</span> <span class="st">"Overwrite"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">module</span><span class="op">$</span><span class="va">mergeBehavior</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Overwrite"</span></span></code></pre>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Reset back to the default</span></span>
+<span><span class="va">module</span><span class="op">$</span><span class="va">mergeBehavior</span> <span class="op">&lt;-</span> <span class="st">"Extend"</span></span></code></pre></div>
+<p>You can easily convert the retrieved initial conditions, parameter
+values, individuals, and expression profiles to data frames for further
+processing:</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">icBBDf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/initialConditionsBBToDataFrame.html">initialConditionsBBToDataFrame</a></span><span class="op">(</span><span class="va">icBBs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co"># Print the first few rows of the data frame</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">icBBDf</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                Container Path Molecule Name Is Present Value Unit Scale Divisor</span></span>
+<span><span class="co">## 1     Organism|Thyroid|Plasma          DIO1       TRUE   NaN µmol             1</span></span>
+<span><span class="co">## 2     Organism|Thyroid|Plasma            T3       TRUE     0 µmol             1</span></span>
+<span><span class="co">## 3     Organism|Thyroid|Plasma            T4       TRUE     0 µmol             1</span></span>
+<span><span class="co">## 4     Organism|Thyroid|Plasma           TSH       TRUE     0 µmol             1</span></span>
+<span><span class="co">## 5 Organism|Thyroid|BloodCells          DIO1       TRUE   NaN µmol             1</span></span>
+<span><span class="co">## 6 Organism|Thyroid|BloodCells            T3       TRUE     0 µmol             1</span></span>
+<span><span class="co">##   Neg. Values Allowed</span></span>
+<span><span class="co">## 1               FALSE</span></span>
+<span><span class="co">## 2               FALSE</span></span>
+<span><span class="co">## 3               FALSE</span></span>
+<span><span class="co">## 4               FALSE</span></span>
+<span><span class="co">## 5               FALSE</span></span>
+<span><span class="co">## 6               FALSE</span></span></code></pre>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pvBBDf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/parameterValuesBBToDataFrame.html">parameterValuesBBToDataFrame</a></span><span class="op">(</span><span class="va">pvBBs</span><span class="op">[[</span><span class="st">"Rat"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co"># Print the first few rows of the data frame</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pvBBDf</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##     Container Path                   Parameter Name     Value     Unit</span></span>
+<span><span class="co">## 1 Organism|Thyroid Acidic phospholipids [mg/g] - RR 3.774e-01         </span></span>
+<span><span class="co">## 2 Organism|Thyroid    Albumin ratio (tissue/plasma) 5.000e-02         </span></span>
+<span><span class="co">## 3 Organism|Thyroid Albumin ratio (tissue/plasma)-PT 5.000e-02         </span></span>
+<span><span class="co">## 4 Organism|Thyroid          Allometric scale factor 7.500e-01         </span></span>
+<span><span class="co">## 5 Organism|Thyroid                     Cell Density 5.089e+05 x10^6/kg</span></span>
+<span><span class="co">## 6 Organism|Thyroid            Fraction interstitial 1.000e-01         </span></span>
+<span><span class="co">##   Value Origin</span></span>
+<span><span class="co">## 1             </span></span>
+<span><span class="co">## 2             </span></span>
+<span><span class="co">## 3             </span></span>
+<span><span class="co">## 4             </span></span>
+<span><span class="co">## 5             </span></span>
+<span><span class="co">## 6</span></span></code></pre>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">individual</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getIndividual</span><span class="op">(</span><span class="st">"Rat"</span><span class="op">)</span></span>
+<span><span class="va">individualDf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/individualsBBToDataFrame.html">individualsBBToDataFrame</a></span><span class="op">(</span><span class="va">individual</span><span class="op">)</span></span>
+<span><span class="co"># Print the individual data frame</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">individualDf</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   Container Path                                   Parameter Name Value Unit</span></span>
+<span><span class="co">## 1       Organism Ontogeny factor (alpha1-acid glycoprotein) table 1.000     </span></span>
+<span><span class="co">## 2       Organism                  Ontogeny factor (albumin) table 1.000     </span></span>
+<span><span class="co">## 3       Organism                                       Hematocrit 0.450     </span></span>
+<span><span class="co">## 4       Organism                                 pH (blood cells) 7.220     </span></span>
+<span><span class="co">## 5       Organism                                      pH (plasma) 7.400     </span></span>
+<span><span class="co">## 6       Organism                               Vf (lipid, plasma) 0.007     </span></span>
+<span><span class="co">##                                                                                                                                                                                                 Value Origin</span></span>
+<span><span class="co">## 1                                                                                                                                                                                                           </span></span>
+<span><span class="co">## 2                                                                                                                                                                                                           </span></span>
+<span><span class="co">## 3                                                                               Publication-Davies B, Morris T. Physiological parameters in laboratory animals and humans. Pharm Res. 1993 Jul;10(7):1093-5.</span></span>
+<span><span class="co">## 4 Publication-ICRP, 2002. Basic Anatomical and Physiological Data for Use in Radiological Protection Reference Values. ICRP Publication 89. Ann. ICRP 32 (3-4). https://doi.org/10.1016/0146-6453(79)90123-4</span></span>
+<span><span class="co">## 5 Publication-ICRP, 2002. Basic Anatomical and Physiological Data for Use in Radiological Protection Reference Values. ICRP Publication 89. Ann. ICRP 32 (3-4). https://doi.org/10.1016/0146-6453(79)90123-4</span></span>
+<span><span class="co">## 6 Publication-ICRP, 2002. Basic Anatomical and Physiological Data for Use in Radiological Protection Reference Values. ICRP Publication 89. Ann. ICRP 32 (3-4). https://doi.org/10.1016/0146-6453(79)90123-4</span></span></code></pre>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">expProfiles</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getExpressionProfiles</span><span class="op">(</span><span class="st">"UDPGT1|Human|Healthy"</span><span class="op">)</span></span>
+<span><span class="va">expProfilesDf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/expressionProfileBBToDataFrame.html">expressionProfileBBToDataFrame</a></span><span class="op">(</span><span class="va">expProfiles</span><span class="op">)</span></span>
+<span><span class="co"># Print the first few rows of the data frame</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">expProfilesDf</span><span class="op">$</span><span class="va">expressionParameters</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                             Container Path        Parameter Name Value   Unit</span></span>
+<span><span class="co">## 1       Organism|VenousBlood|Plasma|UDPGT1 Initial concentration   NaN µmol/l</span></span>
+<span><span class="co">## 2   Organism|VenousBlood|BloodCells|UDPGT1 Initial concentration   NaN µmol/l</span></span>
+<span><span class="co">## 3     Organism|ArterialBlood|Plasma|UDPGT1 Initial concentration   NaN µmol/l</span></span>
+<span><span class="co">## 4 Organism|ArterialBlood|BloodCells|UDPGT1 Initial concentration   NaN µmol/l</span></span>
+<span><span class="co">## 5              Organism|Bone|Plasma|UDPGT1 Initial concentration   NaN µmol/l</span></span>
+<span><span class="co">## 6          Organism|Bone|BloodCells|UDPGT1 Initial concentration   NaN µmol/l</span></span>
+<span><span class="co">##   Value Origin</span></span>
+<span><span class="co">## 1             </span></span>
+<span><span class="co">## 2             </span></span>
+<span><span class="co">## 3             </span></span>
+<span><span class="co">## 4             </span></span>
+<span><span class="co">## 5             </span></span>
+<span><span class="co">## 6</span></span></code></pre>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">expProfilesDf</span><span class="op">$</span><span class="va">initialConditions</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                      Container Path Molecule Name Is Present Value Unit</span></span>
+<span><span class="co">## 1       Organism|VenousBlood|Plasma        UDPGT1       TRUE   NaN µmol</span></span>
+<span><span class="co">## 2   Organism|VenousBlood|BloodCells        UDPGT1       TRUE   NaN µmol</span></span>
+<span><span class="co">## 3     Organism|ArterialBlood|Plasma        UDPGT1       TRUE   NaN µmol</span></span>
+<span><span class="co">## 4 Organism|ArterialBlood|BloodCells        UDPGT1       TRUE   NaN µmol</span></span>
+<span><span class="co">## 5              Organism|Bone|Plasma        UDPGT1       TRUE   NaN µmol</span></span>
+<span><span class="co">## 6          Organism|Bone|BloodCells        UDPGT1       TRUE   NaN µmol</span></span>
+<span><span class="co">##   Scale Divisor Neg. Values Allowed</span></span>
+<span><span class="co">## 1             1               FALSE</span></span>
+<span><span class="co">## 2             1               FALSE</span></span>
+<span><span class="co">## 3             1               FALSE</span></span>
+<span><span class="co">## 4             1               FALSE</span></span>
+<span><span class="co">## 5             1               FALSE</span></span>
+<span><span class="co">## 6             1               FALSE</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="simulation-configurations">Simulation configurations<a class="anchor" aria-label="anchor" href="#simulation-configurations"></a>
@@ -227,7 +345,7 @@ simulation configuration can then be altered afterwards.</p>
 <p><u>NOTE:</u> Only simulations created with OSPS version &gt;=12 have
 simulation configurations.</p>
 <p>Get a configuration of a simulation loaded from a pkml file:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
 <span>  <span class="st">"extdata"</span>,</span>
 <span>  <span class="st">"Aciclovir.pkml"</span>,</span>
@@ -244,11 +362,18 @@ simulation configurations.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">##   • Selected Initial Conditions: Initial Conditions</span></span>
 <span><span class="co">##   • Selected Parameter Values: Parameter Values</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">## <span style="font-weight: bold;">Individual</span>:</span></span>
 <span><span class="co">##   • Vergin_1995_IV</span></span>
-<span><span class="co">## <span style="font-weight: bold;">Expression profiles</span>:</span></span></code></pre>
+<span><span class="co">## <span style="font-weight: bold;">Expression profiles</span>:</span></span>
+<span><span class="co">##   • CYP3A4|Human|Healthy</span></span>
+<span><span class="co">## <span style="font-weight: bold;">Partition coefficient method overrides</span>:</span></span>
+<span><span class="co">##   • Aciclovir: PK-Sim Standard</span></span>
+<span><span class="co">## <span style="font-weight: bold;">Cellular permeability method overrides</span>:</span></span>
+<span><span class="co">##   • Aciclovir: PK-Sim Standard</span></span></code></pre>
 <p>Get a configuration of a simulation from a MoBi project:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulation</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getSimulation</span><span class="op">(</span><span class="st">"Thyroid_QST_Human"</span><span class="op">)</span></span>
 <span><span class="va">configuration</span> <span class="op">&lt;-</span> <span class="va">simulation</span><span class="op">$</span><span class="va">configuration</span></span>
 <span></span>
@@ -286,6 +411,8 @@ simulation configurations.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">##   • Selected Initial Conditions: Initial Conditions</span></span>
 <span><span class="co">##   • Selected Parameter Values: Human</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">## <span style="font-weight: bold;">Individual</span>:</span></span>
 <span><span class="co">##   • Human</span></span>
 <span><span class="co">## <span style="font-weight: bold;">Expression profiles</span>:</span></span>
@@ -317,26 +444,26 @@ the rat species from the modules “Thyroid_QST”, “Rat physiology”,
 “UDPGT1|Human|Healthy”, “DIO1|Human|Healthy”, “DIO3|Human|Healthy”,
 “UDPGT2|Human|Healthy”, and specify the parameter values building block
 “Rat” from the module “Thyroid”:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># sim1 &lt;- myProject$createSimulationConfiguration(</span></span>
-<span><span class="co">#   modulesNames = c(</span></span>
-<span><span class="co">#     "Thyroid_QST",</span></span>
-<span><span class="co">#     "Rat physiology",</span></span>
-<span><span class="co">#     "Thyroid",</span></span>
-<span><span class="co">#     "Pituitary",</span></span>
-<span><span class="co">#     "Endogenous_TH",</span></span>
-<span><span class="co">#     "TH_activeTransports",</span></span>
-<span><span class="co">#     "TH_plasma_binding"</span></span>
-<span><span class="co">#   ),</span></span>
-<span><span class="co">#   individualName = "Rat",</span></span>
-<span><span class="co">#   expressionProfilesNames = c(</span></span>
-<span><span class="co">#     "UDPGT1|Human|Healthy",</span></span>
-<span><span class="co">#     "DIO1|Human|Healthy",</span></span>
-<span><span class="co">#     "DIO3|Human|Healthy",</span></span>
-<span><span class="co">#     "UDPGT2|Human|Healthy"</span></span>
-<span><span class="co">#   ),</span></span>
-<span><span class="co">#   parameterValues = list("Thyroid" = "Rat")</span></span>
-<span><span class="co"># )</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">simConfiguration</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">createSimulationConfiguration</span><span class="op">(</span></span>
+<span>  modulesNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Thyroid_QST"</span>,</span>
+<span>    <span class="st">"Rat physiology"</span>,</span>
+<span>    <span class="st">"Thyroid"</span>,</span>
+<span>    <span class="st">"Pituitary"</span>,</span>
+<span>    <span class="st">"Endogenous_TH"</span>,</span>
+<span>    <span class="st">"TH_activeTransports"</span>,</span>
+<span>    <span class="st">"TH_plasma_binding"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  individualName <span class="op">=</span> <span class="st">"Rat"</span>,</span>
+<span>  expressionProfilesNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"UDPGT1|Human|Healthy"</span>,</span>
+<span>    <span class="st">"DIO1|Human|Healthy"</span>,</span>
+<span>    <span class="st">"DIO3|Human|Healthy"</span>,</span>
+<span>    <span class="st">"UDPGT2|Human|Healthy"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  selectedParameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Thyroid"</span> <span class="op">=</span> <span class="st">"Rat"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="create-simulation-configuration-from-modules">Create simulation configuration from modules<a class="anchor" aria-label="anchor" href="#create-simulation-configuration-from-modules"></a>
@@ -344,33 +471,33 @@ the rat species from the modules “Thyroid_QST”, “Rat physiology”,
 <p>An alternative to creating simulation configurations from modules
 from a project is to use the function
 <code><a href="../reference/createSimulationConfiguration.html">createSimulationConfiguration()</a></code> and provide a list of
-<code>Module</code> objects. This allows to create simulations from
+<code>MoBiModule</code> objects. This allows to create simulations from
 modules contained in different projects, or from modules that are stored
 as pkml files. In the following example, we will create a simulation
 configuration using the modules from the project as in the example
 before, but the extension module “Thyroid” will be loaded from a pkml
 file, and a new individual will be created.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># # Get modules from the project</span></span>
-<span><span class="co"># modules &lt;- myProject$getModules()</span></span>
-<span><span class="co"># # Get the expression profiles from the project</span></span>
-<span><span class="co"># expressionProfiles &lt;- myProject$getExpressionProfiles(</span></span>
-<span><span class="co">#   names = c(</span></span>
-<span><span class="co">#     "UDPGT1|Human|Healthy",</span></span>
-<span><span class="co">#     "DIO1|Human|Healthy",</span></span>
-<span><span class="co">#     "DIO3|Human|Healthy",</span></span>
-<span><span class="co">#     "UDPGT2|Human|Healthy"</span></span>
-<span><span class="co">#   )</span></span>
-<span><span class="co"># )</span></span>
-<span><span class="co"># # Create an individual building block</span></span>
-<span><span class="co"># myIndividual &lt;- createIndividualBuildingBlock(</span></span>
-<span><span class="co">#   species = Species$Human,</span></span>
-<span><span class="co">#   population = HumanPopulation$Asian_Tanaka_1996,</span></span>
-<span><span class="co">#   gender = Gender$Male,</span></span>
-<span><span class="co">#   weight = 79,</span></span>
-<span><span class="co">#   height = 175,</span></span>
-<span><span class="co">#   age = 35</span></span>
-<span><span class="co"># )</span></span></code></pre></div>
+<span><span class="va">modules</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getModules</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># Get the expression profiles from the project</span></span>
+<span><span class="va">expressionProfiles</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getExpressionProfiles</span><span class="op">(</span></span>
+<span>  names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"UDPGT1|Human|Healthy"</span>,</span>
+<span>    <span class="st">"DIO1|Human|Healthy"</span>,</span>
+<span>    <span class="st">"DIO3|Human|Healthy"</span>,</span>
+<span>    <span class="st">"UDPGT2|Human|Healthy"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co"># Create an individual building block</span></span>
+<span><span class="va">myIndividual</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createIndividualBuildingBlock.html">createIndividualBuildingBlock</a></span><span class="op">(</span></span>
+<span>  species <span class="op">=</span> <span class="va">Species</span><span class="op">$</span><span class="va">Human</span>,</span>
+<span>  population <span class="op">=</span> <span class="va">HumanPopulation</span><span class="op">$</span><span class="va">Asian_Tanaka_1996</span>,</span>
+<span>  gender <span class="op">=</span> <span class="va">Gender</span><span class="op">$</span><span class="va">Male</span>,</span>
+<span>  weight <span class="op">=</span> <span class="fl">79</span>,</span>
+<span>  height <span class="op">=</span> <span class="fl">175</span>,</span>
+<span>  age <span class="op">=</span> <span class="fl">35</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Modules that are intended to be used in combination with a variety of
 other modules, especially with every generic PBPK module, are usually
 set up in a generic way and require some extensions in order to be used
@@ -379,119 +506,247 @@ must be extended by the molecules of the model it will be used with.
 Similarly, some compound-specific parameter could require manual
 adjustments. Therefore, initial conditions and parameter values building
 block can be modified from R.</p>
+<p>A module’s <code>Molecules</code> building block is exposed via
+<code>MoBiModule$getMoleculesBB()</code>, which returns a
+<code>MoleculesBuildingBlock</code> object. The methods below let you
+query molecule names from the building block, which is useful when
+extending other building blocks (initial conditions, parameter values,
+expression parameters) for the molecules defined in the module:</p>
+<ul>
+<li>
+<code>allMoleculeNames()</code>,
+<code>allFloatingMoleculeNames()</code>,
+<code>allStationaryMoleculeNames()</code>: Names of all molecules, all
+floating molecules (e.g., drugs, metabolites), or all stationary
+molecules (e.g., enzymes, transporters).</li>
+<li>
+<code>allMoleculeNamesOfType(MoleculeType$&lt;type&gt;)</code>:
+Names of all molecules of a given type. Pass
+<code>MoleculeType$Protein</code> for the union of <code>Enzyme</code>,
+<code>Transporter</code>, and <code>Binding Partner</code>. Other
+supported keys are <code>Drug</code>, <code>Metabolite</code>,
+<code>Enzyme</code>, <code>Transporter</code>,
+<code>Binding Partner</code>, and <code>Complex</code>.</li>
+<li>
+<code>allXenobioticFloatingMoleculeNames()</code>,
+<code>allEndogenousStationaryMoleculeNames()</code>: Names of xenobiotic
+floating (drug-like) or endogenous stationary (protein-like)
+molecules.</li>
+<li>
+<code>moleculeTypeFor(moleculeName)</code>: Type of a single
+molecule by name (e.g., <code>"Drug"</code>, <code>"Enzyme"</code>,
+<code>"Transporter"</code>, <code>"Binding Partner"</code>).</li>
+</ul>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">moleculesBB</span> <span class="op">&lt;-</span> <span class="va">modules</span><span class="op">[[</span><span class="st">"Thyroid_QST"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">getMoleculesBB</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">moleculesBB</span><span class="op">$</span><span class="fu">allMoleculeNames</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">moleculesBB</span><span class="op">$</span><span class="fu">allMoleculeNamesOfType</span><span class="op">(</span><span class="va">MoleculeType</span><span class="op">$</span><span class="va">Protein</span><span class="op">)</span></span>
+<span><span class="va">moleculesBB</span><span class="op">$</span><span class="fu">moleculeTypeFor</span><span class="op">(</span><span class="st">"DIO1"</span><span class="op">)</span></span></code></pre></div>
 <p>Following functionalities are available for the Initial Conditions
 BBs:</p>
 <ul>
 <li>
-<code><a href="../reference/setInitialConditions.html">setInitialConditions()</a></code>: Allows adding new entries or
-changing the values of existing entries in the Initial Conditions
+<code><a href="../reference/setInitialConditionsInBB.html">setInitialConditionsInBB()</a></code>: Allows adding new entries
+or changing the values of existing entries in the Initial Conditions
 BB.</li>
 <li>
-<code><a href="../reference/deleteInitialConditions.html">deleteInitialConditions()</a></code>: Allows deleting entries from
-the Initial Conditions BB.</li>
+<code><a href="../reference/deleteInitialConditionsFromBB.html">deleteInitialConditionsFromBB()</a></code>: Allows deleting
+entries from the Initial Conditions BB.</li>
 <li>
-<code><a href="../reference/extendInitialConditions.html">extendInitialConditions()</a></code>: Extending an IC BB by
+<code><a href="../reference/extendInitialConditionsBB.html">extendInitialConditionsBB()</a></code>: Extending an IC BB by
 entries for specified molecules in all physical containers of a spatial
 structure.</li>
 </ul>
-<p>Followning functionalities are available for the Parameter Values
-(PV) BBs:</p>
+<p>Following functionalities are available for the Parameter Values (PV)
+BBs:</p>
 <ul>
 <li>
-<code><a href="../reference/setParameterValues.html">setParameterValues()</a></code>: Allows adding new entries or
+<code><a href="../reference/setParameterValuesInBB.html">setParameterValuesInBB()</a></code>: Allows adding new entries or
 changing the values of existing entries in the PV BB.</li>
 <li>
-<code><a href="../reference/deleteParameterValues.html">deleteParameterValues()</a></code>: Allows deleting entries from
-the PV BB.</li>
+<code><a href="../reference/deleteParameterValuesFromBB.html">deleteParameterValuesFromBB()</a></code>: Allows deleting entries
+from the PV BB.</li>
 <li>
-<code><a href="../reference/addLocalMoleculeParameters.html">addLocalMoleculeParameters()</a></code>: Extending a PV BB by
-entries for local parameters of specified molecules in all physical
-containers of a spatial structure.</li>
+<code><a href="../reference/addLocalMoleculeParametersToParameterValuesBB.html">addLocalMoleculeParametersToParameterValuesBB()</a></code>:
+Extending a PV BB by entries for local parameters of specified molecules
+in all physical containers of a spatial structure. This function does
+not add parameters whose values are defined by a formula”, e.g., the
+“Relative expression” parameters for proteins.</li>
 <li>
 <code><a href="../reference/addProteinExpressionToParameterValuesBB.html">addProteinExpressionToParameterValuesBB()</a></code>: Extending a
 PV BB by parameters defining expression of protein molecules in selected
 organs.</li>
 </ul>
+<p>Furthermore, for building blocks of type “Parameter Values”, “Initial
+Conditions”, “Expression Profiles”, and “Individual”, there are
+functions to export them to a PKML (<code>.pkml</code>) file.</p>
 <p>So in the first step we load the extension module “Thyroid” from a
 pkml file:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># thyroidModule &lt;- loadModuleFromPKML(system.file(</span></span>
-<span><span class="co">#   "extdata",</span></span>
-<span><span class="co">#   "Thyroid.pkml",</span></span>
-<span><span class="co">#   package = "ospsuite"</span></span>
-<span><span class="co"># ))</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">thyroidModule</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadModuleFromPKML.html">loadModuleFromPKML</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>  <span class="st">"extdata"</span>,</span>
+<span>  <span class="st">"Thyroid.pkml"</span>,</span>
+<span>  package <span class="op">=</span> <span class="st">"ospsuite"</span></span>
+<span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Then we extend the initial conditions BB of the loaded module by
 molecules defined in other modules of our project:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># # Get the IC BB from the Thyroid module</span></span>
-<span><span class="co"># icBB &lt;- thyroidModule$getBuildingBlocks(type = "Initial Conditions")[[1]]</span></span>
-<span><span class="co"># # Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"</span></span>
-<span><span class="co"># newPaths &lt;- extendInitialConditions(</span></span>
-<span><span class="co">#   icBB,</span></span>
-<span><span class="co">#   spatialStructureBB = thyroidModule$getBuildingBlocks(</span></span>
-<span><span class="co">#     type = "Spatial Structure"</span></span>
-<span><span class="co">#   ),</span></span>
-<span><span class="co">#   moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),</span></span>
-<span><span class="co">#   moleculeNames = c("DIO1", "T3", "T4", "TSH")</span></span>
-<span><span class="co"># )</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Get the IC BB from the Thyroid module. The module has only one IC BB.</span></span>
+<span><span class="va">icBB</span> <span class="op">&lt;-</span> <span class="va">thyroidModule</span><span class="op">$</span><span class="fu">getInitialConditionsBBs</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co"># Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"</span></span>
+<span><span class="va">newPaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extendInitialConditionsBB.html">extendInitialConditionsBB</a></span><span class="op">(</span></span>
+<span>  initialConditionsBuildingBlock <span class="op">=</span> <span class="va">icBB</span>,</span>
+<span>  spatialStructureModule <span class="op">=</span> <span class="va">thyroidModule</span>,</span>
+<span>  moleculesModule <span class="op">=</span> <span class="va">modules</span><span class="op">[[</span><span class="st">"Thyroid_QST"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  moleculeNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DIO1"</span>, <span class="st">"T3"</span>, <span class="st">"T4"</span>, <span class="st">"TSH"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">newPaths</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##  [1] "Organism|Thyroid|Plasma|DIO1"        "Organism|Thyroid|Plasma|T3"         </span></span>
+<span><span class="co">##  [3] "Organism|Thyroid|Plasma|T4"          "Organism|Thyroid|Plasma|TSH"        </span></span>
+<span><span class="co">##  [5] "Organism|Thyroid|BloodCells|DIO1"    "Organism|Thyroid|BloodCells|T3"     </span></span>
+<span><span class="co">##  [7] "Organism|Thyroid|BloodCells|T4"      "Organism|Thyroid|BloodCells|TSH"    </span></span>
+<span><span class="co">##  [9] "Organism|Thyroid|Interstitial|DIO1"  "Organism|Thyroid|Interstitial|T3"   </span></span>
+<span><span class="co">## [11] "Organism|Thyroid|Interstitial|T4"    "Organism|Thyroid|Interstitial|TSH"  </span></span>
+<span><span class="co">## [13] "Organism|Thyroid|Intracellular|DIO1" "Organism|Thyroid|Intracellular|T3"  </span></span>
+<span><span class="co">## [15] "Organism|Thyroid|Intracellular|T4"   "Organism|Thyroid|Intracellular|TSH" </span></span>
+<span><span class="co">## [17] "Organism|Thyroid|Endosome|DIO1"      "Organism|Thyroid|Endosome|T3"       </span></span>
+<span><span class="co">## [19] "Organism|Thyroid|Endosome|T4"        "Organism|Thyroid|Endosome|TSH"      </span></span>
+<span><span class="co">## [21] "Organism|Thyroid|Lumen|DIO1"         "Organism|Thyroid|Lumen|T3"          </span></span>
+<span><span class="co">## [23] "Organism|Thyroid|Lumen|T4"           "Organism|Thyroid|Lumen|TSH"</span></span></code></pre>
 <p>The molecule “DIO1” that has been added to the IC BB in the previous
 step is a protein. As the module “Thyroid” adds a new organ for which no
 protein expression is defined in the Expression Profiles, parameters
 defining the expression must be added to the PV BB of the new module
 using the <code><a href="../reference/addProteinExpressionToParameterValuesBB.html">addProteinExpressionToParameterValuesBB()</a></code>
-function:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># # Get the PV BB from the Thyroid module</span></span>
-<span><span class="co"># pvBB &lt;- thyroidModule$getBuildingBlocks(type = "Parameter Values")[["Human"]]</span></span>
-<span><span class="co"># # Add protein expression to the PV BB</span></span>
-<span><span class="co"># proteinExpressionPaths &lt;- addProteinExpressionToParameterValuesBB(</span></span>
-<span><span class="co">#   pvBB,</span></span>
-<span><span class="co">#   spatialStructureBB = thyroidModule$getBuildingBlocks(</span></span>
-<span><span class="co">#     type = "Spatial Structure"</span></span>
-<span><span class="co">#   ),</span></span>
-<span><span class="co">#   moleculesBB = modules[["Thyroid_QST"]]$getBuildingBlocks(type = "Molecules"),</span></span>
-<span><span class="co">#   moleculeNames = c("DIO1")</span></span>
-<span><span class="co"># )</span></span>
+function. Default values for the added parameters are taken from
+reference Expression Profiles supplied as a plain list; the function
+matches each entry to a molecule in <code>moleculeNames</code> by
+reading the profile’s <code>MoleculeName</code>. The organs for which
+expression parameters should be created are specified via
+<code>organPaths</code>; each path must resolve to an existing organ in
+the spatial structure.</p>
+<p>Both <code>moleculeNames</code> and
+<code>referenceExpressionProfiles</code> are optional:</p>
+<ul>
+<li>When <code>moleculeNames = NULL</code> (default), all proteins
+(<code>Enzyme</code>, <code>Transporter</code>,
+<code>Binding Partner</code>) defined in the Molecules building block of
+<code>moleculesModule</code> are used.</li>
+<li>When <code>referenceExpressionProfiles = NULL</code> or only a
+subset of profiles is supplied, default expression profiles for species
+<code>"Human"</code> are auto-created via
+<code><a href="../reference/createExpressionProfileBuildingBlock.html">createExpressionProfileBuildingBlock()</a></code> for each molecule
+without a supplied profile. The profile category is derived from
+<code>moleculeTypeFor()</code>: <code>Enzyme</code> -&gt;
+<code>Metabolizing Enzyme</code>, <code>Transporter</code> -&gt;
+<code>Transport Protein</code>, <code>Binding Partner</code> -&gt;
+<code>Protein Binding Partner</code>.</li>
+</ul>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Get the PV BB from the Thyroid module</span></span>
+<span><span class="va">pvBB</span> <span class="op">&lt;-</span> <span class="va">thyroidModule</span><span class="op">$</span><span class="fu">getParameterValuesBBs</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="st">"Human"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co"># Add protein expression to the PV BB</span></span>
+<span><span class="va">proteinExpressionPaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addProteinExpressionToParameterValuesBB.html">addProteinExpressionToParameterValuesBB</a></span><span class="op">(</span></span>
+<span>  parameterValuesBuildingBlock <span class="op">=</span> <span class="va">pvBB</span>,</span>
+<span>  spatialStructureModule <span class="op">=</span> <span class="va">thyroidModule</span>,</span>
+<span>  moleculesModule <span class="op">=</span> <span class="va">modules</span><span class="op">[[</span><span class="st">"Thyroid_QST"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  moleculeNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DIO1"</span><span class="op">)</span>,</span>
+<span>  referenceExpressionProfiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">expressionProfiles</span><span class="op">[[</span><span class="st">"DIO1|Human|Healthy"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  organPaths <span class="op">=</span> <span class="st">"Organism|Thyroid"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># # EXPECTED BEHAVIOR</span></span>
-<span><span class="co"># proteinExpressionPaths &lt;- c(</span></span>
-<span><span class="co">#   "Organism|Thyroid|Plasma|DIO1|Initial concentration",</span></span>
-<span><span class="co">#   "Organism|Thyroid|BloodCells|DIO1|Initial concentration",</span></span>
-<span><span class="co">#   "Organism|Thyroid|Interstitial|DIO1|Initial concentration",</span></span>
-<span><span class="co">#   "Organism|Thyroid|Intracellular|DIO1|Initial concentration",</span></span>
-<span><span class="co">#   "Organism|Thyroid|Endosome|DIO1|Initial concentration",</span></span>
-<span><span class="co">#   "Organism|Thyroid|Lumen|DIO1|Initial concentration",</span></span>
-<span><span class="co">#   "Organism|Thyroid|Interstitial|DIO1|Fraction expressed interstitial",</span></span>
-<span><span class="co">#   "Organism|Thyroid|Intracellular|DIO1|Fraction expressed intracellular",</span></span>
-<span><span class="co">#   "Organism|Thyroid|Intracellular|DIO1|Relative expression"</span></span>
-<span><span class="co"># )</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">proteinExpressionPaths</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Organism|Thyroid|Plasma|DIO1|Initial concentration"                  </span></span>
+<span><span class="co">## [2] "Organism|Thyroid|BloodCells|DIO1|Initial concentration"              </span></span>
+<span><span class="co">## [3] "Organism|Thyroid|Interstitial|DIO1|Initial concentration"            </span></span>
+<span><span class="co">## [4] "Organism|Thyroid|Interstitial|DIO1|Fraction expressed interstitial"  </span></span>
+<span><span class="co">## [5] "Organism|Thyroid|Intracellular|DIO1|Relative expression"             </span></span>
+<span><span class="co">## [6] "Organism|Thyroid|Intracellular|DIO1|Initial concentration"           </span></span>
+<span><span class="co">## [7] "Organism|Thyroid|Intracellular|DIO1|Fraction expressed intracellular"</span></span>
+<span><span class="co">## [8] "Organism|Thyroid|Endosome|DIO1|Initial concentration"                </span></span>
+<span><span class="co">## [9] "Organism|Thyroid|Lumen|DIO1|Initial concentration"</span></span></code></pre>
+<p>The same call without explicit <code>moleculeNames</code> or
+<code>referenceExpressionProfiles</code> adds expression parameters for
+every protein defined in the molecules module, using auto-created
+<code>"Human"</code> default profiles for any molecule without a
+supplied reference profile:</p>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/addProteinExpressionToParameterValuesBB.html">addProteinExpressionToParameterValuesBB</a></span><span class="op">(</span></span>
+<span>  parameterValuesBuildingBlock <span class="op">=</span> <span class="va">pvBB</span>,</span>
+<span>  spatialStructureModule <span class="op">=</span> <span class="va">thyroidModule</span>,</span>
+<span>  moleculesModule <span class="op">=</span> <span class="va">modules</span><span class="op">[[</span><span class="st">"Thyroid_QST"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  organPaths <span class="op">=</span> <span class="st">"Organism|Thyroid"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>and overwrite the value of “Relative expression”:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># setParameterValues(</span></span>
-<span><span class="co">#   parameterValuesBuildingBlock = pvBB,</span></span>
-<span><span class="co">#   quantityPaths = "Organism|Thyroid|Intracellular|DIO1|Relative expression",</span></span>
-<span><span class="co">#   dimensions = ospDimensions$Fraction,</span></span>
-<span><span class="co">#   quantityValues = 1.33</span></span>
-<span><span class="co"># )</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/setParameterValuesInBB.html">setParameterValuesInBB</a></span><span class="op">(</span></span>
+<span>  parameterValuesBuildingBlock <span class="op">=</span> <span class="va">pvBB</span>,</span>
+<span>  quantityPaths <span class="op">=</span> <span class="st">"Organism|Thyroid|Intracellular|DIO1|Relative expression"</span>,</span>
+<span>  quantityValues <span class="op">=</span> <span class="fl">1.33</span>,</span>
+<span>  units <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  dimensions <span class="op">=</span> <span class="va">ospDimensions</span><span class="op">$</span><span class="va">Fraction</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Finally, we can create a simulation configuration from the modules
 and the individual we created:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># simulationConfigurationHuman &lt;- createSimulationConfiguration(</span></span>
-<span><span class="co">#   simulationName = "Thyroid_QST_human",</span></span>
-<span><span class="co">#   modules = c(</span></span>
-<span><span class="co">#     modules[["Thyroid_QST"]],</span></span>
-<span><span class="co">#     thyroidModule,</span></span>
-<span><span class="co">#     modules[["Pituitary"]],</span></span>
-<span><span class="co">#     modules[["Endogenous_TH"]],</span></span>
-<span><span class="co">#     modules[["TH_activeTransports"]],</span></span>
-<span><span class="co">#     modules[["TH_plasma_binding"]]</span></span>
-<span><span class="co">#   ),</span></span>
-<span><span class="co">#   individual = myIndividual,</span></span>
-<span><span class="co">#   expressionProfiles = expressionProfiles,</span></span>
-<span><span class="co">#   parameterValues = list("Thyroid" = "Human")</span></span>
-<span><span class="co"># )</span></span></code></pre></div>
-<p>Expression profile BBs cannot be created from R but can be loaded
-from PKML. (Tier 3 or so).</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">simulationConfigurationHuman</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulationConfiguration.html">createSimulationConfiguration</a></span><span class="op">(</span></span>
+<span>  modules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="va">modules</span><span class="op">[[</span><span class="st">"Thyroid_QST"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>    <span class="va">thyroidModule</span>,</span>
+<span>    <span class="va">modules</span><span class="op">[[</span><span class="st">"Pituitary"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>    <span class="va">modules</span><span class="op">[[</span><span class="st">"Endogenous_TH"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>    <span class="va">modules</span><span class="op">[[</span><span class="st">"TH_activeTransports"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>    <span class="va">modules</span><span class="op">[[</span><span class="st">"TH_plasma_binding"</span><span class="op">]</span><span class="op">]</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  individual <span class="op">=</span> <span class="va">myIndividual</span>,</span>
+<span>  expressionProfiles <span class="op">=</span> <span class="va">expressionProfiles</span>,</span>
+<span>  selectedParameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Thyroid"</span> <span class="op">=</span> <span class="st">"Human"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">simulationConfigurationHuman</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #0000BB;">&lt;SimulationConfiguration&gt;</span></span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Modules</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── <span style="font-weight: bold;">Thyroid_QST</span> ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   • Selected Initial Conditions: Initial Conditions</span></span>
+<span><span class="co">##   • Selected Parameter Values: Parameter Values</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── <span style="font-weight: bold;">Thyroid_Generic</span> ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   • Selected Initial Conditions: Human</span></span>
+<span><span class="co">##   • Selected Parameter Values: Human</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── <span style="font-weight: bold;">Pituitary</span> ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   • Selected Initial Conditions: Pituitary</span></span>
+<span><span class="co">##   • Selected Parameter Values: Human</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── <span style="font-weight: bold;">Endogenous_TH</span> ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   • Selected Initial Conditions: Initial Conditions</span></span>
+<span><span class="co">##   • Selected Parameter Values: Human</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── <span style="font-weight: bold;">TH_activeTransports</span> ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   • Selected Initial Conditions: Initial Conditions</span></span>
+<span><span class="co">##   • Selected Parameter Values: Parameters</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── <span style="font-weight: bold;">TH_plasma_binding</span> ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   • Selected Initial Conditions: Initial Conditions</span></span>
+<span><span class="co">##   • Selected Parameter Values: Human</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">## <span style="font-weight: bold;">Individual</span>:</span></span>
+<span><span class="co">##   • Human</span></span>
+<span><span class="co">## <span style="font-weight: bold;">Expression profiles</span>:</span></span>
+<span><span class="co">##   • UDPGT1|Human|Healthy</span></span>
+<span><span class="co">##   • DIO1|Human|Healthy</span></span>
+<span><span class="co">##   • DIO3|Human|Healthy</span></span>
+<span><span class="co">##   • UDPGT2|Human|Healthy</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -500,44 +755,88 @@ from PKML. (Tier 3 or so).</p>
 <p>The simulation configuration can be used to create a simulation. The
 simulation can then be saved to a pkml file, or used for further
 analysis.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulation</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getSimulation</span><span class="op">(</span><span class="st">"Thyroid_QST_Human"</span><span class="op">)</span></span>
 <span><span class="va">configuration</span> <span class="op">&lt;-</span> <span class="va">simulation</span><span class="op">$</span><span class="va">configuration</span></span>
 <span></span>
-<span><span class="co"># TODO enable after https://github.com/Open-Systems-Pharmacology/MoBi/issues/2252</span></span>
-<span><span class="co"># simulation &lt;- createSimulation(</span></span>
-<span><span class="co">#   simulationName = "Thyroid_QST_Human_copy",</span></span>
-<span><span class="co">#   configuration</span></span>
-<span><span class="co"># )</span></span></code></pre></div>
+<span><span class="va">simulation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulation.html">createSimulation</a></span><span class="op">(</span></span>
+<span>  simulationName <span class="op">=</span> <span class="st">"Thyroid_QST_Human_copy"</span>,</span>
+<span>  <span class="va">configuration</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="warnings-and-errors-during-simulation-creation">Warnings and errors during simulation creation<a class="anchor" aria-label="anchor" href="#warnings-and-errors-during-simulation-creation"></a>
+</h3>
+<p><code><a href="../reference/createSimulation.html">createSimulation()</a></code> validates the simulation
+configuration and reports any issues encountered during the creation
+process. If the simulation cannot be created (e.g., due to invalid or
+inconsistent configuration), an error is thrown with a description of
+all issues. If the simulation is created successfully but with
+non-critical issues, these are collected as warnings and can be
+displayed by setting <code>showWarnings = TRUE</code>. The following
+example demonstrates an error case:</p>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">simulation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>    <span class="st">"extdata"</span>,</span>
+<span>    <span class="st">"Aciclovir.pkml"</span>,</span>
+<span>    package <span class="op">=</span> <span class="st">"ospsuite"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  loadFromCache <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">simConfig</span> <span class="op">&lt;-</span> <span class="va">simulation</span><span class="op">$</span><span class="va">configuration</span></span>
+<span></span>
+<span><span class="co"># Introduce an error in the configuration</span></span>
+<span><span class="va">simConfig</span><span class="op">$</span><span class="va">selectedInitialConditions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Vergin 1995 IV"</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">newSimulation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulation.html">createSimulation</a></span><span class="op">(</span></span>
+<span>  simulationConfiguration <span class="op">=</span> <span class="va">simConfig</span>,</span>
+<span>  simulationName <span class="op">=</span> <span class="st">"MySim"</span>,</span>
+<span>  showWarnings <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `createSimulation()`:</span></span></span>
+<span><span class="co">## <span style="color: #BBBB00;">!</span> Cannot create simulation. The following errors were generated during simulation creation:</span></span>
+<span><span class="co">##  Cannot create application 'Intravenous_Transport': molecule 'Aciclovir' not available in the target container 'Plasma'</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="setting-calculation-methods-and-creating-process-rate-parameters">Setting calculation methods and creating process rate
+parameters<a class="anchor" aria-label="anchor" href="#setting-calculation-methods-and-creating-process-rate-parameters"></a>
+</h3>
 <p>Before creating a simulation from configuration, the user can change
 the calculation methods for molecules in the simulation. Available
-methods are listed in the enums <code>MoleculeCalculationMethod</code>
-and <code>PartitionCoefficientMethod</code>. Additionally, the user can
-select whether to create all process rate parameters in the simulation
-or not by setting the argument
+methods are listed in the enums <code>PartitionCoefficientMethods</code>
+and <code>CellularPermeabilityMethods</code>. Methods are set per
+molecule using the <code>setPartitionCoefficientMethods()</code> and
+<code>setCellularPermeabilityMethods()</code> methods of the simulation
+configuration. Additionally, the user can select whether to create all
+process rate parameters in the simulation or not by setting the argument
 <code>createAllProcessRateParameters</code> in the function
 <code><a href="../reference/createSimulation.html">createSimulation()</a></code>. These parameters can be used for model
 debugging and analysis.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># simulationConfigurationHuman$partitionCoefficientMethods(</span></span>
-<span><span class="co">#   list(</span></span>
-<span><span class="co">#     "T3" = PartitionCoefficientMethods$Berezhkovskiy,</span></span>
-<span><span class="co">#     "T4" = PartitionCoefficientMethods$`PK-Sim Standard`</span></span>
-<span><span class="co">#   )</span></span>
-<span><span class="co"># )</span></span>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">configuration</span><span class="op">$</span><span class="fu">setPartitionCoefficientMethods</span><span class="op">(</span></span>
+<span>  <span class="st">"T3"</span>,</span>
+<span>  <span class="va">PartitionCoefficientMethods</span><span class="op">$</span><span class="va">Berezhkovskiy</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">configuration</span><span class="op">$</span><span class="fu">setPartitionCoefficientMethods</span><span class="op">(</span></span>
+<span>  <span class="st">"T4"</span>,</span>
+<span>  <span class="va">PartitionCoefficientMethods</span><span class="op">$</span><span class="va">`PK-Sim Standard`</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># simulationConfigurationHuman$cellularPermeabilityMethods(</span></span>
-<span><span class="co">#   list(</span></span>
-<span><span class="co">#     "T3" = CellularPermeabilityMethods$`Charge dependent Schmitt normalized to PK-Sim`,</span></span>
-<span><span class="co">#     "T4" = CellularPermeabilityMethods$`Charge dependent Schmitt normalized to PK-Sim`</span></span>
-<span><span class="co">#   )</span></span>
-<span><span class="co"># )</span></span>
+<span><span class="va">configuration</span><span class="op">$</span><span class="fu">setCellularPermeabilityMethods</span><span class="op">(</span></span>
+<span>  <span class="st">"T3"</span>,</span>
+<span>  <span class="va">CellularPermeabilityMethods</span><span class="op">$</span><span class="va">`Charge dependent Schmitt normalized to PK-Sim`</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">configuration</span><span class="op">$</span><span class="fu">setCellularPermeabilityMethods</span><span class="op">(</span></span>
+<span>  <span class="st">"T4"</span>,</span>
+<span>  <span class="va">CellularPermeabilityMethods</span><span class="op">$</span><span class="va">`Charge dependent Schmitt normalized to PK-Sim`</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># sim1 &lt;- createSimulation(</span></span>
-<span><span class="co">#   simulationName = "Thyroid_QST_human",</span></span>
-<span><span class="co">#   simulationConfigurationHuman,</span></span>
-<span><span class="co">#   createAllProcessRateParameters = TRUE</span></span>
-<span><span class="co"># )</span></span></code></pre></div>
+<span><span class="va">sim1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulation.html">createSimulation</a></span><span class="op">(</span></span>
+<span>  simulationName <span class="op">=</span> <span class="st">"Thyroid_QST_human"</span>,</span>
+<span>  <span class="va">configuration</span>,</span>
+<span>  createAllProcessRateParameters <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -546,7 +845,7 @@ debugging and analysis.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
 </div>
 
 <div class="pkgdown-footer-right">

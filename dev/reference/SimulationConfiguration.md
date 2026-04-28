@@ -8,26 +8,6 @@ Conditions (IC), and molecule calculation methods.
 
 A new `SimulationConfiguration` object.
 
-## Public fields
-
-- `partitionCoefficientMethods`:
-
-  The method used for calculation of partition coefficients. A named
-  list with names being the molecules used in all modules, and the
-  values being one of the `PartitionCoefficientMethods` enum values. To
-  set the partition coefficient method for a molecule, provide a named
-  list. TODO
-  https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650
-
-- `cellularPermeabilityMethods`:
-
-  The method used for calculation of cellular permeabilities. A named
-  list with names being the molecules used in all modules, and the
-  values being one of the `CellularPermeabilityMethods` enum values. To
-  set the cellular permeability method for a molecule, provide a named
-  list. TODO
-  https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650
-
 ## Active bindings
 
 - `individual`:
@@ -42,11 +22,11 @@ A new `SimulationConfiguration` object.
 
 - `modules`:
 
-  A named list of `Module` objects from which to create in simulation.
-  The order of modules defines the order in which the modules will be
-  combined to a simulation! When setting the modules, the selection of
-  Initial Conditions and Parameter Values is reset to the first
-  available ones in the modules.
+  A named list of `MoBiModule` objects from which to create the
+  simulation. The order of modules defines the order in which the
+  modules will be combined to a simulation! When setting the modules,
+  the selection of Initial Conditions and Parameter Values is reset to
+  the first available ones in the modules.
 
 - `selectedInitialConditions`:
 
@@ -60,6 +40,18 @@ A new `SimulationConfiguration` object.
   the PV selection is provided are not in the configuration, throw an
   error.
 
+- `partitionCoefficientOverrides`:
+
+  A named list of partition coefficient method overrides. Names are
+  molecule names, values are the full calculation method names.
+  Read-only; use `setPartitionCoefficientMethods()` to modify.
+
+- `cellularPermeabilityOverrides`:
+
+  A named list of cellular permeability method overrides. Names are
+  molecule names, values are the full calculation method names.
+  Read-only; use `setCellularPermeabilityMethods()` to modify.
+
 - `settings`:
 
   A `SimulationSettings` object defining the simulation settings. If no
@@ -71,29 +63,15 @@ A new `SimulationConfiguration` object.
   selections must be done after creating the simulation from the
   configuration.
 
-- `partitionCoefficientMethods`:
-
-  The method used for calculation of partition coefficients. A named
-  list with names being the molecules used in all modules, and the
-  values being one of the `PartitionCoefficientMethods` enum values. To
-  set the partition coefficient method for a molecule, provide a named
-  list. TODO
-  https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650
-
-- `cellularPermeabilityMethods`:
-
-  The method used for calculation of cellular permeabilities. A named
-  list with names being the molecules used in all modules, and the
-  values being one of the `CellularPermeabilityMethods` enum values. To
-  set the cellular permeability method for a molecule, provide a named
-  list. TODO
-  https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650
-
 ## Methods
 
 ### Public methods
 
 - [`SimulationConfiguration$new()`](#method-SimulationConfiguration-new)
+
+- [`SimulationConfiguration$setPartitionCoefficientMethods()`](#method-SimulationConfiguration-setPartitionCoefficientMethods)
+
+- [`SimulationConfiguration$setCellularPermeabilityMethods()`](#method-SimulationConfiguration-setCellularPermeabilityMethods)
 
 - [`SimulationConfiguration$print()`](#method-SimulationConfiguration-print)
 
@@ -102,12 +80,6 @@ A new `SimulationConfiguration` object.
 ### Method `new()`
 
 Initialize a new instance of the class
-
-Should not be directly used. Instead, use function
-[`createSimulationConfiguration()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulationConfiguration.md)
-or the method
-[`createSimulationConfiguration()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulationConfiguration.md)
-from the class `MoBiProject`.
 
 #### Usage
 
@@ -124,7 +96,7 @@ from the class `MoBiProject`.
 
 - `modules`:
 
-  A list of `Module` objects from which to create in simulation. The
+  A list of `MoBiModule` objects from which to create in simulation. The
   order of modules defines the order in which the modules will be
   combined to a simulation!
 
@@ -166,21 +138,77 @@ from the class `MoBiProject`.
 
 ------------------------------------------------------------------------
 
+### Method `setPartitionCoefficientMethods()`
+
+Sets the method used for calculation of partition coefficients. This
+method can be used to specify the partition coefficient method for each
+molecule used in the modules. If not specified, the method set in the
+Molecules Building Block of the last module in which the molecule is
+present will be used.
+
+#### Usage
+
+    SimulationConfiguration$setPartitionCoefficientMethods(
+      moleculeName,
+      methodName
+    )
+
+#### Arguments
+
+- `moleculeName`:
+
+  The name of the molecule for which to set the partition coefficient
+  method.
+
+- `methodName`:
+
+  The name of the method to use for calculation of partition
+  coefficients for the specified molecule. Should be one of the
+  `PartitionCoefficientMethods` enum values. Use `NULL` to remove an
+  existing override.
+
+------------------------------------------------------------------------
+
+### Method `setCellularPermeabilityMethods()`
+
+Sets the method used for calculation of cellular permeabilities. This
+method can be used to specify the cellular permeability method for each
+molecule used in the modules. If not specified, the method set in the
+Molecules Building Block of the last module in which the molecule is
+present will be used.
+
+#### Usage
+
+    SimulationConfiguration$setCellularPermeabilityMethods(
+      moleculeName,
+      methodName
+    )
+
+#### Arguments
+
+- `moleculeName`:
+
+  The name of the molecule for which to set the cellular permeability
+  method.
+
+- `methodName`:
+
+  The name of the method to use for calculation of cellular
+  permeabilities for the specified molecule. Should be one of the
+  `CellularPermeabilityMethods` enum values. Use `NULL` to remove an
+  existing override.
+
+------------------------------------------------------------------------
+
 ### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 
 #### Usage
 
-    SimulationConfiguration$print(printClassProperties = FALSE, ...)
+    SimulationConfiguration$print(...)
 
 #### Arguments
-
-- `printClassProperties`:
-
-  Logical, whether to print class properties (default: `FALSE`). If
-  `TRUE`, calls first the `print` method of the parent class. Useful for
-  debugging.
 
 - `...`:
 

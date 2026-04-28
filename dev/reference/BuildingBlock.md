@@ -57,7 +57,7 @@ Initialize a new instance of the class
 
 #### Usage
 
-    BuildingBlock$new(netObject, type = NULL)
+    BuildingBlock$new(netObject, type)
 
 #### Arguments
 
@@ -67,8 +67,7 @@ Initialize a new instance of the class
 
 - `type`:
 
-  Type of the building block (optional, defaults to `NULL`). Must be one
-  of the `BuildingBlockTypes`.
+  Type of the building block. Must be one of the `BuildingBlockTypes`.
 
 #### Returns
 

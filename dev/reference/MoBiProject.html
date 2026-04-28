@@ -111,6 +111,10 @@ that are present in the project (read-only)</p></dd>
 present in the project (read-only)</p></dd>
 
 
+<dt><code>defaultSimulationSettings</code></dt>
+<dd><p>Default simulation settings of the project (read-only)</p></dd>
+
+
 </dl><p></p></div>
     </div>
     <div class="section level2">
@@ -275,15 +279,16 @@ expression profiles is not present in the project.</p></dd>
 <span>  <span class="va">modulesNames</span>,</span>
 <span>  individualName <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  expressionProfilesNames <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  initialConditions <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  parameterValues <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  selectedInitialConditions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  selectedParameterValues <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  settings <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>modulesNames</code></dt>
-<dd><p>A list of the modules from which to create in simulation.
+<dd><p>A list of the modules from which to create the simulation.
 All defined modules must be present in the project. The order of module names defines the order in which the modules will be combined to a simulation!</p></dd>
 
 
@@ -295,24 +300,27 @@ All defined modules must be present in the project. The order of module names de
 <dd><p>Optional, list of expression profiles to apply to the simulation.</p></dd>
 
 
-<dt><code>initialConditions</code></dt>
+<dt><code>selectedInitialConditions</code></dt>
 <dd><p>By default, the first Initial Conditions
 (IC) building block (BB) of each module will be selected. If a module has multiple
 IC BBs, it is possible to specify which IC BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the IC BB.
-If <code>NULL</code>, all modules will use the first IC BB, if available. When providing a list,
-the value can also be set to <code>NULL</code>, which means that no IC BB from the specified module
-will be selected.</p></dd>
+By explicitly setting the value for a specific module to <code>NULL</code>, no IC BB from the specified module will be applied.
+If the list contains a module name that is not part of the provided modules, it will be ignored.</p></dd>
 
 
-<dt><code>parameterValues</code></dt>
+<dt><code>selectedParameterValues</code></dt>
 <dd><p>By default, the first Parameter Values
 (PV) building block (BB) of each module will be selected. If a module has multiple
 PV BBs, it is possible to specify which PV BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the PV BB.
-If <code>NULL</code>, all modules will use the first PV BB, if available. When providing a list,
-the value can also be set to <code>NULL</code>, which means that no PV BB from the specified module
-will be selected.</p></dd>
+By explicitly setting the value for a specific module to <code>NULL</code>, no PV BB from the specified module will be applied.
+If the list contains a module name that is not part of the provided modules, it will be ignored.</p></dd>
+
+
+<dt><code>settings</code></dt>
+<dd><p>Optional, a <code>SimulationSettings</code> object defining the simulation settings.
+If <code>NULL</code> (default), the default simulation settings of the project will be used.</p></dd>
 
 
 </dl><p></p></div>
@@ -322,12 +330,16 @@ will be selected.</p></dd>
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Print the object to the console</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MoBiProject</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MoBiProject</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span>printClassProperties <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>...</code></dt>
+<p></p><div class="arguments"><dl><dt><code>printClassProperties</code></dt>
+<dd><p>Whether to print class properties.</p></dd>
+
+
+<dt><code>...</code></dt>
 <dd><p>Rest arguments.</p></dd>
 
 
@@ -343,7 +355,7 @@ will be selected.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9020</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,10 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -79,6 +82,34 @@
 
         </dt>
         <dd>Application</dd>
+
+        <dt>
+
+          <code><a href="BuildingBlock.html">BuildingBlock</a></code>
+
+        </dt>
+        <dd>Building block # ONLY MOBI BBs, or should we consider having PK-Sim BBs as pkml export in the future?</dd>
+
+        <dt>
+
+          <code><a href="BuildingBlockTypes.html">BuildingBlockTypes</a></code>
+
+        </dt>
+        <dd>Types of building blocks supported.</dd>
+
+        <dt>
+
+          <code><a href="CalculationMethodCategories.html">CalculationMethodCategories</a></code>
+
+        </dt>
+        <dd>Categories of molecule calculation methods that can be overridden on a per-molecule basis in a simulation configuration.</dd>
+
+        <dt>
+
+          <code><a href="CellularPermeabilityMethods.html">CellularPermeabilityMethods</a></code>
+
+        </dt>
+        <dd>Available methods for calculation of cellular permeabilities.</dd>
 
         <dt>
 
@@ -159,6 +190,13 @@
 
         <dt>
 
+          <code><a href="ExpressionProfileCategories.html">ExpressionProfileCategories</a></code>
+
+        </dt>
+        <dd>Expression Profile Categories</dd>
+
+        <dt>
+
           <code><a href="Formula.html">Formula</a></code> <code><a href="Formula.html">TableFormula</a></code>
 
         </dt>
@@ -187,6 +225,27 @@
 
         <dt>
 
+          <code><a href="IndividualDiseaseStates.html">IndividualDiseaseStates</a></code>
+
+        </dt>
+        <dd>Available disease states</dd>
+
+        <dt>
+
+          <code><a href="MoBiModule.html">MoBiModule</a></code>
+
+        </dt>
+        <dd>MoBi Module</dd>
+
+        <dt>
+
+          <code><a href="MoBiProject.html">MoBiProject</a></code>
+
+        </dt>
+        <dd>MoBi Project</dd>
+
+        <dt>
+
           <code><a href="MoleculeOntogeny.html">MoleculeOntogeny</a></code>
 
         </dt>
@@ -198,6 +257,20 @@
 
         </dt>
         <dd>Standard molecule parameter names typically available in an endogenous molecule (enzyme, transporter etc...) coming from PK-Sim</dd>
+
+        <dt>
+
+          <code><a href="MoleculeType.html">MoleculeType</a></code>
+
+        </dt>
+        <dd>Molecule Types</dd>
+
+        <dt>
+
+          <code><a href="MoleculesBuildingBlock.html">MoleculesBuildingBlock</a></code>
+
+        </dt>
+        <dd>MoleculesBuildingBlock</dd>
 
         <dt>
 
@@ -240,6 +313,13 @@
 
         </dt>
         <dd>ParameterRange</dd>
+
+        <dt>
+
+          <code><a href="PartitionCoefficientMethods.html">PartitionCoefficientMethods</a></code>
+
+        </dt>
+        <dd>Available methods for calculation of partition coefficients.</dd>
 
         <dt>
 
@@ -324,6 +404,13 @@
 
         </dt>
         <dd>SimulationBatchRunValues</dd>
+
+        <dt>
+
+          <code><a href="SimulationConfiguration.html">SimulationConfiguration</a></code>
+
+        </dt>
+        <dd>Simulation configuration</dd>
 
         <dt>
 
@@ -418,6 +505,13 @@
 
         <dt>
 
+          <code><a href="addLocalMoleculeParametersToParameterValuesBB.html">addLocalMoleculeParametersToParameterValuesBB()</a></code>
+
+        </dt>
+        <dd>Extend a Parameter Values Building Block (BB) with local molecule parameters for molecules from a molecules module in all physical containers of a spatial structure module.</dd>
+
+        <dt>
+
           <code><a href="addOutputInterval.html">addOutputInterval()</a></code>
 
         </dt>
@@ -429,6 +523,13 @@
 
         </dt>
         <dd>Adds the quantities as output into the <code>simulation</code>. The quantities can either be specified using explicit instances or using paths.</dd>
+
+        <dt>
+
+          <code><a href="addProteinExpressionToParameterValuesBB.html">addProteinExpressionToParameterValuesBB()</a></code>
+
+        </dt>
+        <dd>Extend a Parameter Values Building Block (BB) with protein expression parameters for selected protein molecules in selected organs.</dd>
 
         <dt>
 
@@ -516,6 +617,13 @@
 
         <dt>
 
+          <code><a href="createExpressionProfileBuildingBlock.html">createExpressionProfileBuildingBlock()</a></code>
+
+        </dt>
+        <dd>Create an Expression Profile Building Block</dd>
+
+        <dt>
+
           <code><a href="createImporterConfigurationForFile.html">createImporterConfigurationForFile()</a></code>
 
         </dt>
@@ -526,7 +634,14 @@
           <code><a href="createIndividual.html">createIndividual()</a></code>
 
         </dt>
-        <dd>Creates an individual using the PK-Sim Database</dd>
+        <dd>Creates a set of parameter values describing an individual using the PK-Sim Database</dd>
+
+        <dt>
+
+          <code><a href="createIndividualBuildingBlock.html">createIndividualBuildingBlock()</a></code>
+
+        </dt>
+        <dd>Create a MoBi Individual Building Block</dd>
 
         <dt>
 
@@ -551,10 +666,24 @@
 
         <dt>
 
+          <code><a href="createSimulation.html">createSimulation()</a></code>
+
+        </dt>
+        <dd>Create a new simulation from a simulation configuration</dd>
+
+        <dt>
+
           <code><a href="createSimulationBatch.html">createSimulationBatch()</a></code>
 
         </dt>
         <dd>Creates and returns an instance of a <code>SimulationBatch</code> that can be used to efficiently vary parameters and initial values in a simulation</dd>
+
+        <dt>
+
+          <code><a href="createSimulationConfiguration.html">createSimulationConfiguration()</a></code>
+
+        </dt>
+        <dd>Create a simulation configuration from modules.</dd>
 
         <dt>
 
@@ -569,6 +698,20 @@
 
         </dt>
         <dd>Creates a list of <code>DataSet</code> objects from a <code>data.frame</code></dd>
+
+        <dt>
+
+          <code><a href="deleteInitialConditionsFromBB.html">deleteInitialConditionsFromBB()</a></code>
+
+        </dt>
+        <dd>Delete entries from an Initial Conditions Building Block</dd>
+
+        <dt>
+
+          <code><a href="deleteParameterValuesFromBB.html">deleteParameterValuesFromBB()</a></code>
+
+        </dt>
+        <dd>Delete entries from a Parameter Values Building Block</dd>
 
         <dt>
 
@@ -723,6 +866,20 @@
 
         </dt>
         <dd>Export steady-state to Excel in the format that can be imported in MoBi.</dd>
+
+        <dt>
+
+          <code><a href="expressionProfileBBToDataFrame.html">expressionProfileBBToDataFrame()</a></code>
+
+        </dt>
+        <dd>Convert Expression Profile Building Blocks to data frames</dd>
+
+        <dt>
+
+          <code><a href="extendInitialConditionsBB.html">extendInitialConditionsBB()</a></code>
+
+        </dt>
+        <dd>Extend an Initial Conditions Building Block (BB) with new entries for molecules from a molecules BB in all physical containers of a spatial structure BB.</dd>
 
         <dt>
 
@@ -957,6 +1114,13 @@
 
         <dt>
 
+          <code><a href="individualsBBToDataFrame.html">individualsBBToDataFrame()</a></code>
+
+        </dt>
+        <dd>Convert an Individual Building Block to a data frame.</dd>
+
+        <dt>
+
           <code><a href="initPKSim.html">initPKSim()</a></code>
 
         </dt>
@@ -964,10 +1128,24 @@
 
         <dt>
 
+          <code><a href="initialConditionsBBToDataFrame.html">initialConditionsBBToDataFrame()</a></code>
+
+        </dt>
+        <dd>Convert an Initial Conditions Building Block to a data frame.</dd>
+
+        <dt>
+
           <code><a href="isExplicitFormulaByPath.html">isExplicitFormulaByPath()</a></code>
 
         </dt>
         <dd>Is the value defined by an explicit formula</dd>
+
+        <dt>
+
+          <code><a href="isSupportedUnit.html">isSupportedUnit()</a></code>
+
+        </dt>
+        <dd>Check if unit is supported in the OSPSuite platform</dd>
 
         <dt>
 
@@ -996,6 +1174,20 @@
 
         </dt>
         <dd>Load data sets from excel</dd>
+
+        <dt>
+
+          <code><a href="loadMoBiProject.html">loadMoBiProject()</a></code>
+
+        </dt>
+        <dd>Load a MoBi project</dd>
+
+        <dt>
+
+          <code><a href="loadModuleFromPKML.html">loadModuleFromPKML()</a></code>
+
+        </dt>
+        <dd>Load a MoBi module from pkml.</dd>
 
         <dt>
 
@@ -1045,6 +1237,13 @@
 
         </dt>
         <dd>Deprecated functions</dd>
+
+        <dt>
+
+          <code><a href="parameterValuesBBToDataFrame.html">parameterValuesBBToDataFrame()</a></code>
+
+        </dt>
+        <dd>Convert a Parameter Values Building Block to a data frame.</dd>
 
         <dt>
 
@@ -1209,6 +1408,34 @@
 
         <dt>
 
+          <code><a href="saveExpressionProfileToPKML.html">saveExpressionProfileToPKML()</a></code>
+
+        </dt>
+        <dd>Save an Expression Profile Building Block to pkml</dd>
+
+        <dt>
+
+          <code><a href="saveIndividualToPKML.html">saveIndividualToPKML()</a></code>
+
+        </dt>
+        <dd>Save an Individual Building Block to pkml</dd>
+
+        <dt>
+
+          <code><a href="saveInitialConditionsToPKML.html">saveInitialConditionsToPKML()</a></code>
+
+        </dt>
+        <dd>Save an Initial Conditions Building Block to pkml</dd>
+
+        <dt>
+
+          <code><a href="saveParameterValuesToPKML.html">saveParameterValuesToPKML()</a></code>
+
+        </dt>
+        <dd>Save a Parameter Values Building Block to pkml</dd>
+
+        <dt>
+
           <code><a href="saveSimulation.html">saveSimulation()</a></code>
 
         </dt>
@@ -1220,6 +1447,20 @@
 
         </dt>
         <dd>Scale current values of parameters using a factor</dd>
+
+        <dt>
+
+          <code><a href="setExpressionProfileParameters.html">setExpressionProfileParameters()</a></code>
+
+        </dt>
+        <dd>Set Parameters of an Expression Profile Building Block</dd>
+
+        <dt>
+
+          <code><a href="setInitialConditionsInBB.html">setInitialConditionsInBB()</a></code>
+
+        </dt>
+        <dd>Set or add initial conditions to an existing Initial Conditions building block.</dd>
 
         <dt>
 
@@ -1269,6 +1510,20 @@
 
         </dt>
         <dd>Set the values of parameters in the simulation by path</dd>
+
+        <dt>
+
+          <code><a href="setParameterValuesInBB.html">setParameterValuesInBB()</a></code>
+
+        </dt>
+        <dd>Set or add parameter values to an existing Parameter Values building block.</dd>
+
+        <dt>
+
+          <code><a href="setParameterValuesInIndividualBB.html">setParameterValuesInIndividualBB()</a></code>
+
+        </dt>
+        <dd>Set Parameters of a MoBi Individual Building Block</dd>
 
         <dt>
 
@@ -1346,6 +1601,13 @@
 
         </dt>
         <dd>Validate dimension</dd>
+
+        <dt>
+
+          <code><a href="validateIsNamedList.html">validateIsNamedList()</a></code>
+
+        </dt>
+        <dd>Validate that an object is a named list</dd>
 
         <dt>
 

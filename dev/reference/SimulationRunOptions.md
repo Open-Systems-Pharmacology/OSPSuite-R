@@ -17,11 +17,6 @@ Options to be passed to the simulation engine
   simulating a population simulation. Default is
   `getOSPSuiteSetting("numberOfCores")`.
 
-- `checkForNegativeValues`:
-
-  Specifies whether negative values check is on or off. Default is
-  `TRUE`
-
 - `showProgress`:
 
   Specifies whether a progress bar should be shown during population
@@ -39,6 +34,8 @@ Options to be passed to the simulation engine
 - [`SimulationRunOptions$new()`](#method-SimulationRunOptions-new)
 
 - [`SimulationRunOptions$print()`](#method-SimulationRunOptions-print)
+
+- [`SimulationRunOptions$.getCheckForNegativeValues()`](#method-SimulationRunOptions-.getCheckForNegativeValues)
 
 Inherited methods
 
@@ -78,7 +75,7 @@ Initialize a new instance of the class
 
 - `checkForNegativeValues`:
 
-  Should the solver check for negative values. Default is `TRUE`
+  **\[deprecated\]** Use `sim$solver$checkForNegativeValues` instead.
 
 - `showProgress`:
 
@@ -109,3 +106,17 @@ Print the object to the console
 - `...`:
 
   Rest arguments.
+
+------------------------------------------------------------------------
+
+### Method `.getCheckForNegativeValues()`
+
+Get the checkForNegativeValues property (deprecated)
+
+#### Usage
+
+    SimulationRunOptions$.getCheckForNegativeValues()
+
+#### Returns
+
+The value of checkForNegativeValues from the solver

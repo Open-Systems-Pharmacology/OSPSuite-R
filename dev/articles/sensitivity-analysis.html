@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9020</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,10 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -81,7 +84,7 @@
       <h1>Sensitivity analysis</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/vignettes/sensitivity-analysis.Rmd" class="external-link"><code>vignettes/sensitivity-analysis.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/vignettes/sensitivity-analysis.Rmd" class="external-link"><code>vignettes/sensitivity-analysis.Rmd</code></a></small>
       <div class="d-none name"><code>sensitivity-analysis.Rmd</code></div>
     </div>
 
@@ -157,7 +160,10 @@ reference value - Total number of simulations:
 <span><span class="co">#&gt;   • Number of parameters to vary: Will be estimated at run time</span></span>
 <span></span>
 <span><span class="co"># Create a `SensitivityAnalysis` with specified parameters</span></span>
-<span><span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, parameterPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Organism|Q"</span>, <span class="st">"Organism|Volume"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  simulation <span class="op">=</span> <span class="va">sim</span>,</span>
+<span>  parameterPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Organism|Q"</span>, <span class="st">"Organism|Volume"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sa</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SensitivityAnalysis&gt;</span></span></span>
 <span><span class="co">#&gt;   • Number of steps: 2</span></span>
@@ -176,17 +182,18 @@ suitable for sensitivity calculation parameters are considered. - In
 such cases, calling <code>addParameterPaths()</code> will only vary the
 newly added parameters.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Load simulation</span></span>
+<code class="sourceCode R"><span><span class="co"># Load simulation</span></span>
 <span><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"simple.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create a `SensitivityAnalysis` with specified parameters</span></span>
-<span><span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span>, parameterPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"Organism|Q"</span>,</span>
-<span>  <span class="st">"Organism|Volume"</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">sa</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  simulation <span class="op">=</span> <span class="va">sim</span>,</span>
+<span>  parameterPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Organism|Q"</span>,</span>
+<span>    <span class="st">"Organism|Volume"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co"># Add new parameter</span></span>
 <span><span class="va">sa</span><span class="op">$</span><span class="fu">addParameterPaths</span><span class="op">(</span><span class="st">"R1|k1"</span><span class="op">)</span></span>
 <span></span>
@@ -302,7 +309,11 @@ Existing objects retain their original values.</p>
 <span></span>
 <span><span class="co"># Get sensitivities for the parameter "AUC_inf" of the simulated output with a threshold of 0.8</span></span>
 <span><span class="va">outputPath</span> <span class="op">&lt;-</span> <span class="va">sim</span><span class="op">$</span><span class="va">outputSelections</span><span class="op">$</span><span class="va">allOutputs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">path</span></span>
-<span><span class="va">sensitivities</span> <span class="op">&lt;-</span> <span class="va">saResult</span><span class="op">$</span><span class="fu">allPKParameterSensitivitiesFor</span><span class="op">(</span>pkParameterName <span class="op">=</span> <span class="st">"AUC_inf"</span>, outputPath <span class="op">=</span> <span class="va">outputPath</span>, totalSensitivityThreshold <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
+<span><span class="va">sensitivities</span> <span class="op">&lt;-</span> <span class="va">saResult</span><span class="op">$</span><span class="fu">allPKParameterSensitivitiesFor</span><span class="op">(</span></span>
+<span>  pkParameterName <span class="op">=</span> <span class="st">"AUC_inf"</span>,</span>
+<span>  outputPath <span class="op">=</span> <span class="va">outputPath</span>,</span>
+<span>  totalSensitivityThreshold <span class="op">=</span> <span class="fl">0.8</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sensitivities</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;PKParameterSensitivity&gt;</span></span></span>
@@ -337,10 +348,16 @@ which can be loaded in another instance.</p>
 <span></span>
 <span><span class="co"># Export to csv</span></span>
 <span><span class="va">saResultPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"SAResult.csv"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/exportSensitivityAnalysisResultsToCSV.html">exportSensitivityAnalysisResultsToCSV</a></span><span class="op">(</span>results <span class="op">=</span> <span class="va">saResult</span>, filePath <span class="op">=</span> <span class="va">saResultPath</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/exportSensitivityAnalysisResultsToCSV.html">exportSensitivityAnalysisResultsToCSV</a></span><span class="op">(</span></span>
+<span>  results <span class="op">=</span> <span class="va">saResult</span>,</span>
+<span>  filePath <span class="op">=</span> <span class="va">saResultPath</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load from csv</span></span>
-<span><span class="va">saResultLoaded</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/importSensitivityAnalysisResultsFromCSV.html">importSensitivityAnalysisResultsFromCSV</a></span><span class="op">(</span>filePaths <span class="op">=</span> <span class="va">saResultPath</span>, simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">saResultLoaded</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/importSensitivityAnalysisResultsFromCSV.html">importSensitivityAnalysisResultsFromCSV</a></span><span class="op">(</span></span>
+<span>  filePaths <span class="op">=</span> <span class="va">saResultPath</span>,</span>
+<span>  simulation <span class="op">=</span> <span class="va">sim</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

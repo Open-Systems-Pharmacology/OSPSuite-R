@@ -74,24 +74,6 @@ the simulation, selected Parameter Values (PV) and Initial Conditions (IC), and 
     <p>A new <code>SimulationConfiguration</code> object.</p>
     </div>
     <div class="section level2">
-    <h2 id="public-fields">Public fields<a class="anchor" aria-label="anchor" href="#public-fields"></a></h2>
-    <p></p><div class="r6-fields"><dl><dt><code>partitionCoefficientMethods</code></dt>
-<dd><p>The method used for calculation of partition coefficients. A named list with names being the molecules used in all modules,
-and the values being one of the <code>PartitionCoefficientMethods</code> enum values.
-To set the partition coefficient method for a molecule, provide a named list.
-TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650</p></dd>
-
-
-<dt><code>cellularPermeabilityMethods</code></dt>
-<dd><p>The method used for calculation of cellular permeabilities. A named list with names being the molecules used in all modules,
-and the values being one of the <code>CellularPermeabilityMethods</code> enum values.
-To set the cellular permeability method for a molecule, provide a named list.
-TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650</p></dd>
-
-
-</dl><p></p></div>
-    </div>
-    <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
     <p></p><div class="r6-active-bindings"><dl><dt><code>individual</code></dt>
 <dd><p>A building block of type "Individual" used in the configuration.
@@ -104,7 +86,7 @@ used in the configuration. Only one profile per protein is allowed.</p></dd>
 
 
 <dt><code>modules</code></dt>
-<dd><p>A named list of <code>Module</code> objects from which to create in simulation.
+<dd><p>A named list of <code>MoBiModule</code> objects from which to create the simulation.
 The order of modules defines the order in which the modules will be combined to a simulation!
 When setting the modules, the selection of Initial Conditions and Parameter Values
 is reset to the first available ones in the modules.</p></dd>
@@ -122,25 +104,23 @@ If the modules for which the PV
 selection is provided are not in the configuration, throw an error.</p></dd>
 
 
+<dt><code>partitionCoefficientOverrides</code></dt>
+<dd><p>A named list of partition coefficient method
+overrides. Names are molecule names, values are the full calculation method names.
+Read-only; use <code>setPartitionCoefficientMethods()</code> to modify.</p></dd>
+
+
+<dt><code>cellularPermeabilityOverrides</code></dt>
+<dd><p>A named list of cellular permeability method
+overrides. Names are molecule names, values are the full calculation method names.
+Read-only; use <code>setCellularPermeabilityMethods()</code> to modify.</p></dd>
+
+
 <dt><code>settings</code></dt>
 <dd><p>A <code>SimulationSettings</code> object defining the simulation settings.
 If no settings are provided, default settings will be used upon simulation creation.
 Individual properties within the <code>SimulationSettings</code> object are read-only, but the entire settings object can be replaced with another <code>SimulationSettings</code> instance (or set to <code>NULL</code> to use defaults).
 Setting the solver settings, output intervals, and output selections must be done after creating the simulation from the configuration.</p></dd>
-
-
-<dt><code>partitionCoefficientMethods</code></dt>
-<dd><p>The method used for calculation of partition coefficients. A named list with names being the molecules used in all modules,
-and the values being one of the <code>PartitionCoefficientMethods</code> enum values.
-To set the partition coefficient method for a molecule, provide a named list.
-TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650</p></dd>
-
-
-<dt><code>cellularPermeabilityMethods</code></dt>
-<dd><p>The method used for calculation of cellular permeabilities. A named list with names being the molecules used in all modules,
-and the values being one of the <code>CellularPermeabilityMethods</code> enum values.
-To set the cellular permeability method for a molecule, provide a named list.
-TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650</p></dd>
 
 
 </dl><p></p></div>
@@ -152,12 +132,12 @@ TODO https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1650</p></dd
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
 <ul><li><p><a href="#method-SimulationConfiguration-new"><code>SimulationConfiguration$new()</code></a></p></li>
+<li><p><a href="#method-SimulationConfiguration-setPartitionCoefficientMethods"><code>SimulationConfiguration$setPartitionCoefficientMethods()</code></a></p></li>
+<li><p><a href="#method-SimulationConfiguration-setCellularPermeabilityMethods"><code>SimulationConfiguration$setCellularPermeabilityMethods()</code></a></p></li>
 <li><p><a href="#method-SimulationConfiguration-print"><code>SimulationConfiguration$print()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-SimulationConfiguration-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
-<p>Initialize a new instance of the class</p>
-<p>Should not be directly used. Instead, use function <code><a href="createSimulationConfiguration.html">createSimulationConfiguration()</a></code> or the method <code><a href="createSimulationConfiguration.html">createSimulationConfiguration()</a></code>
-from the class <code>MoBiProject</code>.</p><div class="section">
+<p>Initialize a new instance of the class</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/SimulationConfiguration.html">SimulationConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
 <span>  <span class="va">modules</span>,</span>
@@ -172,7 +152,7 @@ from the class <code>MoBiProject</code>.</p><div class="section">
 <div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>modules</code></dt>
-<dd><p>A list of <code>Module</code> objects from which to create in simulation.
+<dd><p>A list of <code>MoBiModule</code> objects from which to create in simulation.
 The order of modules defines the order in which the modules will be combined to a simulation!</p></dd>
 
 
@@ -210,21 +190,66 @@ default settings will be used upon simulation creation.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-SimulationConfiguration-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
-<p>Print the object to the console</p><div class="section">
+</div><p></p><hr><a id="method-SimulationConfiguration-setPartitionCoefficientMethods"></a><div class="section">
+<h3 id="method-setpartitioncoefficientmethods-">Method <code>setPartitionCoefficientMethods()</code><a class="anchor" aria-label="anchor" href="#method-setpartitioncoefficientmethods-"></a></h3>
+<p>Sets the method used for calculation of partition coefficients. This method can be used to specify the partition coefficient method for each molecule used in the modules. If
+not specified, the method set in the Molecules Building Block of the last module in which the molecule is present will be used.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">SimulationConfiguration</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span>printClassProperties <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">SimulationConfiguration</span><span class="op">$</span><span class="fu">setPartitionCoefficientMethods</span><span class="op">(</span></span>
+<span>  <span class="va">moleculeName</span>,</span>
+<span>  <span class="va">methodName</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>printClassProperties</code></dt>
-<dd><p>Logical, whether to print class properties (default: <code>FALSE</code>). If <code>TRUE</code>, calls first the <code>print</code> method of the parent class.
-Useful for debugging.</p></dd>
+<p></p><div class="arguments"><dl><dt><code>moleculeName</code></dt>
+<dd><p>The name of the molecule for which to set the partition coefficient method.</p></dd>
 
 
-<dt><code>...</code></dt>
+<dt><code>methodName</code></dt>
+<dd><p>The name of the method to use for calculation of partition coefficients for the specified molecule. Should be one of the <code>PartitionCoefficientMethods</code> enum values.
+Use <code>NULL</code> to remove an existing override.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div><p></p><hr><a id="method-SimulationConfiguration-setCellularPermeabilityMethods"></a><div class="section">
+<h3 id="method-setcellularpermeabilitymethods-">Method <code>setCellularPermeabilityMethods()</code><a class="anchor" aria-label="anchor" href="#method-setcellularpermeabilitymethods-"></a></h3>
+<p>Sets the method used for calculation of cellular permeabilities. This method can be used to specify the cellular permeability method for each molecule used in the modules. If
+not specified, the method set in the Molecules Building Block of the last module in which the molecule is present will be used.</p><div class="section">
+<h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">SimulationConfiguration</span><span class="op">$</span><span class="fu">setCellularPermeabilityMethods</span><span class="op">(</span></span>
+<span>  <span class="va">moleculeName</span>,</span>
+<span>  <span class="va">methodName</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>moleculeName</code></dt>
+<dd><p>The name of the molecule for which to set the cellular permeability method.</p></dd>
+
+
+<dt><code>methodName</code></dt>
+<dd><p>The name of the method to use for calculation of cellular permeabilities for the specified molecule. Should be one of the <code>CellularPermeabilityMethods</code> enum values.
+Use <code>NULL</code> to remove an existing override.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div><p></p><hr><a id="method-SimulationConfiguration-print"></a><div class="section">
+<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
+<p>Print the object to the console</p><div class="section">
+<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">SimulationConfiguration</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>Rest arguments.</p></dd>
 
 
@@ -240,7 +265,7 @@ Useful for debugging.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
 </div>
 
 <div class="pkgdown-footer-right">
