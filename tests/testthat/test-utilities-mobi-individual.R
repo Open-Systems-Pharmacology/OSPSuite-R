@@ -201,7 +201,7 @@ test_that("saveIndividualToPKML writes a non-empty pkml file and returns the pat
 
   expect_true(file.exists(filePath))
   expect_gt(file.info(filePath)$size, 0)
-  expect_equal(result, .expandPath(filePath))
+  expect_equal(result, path.expand(filePath))
 })
 
 test_that("saveIndividualToPKML errors when given a non-Individual BB", {

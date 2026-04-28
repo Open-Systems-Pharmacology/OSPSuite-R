@@ -32,3 +32,17 @@ Path of entries added to the building block.
 \description{
 Existing entries will not be overwritten.
 }
+\examples{
+\dontrun{
+project <- loadMoBiProject("path/to/project.mbp3")
+module <- project$getModules("TestModule")[[1]]
+pvBB <- module$getParameterValuesBBs()[[1]]
+
+newPaths <- addLocalMoleculeParametersToParameterValuesBB(
+  parameterValuesBuildingBlock = pvBB,
+  spatialStructureModule = module,
+  moleculesModule = module,
+  moleculeNames = c("CYP3A4")
+)
+}
+}

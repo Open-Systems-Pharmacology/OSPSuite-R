@@ -79,7 +79,7 @@ MoBiProject <- R6::R6Class(
     #'
     #' Should not be directly used. Instead, use function `loadMoBiProject()`
     #' to load a project.
-    #' @param netObject Reference to `NetObject` .NET MoBi-project object
+    #' @param netObject Underlying reference to the MoBi project in the simulation engine.
     #' @param sourceFile (Optional) File used to load the project
     #' @returns A new `MoBiProject` object.
     initialize = function(netObject, sourceFile = NULL) {
@@ -252,13 +252,13 @@ MoBiProject <- R6::R6Class(
     #' IC BBs, it is possible to specify which IC BB to apply by providing a named list,
     #' where the name should be the name of the module and the value the name of the IC BB.
     #' By explicitly setting the value for a specific module to `NULL`, no IC BB from the specified module will be applied.
-    #' If the list contains a module name that is not part of the provided modules, it will be ignored.
+    #' Names that do not match any module in `modulesNames` raise an error.
     #' @param selectedParameterValues By default, the first Parameter Values
     #' (PV) building block (BB) of each module will be selected. If a module has multiple
     #' PV BBs, it is possible to specify which PV BB to apply by providing a named list,
     #' where the name should be the name of the module and the value the name of the PV BB.
     #' By explicitly setting the value for a specific module to `NULL`, no PV BB from the specified module will be applied.
-    #' If the list contains a module name that is not part of the provided modules, it will be ignored.
+    #' Names that do not match any module in `modulesNames` raise an error.
     #' @param settings Optional, a `SimulationSettings` object defining the simulation settings.
     #' If `NULL` (default), the default simulation settings of the project will be used.
     #' @returns A `SimulationConfiguration` object.

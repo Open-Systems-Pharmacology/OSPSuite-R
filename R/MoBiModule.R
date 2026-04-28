@@ -63,7 +63,7 @@ MoBiModule <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class
     #'
-    #' @param netObject Reference to `NetObject` .NET MoBi-module object
+    #' @param netObject Underlying reference to the MoBi module in the simulation engine.
     #' @return A new `MoBiModule` object.
     initialize = function(netObject) {
       super$initialize(netObject)

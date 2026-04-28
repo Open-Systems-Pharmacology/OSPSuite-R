@@ -13,7 +13,7 @@ loadModuleFromPKML <- function(path) {
     stop(paste0("File does not exist: ", path))
   }
   validateIsFileExtension(path, "pkml")
-  netObject <- .callModuleTask("LoadModulesFromFile", .expandPath(path))
+  netObject <- .callModuleTask("LoadModulesFromFile", path.expand(path))
   if (length(netObject) > 1) {
     stop(
       "The PKML you are trying to load the module from contains more than one module, but the 

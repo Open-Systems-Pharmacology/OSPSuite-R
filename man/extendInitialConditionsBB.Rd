@@ -33,3 +33,17 @@ Paths of entries added to the building block.
 If an initial condition for the combination <container, molecule> already exists
 in the IC-BB, the value will be kept AS IS.
 }
+\examples{
+\dontrun{
+project <- loadMoBiProject("path/to/project.mbp3")
+module <- project$getModules("TestModule")[[1]]
+icBB <- module$getInitialConditionsBBs()[[1]]
+
+newPaths <- extendInitialConditionsBB(
+  initialConditionsBuildingBlock = icBB,
+  spatialStructureModule = module,
+  moleculesModule = module,
+  moleculeNames = c("CYP3A4", "UGT2B7")
+)
+}
+}

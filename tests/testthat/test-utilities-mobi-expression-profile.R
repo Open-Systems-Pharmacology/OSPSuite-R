@@ -309,7 +309,7 @@ test_that("saveExpressionProfileToPKML writes a non-empty pkml file and returns 
 
   expect_true(file.exists(filePath))
   expect_gt(file.info(filePath)$size, 0)
-  expect_equal(result, .expandPath(filePath))
+  expect_equal(result, path.expand(filePath))
 })
 
 test_that("saveExpressionProfileToPKML errors when given a non-Expression-Profile BB", {

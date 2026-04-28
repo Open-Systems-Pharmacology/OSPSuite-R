@@ -29,7 +29,7 @@ loadDataSetFromPKML <- function(filePath) {
 saveDataSetToPKML <- function(dataSet, filePath) {
   validateIsString(filePath)
   validateIsOfType(dataSet, "DataSet")
-  filePath <- .expandPath(filePath)
+  filePath <- path.expand(filePath)
   dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
   dataRepositoryTask$call(
     "SaveDataRepository",

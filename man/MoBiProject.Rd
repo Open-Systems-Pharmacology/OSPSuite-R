@@ -95,7 +95,7 @@ to load a project.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{netObject}}{Reference to \code{NetObject} .NET MoBi-project object}
+\item{\code{netObject}}{Underlying reference to the MoBi project in the simulation engine.}
 
 \item{\code{sourceFile}}{(Optional) File used to load the project}
 }
@@ -234,14 +234,14 @@ All defined modules must be present in the project. The order of module names de
 IC BBs, it is possible to specify which IC BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the IC BB.
 By explicitly setting the value for a specific module to \code{NULL}, no IC BB from the specified module will be applied.
-If the list contains a module name that is not part of the provided modules, it will be ignored.}
+Names that do not match any module in \code{modulesNames} raise an error.}
 
 \item{\code{selectedParameterValues}}{By default, the first Parameter Values
 (PV) building block (BB) of each module will be selected. If a module has multiple
 PV BBs, it is possible to specify which PV BB to apply by providing a named list,
 where the name should be the name of the module and the value the name of the PV BB.
 By explicitly setting the value for a specific module to \code{NULL}, no PV BB from the specified module will be applied.
-If the list contains a module name that is not part of the provided modules, it will be ignored.}
+Names that do not match any module in \code{modulesNames} raise an error.}
 
 \item{\code{settings}}{Optional, a \code{SimulationSettings} object defining the simulation settings.
 If \code{NULL} (default), the default simulation settings of the project will be used.}
