@@ -292,7 +292,9 @@ proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(
   spatialStructureModule = thyroidModule,
   moleculesModule = modules[["Thyroid_QST"]],
   moleculeNames = c("DIO1"),
-  referenceExpressionProfiles = list(expressionProfiles[["DIO1|Human|Healthy"]]),
+  referenceExpressionProfiles = list(expressionProfiles[[
+    "DIO1|Human|Healthy"
+  ]]),
   organPaths = "Organism|Thyroid"
 )
 
@@ -302,12 +304,13 @@ print(proteinExpressionPaths)
 The same call without explicit `moleculeNames` or `referenceExpressionProfiles` adds expression parameters for every protein defined in the molecules module, using auto-created `"Human"` default profiles for any molecule without a supplied reference profile:
 
 ```{r addProteinExpressionToPVBBDefaults, eval = FALSE}
-addProteinExpressionToParameterValuesBB(
+addedPaths <- addProteinExpressionToParameterValuesBB(
   parameterValuesBuildingBlock = pvBB,
   spatialStructureModule = thyroidModule,
   moleculesModule = modules[["Thyroid_QST"]],
   organPaths = "Organism|Thyroid"
 )
+head(addedPaths)
 ```
 
 and overwrite the value of "Relative expression":
@@ -336,7 +339,7 @@ simulationConfigurationHuman <- createSimulationConfiguration(
   ),
   individual = myIndividual,
   expressionProfiles = expressionProfiles,
-  selectedParameterValues = list("Thyroid" = "Human")
+  selectedParameterValues = list("Thyroid_Generic" = "Human")
 )
 
 print(simulationConfigurationHuman)
