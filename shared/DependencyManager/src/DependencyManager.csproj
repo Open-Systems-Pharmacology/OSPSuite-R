@@ -85,18 +85,14 @@
       <AllowedAssembly Include="BouncyCastle.Cryptography" />
       <AllowedAssembly Include="Castle.Core" />
       <AllowedAssembly Include="Castle.Windsor" />
-      <AllowedAssembly Include="Dapper" />
       <AllowedAssembly Include="DependencyManager" />
       <AllowedAssembly Include="DevExpress.Data.v21.2" />
-      <AllowedAssembly Include="Enums.NET" />
       <AllowedAssembly Include="ExtendedNumerics.BigDecimal" />
       <AllowedAssembly Include="FluentNHibernate" />
       <AllowedAssembly Include="ICSharpCode.SharpZipLib" />
       <AllowedAssembly Include="Iesi.Collections" />
       <AllowedAssembly Include="LumenWorks.Framework.IO" />
-      <AllowedAssembly Include="MPFitLib" />
       <AllowedAssembly Include="MarkdownLog" />
-      <AllowedAssembly Include="MathNet.Numerics" />
       <AllowedAssembly Include="Microsoft.Data.Sqlite" />
       <AllowedAssembly Include="Microsoft.Extensions.DependencyInjection" />
       <AllowedAssembly Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
@@ -140,7 +136,6 @@
       <AllowedAssembly Include="OSPSuite.TeXReporting" />
       <AllowedAssembly Include="OSPSuite.Utility" />
       <AllowedAssembly Include="PKSim.Assets" />
-      <AllowedAssembly Include="PKSim.Assets.Images" />
       <AllowedAssembly Include="PKSim.CLI.Core" />
       <AllowedAssembly Include="PKSim.Core" />
       <AllowedAssembly Include="PKSim.Infrastructure" />
@@ -154,7 +149,6 @@
       <AllowedAssembly Include="SixLabors.Fonts" />
       <AllowedAssembly Include="SixLabors.ImageSharp" />
       <AllowedAssembly Include="System.Configuration.ConfigurationManager" />
-      <AllowedAssembly Include="System.Data.SQLite" />
       <AllowedAssembly Include="System.Drawing.Common" />
       <AllowedAssembly Include="System.Formats.Nrbf" />
       <AllowedAssembly Include="System.Resources.Extensions" />
