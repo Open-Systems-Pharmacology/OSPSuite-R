@@ -625,14 +625,20 @@ addLocalMoleculeParametersToParameterValuesBB <- function(
 #' @param moleculesModule A `MoBiModule` containing a `Molecules` building block.
 #' Must contain the proteins named in `moleculeNames`.
 #' @param moleculeNames Character vector of protein molecule names for which
-#' expression parameters should be added.
+#' expression parameters should be added. If `NULL` (default), all proteins
+#' (i.e. molecules of type `Enzyme`, `Transporter`, or `Binding Partner`)
+#' defined in the Molecules building block of `moleculesModule` are used.
 #' @param referenceExpressionProfiles A single `BuildingBlock` of type
-#' `Expression Profile`, or a list of such building blocks. The matching
+#' `Expression Profile`, a list of such building blocks, or `NULL`. The matching
 #' profile for each molecule in `moleculeNames` is identified by the profile's
-#' `MoleculeName` property. Every molecule in `moleculeNames` must have a
-#' matching profile. Profiles whose `MoleculeName` is not in `moleculeNames`
-#' are ignored. Duplicate profiles (two entries with the same `MoleculeName`)
-#' raise an error.
+#' `MoleculeName` property. For every molecule in `moleculeNames` without a
+#' supplied profile (or when this argument is `NULL`), a default profile is
+#' created via [createExpressionProfileBuildingBlock()] for species `"Human"`,
+#' using the molecule's protein type to choose the profile category (Enzyme ->
+#' Metabolizing Enzyme, Transporter -> Transport Protein, Binding Partner ->
+#' Protein Binding Partner). Profiles whose `MoleculeName` is not in
+#' `moleculeNames` are ignored. Duplicate profiles (two entries with the same
+#' `MoleculeName`) raise an error.
 #' @param organPaths Character vector of organ paths under which expression
 #' parameters are created (e.g. `"Organism|Kidney"`). Each path must resolve
 #' to an existing organ in the spatial structure. The parameters are added for all physical containers under these paths.
@@ -645,16 +651,10 @@ addProteinExpressionToParameterValuesBB <- function(
   parameterValuesBuildingBlock,
   spatialStructureModule,
   moleculesModule,
-  moleculeNames,
-  referenceExpressionProfiles,
+  moleculeNames = NULL,
+  referenceExpressionProfiles = NULL,
   organPaths = NULL
 ) {
-  # Early exit if no molecule names are provided
-  validateIsCharacter(moleculeNames)
-  if (length(moleculeNames) == 0) {
-    return(character(0))
-  }
-
   validateIsOfType(
     referenceExpressionProfiles,
     "BuildingBlock",
@@ -692,9 +692,24 @@ addProteinExpressionToParameterValuesBB <- function(
     )
   }
 
-  referenceExpressionProfiles <- ospsuite.utils::toList(
-    referenceExpressionProfiles
-  )
+  if (is.null(moleculeNames)) {
+    moleculeNames <- moleculesBB$allMoleculeNamesOfType(
+      moleculeType = MoleculeType$Protein
+    )
+  }
+
+  validateIsCharacter(moleculeNames)
+  if (length(moleculeNames) == 0) {
+    return(character(0))
+  }
+
+  if (is.null(referenceExpressionProfiles)) {
+    referenceExpressionProfiles <- list()
+  } else {
+    referenceExpressionProfiles <- ospsuite.utils::toList(
+      referenceExpressionProfiles
+    )
+  }
   # Validate building block type
   # Build molecule-name -> profile lookup by reading MoleculeName from each BB.
   profileMoleculeNames <- character(0)
@@ -721,11 +736,14 @@ addProteinExpressionToParameterValuesBB <- function(
   names(referenceExpressionProfiles) <- profileMoleculeNames
 
   missingProfiles <- setdiff(moleculeNames, profileMoleculeNames)
-  if (length(missingProfiles) > 0) {
-    stop(sprintf(
-      "No reference expression profile provided for molecules: %s. Provide an Expression Profile building block whose `MoleculeName` matches each molecule.",
-      paste(missingProfiles, collapse = ", ")
-    ))
+  for (mol in missingProfiles) {
+    moleculeType <- moleculesBB$moleculeTypeFor(mol)
+    category <- .moleculeTypeToProfileCategory(moleculeType)
+    referenceExpressionProfiles[[mol]] <- createExpressionProfileBuildingBlock(
+      type = category,
+      moleculeName = mol,
+      speciesName = Species$Human
+    )
   }
 
   if (is.null(organPaths)) {
@@ -752,6 +770,22 @@ addProteinExpressionToParameterValuesBB <- function(
     return(character(0))
   }
   return(as.vector(newPaths, mode = "character"))
+}
+
+#' Map a molecule type string returned by `MoleculesBuildingBlock$moleculeTypeFor()`
+#' to the corresponding [ExpressionProfileCategories] entry.
+#' @keywords internal
+.moleculeTypeToProfileCategory <- function(moleculeType) {
+  switch(
+    moleculeType,
+    "Enzyme" = ExpressionProfileCategories$`Metabolizing Enzyme`,
+    "Transporter" = ExpressionProfileCategories$`Transport Protein`,
+    "Binding Partner" = ExpressionProfileCategories$`Protein Binding Partner`,
+    stop(sprintf(
+      "Cannot create a default expression profile for molecule type '%s'. Only 'Enzyme', 'Transporter', and 'Binding Partner' are supported.",
+      moleculeType
+    ))
+  )
 }
 
 

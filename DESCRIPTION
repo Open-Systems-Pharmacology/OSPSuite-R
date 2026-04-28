@@ -86,6 +86,7 @@ Collate:
     'messages.R'
     'molecule-ontogeny.R'
     'molecule.R'
+    'molecules-building-block.R'
     'object-base.R'
     'utilities.R'
     'ospsuite-env.R'
