@@ -362,6 +362,25 @@ messages$errorPVNotFoundInModule <- function(pvName, moduleName) {
   )
 }
 
+messages$errorBBTypeAutoDetectFailed <- function(filePath) {
+  paste0(
+    "Could not auto-detect the building block type from file '",
+    filePath,
+    "'. Specify the `type` argument explicitly using one of `BuildingBlockTypes$...`."
+  )
+}
+
+messages$errorBBLoadFromPKMLFailed <- function(filePath, type, cause) {
+  paste0(
+    "Failed to load a '",
+    type,
+    "' building block from file '",
+    filePath,
+    "'. ",
+    cause
+  )
+}
+
 ##### Simulation #####
 messages$errorFeatureNotSupportedBySimulation <- function(
   featureName,

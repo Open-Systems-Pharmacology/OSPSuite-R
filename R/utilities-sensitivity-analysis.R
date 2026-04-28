@@ -57,7 +57,7 @@ runSensitivityAnalysis <- function(
 exportSensitivityAnalysisResultsToCSV <- function(results, filePath) {
   validateIsOfType(results, "SensitivityAnalysisResults")
   validateIsString(filePath)
-  filePath <- .expandPath(filePath)
+  filePath <- path.expand(filePath)
   sensitivityAnalysisTask <- .getCoreTask("SensitivityAnalysisTask")
   sensitivityAnalysisTask$call(
     "ExportResultsToCSV",
@@ -95,7 +95,7 @@ importSensitivityAnalysisResultsFromCSV <- function(simulation, filePaths) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePaths)
   filePaths <- unlist(
-    lapply(filePaths, function(filePath) .expandPath(filePath)),
+    lapply(filePaths, function(filePath) path.expand(filePath)),
     use.names = FALSE
   )
 

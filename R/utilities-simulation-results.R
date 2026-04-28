@@ -185,7 +185,7 @@ exportResultsToCSV <- function(results, filePath) {
     stop(messages$errorExportResultsOnlyOneObject())
   }
   validateIsString(filePath)
-  filePath <- .expandPath(filePath)
+  filePath <- path.expand(filePath)
   simulationResultsTask <- .getCoreTask("SimulationResultsTask")
   simulationResultsTask$call(
     "ExportResultsToCSV",
@@ -223,7 +223,7 @@ importResultsFromCSV <- function(simulation, filePaths) {
   validateIsString(filePaths)
   simulationResultsTask <- .getCoreTask("SimulationResultsTask")
   filePaths <- unlist(
-    lapply(filePaths, function(filePath) .expandPath(filePath)),
+    lapply(filePaths, function(filePath) path.expand(filePath)),
     use.names = FALSE
   )
 

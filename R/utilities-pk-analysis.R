@@ -35,7 +35,7 @@ calculatePKAnalyses <- function(results) {
 exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
   validateIsOfType(pkAnalyses, "SimulationPKAnalyses")
   validateIsString(filePath)
-  filePath <- .expandPath(filePath)
+  filePath <- path.expand(filePath)
   pkAnalysisTask <- .getCoreTask("PKAnalysisTask")
   pkAnalysisTask$call(
     "ExportPKAnalysesToCSV",
@@ -61,7 +61,7 @@ exportPKAnalysesToCSV <- function(pkAnalyses, filePath) {
 importPKAnalysesFromCSV <- function(filePath, simulation) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePath)
-  filePath <- .expandPath(filePath)
+  filePath <- path.expand(filePath)
   pkAnalysisTask <- .getCoreTask("PKAnalysisTask")
   pkAnalyses <- pkAnalysisTask$call(
     "ImportPKAnalysesFromCSV",

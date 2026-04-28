@@ -9,7 +9,7 @@
 #' @export
 loadPopulation <- function(csvPopulationFile) {
   validateIsString(csvPopulationFile)
-  csvPopulationFile <- .expandPath(csvPopulationFile)
+  csvPopulationFile <- path.expand(csvPopulationFile)
   populationTask <- .getCoreTask("PopulationTask")
   population <- populationTask$call("ImportPopulation", csvPopulationFile)
   Population$new(population)
@@ -39,7 +39,7 @@ splitPopulationFile <- function(
   validateIsNumeric(numberOfCores)
   validateIsString(outputFolder)
   validateIsString(outputFileName)
-  csvPopulationFile <- .expandPath(csvPopulationFile)
+  csvPopulationFile <- path.expand(csvPopulationFile)
   populationTask <- .getCoreTask("PopulationTask")
   populationTask$call(
     "SplitPopulation",
@@ -143,7 +143,7 @@ populationFromDataFrame <- function(dataFrame) {
 exportPopulationToCSV <- function(population, filePath) {
   validateIsOfType(population, "Population")
   validateIsString(filePath)
-  filePath <- .expandPath(filePath)
+  filePath <- path.expand(filePath)
   df <- populationToDataFrame(population)
   utils::write.csv(
     df,

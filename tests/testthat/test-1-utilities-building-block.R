@@ -1078,7 +1078,7 @@ test_that("saveInitialConditionsToPKML writes a non-empty pkml file and returns 
 
   expect_true(file.exists(filePath))
   expect_gt(file.info(filePath)$size, 0)
-  expect_equal(result, .expandPath(filePath))
+  expect_equal(result, path.expand(filePath))
 })
 
 test_that("saveInitialConditionsToPKML errors when given a non-Initial-Conditions BB", {
@@ -1105,7 +1105,7 @@ test_that("saveParameterValuesToPKML writes a non-empty pkml file and returns th
 
   expect_true(file.exists(filePath))
   expect_gt(file.info(filePath)$size, 0)
-  expect_equal(result, .expandPath(filePath))
+  expect_equal(result, path.expand(filePath))
 })
 
 test_that("saveParameterValuesToPKML errors when given a non-Parameter-Values BB", {
@@ -1121,5 +1121,212 @@ test_that("saveParameterValuesToPKML errors when file extension is not pkml", {
   expect_error(
     saveParameterValuesToPKML(cachedPVBB, filePath),
     regexp = "extension 'txt', while 'pkml' was expected"
+  )
+})
+
+
+####### Loading BB from PKML tests ######
+
+# Tests for loadBuildingBlockFromPKML
+
+# Helper: dump a building block to a temp pkml file using the matching MoBi
+# task. Mirrors `.saveBuildingBlockToPKML` but accepts the task name directly so
+# we can save BB types that do not yet have an exported `save*ToPKML` wrapper.
+.tempBBFile <- function(bb, taskName) {
+  tmp <- tempfile(fileext = ".pkml")
+  netTask <- ospsuite:::.getMoBiTaskFromCache(taskName)
+  netTask$call("ExportToPKML", bb, tmp)
+  tmp
+}
+
+# Type → task mapping must cover every BuildingBlockTypes value
+test_that(".bbTypeToTaskName covers every BuildingBlockTypes value", {
+  for (typeKey in names(BuildingBlockTypes)) {
+    taskName <- ospsuite:::.bbTypeToTaskName(BuildingBlockTypes[[typeKey]])
+    expect_type(taskName, "character")
+    expect_match(taskName, "Task$")
+  }
+})
+
+# --- Round-trip: type-specified path via existing save wrappers ---
+
+test_that("loadBuildingBlockFromPKML loads an Initial Conditions BB", {
+  module <- globalTestMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+  icBB <- module$getInitialConditionsBBs("IC1")[[1]]
+  tmp <- tempfile(fileext = ".pkml")
+  saveInitialConditionsToPKML(icBB, tmp)
+
+  loaded <- loadBuildingBlockFromPKML(
+    filePath = tmp,
+    type = BuildingBlockTypes$`Initial Conditions`
+  )
+
+  expect_true(isOfType(loaded, "BuildingBlock"))
+  expect_equal(loaded$type, BuildingBlockTypes$`Initial Conditions`)
+  expect_equal(loaded$name, icBB$name)
+})
+
+test_that("loadBuildingBlockFromPKML loads a Parameter Values BB", {
+  module <- globalTestMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+  pvBB <- module$getParameterValuesBBs("PV2")[[1]]
+  tmp <- tempfile(fileext = ".pkml")
+  saveParameterValuesToPKML(pvBB, tmp)
+
+  loaded <- loadBuildingBlockFromPKML(
+    filePath = tmp,
+    type = BuildingBlockTypes$`Parameter Values`
+  )
+
+  expect_true(isOfType(loaded, "BuildingBlock"))
+  expect_equal(loaded$type, BuildingBlockTypes$`Parameter Values`)
+  expect_equal(loaded$name, pvBB$name)
+})
+
+test_that("loadBuildingBlockFromPKML loads an Individual BB", {
+  individual <- globalTestMoBiProject$getIndividual("DefaultIndividual")
+  tmp <- tempfile(fileext = ".pkml")
+  saveIndividualToPKML(individual, tmp)
+
+  loaded <- loadBuildingBlockFromPKML(
+    filePath = tmp,
+    type = BuildingBlockTypes$Individual
+  )
+
+  expect_true(isOfType(loaded, "BuildingBlock"))
+  expect_equal(loaded$type, BuildingBlockTypes$Individual)
+  expect_equal(loaded$name, individual$name)
+})
+
+test_that("loadBuildingBlockFromPKML loads an Expression Profile BB", {
+  expProfile <- globalTestMoBiProject$getExpressionProfiles(
+    "CYP3A4|Human|Healthy"
+  )[[1]]
+  tmp <- tempfile(fileext = ".pkml")
+  saveExpressionProfileToPKML(expProfile, tmp)
+
+  loaded <- loadBuildingBlockFromPKML(
+    filePath = tmp,
+    type = BuildingBlockTypes$`Expression Profile`
+  )
+
+  expect_true(isOfType(loaded, "BuildingBlock"))
+  expect_equal(loaded$type, BuildingBlockTypes$`Expression Profile`)
+  expect_equal(loaded$name, expProfile$name)
+})
+
+# --- Auto-detect path (no `type` argument) ---
+
+test_that("loadBuildingBlockFromPKML auto-detects an Initial Conditions BB", {
+  module <- globalTestMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+  icBB <- module$getInitialConditionsBBs("IC2")[[1]]
+  tmp <- tempfile(fileext = ".pkml")
+  saveInitialConditionsToPKML(icBB, tmp)
+
+  loaded <- loadBuildingBlockFromPKML(filePath = tmp)
+
+  expect_equal(loaded$type, BuildingBlockTypes$`Initial Conditions`)
+  expect_equal(loaded$name, icBB$name)
+})
+
+test_that("loadBuildingBlockFromPKML auto-detects a Parameter Values BB", {
+  module <- globalTestMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+  pvBB <- module$getParameterValuesBBs("PV3")[[1]]
+  tmp <- tempfile(fileext = ".pkml")
+  saveParameterValuesToPKML(pvBB, tmp)
+
+  loaded <- loadBuildingBlockFromPKML(filePath = tmp)
+
+  expect_equal(loaded$type, BuildingBlockTypes$`Parameter Values`)
+  expect_equal(loaded$name, pvBB$name)
+})
+
+# --- Wrappers: Molecules BB returns the MoleculesBuildingBlock subclass ---
+
+test_that("loadBuildingBlockFromPKML wraps a Molecules BB in MoleculesBuildingBlock", {
+  module <- globalTestMoBiProject$getModules("TestModule")[[1]]
+  moleculesBB <- module$getMoleculesBB()
+  tmp <- tryCatch(
+    .tempBBFile(moleculesBB, "MoleculesTask"),
+    error = function(e) {
+      skip(paste0(
+        "Molecules BB pkml export not available: ",
+        conditionMessage(e)
+      ))
+    }
+  )
+
+  loaded <- loadBuildingBlockFromPKML(
+    filePath = tmp,
+    type = BuildingBlockTypes$Molecules
+  )
+
+  expect_true(isOfType(loaded, "MoleculesBuildingBlock"))
+  expect_equal(loaded$type, BuildingBlockTypes$Molecules)
+  expect_setequal(loaded$allMoleculeNames(), moleculesBB$allMoleculeNames())
+})
+
+# --- Errors: invalid input ---
+
+test_that("loadBuildingBlockFromPKML errors on non-existent file", {
+  expect_error(
+    loadBuildingBlockFromPKML(filePath = "no-such-file.pkml"),
+    regexp = "File does not exist"
+  )
+})
+
+test_that("loadBuildingBlockFromPKML errors on a non-pkml extension", {
+  tmp <- tempfile(fileext = ".txt")
+  file.create(tmp)
+  on.exit(unlink(tmp), add = TRUE)
+
+  expect_error(loadBuildingBlockFromPKML(filePath = tmp))
+})
+
+test_that("loadBuildingBlockFromPKML errors on an invalid type value", {
+  module <- globalTestMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+  icBB <- module$getInitialConditionsBBs("IC1")[[1]]
+  tmp <- tempfile(fileext = ".pkml")
+  saveInitialConditionsToPKML(icBB, tmp)
+
+  expect_error(loadBuildingBlockFromPKML(
+    filePath = tmp,
+    type = "NotARealBBType"
+  ))
+})
+
+# --- Errors: type mismatch / wrong content ---
+
+test_that("loadBuildingBlockFromPKML errors when the file's BB does not match the requested type", {
+  module <- globalTestMoBiProject$getModules("ExtModule_3IC_3PV")[[1]]
+  icBB <- module$getInitialConditionsBBs("IC1")[[1]]
+  tmp <- tempfile(fileext = ".pkml")
+  saveInitialConditionsToPKML(icBB, tmp)
+
+  expect_error(
+    loadBuildingBlockFromPKML(
+      filePath = tmp,
+      type = BuildingBlockTypes$`Parameter Values`
+    )
+  )
+})
+
+test_that("loadBuildingBlockFromPKML errors when the file contains more than one BB of the requested type", {
+  filePath <- getTestDataFilePath("MoBiProject/TestSim_2Modules.pkml")
+  expect_error(
+    loadBuildingBlockFromPKML(
+      filePath = filePath,
+      type = BuildingBlockTypes$Molecules
+    )
+  )
+})
+
+test_that("loadBuildingBlockFromPKML errors when no BB type can be auto-detected", {
+  tmp <- tempfile(fileext = ".pkml")
+  writeLines("not a valid pkml document", tmp)
+  on.exit(unlink(tmp), add = TRUE)
+
+  expect_error(
+    loadBuildingBlockFromPKML(filePath = tmp),
+    regexp = "Could not auto-detect"
   )
 })
