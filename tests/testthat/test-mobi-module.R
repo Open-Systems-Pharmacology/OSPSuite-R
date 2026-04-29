@@ -179,3 +179,131 @@ test_that("It returns the names of all IC BBs", {
     "Property 'initialConditionsBBnames' is read-only"
   )
 })
+
+# --- addBuildingBlocks / removeBuildingBlock ---------------------------------
+
+# Local fresh-BB factory using the engine-level constructor. Same pattern as
+# in test-utilities-mobi-module.R; duplicated here so the file remains
+# self-contained.
+.freshModuleTestBB <- function(typeName, type, name = "Test") {
+  netBB <- rSharp::newObjectFromName(
+    paste0("OSPSuite.Core.Domain.Builder.", typeName)
+  )
+  netBB$set("Name", name)
+  if (type == BuildingBlockTypes$Molecules) {
+    return(MoleculesBuildingBlock$new(netBB))
+  }
+  BuildingBlock$new(netBB, type = type)
+}
+
+test_that("addBuildingBlocks adds a single Molecules BB to a module", {
+  module <- createMoBiModule("AddOne")
+  mol <- .freshModuleTestBB(
+    "MoleculeBuildingBlock",
+    BuildingBlockTypes$Molecules,
+    "M1"
+  )
+
+  result <- module$addBuildingBlocks(list(mol))
+
+  expect_identical(result, module)
+  expect_true(isOfType(module$getMoleculesBB(), "MoleculesBuildingBlock"))
+  expect_equal(module$getMoleculesBB()$name, "M1")
+})
+
+test_that("addBuildingBlocks adds multiple Initial Conditions BBs", {
+  module <- createMoBiModule("AddICs")
+  ic1 <- .freshModuleTestBB(
+    "InitialConditionsBuildingBlock",
+    BuildingBlockTypes$`Initial Conditions`,
+    "IC1"
+  )
+  ic2 <- .freshModuleTestBB(
+    "InitialConditionsBuildingBlock",
+    BuildingBlockTypes$`Initial Conditions`,
+    "IC2"
+  )
+
+  module$addBuildingBlocks(list(ic1, ic2))
+
+  expect_setequal(module$initialConditionsBBnames, c("IC1", "IC2"))
+})
+
+test_that("addBuildingBlocks errors when adding a duplicate single-type BB", {
+  module <- createMoBiModule("DupSingle")
+  m1 <- .freshModuleTestBB(
+    "MoleculeBuildingBlock",
+    BuildingBlockTypes$Molecules,
+    "M1"
+  )
+  m2 <- .freshModuleTestBB(
+    "MoleculeBuildingBlock",
+    BuildingBlockTypes$Molecules,
+    "M2"
+  )
+  module$addBuildingBlocks(list(m1))
+  expect_error(module$addBuildingBlocks(list(m2)))
+})
+
+test_that("addBuildingBlocks treats NULL or empty list as a no-op", {
+  module <- createMoBiModule("Noop")
+
+  expect_identical(module$addBuildingBlocks(NULL), module)
+  expect_identical(module$addBuildingBlocks(list()), module)
+  expect_equal(length(module$initialConditionsBBnames), 0)
+  expect_equal(length(module$parameterValuesBBnames), 0)
+})
+
+test_that("addBuildingBlocks accepts a single BuildingBlock argument", {
+  module <- createMoBiModule("AddSingleArg")
+  ic <- .freshModuleTestBB(
+    "InitialConditionsBuildingBlock",
+    BuildingBlockTypes$`Initial Conditions`,
+    "ICOnly"
+  )
+
+  module$addBuildingBlocks(ic)
+
+  expect_equal(module$initialConditionsBBnames, "ICOnly")
+})
+
+test_that("addBuildingBlocks errors when the argument is not a BuildingBlock", {
+  module <- createMoBiModule("BadAdd")
+  expect_error(
+    module$addBuildingBlocks("not a BB"),
+    regexp = "BuildingBlock"
+  )
+})
+
+test_that("removeBuildingBlock removes a single-type BB by its type name", {
+  module <- createMoBiModule("RemoveSingle")
+  mol <- .freshModuleTestBB(
+    "MoleculeBuildingBlock",
+    BuildingBlockTypes$Molecules,
+    "M1"
+  )
+  module$addBuildingBlocks(list(mol))
+
+  result <- module$removeBuildingBlock(BuildingBlockTypes$Molecules)
+
+  expect_identical(result, module)
+  expect_null(module$getMoleculesBB())
+})
+
+test_that("removeBuildingBlock errors when no BB of the given type is present", {
+  module <- createMoBiModule("EmptyRemove")
+  expect_error(
+    module$removeBuildingBlock(BuildingBlockTypes$Molecules),
+    regexp = "No 'Molecules' building block"
+  )
+})
+
+test_that("removeBuildingBlock errors when name is not a valid BuildingBlockTypes value", {
+  module <- createMoBiModule("BadName")
+  expect_error(module$removeBuildingBlock("NotARealType"))
+})
+
+test_that("removeBuildingBlock errors when name is not a string", {
+  module <- createMoBiModule("BadType")
+  expect_error(module$removeBuildingBlock(123))
+})

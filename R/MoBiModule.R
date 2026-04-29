@@ -113,6 +113,53 @@ MoBiModule <- R6::R6Class(
     },
 
     #' @description
+    #' Add one or more building blocks to the module.
+    #'
+    #' Single-type building blocks (Molecules, Reactions, Spatial Structure,
+    #' Passive Transports, Observers, Event Groups) can appear at most once
+    #' per module; trying to add a second BB of the same single type raises
+    #' an error. Initial Conditions and Parameter Values BBs may appear
+    #' multiple times.
+    #'
+    #' @param buildingBlocks A `BuildingBlock`, a list of `BuildingBlock`
+    #'   objects, or `NULL` / empty list (no-op).
+    #' @returns The module, invisibly.
+    addBuildingBlocks = function(buildingBlocks) {
+      validateIsOfType(buildingBlocks, "BuildingBlock", nullAllowed = TRUE)
+      .callModuleTaskWithBBs(
+        "AddBuildingBlocksToModule",
+        self,
+        buildingBlocks = buildingBlocks
+      )
+      invisible(self)
+    },
+
+    #' @description
+    #' Remove a building block from the module by its type name.
+    #'
+    #' Looks up the building block in the module via `.getBBFromModule()`
+    #' (single-type BBs: Molecules, Reactions, Spatial Structure, Passive
+    #' Transports, Observers, Event Groups) and removes it. Throws an error
+    #' if no building block of the given type is present in the module.
+    #'
+    #' @param name Name of the building block type to remove (one of the
+    #'   `BuildingBlockTypes` keys, e.g. `"Molecules"`, `"Reactions"`).
+    #' @returns The module, invisibly.
+    removeBuildingBlock = function(name) {
+      validateIsString(name)
+      bb <- .getBBFromModule(self, bbType = name)
+      if (is.null(bb)) {
+        stop(sprintf(
+          "No '%s' building block in module '%s'.",
+          name,
+          self$name
+        ))
+      }
+      .callModuleTask("RemoveBuildingBlockFromModule", self, bb)
+      invisible(self)
+    },
+
+    #' @description
     #' Print the object to the console
     #' @param printClassProperties Logical, whether to print class properties (default: `FALSE`). If `TRUE`, calls first the `print` method of the parent class.
     #' Useful for debugging.

@@ -72,6 +72,74 @@ loadModuleFromPKML <- function(path) {
   return(results)
 }
 
+#' Call a method of a `ModuleTask` that takes a variable number of building
+#' blocks (a `params IBuildingBlock[]` argument on the engine side).
+#'
+#' Spreads `buildingBlocks` as individual positional arguments so that each is
+#' marshalled as an element of the `params` array. `toList(NULL)` would yield
+#' `list(NULL)`, so a `NULL` `buildingBlocks` is guarded explicitly.
+#'
+#' @param method Name of the method to call on the `ModuleTask`.
+#' @param ... Leading positional arguments (e.g. module name or module).
+#' @param buildingBlocks A `BuildingBlock`, a list of `BuildingBlock` objects,
+#'   or `NULL`.
+#' @returns The result of the method call.
+#' @noRd
+.callModuleTaskWithBBs <- function(method, ..., buildingBlocks) {
+  netTask <- .getMoBiTaskFromCache("ModuleTask")
+  bbList <- if (is.null(buildingBlocks)) {
+    list()
+  } else {
+    ospsuite.utils::toList(buildingBlocks)
+  }
+  args <- c(list(method, ...), bbList)
+  do.call(netTask$call, args)
+}
+
+#' Create a new MoBi module
+#'
+#' Creates an empty MoBi module, optionally pre-populated with a list of
+#' building blocks.
+#'
+#' @param name Name of the module to create. Must be a non-empty string.
+#' @param buildingBlocks Optional `BuildingBlock`, list of `BuildingBlock`
+#'   objects, or `NULL` (default) for an empty module.
+#'
+#' @returns A `MoBiModule` object.
+#'
+#' @details Single-type building blocks (Molecules, Reactions, Spatial
+#'   Structure, Passive Transports, Observers, Event Groups) can appear at
+#'   most once per module; passing two BBs of the same single type raises an
+#'   error. Initial Conditions and Parameter Values BBs may appear multiple
+#'   times.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Empty module
+#' module <- createMoBiModule("MyModule")
+#'
+#' # Module pre-populated with a Parameter Values BB loaded from a pkml file
+#' pvBB <- loadBuildingBlockFromPKML(
+#'   filePath = "ParameterValues.pkml",
+#'   type = BuildingBlockTypes$`Parameter Values`
+#' )
+#' module <- createMoBiModule("MyModule", buildingBlocks = pvBB)
+#' }
+createMoBiModule <- function(name, buildingBlocks = NULL) {
+  validateIsString(name)
+  ospsuite.utils::validateHasOnlyNonEmptyStrings(name)
+  validateIsOfType(buildingBlocks, "BuildingBlock", nullAllowed = TRUE)
+
+  netObject <- .callModuleTaskWithBBs(
+    "CreateModule",
+    name,
+    buildingBlocks = buildingBlocks
+  )
+  return(MoBiModule$new(netObject))
+}
+
 #' Get a list of Parameter Values (PV) or Initial Conditions (IC) Building Blocks (BBs) in the module.
 #'
 #' @param module The `MoBiModule` object for which to retrieve the Building Blocks.

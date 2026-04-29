@@ -156,6 +156,51 @@ autoLoadedBB <- loadBuildingBlockFromPKML(filePath = tmpFile)
 print(autoLoadedBB)
 ```
 
+## Creating a MoBi module from R
+
+A new module can be assembled directly from R with `createMoBiModule()`. The function creates an empty module by default; building blocks can either be passed at creation time via the `buildingBlocks` argument or added later via `MoBiModule$addBuildingBlocks()`. Building blocks are removed individually via `MoBiModule$removeBuildingBlock()`.
+
+Single-type building blocks (Molecules, Reactions, Spatial Structure, Passive Transports, Observers, Event Groups) can appear at most once per module. Adding a second building block of the same single type — either at creation or via `addBuildingBlocks()` — raises an error. Initial Conditions and Parameter Values building blocks may appear multiple times.
+
+```{r createMoBiModule}
+# Empty module
+myModule <- createMoBiModule("MyCustomModule")
+
+# Load a Parameter Values BB from a pkml file (reusing the round-trip from
+# the previous section) and attach it to the module. A single BB can be
+# passed directly; pass a list of BBs to attach several at once.
+pvBB <- loadBuildingBlockFromPKML(
+  filePath = tmpFile,
+  type = BuildingBlockTypes$`Parameter Values`
+)
+myModule$addBuildingBlocks(pvBB)
+print(myModule$parameterValuesBBnames)
+
+# `removeBuildingBlock()` removes single-type building blocks (Molecules,
+# Reactions, Spatial Structure, Passive Transports, Observers, Event Groups)
+# by their type name, e.g.:
+moleculesBB <- myProject$getModules("Thyroid")[[1]]$getMoleculesBB()
+myModule$addBuildingBlocks(moleculesBB)
+myModule$removeBuildingBlock(BuildingBlockTypes$Molecules)
+```
+
+A module can also be created with its building blocks in one call:
+
+```{r createMoBiModuleWithBBs, eval = FALSE}
+pvBB <- loadBuildingBlockFromPKML(
+  filePath = "ParameterValues.pkml",
+  type = BuildingBlockTypes$`Parameter Values`
+)
+icBB <- loadBuildingBlockFromPKML(
+  filePath = "InitialConditions.pkml",
+  type = BuildingBlockTypes$`Initial Conditions`
+)
+myModule <- createMoBiModule(
+  "MyCustomModule",
+  buildingBlocks = list(pvBB, icBB)
+)
+```
+
 ## Simulation configurations
 
 Each simulation has a `SimulationConfiguration` object that contains the modules used in the simulation, the Individual, the Expression Profiles, selection of the Initial Conditions and Parameter Values building blocks, and selection of partitioning coefficients for the molecules in the simulation. Additionally, it can contain settings for the simulation time, output settings, and solver settings.
