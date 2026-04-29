@@ -176,10 +176,14 @@ pvBB <- loadBuildingBlockFromPKML(
 myModule$addBuildingBlocks(pvBB)
 print(myModule$parameterValuesBBnames)
 
-# `removeBuildingBlock()` removes single-type building blocks (Molecules,
-# Reactions, Spatial Structure, Passive Transports, Observers, Event Groups)
-# by their type name, e.g.:
-moleculesBB <- myProject$getModules("Thyroid")[[1]]$getMoleculesBB()
+```
+
+`MoBiModule$removeBuildingBlock()` removes single-type building blocks
+(Molecules, Reactions, Spatial Structure, Passive Transports, Observers,
+Event Groups) from a module by their type name:
+
+```{r removeSingleTypeBB, eval = FALSE}
+moleculesBB <- myProject$getModules("Thyroid_QST")[[1]]$getMoleculesBB()
 myModule$addBuildingBlocks(moleculesBB)
 myModule$removeBuildingBlock(BuildingBlockTypes$Molecules)
 ```
