@@ -174,34 +174,40 @@ pvBB <- loadBuildingBlockFromPKML(
   type = BuildingBlockTypes$`Parameter Values`
 )
 myModule$addBuildingBlocks(pvBB)
-print(myModule$parameterValuesBBnames)
 
-```
-
-`MoBiModule$removeBuildingBlock()` removes single-type building blocks
-(Molecules, Reactions, Spatial Structure, Passive Transports, Observers,
-Event Groups) from a module by their type name:
-
-```{r removeSingleTypeBB, eval = FALSE}
-moleculesBB <- myProject$getModules("Thyroid_QST")[[1]]$getMoleculesBB()
-myModule$addBuildingBlocks(moleculesBB)
-myModule$removeBuildingBlock(BuildingBlockTypes$Molecules)
+print(myModule)
 ```
 
 A module can also be created with its building blocks in one call:
 
-```{r createMoBiModuleWithBBs, eval = FALSE}
-pvBB <- loadBuildingBlockFromPKML(
-  filePath = "ParameterValues.pkml",
-  type = BuildingBlockTypes$`Parameter Values`
-)
-icBB <- loadBuildingBlockFromPKML(
-  filePath = "InitialConditions.pkml",
-  type = BuildingBlockTypes$`Initial Conditions`
-)
+```{r createMoBiModuleWithBBs}
+pvBB <- myProject$getModules("Thyroid")[[1]]$getParameterValuesBBs()[["Rat"]]
+icBB <- myProject$getModules("Thyroid")[[1]]$getInitialConditionsBBs()[[1]]
+moleculesBB <- myProject$getModules("Thyroid_QST")[[1]]$getMoleculesBB()
 myModule <- createMoBiModule(
   "MyCustomModule",
-  buildingBlocks = list(pvBB, icBB)
+  buildingBlocks = list(moleculesBB, pvBB, icBB)
+)
+```
+
+`MoBiModule$removeBuildingBlock(name, type)` removes a building block by its
+name and type. For single-type building blocks (Molecules, Reactions, Spatial
+Structure, Passive Transports, Observers, Event Groups) the `name` is verified
+against the lone BB's `Name` property; for Initial Conditions and Parameter
+Values, `name` selects the BB within the type. Removing Expression Profile or
+Individual via this method is not supported (neither is module-level).
+
+```{r removeSingleTypeBB}
+# Remove the Molecules BB attached above (its name is the source BB's name)
+myModule$removeBuildingBlock(
+  name = moleculesBB$name,
+  type = BuildingBlockTypes$Molecules
+)
+
+# Remove an Initial Conditions BB by name
+myModule$removeBuildingBlock(
+  name = icBB$name,
+  type = BuildingBlockTypes$`Initial Conditions`
 )
 ```
 

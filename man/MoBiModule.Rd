@@ -168,21 +168,27 @@ objects, or \code{NULL} / empty list (no-op).}
 \if{html}{\out{<a id="method-MoBiModule-removeBuildingBlock"></a>}}
 \if{latex}{\out{\hypertarget{method-MoBiModule-removeBuildingBlock}{}}}
 \subsection{Method \code{removeBuildingBlock()}}{
-Remove a building block from the module by its type name.
+Remove a building block from the module by its name and type.
 
-Looks up the building block in the module via \code{.getBBFromModule()}
-(single-type BBs: Molecules, Reactions, Spatial Structure, Passive
-Transports, Observers, Event Groups) and removes it. Throws an error
-if no building block of the given type is present in the module.
+Single-type building blocks (Molecules, Reactions, Spatial Structure,
+Passive Transports, Observers, Event Groups) are matched on type and
+the lone BB's \code{Name} is verified against \code{name}. Multi-type building
+blocks (Initial Conditions, Parameter Values) are looked up by name
+within their type. Expression Profile and Individual are not
+module-level and raise an error.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$removeBuildingBlock(name)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$removeBuildingBlock(name, type)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{name}}{Name of the building block type to remove (one of the
-\code{BuildingBlockTypes} keys, e.g. \code{"Molecules"}, \code{"Reactions"}).}
+\item{\code{name}}{Name of the building block to remove (the BB's \code{Name}
+property).}
+
+\item{\code{type}}{Type of the building block to remove. One of the values
+defined in \code{BuildingBlockTypes} (excluding \verb{Expression Profile} and
+\code{Individual}).}
 }
 \if{html}{\out{</div>}}
 }

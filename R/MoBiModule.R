@@ -135,26 +135,80 @@ MoBiModule <- R6::R6Class(
     },
 
     #' @description
-    #' Remove a building block from the module by its type name.
+    #' Remove a building block from the module by its name and type.
     #'
-    #' Looks up the building block in the module via `.getBBFromModule()`
-    #' (single-type BBs: Molecules, Reactions, Spatial Structure, Passive
-    #' Transports, Observers, Event Groups) and removes it. Throws an error
-    #' if no building block of the given type is present in the module.
+    #' Single-type building blocks (Molecules, Reactions, Spatial Structure,
+    #' Passive Transports, Observers, Event Groups) are matched on type and
+    #' the lone BB's `Name` is verified against `name`. Multi-type building
+    #' blocks (Initial Conditions, Parameter Values) are looked up by name
+    #' within their type. Expression Profile and Individual are not
+    #' module-level and raise an error.
     #'
-    #' @param name Name of the building block type to remove (one of the
-    #'   `BuildingBlockTypes` keys, e.g. `"Molecules"`, `"Reactions"`).
+    #' @param name Name of the building block to remove (the BB's `Name`
+    #'   property).
+    #' @param type Type of the building block to remove. One of the values
+    #'   defined in `BuildingBlockTypes` (excluding `Expression Profile` and
+    #'   `Individual`).
     #' @returns The module, invisibly.
-    removeBuildingBlock = function(name) {
+    removeBuildingBlock = function(name, type) {
       validateIsString(name)
-      bb <- .getBBFromModule(self, bbType = name)
-      if (is.null(bb)) {
+      validateIsString(type)
+
+      # Modules carry two flavours of building blocks that need different
+      # lookup strategies:
+      #   - single-type BBs (Molecules, Reactions, ...) appear at most once,
+      #     are accessed via `module$get(<type>)`, and have to be name-checked
+      #     against the lone BB's `Name`.
+      #   - multi-type BBs (Initial Conditions, Parameter Values) can have
+      #     many instances and must be looked up by name within the type via
+      #     `.getICPVBBsFromModule`.
+      # `.getBBFromModule` only handles the single-type case, hence the split.
+      singleTypes <- c(
+        BuildingBlockTypes$Molecules,
+        BuildingBlockTypes$Reactions,
+        BuildingBlockTypes$SpatialStructure,
+        BuildingBlockTypes$`Passive Transports`,
+        BuildingBlockTypes$Observers,
+        BuildingBlockTypes$EventGroups
+      )
+      multiTypes <- c(
+        BuildingBlockTypes$`Initial Conditions`,
+        BuildingBlockTypes$`Parameter Values`
+      )
+
+      if (type %in% multiTypes) {
+        bb <- .getICPVBBsFromModule(
+          self,
+          names = name,
+          bbType = type,
+          stopIfNotFound = TRUE
+        )[[1]]
+      } else if (type %in% singleTypes) {
+        bb <- .getBBFromModule(self, bbType = type)
+        if (is.null(bb)) {
+          stop(sprintf(
+            "No '%s' building block in module '%s'.",
+            type,
+            self$name
+          ))
+        }
+        if (bb$name != name) {
+          stop(sprintf(
+            "Building block named '%s' (type '%s') not present in module '%s' (found '%s').",
+            name,
+            type,
+            self$name,
+            bb$name
+          ))
+        }
+      } else {
         stop(sprintf(
-          "No '%s' building block in module '%s'.",
-          name,
-          self$name
+          "Cannot remove building block of type '%s' from a module. Supported types: %s.",
+          type,
+          paste(c(singleTypes, multiTypes), collapse = ", ")
         ))
       }
+
       .callModuleTask("RemoveBuildingBlockFromModule", self, bb)
       invisible(self)
     },

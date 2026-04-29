@@ -275,7 +275,7 @@ test_that("addBuildingBlocks errors when the argument is not a BuildingBlock", {
   )
 })
 
-test_that("removeBuildingBlock removes a single-type BB by its type name", {
+test_that("removeBuildingBlock removes a single-type BB matching name + type", {
   module <- createMoBiModule("RemoveSingle")
   mol <- .freshModuleTestBB(
     "MoleculeBuildingBlock",
@@ -284,26 +284,78 @@ test_that("removeBuildingBlock removes a single-type BB by its type name", {
   )
   module$addBuildingBlocks(list(mol))
 
-  result <- module$removeBuildingBlock(BuildingBlockTypes$Molecules)
+  result <- module$removeBuildingBlock("M1", BuildingBlockTypes$Molecules)
 
   expect_identical(result, module)
   expect_null(module$getMoleculesBB())
 })
 
-test_that("removeBuildingBlock errors when no BB of the given type is present", {
-  module <- createMoBiModule("EmptyRemove")
+test_that("removeBuildingBlock removes a multi-type BB by name", {
+  module <- createMoBiModule("RemoveOneOfMany")
+  ic1 <- .freshModuleTestBB(
+    "InitialConditionsBuildingBlock",
+    BuildingBlockTypes$`Initial Conditions`,
+    "IC1"
+  )
+  ic2 <- .freshModuleTestBB(
+    "InitialConditionsBuildingBlock",
+    BuildingBlockTypes$`Initial Conditions`,
+    "IC2"
+  )
+  module$addBuildingBlocks(list(ic1, ic2))
+
+  module$removeBuildingBlock("IC1", BuildingBlockTypes$`Initial Conditions`)
+
+  expect_equal(module$initialConditionsBBnames, "IC2")
+})
+
+test_that("removeBuildingBlock errors when single-type BB name does not match", {
+  module <- createMoBiModule("WrongName")
+  mol <- .freshModuleTestBB(
+    "MoleculeBuildingBlock",
+    BuildingBlockTypes$Molecules,
+    "RealName"
+  )
+  module$addBuildingBlocks(list(mol))
+
   expect_error(
-    module$removeBuildingBlock(BuildingBlockTypes$Molecules),
+    module$removeBuildingBlock("WrongName", BuildingBlockTypes$Molecules),
+    regexp = "not present in module"
+  )
+})
+
+test_that("removeBuildingBlock errors when no BB of the given single type is present", {
+  module <- createMoBiModule("EmptySingle")
+  expect_error(
+    module$removeBuildingBlock("M1", BuildingBlockTypes$Molecules),
     regexp = "No 'Molecules' building block"
   )
 })
 
-test_that("removeBuildingBlock errors when name is not a valid BuildingBlockTypes value", {
-  module <- createMoBiModule("BadName")
-  expect_error(module$removeBuildingBlock("NotARealType"))
+test_that("removeBuildingBlock errors when the named multi-type BB is missing", {
+  module <- createMoBiModule("EmptyMulti")
+  expect_error(
+    module$removeBuildingBlock(
+      "MissingIC",
+      BuildingBlockTypes$`Initial Conditions`
+    )
+  )
 })
 
-test_that("removeBuildingBlock errors when name is not a string", {
+test_that("removeBuildingBlock errors for unsupported BB types", {
   module <- createMoBiModule("BadType")
-  expect_error(module$removeBuildingBlock(123))
+  expect_error(
+    module$removeBuildingBlock("X", BuildingBlockTypes$`Expression Profile`),
+    regexp = "Cannot remove building block of type"
+  )
+  expect_error(
+    module$removeBuildingBlock("X", BuildingBlockTypes$Individual),
+    regexp = "Cannot remove building block of type"
+  )
+})
+
+test_that("removeBuildingBlock errors when name or type is not a string", {
+  module <- createMoBiModule("BadArgs")
+  expect_error(module$removeBuildingBlock(123, BuildingBlockTypes$Molecules))
+  expect_error(module$removeBuildingBlock("M1", 123))
 })
