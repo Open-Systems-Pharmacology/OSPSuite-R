@@ -56,8 +56,11 @@ test_that("loadModuleFromPKML throws an error when the passed PKML contains more
 })
 
 test_that("loadModuleFromPKML throws an error when the passed PKML does not contain any module", {
-  filePath <- getTestDataFilePath("S1.pkml")
-  expect_error(loadModuleFromPKML(filePath))
+  filePath <- getTestDataFilePath("obs_data.pkml")
+  expect_error(
+    loadModuleFromPKML(filePath),
+    regexp = "cannot be loaded as 'Module'"
+  )
 })
 
 # --- createMoBiModule ---------------------------------------------------------
@@ -120,9 +123,18 @@ test_that("createMoBiModule attaches the provided building blocks", {
 })
 
 test_that("createMoBiModule errors when name is empty or not a string", {
-  expect_error(createMoBiModule(""))
-  expect_error(createMoBiModule(123))
-  expect_error(createMoBiModule(NULL))
+  expect_error(
+    createMoBiModule(""),
+    regexp = "argument \"name\" has empty strings!"
+  )
+  expect_error(
+    createMoBiModule(123),
+    regexp = " argument \"name\" is of type <numeric>, but expected <character>!"
+  )
+  expect_error(
+    createMoBiModule(NULL),
+    regexp = "argument \"name\" is of type <NULL>, but expected <character>!"
+  )
 })
 
 test_that("createMoBiModule accepts a single BuildingBlock as `buildingBlocks`", {
@@ -159,5 +171,8 @@ test_that("createMoBiModule errors when a single-type BB is passed twice", {
     BuildingBlockTypes$Molecules,
     "M2"
   )
-  expect_error(createMoBiModule("DupMol", buildingBlocks = list(m1, m2)))
+  expect_error(
+    createMoBiModule("DupMol", buildingBlocks = list(m1, m2)),
+    regexp = "BuildingBlock 'MoleculeBuildingBlock' for 'M2' was already added to module"
+  )
 })

@@ -242,7 +242,10 @@ test_that("addBuildingBlocks errors when adding a duplicate single-type BB", {
     "M2"
   )
   module$addBuildingBlocks(list(m1))
-  expect_error(module$addBuildingBlocks(list(m2)))
+  expect_error(
+    module$addBuildingBlocks(list(m2)),
+    "BuildingBlock 'MoleculeBuildingBlock' for 'M2' was already added to module"
+  )
 })
 
 test_that("addBuildingBlocks treats NULL or empty list as a no-op", {
@@ -338,7 +341,8 @@ test_that("removeBuildingBlock errors when the named multi-type BB is missing", 
     module$removeBuildingBlock(
       "MissingIC",
       BuildingBlockTypes$`Initial Conditions`
-    )
+    ),
+    regexp = "No Initial Conditions Building Blocks found with names: MissingIC in module EmptyMulti"
   )
 })
 
@@ -356,6 +360,12 @@ test_that("removeBuildingBlock errors for unsupported BB types", {
 
 test_that("removeBuildingBlock errors when name or type is not a string", {
   module <- createMoBiModule("BadArgs")
-  expect_error(module$removeBuildingBlock(123, BuildingBlockTypes$Molecules))
-  expect_error(module$removeBuildingBlock("M1", 123))
+  expect_error(
+    module$removeBuildingBlock(123, BuildingBlockTypes$Molecules),
+    regexp = "argument \"name\" is of type <numeric>, but expected <character>"
+  )
+  expect_error(
+    module$removeBuildingBlock("M1", 123),
+    regexp = "argument \"type\" is of type <numeric>, but expected <character>"
+  )
 })
