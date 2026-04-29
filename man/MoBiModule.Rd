@@ -12,6 +12,10 @@ A named list of \code{BuildingBlock} objects, with names being the names of the 
 A \code{MoleculesBuildingBlock} object exposing molecule-name
 queries (e.g. \code{allMoleculeNames()}, \code{allMoleculeNamesOfType()},
 \code{moleculeTypeFor()}), or \code{NULL} if the module has no Molecules BB.
+
+The module, invisibly.
+
+The module, invisibly.
 }
 \description{
 A MoBi module, either loaded from a project or from a pkml file
@@ -41,6 +45,8 @@ A MoBi module, either loaded from a project or from a pkml file
 \item \href{#method-MoBiModule-getParameterValuesBBs}{\code{MoBiModule$getParameterValuesBBs()}}
 \item \href{#method-MoBiModule-getInitialConditionsBBs}{\code{MoBiModule$getInitialConditionsBBs()}}
 \item \href{#method-MoBiModule-getMoleculesBB}{\code{MoBiModule$getMoleculesBB()}}
+\item \href{#method-MoBiModule-addBuildingBlocks}{\code{MoBiModule$addBuildingBlocks()}}
+\item \href{#method-MoBiModule-removeBuildingBlock}{\code{MoBiModule$removeBuildingBlock()}}
 \item \href{#method-MoBiModule-print}{\code{MoBiModule$print()}}
 }
 }
@@ -133,6 +139,59 @@ Get the \code{Molecules} Building Block of the module, if any.
 \if{html}{\out{<div class="r">}}\preformatted{MoBiModule$getMoleculesBB()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-MoBiModule-addBuildingBlocks"></a>}}
+\if{latex}{\out{\hypertarget{method-MoBiModule-addBuildingBlocks}{}}}
+\subsection{Method \code{addBuildingBlocks()}}{
+Add one or more building blocks to the module.
+
+Single-type building blocks (Molecules, Reactions, Spatial Structure,
+Passive Transports, Observers, Event Groups) can appear at most once
+per module; trying to add a second BB of the same single type raises
+an error. Initial Conditions and Parameter Values BBs may appear
+multiple times.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$addBuildingBlocks(buildingBlocks)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{buildingBlocks}}{A \code{BuildingBlock}, a list of \code{BuildingBlock}
+objects, or \code{NULL} / empty list (no-op).}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-MoBiModule-removeBuildingBlock"></a>}}
+\if{latex}{\out{\hypertarget{method-MoBiModule-removeBuildingBlock}{}}}
+\subsection{Method \code{removeBuildingBlock()}}{
+Remove a building block from the module by its name and type.
+
+Single-type building blocks (Molecules, Reactions, Spatial Structure,
+Passive Transports, Observers, Event Groups) are matched on type and
+the lone BB's \code{Name} is verified against \code{name}. Multi-type building
+blocks (Initial Conditions, Parameter Values) are looked up by name
+within their type. Expression Profile and Individual are not
+module-level and raise an error.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MoBiModule$removeBuildingBlock(name, type)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{Name of the building block to remove (the BB's \code{Name}
+property).}
+
+\item{\code{type}}{Type of the building block to remove. One of the values
+defined in \code{BuildingBlockTypes} (excluding \verb{Expression Profile} and
+\code{Individual}).}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-MoBiModule-print"></a>}}
