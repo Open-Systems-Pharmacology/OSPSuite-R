@@ -9,17 +9,14 @@
 #' filePath <- system.file("extdata", "Thyroid.pkml", package = "ospsuite")
 #' module <- loadModuleFromPKML(filePath)
 loadModuleFromPKML <- function(path) {
+  validateIsString(path)
   if (!file.exists(path)) {
-    stop(paste0("File does not exist: ", path))
+    stop(messages$errorFileDoesNotExist(path))
   }
   validateIsFileExtension(path, "pkml")
   netObject <- .callModuleTask("LoadModulesFromFile", path.expand(path))
   if (length(netObject) > 1) {
-    stop(
-      "The PKML you are trying to load the module from contains more than one module, but the 
-    function expects only one module.
-    Most probably you are trying to load a simulation export."
-    )
+    stop(messages$errorPkmlContainsMultipleModules())
   }
   # .NET always returns an array, as it also returns multiple modules for a
   # simulation export. In R, this function should only be used for loading single modules.

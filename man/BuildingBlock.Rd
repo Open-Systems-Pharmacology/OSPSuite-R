@@ -3,7 +3,7 @@
 \docType{class}
 \name{BuildingBlock}
 \alias{BuildingBlock}
-\title{Building block # ONLY MOBI BBs, or should we consider having PK-Sim BBs as pkml export in the future?}
+\title{Building block}
 \description{
 A representation of a building block
 }

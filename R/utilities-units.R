@@ -52,6 +52,7 @@ validateUnit <- function(unit, dimension) {
 #' @details Returns `TRUE` if the provided unit is supported in the OSPSuite platform, otherwise `FALSE`
 #' @export
 isSupportedUnit <- function(unit) {
+  validateIsString(unit)
   return(unit %in% unlist(ospUnits))
 }
 

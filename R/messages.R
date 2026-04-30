@@ -2,6 +2,18 @@
 #' Extends the `messages` list from ospsuite.utils
 messages <- ospsuite.utils::messages
 
+messages$errorFileDoesNotExist <- function(path) {
+  paste0("File does not exist: ", path)
+}
+
+messages$errorPkmlContainsMultipleModules <- function() {
+  paste(
+    "The PKML you are trying to load the module from contains more than one",
+    "module, but the function expects only one module.",
+    "Most probably you are trying to load a simulation export."
+  )
+}
+
 messages$errorWrongPopulation <- function(species, population) {
   paste0(
     "Could not find population '",

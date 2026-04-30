@@ -50,14 +50,6 @@ SimulationRunOptions <- R6::R6Class(
         "numberOfCores" = self$numberOfCores,
         "showProgress" = self$showProgress
       ))
-    },
-    #' @description
-    #' Get the checkForNegativeValues property (deprecated)
-    #' @return The value of checkForNegativeValues from the solver
-    .getCheckForNegativeValues = function() {
-      # This is a helper to preserve backward compatibility
-      # The actual property is now on SolverSettings
-      return(NULL)
     }
   ),
   active = list(

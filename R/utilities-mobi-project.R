@@ -12,8 +12,9 @@
 #' myProject <- loadMoBiProject(projectPath)
 #' }
 loadMoBiProject <- function(filePath) {
+  validateIsString(filePath)
   if (!file.exists(filePath)) {
-    stop(paste0("File does not exist: ", filePath))
+    stop(messages$errorFileDoesNotExist(filePath))
   }
   validateIsFileExtension(filePath, "mbp3")
 
