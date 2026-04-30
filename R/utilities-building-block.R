@@ -239,6 +239,12 @@ setInitialConditionsInBB <- function(
   if (length(quantityPaths) == 0) {
     return(invisible(initialConditionsBuildingBlock))
   }
+
+  validateIsCharacter(quantityPaths)
+  validateIsNumeric(quantityValues)
+  validateIsNumeric(scaleDivisors, nullAllowed = TRUE)
+  validateIsLogical(isPresent, nullAllowed = TRUE)
+  validateIsLogical(negativeValuesAllowed, nullAllowed = TRUE)
   # if the scaleDivisors, isPresent or negativeValuesAllowed are provided as single values, replicate them to match the length of quantityPaths
   if (!is.null(scaleDivisors) && length(scaleDivisors) == 1) {
     scaleDivisors <- rep(scaleDivisors, length(quantityPaths))
@@ -1209,17 +1215,25 @@ loadBuildingBlockFromPKML <- function(filePath, type = NULL) {
 #' `BuildingBlockTypes` value).
 #' @keywords internal
 .autoDetectAndLoadBB <- function(expandedPath) {
+  lastError <- NULL
   for (typeKey in names(BuildingBlockTypes)) {
     type <- BuildingBlockTypes[[typeKey]]
     netBB <- tryCatch(
       .loadBBNetWithType(expandedPath, type),
-      error = function(e) NULL
+      error = function(e) {
+        lastError <<- e
+        NULL
+      }
     )
     if (!is.null(netBB)) {
       return(list(net = netBB, type = type))
     }
   }
-  stop(messages$errorBBTypeAutoDetectFailed(expandedPath))
+  msg <- messages$errorBBTypeAutoDetectFailed(expandedPath)
+  if (!is.null(lastError)) {
+    msg <- paste0(msg, " Last loader error: ", conditionMessage(lastError))
+  }
+  stop(msg)
 }
 
 #' Wrap a loaded .NET building block reference in the appropriate R6 class.

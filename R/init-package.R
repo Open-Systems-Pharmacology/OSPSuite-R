@@ -98,7 +98,9 @@
   for (netValue in netValues) {
     name <- netValue$call("ToString")
     flagByName[[name]] <- as.integer(rSharp::callStatic(
-      "System.Convert", "ToInt32", netValue
+      "System.Convert",
+      "ToInt32",
+      netValue
     ))
   }
   # Mapping of user-facing names to internal flag names. `Binding Partner` is
@@ -112,15 +114,19 @@
     "Complex" = "Complex",
     "Protein" = "Protein"
   )
-  curated <- vapply(curatedNames, function(netKey) {
-    if (is.null(flagByName[[netKey]])) {
-      stop(sprintf(
-        "QuantityType flag '%s' was not found in the engine enum.",
-        netKey
-      ))
-    }
-    flagByName[[netKey]]
-  }, integer(1))
+  curated <- vapply(
+    curatedNames,
+    function(netKey) {
+      if (is.null(flagByName[[netKey]])) {
+        stop(sprintf(
+          "QuantityType flag '%s' was not found in the engine enum.",
+          netKey
+        ))
+      }
+      flagByName[[netKey]]
+    },
+    integer(1)
+  )
   names(curated) <- names(curatedNames)
   enum(curated)
 }

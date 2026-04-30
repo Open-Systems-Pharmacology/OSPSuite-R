@@ -104,13 +104,14 @@ test_that("setParameterValuesInIndividualBB returns the building block invisibly
     population = HumanPopulation$European_ICRP_2002
   )
 
-  result <- setParameterValuesInIndividualBB(
-    individual,
-    quantityPaths = "Organism|Age",
-    quantityValues = 25,
-    units = "year(s)"
+  expect_invisible(
+    result <- setParameterValuesInIndividualBB(
+      individual,
+      quantityPaths = "Organism|Age",
+      quantityValues = 25,
+      units = "year(s)"
+    )
   )
-
   expect_identical(result, individual)
 })
 
@@ -197,7 +198,9 @@ test_that("saveIndividualToPKML writes a non-empty pkml file and returns the pat
     seed = 42
   )
   filePath <- withr::local_tempfile(fileext = ".pkml")
-  result <- saveIndividualToPKML(individual, filePath)
+  expect_invisible(
+    result <- saveIndividualToPKML(individual, filePath)
+  )
 
   expect_true(file.exists(filePath))
   expect_gt(file.info(filePath)$size, 0)

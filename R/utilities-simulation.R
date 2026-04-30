@@ -13,6 +13,8 @@ createSimulation <- function(
   createAllProcessRateParameters = FALSE,
   showWarnings = FALSE
 ) {
+  validateIsString(simulationName)
+  validateIsOfType(simulationConfiguration, "SimulationConfiguration")
   validateIsLogical(c(createAllProcessRateParameters, showWarnings))
   # Get simulation task
   simulationTask <- .getMoBiTaskFromCache("SimulationTask")

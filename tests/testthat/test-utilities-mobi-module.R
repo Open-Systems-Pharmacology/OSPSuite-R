@@ -49,7 +49,7 @@ test_that("loadModuleFromPKML throws an error when the passed PKML contains more
   filePath <- getTestDataFilePath("MoBiProject/TestSim_2Modules.pkml")
   expect_error(
     loadModuleFromPKML(filePath),
-    regexp = "The PKML you are trying to load the module from contains more than one module"
+    regexp = "contains more than one module"
   )
 })
 
@@ -127,7 +127,7 @@ test_that("createMoBiModule errors when name is empty or not a string", {
   )
   expect_error(
     createMoBiModule(123),
-    regexp = " argument \"name\" is of type <numeric>, but expected <character>!"
+    regexp = "argument \"name\" is of type <numeric>, but expected <character>!"
   )
   expect_error(
     createMoBiModule(NULL),

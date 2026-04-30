@@ -70,8 +70,9 @@ SimulationConfiguration <- R6::R6Class(
 
     #' @field modules A named list of `MoBiModule` objects from which to create the simulation.
     #' The order of modules defines the order in which the modules will be combined to a simulation!
-    #' When setting the modules, the selection of Initial Conditions and Parameter Values
-    #' is reset to the first available ones in the modules.
+    #' Replacing `modules` does not automatically reset `selectedInitialConditions` or
+    #' `selectedParameterValues`. Reassign those fields explicitly if the new modules
+    #' do not contain the previously selected building blocks.
     modules = function(value) {
       if (missing(value)) {
         return(private$.modules)
@@ -119,6 +120,12 @@ SimulationConfiguration <- R6::R6Class(
           module <- private$.modules[[moduleName]]
           icBBnames <- module$initialConditionsBBnames
           selectedICName <- value[[moduleName]]
+          # Each entry must be NULL or a single string; vectors would silently
+          # take only their first element through %in% / && below.
+          .validateScalarStringOrNull(
+            selectedICName,
+            sprintf("selectedInitialConditions[['%s']]", moduleName)
+          )
           # If the selected IC is not NULL, check that it exists in the module
           if (
             !is.null(selectedICName) &&
@@ -174,6 +181,10 @@ SimulationConfiguration <- R6::R6Class(
           module <- private$.modules[[moduleName]]
           pvBBnames <- module$parameterValuesBBnames
           selectedPVName <- value[[moduleName]]
+          .validateScalarStringOrNull(
+            selectedPVName,
+            sprintf("selectedParameterValues[['%s']]", moduleName)
+          )
           # If the selected PV is not NULL, check that it exists in the module
           if (
             !is.null(selectedPVName) &&
@@ -264,6 +275,18 @@ SimulationConfiguration <- R6::R6Class(
       # for the simulation configuration data before creating the actual simulation in .NET.
       validateIsOfType(settings, "SimulationSettings", nullAllowed = TRUE)
       validateIsOfType(modules, "MoBiModule")
+      if (!is.null(selectedInitialConditions)) {
+        validateIsNamedList(
+          selectedInitialConditions,
+          "selectedInitialConditions"
+        )
+      }
+      if (!is.null(selectedParameterValues)) {
+        validateIsNamedList(
+          selectedParameterValues,
+          "selectedParameterValues"
+        )
+      }
       validateIsOfType(individual, "BuildingBlock", nullAllowed = TRUE)
       .validateBuildingBlockType(individual, "Individual", nullAllowed = TRUE)
       validateIsOfType(expressionProfiles, "BuildingBlock", nullAllowed = TRUE)
