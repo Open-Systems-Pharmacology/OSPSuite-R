@@ -13,10 +13,3 @@
   return(result)
 }
 
-
-#' Returns the expanded path for `path` and ensure that encoding is applied properly
-#'
-#' @param  path Path to expand
-.expandPath <- function(path) {
-  path.expand(path)
-}

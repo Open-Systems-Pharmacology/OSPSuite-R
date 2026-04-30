@@ -168,7 +168,7 @@ to install packages from binary files.
 `{tlf}` were installed in the previous step.
 
 ``` r
-# Install rSharp from local file 
+# Install rSharp from local file
 # Replace pathTo_rSharp.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
 install.packages(pathTo_rSharp.zip, repos = NULL)
 
@@ -212,41 +212,36 @@ cannot be re-used.
 
 # Development
 
-## Development Setup
-
-When developing the `{ospsuite}` package, you need to prepare
-platform-specific library files before using `devtools::load_all()`. The
-package uses configure scripts during installation to rename
-platform-specific DLLs, but `devtools::load_all()` bypasses this
-process.
-
-**Run the development setup script:**
-
-``` r
-source("tools/setup_dev.R")
-setup_dev()
-```
-
-**When to run `setup_dev()`:** - After cloning the repository for the
-first time - After switching to a different branch - After pulling
-changes that might affect library files
-
-The script automatically detects your operating system and renames the
-appropriate DLL: - **Windows**: Renames
-`System.Data.SQLite.windows_linux.dll` → `System.Data.SQLite.dll` -
-**Linux**: Renames `System.Data.SQLite.windows_linux.dll` →
-`System.Data.SQLite.dll` - **macOS**: Renames
-`System.Data.SQLite.mac.dll` → `System.Data.SQLite.dll`
-
 ## Embedded binaries
 
-The `{ospsuite}` package requires shared libraries to access PK-Sim
-functionality. To obtain the latest libraries (**.dll** on Windows or
-**.so** on Linux), run the `update_core_files.R` script included with
-this package.
+The `{ospsuite}` package requires shared libraries (binary files) to
+access PK-Sim and MoBi functionalities.
 
-Because `{ospsuite}` contains binary files, it is classified as a binary
-package and cannot be submitted to CRAN.
+**Note**: Because `{ospsuite}` contains binary files, it is classified
+as a binary package and cannot be submitted to CRAN.
+
+### Updating embedded binaries
+
+The embedded binaries are built from NuGet packages specified in the
+DependencyManager project. To update the binaries to a new version:
+
+1.  Open `shared/DependencyManager/src/DependencyManager.csproj`.
+2.  Update the `Version` attribute in the `PackageReference` elements to
+    the desired version numbers.
+3.  Commit and push the changes to a branch.
+4.  The GitHub Actions workflow defined in
+    `.github/workflows/build-libraries.yaml` automatically:
+    - Builds the DependencyManager project, which downloads the
+      specified NuGet packages
+    - Extracts the required binary files and dependencies
+    - Copies them to the `inst/lib/` directory
+    - Commits the updated binaries to the branch
+
+No manual build steps are required. The workflow handles the entire
+process automatically when changes to the `.csproj` file are pushed.
+
+**Note:** If the `DependencyManager.csproj` file is not modified, the
+build-libraries workflow step is automatically skipped.
 
 ## Versioning
 

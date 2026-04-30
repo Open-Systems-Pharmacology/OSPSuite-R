@@ -705,3 +705,217 @@ test_that("It throws an error when trying to run multiple simulations", {
   sim2 <- loadTestSimulation("simple", loadFromCache = FALSE)
   suppressWarnings(expect_error(results <- runSimulation(c(sim, sim2))))
 })
+
+#### Creating simulation ####
+test_that("It can create a simulation from a project configuration retrieved from a simulation with no expression profiles", {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "Aciclovir.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = TRUE
+  )
+  simConfig <- simulation$configuration
+  newSimulation <- createSimulation(
+    simulationConfiguration = simConfig,
+    simulationName = "MySim"
+  )
+
+  # Check simulation configuration
+  expect_equal(newSimulation$name, "MySim")
+  expect_equal(
+    names(newSimulation$configuration$expressionProfiles),
+    names(simConfig$expressionProfiles)
+  )
+  expect_equal(
+    newSimulation$configuration$individual$name,
+    simConfig$individual$name
+  )
+  # Checking for the names of the modules, because the module instances are different
+  expect_equal(
+    names(newSimulation$configuration$modules),
+    names(simConfig$modules)
+  )
+
+  # Check simulation properties
+  expect_equal(
+    newSimulation$allFloatingMoleculeNames(),
+    simulation$allFloatingMoleculeNames()
+  )
+  expect_equal(
+    newSimulation$allStationaryMoleculeNames(),
+    simulation$allStationaryMoleculeNames()
+  )
+  expect_equal(
+    length(newSimulation$outputSchema$intervals),
+    length(simulation$outputSchema$intervals)
+  )
+  expect_equal(
+    newSimulation$outputSchema$intervals[[1]]$name,
+    simulation$outputSchema$intervals[[1]]$name
+  )
+  expect_equal(
+    newSimulation$outputSelections$allOutputs[[1]]$path,
+    simulation$outputSelections$allOutputs[[1]]$path
+  )
+})
+
+# show warnings true
+test_that("createSimulation shows warnings when showWarnings is TRUE", {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "Aciclovir.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = TRUE
+  )
+  simConfig <- simulation$configuration
+
+  expect_snapshot(
+    newSimulation <- createSimulation(
+      simulationConfiguration = simConfig,
+      simulationName = "MySim",
+      showWarnings = TRUE
+    )
+  )
+})
+
+# errors
+test_that("createSimulation throws an error when simulation cannot be created", {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "Aciclovir.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = TRUE
+  )
+  simConfig <- simulation$configuration
+
+  # Introduce an error in the configuration
+  simConfig$selectedInitialConditions <- list("Vergin 1995 IV" = NULL)
+
+  expect_snapshot(
+    newSimulation <- createSimulation(
+      simulationConfiguration = simConfig,
+      simulationName = "MySim"
+    ),
+    error = TRUE
+  )
+})
+
+test_that("createSimulation shows warnings when simulation creation issues warnings", {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "Aciclovir.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = TRUE
+  )
+  simConfig <- simulation$configuration
+
+  expect_snapshot(
+    newSimulation <- createSimulation(
+      simulationConfiguration = simConfig,
+      simulationName = "MySim"
+    )
+  )
+})
+
+# Test for process rate parameters
+test_that("createSimulation can create process rate parameters when requested", {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "Aciclovir.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = TRUE
+  )
+  simConfig <- simulation$configuration
+
+  newSimulation <- createSimulation(
+    simulationConfiguration = simConfig,
+    simulationName = "MySim",
+    createAllProcessRateParameters = TRUE
+  )
+
+  # Check that process rate parameters were created
+  paramPath <- "Neighborhoods|ArterialBlood_bc_Bone_bc|Aciclovir|MassTransferBloodPool2OrgRBC|ProcessRate"
+  expect_no_error(
+    processRateParameter <- getParameter(
+      path = paramPath,
+      container = newSimulation
+    )
+  )
+})
+
+# PC and CP methods overrides
+test_that("It creates a simulation with overridden PC and CP methods", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  config <- sim$configuration
+  config$setCellularPermeabilityMethods(
+    "A",
+    CellularPermeabilityMethods$`Charge dependent Schmitt`
+  )
+  config$setPartitionCoefficientMethods(
+    "A",
+    PartitionCoefficientMethods$`Rodgers and Rowland`
+  )
+
+  newSim <- createSimulation(
+    simulationConfiguration = config,
+    simulationName = "MySim"
+  )
+
+  newConfig <- newSim$configuration
+  expect_identical(
+    newConfig$partitionCoefficientOverrides[["A"]],
+    PartitionCoefficientMethods$`Rodgers and Rowland`
+  )
+  expect_identical(
+    newConfig$cellularPermeabilityOverrides[["A"]],
+    CellularPermeabilityMethods$`Charge dependent Schmitt`
+  )
+})
+
+test_that("It ignores molecules that are not present in the simulation when overriding PC and CP methods", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  config <- sim$configuration
+  config$setCellularPermeabilityMethods(
+    "foo",
+    CellularPermeabilityMethods$`Charge dependent Schmitt`
+  )
+  config$setPartitionCoefficientMethods(
+    "foo",
+    PartitionCoefficientMethods$`Rodgers and Rowland`
+  )
+  config$setCellularPermeabilityMethods(
+    "B",
+    CellularPermeabilityMethods$`Charge dependent Schmitt`
+  )
+  config$setPartitionCoefficientMethods(
+    "B",
+    PartitionCoefficientMethods$`Rodgers and Rowland`
+  )
+
+  newSim <- createSimulation(
+    simulationConfiguration = config,
+    simulationName = "MySim"
+  )
+
+  newConfig <- newSim$configuration
+  expect_false("foo" %in% names(newConfig$partitionCoefficientOverrides))
+  expect_false("foo" %in% names(newConfig$cellularPermeabilityOverrides))
+  expect_identical(
+    newConfig$partitionCoefficientOverrides[["B"]],
+    PartitionCoefficientMethods$`Rodgers and Rowland`
+  )
+  expect_identical(
+    newConfig$cellularPermeabilityOverrides[["B"]],
+    CellularPermeabilityMethods$`Charge dependent Schmitt`
+  )
+})
