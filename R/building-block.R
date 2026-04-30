@@ -1,4 +1,4 @@
-#' @title Building block # ONLY MOBI BBs, or should we consider having PK-Sim BBs as pkml export in the future?
+#' @title Building block
 #' @docType class
 #' @description  A representation of a building block
 #' @format NULL
@@ -13,7 +13,7 @@ BuildingBlock <- R6::R6Class(
     },
     #' @field id ID of the building block
     id = function(value) {
-      private$.readOnlyProperty("type", value, self$get("Id"))
+      private$.readOnlyProperty("id", value, self$get("Id"))
     },
     #' @field name Name of the building block. Read-only.
     name = function(value) {
