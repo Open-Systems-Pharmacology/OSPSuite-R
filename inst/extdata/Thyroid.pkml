@@ -1,0 +1,1800 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module id="45i9PGfJsUqQxwJucX4E3Q" name="Thyroid_Generic" icon="Module" moduleImportVersion="142603378" mergeBehavior="Extend" isPKSimModule="0" version="17">
+  <BuildingBlocks>
+    <SpatialStructure id="SUDL_9Jn3UiQZp1Zc4pcPw" name="Organism" icon="SpatialStructure" bbVersion="126">
+      <Creation createdAt="5250482378095516253" createdBy="pavel.balazki" creationMode="New" origin="MoBi" version="12.0" internalVersion="17" />
+      <GlobalMoleculeDependentProperties id="SL8MOZwy006BmCCFOyGnkA" name="MoleculeProperties" mode="Logical" containerType="Molecule" />
+      <TopContainers>
+        <Container id="na99_lVd0Eq92odIWGCSOw" name="Thyroid" description="Muscle" icon="Muscle" mode="Logical" containerType="Organ">
+          <Tags>
+            <Tag value="TissueOrgan" />
+          </Tags>
+          <ParentPath path="0" />
+          <Children>
+            <Parameter id="dmX-Fws_5ESfdHe1mN4isA" name="Fraction of endosomal uptake from plasma" description="Fraction of endosomal uptake from plasma" icon="Parameter" persistable="0" isFixedValue="0" dim="Fraction" quantityType="Parameter" negativeValuesAllowed="1" formula="wPgLwmp4okOVzYWxHV9CLQ" isDefault="1">
+              <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+              <Info min="0" flag="54" seq="0" ref="0" bb="2" group="25" />
+            </Parameter>
+            <Parameter id="TW2SFuKlcE-gxc32gYGk6w" name="Fraction endosomal" description="Fraction of endosomal space in vascular endothelium" icon="Parameter" persistable="0" isFixedValue="0" dim="Fraction" quantityType="Parameter" negativeValuesAllowed="1" formula="R0zm_YUCz0iiyEvBO5epNg" isDefault="1">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+              <Info min="0" max="1" flag="54" seq="1" ref="0" bb="32" group="29" />
+            </Parameter>
+            <Parameter id="tdBQZ4iOTUqKphzvroz-1w" name="Fraction recycled to plasma" description="Fraction recycled to plasma" icon="Parameter" persistable="0" isFixedValue="0" dim="Fraction" quantityType="Parameter" negativeValuesAllowed="1" formula="fMpKmOIgQEuFGQriOPhkDA" isDefault="1">
+              <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+              <Info min="0" flag="54" seq="1" ref="0" bb="2" group="25" />
+            </Parameter>
+            <Parameter id="-XFKk28Gy0CUV4b-LVBlKQ" name="Rate constant for endosomal uptake" description="Rate constant for endosomal uptake" icon="Parameter" persistable="0" isFixedValue="0" dim="Inversed time" quantityType="Parameter" negativeValuesAllowed="1" formula="hhawugqGek6d3Ftwg8LHcw" isDefault="1" displayUnit="1/min">
+              <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+              <Info min="0" flag="54" seq="1" ref="0" bb="2" group="25" />
+            </Parameter>
+            <Parameter id="-cOxvTHfEEOGWeBH6JqTGw" name="Rate constant for recycling from endosomal space" description="Rate constant for recycling from endosomal space" icon="Parameter" persistable="0" isFixedValue="0" dim="Inversed time" quantityType="Parameter" negativeValuesAllowed="1" formula="axI2z0UENkSb2TMqa_47Zg" isDefault="1" displayUnit="1/min">
+              <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+              <Info min="0" flag="54" seq="1" ref="0" bb="2" group="25" />
+            </Parameter>
+            <Parameter id="szLVW09qJUSObE29DXawew" name="Weight (tissue)" description="Weight of organ or compartment" icon="Parameter" persistable="0" isFixedValue="0" dim="Mass" quantityType="Parameter" negativeValuesAllowed="1" formula="YLQUenNW50yLXRlLOA4DLA" isDefault="1" displayUnit="kg">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <Info min="0" flag="54" seq="1" ref="0" bb="32" group="136" />
+            </Parameter>
+            <Parameter id="RjO1iaER1U2-e5HX4dA4fA" name="Fluid recirculation flow rate" description="Fluid recirculation flow rate between plasma and interstitial space" icon="Parameter" persistable="0" isFixedValue="0" dim="Flow" quantityType="Parameter" negativeValuesAllowed="1" formula="vNm_i9U0NUqKp4V2Wk3uYg" isDefault="1" displayUnit="l/min">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+              <Info min="0" flag="122" seq="19" ref="0" bb="32" group="27" />
+            </Parameter>
+            <Parameter id="87wPzT303kyDTIqG68Uftw" name="Lymph flow rate" description="Lymph flow rate" icon="Parameter" persistable="0" isFixedValue="0" dim="Flow" quantityType="Parameter" negativeValuesAllowed="1" formula="ScDpjDJl20SQMYmC0MrbfA" isDefault="1" displayUnit="l/min">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+              <Info min="0" flag="122" seq="19" ref="0" bb="32" group="58" />
+            </Parameter>
+            <Parameter id="Ye5x3ncA4k-EXbraHRGvdw" name="Volume (endothelium)" description="Volume of  vascular endothelium" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" formula="Zevuy9Ed50SiOROPVagkUA" isDefault="1" displayUnit="l">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <Info min="0" flag="62" seq="19" ref="0" bb="32" group="127" />
+            </Parameter>
+            <Parameter id="9VGnRi8sS0qEJcZCkjGFfw" name="Blood flow rate" description="Organ blood flow rate" icon="Parameter" persistable="0" isFixedValue="0" dim="Flow" quantityType="Parameter" negativeValuesAllowed="1" formula="EcyrcwZ7Yka7NuoqAV776w" isDefault="1" displayUnit="l/min">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <ValueOrigin id="48" source="Other" description="Absolute value = specific value (i.e. value normalized to the volume of the organ) multiplied by the organ volume" />
+              <Info min="0" flag="190" seq="162" ref="0" bb="32" group="5" />
+            </Parameter>
+            <Parameter id="Vx-Zsy0UGEuYKr_9ix7TxQ" name="Density (tissue)" description="Density of tissue" icon="Parameter" persistable="0" isFixedValue="0" dim="Density" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1" displayUnit="g/cm³">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <Info min="0" flag="38" seq="1" ref="0" bb="32" group="21" />
+            </Parameter>
+            <Parameter id="gSirRb8V6UiuOR95-ucNmg" name="Fluid recirculation flow proportionality factor" description="proportionality factor linking fluid recirculation flow to lymph flow via small pores" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.292">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <Info min="0" flag="54" seq="1" ref="0" bb="32" group="27" />
+            </Parameter>
+            <Parameter id="zITp1MJdQUKngzXzpbD-Yw" name="Lymph flow proportionality factor" description="Proportionality factor linking lymph flow to plasma flow" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.00201">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <Info min="0" flag="54" seq="1" ref="0" bb="32" group="58" />
+            </Parameter>
+            <Parameter id="wEgsAe0DSUmjJE7qEsaX1A" name="Organ volume mouse" description="Organ volume mouse" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" isDefault="0" value="6.127279E-06" displayUnit="l">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <ValueOrigin source="Unknown" />
+              <Info min="0" flag="54" seq="1" ref="0" bb="32" group="65" />
+            </Parameter>
+            <Parameter id="cWF5O8vlVkqkBSQAOSAsag" name="Fraction of blood for sampling" description="Fraction of blood for sampling observer" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <Info min="0" max="1" flag="58" seq="15" ref="0" bb="32" group="154" />
+            </Parameter>
+            <Parameter id="LQ18-zZ9506M9K9BTxkarg" name="Flow fraction via large pores" description="Fraction of fluid flow via large endothelial pores" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.05">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+              <Info min="0" max="1" flag="122" seq="19" ref="0" bb="32" group="114" />
+            </Parameter>
+            <Parameter id="E-P8b641w0SB4YLsPe4lPw" name="Hydraulic conductivity" description="Hydraulic conductivity of vascular endothelium" icon="Parameter" persistable="0" isFixedValue="0" dim="Hydraulic conductivity" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="9E-12" displayUnit="ml/min/N">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+              <Info min="0" flag="122" seq="19" ref="0" bb="32" group="115" />
+            </Parameter>
+            <Parameter id="4-xV9I8Fh0apvpglKNWzNA" name="Radius (large pores)" description="Large endothelial pores radius" icon="Parameter" persistable="0" isFixedValue="0" dim="Length" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="2.5E-07" displayUnit="µm">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+              <Info min="0" flag="122" seq="19" ref="0" bb="32" group="55" />
+            </Parameter>
+            <Parameter id="_O5vT9U3Zk-Fo3XElqOsSw" name="Radius (small pores)" description="Small endothelial pores radius" icon="Parameter" persistable="0" isFixedValue="0" dim="Length" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="4.5E-08" displayUnit="µm">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+              <Info min="0" flag="122" seq="19" ref="0" bb="32" group="99" />
+            </Parameter>
+            <Parameter id="zcTv6T1cQEmCRUM3ShEiZw" name="Albumin ratio (tissue/plasma)" description="Ratio of albumin concentration found in tissue vs. plasma" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.064">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <ValueOrigin id="22" source="Publication" description="Rodgers T, Rowland M. Physiologically based pharmacokinetic modelling 2: predicting the tissue distribution of acids, very weak bases, neutrals and zwitterions. J Pharm Sci. 2006 Jun;95(6):1238-57 https://doi.org/10.1002/jps.20502" />
+              <Info min="0" max="1" flag="122" seq="59" ref="0" bb="32" group="111" />
+            </Parameter>
+            <Parameter id="MtOTg4q72UitnRCsLAKSDA" name="Albumin ratio (tissue/plasma)-PT" description="Ratio of albumin concentration found in tissue vs. plasma used in the partition coefficient calculation method 'Poulin and Theil'" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <ValueOrigin id="24" source="Publication" description="POULIN P, THEIL F. Prediction of Pharmacokinetics Prior to In Vivo Studies. 1. Mechanism-Based Prediction of Volume of Distribution. JOURNAL OF PHARMACEUTICAL SCIENCES, VOL. 91, NO. 1, JANUARY 2002" />
+              <Info min="0" max="1" flag="122" seq="59" ref="0" bb="32" group="112" />
+            </Parameter>
+            <Parameter id="LDEq20t8e0W8uvt8pd2KNg" name="Lipoprotein ratio (tissue/plasma)" description="Ratio of lipoprotein concentration found in tissue vs. plasma" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.059">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <ValueOrigin id="22" source="Publication" description="Rodgers T, Rowland M. Physiologically based pharmacokinetic modelling 2: predicting the tissue distribution of acids, very weak bases, neutrals and zwitterions. J Pharm Sci. 2006 Jun;95(6):1238-57 https://doi.org/10.1002/jps.20502" />
+              <Info min="0" max="1" flag="122" seq="59" ref="0" bb="32" group="113" />
+            </Parameter>
+            <Parameter id="YgEwxXbDKEeAmRMaufE5cQ" name="Vf (acidic phospholipids)-WS" description="Fractional cell volume content of acidic phospholipids used in the partition coefficient calculation method 'Schmitt'" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.0009">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <Info min="0" max="1" flag="122" seq="99" ref="0" bb="32" group="95" />
+            </Parameter>
+            <Container id="hzai3X39q0GwbxCe52cf-A" name="Plasma" description="Plasma" icon="Plasma" mode="Physical" containerType="Compartment">
+              <Tags>
+                <Tag value="Thyroid" />
+              </Tags>
+              <Children>
+                <Parameter id="j2Pe4XSYPE6XkWjMm1feuA" name="FcRn concentration in container" description="FcRn concentration in container" icon="Parameter" persistable="0" isFixedValue="0" dim="Concentration (molar)" quantityType="Parameter" negativeValuesAllowed="1" formula="5pZYciD37U6hx_39As-PKg" isDefault="1" displayUnit="µmol/l">
+                  <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                  <Info flag="52" seq="1" ref="0" bb="2" group="25" />
+                </Parameter>
+                <Parameter id="pUpUmqA3pEa5fnCg-0gvZw" name="Volume" description="Volume of organ or compartment" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" formula="irnxPgkmJkaYZxjqNBWBQQ" isDefault="1" displayUnit="l">
+                  <ValueOrigin id="35" source="Publication" description="Willmann S, Lippert J, Sevestre M, Solodenko J, Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic ‘whole-body’ model. Biosilico. 2003; 1 (4): 121-124. http://dx.doi.org/10.1016/S1478-5382%2803%2902342-4" />
+                  <Info min="0" flag="62" seq="19" ref="0" bb="2" group="126" />
+                </Parameter>
+                <Container id="N2yssNirRUaMr-JsH72pfg" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Molecule">
+                  <Children>
+                    <Parameter id="kmLTTa1pc0i3twGrCcU1tw" name="Kd (FcRn) in endosomal space of container" description="Dissociation constant of drug for binding to FcRn in endosomal space of parent container" icon="Parameter" persistable="0" isFixedValue="0" dim="Concentration (molar)" quantityType="Parameter" negativeValuesAllowed="1" formula="W4q3tkVKSEiPbWUpY8oCAA" isDefault="1" displayUnit="µmol/l">
+                      <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                      <Info flag="52" seq="1" ref="0" bb="2" group="25" />
+                    </Parameter>
+                    <Parameter id="hvlark5QLUKA-o-i5PqdAA" name="Ontogeny factor" description="Ontogeny factor" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="6vzBLHjtiEe7NimOLRW9ZA" isDefault="1">
+                      <Info min="0" flag="52" seq="1" ref="0" bb="2" group="142" />
+                    </Parameter>
+                    <Parameter id="uzUTvfjHsEGfAPCN-_M2oA" name="Partition coefficient (water/container)" description="Partition coefficient Water / Container (will be mapped to concrete container in the simulation)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="Q66yXcgK5k627vPIu3ueqQ" isDefault="1">
+                      <Info min="0" flag="52" seq="1" ref="0" bb="2" group="67" />
+                    </Parameter>
+                    <Parameter id="kCh7KFz_IU2SJ5Wuy49wSQ" name="t1/2" description="Half-life of drug release" icon="Parameter" persistable="0" isFixedValue="0" dim="Time" quantityType="Parameter" negativeValuesAllowed="1" formula="25XAhq_pGUy0VMIPVHTN8Q" isDefault="1" displayUnit="min">
+                      <Info min="0" flag="38" seq="1" ref="0" bb="2" group="91" />
+                    </Parameter>
+                  </Children>
+                </Container>
+              </Children>
+            </Container>
+            <Container id="D55jSivd4UCyuKfQX_MVog" name="BloodCells" description="Blood Cells" icon="BloodCells" mode="Physical" containerType="Compartment">
+              <Tags>
+                <Tag value="Thyroid" />
+              </Tags>
+              <Children>
+                <Parameter id="TYsaW-Xgqk-To2_gcfT8yw" name="Volume" description="Volume of organ or compartment" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" formula="dztE99tNrkaMMp3GC5oRUQ" isDefault="1" displayUnit="l">
+                  <ValueOrigin id="35" source="Publication" description="Willmann S, Lippert J, Sevestre M, Solodenko J, Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic ‘whole-body’ model. Biosilico. 2003; 1 (4): 121-124. http://dx.doi.org/10.1016/S1478-5382%2803%2902342-4" />
+                  <Info min="0" flag="62" seq="19" ref="0" bb="2" group="121" />
+                </Parameter>
+                <Container id="HtIRA8AfjkyGkBrwltgfrQ" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Molecule">
+                  <Children>
+                    <Parameter id="6yp2UT-9BkaRFKDP6YCalw" name="Ontogeny factor" description="Ontogeny factor" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="6vzBLHjtiEe7NimOLRW9ZA" isDefault="1">
+                      <Info min="0" flag="52" seq="1" ref="0" bb="2" group="142" />
+                    </Parameter>
+                    <Parameter id="DY2IJBe5pUm6HX-rNzXO1w" name="Partition coefficient (water/container)" description="Partition coefficient Water / Container (will be mapped to concrete container in the simulation)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="R6FfPNSmN0yexPsEJgDu6g" isDefault="1">
+                      <Info min="0" flag="52" seq="1" ref="0" bb="2" group="67" />
+                    </Parameter>
+                    <Parameter id="nZ795n4w40qu6Nk7QUGrOw" name="t1/2" description="Half-life of drug release" icon="Parameter" persistable="0" isFixedValue="0" dim="Time" quantityType="Parameter" negativeValuesAllowed="1" formula="25XAhq_pGUy0VMIPVHTN8Q" isDefault="1" displayUnit="min">
+                      <Info min="0" flag="38" seq="1" ref="0" bb="2" group="91" />
+                    </Parameter>
+                  </Children>
+                </Container>
+              </Children>
+            </Container>
+            <Container id="DLhHttQolESr3KprffEu_w" name="Interstitial" description="Interstitial" icon="Interstitial" mode="Physical" containerType="Compartment">
+              <Tags>
+                <Tag value="Thyroid" />
+              </Tags>
+              <Children>
+                <Parameter id="8hH9If48xU-qw4cTIPiHxg" name="FcRn concentration in container" description="FcRn concentration in container" icon="Parameter" persistable="0" isFixedValue="0" dim="Concentration (molar)" quantityType="Parameter" negativeValuesAllowed="1" formula="2IOAHTY_AkKoWRqvFU03jg" isDefault="1" displayUnit="µmol/l">
+                  <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                  <Info flag="52" seq="1" ref="0" bb="2" group="25" />
+                </Parameter>
+                <Parameter id="uYULLNTYlEubp-8qafHFjw" name="Volume" description="Volume of organ or compartment" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" formula="183Ge50nSUeCWXe-IAnBDA" isDefault="1" displayUnit="l">
+                  <ValueOrigin id="35" source="Publication" description="Willmann S, Lippert J, Sevestre M, Solodenko J, Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic ‘whole-body’ model. Biosilico. 2003; 1 (4): 121-124. http://dx.doi.org/10.1016/S1478-5382%2803%2902342-4" />
+                  <Info min="0" flag="62" seq="19" ref="0" bb="2" group="124" />
+                </Parameter>
+                <Parameter id="C13N5vUHKkyo3hWn3nyv_A" name="pH" description="pH" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="jCTCMXXoS0GsdaxB3KJQwA" isDefault="1">
+                  <Tags>
+                    <Tag value="Tumor" />
+                  </Tags>
+                  <Info min="0" max="14" flag="122" seq="59" ref="0" bb="32" group="84" />
+                </Parameter>
+                <Container id="lWHEwsRTbkmsyDgZLGPLpQ" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Molecule">
+                  <Children>
+                    <Parameter id="B-it-VbyskiShfYne0IHuQ" name="Kd (FcRn) in endosomal space of container" description="Dissociation constant of drug for binding to FcRn in endosomal space of parent container" icon="Parameter" persistable="0" isFixedValue="0" dim="Concentration (molar)" quantityType="Parameter" negativeValuesAllowed="1" formula="W4q3tkVKSEiPbWUpY8oCAA" isDefault="1" displayUnit="µmol/l">
+                      <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                      <Info flag="52" seq="1" ref="0" bb="2" group="25" />
+                    </Parameter>
+                    <Parameter id="g83X-cfQWEC5sqn_FXK-WQ" name="Ontogeny factor" description="Ontogeny factor" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="6vzBLHjtiEe7NimOLRW9ZA" isDefault="1">
+                      <Info min="0" flag="52" seq="1" ref="0" bb="2" group="142" />
+                    </Parameter>
+                    <Parameter id="_CodTDsjIUGSA9-B9S4_6Q" name="Partition coefficient (water/container)" description="Partition coefficient Water / Container (will be mapped to concrete container in the simulation)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="znprcQV8gESJK4sHcxHOBg" isDefault="1">
+                      <Info min="0" flag="52" seq="1" ref="0" bb="2" group="67" />
+                    </Parameter>
+                    <Parameter id="Qp7fUrl-5kizaeXkXkXCKw" name="t1/2" description="Half-life of drug release" icon="Parameter" persistable="0" isFixedValue="0" dim="Time" quantityType="Parameter" negativeValuesAllowed="1" formula="25XAhq_pGUy0VMIPVHTN8Q" isDefault="1" displayUnit="min">
+                      <Info min="0" flag="38" seq="1" ref="0" bb="2" group="91" />
+                    </Parameter>
+                  </Children>
+                </Container>
+              </Children>
+            </Container>
+            <Container id="g-NFUG-_YU2kDKVSyEXpig" name="Intracellular" description="Intracellular" icon="Intracellular" mode="Physical" containerType="Compartment">
+              <Tags>
+                <Tag value="Thyroid" />
+              </Tags>
+              <Children>
+                <Parameter id="DS7Q74hbc0uPQTXwEXWSjA" name="Volume" description="Volume of organ or compartment" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" formula="OE0eNNRH7EKV5XVeil8iow" isDefault="1" displayUnit="l">
+                  <ValueOrigin id="35" source="Publication" description="Willmann S, Lippert J, Sevestre M, Solodenko J, Fois F, Schmitt W. PK-Sim®: a physiologically based pharmacokinetic ‘whole-body’ model. Biosilico. 2003; 1 (4): 121-124. http://dx.doi.org/10.1016/S1478-5382%2803%2902342-4" />
+                  <Info min="0" flag="62" seq="19" ref="0" bb="2" group="125" />
+                </Parameter>
+                <Parameter id="DKrTcH2YVE6KEfYiNWBjwA" name="pH" description="pH" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="6.81">
+                  <Tags>
+                    <Tag value="Tumor" />
+                  </Tags>
+                  <ValueOrigin id="34" source="Publication" description="Toxicol In Vitro. 2008 Mar;22(2):457-67 https://doi.org/10.1016/j.tiv.2007.09.010" />
+                  <Info min="0" max="14" flag="122" seq="59" ref="0" bb="32" group="83" />
+                </Parameter>
+                <Container id="DCM-Z3MNSkCKXWM3IQMevw" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Molecule">
+                  <Children>
+                    <Parameter id="MilJObeSpEeMFZLAFW7F0Q" name="Ontogeny factor" description="Ontogeny factor" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="6vzBLHjtiEe7NimOLRW9ZA" isDefault="1">
+                      <Info min="0" flag="52" seq="1" ref="0" bb="2" group="142" />
+                    </Parameter>
+                    <Parameter id="YuH4dMs2-k6MgkBrFkIcZw" name="Partition coefficient (water/container)" description="Partition coefficient Water / Container (will be mapped to concrete container in the simulation)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="c-pE2KJja0GVOA4OHxPfAQ" isDefault="1">
+                      <Info min="0" flag="52" seq="1" ref="0" bb="2" group="67" />
+                    </Parameter>
+                    <Parameter id="lHZBKcnDRkymmAk0An0gCA" name="t1/2" description="Half-life of drug release" icon="Parameter" persistable="0" isFixedValue="0" dim="Time" quantityType="Parameter" negativeValuesAllowed="1" formula="25XAhq_pGUy0VMIPVHTN8Q" isDefault="1" displayUnit="min">
+                      <Info min="0" flag="38" seq="1" ref="0" bb="2" group="91" />
+                    </Parameter>
+                  </Children>
+                </Container>
+              </Children>
+            </Container>
+            <Container id="oHo1PhHiTk-Sq2XVlzqVDQ" name="Endosome" description="Endosomal Space" icon="Endosome" mode="Physical" containerType="Compartment">
+              <Tags>
+                <Tag value="Thyroid" />
+              </Tags>
+              <Children>
+                <Parameter id="5K6xdsPhu0eqk096QvSvxw" name="FcRn concentration in container" description="FcRn concentration in container" icon="Parameter" persistable="0" isFixedValue="0" dim="Concentration (molar)" quantityType="Parameter" negativeValuesAllowed="1" formula="7aCLy4tLYUKSWeMLKK7Mqw" isDefault="1" displayUnit="µmol/l">
+                  <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                  <Info flag="52" seq="1" ref="0" bb="2" group="25" />
+                </Parameter>
+                <Parameter id="cNsYqJ-pokmYi5HOEjVZEQ" name="Volume" description="Volume of organ or compartment" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" formula="fmcW6XJUjEqGusiThpse_g" isDefault="1" displayUnit="l">
+                  <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                  <Info min="0" flag="122" seq="19" ref="0" bb="2" group="123" />
+                </Parameter>
+                <Container id="abTDz5dnbUKCYBQ0-SU91w" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Molecule">
+                  <Children>
+                    <Parameter id="99jt-zlbNEug_nBzL6ByYw" name="Kd (FcRn) in endosomal space of container" description="Dissociation constant of drug for binding to FcRn in endosomal space of parent container" icon="Parameter" persistable="0" isFixedValue="0" dim="Concentration (molar)" quantityType="Parameter" negativeValuesAllowed="1" formula="P5femexmK0Szt9j4zWP0qQ" isDefault="1" displayUnit="µmol/l">
+                      <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                      <Info flag="52" seq="1" ref="0" bb="2" group="25" />
+                    </Parameter>
+                    <Parameter id="fxwikJJ5X0eOdn1UCMsd_g" name="Ontogeny factor" description="Ontogeny factor" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="6vzBLHjtiEe7NimOLRW9ZA" isDefault="1">
+                      <Info min="0" flag="52" seq="1" ref="0" bb="2" group="142" />
+                    </Parameter>
+                    <Parameter id="uVeZjHnbzkaODaVkbT8tyg" name="Partition coefficient (water/container)" description="Partition coefficient Water / Container (will be mapped to concrete container in the simulation)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1">
+                      <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                      <Info min="0" flag="52" seq="1" ref="0" bb="2" group="67" />
+                    </Parameter>
+                    <Parameter id="V2AfQy9H50CbfwN7WAWAjA" name="t1/2" description="Half-life of drug release" icon="Parameter" persistable="0" isFixedValue="0" dim="Time" quantityType="Parameter" negativeValuesAllowed="1" formula="25XAhq_pGUy0VMIPVHTN8Q" isDefault="1" displayUnit="min">
+                      <Info min="0" flag="38" seq="1" ref="0" bb="2" group="91" />
+                    </Parameter>
+                  </Children>
+                </Container>
+              </Children>
+            </Container>
+            <DistributedParameter id="0xlJmCSCy0eC6uys5xtVlQ" name="Volume" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" formula="0NF3qlN3Hk6loAqsDuB7Qw" mode="Logical" isDefault="1" displayUnit="l">
+              <Children>
+                <Parameter id="noHjMk9NQES_y5HPi2msTQ" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.538911929997645">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="65" />
+                </Parameter>
+                <Parameter id="SiwaxYuvhE27C7teSDEtMg" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="32.338641984" displayUnit="l">
+                  <Info min="0" flag="34" seq="1" ref="0" bb="32" group="65" />
+                </Parameter>
+                <Parameter id="EiNEJwjcVEKJYAvXjlJPMQ" name="GeometricDeviation" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1.1">
+                  <Info min="1" flag="18" seq="1" ref="0" bb="32" group="65" />
+                </Parameter>
+              </Children>
+              <ValueOrigin source="Publication" description="ICRP, 2002. Basic Anatomical and Physiological Data for Use in Radiological Protection Reference Values. ICRP Publication 89. Ann. ICRP 32 (3-4). https://doi.org/10.1016/0146-6453(79)90123-4" />
+              <Info min="0" flag="234" seq="11" ref="0" bb="32" group="65" />
+            </DistributedParameter>
+            <DistributedParameter id="-QY3bzy5oEOIfJqsaaiTCw" name="Vf (lipid)" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="m9JJnh-WeEWEF8JWnnVE3g" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="EOdykpkgyUCxqfbCP5u4WA" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="85" />
+                </Parameter>
+                <Parameter id="dRqGbHTNDEe8XVTTmqXNaA" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.013">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="85" />
+                </Parameter>
+              </Children>
+              <ValueOrigin source="Publication" description="Edginton, A.N., Schmitt, W. &amp; Willmann, S. Clin Pharmacokinet (2006) 45: 1013. https://doi.org/10.2165/00003088-200645100-00005" />
+              <Info min="0" max="1" flag="250" seq="57" ref="0" bb="32" group="85" />
+            </DistributedParameter>
+            <DistributedParameter id="7Aq51AaME0ukqNQiqBWAlA" name="Vf (neutral lipid)-PT" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="uo37zlAVkku3xTHwjdPUWA" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="7TxcO2WvAka239QSBOl77g" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="86" />
+                </Parameter>
+                <Parameter id="7J0LZi12YkChaHEz4Iim9A" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.0238">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="86" />
+                </Parameter>
+              </Children>
+              <Info min="0" max="1" flag="250" seq="57" ref="0" bb="32" group="86" />
+            </DistributedParameter>
+            <DistributedParameter id="hug4lfosgU6vVN-I6YGSLg" name="Vf (phospholipid)-PT" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="lByiwzw-i0uAmBkM5U1W5A" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="Xi3QIIoyrEi79etUfAY5pg" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="86" />
+                </Parameter>
+                <Parameter id="-CY_6Ewe8ka3IhKMpUyDVw" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.0072">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="86" />
+                </Parameter>
+              </Children>
+              <Info min="0" max="1" flag="250" seq="58" ref="0" bb="32" group="86" />
+            </DistributedParameter>
+            <DistributedParameter id="VMVZCVcxgkCnEjeqP7qRyg" name="Vf (protein)" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="gggPPRswlkGGTqmsHqciow" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="D110qKRtJUevMr6NHFmK1w" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="85" />
+                </Parameter>
+                <Parameter id="j2VvO4meAUyrs8qv6BofVg" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.177">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="85" />
+                </Parameter>
+              </Children>
+              <ValueOrigin source="Publication" description="Edginton, A.N., Schmitt, W. &amp; Willmann, S. Clin Pharmacokinet (2006) 45: 1013. https://doi.org/10.2165/00003088-200645100-00005" />
+              <Info min="0" max="1" flag="250" seq="58" ref="0" bb="32" group="85" />
+            </DistributedParameter>
+            <DistributedParameter id="mklf2Oa1Xk-5z5ICAwSOSA" name="Vf (water)" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="qOsxwu5gw0SmEkrEJqGZQg" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="cHILZuFtzkymV9A96I0uMg" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="85" />
+                </Parameter>
+                <Parameter id="SF8PY5mKVEuQKYiFJhNZ3A" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.811">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="85" />
+                </Parameter>
+              </Children>
+              <ValueOrigin source="Publication" description="Edginton, A.N., Schmitt, W. &amp; Willmann, S. Clin Pharmacokinet (2006) 45: 1013. https://doi.org/10.2165/00003088-200645100-00005" />
+              <Info min="0" max="1" flag="250" seq="59" ref="0" bb="32" group="85" />
+            </DistributedParameter>
+            <DistributedParameter id="Fs2UcNUcAEuOA5gCRa_frA" name="Vf (water)-PT" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="IvN6IlO7gUyyIZ3_xv4XKQ" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="zUoRhyHEcEmLW0ThAyUoag" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="86" />
+                </Parameter>
+                <Parameter id="ZOA3-v_uNE-k4TIzDHT7SQ" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.76">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="86" />
+                </Parameter>
+              </Children>
+              <Info min="0" max="1" flag="250" seq="59" ref="0" bb="32" group="86" />
+            </DistributedParameter>
+            <DistributedParameter id="O8R6xzcWeUmnvDasPLPmbw" name="Fraction interstitial" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="Vqbr4B2k8U-p5Z23I5ELlw" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="rcJZHTAtmU20X07MZqS96Q" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="64" />
+                </Parameter>
+                <Parameter id="erP3bMZ3602cXiH14qDf4w" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.16">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="64" />
+                </Parameter>
+              </Children>
+              <ValueOrigin source="Publication" description="Edginton, A.N., Schmitt, W. &amp; Willmann, S. Clin Pharmacokinet (2006) 45: 1013. https://doi.org/10.2165/00003088-200645100-00005" />
+              <Info min="0" max="1" flag="186" seq="65" ref="0" bb="32" group="64" />
+            </DistributedParameter>
+            <DistributedParameter id="EXmJrnn0y0ilW_yEJhmaTw" name="Vf (neutral lipid)-RR" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="Mj8JUGpEvE6kEX_VWh0nJw" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="GZQsu_EfF0C2oTJn7to4aA" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="92" />
+                </Parameter>
+                <Parameter id="v_lukMMMkk26Lu7V8DqKXw" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.022">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="92" />
+                </Parameter>
+              </Children>
+              <ValueOrigin source="Publication" description="Rodgers T, Rowland M. Mechanistic approaches to volume of distribution predictions: understanding the processes. Pharm Res. 2007 May;24(5):918-33. https://doi.org/10.1007/s11095-006-9210-3" />
+              <Info min="0" max="1" flag="250" seq="95" ref="0" bb="32" group="92" />
+            </DistributedParameter>
+            <DistributedParameter id="_pNLos9hN0ag7V5nLpJJ0A" name="Vf (neutral lipid)-WS" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="xUUid_i30UikFzw1ll5FLQ" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="J9mVu8mVXU-Gq2gWLs3kPA" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="95" />
+                </Parameter>
+                <Parameter id="PRHV3tTxWU69QMvBbEjgOA" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.0049">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="95" />
+                </Parameter>
+              </Children>
+              <Info min="0" max="1" flag="250" seq="95" ref="0" bb="32" group="95" />
+            </DistributedParameter>
+            <DistributedParameter id="XJSysVdRokevHzQ4JlJsqQ" name="Vf (neutral phospholipid)-RR" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="t6uPYs6gAE-IFCTrjwe-xA" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="r-AE5F1hkUSI790g7I51Fg" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="92" />
+                </Parameter>
+                <Parameter id="fGFM2pwMV02pIvIEmsXBWg" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.0078">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="92" />
+                </Parameter>
+              </Children>
+              <ValueOrigin source="Publication" description="Rodgers T, Rowland M. Mechanistic approaches to volume of distribution predictions: understanding the processes. Pharm Res. 2007 May;24(5):918-33. https://doi.org/10.1007/s11095-006-9210-3" />
+              <Info min="0" max="1" flag="250" seq="96" ref="0" bb="32" group="92" />
+            </DistributedParameter>
+            <DistributedParameter id="g9uMFJ7sdkm7rgbQ2-uVVw" name="Vf (neutral phospholipid, plasma)-WS" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="oTyYhX3bDEu9LtjxBM2Xtw" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="IG9zWKku10er_cy9v5SWDg" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="95" />
+                </Parameter>
+                <Parameter id="ymQ66CIwMkalCgKkJq-c3g" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.0042">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="95" />
+                </Parameter>
+              </Children>
+              <Info min="0" max="1" flag="250" seq="96" ref="0" bb="32" group="95" />
+            </DistributedParameter>
+            <DistributedParameter id="ADXL6jpOxky8L-7A8vembQ" name="Vf (extracellular water)-RR" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="qE2EYd4GdUCoDZ8z99QzJQ" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="kQAYfh74y02eNJkfzW0EQA" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="92" />
+                </Parameter>
+                <Parameter id="S3WaA4d8SUKp_dS4tV1mWA" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.079">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="92" />
+                </Parameter>
+              </Children>
+              <Info min="0" max="1" flag="250" seq="97" ref="0" bb="32" group="92" />
+            </DistributedParameter>
+            <DistributedParameter id="4MNJ-vKKgkWR8IHqy31Lgw" name="Vf (protein)-WS" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="Mtzqch0Gc0Gf5I8-SUNV2A" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="ShWfB2fvmk-gY7elrMjLMA" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="95" />
+                </Parameter>
+                <Parameter id="zU81KAec9U2cyiNppq2mAQ" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.19">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="95" />
+                </Parameter>
+              </Children>
+              <Info min="0" max="1" flag="250" seq="97" ref="0" bb="32" group="95" />
+            </DistributedParameter>
+            <DistributedParameter id="shxrqFcZOU-lei1HJ-CcaQ" name="Vf (intracellular water)-RR" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="oO1p5qagEUWgvO6bzuWMbg" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="czfASwxx3UuK9O3_ypqzsg" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="92" />
+                </Parameter>
+                <Parameter id="DjGUdpUgFk2mWLI3hvl3sg" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.666">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="92" />
+                </Parameter>
+              </Children>
+              <Info min="0" max="1" flag="250" seq="98" ref="0" bb="32" group="92" />
+            </DistributedParameter>
+            <DistributedParameter id="xRP-pLyaN0CuVNGyBzVUxA" name="Vf (water)-WS" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="R07inNDNzkeQsyPM4twwYw" mode="Logical" isDefault="1">
+              <Children>
+                <Parameter id="88hgZ8lT-kaxjDPz56MZSg" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="95" />
+                </Parameter>
+                <Parameter id="G1o3O48AWEK7a4S8F45Njw" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.76">
+                  <Info min="0" max="1" flag="50" seq="1" ref="0" bb="32" group="95" />
+                </Parameter>
+              </Children>
+              <Info min="0" max="1" flag="250" seq="98" ref="0" bb="32" group="95" />
+            </DistributedParameter>
+            <DistributedParameter id="-ItIokyGhUu0xQTc-1YgyQ" name="Specific blood flow rate" persistable="0" isFixedValue="0" dim="Flow per weight organ" quantityType="Parameter" negativeValuesAllowed="1" formula="vL4CApgONUCHc4Y-GhcCVA" mode="Logical" isDefault="1" displayUnit="ml/min/100g organ">
+              <Children>
+                <Parameter id="uE0-cJVfW0aWpxBfh4jTtQ" name="Percentile" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.5">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="5" />
+                </Parameter>
+                <Parameter id="5_BUcUrBpUSXB-skTPC8Pw" name="Mean" icon="Parameter" persistable="0" isFixedValue="0" dim="Flow per weight organ" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.03419" displayUnit="ml/min/100g organ">
+                  <Info min="0" flag="50" seq="1" ref="0" bb="32" group="5" />
+                </Parameter>
+                <Parameter id="8ZB2LKa9NkK1I60GTYLBIA" name="Deviation" icon="Parameter" persistable="0" isFixedValue="0" dim="Flow per weight organ" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.0017095" displayUnit="ml/min/100g organ">
+                  <Info min="0" flag="18" seq="1" ref="0" bb="32" group="5" />
+                </Parameter>
+              </Children>
+              <ValueOrigin source="Publication" description="Edginton, A.N., Schmitt, W. &amp; Willmann, S. Clin Pharmacokinet (2006) 45: 1013. https://doi.org/10.2165/00003088-200645100-00005" />
+              <Info min="0" flag="250" seq="161" ref="0" bb="32" group="5" />
+            </DistributedParameter>
+            <Parameter id="PyGfMwtnn0y67cPJ5ebz5A" name="Allometric scale factor" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="2">
+              <Info min="2" max="2" flag="54" seq="1" ref="0" bb="32" group="2" />
+            </Parameter>
+            <Parameter id="6CMIgaeWWkmFqhAlySgZGA" name="Fraction vascular" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.025">
+              <ValueOrigin source="Publication" description="Edginton, A.N., Schmitt, W. &amp; Willmann, S. Clin Pharmacokinet (2006) 45: 1013. https://doi.org/10.2165/00003088-200645100-00005" />
+              <Info min="0" max="1" flag="58" seq="63" ref="0" bb="32" group="64" />
+            </Parameter>
+            <Parameter id="WH0a_-1fuEixnMrzQUvQkA" name="Acidic phospholipids [mg/g] - RR" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="2.42">
+              <ValueOrigin source="Publication" description="Rodgers T, Rowland M. Mechanistic approaches to volume of distribution predictions: understanding the processes. Pharm Res. 2007 May;24(5):918-33. https://doi.org/10.1007/s11095-006-9210-3" />
+              <Info min="0" max="1000" flag="122" seq="99" ref="0" bb="32" group="92" />
+            </Parameter>
+            <Parameter id="l8RqrCveKUWjgH0k0xFacQ" name="Cell Density" icon="Parameter" persistable="0" isFixedValue="0" dim="Count per mass" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="508900" displayUnit="x10^6/g">
+              <ValueOrigin description="Malendowicz &amp; Bednarek 1986, rat value" />
+              <Info flag="10" seq="1" ref="0" bb="2" group="143" />
+            </Parameter>
+            <Parameter id="yX8AeKpO7ECFhWFd0CzqTw" name="Singel Cell Volume" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1.116E-12" displayUnit="ml">
+              <ValueOrigin description="Malendowicz &amp; Bednarek 1986, rat value" />
+              <Info flag="10" seq="1" ref="0" bb="2" group="143" />
+            </Parameter>
+            <Parameter id="4URRFztDCkubkGHkNrt4Bw" name="Single Cell Height" description="Height of a single follicular cell" icon="Parameter" persistable="0" isFixedValue="0" dim="Length" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.00015" displayUnit="µm">
+              <ValueOrigin description="Malendowicz &amp; Bednarek 1986, rat value" />
+              <Info flag="10" seq="1" ref="0" bb="2" group="143" />
+            </Parameter>
+            <Parameter id="MvAYNYS1BEqYoKUI7f4AQg" name="Single Cell Surface Area" icon="Parameter" persistable="0" isFixedValue="1" dim="Area" quantityType="Parameter" negativeValuesAllowed="1" formula="A8aPMooOYU6DuCnSxm6IxQ" isDefault="0" value="3.55656615257278E-08" displayUnit="cm²">
+              <ValueOrigin source="Unknown" />
+              <Info flag="10" seq="1" ref="0" bb="2" group="143" />
+            </Parameter>
+            <Parameter id="tJPpYn5d2kO-uIoqUrP67g" name="Fraction lumen" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.217">
+              <ValueOrigin description="Malendowicz &amp; Bednarek 1986,scaled  rat value" />
+              <Info flag="10" seq="1" ref="0" bb="2" group="143" />
+            </Parameter>
+            <Parameter id="bK6rEDwFkkqixCotw3UuZw" name="Fraction intracellular" description="Fraction of intracellular space of the organ" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="C4j0LWsGGEW5c1AmxxxoOQ" isDefault="0">
+              <Tags>
+                <Tag value="TissueOrgan" />
+              </Tags>
+              <ValueOrigin source="Unknown" description="Malendowicz &amp; Bednarek 1986, scaled rat value" />
+              <Info min="0" max="1" flag="62" seq="64" ref="0" bb="32" group="64" />
+            </Parameter>
+            <Container id="BmunLOxh30uZYd_hEK6r2g" name="Lumen" icon="LUMEN" mode="Physical" containerType="Compartment">
+              <Tags>
+                <Tag value="Thyroid" />
+              </Tags>
+              <Children>
+                <Container id="V4ixjMVduU6wMHGVh2QKkw" name="MoleculeProperties" mode="Logical" containerType="Other">
+                  <Children>
+                    <Parameter id="MVLnQVRNuk2BydY6eoeLSQ" name="Ontogeny factor" description="Ontogeny factor" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="6vzBLHjtiEe7NimOLRW9ZA" isDefault="0">
+                      <ValueOrigin source="Unknown" />
+                      <Info min="0" flag="52" seq="1" ref="0" bb="2" group="142" />
+                    </Parameter>
+                    <Parameter id="ah4SDwAFkUyRwLM_Rl3X6Q" name="Partition coefficient (water/container)" description="Partition coefficient Water / Container (will be mapped to concrete container in the simulation)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="k5E1xM1csUGeRkNaMvehdw" isDefault="0">
+                      <ValueOrigin source="Unknown" />
+                      <Info min="0" flag="52" seq="1" ref="0" bb="2" group="67" />
+                    </Parameter>
+                    <Parameter id="qCNTIqig7kyh1o4ILYJvhA" name="t1/2" description="Half-life of drug release" icon="Parameter" persistable="0" isFixedValue="0" dim="Time" quantityType="Parameter" negativeValuesAllowed="1" formula="25XAhq_pGUy0VMIPVHTN8Q" isDefault="1" displayUnit="min">
+                      <Info min="0" flag="38" seq="1" ref="0" bb="2" group="91" />
+                    </Parameter>
+                  </Children>
+                </Container>
+                <Parameter id="nOJys-YCD0q4IkS_LL3NhA" name="Volume" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" formula="2Vk2G7pMAkKJgIGh8I6w0A" isDefault="1" displayUnit="l">
+                  <Info flag="10" seq="1" ref="0" bb="2" group="65" />
+                </Parameter>
+              </Children>
+            </Container>
+          </Children>
+        </Container>
+      </TopContainers>
+      <NeighborhoodsContainer id="U00sDXhU6kqyLTBC7iqSmg" name="Neighborhoods" mode="Logical" containerType="Other">
+        <Children>
+          <NeighborhoodBuilder id="F9EARjGYFUWA3Bz97Vp3rA" name="Thyroid_pls_Thyroid_bc" description="Neighborhood between Muscle/Plasma and Muscle/Blood Cells" mode="Logical" containerType="Neighborhood">
+            <Tags>
+              <Tag value="Neighborhood: Plasma / BloodCells" />
+            </Tags>
+            <Children>
+              <Container id="B43t0ZQINE6zsigzvAZwuQ" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Other" />
+              <Parameter id="c0xRYyARnESHI1gvRJZ97w" name="Surface area (blood cells/plasma)" description="Surface area between blood cells and plasma" icon="Parameter" persistable="0" isFixedValue="0" dim="Area" quantityType="Parameter" negativeValuesAllowed="1" formula="XrK64-pghU-axRkqK4bUNA" isDefault="1" displayUnit="cm²">
+                <Tags>
+                  <Tag value="Neighborhood: Plasma / BloodCells" />
+                </Tags>
+                <Info min="0" flag="122" seq="14" ref="0" bb="32" group="104" />
+              </Parameter>
+            </Children>
+            <FirstNeighborPath path="1" />
+            <SecondNeighborPath path="2" />
+          </NeighborhoodBuilder>
+          <NeighborhoodBuilder id="gzo6mUqAPkKtxOOlR7iPsw" name="Thyroid_pls_Thyroid_end" description="Neighborhood between Muscle/Plasma and Muscle/Endosome" mode="Logical" containerType="Neighborhood">
+            <Tags>
+              <Tag value="Neighborhood: Plasma / Endosome" />
+            </Tags>
+            <Children>
+              <Container id="SFN_Ol1pY0e-E51SGQC_Lw" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Other" />
+            </Children>
+            <FirstNeighborPath path="1" />
+            <SecondNeighborPath path="3" />
+          </NeighborhoodBuilder>
+          <NeighborhoodBuilder id="wltJHwRukUOaM6hhcQVaSQ" name="Thyroid_pls_Thyroid_int" description="Neighborhood between Muscle/Plasma and Muscle/Interstitial" mode="Logical" containerType="Neighborhood">
+            <Tags>
+              <Tag value="Neighborhood: Plasma / Interstitial" />
+            </Tags>
+            <Children>
+              <Container id="i5CqrhuG70KOIIeb36RtjA" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Other">
+                <Children>
+                  <Parameter id="L1H6Ez6Rckm3juf7l29XoQ" name="P (large endothelial pores)" description="Effective permeability for large endothelial pores" icon="Parameter" persistable="0" isFixedValue="0" dim="Velocity" quantityType="Parameter" negativeValuesAllowed="1" formula="W4PVoQFtaEK7k7LKCXtuvw" isDefault="1" displayUnit="cm/min">
+                    <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                    <Info min="0" flag="122" seq="1" ref="0" bb="2" group="79" />
+                  </Parameter>
+                  <Parameter id="eNrwHsT56ECVI2BU0k-3sQ" name="P (plasma&lt;-&gt;interstitial)" description="Permeability between plasma and interstitial space" icon="Parameter" persistable="0" isFixedValue="0" dim="Velocity" quantityType="Parameter" negativeValuesAllowed="1" formula="1Ov80nuNE0-HalIRqY1q1g" isDefault="1" displayUnit="cm/min">
+                    <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                    <Info min="0" flag="122" seq="1" ref="0" bb="2" group="77" />
+                  </Parameter>
+                  <Parameter id="ExoCq-xs8k20mL_E_-BZhg" name="P (small endothelial pores)" description="Effective permeability for small endothelial pores" icon="Parameter" persistable="0" isFixedValue="0" dim="Velocity" quantityType="Parameter" negativeValuesAllowed="1" formula="zge18lBmOk2Fu15CAp5m3g" isDefault="1" displayUnit="cm/min">
+                    <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                    <Info min="0" flag="122" seq="1" ref="0" bb="2" group="80" />
+                  </Parameter>
+                  <Parameter id="6U4XoQxVt0etltvqeCLYQA" name="Partition coefficient (interstitial/plasma)" description="Partition coefficient between interstitial space and plasma" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="7cfr3xD5HE2yc_N6I-jRYg" isDefault="1">
+                    <Info min="0" flag="122" seq="1" ref="0" bb="2" group="70" />
+                  </Parameter>
+                  <Parameter id="yhNzmFcwKEKunjj9rga85g" name="Peclet number (large pores)" description="Peclet number for large endothelial pores" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="R1NbnurfRkinxUEztUwk4Q" isDefault="1">
+                    <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                    <Info min="0" flag="54" seq="1" ref="0" bb="2" group="116" />
+                  </Parameter>
+                  <Parameter id="J9BlldVOzkec39pcgGirvA" name="Peclet number (small pores)" description="Peclet number for small endothelial pores" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="pGM3vwKASEaRT98pZqKsOg" isDefault="1">
+                    <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                    <Info min="0" flag="54" seq="1" ref="0" bb="2" group="116" />
+                  </Parameter>
+                  <Parameter id="mirhD2IF5kiTfqcwdIfgLQ" name="Radius ratio (solute/large pores)" description="Solute radius/large pores radius" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="7gSa1gFAMkWCcNdp3GuknA" isDefault="1">
+                    <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                    <Info min="0" flag="52" seq="1" ref="0" bb="2" group="116" />
+                  </Parameter>
+                  <Parameter id="L1XgOGqukEmYChly7M2Ueg" name="Radius ratio (solute/small pores)" description="Solute radius/small pores radius" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="Y_nR0ZltV0WQhlFIumvDhA" isDefault="1">
+                    <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                    <Info min="0" flag="52" seq="1" ref="0" bb="2" group="116" />
+                  </Parameter>
+                  <Parameter id="Ffo2RI45UkyxvtJxWG8ycA" name="Reflection coefficient (large pores)" description="Osmotic reflection coefficient for large pores" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="_dWvcR7vBUa01MXAJn8EEQ" isDefault="1">
+                    <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                    <Info min="0" flag="58" seq="1" ref="0" bb="2" group="89" />
+                  </Parameter>
+                  <Parameter id="bhZj_nItg02-9ETXdkFM3g" name="Reflection coefficient (small pores)" description="Osmotic reflection coefficient for small pores" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="PIB0Up02Mku-sdGIjc34vg" isDefault="1">
+                    <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                    <Info min="0" flag="58" seq="1" ref="0" bb="2" group="90" />
+                  </Parameter>
+                </Children>
+              </Container>
+              <Parameter id="ZQvnkaEQ9E-wHgG2f5A9RQ" name="Surface area (plasma/interstitial)" description="Surface area between plasma and interstitial space" icon="Parameter" persistable="0" isFixedValue="0" dim="Area" quantityType="Parameter" negativeValuesAllowed="1" formula="6FLmUSz6rka8mJ5o_2byfw" isDefault="1" displayUnit="cm²">
+                <Tags>
+                  <Tag value="Neighborhood: Plasma / Interstitial" />
+                </Tags>
+                <ValueOrigin id="26" source="Publication" description="Niederalt, C., Kuepfer, L., Solodenko, J. et al. J Pharmacokinet Pharmacodyn (2017). https://doi.org/10.1007/s10928-017-9559-4" />
+                <Info min="0" flag="122" seq="12" ref="0" bb="32" group="106" />
+              </Parameter>
+            </Children>
+            <FirstNeighborPath path="1" />
+            <SecondNeighborPath path="4" />
+          </NeighborhoodBuilder>
+          <NeighborhoodBuilder id="SyOsqeaV7Ey1D_nh7THUOQ" name="Thyroid_pls_VenousBlood_pls" description="Neighborhood between Muscle/Plasma and Venous Blood/Plasma" mode="Logical" containerType="Neighborhood">
+            <Tags>
+              <Tag value="Neighborhood: Plasma / Plasma" />
+            </Tags>
+            <Children>
+              <Container id="TbAlp3jnw0-NO3tCZPTxsA" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Other" />
+            </Children>
+            <FirstNeighborPath path="1" />
+            <SecondNeighborPath path="5" />
+          </NeighborhoodBuilder>
+          <NeighborhoodBuilder id="avJsoJzJvUunAroWv_NSxg" name="ArterialBlood_pls_Thyroid_pls" description="Neighborhood between Arterial Blood/Plasma and Muscle/Plasma" mode="Logical" containerType="Neighborhood">
+            <Tags>
+              <Tag value="Neighborhood: Plasma / Plasma" />
+            </Tags>
+            <Children>
+              <Container id="57_zYm3kEEyxfN9_ZMpfgg" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Other" />
+            </Children>
+            <FirstNeighborPath path="6" />
+            <SecondNeighborPath path="1" />
+          </NeighborhoodBuilder>
+          <NeighborhoodBuilder id="42Plk_897kW44dB5WUjdxA" name="Thyroid_bc_VenousBlood_bc" description="Neighborhood between Muscle/Blood Cells and Venous Blood/Blood Cells" mode="Logical" containerType="Neighborhood">
+            <Tags>
+              <Tag value="Neighborhood: BloodCells / BloodCells" />
+            </Tags>
+            <Children>
+              <Container id="a4Wupw7nFEqsIEJX8fNUJg" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Other" />
+            </Children>
+            <FirstNeighborPath path="2" />
+            <SecondNeighborPath path="7" />
+          </NeighborhoodBuilder>
+          <NeighborhoodBuilder id="5-d7KQgpLUSN_t802Edb6A" name="ArterialBlood_bc_Thyroid_bc" description="Neighborhood between Arterial Blood/Blood Cells and Muscle/Blood Cells" mode="Logical" containerType="Neighborhood">
+            <Tags>
+              <Tag value="Neighborhood: BloodCells / BloodCells" />
+            </Tags>
+            <Children>
+              <Container id="DxdveMvh2EmBNSedYQMRQw" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Other" />
+            </Children>
+            <FirstNeighborPath path="8" />
+            <SecondNeighborPath path="2" />
+          </NeighborhoodBuilder>
+          <NeighborhoodBuilder id="X_iTb_PEK0q31w2E9A_XQQ" name="Thyroid_end_Thyroid_int" description="Neighborhood between Muscle/Endosome and Muscle/Interstitial" mode="Logical" containerType="Neighborhood">
+            <Tags>
+              <Tag value="Neighborhood: Endosome / Interstitial" />
+            </Tags>
+            <Children>
+              <Container id="_talxhmhXEC_oNNEicRwzA" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Other" />
+            </Children>
+            <FirstNeighborPath path="3" />
+            <SecondNeighborPath path="4" />
+          </NeighborhoodBuilder>
+          <NeighborhoodBuilder id="oYFIRjAtZEyykajDiZOXoA" name="Thyroid_int_Thyroid_cell" description="Neighborhood between Muscle/Interstitial and Muscle/Intracellular" mode="Logical" containerType="Neighborhood">
+            <Tags>
+              <Tag value="Neighborhood: Interstitial / Intracellular" />
+            </Tags>
+            <Children>
+              <Container id="aKPnppXfuUKFZ7qBuEYxug" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Other">
+                <Children>
+                  <Parameter id="9txwbAnluECfSCP6z83qUQ" name="P (interstitial-&gt;intracellular)" description="Permeability from interstitial to intracellular space" icon="Parameter" persistable="0" isFixedValue="0" dim="Velocity" quantityType="Parameter" negativeValuesAllowed="1" formula="-7crxWQIiEeDtTpedMlghA" isDefault="1" displayUnit="cm/min">
+                    <Info min="0" flag="122" seq="1" ref="0" bb="2" group="78" />
+                  </Parameter>
+                  <Parameter id="nMLMMnwuD0GZC01_IurDXg" name="P (intracellular-&gt;interstitial)" description="Permeability from intracellular to interstitial space" icon="Parameter" persistable="0" isFixedValue="0" dim="Velocity" quantityType="Parameter" negativeValuesAllowed="1" formula="qVIRI9HuEkCY9lxcjXs2FQ" isDefault="1" displayUnit="cm/min">
+                    <Info min="0" flag="122" seq="1" ref="0" bb="2" group="76" />
+                  </Parameter>
+                  <Parameter id="XAOzGzAWRU2d1jTS4opWEQ" name="P*SA interstitial -&gt; intracellular" description="Permeability surface area product from interstitial to intracellular space" icon="Parameter" persistable="0" isFixedValue="0" dim="Flow" quantityType="Parameter" negativeValuesAllowed="1" formula="_wzQXxYWw0Oc6H-sx8548g" isDefault="1" displayUnit="l/min">
+                    <Info min="0" flag="54" seq="1" ref="0" bb="2" group="75" />
+                  </Parameter>
+                  <Parameter id="XN90ZB6YREKEmFaYCeTTqQ" name="P*SA intracellular -&gt; interstitial" description="Permeability surface area product from intracellular to interstitial space" icon="Parameter" persistable="0" isFixedValue="0" dim="Flow" quantityType="Parameter" negativeValuesAllowed="1" formula="Fjne4C2dvUWHakb8liCXWg" isDefault="1" displayUnit="l/min">
+                    <Info min="0" flag="54" seq="1" ref="0" bb="2" group="75" />
+                  </Parameter>
+                  <Parameter id="MK64gck1IkC9s10btqXykg" name="P_cell_int_factor" description="Factor modifying the permeability of acids and bases depending on their degree of dissociation" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="mGBI2Cbzr0aZi_lcmn-WEg" isDefault="1">
+                    <Info min="0" flag="54" seq="1" ref="0" bb="2" group="75" />
+                  </Parameter>
+                  <Parameter id="Llv81kcGSkKvem462LvXJA" name="P_int_cell_factor" description="Factor modifying the permeability of acids and bases depending on their degree of dissociation" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="mGBI2Cbzr0aZi_lcmn-WEg" isDefault="1">
+                    <Info min="0" flag="54" seq="1" ref="0" bb="2" group="75" />
+                  </Parameter>
+                  <Parameter id="AC1o95bnNU2KKEZPJ03MQQ" name="Partition coefficient (intracellular/plasma)" description="Partition coefficient between intracellular space and plasma" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="52IZMOO_OECZR6aYUkdimg" isDefault="1">
+                    <Info min="0" flag="122" seq="1" ref="0" bb="2" group="69" />
+                  </Parameter>
+                  <Parameter id="il30PWnUN0GtBu-xFQ17BA" name="Partition coefficient (intracellular/water)" description="Partition coefficient (intracellular/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="klHhdmK6GkKN3T8srXH-xQ" isDefault="1">
+                    <Info min="0" flag="54" seq="1" ref="0" bb="2" group="67" />
+                  </Parameter>
+                </Children>
+              </Container>
+              <Parameter id="9QJlKPRQD0K98yokdz7jHA" name="Surface area (interstitial/intracellular)" description="Surface area between interstitial and intracellular space" icon="Parameter" persistable="0" isFixedValue="0" dim="Area" quantityType="Parameter" negativeValuesAllowed="1" formula="g4L63fEmikiMt2juu26URg" isDefault="0" displayUnit="cm²">
+                <Tags>
+                  <Tag value="Neighborhood: Interstitial / Intracellular" />
+                </Tags>
+                <ValueOrigin source="Unknown" />
+                <Info min="0" flag="122" seq="12" ref="0" bb="32" group="105" />
+              </Parameter>
+            </Children>
+            <FirstNeighborPath path="4" />
+            <SecondNeighborPath path="9" />
+          </NeighborhoodBuilder>
+          <NeighborhoodBuilder id="tGE4LAhgPU6bUK7sZ_EZJA" name="Thyroid_int_VenousBlood_pls" description="Neighborhood between Muscle/Interstitial and Venous Blood/Plasma" mode="Logical" containerType="Neighborhood">
+            <Tags>
+              <Tag value="Neighborhood: Interstitial / Plasma" />
+            </Tags>
+            <Children>
+              <Container id="4sqIpCbspUOiwX9HZjCPpQ" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Other" />
+            </Children>
+            <FirstNeighborPath path="4" />
+            <SecondNeighborPath path="5" />
+          </NeighborhoodBuilder>
+          <NeighborhoodBuilder id="x-DtearTskWYhst0fVvgyg" name="Thyroid_end_Thyroid_ecl" description="Neighborhood between Muscle/Endosome and Muscle/Endosomal Clearance" mode="Logical" containerType="Neighborhood">
+            <Tags>
+              <Tag value="Neighborhood: Endosome / EndosomalClearance" />
+            </Tags>
+            <Children>
+              <Container id="YCnls7cjqEq4QbPaNexpGg" name="MoleculeProperties" description="Molecule dependent properties" mode="Logical" containerType="Other" />
+            </Children>
+            <FirstNeighborPath path="3" />
+            <SecondNeighborPath path="10" />
+          </NeighborhoodBuilder>
+          <NeighborhoodBuilder id="hYPLnaNmhEWv9knR-ZMWYg" name="Thyroid_Lumen_Thyroid_cell" mode="Logical" containerType="Neighborhood">
+            <Children>
+              <Container id="asrP93LA7UCPhaD31iZgQQ" name="MoleculeProperties" mode="Logical" containerType="Neighborhood">
+                <Tags>
+                  <Tag value="Neighborhood" />
+                </Tags>
+                <Children>
+                  <Parameter id="kVAX5leIXkuv01bXI4Asrw" name="Kfac_lumen_plasma" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1">
+                    <Info flag="10" seq="1" ref="0" bb="2" group="143" />
+                  </Parameter>
+                  <Parameter id="JpSjIIP6GkmpP80Mz7jdvA" name="P (interstitial-&gt;intracellular)" description="Permeability from interstitial to intracellular space" icon="Parameter" persistable="0" isFixedValue="0" dim="Velocity" quantityType="Parameter" negativeValuesAllowed="1" formula="GiINfs66zUWwS5jqVRLbXw" isDefault="1" displayUnit="cm/min">
+                    <Info min="0" flag="122" seq="1" ref="0" bb="2" group="78" />
+                  </Parameter>
+                  <Parameter id="uQw5sIorcUWSHSbRngoGZg" name="P (intracellular-&gt;interstitial)" description="Permeability from intracellular to interstitial space" icon="Parameter" persistable="0" isFixedValue="0" dim="Velocity" quantityType="Parameter" negativeValuesAllowed="1" formula="qVIRI9HuEkCY9lxcjXs2FQ" isDefault="1" displayUnit="cm/min">
+                    <Info min="0" flag="122" seq="1" ref="0" bb="2" group="76" />
+                  </Parameter>
+                  <Parameter id="3zs0xFWBekKDafFxKMwVjg" name="P*SA intracellular -&gt; lumen" description="Permeability surface area product from intracellular to interstitial space" icon="Parameter" persistable="0" isFixedValue="0" dim="Flow" quantityType="Parameter" negativeValuesAllowed="1" formula="Fjne4C2dvUWHakb8liCXWg" isDefault="1" displayUnit="l/min">
+                    <Info min="0" flag="54" seq="1" ref="0" bb="2" group="75" />
+                  </Parameter>
+                  <Parameter id="8ho4gEXLBUyTuXAeV0BlDg" name="P*SA lumen -&gt; intracellular" description="Permeability surface area product from interstitial to intracellular space" icon="Parameter" persistable="0" isFixedValue="0" dim="Flow" quantityType="Parameter" negativeValuesAllowed="1" formula="_wzQXxYWw0Oc6H-sx8548g" isDefault="1" displayUnit="l/min">
+                    <Info min="0" flag="54" seq="1" ref="0" bb="2" group="75" />
+                  </Parameter>
+                  <Parameter id="bdtU6qsy-UeWLcuDKSZYEg" name="P_cell_int_factor" description="Factor modifying the permeability of acids and bases depending on their degree of dissociation" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="0" value="1">
+                    <ValueOrigin source="Unknown" />
+                    <Info min="0" flag="54" seq="1" ref="0" bb="2" group="75" />
+                  </Parameter>
+                  <Parameter id="lynMf9xdSkySd_cEptsy7Q" name="P_int_cell_factor" description="Factor modifying the permeability of acids and bases depending on their degree of dissociation" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="0" value="1">
+                    <ValueOrigin source="Unknown" />
+                    <Info min="0" flag="54" seq="1" ref="0" bb="2" group="75" />
+                  </Parameter>
+                  <Parameter id="gg06Omwbw02OU5NtPU7R-g" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="hOuKV3kTukiBCRR4i60F2w" isDefault="1">
+                    <Info flag="10" seq="1" ref="0" bb="2" group="143" />
+                  </Parameter>
+                  <Parameter id="1xzDlnLALUiiOUPFe0esIQ" name="Partition coefficient (intracellular/plasma)" description="Partition coefficient between intracellular space and plasma" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="_KCK4ihdOU-9rT9E1jKFSw" isDefault="0">
+                    <ValueOrigin source="Unknown" />
+                    <Info min="0" flag="122" seq="1" ref="0" bb="2" group="69" />
+                  </Parameter>
+                  <Parameter id="sPY3pFH2xku1d5srG8QYSg" name="Partition coefficient (intracellular/water)" description="Partition coefficient (intracellular/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="klHhdmK6GkKN3T8srXH-xQ" isDefault="1">
+                    <Info min="0" flag="54" seq="1" ref="0" bb="2" group="67" />
+                  </Parameter>
+                  <Parameter id="jb2MIYLg0kydIRkkDB5FbA" name="Partition coefficient (lumen/plasma)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="wLmlKlt1bUONRQYSaYYK1Q" isDefault="1">
+                    <Info flag="10" seq="1" ref="0" bb="2" group="143" />
+                  </Parameter>
+                  <Parameter id="lHKHczdsmEa3pLS05gm6nQ" name="Partition coefficient (lumen/water)" description="Partition coefficient (intracellular/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="VZeBD0RtdEGBWKJ-k-Ut-w" isDefault="1">
+                    <Info min="0" flag="54" seq="1" ref="0" bb="2" group="67" />
+                  </Parameter>
+                </Children>
+              </Container>
+              <Parameter id="sAtrK3zfSkqfPtzdGEnf_Q" name="Surface area (interstitial/intracellular)" description="Surface area between interstitial and intracellular space" icon="Parameter" persistable="0" isFixedValue="0" dim="Area" quantityType="Parameter" negativeValuesAllowed="1" formula="g4L63fEmikiMt2juu26URg" isDefault="0" displayUnit="cm²">
+                <ValueOrigin source="Unknown" />
+                <Info min="0" flag="122" seq="17" ref="0" bb="32" group="105" />
+              </Parameter>
+            </Children>
+            <FirstNeighborPath path="11" />
+            <SecondNeighborPath path="9" />
+          </NeighborhoodBuilder>
+        </Children>
+      </NeighborhoodsContainer>
+      <FormulaCache>
+        <Formulas>
+          <Formula id="wPgLwmp4okOVzYWxHV9CLQ" name="PARAM_f_uptake_vas" dim="Fraction" formula="f_uptake_vas_global">
+            <Paths>
+              <Path path="12" as="13" dim="14" />
+            </Paths>
+          </Formula>
+          <Formula id="R0zm_YUCz0iiyEvBO5epNg" name="PARAM_f_endo" dim="Fraction" formula="f_endo_global">
+            <Paths>
+              <Path path="15" as="16" dim="14" />
+            </Paths>
+          </Formula>
+          <Formula id="fMpKmOIgQEuFGQriOPhkDA" name="PARAM_f_rec_vas" dim="Fraction" formula="f_rec_vas_global">
+            <Paths>
+              <Path path="17" as="18" dim="14" />
+            </Paths>
+          </Formula>
+          <Formula id="hhawugqGek6d3Ftwg8LHcw" name="PARAM_K_uptake" dim="Inversed time" formula="Rendo_v_global">
+            <Paths>
+              <Path path="19" as="20" dim="21" />
+            </Paths>
+          </Formula>
+          <Formula id="axI2z0UENkSb2TMqa_47Zg" name="PARAM_K_rec" dim="Inversed time" formula="Rrec_global">
+            <Paths>
+              <Path path="22" as="23" dim="21" />
+            </Paths>
+          </Formula>
+          <Formula id="YLQUenNW50yLXRlLOA4DLA" name="PARAM_Tissue_Weight" dim="Mass" formula="Volume * Density">
+            <Paths>
+              <Path path="24" as="25" dim="25" />
+              <Path path="26" as="27" dim="27" />
+            </Paths>
+          </Formula>
+          <Formula id="vNm_i9U0NUqKp4V2Wk3uYg" name="PARAM_Fluid_recirculation_flow_rate" dim="Flow" formula="f_Jiso * (1-alpha_l) * Q_lymph * (V/V_mouse)^(exp_Jiso_scale - 1)">
+            <Paths>
+              <Path path="28" as="29" />
+              <Path path="30" as="31" />
+              <Path path="32" as="33" dim="34" />
+              <Path path="35" as="36" dim="27" />
+              <Path path="26" as="37" dim="27" />
+              <Path path="38" as="39" />
+            </Paths>
+          </Formula>
+          <Formula id="ScDpjDJl20SQMYmC0MrbfA" name="PARAM_Lymph_flow_rate" dim="Flow" formula="f_lymph*Q*(1-HCT)">
+            <Paths>
+              <Path path="40" as="41" dim="34" />
+              <Path path="42" as="43" />
+              <Path path="44" as="45" />
+            </Paths>
+          </Formula>
+          <Formula id="Zevuy9Ed50SiOROPVagkUA" name="VOLUME_VascularEndo" dim="Volume" formula="SA_pls_int*d_endo">
+            <Paths>
+              <Path path="46" as="47" dim="48" />
+              <Path path="49" as="50" dim="51" />
+            </Paths>
+          </Formula>
+          <Formula id="EcyrcwZ7Yka7NuoqAV776w" name="PARAM_Q_from_Qspec" dim="Flow" formula="Qspec * Weight">
+            <Paths>
+              <Path path="52" as="53" dim="54" />
+              <Path path="55" as="56" dim="57" />
+            </Paths>
+          </Formula>
+          <Formula id="5pZYciD37U6hx_39As-PKg" name="FcRn_in_Container_Plasma" dim="Concentration (molar)" formula="FcRn">
+            <Paths>
+              <Path path="58" as="59" dim="60" />
+            </Paths>
+          </Formula>
+          <Formula id="irnxPgkmJkaYZxjqNBWBQQ" name="VOLUME_pls_2Pores" dim="Volume" formula="f_vas*(1-HCT)*V_org">
+            <Paths>
+              <Path path="61" as="62" />
+              <Path path="63" as="64" dim="27" />
+              <Path path="44" as="45" />
+            </Paths>
+          </Formula>
+          <Formula id="W4q3tkVKSEiPbWUpY8oCAA" name="KdFcRn_in_Container_Plasma_and_Interstitial" dim="Concentration (molar)" formula="Kd_FcRn">
+            <Paths>
+              <Path path="65" as="66" dim="60" />
+            </Paths>
+          </Formula>
+          <Formula id="6vzBLHjtiEe7NimOLRW9ZA" name="PARAM_OntogenyFactor_FromGlobal" formula="f_onto">
+            <Paths>
+              <Path path="67" as="68" />
+            </Paths>
+          </Formula>
+          <Formula id="Q66yXcgK5k627vPIu3ueqQ" name="PARAM_K_Water_PLS" formula="fu">
+            <Paths>
+              <Path path="69" as="70" dim="14" />
+            </Paths>
+          </Formula>
+          <Formula id="25XAhq_pGUy0VMIPVHTN8Q" name="PARAM_ProteinHalfLife_FromGlobal_Liver" dim="Time" formula="tHalf">
+            <Paths>
+              <Path path="71" as="72" dim="73" />
+            </Paths>
+          </Formula>
+          <Formula id="dztE99tNrkaMMp3GC5oRUQ" name="VOLUME_bc_2Pores" dim="Volume" formula="f_vas*HCT*V">
+            <Paths>
+              <Path path="61" as="62" />
+              <Path path="63" as="37" dim="27" />
+              <Path path="44" as="45" />
+            </Paths>
+          </Formula>
+          <Formula id="R6FfPNSmN0yexPsEJgDu6g" name="PARAM_K_Water_BC" formula="K_rbc/fu">
+            <Paths>
+              <Path path="69" as="70" dim="14" />
+              <Path path="74" as="75" />
+            </Paths>
+          </Formula>
+          <Formula id="2IOAHTY_AkKoWRqvFU03jg" name="FcRn_in_Container_Interstitial" dim="Concentration (molar)" formula="FcRn">
+            <Paths>
+              <Path path="76" as="59" dim="60" />
+            </Paths>
+          </Formula>
+          <Formula id="183Ge50nSUeCWXe-IAnBDA" name="VOLUME_int_2Pores" dim="Volume" formula="f_int*V">
+            <Paths>
+              <Path path="77" as="78" />
+              <Path path="63" as="37" dim="27" />
+            </Paths>
+          </Formula>
+          <Formula id="jCTCMXXoS0GsdaxB3KJQwA" name="PARAM_pH_INT" formula="pH_int">
+            <Paths>
+              <Path path="79" as="80" />
+            </Paths>
+          </Formula>
+          <Formula id="znprcQV8gESJK4sHcxHOBg" name="PARAM_K_Water_INT" formula="K_water_int">
+            <Paths>
+              <Path path="81" as="82" />
+            </Paths>
+          </Formula>
+          <Formula id="OE0eNNRH7EKV5XVeil8iow" name="VOLUME_cell_2Pores" dim="Volume" formula="f_cell*V">
+            <Paths>
+              <Path path="83" as="84" />
+              <Path path="63" as="37" dim="27" />
+            </Paths>
+          </Formula>
+          <Formula id="c-pE2KJja0GVOA4OHxPfAQ" name="PARAM_K_Water_CELL" formula="K_water_cell">
+            <Paths>
+              <Path path="85" as="86" />
+            </Paths>
+          </Formula>
+          <Formula id="7aCLy4tLYUKSWeMLKK7Mqw" name="FcRn_in_Container_Endosomal" dim="Concentration (molar)" formula="FcRn">
+            <Paths>
+              <Path path="87" as="59" dim="60" />
+            </Paths>
+          </Formula>
+          <Formula id="fmcW6XJUjEqGusiThpse_g" name="VOLUME_end" dim="Volume" formula="f_endo*SA_pls_int*d_endo">
+            <Paths>
+              <Path path="88" as="47" dim="48" />
+              <Path path="89" as="90" dim="14" />
+              <Path path="49" as="50" dim="51" />
+            </Paths>
+          </Formula>
+          <Formula id="P5femexmK0Szt9j4zWP0qQ" name="KdFcRn_in_Container_Endosomal" dim="Concentration (molar)" formula="Kd_FcRn">
+            <Paths>
+              <Path path="91" as="66" dim="60" />
+            </Paths>
+          </Formula>
+          <Formula id="A8aPMooOYU6DuCnSxm6IxQ" name="PARAM_SA_single_cell" dim="Area" formula="V_cell/Height">
+            <Paths>
+              <Path path="92" as="93" dim="27" />
+              <Path path="94" as="95" dim="51" />
+            </Paths>
+          </Formula>
+          <Formula id="C4j0LWsGGEW5c1AmxxxoOQ" name="PARAM_f_cell_thyroid" formula="1 - f_int - f_vas - f_lum">
+            <Paths>
+              <Path path="96" as="78" />
+              <Path path="97" as="62" />
+              <Path path="98" as="99" />
+            </Paths>
+          </Formula>
+          <Formula id="k5E1xM1csUGeRkNaMvehdw" name="PARAM_K_wat_lum_thyro" formula="K_water_lum">
+            <Paths>
+              <Path path="100" as="101" />
+            </Paths>
+          </Formula>
+          <Formula id="2Vk2G7pMAkKJgIGh8I6w0A" name="PARAM_Volume_Thyroid_lumen" dim="Volume" formula="V*F">
+            <Paths>
+              <Path path="102" as="103" dim="14" />
+              <Path path="63" as="37" dim="27" />
+            </Paths>
+          </Formula>
+          <Formula id="XrK64-pghU-axRkqK4bUNA" name="PARAM_SA_rbc_pls" dim="Area" formula="HCT * A_to_V_bc * 0.6 * V * f_vas">
+            <Paths>
+              <Path path="104" as="62" />
+              <Path path="105" as="37" dim="27" />
+              <Path path="44" as="45" />
+              <Path path="106" as="107" dim="108" />
+            </Paths>
+          </Formula>
+          <Formula id="W4PVoQFtaEK7k7LKCXtuvw" name="PARAM_P_endothelial_l" dim="Velocity" formula="gamma&lt;1 ? (1-gamma)^4.5/(1-0.3956*gamma+1.0616*gamma^2)* alpha_l*8*Lp/(r)^2 * RT/(6*Pi*Na*a_e) : 1e-22">
+            <Paths>
+              <Path path="109" as="110" />
+              <Path path="111" as="112" dim="51" />
+              <Path path="113" as="29" />
+              <Path path="114" as="115" dim="116" />
+              <Path path="117" as="118" dim="51" />
+              <Path path="119" as="120" dim="121" />
+              <Path path="122" as="123" dim="123" />
+            </Paths>
+          </Formula>
+          <Formula id="1Ov80nuNE0-HalIRqY1q1g" name="PARAM_P_endothelial" dim="Velocity" formula="P/2">
+            <Paths>
+              <Path path="124" as="125" dim="126" />
+            </Paths>
+          </Formula>
+          <Formula id="zge18lBmOk2Fu15CAp5m3g" name="PARAM_P_endothelial_s" dim="Velocity" formula="gamma&lt;1 ? (1-gamma)^4.5/(1-0.3956*gamma+1.0616*gamma^2)* (1-alpha_l)*8*Lp/(r)^2 * RT/(6*Pi*Na*a_e) : 1e-22">
+            <Paths>
+              <Path path="127" as="110" />
+              <Path path="111" as="112" dim="51" />
+              <Path path="113" as="29" />
+              <Path path="114" as="115" dim="116" />
+              <Path path="128" as="118" dim="51" />
+              <Path path="119" as="120" dim="121" />
+              <Path path="122" as="123" dim="123" />
+            </Paths>
+          </Formula>
+          <BlackBoxFormula id="7cfr3xD5HE2yc_N6I-jRYg" name="INTERSTITIAL PARTITION COEFFICIENT FORMULA" />
+          <Formula id="R1NbnurfRkinxUEztUwk4Q" name="PecletNumber_l" formula="P_endothelial_l * SA_pls_int &gt; 0 ? (J_iso+alpha_l*Q_lymph)*(1-sigma_l)/(P_endothelial_l*SA_pls_int) : 0">
+            <Paths>
+              <Path path="129" as="130" dim="126" />
+              <Path path="131" as="132" />
+              <Path path="113" as="29" />
+              <Path path="133" as="134" dim="34" />
+              <Path path="135" as="33" dim="34" />
+              <Path path="136" as="47" dim="48" />
+            </Paths>
+          </Formula>
+          <Formula id="pGM3vwKASEaRT98pZqKsOg" name="PecletNumber_s" formula="P_endothelial_s * SA_pls_int &gt; 0 ? (-J_iso+(1-alpha_l)*Q_lymph)*(1-sigma_s)/(P_endothelial_s*SA_pls_int) : 0">
+            <Paths>
+              <Path path="137" as="138" dim="126" />
+              <Path path="139" as="140" />
+              <Path path="113" as="29" />
+              <Path path="133" as="134" dim="34" />
+              <Path path="135" as="33" dim="34" />
+              <Path path="136" as="47" dim="48" />
+            </Paths>
+          </Formula>
+          <Formula id="7gSa1gFAMkWCcNdp3GuknA" name="PARAM_gamma_l" formula="a_e / r_l">
+            <Paths>
+              <Path path="111" as="112" dim="51" />
+              <Path path="117" as="141" dim="51" />
+            </Paths>
+          </Formula>
+          <Formula id="Y_nR0ZltV0WQhlFIumvDhA" name="PARAM_gamma_s" formula="a_e / r_s">
+            <Paths>
+              <Path path="111" as="112" dim="51" />
+              <Path path="128" as="142" dim="51" />
+            </Paths>
+          </Formula>
+          <Formula id="_dWvcR7vBUa01MXAJn8EEQ" name="PARAM_sigma_l" formula="gamma&lt;1 ? 1-(1-gamma)^2*(2-(1-gamma)^2)*(1-gamma/3)/(1-gamma/3+2/3*gamma^2) : 0.999">
+            <Paths>
+              <Path path="109" as="110" />
+            </Paths>
+          </Formula>
+          <Formula id="PIB0Up02Mku-sdGIjc34vg" name="PARAM_sigma_s" formula="gamma&lt;1 ? 1-(1-gamma)^2*(2-(1-gamma)^2)*(1-gamma/3)/(1-gamma/3+2/3*gamma^2) : 0.999">
+            <Paths>
+              <Path path="127" as="110" />
+            </Paths>
+          </Formula>
+          <Formula id="6FLmUSz6rka8mJ5o_2byfw" name="PARAM_SA_pls_int" dim="Area" formula="k * f_vas_org * V_org">
+            <Paths>
+              <Path path="104" as="143" />
+              <Path path="105" as="64" dim="27" />
+              <Path path="144" as="145" dim="108" />
+            </Paths>
+          </Formula>
+          <Formula id="-7crxWQIiEeDtTpedMlghA" name="PARAM_P_int_cell" dim="Velocity" formula="P * P_int_cell_factor">
+            <Paths>
+              <Path path="146" as="147" />
+              <Path path="124" as="125" dim="126" />
+            </Paths>
+          </Formula>
+          <Formula id="qVIRI9HuEkCY9lxcjXs2FQ" name="PARAM_P_cell_int" dim="Velocity" formula="P * P_cell_int_factor">
+            <Paths>
+              <Path path="148" as="149" />
+              <Path path="124" as="125" dim="126" />
+            </Paths>
+          </Formula>
+          <Formula id="_wzQXxYWw0Oc6H-sx8548g" name="PARAM_PA_int_cell" dim="Flow" formula="P_int_cell * SA">
+            <Paths>
+              <Path path="150" as="151" dim="126" />
+              <Path path="152" as="153" dim="48" />
+            </Paths>
+          </Formula>
+          <Formula id="Fjne4C2dvUWHakb8liCXWg" name="PARAM_PA_cell_int" dim="Flow" formula="P_cell_int * SA">
+            <Paths>
+              <Path path="154" as="155" dim="126" />
+              <Path path="152" as="153" dim="48" />
+            </Paths>
+          </Formula>
+          <BlackBoxFormula id="mGBI2Cbzr0aZi_lcmn-WEg" name="CELLULAR PERMEABILITY FACTOR RATE" />
+          <BlackBoxFormula id="52IZMOO_OECZR6aYUkdimg" name="PARTITION COEFFICIENT FORMULA" />
+          <Formula id="klHhdmK6GkKN3T8srXH-xQ" name="PARAM_K_wat_cell" formula="fu/K_cell_pls">
+            <Paths>
+              <Path path="156" as="157" />
+              <Path path="69" as="70" dim="14" />
+            </Paths>
+          </Formula>
+          <Formula id="g4L63fEmikiMt2juu26URg" name="PARAM_SA_int_cell_thy" dim="Area" formula="SA_cell*No_cells*10^6*OW">
+            <Paths>
+              <Path path="158" as="159" dim="160" />
+              <Path path="161" as="162" dim="48" />
+              <Path path="163" as="164" dim="57" />
+            </Paths>
+          </Formula>
+          <Formula id="GiINfs66zUWwS5jqVRLbXw" name="PARAM_P_lum_cell" dim="Velocity" formula="P * P_lum_cell_factor">
+            <Paths>
+              <Path path="124" as="125" dim="126" />
+              <Path path="146" as="165" />
+            </Paths>
+          </Formula>
+          <Formula id="hOuKV3kTukiBCRR4i60F2w" name="PARAM_Partition_coefficient_interstitial_water_thyroid" formula="fu/K_int_pls">
+            <Paths>
+              <Path path="166" as="167" />
+              <Path path="69" as="70" dim="14" />
+            </Paths>
+          </Formula>
+          <Formula id="_KCK4ihdOU-9rT9E1jKFSw" name="PC_cell_plasma_ThyroidLumen" formula="Partition_coefficient__intracellular_plasma_">
+            <Paths>
+              <Path path="168" as="169" />
+            </Paths>
+          </Formula>
+          <Formula id="wLmlKlt1bUONRQYSaYYK1Q" name="P_lumen_plasma_thy" formula="K_cell_plasma*Kfac">
+            <Paths>
+              <Path path="156" as="170" />
+              <Path path="171" as="172" />
+            </Paths>
+          </Formula>
+          <Formula id="VZeBD0RtdEGBWKJ-k-Ut-w" name="PARAM_K_wat_lum" formula="fu/K_lum_pls">
+            <Paths>
+              <Path path="173" as="174" />
+              <Path path="69" as="70" dim="14" />
+            </Paths>
+          </Formula>
+          <LogNormalDistributionFormula id="0NF3qlN3Hk6loAqsDuB7Qw" dim="Volume">
+            <Paths>
+              <Path path="175" as="175" dim="27" />
+              <Path path="176" as="176" />
+            </Paths>
+          </LogNormalDistributionFormula>
+          <DiscreteDistributionFormula id="m9JJnh-WeEWEF8JWnnVE3g">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="uo37zlAVkku3xTHwjdPUWA">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="lByiwzw-i0uAmBkM5U1W5A">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="gggPPRswlkGGTqmsHqciow">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="qOsxwu5gw0SmEkrEJqGZQg">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="IvN6IlO7gUyyIZ3_xv4XKQ">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="Vqbr4B2k8U-p5Z23I5ELlw">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="Mj8JUGpEvE6kEX_VWh0nJw">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="xUUid_i30UikFzw1ll5FLQ">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="t6uPYs6gAE-IFCTrjwe-xA">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="oTyYhX3bDEu9LtjxBM2Xtw">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="qE2EYd4GdUCoDZ8z99QzJQ">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="Mtzqch0Gc0Gf5I8-SUNV2A">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="oO1p5qagEUWgvO6bzuWMbg">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <DiscreteDistributionFormula id="R07inNDNzkeQsyPM4twwYw">
+            <Paths>
+              <Path path="175" as="175" />
+            </Paths>
+          </DiscreteDistributionFormula>
+          <NormalDistributionFormula id="vL4CApgONUCHc4Y-GhcCVA" dim="Flow per weight organ">
+            <Paths>
+              <Path path="175" as="175" dim="54" />
+              <Path path="177" as="177" dim="54" />
+            </Paths>
+          </NormalDistributionFormula>
+        </Formulas>
+        <StringMap>
+          <Map s="Organism" id="0" />
+          <Map s="Organism|Thyroid|Plasma" id="1" />
+          <Map s="Organism|Thyroid|BloodCells" id="2" />
+          <Map s="Organism|Thyroid|Endosome" id="3" />
+          <Map s="Organism|Thyroid|Interstitial" id="4" />
+          <Map s="Organism|VenousBlood|Plasma" id="5" />
+          <Map s="Organism|ArterialBlood|Plasma" id="6" />
+          <Map s="Organism|VenousBlood|BloodCells" id="7" />
+          <Map s="Organism|ArterialBlood|BloodCells" id="8" />
+          <Map s="Organism|Thyroid|Intracellular" id="9" />
+          <Map s="Organism|EndosomalClearance" id="10" />
+          <Map s="Organism|Thyroid|Lumen" id="11" />
+          <Map s="Organism|Fraction of endosomal uptake from plasma (global)" id="12" />
+          <Map s="f_uptake_vas_global" id="13" />
+          <Map s="Fraction" id="14" />
+          <Map s="Organism|Fraction endosomal (global)" id="15" />
+          <Map s="f_endo_global" id="16" />
+          <Map s="Organism|Fraction recycled to plasma (global)" id="17" />
+          <Map s="f_rec_vas_global" id="18" />
+          <Map s="Organism|Rate constant for endosomal uptake (global)" id="19" />
+          <Map s="Rendo_v_global" id="20" />
+          <Map s="Inversed time" id="21" />
+          <Map s="Organism|Rate constant for recycling from endosomal space (global)" id="22" />
+          <Map s="Rrec_global" id="23" />
+          <Map s="..|Density (tissue)" id="24" />
+          <Map s="Density" id="25" />
+          <Map s="..|Volume" id="26" />
+          <Map s="Volume" id="27" />
+          <Map s="..|Flow fraction via large pores" id="28" />
+          <Map s="alpha_l" id="29" />
+          <Map s="..|Fluid recirculation flow proportionality factor" id="30" />
+          <Map s="f_Jiso" id="31" />
+          <Map s="..|Lymph flow rate" id="32" />
+          <Map s="Q_lymph" id="33" />
+          <Map s="Flow" id="34" />
+          <Map s="..|Organ volume mouse" id="35" />
+          <Map s="V_mouse" id="36" />
+          <Map s="V" id="37" />
+          <Map s="Organism|Scaling exponent for fluid recirculation flow rate" id="38" />
+          <Map s="exp_Jiso_scale" id="39" />
+          <Map s="..|Blood flow rate" id="40" />
+          <Map s="Q" id="41" />
+          <Map s="..|Lymph flow proportionality factor" id="42" />
+          <Map s="f_lymph" id="43" />
+          <Map s="Organism|Hematocrit" id="44" />
+          <Map s="HCT" id="45" />
+          <Map s="..|Plasma|&lt;NBH&gt;|..|Interstitial|&lt;NBH&gt;|Surface area (plasma/interstitial)" id="46" />
+          <Map s="SA_pls_int" id="47" />
+          <Map s="Area" id="48" />
+          <Map s="Organism|Thickness (endothelium)" id="49" />
+          <Map s="d_endo" id="50" />
+          <Map s="Length" id="51" />
+          <Map s="..|Specific blood flow rate" id="52" />
+          <Map s="Qspec" id="53" />
+          <Map s="Flow per weight organ" id="54" />
+          <Map s="..|Weight (tissue)" id="55" />
+          <Map s="Weight" id="56" />
+          <Map s="Mass" id="57" />
+          <Map s="Organism|EndogenousIgG|Plasma|FcRn|Concentration" id="58" />
+          <Map s="FcRn" id="59" />
+          <Map s="Concentration (molar)" id="60" />
+          <Map s="..|..|Fraction vascular" id="61" />
+          <Map s="f_vas" id="62" />
+          <Map s="..|..|Volume" id="63" />
+          <Map s="V_org" id="64" />
+          <Map s="MOLECULE|Kd (FcRn) in plasma/interstitial" id="65" />
+          <Map s="Kd_FcRn" id="66" />
+          <Map s="MOLECULE|Ontogeny factor" id="67" />
+          <Map s="f_onto" id="68" />
+          <Map s="MOLECULE|Fraction unbound (plasma)" id="69" />
+          <Map s="fu" id="70" />
+          <Map s="MOLECULE|t1/2 (liver)" id="71" />
+          <Map s="tHalf" id="72" />
+          <Map s="Time" id="73" />
+          <Map s="MOLECULE|Partition coefficient (blood cells/plasma)" id="74" />
+          <Map s="K_rbc" id="75" />
+          <Map s="Organism|EndogenousIgG|Interstitial|FcRn|Concentration" id="76" />
+          <Map s="..|..|Fraction interstitial" id="77" />
+          <Map s="f_int" id="78" />
+          <Map s="Organism|pH (interstitial)" id="79" />
+          <Map s="pH_int" id="80" />
+          <Map s="..|..|&lt;NBH&gt;|..|..|..|Intracellular|&lt;NBH&gt;|MOLECULE|Partition coefficient (interstitial/water)" id="81" />
+          <Map s="K_water_int" id="82" />
+          <Map s="..|..|Fraction intracellular" id="83" />
+          <Map s="f_cell" id="84" />
+          <Map s="..|..|&lt;NBH&gt;|..|..|..|Interstitial|&lt;NBH&gt;|MOLECULE|Partition coefficient (intracellular/water)" id="85" />
+          <Map s="K_water_cell" id="86" />
+          <Map s="Organism|EndogenousIgG|Endosome|FcRn|Concentration" id="87" />
+          <Map s="..|..|Plasma|&lt;NBH&gt;|..|..|Interstitial|&lt;NBH&gt;|Surface area (plasma/interstitial)" id="88" />
+          <Map s="..|..|Fraction endosomal" id="89" />
+          <Map s="f_endo" id="90" />
+          <Map s="MOLECULE|Kd (FcRn) in endosomal space" id="91" />
+          <Map s="Organism|Thyroid|Singel Cell Volume" id="92" />
+          <Map s="V_cell" id="93" />
+          <Map s="Organism|Thyroid|Single Cell Height" id="94" />
+          <Map s="Height" id="95" />
+          <Map s="..|Fraction interstitial" id="96" />
+          <Map s="..|Fraction vascular" id="97" />
+          <Map s="..|Fraction lumen" id="98" />
+          <Map s="f_lum" id="99" />
+          <Map s="Neighborhoods|Thyroid_Lumen_Thyroid_cell|MOLECULE|Partition coefficient (lumen/water)" id="100" />
+          <Map s="K_water_lum" id="101" />
+          <Map s="..|..|Fraction lumen" id="102" />
+          <Map s="F" id="103" />
+          <Map s="FIRST_NEIGHBOR|..|Fraction vascular" id="104" />
+          <Map s="FIRST_NEIGHBOR|..|Volume" id="105" />
+          <Map s="Organism|Surface/Volume ratio (blood cells)" id="106" />
+          <Map s="A_to_V_bc" id="107" />
+          <Map s="Inversed length" id="108" />
+          <Map s="..|Radius ratio (solute/large pores)" id="109" />
+          <Map s="gamma" id="110" />
+          <Map s="MOLECULE|Radius (solute)" id="111" />
+          <Map s="a_e" id="112" />
+          <Map s="FIRST_NEIGHBOR|..|Flow fraction via large pores" id="113" />
+          <Map s="FIRST_NEIGHBOR|..|Hydraulic conductivity" id="114" />
+          <Map s="Lp" id="115" />
+          <Map s="Hydraulic conductivity" id="116" />
+          <Map s="FIRST_NEIGHBOR|..|Radius (large pores)" id="117" />
+          <Map s="r" id="118" />
+          <Map s="Organism|Na" id="119" />
+          <Map s="Na" id="120" />
+          <Map s="Inversed mol" id="121" />
+          <Map s="Organism|R*T" id="122" />
+          <Map s="RT" id="123" />
+          <Map s="MOLECULE|Permeability" id="124" />
+          <Map s="P" id="125" />
+          <Map s="Velocity" id="126" />
+          <Map s="..|Radius ratio (solute/small pores)" id="127" />
+          <Map s="FIRST_NEIGHBOR|..|Radius (small pores)" id="128" />
+          <Map s="..|P (large endothelial pores)" id="129" />
+          <Map s="P_endothelial_l" id="130" />
+          <Map s="..|Reflection coefficient (large pores)" id="131" />
+          <Map s="sigma_l" id="132" />
+          <Map s="FIRST_NEIGHBOR|..|Fluid recirculation flow rate" id="133" />
+          <Map s="J_iso" id="134" />
+          <Map s="FIRST_NEIGHBOR|..|Lymph flow rate" id="135" />
+          <Map s="..|..|Surface area (plasma/interstitial)" id="136" />
+          <Map s="..|P (small endothelial pores)" id="137" />
+          <Map s="P_endothelial_s" id="138" />
+          <Map s="..|Reflection coefficient (small pores)" id="139" />
+          <Map s="sigma_s" id="140" />
+          <Map s="r_l" id="141" />
+          <Map s="r_s" id="142" />
+          <Map s="f_vas_org" id="143" />
+          <Map s="Organism|SA proportionality factor" id="144" />
+          <Map s="k" id="145" />
+          <Map s="..|P_int_cell_factor" id="146" />
+          <Map s="P_int_cell_factor" id="147" />
+          <Map s="..|P_cell_int_factor" id="148" />
+          <Map s="P_cell_int_factor" id="149" />
+          <Map s="..|P (interstitial-&gt;intracellular)" id="150" />
+          <Map s="P_int_cell" id="151" />
+          <Map s="..|..|Surface area (interstitial/intracellular)" id="152" />
+          <Map s="SA" id="153" />
+          <Map s="..|P (intracellular-&gt;interstitial)" id="154" />
+          <Map s="P_cell_int" id="155" />
+          <Map s="..|Partition coefficient (intracellular/plasma)" id="156" />
+          <Map s="K_cell_pls" id="157" />
+          <Map s="Organism|Thyroid|Cell Density" id="158" />
+          <Map s="No_cells" id="159" />
+          <Map s="Count per mass" id="160" />
+          <Map s="Organism|Thyroid|Single Cell Surface Area" id="161" />
+          <Map s="SA_cell" id="162" />
+          <Map s="Organism|Thyroid|Weight (tissue)" id="163" />
+          <Map s="OW" id="164" />
+          <Map s="P_lum_cell_factor" id="165" />
+          <Map s="Neighborhoods|Thyroid_pls_Thyroid_int|MOLECULE|Partition coefficient (interstitial/plasma)" id="166" />
+          <Map s="K_int_pls" id="167" />
+          <Map s="Neighborhoods|Thyroid_int_Thyroid_cell|MOLECULE|Partition coefficient (intracellular/plasma)" id="168" />
+          <Map s="Partition_coefficient__intracellular_plasma_" id="169" />
+          <Map s="K_cell_plasma" id="170" />
+          <Map s="..|Kfac_lumen_plasma" id="171" />
+          <Map s="Kfac" id="172" />
+          <Map s="..|Partition coefficient (lumen/plasma)" id="173" />
+          <Map s="K_lum_pls" id="174" />
+          <Map s="Mean" id="175" />
+          <Map s="GeometricDeviation" id="176" />
+          <Map s="Deviation" id="177" />
+        </StringMap>
+      </FormulaCache>
+    </SpatialStructure>
+    <ParameterValuesBuildingBlock id="chWP3AHa7ki9QY7nc5YDMA" name="Human" icon="ParameterValues" bbVersion="55">
+      <Creation createdAt="5250482378095516253" createdBy="pavel.balazki" creationMode="New" origin="MoBi" version="12.0" internalVersion="17" />
+      <Builders>
+        <ParameterValue id="iKu7463tSU-oXAvFgHLKqA" name="Acidic phospholipids [mg/g] - RR" dimension="Fraction" value="0.6086" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="bfYwy2fnHkGmj013w6mG8Q" name="Albumin ratio (tissue/plasma)" dimension="Fraction" value="0.0267" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="lT0ST_Z9lkGFP4hrE-ve7Q" name="Albumin ratio (tissue/plasma)-PT" dimension="Fraction" value="0.0267" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="0FS7ceIXlk62LELqgRVFbg" name="Allometric scale factor" dimension="Fraction" value="0.75" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="eJMlY_kk5kaO3rc3YPab3g" name="Cell Density" dimension="Count per mass" value="508900" isDefault="0" displayUnit="x10^6/g">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="y0__L9n3ekGLvBJ15Nxc8Q" name="Fraction interstitial" dimension="Fraction" value="0.089" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="wGKE7o08aUSWPaYj8ZSraA" name="Fraction lumen" dimension="Fraction" value="0.217" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="-X0dzKN-l0WZEM7X4pSJPw" name="Fraction vascular" dimension="Fraction" value="0.159" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="vPHZT4IhN0Wq6Eh-Qj51iQ" name="Lipoprotein ratio (tissue/plasma)" dimension="Fraction" value="0.0445" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="dXmAXDn-cUmCE8p5rIyvWw" name="Lymph flow proportionality factor" dimension="Fraction" value="0.124" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="IAce-14dc0WiqJEaWZ3fKw" name="Singel Cell Volume" dimension="Volume" value="1.116E-12" isDefault="0" displayUnit="ml">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="A9C_x-LWvkSf-u_1buaVSA" name="Single Cell Height" dimension="Length" value="0.00015" isDefault="0" displayUnit="µm">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="fjcfK360vECyEgI3_bukrA" name="Single Cell Surface Area" dimension="Area" value="3.55656615257278E-08" isDefault="0" displayUnit="cm²">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="tebrZ5pN9kqM_XVULAPdzg" name="Specific blood flow rate" dimension="Flow per weight organ" value="4.875" isDefault="0" displayUnit="ml/min/100g organ">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="LSPv-S6O4Uek2oiJHT51jg" name="Vf (acidic phospholipids)-WS" dimension="Fraction" value="0.0006086" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="9ywdAKX_tkSsk6ZRYHPeHw" name="Vf (extracellular water)-RR" dimension="Fraction" value="0.594" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="y-OlGGCt-USA7pKZ1juUfQ" name="Vf (intracellular water)-RR" dimension="Fraction" value="0.19" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="abElOJzFJE2oTUARHLSQ4A" name="Vf (lipid)" dimension="Fraction" value="0.013" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="jp4eScGj0k2UjXfdpR0oqA" name="Vf (neutral lipid)-PT" dimension="Fraction" value="0.0406" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="xkmYnjmwUEGBz6QtN1dHHQ" name="Vf (neutral lipid)-RR" dimension="Fraction" value="0.0406" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="GgowaDEkoUWJRGyA6ej8hA" name="Vf (neutral lipid)-WS" dimension="Fraction" value="0.0406" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="-5aiA9HpxECF7ju5_wEC6A" name="Vf (neutral phospholipid)-RR" dimension="Fraction" value="0.0028" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="gPU6WbuBV0SQDLP8Ar-q4w" name="Vf (neutral phospholipid, plasma)-WS" dimension="Fraction" value="0.0028" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="T7ErRLfT00uTfXhxG80j0Q" name="Vf (phospholipid)-PT" dimension="Fraction" value="0.0034" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="evYHksEqpUmwGswzCL5gnA" name="Vf (protein)" dimension="Fraction" value="0.14" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="SvBDbfub0ky3oIig8DESwg" name="Vf (protein)-WS" dimension="Fraction" value="0.16" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="KJiFk1Hw0EmphIQeJtRI2A" name="Vf (water)" dimension="Fraction" value="0.784" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="gtfWiro0bEmGTk30m17U1g" name="Vf (water)-PT" dimension="Fraction" value="0.784" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="M73-VrBWKkOhTSsscckc7Q" name="Vf (water)-WS" dimension="Fraction" value="0.74" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="Y1v0PiCbzUSvA-8mSgILvg" name="Volume" dimension="Volume" value="0.0201869440423271" isDefault="0" displayUnit="l">
+          <ContainerPath path="0" />
+        </ParameterValue>
+      </Builders>
+      <FormulaCache>
+        <Formulas>
+          <Formula id="nQXryynRUEyuyy2ALtPgOw" name="InitialConcentrationPlasma_VascularSystem" dim="Concentration (molar)" formula="(1 - HCT) &gt; 0 ? RC * (rel_exp_pls + rel_exp_bc * f_exp_bc_membrane * HCT / (1 - HCT)) : 0">
+            <Paths>
+              <Path path="1" as="2" dim="3" />
+              <Path path="4" as="5" dim="6" />
+              <Path path="7" as="8" dim="3" />
+              <Path path="9" as="10" dim="3" />
+              <Path path="11" as="12" />
+            </Paths>
+          </Formula>
+          <Formula id="azp1Q7E9hUKMPxN3srxLKg" name="InitialConcentrationBloodCells" dim="Concentration (molar)" formula="RC * rel_exp_bc * f_exp_bc_cell">
+            <Paths>
+              <Path path="13" as="14" dim="3" />
+              <Path path="4" as="5" dim="6" />
+              <Path path="7" as="8" dim="3" />
+            </Paths>
+          </Formula>
+          <Formula id="xQ_M1xIAZUGyIm10PX2uxg" name="InitialConcentrationInterstitial" dim="Concentration (molar)" formula="(f_int * V_org) &gt; 0 ? RC * (rel_exp_org * f_exp_org_int * 1/ f_int + rel_exp_vasend * f_exp_vasend_tissue * V_vasend / (f_int * V_org)) : 0">
+            <Paths>
+              <Path path="15" as="16" dim="3" />
+              <Path path="17" as="18" />
+              <Path path="19" as="20" dim="21" />
+              <Path path="22" as="23" dim="21" />
+              <Path path="24" as="25" dim="3" />
+              <Path path="4" as="5" dim="6" />
+              <Path path="26" as="27" dim="3" />
+              <Path path="28" as="29" dim="3" />
+            </Paths>
+          </Formula>
+          <Formula id="VG6laVFF8k-xpUHzlU_dhg" name="PARAM_f_exp_interstitial" dim="Fraction" formula="1 - f_exp_org_cell">
+            <Paths>
+              <Path path="30" as="31" dim="3" />
+            </Paths>
+          </Formula>
+          <Formula id="COqmNoi31UuBHVC-S6zZCg" name="InitialConcentrationIntracellular" dim="Concentration (molar)" formula="RC * rel_exp_org * f_exp_org_cell * 1 / f_cell">
+            <Paths>
+              <Path path="32" as="31" dim="3" />
+              <Path path="33" as="34" />
+              <Path path="35" as="27" dim="3" />
+              <Path path="4" as="5" dim="6" />
+            </Paths>
+          </Formula>
+          <Formula id="ldDiCyYIOkaMxpgFSc9aAA" name="InitialConcentrationEndosome" dim="Concentration (molar)" formula="f_endo &gt; 0 ? RC * rel_exp_vasend * f_exp_vasend_endosomes * 1 / f_endo : 0">
+            <Paths>
+              <Path path="36" as="37" dim="3" />
+              <Path path="38" as="39" dim="3" />
+              <Path path="4" as="5" dim="6" />
+              <Path path="28" as="29" dim="3" />
+            </Paths>
+          </Formula>
+        </Formulas>
+        <StringMap>
+          <Map s="Organism|Thyroid" id="0" />
+          <Map s="MOLECULE|Fraction expressed in blood cells membrane" id="1" />
+          <Map s="f_exp_bc_membrane" id="2" />
+          <Map s="Fraction" id="3" />
+          <Map s="MOLECULE|Reference concentration" id="4" />
+          <Map s="RC" id="5" />
+          <Map s="Concentration (molar)" id="6" />
+          <Map s="MOLECULE|Relative expression in blood cells" id="7" />
+          <Map s="rel_exp_bc" id="8" />
+          <Map s="MOLECULE|Relative expression in plasma" id="9" />
+          <Map s="rel_exp_pls" id="10" />
+          <Map s="Organism|Hematocrit" id="11" />
+          <Map s="HCT" id="12" />
+          <Map s="MOLECULE|Fraction expressed in blood cells" id="13" />
+          <Map s="f_exp_bc_cell" id="14" />
+          <Map s="..|Fraction expressed interstitial" id="15" />
+          <Map s="f_exp_org_int" id="16" />
+          <Map s="..|..|..|Fraction interstitial" id="17" />
+          <Map s="f_int" id="18" />
+          <Map s="..|..|..|Volume" id="19" />
+          <Map s="V_org" id="20" />
+          <Map s="Volume" id="21" />
+          <Map s="..|..|..|Volume (endothelium)" id="22" />
+          <Map s="V_vasend" id="23" />
+          <Map s="MOLECULE|Fraction expressed on tissue-side membrane of vascular endothelium" id="24" />
+          <Map s="f_exp_vasend_tissue" id="25" />
+          <Map s="..|..|..|Intracellular|MOLECULE|Relative expression" id="26" />
+          <Map s="rel_exp_org" id="27" />
+          <Map s="MOLECULE|Relative expression in vascular endothelium" id="28" />
+          <Map s="rel_exp_vasend" id="29" />
+          <Map s="..|..|..|Intracellular|MOLECULE|Fraction expressed intracellular" id="30" />
+          <Map s="f_exp_org_cell" id="31" />
+          <Map s="..|Fraction expressed intracellular" id="32" />
+          <Map s="..|..|..|Fraction intracellular" id="33" />
+          <Map s="f_cell" id="34" />
+          <Map s="..|Relative expression" id="35" />
+          <Map s="..|..|..|Fraction endosomal" id="36" />
+          <Map s="f_endo" id="37" />
+          <Map s="MOLECULE|Fraction expressed in endosomes" id="38" />
+          <Map s="f_exp_vasend_endosomes" id="39" />
+        </StringMap>
+      </FormulaCache>
+    </ParameterValuesBuildingBlock>
+    <InitialConditionsBuildingBlock id="fDcZV24iwEaYoxx4iGbYTg" name="Human" icon="InitialConditions" bbVersion="66">
+      <Creation createdAt="5250482378095580246" createdBy="pavel.balazki" creationMode="New" origin="MoBi" version="12.0" internalVersion="17" />
+      <FormulaCache>
+        <Formulas>
+          <Formula id="S1EZjFeNe0Gqpvsgs7tMlQ" name="STARTAMOUNT_Protein" dim="Amount" formula="M_0">
+            <Paths>
+              <Path path="0" as="1" dim="2" />
+            </Paths>
+          </Formula>
+        </Formulas>
+        <StringMap>
+          <Map s="Start amount" id="0" />
+          <Map s="M_0" id="1" />
+          <Map s="Amount" id="2" />
+        </StringMap>
+      </FormulaCache>
+    </InitialConditionsBuildingBlock>
+    <ParameterValuesBuildingBlock id="02G-zK-cSkmrJ-Qw18fBCw" name="Rat" icon="ParameterValues" bbVersion="30">
+      <Creation createdAt="5250482378095580246" createdBy="pavel.balazki" creationMode="New" origin="MoBi" version="12.0" internalVersion="17" />
+      <Builders>
+        <ParameterValue id="LfIT86LGQkSlB4mSBFOe5g" name="Acidic phospholipids [mg/g] - RR" dimension="Fraction" value="0.3774" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="D6fojG9dC06WnRZyEq4IQA" name="Albumin ratio (tissue/plasma)" dimension="Fraction" value="0.05" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="Hra2SjvVy0umMSYT5pGLHw" name="Albumin ratio (tissue/plasma)-PT" dimension="Fraction" value="0.05" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="3_XCsrqJgUaNvl-_pImjJQ" name="Allometric scale factor" dimension="Fraction" value="0.75" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="7Tn5VgM7mkundB3W2Whf_Q" name="Cell Density" dimension="Count per mass" value="508900" isDefault="0" displayUnit="x10^6/g">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="KJafg3e5lESyZdD6f6bLGw" name="Fraction interstitial" dimension="Fraction" value="0.1" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="jUyJxnstQ0m2ueSXqAWL9g" name="Fraction lumen" dimension="Fraction" value="0.244" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="Z2d_CEpsGkOtVJG29zBrLQ" name="Fraction vascular" dimension="Fraction" value="0.056" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="-3yAYhTC9UWnT74kq_BFlA" name="Lipoprotein ratio (tissue/plasma)" dimension="Fraction" value="0.05" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="dKtuVNBwbU-GBStl3fiVrg" name="Lymph flow proportionality factor" dimension="Fraction" value="0.124" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="i4IVIPUlMEGa8NP2jWI9GQ" name="Singel Cell Volume" dimension="Volume" value="1.116E-12" isDefault="0" displayUnit="ml">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="wL1zZ4cie0CKrEyLgnxpCA" name="Single Cell Height" dimension="Length" value="0.00015" isDefault="0" displayUnit="µm">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="DrS7B2j1XkeNgIpRb0UQRg" name="Single Cell Surface Area" dimension="Area" value="3.55656615257278E-08" isDefault="0" displayUnit="cm²">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="msfIR_Gsk0C_dAKvOBVGFA" name="Specific blood flow rate" dimension="Flow per weight organ" value="8.3333" isDefault="0" displayUnit="ml/min/100g organ">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="uUdF3X91dUWkoFSuJaKVRw" name="Vf (acidic phospholipids)-WS" dimension="Fraction" value="0.0003774" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="g1VuzNqz00-AiXaAzD2uow" name="Vf (extracellular water)-RR" dimension="Fraction" value="0.18" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="u_u4iqEYDUO369Zrb0SQjw" name="Vf (intracellular water)-RR" dimension="Fraction" value="0.564" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="9Et50dcW3UyFZ5LfiKcb3g" name="Vf (lipid)" dimension="Fraction" value="0.044" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="vqEjNhNeMke_0mOsm2BL3A" name="Vf (neutral lipid)-PT" dimension="Fraction" value="0.0406" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="7xsXwQkO0EG4dRRvGNFt6g" name="Vf (neutral lipid)-RR" dimension="Fraction" value="0.0406" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="xivnbQeml0iU56CNQLzB9A" name="Vf (neutral lipid)-WS" dimension="Fraction" value="0.0406" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="_B_kPg3xwEGnAJZO-XIZ2Q" name="Vf (neutral phospholipid)-RR" dimension="Fraction" value="0.0030226" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="lJj4pBpvLEKw2hg6nkAMnA" name="Vf (neutral phospholipid, plasma)-WS" dimension="Fraction" value="0.0030226" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="siLaePI5nkae_w-Lk0uB4w" name="Vf (phospholipid)-PT" dimension="Fraction" value="0.0034" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="G8eSM2vlH0q9LGzuGWLIAw" name="Vf (protein)" dimension="Fraction" value="0.067" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="YxoXK0mwOU2Ky4kfv8cUyg" name="Vf (protein)-WS" dimension="Fraction" value="0.078" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="5WJokgSwXUCmSui6Q6r1vg" name="Vf (water)" dimension="Fraction" value="0.744" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="lkZKcXSfikaSgYskCAqI1Q" name="Vf (water)-PT" dimension="Fraction" value="0.744" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="-3SXoAoJE0e1XkWC_h-Xhw" name="Vf (water)-WS" dimension="Fraction" value="0.701" isDefault="0">
+          <ContainerPath path="0" />
+        </ParameterValue>
+        <ParameterValue id="wBSageKi90O0BSc5ZqX7Uw" name="Volume" dimension="Volume" value="1.14E-05" isDefault="0" displayUnit="l">
+          <ContainerPath path="0" />
+        </ParameterValue>
+      </Builders>
+      <FormulaCache>
+        <StringMap>
+          <Map s="Organism|Thyroid" id="0" />
+        </StringMap>
+      </FormulaCache>
+    </ParameterValuesBuildingBlock>
+    <PassiveTransportBuildingBlock id="uJp66NnAaEGUK7G2Jmt26g" name="Thyroid_QST_Human" icon="PassiveTransport" bbVersion="448">
+      <Creation createdAt="5250482378095580246" createdBy="pavel.balazki" creationMode="New" origin="PKSim" version="11.2" internalVersion="79" />
+      <Builders>
+        <TransportBuilder id="oiLXkCu_rE-A9HXjyMhKRw" name="PassiveDiffusionThyroidLumen2ThyroidCell" mode="Logical" containerType="Other" dimension="Amount per time" createProcessRateParameter="0" processRateParameterPersistable="0" formula="yuxsT2QQ8EOlNQniWVWglw" transportType="0">
+          <SourceCriteria operator="And">
+            <DescriptorConditions>
+              <MatchTagCondition tag="Lumen" />
+              <MatchTagCondition tag="Thyroid" />
+            </DescriptorConditions>
+          </SourceCriteria>
+          <TargetCriteria operator="And">
+            <DescriptorConditions>
+              <MatchTagCondition tag="Intracellular" />
+            </DescriptorConditions>
+          </TargetCriteria>
+          <MoleculeList forAll="1" />
+        </TransportBuilder>
+      </Builders>
+      <FormulaCache>
+        <Formulas>
+          <Formula id="yuxsT2QQ8EOlNQniWVWglw" name="PassiveDiffusionLum2Cell" dim="Amount per time" formula="K_water_lum * PA_lum_cell * C_lum - K_water_cell * PA_cell_lum * C_cell">
+            <Paths>
+              <Path path="0" as="1" dim="2" />
+              <Path path="3" as="4" dim="2" />
+              <Path path="5" as="6" dim="7" />
+              <Path path="8" as="9" dim="7" />
+              <Path path="10" as="11" />
+              <Path path="12" as="13" />
+            </Paths>
+          </Formula>
+        </Formulas>
+        <StringMap>
+          <Map s="TARGET|MOLECULE|Concentration" id="0" />
+          <Map s="C_cell" id="1" />
+          <Map s="Concentration (molar)" id="2" />
+          <Map s="SOURCE|MOLECULE|Concentration" id="3" />
+          <Map s="C_lum" id="4" />
+          <Map s="NEIGHBORHOOD|MOLECULE|P*SA lumen -&gt; intracellular" id="5" />
+          <Map s="PA_lum_cell" id="6" />
+          <Map s="Flow" id="7" />
+          <Map s="NEIGHBORHOOD|MOLECULE|P*SA intracellular -&gt; lumen" id="8" />
+          <Map s="PA_cell_lum" id="9" />
+          <Map s="NEIGHBORHOOD|MOLECULE|Partition coefficient (lumen/water)" id="10" />
+          <Map s="K_water_lum" id="11" />
+          <Map s="NEIGHBORHOOD|MOLECULE|Partition coefficient (intracellular/water)" id="12" />
+          <Map s="K_water_cell" id="13" />
+        </StringMap>
+      </FormulaCache>
+    </PassiveTransportBuildingBlock>
+  </BuildingBlocks>
+</Module>
