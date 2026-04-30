@@ -3642,7 +3642,7 @@
         "rmarkdown"
       ],
       "License": "file LICENSE",
-      "SystemRequirements": ".NET (>= 8.0)",
+      "SystemRequirements": "dotnet8",
       "RoxygenNote": "7.3.3",
       "VignetteBuilder": "knitr",
       "Config/testthat/edition": "3",
@@ -3653,7 +3653,7 @@
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "rSharp",
       "RemoteRef": "main",
-      "RemoteSha": "51efa6662c7fd9dde3bc88131816e09f9ecd2db7"
+      "RemoteSha": "f4586432c7ed4ccb3de975f50e4e3cd42444ca7e"
     },
     "ragg": {
       "Package": "ragg",
