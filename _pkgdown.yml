@@ -24,9 +24,15 @@ authors:
 
 articles:
 
-  - title: Primary functions
-    navbar: Primary functions
-    desc: Details about primary functions
+  - title: Working with projects
+    navbar: Working with MoBi and PK-Sim projects
+    desc: Details about primary functions that work on projects
+    contents:
+    - mobi-projects
+
+  - title: Working with simulations
+    navbar: Working with simulations
+    desc: Details about primary functions that work on simulations
     contents:
     - load-get
     - set-values

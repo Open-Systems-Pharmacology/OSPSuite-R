@@ -5,7 +5,7 @@
 \alias{DataImporterConfiguration}
 \title{DataImporterConfiguration}
 \description{
-Configuration of data import from excel or csv files. To be used with #TODO
+Configuration of data import from excel or csv files. To be used with \code{loadDataSetsFromExcel}.
 }
 \section{Super classes}{
 \code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataImporterConfiguration}

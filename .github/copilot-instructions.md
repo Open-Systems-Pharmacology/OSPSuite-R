@@ -463,14 +463,6 @@ devtools::build_vignettes()
 devtools::install()
 ```
 
-### Updating Core Binary Files
-
-```r
-# Update .NET DLLs from OSPSuite.Core
-source(".github/scripts/update_core_files.R")
-# Follow instructions in script
-```
-
 ## Common Pitfalls and Solutions
 
 ### 1. .NET Object Lifetime

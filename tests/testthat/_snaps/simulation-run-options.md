@@ -5,6 +5,5 @@
     Output
       <SimulationRunOptions>
         * numberOfCores: 5
-        * checkForNegativeValues: FALSE
         * showProgress: FALSE
 
