@@ -427,6 +427,14 @@ messages$errorOnlyOneIndividualPerConfiguration <- function() {
   "Only one individual can be assigned to a simulation configuration."
 }
 
+messages$errorDuplicateModuleNames <- function(duplicateNames) {
+  paste0(
+    "Module names must be unique. The following name(s) appear more than once: ",
+    paste0("'", unique(duplicateNames), "'", collapse = ", "),
+    "."
+  )
+}
+
 messages$errorModuleNotInConfiguration <- function(moduleName) {
   paste0(
     "Module(s) with the name(s) '",

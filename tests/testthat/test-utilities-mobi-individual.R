@@ -94,7 +94,9 @@ test_that("setParameterValuesInIndividualBB sets parameters on a building block"
         df$`Parameter Name` == "Age"),
   ]
   # Returned values are converted to the reference unit, which is year for age and kg/m² for BMI. Therefore, the value for BMI is converted from 73 kg/m² to 0.73 kg/cm².
-  expect_equal(entries$Value, c(0.73, 30))
+  valuesByName <- setNames(entries$Value, entries$`Parameter Name`)
+  expect_equal(valuesByName[["BMI"]], 0.73)
+  expect_equal(valuesByName[["Age"]], 30)
 })
 
 test_that("setParameterValuesInIndividualBB returns the building block invisibly", {

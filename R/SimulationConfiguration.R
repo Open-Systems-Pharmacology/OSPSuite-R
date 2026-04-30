@@ -303,6 +303,10 @@ SimulationConfiguration <- R6::R6Class(
       }
 
       names(modules) <- vapply(modules, function(m) m$name, character(1))
+      duplicateNames <- names(modules)[duplicated(names(modules))]
+      if (length(duplicateNames) > 0) {
+        stop(messages$errorDuplicateModuleNames(duplicateNames))
+      }
       self$modules <- modules
       self$individual <- individual
       self$expressionProfiles <- expressionProfiles

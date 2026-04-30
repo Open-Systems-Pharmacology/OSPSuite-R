@@ -242,29 +242,35 @@ setInitialConditionsInBB <- function(
 
   validateIsCharacter(quantityPaths)
   validateIsNumeric(quantityValues)
-  validateIsNumeric(scaleDivisors, nullAllowed = TRUE)
-  validateIsLogical(isPresent, nullAllowed = TRUE)
-  validateIsLogical(negativeValuesAllowed, nullAllowed = TRUE)
-  # if the scaleDivisors, isPresent or negativeValuesAllowed are provided as single values, replicate them to match the length of quantityPaths
-  if (!is.null(scaleDivisors) && length(scaleDivisors) == 1) {
+  # Normalize NULL optionals to formal defaults so .NET receives length-matched vectors.
+  if (is.null(scaleDivisors)) {
+    scaleDivisors <- 1
+  }
+  if (is.null(isPresent)) {
+    isPresent <- TRUE
+  }
+  if (is.null(negativeValuesAllowed)) {
+    negativeValuesAllowed <- FALSE
+  }
+  validateIsNumeric(scaleDivisors)
+  validateIsLogical(isPresent)
+  validateIsLogical(negativeValuesAllowed)
+  # Replicate scalars to match the length of quantityPaths.
+  if (length(scaleDivisors) == 1) {
     scaleDivisors <- rep(scaleDivisors, length(quantityPaths))
   }
-
-  if (!is.null(isPresent) && length(isPresent) == 1) {
+  if (length(isPresent) == 1) {
     isPresent <- rep(isPresent, length(quantityPaths))
   }
-
-  if (!is.null(negativeValuesAllowed) && length(negativeValuesAllowed) == 1) {
+  if (length(negativeValuesAllowed) == 1) {
     negativeValuesAllowed <- rep(negativeValuesAllowed, length(quantityPaths))
   }
 
   if (
     length(quantityPaths) != length(quantityValues) ||
-      (!is.null(scaleDivisors) &&
-        length(quantityPaths) != length(scaleDivisors)) ||
-      (!is.null(isPresent) && length(quantityPaths) != length(isPresent)) ||
-      (!is.null(negativeValuesAllowed) &&
-        length(quantityPaths) != length(negativeValuesAllowed))
+      length(quantityPaths) != length(scaleDivisors) ||
+      length(quantityPaths) != length(isPresent) ||
+      length(quantityPaths) != length(negativeValuesAllowed)
   ) {
     stop(
       "The length of quantityPaths should be equal to the length of quantityValues, scaleDivisors, isPresent and negativeValuesAllowed (if they are provided as lists)."
@@ -486,6 +492,10 @@ setParameterValuesInBB <- function(
     parameterValuesBuildingBlock,
     c(BuildingBlockTypes$`Parameter Values`)
   )
+  validateIsCharacter(quantityPaths)
+  validateIsNumeric(quantityValues)
+  validateIsCharacter(units)
+  validateIsCharacter(dimensions, nullAllowed = TRUE)
   validatedInputs <- .validatePVBBInputs(
     parameterValuesBuildingBlock,
     quantityPaths,
