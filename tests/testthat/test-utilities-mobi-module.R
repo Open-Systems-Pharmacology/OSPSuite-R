@@ -49,9 +49,7 @@ test_that("loadModuleFromPKML throws an error when the passed PKML contains more
   filePath <- getTestDataFilePath("MoBiProject/TestSim_2Modules.pkml")
   expect_error(
     loadModuleFromPKML(filePath),
-    regexp = "The PKML you are trying to load the module from contains more than one module, but the 
-    function expects only one module.
-    Most probably you are trying to load a simulation export."
+    regexp = "The PKML you are trying to load the module from contains more than one module"
   )
 })
 
