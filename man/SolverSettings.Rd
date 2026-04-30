@@ -26,6 +26,8 @@ Solver settings associated with a given simulation
 \item{\code{relTol}}{Relative tolerance of unknowns}
 
 \item{\code{absTol}}{Absolute tolerance of unknowns}
+
+\item{\code{checkForNegativeValues}}{Should the solver check for negative values}
 }
 \if{html}{\out{</div>}}
 }
