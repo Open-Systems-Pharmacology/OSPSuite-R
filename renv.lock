@@ -4036,7 +4036,7 @@
     },
     "roxygen2": {
       "Package": "roxygen2",
-      "Version": "7.3.3",
+      "Version": "8.0.0",
       "Source": "Repository",
       "Title": "In-Line Documentation for R",
       "Authors@R": "c( person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\", \"cph\"), comment = c(ORCID = \"0000-0003-4757-117X\")), person(\"Peter\", \"Danenberg\", , \"pcd@roxygen.org\", role = c(\"aut\", \"cph\")), person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = \"aut\"), person(\"Manuel\", \"Eugster\", role = c(\"aut\", \"cph\")), person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"), comment = c(ROR = \"03wc8by49\")) )",
@@ -4045,7 +4045,7 @@
       "URL": "https://roxygen2.r-lib.org/, https://github.com/r-lib/roxygen2",
       "BugReports": "https://github.com/r-lib/roxygen2/issues",
       "Depends": [
-        "R (>= 3.6)"
+        "R (>= 4.1)"
       ],
       "Imports": [
         "brew",
@@ -4053,13 +4053,11 @@
         "commonmark",
         "desc (>= 1.2.0)",
         "knitr",
+        "lifecycle",
         "methods",
-        "pkgload (>= 1.0.2)",
-        "purrr (>= 1.0.0)",
+        "pkgload (>= 1.5.2)",
         "R6 (>= 2.1.2)",
-        "rlang (>= 1.0.6)",
-        "stringi",
-        "stringr (>= 1.0.0)",
+        "rlang (>= 1.1.0)",
         "utils",
         "withr",
         "xml2"
@@ -4067,6 +4065,7 @@
       "Suggests": [
         "covr",
         "R.methodsS3",
+        "S7",
         "R.oo",
         "rmarkdown (>= 2.16)",
         "testthat (>= 3.1.2)",
@@ -4078,11 +4077,13 @@
       "VignetteBuilder": "knitr",
       "Config/Needs/development": "testthat",
       "Config/Needs/website": "tidyverse/tidytemplate",
+      "Config/roxygen2/load": "installed",
+      "Config/roxygen2/markdown": "TRUE",
+      "Config/roxygen2/version": "7.3.3.9000",
       "Config/testthat/edition": "3",
       "Config/testthat/parallel": "TRUE",
       "Encoding": "UTF-8",
       "Language": "en-GB",
-      "RoxygenNote": "7.3.2.9000",
       "NeedsCompilation": "yes",
       "Author": "Hadley Wickham [aut, cre, cph] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Peter Danenberg [aut, cph], Gábor Csárdi [aut], Manuel Eugster [aut, cph], Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
