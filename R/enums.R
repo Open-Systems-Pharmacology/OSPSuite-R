@@ -76,6 +76,13 @@ ExpressionProfileCategories <- enum(list(
 #' @export
 MoleculeType <- NULL
 
+#' @title Merge Behaviors
+#' @description Merge behaviors available for modules in MoBi. Loaded at
+#' package init from `OSPSuite.Core.Domain.MergeBehavior`. Used by
+#' `MoBiModule$mergeBehavior`.
+#' @export
+MergeBehavior <- NULL
+
 #' Default genders  defined in PK-Sim
 #'
 #'
