@@ -139,3 +139,56 @@ clearMemory <- function(clearSimulationsCache = FALSE) {
   # Add the keyword `MoleculeProperties` to the list of illegal names
   illegalNames <- c(illegalNames, "MoleculeProperties")
 }
+
+
+#' Validate that a value is `NULL` or a single non-NA character string.
+#'
+#' @param x Value to validate.
+#' @param varName Name of the variable being validated (used in the error message).
+#' @returns invisible `TRUE` on success; otherwise an error is thrown.
+#' @keywords internal
+#' @noRd
+.validateScalarStringOrNull <- function(x, varName) {
+  if (is.null(x)) {
+    return(invisible(TRUE))
+  }
+  if (!(is.character(x) && length(x) == 1 && !is.na(x))) {
+    stop(
+      sprintf(
+        "The parameter '%s' must be `NULL` or a single non-NA character string.",
+        varName
+      ),
+      call. = FALSE
+    )
+  }
+  invisible(TRUE)
+}
+
+#' Validate that an object is a named list
+#'
+#' @param x Object to validate as a named list.
+#' @param varName Name of the variable being validated (used in error message).
+#'
+#' @returns invisible TRUE if the validation passed, otherwise an error is thrown.
+#'
+#' @export
+#' @examples
+#' validateIsNamedList(list(a = 1, b = 2), "myVar") # passes
+#' # validateIsNamedList(list(1, 2), "myVar") # throws an error
+validateIsNamedList <- function(x, varName) {
+  validateIsString(varName)
+  nms <- names(x)
+  if (
+    !(is.list(x) &&
+      !is.null(nms) &&
+      !anyNA(nms) &&
+      all(nzchar(nms)))
+  ) {
+    stop(
+      sprintf("The parameter '%s' must be a named list.", varName),
+      call. = FALSE
+    )
+  }
+
+  return(invisible(TRUE))
+}

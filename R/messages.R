@@ -2,6 +2,18 @@
 #' Extends the `messages` list from ospsuite.utils
 messages <- ospsuite.utils::messages
 
+messages$errorFileDoesNotExist <- function(path) {
+  paste0("File does not exist: ", path)
+}
+
+messages$errorPkmlContainsMultipleModules <- function() {
+  paste(
+    "The PKML you are trying to load the module from contains more than one",
+    "module, but the function expects only one module.",
+    "Most probably you are trying to load a simulation export."
+  )
+}
+
 messages$errorWrongPopulation <- function(species, population) {
   paste0(
     "Could not find population '",
@@ -277,5 +289,165 @@ messages$errorIndividualIdsNotFoundInPopulation <- function(missingIds) {
     "The following individual id(s) were not found in the population: '",
     paste(missingIds, collapse = ", "),
     "'"
+  )
+}
+
+##### MoBiProject#####
+messages$modulesNotPresentInProject <- function(modules) {
+  paste0(
+    "Modules with the name(s) ",
+    paste(modules, collapse = ", "),
+    " is/are not present in the project!"
+  )
+}
+
+messages$errorSimulationNotFound <- function(simulationName) {
+  paste0(
+    "Simulation with the name '",
+    simulationName,
+    "' is not present in the project!"
+  )
+}
+
+messages$errorDataSetsNotPresentInProject <- function(dataSetNames) {
+  paste0(
+    "Data set(s) with the name(s) ",
+    paste(dataSetNames, collapse = ", "),
+    " is/are not present in the project!"
+  )
+}
+
+##### BuildingBlock #####
+messages$errorExpressionProfileNotFound <- function(names) {
+  paste0(
+    "Expression profile(s) with the name(s) ",
+    paste(names, collapse = ", "),
+    " is/are not present in the project!"
+  )
+}
+
+messages$errorIndividualNotFound <- function(name) {
+  paste0("Individual with the name ", name, " is not present in the project!")
+}
+
+messages$errorMissingRequiredBBs <- function(missing) {
+  paste0(
+    "The provided modules do not contain the required building blocks: ",
+    paste(missing, collapse = ", "),
+    ". Please provide modules with the required building blocks."
+  )
+}
+
+messages$errorWrongBuildingBlockType <- function(
+  bbName,
+  expectedType,
+  actualType
+) {
+  paste0(
+    "Building Block with the name '",
+    bbName,
+    "' is of type '",
+    actualType,
+    "', but expected type is '",
+    expectedType,
+    "'."
+  )
+}
+
+messages$errorICNotFoundInModule <- function(icName, moduleName) {
+  paste0(
+    "Initial Condition Building Block with the name '",
+    icName,
+    "' is not present in the module '",
+    moduleName,
+    "'."
+  )
+}
+
+messages$errorPVNotFoundInModule <- function(pvName, moduleName) {
+  paste0(
+    "Parameter Values Building Block with the name '",
+    pvName,
+    "' is not present in the module '",
+    moduleName,
+    "'."
+  )
+}
+
+messages$errorBBTypeAutoDetectFailed <- function(filePath) {
+  paste0(
+    "Could not auto-detect the building block type from file '",
+    filePath,
+    "'. Specify the `type` argument explicitly using one of `BuildingBlockTypes$...`."
+  )
+}
+
+messages$errorBBLoadFromPKMLFailed <- function(filePath, type, cause) {
+  paste0(
+    "Failed to load a '",
+    type,
+    "' building block from file '",
+    filePath,
+    "'. ",
+    cause
+  )
+}
+
+##### Simulation #####
+messages$errorFeatureNotSupportedBySimulation <- function(
+  featureName,
+  version,
+  requiredVersion
+) {
+  paste0(
+    "The feature '",
+    featureName,
+    "' is not supported by this simulation. The simulation was created with OSP version ",
+    version,
+    ". Minimal required OSP version is ",
+    requiredVersion
+  )
+}
+
+##### SimulationConfiguration #####
+messages$errorExpressionProfileAlreadyDefined <- function(
+  profileName,
+  proteinName
+) {
+  paste0(
+    "Expression for the protein '",
+    proteinName,
+    "' has already been defined for this simulation configuration with the expression profile '",
+    profileName,
+    "'."
+  )
+}
+
+messages$errorOnlyOneIndividualPerConfiguration <- function() {
+  "Only one individual can be assigned to a simulation configuration."
+}
+
+messages$errorDuplicateModuleNames <- function(duplicateNames) {
+  paste0(
+    "Module names must be unique. The following name(s) appear more than once: ",
+    paste0("'", unique(duplicateNames), "'", collapse = ", "),
+    "."
+  )
+}
+
+messages$errorModuleNotInConfiguration <- function(moduleName) {
+  paste0(
+    "Module(s) with the name(s) '",
+    moduleName,
+    "' is not part of the simulation configuration."
+  )
+}
+
+messages$errorInvalidCalculationMethod <- function(methodName, validMethods) {
+  paste0(
+    "'",
+    methodName,
+    "' is not a valid calculation method. Valid methods are: ",
+    paste0("'", validMethods, "'", collapse = ", ")
   )
 }

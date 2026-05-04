@@ -34,6 +34,10 @@ SolverSettings <- R6::R6Class(
     #' @field absTol Absolute tolerance of unknowns
     absTol = function(value) {
       private$.wrapProperty("AbsTol", value)
+    },
+    #' @field checkForNegativeValues Should the solver check for negative values
+    checkForNegativeValues = function(value) {
+      private$.wrapProperty("CheckForNegativeValues", value)
     }
   ),
   public = list(
@@ -49,7 +53,8 @@ SolverSettings <- R6::R6Class(
         "hMax" = self$hMax,
         "mxStep" = self$mxStep,
         "relTol" = self$relTol,
-        "absTol" = self$absTol
+        "absTol" = self$absTol,
+        "checkForNegativeValues" = self$checkForNegativeValues
       ))
     }
   )

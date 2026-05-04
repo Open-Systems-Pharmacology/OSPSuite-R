@@ -1,5 +1,17 @@
 # ospsuite (development version)
 
+## Major changes
+
+- Added MoBi project support: load `.mbp3` projects, query modules, individuals, expression profiles, and simulations, and assemble simulations from project building blocks. New classes `MoBiProject`, `MoBiModule`, `SimulationConfiguration`, `MoleculesBuildingBlock`, plus helpers for creating and saving Initial Conditions, Parameter Values, Individual, and Expression Profile building blocks. See `vignette("mobi-projects")` for an end-to-end walkthrough.
+
+## Breaking changes
+
+- `createIndividual()` and `createPopulation()` will not work with models developed prior to version 13.
+The reason is that in v13, the absorption model has been refined, adding new parameters.
+To be able to use creation of individuals or populations with earlier models, the user has to re-create the models from snapshot with the latest PK-Sim version.
+If no original PK-Sim project or snapshot are available, the user should use the latest version 12 of the R package.
+- `SimulationRunOptions$checkForNegativeValues` field has been removed. The property is now on `SolverSettings` and accessible via `simulation$solver$checkForNegativeValues`. The `checkForNegativeValues` argument of `SimulationRunOptions$new()` is kept for backward compatibility but issues a deprecation warning and has no effect.
+
 ## Minor improvements and bug fixes
 
 - `plotTimeProfile()` now defaults to `showLegendPerDataset = "all"`, showing individual dataset names for both observed and simulated data by default (#1844).
@@ -54,12 +66,18 @@
 
 - Added support for macOS (both Intel and Apple Silicon architectures). (\#1621)
 
+## Deprecations
+
+- `checkForNegativeValues` parameter in `SimulationRunOptions$new()` is deprecated. Use `sim$solver$checkForNegativeValues` instead.
+The parameter is still accepted but will issue a deprecation warning. The property has moved from `SimulationRunOptions` to `SolverSettings`
+to align with .NET binaries changes.
+
 ## Minor improvements and bug fixes
 
 - Added optional `names` parameter to `dataSetToTibble()` function to support custom naming of datasets.
-  This is particularly useful when multiple datasets have the same original name.
-  The naming logic has been moved from the private `.dataSetToDataFrame()` method in `DataCombined`
-  to `dataSetToTibble()` for better code reuse and maintainability. (\#1627)
+This is particularly useful when multiple datasets have the same original name.
+The naming logic has been moved from the private `.dataSetToDataFrame()` method in `DataCombined`
+to `dataSetToTibble()` for better code reuse and maintainability. (\#1627)
 
 # ospsuite 12.3.2
 

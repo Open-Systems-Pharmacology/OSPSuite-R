@@ -1,13 +1,10 @@
 # Soft deprecation warnings for tlf-based plotting functions
 
-oneObsDC <- readRDS(getTestDataFilePath("oneObsDC"))
-oneObsSimDC <- readRDS(getTestDataFilePath("oneObsSimDC"))
-
 # plotIndividualTimeProfile -----------------------------------------------
 
 test_that("plotIndividualTimeProfile emits a soft deprecation warning pointing to plotTimeProfile", {
   expect_warning(
-    plotIndividualTimeProfile(oneObsDC),
+    plotIndividualTimeProfile(oneObsDC()),
     regexp = "plotIndividualTimeProfile.*deprecated.*plotTimeProfile",
     class = "lifecycle_warning_deprecated"
   )
@@ -17,7 +14,7 @@ test_that("plotIndividualTimeProfile emits a soft deprecation warning pointing t
 
 test_that("plotPopulationTimeProfile emits a soft deprecation warning pointing to plotTimeProfile", {
   expect_warning(
-    plotPopulationTimeProfile(oneObsDC),
+    plotPopulationTimeProfile(oneObsDC()),
     regexp = "plotPopulationTimeProfile.*deprecated.*plotTimeProfile",
     class = "lifecycle_warning_deprecated"
   )

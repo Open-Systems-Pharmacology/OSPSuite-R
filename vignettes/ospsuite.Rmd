@@ -132,7 +132,6 @@ print(dose)
 Adjust simulation outputs and solver settings:
 
 ```{r, echo=TRUE, message=TRUE}
-
 # Originally, the simulation outputs plasma concentrations
 sim$outputSelections
 
@@ -152,7 +151,7 @@ addOutputInterval(
   startTime = 1440, # 1 day
   endTime = 3000, # ~2 days
   resolution = 10, # Every 10 minutes
-  intervalName = "highRes"
+  intervalName = "HighRes"
 )
 
 # Check current output schema

@@ -28,7 +28,6 @@ Default is \code{getOSPSuiteSetting("showProgress")}}
 \itemize{
 \item \href{#method-SimulationRunOptions-new}{\code{SimulationRunOptions$new()}}
 \item \href{#method-SimulationRunOptions-print}{\code{SimulationRunOptions$print()}}
-\item \href{#method-SimulationRunOptions-.getCheckForNegativeValues}{\code{SimulationRunOptions$.getCheckForNegativeValues()}}
 }
 }
 \if{html}{\out{
@@ -95,19 +94,6 @@ Print the object to the console
 \item{\code{...}}{Rest arguments.}
 }
 \if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-SimulationRunOptions-.getCheckForNegativeValues"></a>}}
-\if{latex}{\out{\hypertarget{method-SimulationRunOptions-.getCheckForNegativeValues}{}}}
-\subsection{Method \code{.getCheckForNegativeValues()}}{
-Get the checkForNegativeValues property (deprecated)
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationRunOptions$.getCheckForNegativeValues()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-The value of checkForNegativeValues from the solver
 }
 }
 }

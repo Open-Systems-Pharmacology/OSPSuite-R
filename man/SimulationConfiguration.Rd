@@ -22,8 +22,9 @@ used in the configuration. Only one profile per protein is allowed.}
 
 \item{\code{modules}}{A named list of \code{MoBiModule} objects from which to create the simulation.
 The order of modules defines the order in which the modules will be combined to a simulation!
-When setting the modules, the selection of Initial Conditions and Parameter Values
-is reset to the first available ones in the modules.}
+Replacing \code{modules} does not automatically reset \code{selectedInitialConditions} or
+\code{selectedParameterValues}. Reassign those fields explicitly if the new modules
+do not contain the previously selected building blocks.}
 
 \item{\code{selectedInitialConditions}}{A named list with names being the names of the modules,
 and the values the names of Initial Conditions Building Blocks}

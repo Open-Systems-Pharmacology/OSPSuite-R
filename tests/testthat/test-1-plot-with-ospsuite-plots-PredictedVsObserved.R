@@ -55,10 +55,6 @@ obsData <- lapply(
 )
 names(obsData) <- lapply(obsData, function(x) x$name)
 
-manyObsSimDCWithFraction <- readRDS(getTestDataFilePath(
-  "manyObsSimDCWithFraction"
-))
-
 # create a new instance and add datasets
 myCombDat <- DataCombined$new()
 myCombDat$addDataSets(dataSet[c(1, 3, 5)])
@@ -249,7 +245,7 @@ test_that("It swaps axes when predictedAxis is 'x'", {
 # 2 y-axis dimensions ----
 test_that("Plot throws error with fraction and concentration", {
   expect_error(
-    plotPredictedVsObserved(manyObsSimDCWithFraction),
+    plotPredictedVsObserved(manyObsSimDCWithFraction()),
     'Data contains too many'
   )
 })
