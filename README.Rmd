@@ -120,17 +120,22 @@ Installing from archive files requires manual installation of CRAN dependencies 
 # versions of the packages and generate a string that is printed in the README.md
 # file.
 
-library(pacman)
-
 non_cran_deps <- c("rSharp", "ospsuite.utils", "tlf", "ospsuite")
 deps <- c()
 
-for (non_cran_dep in non_cran_deps) {
-  package_deps <- p_depends(non_cran_dep, local = T, character.only = T)
-  deps <- sort(unique(c(deps, package_deps$Depends, package_deps$Imports)))
+parse_dep_field <- function(field) {
+  if (is.null(field) || is.na(field)) return(character())
+  parts <- strsplit(field, ",")[[1]]
+  parts <- gsub("\\s*\\(.*\\)\\s*", "", parts)
+  trimws(parts)
 }
 
-deps <- deps[!deps %in% c("methods", non_cran_deps)]
+for (non_cran_dep in non_cran_deps) {
+  pd <- utils::packageDescription(non_cran_dep)
+  deps <- sort(unique(c(deps, parse_dep_field(pd$Depends), parse_dep_field(pd$Imports))))
+}
+
+deps <- deps[!deps %in% c("methods", "R", non_cran_deps)]
 
 dep_install <- paste(
   'install.packages("',
