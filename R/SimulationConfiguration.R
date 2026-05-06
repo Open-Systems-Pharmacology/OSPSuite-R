@@ -7,20 +7,21 @@ SimulationConfiguration <- R6::R6Class(
   "SimulationConfiguration",
   cloneable = FALSE,
   active = list(
-    #' @field individual A building block of type "Individual" used in the configuration.
+    #' @field individual An [IndividualBuildingBlock] used in the configuration.
     #' Can be `NULL` if no Individual should be applied.
     individual = function(value) {
       if (missing(value)) {
         return(private$.individual)
       } else {
-        validateIsOfType(value, "BuildingBlock", nullAllowed = TRUE)
         if (!is.null(value)) {
-          # Validate that only one individual is passed
           if (length(c(value)) > 1) {
             stop(messages$errorOnlyOneIndividualPerConfiguration())
           }
-          # Check that the bb is of correct type
-          .validateBuildingBlockType(value, "Individual")
+          # `validateIsOfType()` cannot recover the argument name from an active
+          # binding's call frame, so use `inherits()` here.
+          if (!inherits(value, "IndividualBuildingBlock")) {
+            stop("argument is not an <IndividualBuildingBlock>!")
+          }
         }
         private$.individual <- value
       }
@@ -244,7 +245,7 @@ SimulationConfiguration <- R6::R6Class(
     #'
     #' @param modules A list of `MoBiModule` objects from which to create in simulation.
     #' The order of modules defines the order in which the modules will be combined to a simulation!
-    #' @param individual Optional, an individual building block
+    #' @param individual Optional, an [IndividualBuildingBlock].
     #' @param expressionProfiles Optional, a list of expression profiles to apply to the simulation.
     #' @param selectedInitialConditions By default, the first Initial Conditions
     #' (IC) building block (BB) of each module will be selected. If a module has multiple
@@ -287,8 +288,7 @@ SimulationConfiguration <- R6::R6Class(
           "selectedParameterValues"
         )
       }
-      validateIsOfType(individual, "BuildingBlock", nullAllowed = TRUE)
-      .validateBuildingBlockType(individual, "Individual", nullAllowed = TRUE)
+      validateIsOfType(individual, "IndividualBuildingBlock", nullAllowed = TRUE)
       validateIsOfType(expressionProfiles, "BuildingBlock", nullAllowed = TRUE)
       # Coerce a single BuildingBlock into a 1-element list. R6 objects are
       # environments and would not iterate correctly otherwise.

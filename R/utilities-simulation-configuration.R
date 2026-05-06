@@ -4,7 +4,7 @@
 #'
 #' @param modules A list of `MoBiModule` objects from which to create the simulation.
 #' The order of modules defines the order in which the modules will be combined to a simulation!
-#' @param individual Optional, an individual building block
+#' @param individual Optional, an [IndividualBuildingBlock].
 #' @param expressionProfiles Optional, a list of expression profiles to apply to the simulation.
 #' @param selectedInitialConditions By default, the first Initial Conditions
 #' (IC) building block (BB) of each module will be selected. If a module has multiple
@@ -83,10 +83,7 @@ createSimulationConfiguration <- function(
   # Get the individual .NET object and create the R object
   individual <- netObj$get("Individual")
   if (!is.null(individual)) {
-    individual <- BuildingBlock$new(
-      individual,
-      type = BuildingBlockTypes$Individual
-    )
+    individual <- IndividualBuildingBlock$new(individual)
   }
 
   names(modules) <- modulesNames
