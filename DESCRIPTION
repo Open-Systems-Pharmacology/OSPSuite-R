@@ -44,6 +44,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.3),
     vdiffr (>= 1.0.0),
+    withr,
     showtext
 Language: en-US
 Encoding: UTF-8
