@@ -1255,5 +1255,8 @@ loadBuildingBlockFromPKML <- function(filePath, type = NULL) {
   if (type == BuildingBlockTypes$Molecules) {
     return(MoleculesBuildingBlock$new(netBB))
   }
+  if (type == BuildingBlockTypes$Individual) {
+    return(IndividualBuildingBlock$new(netBB))
+  }
   BuildingBlock$new(netBB, type = type)
 }

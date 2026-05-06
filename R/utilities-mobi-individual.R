@@ -7,7 +7,7 @@
 #'
 #' @inheritParams createIndividualCharacteristics
 #'
-#' @returns An object of type `BuildingBlock` representing the created individual.
+#' @returns An [IndividualBuildingBlock] representing the created individual.
 #' @export
 #'
 #' @examples
@@ -60,7 +60,7 @@ createIndividualBuildingBlock <- function(
     name
   )
 
-  return(BuildingBlock$new(netObject, type = BuildingBlockTypes$Individual))
+  return(IndividualBuildingBlock$new(netObject))
 }
 
 #' Convert an Individual Building Block to a data frame.

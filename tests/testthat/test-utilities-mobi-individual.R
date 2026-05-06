@@ -6,6 +6,7 @@ test_that("createIndividualBuildingBlock creates a building block for a non-huma
   )
 
   expect_true(isOfType(individual, "BuildingBlock"))
+  expect_true(isOfType(individual, "IndividualBuildingBlock"))
   expect_equal(individual$type, BuildingBlockTypes$Individual)
   expect_equal(individual$name, Species$Beagle)
 })
@@ -30,6 +31,53 @@ test_that("createIndividualBuildingBlock creates a building block for a human in
   )
 
   expect_true(isOfType(individual, "BuildingBlock"))
+  expect_true(isOfType(individual, "IndividualBuildingBlock"))
+})
+
+# IndividualBuildingBlock OriginData fields
+
+test_that("IndividualBuildingBlock exposes origin data fields for a human individual", {
+  individual <- createIndividualBuildingBlock(
+    species = Species$Human,
+    population = HumanPopulation$European_ICRP_2002,
+    gender = Gender$Male,
+    weight = 73,
+    height = 175,
+    age = 30
+  )
+
+  expect_equal(individual$species, Species$Human)
+  expect_equal(individual$population, "European (ICRP, 2002)")
+  expect_equal(individual$gender, "Male")
+  expect_equal(individual$age, '30.00 year(s)')
+  expect_equal(individual$weight, '73.00 kg')
+  expect_equal(individual$height, '175.00 cm')
+})
+
+test_that("IndividualBuildingBlock origin data fields are read-only", {
+  individual <- createIndividualBuildingBlock(species = Species$Beagle)
+
+  expect_error(individual$species <- "X", regexp = "read-only")
+  expect_error(individual$population <- "X", regexp = "read-only")
+  expect_error(individual$gender <- "X", regexp = "read-only")
+  expect_error(individual$age <- 1, regexp = "read-only")
+  expect_error(individual$gestationalAge <- 1, regexp = "read-only")
+  expect_error(individual$height <- 1, regexp = "read-only")
+  expect_error(individual$weight <- 1, regexp = "read-only")
+})
+
+test_that("IndividualBuildingBlock print includes origin data section", {
+  individual <- createIndividualBuildingBlock(
+    name = "TestIndividual",
+    species = Species$Human,
+    population = HumanPopulation$European_ICRP_2002,
+    gender = Gender$Male,
+    weight = 73,
+    height = 175,
+    age = 30
+  )
+
+  expect_snapshot(print(individual))
 })
 
 test_that("createIndividualBuildingBlock throws an error when species is Human and no or wrong population is provided", {

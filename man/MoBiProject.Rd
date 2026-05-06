@@ -14,7 +14,7 @@ A named list of \code{DataSet} objects.
 
 A named list of \code{MoBiModule} objects.
 
-An object of the type \code{BuildingBlock}. \code{NULL} if the project does not contain
+An object of the type \code{IndividualBuildingBlock}. \code{NULL} if the project does not contain
 such an individual and \code{stopIfNotFound = FALSE}.
 
 A named list of objects of the type \code{BuildingBlock}. If \code{stopIfNotFound = FALSE},

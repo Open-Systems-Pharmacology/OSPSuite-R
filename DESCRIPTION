@@ -80,6 +80,7 @@ Collate:
     'formula.R'
     'get-net-task.R'
     'globals.R'
+    'individual-building-block.R'
     'individual-characteristics.R'
     'init-package.R'
     'interval.R'
