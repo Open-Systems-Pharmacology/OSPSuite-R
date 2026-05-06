@@ -13,17 +13,10 @@ SimulationConfiguration <- R6::R6Class(
       if (missing(value)) {
         return(private$.individual)
       } else {
-        if (!is.null(value)) {
-          if (length(c(value)) > 1) {
-            stop(messages$errorOnlyOneIndividualPerConfiguration())
-          }
-          # `validateIsOfType()` cannot recover the argument name from an active
-          # binding's call frame, so use `inherits()` here.
-          if (!inherits(value, "IndividualBuildingBlock")) {
-            stop("argument is not an <IndividualBuildingBlock>!")
-          }
+        if (!is.null(value) && length(c(value)) > 1) {
+          stop(messages$errorOnlyOneIndividualPerConfiguration())
         }
-        private$.individual <- value
+        private$.setIndividual(value)
       }
     },
 
@@ -503,6 +496,14 @@ SimulationConfiguration <- R6::R6Class(
     .settings = NULL,
     .partitionCoefficientOverrides = list(),
     .cellularPermeabilityOverrides = list(),
+
+    # Indirection so `validateIsOfType()` can recover the argument name; called
+    # from an active binding directly, `sys.call(-1)[[1]]` is the binding's
+    # closure (not a symbol) and `as.character()` chokes on it.
+    .setIndividual = function(value) {
+      validateIsOfType(value, "IndividualBuildingBlock", nullAllowed = TRUE)
+      private$.individual <- value
+    },
 
     .setCalculationMethodOverride = function(
       moleculeName,
