@@ -37,19 +37,15 @@ Imports:
     lifecycle,
     cli,
     rSharp,
-    showtext,
-    checkmate
+    checkmate,
+    R6
 Suggests:
-    pacman,
     knitr,
     rmarkdown,
     testthat (>= 3.0.3),
     vdiffr (>= 1.0.0),
     withr,
-    sysfonts,
-    devtools (>= 2.4.5),
-    diffviewer,
-    covr
+    showtext
 Language: en-US
 Encoding: UTF-8
 LazyData: true
