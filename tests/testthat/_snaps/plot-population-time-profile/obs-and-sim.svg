@@ -235,6 +235,7 @@
 <line x1='42.53' y1='38.78' x2='45.36' y2='38.78' style='stroke-width: 1.07;' />
 <line x1='42.53' y1='33.87' x2='45.36' y2='33.87' style='stroke-width: 1.07;' />
 <line x1='42.53' y1='29.48' x2='51.03' y2='29.48' style='stroke-width: 1.07;' />
+<rect x='42.53' y='5.48' width='671.99' height='527.99' style='stroke-width: 1.07; stroke: #333333;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='42.53,533.47 42.53,5.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
