@@ -37,7 +37,6 @@ Imports:
     lifecycle,
     cli,
     rSharp,
-    showtext,
     checkmate
 Suggests:
     pacman,
@@ -46,6 +45,7 @@ Suggests:
     testthat (>= 3.0.3),
     vdiffr (>= 1.0.0),
     withr,
+    showtext,
     sysfonts,
     devtools (>= 2.4.5),
     diffviewer
