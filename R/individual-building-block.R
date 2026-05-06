@@ -15,7 +15,7 @@ IndividualBuildingBlock <- R6::R6Class(
       private$.readOnlyProperty(
         "species",
         value,
-        private$.originDataValue("Species")
+        private$.originData[["Species"]]
       )
     },
     #' @field population Population of the individual. May be `NULL` for
@@ -24,7 +24,7 @@ IndividualBuildingBlock <- R6::R6Class(
       private$.readOnlyProperty(
         "population",
         value,
-        private$.originDataValue("Population")
+        private$.originData[["Population"]]
       )
     },
     #' @field gender Gender of the individual. Read-only.
@@ -32,7 +32,7 @@ IndividualBuildingBlock <- R6::R6Class(
       private$.readOnlyProperty(
         "gender",
         value,
-        private$.originDataValue("Gender")
+        private$.originData[["Gender"]]
       )
     },
     #' @field age Age of the individual. Read-only.
@@ -40,7 +40,7 @@ IndividualBuildingBlock <- R6::R6Class(
       private$.readOnlyProperty(
         "age",
         value,
-        private$.originDataValue("Age")
+        private$.originData[["Age"]]
       )
     },
     #' @field gestationalAge Gestational age of the individual. Read-only.
@@ -48,7 +48,7 @@ IndividualBuildingBlock <- R6::R6Class(
       private$.readOnlyProperty(
         "gestationalAge",
         value,
-        private$.originDataValue("Gestational age")
+        private$.originData[["Gestational age"]]
       )
     },
     #' @field height Height of the individual. Read-only.
@@ -56,7 +56,7 @@ IndividualBuildingBlock <- R6::R6Class(
       private$.readOnlyProperty(
         "height",
         value,
-        private$.originDataValue("Height")
+        private$.originData[["Height"]]
       )
     },
     #' @field weight Weight of the individual. Read-only.
@@ -64,17 +64,20 @@ IndividualBuildingBlock <- R6::R6Class(
       private$.readOnlyProperty(
         "weight",
         value,
-        private$.originDataValue("Weight")
+        private$.originData[["Weight"]]
       )
     }
   ),
   public = list(
     #' @description
-    #' Initialize a new instance of the class.
+    #' Initialize a new instance of the class. Origin-data values are read once
+    #' from the underlying object and cached on the R6 instance; subsequent
+    #' field access does not call back into the simulation engine.
     #' @param netObject Reference to the underlying `Individual` building block.
     #' @return A new `IndividualBuildingBlock` object.
     initialize = function(netObject) {
       super$initialize(netObject, type = BuildingBlockTypes$Individual)
+      private$.cacheOriginData()
     },
 
     #' @description
@@ -100,14 +103,14 @@ IndividualBuildingBlock <- R6::R6Class(
     }
   ),
   private = list(
-    .originDataValue = function(name) {
+    .originData = NULL,
+    .cacheOriginData = function() {
       all <- self$get("OriginData")$get("All")
+      values <- list()
       for (entry in all) {
-        if (identical(entry$get("Name"), name)) {
-          return(entry$get("Value"))
-        }
+        values[[entry$get("Name")]] <- entry$get("Value")
       }
-      NULL
+      private$.originData <- values
     }
   )
 )

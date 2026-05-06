@@ -115,7 +115,7 @@ pvBBDf <- parameterValuesBBToDataFrame(pvBBs[["Rat"]])
 # Print the first few rows of the data frame
 head(pvBBDf)
 
-individual <- myProject$getIndividual("Rat")
+individual <- myProject$getIndividual("Human")
 individualDf <- individualsBBToDataFrame(individual)
 # Print the individual data frame
 head(individualDf)
@@ -129,7 +129,9 @@ individual$population
 individual$weight
 
 print(individual)
+```
 
+```{r expressionProfiles}
 expProfiles <- myProject$getExpressionProfiles("UDPGT1|Human|Healthy")
 expProfilesDf <- expressionProfileBBToDataFrame(expProfiles)
 # Print the first few rows of the data frame

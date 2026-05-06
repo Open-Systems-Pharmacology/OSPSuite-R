@@ -67,6 +67,11 @@ test_that("IndividualBuildingBlock origin data fields are read-only", {
 })
 
 test_that("IndividualBuildingBlock print includes origin data section", {
+  # Note: the printed gestational age is wrong (`2087.14 week(s)`) because
+  # `IndividualTask.CreateIndividual` ignores the `gestationalAgeUnit` of the
+  # underlying `IndividualCharacteristics` snapshot parameter and stores the
+  # value as years. Tracked in
+  # https://github.com/Open-Systems-Pharmacology/OSPSuite-R/issues/1932.
   individual <- createIndividualBuildingBlock(
     name = "TestIndividual",
     species = Species$Human,

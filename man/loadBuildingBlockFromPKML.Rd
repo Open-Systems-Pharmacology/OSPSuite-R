@@ -15,8 +15,9 @@ automatically. When the type cannot be auto-detected, an error is thrown
 asking the caller to specify \code{type} explicitly.}
 }
 \value{
-A \code{BuildingBlock} object (or a \code{MoleculesBuildingBlock} when the
-loaded building block is of type \code{Molecules}).
+A \code{BuildingBlock} object, or a specialized subclass when applicable:
+a \code{MoleculesBuildingBlock} for \code{Molecules}, or an \code{IndividualBuildingBlock}
+for \code{Individual}.
 }
 \description{
 Load a building block from a pkml file
