@@ -15,6 +15,7 @@ of calculated PK parameters and their description, please refer to [OSPS
 documentation](https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/pk-sim-simulations#pk-analysis-view).
 
 ``` r
+
 library(ospsuite)
 #> The option 'ospsuite.plots.watermarkEnabled' is not set.
 #> To enable watermarks, add the following to your .Rprofile:
@@ -176,6 +177,7 @@ for, and `$values` the value (or list of values for a population
 simulation).
 
 ``` r
+
 # Get C_max parameter
 c_max <- pkAnalysis$pKParameterFor(quantityPath = outputPath, pkParameter = "C_max")
 
@@ -205,6 +207,7 @@ dataframe for working with them further in other workflows (e.g. data
 wrangling), and the package provides a convenient helper to extract it:
 
 ``` r
+
 pkAnalysesToDataFrame(pkAnalysis)
 #> # A tibble: 28 × 5
 #>    IndividualId QuantityPath                            Parameter    Value Unit 
@@ -228,6 +231,7 @@ Population analysis calculated in R can be exported to a \*.csv file and
 loaded in PK-Sim, and vice versa.
 
 ``` r
+
 # Load and run the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -267,6 +271,7 @@ which can then be parameterized for specific requirements.
 #### Calculate AUC between for a specific time interval.
 
 ``` r
+
 # Adds a user defined parameter named `MyAuc` that will calculate the value of AUC between t=50 min and t=80min only.
 
 # Create a new parameter based on the standard AUC parameter
@@ -283,6 +288,7 @@ myAUC$endTime <- 80
 #### Calculate CMax between the 4th and 5th application of a multiple applications simulation.
 
 ``` r
+
 # Adds a user defined parameter named `MyCMax` that will calculate the value of Cmax between the 4th and 5th application
 
 # Create a new parameter based on the standard C_max parameter
@@ -299,6 +305,7 @@ myCMax$endApplicationIndex <- 5
 #### Calculate CMax between the 4th and 5th application of a multiple applications simulation and apply a time offset
 
 ``` r
+
 # Adds a user defined parameter named `MyCMax` that will calculate the value of Cmax between the 4th application start time + 10 min and
 # the 5th application start time + 20min
 
@@ -328,6 +335,7 @@ setting its display unit to any valid unit of the target dimension can
 do the trick
 
 ``` r
+
 # Let's assume there is an observer called Q_observer in mg/m2 using the dimension Dose per body surface area.
 # Simply using C_max would result in the parameter being shown in umol\l.
 # To see the correct unit and dimension, the following can be done:

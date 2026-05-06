@@ -10,6 +10,7 @@ format exported from PK-Sim or MoBi, and returns the corresponding
 simulation object.
 
 ``` r
+
 library(ospsuite)
 #> The option 'ospsuite.plots.watermarkEnabled' is not set.
 #> To enable watermarks, add the following to your .Rprofile:
@@ -37,6 +38,7 @@ In most cases, `container` is the `Simulation` object created by calling
 `loadSimulation(pkmlSimulationFile)`.
 
 ``` r
+
 # Get the molecule Aciclovir located in kidney intracellular space
 moleculeInKid <- getMolecule("Organism|Kidney|Intracellular|Aciclovir", sim)
 print(moleculeInKid)
@@ -84,6 +86,7 @@ one occurrence of any element) or `**` (zero or more occurrences of any
 element).
 
 ``` r
+
 # Get the parameter `Volume` of the intracellular space of all organs,
 # with exactly one path element before `Intracellular`
 volumeParams <- getAllParametersMatching("Organism|*|Intracellular|Volume", sim)
@@ -113,6 +116,7 @@ and
 can also be used to retrieve entities from multiple paths:
 
 ``` r
+
 # Get the molecule Aciclovir located in `Liver|Periportal|Intracellular` and `VenousBlood|Plasma`
 molecules <- getAllMoleculesMatching(c(
   "Organism|VenousBlood|Plasma|Aciclovir",
@@ -121,13 +125,13 @@ molecules <- getAllMoleculesMatching(c(
 print(molecules)
 #> [[1]]
 #> <Molecule>
-#>   • Path: Organism|VenousBlood|Plasma|Aciclovir
+#>   • Path: Organism|Liver|Periportal|Intracellular|Aciclovir
 #>   • Scale Divisor: 1
 #>   • Initial Value: 0.00e+00 [µmol]
 #> 
 #> [[2]]
 #> <Molecule>
-#>   • Path: Organism|Liver|Periportal|Intracellular|Aciclovir
+#>   • Path: Organism|VenousBlood|Plasma|Aciclovir
 #>   • Scale Divisor: 1
 #>   • Initial Value: 0.00e+00 [µmol]
 ```
@@ -136,6 +140,7 @@ The entities possess various properties that can be accessed through
 their objects. The most important properties for a container are:
 
 ``` r
+
 # Path of the container
 livContainer$path
 #> [1] "Organism|Liver"
@@ -150,6 +155,7 @@ livContainer$parentContainer
 The most important properties for a molecule are:
 
 ``` r
+
 # Initial value of the molecule
 moleculeInKid$value
 #> [1] 0
@@ -171,6 +177,7 @@ moleculeInKid$formula
 The most important properties for a parameter are:
 
 ``` r
+
 # Initial value of the parameter
 livParam$value
 #> [1] 0.3533005
@@ -203,6 +210,7 @@ sub-containers of the element. The final elements are strings
 representing the path to the entity.
 
 ``` r
+
 # Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)

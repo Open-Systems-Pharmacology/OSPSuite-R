@@ -59,6 +59,7 @@ Load observed data from an excel file using an importer configuration
 ## Examples
 
 ``` r
+
 xlsFilePath <- system.file(
   "extdata", "CompiledDataSet.xlsx",
   package = "ospsuite"

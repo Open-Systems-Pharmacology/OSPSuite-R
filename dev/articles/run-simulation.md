@@ -11,6 +11,7 @@ to produce an object of the class `SimulationResults`. Keep in mind that
 produces a list of `SimulationResults` objects.
 
 ``` r
+
 library(ospsuite)
 #> The option 'ospsuite.plots.watermarkEnabled' is not set.
 #> To enable watermarks, add the following to your .Rprofile:
@@ -49,6 +50,7 @@ available in the simulation results are returned.
 The paths of all available outputs can be accessed via
 
 ``` r
+
 simulationResults$allQuantityPaths
 #> [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 #> [2] "Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound"
@@ -70,6 +72,7 @@ simulationResults$allQuantityPaths
   dimension or the unit.
 
 ``` r
+
 # Get simulated results by path
 resultsPath <- simulationResults$allQuantityPaths[[1]]
 print(resultsPath)
@@ -92,6 +95,7 @@ The results can be stored in and imported from a \*.csv file with the
 methods `exportResultsToCSV` and `importResultsFromCSV`.
 
 ``` r
+
 # Load and run the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -132,6 +136,7 @@ hand, if the user simulates 10 simulations with only 8 cores available,
 7 will be used and then the first 3 available.
 
 ``` r
+
 # Load and run multiple simulations concurrently.
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 
@@ -151,14 +156,15 @@ results correspond. This way, it is easy to retrieve the correct results
 for the specific simulation
 
 ``` r
+
 # Get the id of the second simulation
 id <- sim2$id
 print(id)
-#> [1] "cyGIhIV5cU6Jm-f1dn0QPA"
+#> [1] "w-V9_e1DbU2LvEYxRbVtZA"
 # get the corresponding result
 sim2Results <- simulationResults[[id]]
 print(sim2Results$simulation$id)
-#> [1] "cyGIhIV5cU6Jm-f1dn0QPA"
+#> [1] "w-V9_e1DbU2LvEYxRbVtZA"
 ```
 
 ## Adding new outputs
@@ -173,6 +179,7 @@ corresponding simulation needs to be re-run in order to generate updated
 results.
 
 ``` r
+
 # Clear the list of generated outputs
 clearOutputs(sim)
 
@@ -217,6 +224,7 @@ stored) are stored as the property `$outputSchema` of a `Simulation`
 object.
 
 ``` r
+
 print(sim$outputSchema)
 #> <OutputSchema>
 #> 
@@ -246,6 +254,7 @@ and
 [`setOutputInterval()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setOutputInterval.md).
 
 ``` r
+
 # Remove all output intervals - simulation not possible!
 clearOutputIntervals(simulation = sim)
 runSimulations(simulations = sim)
@@ -334,6 +343,7 @@ be accessed and modified through the `$solver` property of a
 `Simulation` object.
 
 ``` r
+
 # View current solver settings
 print(sim$solver)
 #> <SolverSettings>
@@ -344,7 +354,6 @@ print(sim$solver)
 #>   • mxStep: 100000
 #>   • relTol: 1e-05
 #>   • absTol: 1e-10
-#>   • checkForNegativeValues: TRUE
 ```
 
 In some cases, a simulation may fail to run successfully due to
@@ -359,6 +368,7 @@ main tolerance parameters are:
   relative to the magnitude of the values
 
 ``` r
+
 # If a simulation fails to run, try reducing the tolerances
 # Reduce absolute tolerance by a factor of 10
 sim$solver$absTol <- sim$solver$absTol * 1e-1

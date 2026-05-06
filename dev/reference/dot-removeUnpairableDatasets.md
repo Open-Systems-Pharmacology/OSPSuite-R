@@ -26,6 +26,7 @@ To this end, current function removes the following datasets:
 ## Examples
 
 ``` r
+
 df <- dplyr::tribble(
   ~name, ~dataType, ~group,
   "Sim1", "Simulated", "GroupA",

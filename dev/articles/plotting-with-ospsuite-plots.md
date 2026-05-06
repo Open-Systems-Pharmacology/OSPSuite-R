@@ -39,6 +39,7 @@ initialize the plotting environment properly. When `ospsuite` is loaded,
 is called automatically. You must also configure the watermark option:
 
 ``` r
+
 library(ospsuite)
 
 # Enable or disable watermark for plots
@@ -57,6 +58,7 @@ using
 which provides access to any named setting stored in `ospsuiteEnv`:
 
 ``` r
+
 ospsuite.plots::resetDefaults(getOSPSuiteSetting("ggplotDefaults"))
 ```
 
@@ -70,6 +72,7 @@ Next, let’s create `DataCombined` objects that we will use throughout
 this vignette:
 
 ``` r
+
 # Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -147,6 +150,7 @@ For demonstrating population-specific features, let’s also create a
 `DataCombined` object with population simulation results:
 
 ``` r
+
 # Load population from CSV file
 popFilePath <- system.file("extdata", "pop.csv", package = "ospsuite")
 population <- loadPopulation(csvPopulationFile = popFilePath)
@@ -181,6 +185,7 @@ over time. This is one of the most common visualizations in
 pharmacometric analysis.
 
 ``` r
+
 plotTimeProfile(myDataCombined)
 ```
 
@@ -198,6 +203,7 @@ is aggregated using the `aggregation` parameter. Options include:
 Here’s an example using the population simulation data:
 
 ``` r
+
 # Plot population data with default quantile aggregation
 plotTimeProfile(myPopDataCombined, yScale = 'log')
 ```
@@ -207,6 +213,7 @@ plotTimeProfile(myPopDataCombined, yScale = 'log')
 You can customize the quantiles:
 
 ``` r
+
 plotTimeProfile(
   myPopDataCombined,
   yScale = 'log',
@@ -221,6 +228,7 @@ Alternatively, you can use arithmetic mean aggregation with standard
 deviation bands:
 
 ``` r
+
 plotTimeProfile(
   myPopDataCombined,
   yScale = 'log',
@@ -241,6 +249,7 @@ You can customize this behavior using the `showLegendPerDataset`
 parameter:
 
 ``` r
+
 # Show all individual dataset names (both observed and simulated) - default
 plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "all")
 ```
@@ -248,6 +257,7 @@ plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "all")
 ![](plotting-with-ospsuite-plots_files/figure-html/timeprofile-legend-per-dataset-1.png)
 
 ``` r
+
 
 # No per-dataset differentiation
 plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "none")
@@ -257,6 +267,7 @@ plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "none")
 
 ``` r
 
+
 # Show only observed dataset names (different shapes)
 plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "observed")
 ```
@@ -264,6 +275,7 @@ plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "observed")
 ![](plotting-with-ospsuite-plots_files/figure-html/timeprofile-legend-per-dataset-3.png)
 
 ``` r
+
 
 # Show only simulated dataset names (different line types)
 plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "simulated")
@@ -287,6 +299,7 @@ To get the same plots as above you have to set the aesthetics as
 following:
 
 ``` r
+
 # Show all individual dataset names (both observed and simulated)
 plotTimeProfile(
   myDataCombinedMulti,
@@ -313,6 +326,7 @@ mappings and all columns available in
 `myDataCombinedMulti$toDataFrame()`.
 
 ``` r
+
 # Customize aesthetics
 plotTimeProfile(
   myDataCombinedMulti,
@@ -332,6 +346,7 @@ observed values. This helps assess model performance and identify
 systematic biases.
 
 ``` r
+
 plotPredictedVsObserved(myDataCombined)
 ```
 
@@ -346,6 +361,7 @@ You can customize the fold-distance lines using the
 `comparisonLineVector` parameter:
 
 ``` r
+
 # Show 1.5-fold and 3-fold ranges
 plotPredictedVsObserved(
   myDataCombined,
@@ -361,6 +377,7 @@ By default, predicted values are on the y-axis and observed on the
 x-axis. You can swap these using the `predictedAxis` parameter:
 
 ``` r
+
 # Put predicted on x-axis, observed on y-axis
 plotPredictedVsObserved(myDataCombined, predictedAxis = "x")
 ```
@@ -372,6 +389,7 @@ plotPredictedVsObserved(myDataCombined, predictedAxis = "x")
 The `xyScale` parameter controls the axis scaling:
 
 ``` r
+
 # Use linear scale instead of log
 plotPredictedVsObserved(myDataCombined, xyScale = "linear")
 ```
@@ -386,6 +404,7 @@ you can display individual dataset names in the legend using the
 `showLegendPerDataset` parameter:
 
 ``` r
+
 # Show individual observed dataset names (different shapes) (default)
 plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "all")
 
@@ -404,6 +423,7 @@ values.
 ### Residuals vs Observed Values
 
 ``` r
+
 plotResidualsVsCovariate(myDataCombined, xAxis = "observed")
 ```
 
@@ -412,6 +432,7 @@ plotResidualsVsCovariate(myDataCombined, xAxis = "observed")
 ### Residuals vs Time
 
 ``` r
+
 plotResidualsVsCovariate(myDataCombined, xAxis = "time")
 ```
 
@@ -420,6 +441,7 @@ plotResidualsVsCovariate(myDataCombined, xAxis = "time")
 ### Residuals vs Predicted Values
 
 ``` r
+
 plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
 ```
 
@@ -436,6 +458,7 @@ displayed (this same parameter is used in `plotResidualsAsHistogram` and
 - `"ratio"` - Ratio: `observed/predicted`
 
 ``` r
+
 # Use linear residuals
 plotResidualsVsCovariate(
   myDataCombined,
@@ -452,6 +475,7 @@ You can display individual dataset names in the legend using the
 `showLegendPerDataset` parameter:
 
 ``` r
+
 # Show individual observed dataset names (different shapes) (default)
 plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "all")
 
@@ -467,6 +491,7 @@ function creates a histogram of residuals, which helps assess the
 distribution of errors.
 
 ``` r
+
 plotResidualsAsHistogram(myDataCombined)
 ```
 
@@ -476,6 +501,7 @@ By default, a normal distribution overlay is added to help assess
 normality. You can control this using the `distribution` parameter:
 
 ``` r
+
 # Without distribution overlay
 plotResidualsAsHistogram(myDataCombined, distribution = 'none')
 ```
@@ -484,6 +510,7 @@ The `residualScale` parameter works the same as in
 [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md):
 
 ``` r
+
 # Linear residuals histogram
 plotResidualsAsHistogram(myDataCombined, residualScale = "linear")
 ```
@@ -496,6 +523,7 @@ function creates a Q-Q plot to assess whether residuals follow a normal
 distribution.
 
 ``` r
+
 plotQuantileQuantilePlot(myDataCombined)
 ```
 
@@ -505,6 +533,7 @@ Points falling along the diagonal line indicate that the residuals
 follow a normal distribution. Deviations suggest non-normality.
 
 ``` r
+
 # Use linear residuals
 plotQuantileQuantilePlot(myDataCombined, residualScale = "linear")
 ```
@@ -555,6 +584,7 @@ supports `xUnit` and `yUnit`, all other functions
 support `yUnit` only.
 
 ``` r
+
 # Default: auto-detected units (e.g. µmol/l and h from the data)
 plotTimeProfile(myDataCombined)
 ```
@@ -562,6 +592,7 @@ plotTimeProfile(myDataCombined)
 ![](plotting-with-ospsuite-plots_files/figure-html/units-direct-1.png)
 
 ``` r
+
 # Override x-axis unit: display time in minutes instead of hours
 plotTimeProfile(myDataCombined, xUnit = "min", yUnit = "mg/l")
 ```
@@ -572,6 +603,7 @@ Passing units directly is equivalent to pre-converting the data with
 [`convertUnits()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/convertUnits.md):
 
 ``` r
+
 plotTimeProfile(convertUnits(myDataCombined, xUnit = "min", yUnit = "mg/l"))
 ```
 
@@ -622,6 +654,7 @@ Additionally, since all functions return `ggplot2` objects, you can
 further modify them using standard `ggplot2` functions:
 
 ``` r
+
 library(ggplot2)
 
 # Create a plot and customize it
@@ -642,6 +675,7 @@ Since all functions return `ggplot2` objects, you can save them using
 [`ospsuite.plots::exportPlot()`](https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/exportPlot.html):
 
 ``` r
+
 # Create a plot
 myPlot <- plotTimeProfile(myDataCombined)
 
@@ -665,6 +699,7 @@ Alternatively, you can use directly the standard
 function from `ggplot2`:
 
 ``` r
+
 # Save using ggsave
 ggsave("timeprofile.png", myPlot, width = 8, height = 6, dpi = 300)
 ```

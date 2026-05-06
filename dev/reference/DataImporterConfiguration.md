@@ -1,7 +1,7 @@
 # DataImporterConfiguration
 
 Configuration of data import from excel or csv files. To be used with
-`loadDataSetsFromExcel`.
+\#TODO
 
 ## Super classes
 

@@ -11,8 +11,12 @@ install extra software to use
 
 Also,
 [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r) is
-fully self contained and is independent from any version of OSPSuite and
+fully self contained and is independant from any version of OSPSuite and
 PK-Sim installed on the user computer.
+
+However, a script is provided in the package for developpers in order to
+get/update the latest dependencies (or core files):
+[here](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/update_core_files.R)
 
 ## Versions below 12.1.0
 
@@ -74,6 +78,7 @@ Then, include the following code lines at the beginning of the projects
 scripts:
 
 ``` r
+
 ospsuite::initPKSim(pksimFolderPath = "PKSim")
 ```
 

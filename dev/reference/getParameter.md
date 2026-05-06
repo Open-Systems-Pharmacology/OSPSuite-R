@@ -40,6 +40,7 @@ to retrieve objects of type Container or Simulation
 ## Examples
 
 ``` r
+
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 param <- getParameter("Organism|Liver|Volume", sim)

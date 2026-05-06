@@ -22,6 +22,7 @@ Returns the an instance of the dimension with the given name if found or
 ## Examples
 
 ``` r
+
 getDimensionByName("Time")
 #> 
 #> ── <NetObject> ──

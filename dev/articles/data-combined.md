@@ -17,6 +17,7 @@ data](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/observed
 Let’s first generate some simulation results and load observed data.
 
 ``` r
+
 library(ospsuite)
 
 # Simulation results
@@ -48,6 +49,7 @@ function.
 First, we create a new instance of `DataCombined` class.
 
 ``` r
+
 myDataCombined <- DataCombined$new()
 ```
 
@@ -55,6 +57,7 @@ Then we add simulated results to this object using
 `$addSimulationResults()`:
 
 ``` r
+
 myDataCombined$addSimulationResults(
   simulationResults = simResults,
   quantitiesOrPaths = outputPath,
@@ -66,6 +69,7 @@ myDataCombined$addSimulationResults(
 Next we add observed data to this object using `$addDataSets()`:
 
 ``` r
+
 myDataCombined$addDataSets(
   obsData$`Vergin 1995.Iv`,
   groups = "Aciclovir PVB"
@@ -114,6 +118,7 @@ Let’s create a `DataCombined` and add simulation results and observed
 data *without* specifying their grouping and create a time profile:
 
 ``` r
+
 myDataCombined <- DataCombined$new()
 
 myDataCombined$addSimulationResults(
@@ -137,6 +142,7 @@ one group will get one entry in the legend with the name of the group,
 and will be plotted with the same color.
 
 ``` r
+
 myDataCombined$setGroups(
   names = c("Aciclovir Plasma", obsData$`Vergin 1995.Iv`$name),
   groups = c("Aciclovir PVB", "Aciclovir PVB")
@@ -151,6 +157,7 @@ At any point, you can check the current names and groupings with the
 following active field:
 
 ``` r
+
 myDataCombined$groupMap
 #> # A tibble: 2 × 3
 #>   name             group         dataType 
@@ -185,6 +192,7 @@ At any point, you can check the applied offsets and scale factors with
 the following active field:
 
 ``` r
+
 myDataCombined$dataTransformations
 #> # A tibble: 2 × 5
 #>   name             xOffsets yOffsets xScaleFactors yScaleFactors
@@ -199,6 +207,7 @@ It reports concentrations of aciclovir after single intravenous
 administration.
 
 ``` r
+
 myDataCombinedTranformations <- DataCombined$new()
 
 myDataCombinedTranformations$addDataSets(
@@ -217,6 +226,7 @@ observed data time by 24 hours. Keep in mind that the offset must be
 given in the same unit as the data set values are.
 
 ``` r
+
 # Check the units of the observed time values
 obsData$`Vergin 1995.Iv`$xUnit
 #> [1] "h"
@@ -237,6 +247,7 @@ example, we normalize observed values to 250 mg dose by setting the
 `yScaleFactor` to 1/250:
 
 ``` r
+
 myDataCombinedTranformations$setDataTransformations(
   forNames = obsData$`Vergin 1995.Iv`$name,
   yScaleFactors = 1 / 250
@@ -261,6 +272,7 @@ Internally, `DataCombined` extracts data frames for observed and
 simulated datasets and combines them.
 
 ``` r
+
 myDataCombined$toDataFrame()
 #> # A tibble: 504 × 27
 #>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit
@@ -291,6 +303,7 @@ available options
 let’s change a few options and print the data frame again.
 
 ``` r
+
 options(
   pillar.width = Inf, # show all columns
   pillar.min_chars = Inf # to turn off truncation of column titles
@@ -358,9 +371,10 @@ frame, they are likely to have different units.
 [`convertUnits()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/convertUnits.md)
 function helps to convert them to a common unit. The function will not
 modify the `DataCombined` object but return a new data frame with
-unified units.[¹](#fn1).
+unified units.[^1].
 
 ``` r
+
 convertUnits(
   myDataCombined,
   xUnit = ospUnits$Time$s,
@@ -419,6 +433,7 @@ For ratio scaling (`scaling = "ratio"`):
 > Residuals are calculated as: Observed value / Simulation value.
 
 ``` r
+
 # Linear residuals
 calculateResiduals(myDataCombined, scaling = "linear")$residualValues
 #>  [1]  2.13793038 -0.03274317  0.04046023  0.41573747  0.79398400  0.82012473
@@ -440,6 +455,7 @@ To quickly calculate the total error of the `DataCombined`, one can sum
 up the absolute values of the residuals:
 
 ``` r
+
 # Linear residuals
 totalError <- sum(abs(calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues))
 
@@ -454,8 +470,6 @@ See [Visualizations with
 describing functions that can visualize data stored in `DataCombined`
 object.
 
-------------------------------------------------------------------------
-
-1.  Note that if you are using `DataCombined` object for plotting
+[^1]: Note that if you are using `DataCombined` object for plotting
     functions, you don’t need to this conversion; the plotting functions
     will take care of this internally.

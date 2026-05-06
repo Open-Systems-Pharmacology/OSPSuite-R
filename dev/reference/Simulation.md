@@ -41,12 +41,6 @@ An OSPSuite simulation
 
   Name of the simulation
 
-- `configuration`:
-
-  An object of the type `SimulationConfiguration`, describing the
-  modules used for the simulation, selected Parameter Values (PV) and
-  Initial Conditions (IC).
-
 ## Methods
 
 ### Public methods
@@ -62,8 +56,6 @@ An OSPSuite simulation
 - [`Simulation$allFloatingMoleculeNames()`](#method-Simulation-allFloatingMoleculeNames)
 
 - [`Simulation$molWeightFor()`](#method-Simulation-molWeightFor)
-
-- [`Simulation$calculationMethodFor()`](#method-Simulation-calculationMethodFor)
 
 - [`Simulation$allApplicationsFor()`](#method-Simulation-allApplicationsFor)
 
@@ -175,28 +167,6 @@ with given path or NA if not found
 
 ------------------------------------------------------------------------
 
-### Method `calculationMethodFor()`
-
-Returns the calculation method name used for the given molecule and
-category, or `NULL` if no override is set.
-
-#### Usage
-
-    Simulation$calculationMethodFor(moleculeName, category)
-
-#### Arguments
-
-- `moleculeName`:
-
-  Name of the molecule.
-
-- `category`:
-
-  One of the `CalculationMethodCategories` enum values (e.g.
-  `CalculationMethodCategories$PartitionCoefficient`).
-
-------------------------------------------------------------------------
-
 ### Method `allApplicationsFor()`
 
 Returns the applications ordered by start time associated to the
@@ -221,15 +191,9 @@ Print the object to the console
 
 #### Usage
 
-    Simulation$print(printClassProperties = FALSE, ...)
+    Simulation$print(...)
 
 #### Arguments
-
-- `printClassProperties`:
-
-  Logical, whether to print class properties (default: `FALSE`). If
-  `TRUE`, calls first the `print` method of the parent class. Useful for
-  debugging.
 
 - `...`:
 

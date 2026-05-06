@@ -25,6 +25,7 @@ Aciclovir example model (unless stated otherwise), which is included in
 the package and can be accessed with:
 
 ``` r
+
 system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 ```
 
@@ -34,6 +35,7 @@ This example demonstrates the essential ospsuite workflow. Detailed
 explanations follow in subsequent sections.
 
 ``` r
+
 # Load the ospsuite package
 library(ospsuite)
 ospsuite.plots::setDefaults()
@@ -69,6 +71,7 @@ Simulations require a **.pkml** format file (exported from PK-Sim or
 MoBi):
 
 ``` r
+
 # Using the included example
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -89,6 +92,7 @@ print(sim)
 After loading, explore the simulation structure and parameters:
 
 ``` r
+
 # Get the simulation tree structure
 simTree <- getSimulationTree(sim)
 
@@ -147,6 +151,7 @@ Path”.
 Retrieve and modify parameter values:
 
 ``` r
+
 # Get a specific parameter
 dose <- getParameter(
   path = "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
@@ -204,6 +209,8 @@ print(dose)
 Adjust simulation outputs and solver settings:
 
 ``` r
+
+
 # Originally, the simulation outputs plasma concentrations
 sim$outputSelections
 #> <OutputSelections>
@@ -232,7 +239,7 @@ addOutputInterval(
   startTime = 1440, # 1 day
   endTime = 3000, # ~2 days
   resolution = 10, # Every 10 minutes
-  intervalName = "HighRes"
+  intervalName = "highRes"
 )
 
 # Check current output schema
@@ -257,7 +264,7 @@ print(sim$outputSchema)
 #>   • End time: 1440.00 [min]
 #>   • Resolution: 0.07 [pts/min]
 #> <Interval>
-#>   • Name: HighRes
+#>   • Name: highRes
 #>   • Start time: 1440.00 [min]
 #>   • End time: 3000.00 [min]
 #>   • Resolution: 10.00 [pts/min]
@@ -268,6 +275,7 @@ print(sim$outputSchema)
 After setting parameters, run the simulation:
 
 ``` r
+
 # Run the simulation
 results <- runSimulations(sim)
 
@@ -296,6 +304,7 @@ ospsuite provides multiple visualization options:
 #### Option 1: Built-in Plotting Functions
 
 ``` r
+
 # Create a DataCombined object for plotting
 myDataCombined <- DataCombined$new()
 myDataCombined$addSimulationResults(
@@ -326,6 +335,7 @@ plotTimeProfile(myDataCombined)
 #### Option 2: Custom Plotting with ggplot2
 
 ``` r
+
 library(ggplot2)
 
 # Transform simulation results to a dataframe
@@ -354,6 +364,7 @@ ggplot(results_df, aes(x = Time, y = simulationValues)) +
 This complete example demonstrates the typical ospsuite workflow:
 
 ``` r
+
 # 1. Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -378,6 +389,7 @@ plotTimeProfile(myDataCombined)
 
 ``` r
 
+
 # 5. Extract data for further analysis
 df_results <- myDataCombined$toDataFrame()
 print(paste("Peak concentration:", round(max(df_results$yValues), 2), "µmol/L"))
@@ -400,6 +412,7 @@ Most functions return an *instance* (or *object*) of a *class*. These
 objects have properties and methods accessible with the `$` sign:
 
 ``` r
+
 # Creating an object
 myData <- DataCombined$new()
 

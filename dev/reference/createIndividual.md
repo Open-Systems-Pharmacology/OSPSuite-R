@@ -1,7 +1,6 @@
-# Creates a set of parameter values describing an individual using the PK-Sim Database
+# Creates an individual using the PK-Sim Database
 
-Creates a set of parameter values describing an individual using the
-PK-Sim Database
+Creates an individual using the PK-Sim Database
 
 ## Usage
 

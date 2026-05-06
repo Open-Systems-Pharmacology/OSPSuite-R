@@ -38,6 +38,7 @@ to create objects of type Parameter
 ## Examples
 
 ``` r
+
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 param <- getParameter("Organism|Liver|Volume", sim)

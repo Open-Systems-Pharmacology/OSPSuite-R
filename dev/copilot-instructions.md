@@ -61,6 +61,7 @@ The package extensively uses R6 classes to wrap .NET objects:
 ### Example R6 Class Structure
 
 ``` r
+
 ClassName <- R6::R6Class(
   "ClassName",
   cloneable = FALSE,
@@ -108,6 +109,7 @@ Follow the Open Systems Pharmacology R coding standards: **Reference**:
 1.  **Variables and functions**: `camelCase`
 
     ``` r
+
     simulationResults <- runSimulation(sim)
     getParameterValue <- function(parameter) { ... }
     ```
@@ -115,12 +117,14 @@ Follow the Open Systems Pharmacology R coding standards: **Reference**:
 2.  **Classes**: `PascalCase`
 
     ``` r
+
     SimulationResults <- R6::R6Class("SimulationResults", ...)
     ```
 
 3.  **Constants**: `ALL_CAPS` or `ALL_CAPS_WITH_UNDERSCORES`
 
     ``` r
+
     MAX_ITERATIONS <- 1000
     DEFAULT_TOLERANCE <- 1e-6
     ```
@@ -128,6 +132,7 @@ Follow the Open Systems Pharmacology R coding standards: **Reference**:
 4.  **Private members**: Prefix with `.` (dot)
 
     ``` r
+
     private = list(
       .cachedValue = NULL,
       .internalMethod = function() { ... }
@@ -149,6 +154,7 @@ Follow the Open Systems Pharmacology R coding standards: **Reference**:
 Every exported function and class must have roxygen2 documentation:
 
 ``` r
+
 #' @title Brief title
 #' @description Detailed description of what the function/class does
 #'
@@ -177,6 +183,7 @@ functionName <- function(paramName, anotherParam) {
 Always validate function inputs:
 
 ``` r
+
 # Use validation functions from ospsuite.utils or base R
 validateIsString(value)
 validateIsNumeric(value)
@@ -195,6 +202,7 @@ defined in the `ospsuite.utils` package - see
 [`ospsuite.utils messages.R`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/main/R/messages.R).
 
 ``` r
+
 # Define error messages in messages.R
 messages$errorSimulationIsNull <- function() {
   "Simulation cannot be NULL"
@@ -232,6 +240,7 @@ documentation](https://www.open-systems-pharmacology.org/OSPSuite.RUtils/dev/art
 for details.
 
 ``` r
+
 # Example of logging with ospsuite.utils
 ospsuite.utils::logError(messages$someError)
 ospsuite.utils::logDebug(messages$someDebugInformation)
@@ -245,6 +254,7 @@ formatting](https://www.open-systems-pharmacology.org/OSPSuite.RUtils/dev/articl
 for details.
 
 ``` r
+
 # Example of formatting messages with cli
 # Define messages with cli formatting in messages.R
 messages$errorLoadingSimulation <- function(filePath) {
@@ -270,6 +280,7 @@ ospsuite.utils::logDebug(messages$debugParameterValue(paramName, paramValue))
 1.  **Vectorization**: Prefer vectorized operations over loops
 
     ``` r
+
     # Good
     results <- sapply(values, processValue)
 
@@ -323,6 +334,7 @@ ospsuite.utils::logDebug(messages$debugParameterValue(paramName, paramValue))
 ### Function Organization Within Files
 
 ``` r
+
 # 1. Constants and global variables (if any)
 CONSTANT_VALUE <- 100
 
@@ -344,6 +356,7 @@ publicFunction <- function() { ... }
 ### Test Structure
 
 ``` r
+
 # tests/testthat/test-feature-name.R
 
 test_that("descriptive test name", {
@@ -376,6 +389,7 @@ test_that("descriptive test name", {
 ### Common Test Patterns
 
 ``` r
+
 # Test for errors
 expect_error(invalidOperation(), "expected error message")
 
@@ -438,6 +452,7 @@ package provides R-to-.NET interoperability:
 ### Common rSharp Patterns
 
 ``` r
+
 # Call .NET static method
 result <- rSharp::callStatic("Namespace.ClassName", "MethodName", arg1, arg2)
 
@@ -466,6 +481,7 @@ items <- rSharp::toList(netCollection)
 ### Setting Up Development Environment
 
 ``` r
+
 # 1. Clone repository
 # 2. Run development setup
 source("tools/setup_dev.R")
@@ -481,6 +497,7 @@ devtools::load_all()
 ### Building and Checking
 
 ``` r
+
 # Check package
 devtools::check()
 
@@ -495,6 +512,15 @@ devtools::build_vignettes()
 
 # Install locally
 devtools::install()
+```
+
+### Updating Core Binary Files
+
+``` r
+
+# Update .NET DLLs from OSPSuite.Core
+source(".github/scripts/update_core_files.R")
+# Follow instructions in script
 ```
 
 ## Common Pitfalls and Solutions

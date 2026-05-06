@@ -26,6 +26,7 @@ updatePKParameter(name, displayName = NULL, displayUnit = NULL)
 ## Examples
 
 ``` r
+
 updatePKParameter("t_max", "MyTmax", "min")
 #> <PKParameter>
 #>   • Name: t_max

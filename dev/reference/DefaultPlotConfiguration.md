@@ -434,6 +434,7 @@ The objects of this class are cloneable with this method.
 ## Examples
 
 ``` r
+
 # Create a new instance of this class
 myPlotConfiguration <- DefaultPlotConfiguration$new()
 

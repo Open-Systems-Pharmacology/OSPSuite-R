@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9021</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,10 +20,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
-    <li><a class="dropdown-item" href="articles/mobi-projects.html">Working with MoBi projects</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
     <li><a class="dropdown-item" href="articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="articles/run-simulation.html">Running a simulation</a></li>
@@ -57,7 +54,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>NA</h1>
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/.github/code-review-instructions.md" class="external-link"><code>.github/code-review-instructions.md</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/.github/code-review-instructions.md" class="external-link"><code>.github/code-review-instructions.md</code></a></small>
     </div>
 
 
@@ -140,7 +137,7 @@
 <p>For each criterion above, create a Markdown subsection.<br>
 Within each subsection, provide a table of findings for <em>only those functions/methods with issues</em>.<br>
 Each table should have the following columns:</p>
-<table class="table"><thead><tr class="header"><th>Function/Method Name</th>
+<table class="table"><thead><tr><th>Function/Method Name</th>
 <th>Finding</th>
 <th>Suggestions</th>
 </tr></thead><tbody></tbody></table><ul><li>The last column (Suggestions) should provide specific, actionable guidance on how to resolve the issue.</li>
@@ -149,28 +146,28 @@ Each table should have the following columns:</p>
 <h3 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a></h3>
 <div class="section level4">
 <h4 id="a-syntactic-correctness-and-performance-1">a) Syntactic Correctness and Performance<a class="anchor" aria-label="anchor" href="#a-syntactic-correctness-and-performance-1"></a></h4>
-<table class="table"><colgroup><col width="50%"><col width="20%"><col width="29%"></colgroup><thead><tr class="header"><th>Function/Method Name</th>
+<table class="table"><colgroup><col width="50%"><col width="20%"><col width="29%"></colgroup><thead><tr><th>Function/Method Name</th>
 <th>Finding</th>
 <th>Suggestions</th>
-</tr></thead><tbody><tr class="odd"><td>calculateStats</td>
+</tr></thead><tbody><tr><td>calculateStats</td>
 <td>Unnecessary for-loop used for vectorized operation</td>
 <td>Replace loop with <code><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply()</a></code> or vectorized function.</td>
 </tr></tbody></table></div>
 <div class="section level4">
 <h4 id="c-cyclomatic-complexity-1">c) Cyclomatic Complexity<a class="anchor" aria-label="anchor" href="#c-cyclomatic-complexity-1"></a></h4>
-<table class="table"><colgroup><col width="50%"><col width="20%"><col width="29%"></colgroup><thead><tr class="header"><th>Function/Method Name</th>
+<table class="table"><colgroup><col width="50%"><col width="20%"><col width="29%"></colgroup><thead><tr><th>Function/Method Name</th>
 <th>Finding</th>
 <th>Suggestions</th>
-</tr></thead><tbody><tr class="odd"><td>processData</td>
+</tr></thead><tbody><tr><td>processData</td>
 <td>Cyclomatic complexity = 15 (exceeds 10)</td>
 <td>Refactor into smaller helper functions to reduce complexity.</td>
 </tr></tbody></table></div>
 <div class="section level4">
 <h4 id="h-error-handling-1">h) Error Handling<a class="anchor" aria-label="anchor" href="#h-error-handling-1"></a></h4>
-<table class="table"><colgroup><col width="50%"><col width="20%"><col width="29%"></colgroup><thead><tr class="header"><th>Function/Method Name</th>
+<table class="table"><colgroup><col width="50%"><col width="20%"><col width="29%"></colgroup><thead><tr><th>Function/Method Name</th>
 <th>Finding</th>
 <th>Suggestions</th>
-</tr></thead><tbody><tr class="odd"><td>loadData</td>
+</tr></thead><tbody><tr><td>loadData</td>
 <td>No error handling for missing files</td>
 <td>Use <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> to handle file loading errors and provide informative messages.</td>
 </tr></tbody></table><hr></div>

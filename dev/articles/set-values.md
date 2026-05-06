@@ -13,6 +13,7 @@ If the value is defined by a simple constant, the field `isConstant` of
 the respective parameter or molecule has the value `TRUE`.
 
 ``` r
+
 library(ospsuite)
 #> The option 'ospsuite.plots.watermarkEnabled' is not set.
 #> To enable watermarks, add the following to your .Rprofile:
@@ -50,6 +51,7 @@ documentation](https://docs.open-systems-pharmacology.org/working-with-mobi/mobi
 for more information.
 
 ``` r
+
 # Get the parameter "Volume" of the Liver
 liverVolume <- getParameter("Organism|Liver|Volume", sim)
 print(liverVolume)
@@ -74,6 +76,7 @@ simulation. The string of the formula can be accessed via
 `parameter$formulaString`.
 
 ``` r
+
 # Get the parameter "Volume" of the Liver interstital
 liverIntVolume <- getParameter("Organism|Liver|Interstitial|Volume", sim)
 print(liverIntVolume)
@@ -103,6 +106,7 @@ for additional information on how to retrieve or change the table
 values.
 
 ``` r
+
 # Get the parameter defined by a table.
 tableParam <- getParameter("Organism|TableParameter", sim)
 #> Error in `.getEntity()`:
@@ -117,6 +121,7 @@ case, the parameter has an *initial value* and a *right hand side (RHS)*
 formula, both of which can be any formula type.
 
 ``` r
+
 # Get the parameter defined by a state variable.
 stateVariableParam <- getParameter("Organism|StateVariable_Parameter", sim)
 #> Error in `.getEntity()`:
@@ -142,6 +147,7 @@ methods `setParameterValues` and `setMoleculeInitialValues`,
 respectively.
 
 ``` r
+
 # Get the parameter Dose
 doseParamPath <- "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"
 doseParam <- getParameter(doseParamPath, sim)
@@ -167,6 +173,7 @@ Another way to change parameter values is to scale them. The scaling is
 always performed relative to the current value:
 
 ``` r
+
 doseParamPath <- "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"
 doseParam <- getParameter(doseParamPath, sim)
 #> Error in `.getEntity()`:
@@ -199,6 +206,7 @@ values of formula parameters should be done with caution, as the
 potential dependency on another simulation parameters will be destroyed.
 
 ``` r
+
 # Get the parameter "Volume" of the Liver interstital
 liverIntVolume <- getParameter("Organism|Liver|Interstitial|Volume", sim)
 print(liverIntVolume)
@@ -246,6 +254,7 @@ The parameter value can be reset to its formula after assigning a
 constant value:
 
 ``` r
+
 print(liverIntVolume)
 #> <Parameter>
 #>   • Quantity Type: Parameter
@@ -295,6 +304,7 @@ This function is one-way only! It is not possible to re-activate the RHS
 formula after switching it off.
 
 ``` r
+
 # Get the parameter defined by a state variable.
 stateVariableParam <- getParameter("Organism|StateVariable_Parameter", sim)
 #> Error in `.getEntity()`:
@@ -329,6 +339,7 @@ An example how to set the initial values of molecules in all containers
 to a certain value:
 
 ``` r
+
 # Get objects representing the molecule Aciclovir in all containers
 allAciclovirMolecules <- getAllMoleculesMatching("Organism|**|Aciclovir", sim)
 

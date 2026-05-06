@@ -23,6 +23,7 @@ A new `DataImporterConfiguration` object to be used with
 ## Examples
 
 ``` r
+
 configurationFilePath <- system.file(
   "extdata", "dataImporterConfiguration.xml",
   package = "ospsuite"

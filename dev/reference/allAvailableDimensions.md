@@ -16,6 +16,7 @@ platform.
 ## Examples
 
 ``` r
+
 allAvailableDimensions()
 #>  [1] "Abundance per mass protein"     "Abundance per tissue"          
 #>  [3] "Age in weeks"                   "Age in years"                  

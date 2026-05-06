@@ -18,6 +18,7 @@ clearOutputIntervals(simulation)
 ## Examples
 
 ``` r
+
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 
 # Make sure we create a new simulation so that we do not impact other examples

@@ -6,6 +6,7 @@ given by a list of `ValuePoint` objects, each `ValuePoint` being an x-y
 value pair. X values usually refer to the simulation time.
 
 ``` r
+
 library(ospsuite)
 #> The option 'ospsuite.plots.watermarkEnabled' is not set.
 #> To enable watermarks, add the following to your .Rprofile:
@@ -32,6 +33,7 @@ of the table parameter. All x- or y-values stored in the table can be
 conveniently retrieved using the `lapply` method:
 
 ``` r
+
 # Get the parameter defined by a table
 tableParam <- getParameter("Organism|TableParameter", sim)
 #> Error in `.getEntity()`:
@@ -71,6 +73,7 @@ for the given `x`. If no entry exists for the `x`, the value `y` is
 linearly interpolated between the two closest `x` values.
 
 ``` r
+
 # Get the parameter defined by a table
 tableParam <- getParameter("Organism|TableParameter", sim)
 #> Error in `.getEntity()`:
@@ -94,6 +97,7 @@ Simply setting the value of a table-defined parameter using
 constant.
 
 ``` r
+
 # Get the parameter defined by a table.
 tableParam <- getParameter("Organism|TableParameter", sim)
 #> Error in `.getEntity()`:
@@ -117,6 +121,7 @@ values to the existing table. If trying to add a point with the x-value
 already present in the table, an error is thrown:
 
 ``` r
+
 tableParam <- getParameter("Organism|TableParameter", sim)
 #> Error in `.getEntity()`:
 #> ! `tryCatch()`: no entity exists for path "Organism|TableParameter" located under container <Vergin 1995 IV>!
@@ -143,6 +148,7 @@ remove a point if the x value is present in the table and has the
 provided y.
 
 ``` r
+
 tableParam
 #> Error:
 #> ! object 'tableParam' not found
@@ -178,6 +184,7 @@ The `clearPoints()` method removes all points from the table, while
 new points:
 
 ``` r
+
 tableParam
 #> Error:
 #> ! object 'tableParam' not found

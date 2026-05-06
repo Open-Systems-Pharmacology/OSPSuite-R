@@ -34,6 +34,7 @@ to create objects of type Container or Simulation
 ## Examples
 
 ``` r
+
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 

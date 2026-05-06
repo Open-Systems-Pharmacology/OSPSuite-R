@@ -23,5 +23,6 @@ pkParameterByName(name, stopIfNotFound = TRUE)
 ## Examples
 
 ``` r
+
 pkParameter <- pkParameterByName(name = "t_max")
 ```

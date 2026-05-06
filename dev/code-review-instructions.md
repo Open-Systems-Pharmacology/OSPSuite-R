@@ -113,21 +113,21 @@ criterion.
 
 #### a) Syntactic Correctness and Performance
 
-| Function/Method Name | Finding                                            | Suggestions                                                                              |
-|----------------------|----------------------------------------------------|------------------------------------------------------------------------------------------|
-| calculateStats       | Unnecessary for-loop used for vectorized operation | Replace loop with [`apply()`](https://rdrr.io/r/base/apply.html) or vectorized function. |
+| Function/Method Name | Finding | Suggestions |
+|----|----|----|
+| calculateStats | Unnecessary for-loop used for vectorized operation | Replace loop with [`apply()`](https://rdrr.io/r/base/apply.html) or vectorized function. |
 
 #### c) Cyclomatic Complexity
 
-| Function/Method Name | Finding                                 | Suggestions                                                  |
-|----------------------|-----------------------------------------|--------------------------------------------------------------|
-| processData          | Cyclomatic complexity = 15 (exceeds 10) | Refactor into smaller helper functions to reduce complexity. |
+| Function/Method Name | Finding | Suggestions |
+|----|----|----|
+| processData | Cyclomatic complexity = 15 (exceeds 10) | Refactor into smaller helper functions to reduce complexity. |
 
 #### h) Error Handling
 
-| Function/Method Name | Finding                             | Suggestions                                                                                                                |
-|----------------------|-------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| loadData             | No error handling for missing files | Use [`tryCatch()`](https://rdrr.io/r/base/conditions.html) to handle file loading errors and provide informative messages. |
+| Function/Method Name | Finding | Suggestions |
+|----|----|----|
+| loadData | No error handling for missing files | Use [`tryCatch()`](https://rdrr.io/r/base/conditions.html) to handle file loading errors and provide informative messages. |
 
 ------------------------------------------------------------------------
 

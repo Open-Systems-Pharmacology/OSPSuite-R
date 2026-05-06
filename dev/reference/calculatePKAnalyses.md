@@ -22,6 +22,7 @@ An instance of `SimulationPKAnalyses` class.
 ## Examples
 
 ``` r
+
 simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 

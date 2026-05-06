@@ -30,6 +30,7 @@ to retrieve objects of type Molecule
 ## Examples
 
 ``` r
+
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 molecule <- getMolecule("Organism|Liver|A", sim)

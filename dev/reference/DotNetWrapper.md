@@ -56,11 +56,12 @@ A new `Molecule` object.
 ## Examples
 
 ``` r
+
 sim <- loadSimulation(system.file("extdata", "simple.pkml", package = "ospsuite"))
 
 # looking at a reference to `.NET` simulation object
 sim$pointer
-#> <pointer: 0x561f02befda0>
+#> <pointer: 0x557accee7980>
 
 # create a new instance of `DotNetWrapper` class using this reference
 DotNetWrapper$new(sim)
@@ -75,10 +76,10 @@ DotNetWrapper$new(sim)
 #>   • `add_PropertyChanged()`
 #>   • `AddAnalysis()`
 #>   • `All()`
-#>   • `CalculationMethodFor()`
 #>   • `Equals()`
 #>   • `get_Analyses()`
 #>   • `get_BodyWeight()`
+#>   • `get_BuildConfiguration()`
 #>   • `get_Charts()`
 #>   • `get_ComesFromPKSim()`
 #>   • `get_CompoundNames()`
@@ -129,6 +130,7 @@ DotNetWrapper$new(sim)
 #> ── Available Properties 
 #>   • Analyses
 #>   • BodyWeight
+#>   • BuildConfiguration
 #>   • Charts
 #>   • ComesFromPKSim
 #>   • CompoundNames

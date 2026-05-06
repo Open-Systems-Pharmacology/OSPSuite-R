@@ -191,6 +191,7 @@ Print the object to the console
 ## Examples
 
 ``` r
+
 ## ------------------------------------------------
 ## Method `SimulationBatch$addRunValues`
 ## ------------------------------------------------
