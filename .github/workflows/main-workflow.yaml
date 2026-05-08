@@ -11,7 +11,7 @@ permissions: write-all
 jobs:
   bump-dev-version: # only do that when actually merging in main/develop branch
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/bump_dev_version_tag_branch.yaml@main
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/bump_dev_version_tag_branch.yaml@use-org-runner-var-test-csharp
     with:
       app-id: ${{ vars.VERSION_BUMPER_APPID }}
     secrets:
@@ -20,16 +20,16 @@ jobs:
   R-CMD-Check:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@use-org-runner-var-test-csharp
 
   test-coverage:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@use-org-runner-var-test-csharp
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   pkgdown:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@use-org-runner-var-test-csharp
