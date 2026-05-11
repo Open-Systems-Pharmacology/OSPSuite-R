@@ -4,6 +4,7 @@
 #'
 #' @format NULL
 #' @keywords internal
+#' @importFrom R6 R6Class
 ObjectBase <- R6::R6Class(
   "ObjectBase",
   cloneable = FALSE,
