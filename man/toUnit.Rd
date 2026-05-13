@@ -22,9 +22,9 @@ toUnit(
 
 \item{sourceUnit}{Optional Name of the unit to convert from. If \code{NULL} (default), the values are assumed to be in base unit.}
 
-\item{molWeight}{Optional molecular weight to use when converting, for example,  from molar to mass amount or concentration. If \code{molWeightUnit} is not specified, \code{molWeight} is assumed to be in kg/µmol}
+\item{molWeight}{Optional molecular weight to use when converting, for example,  from molar to mass amount or concentration. If \code{molWeightUnit} is not specified, \code{molWeight} is assumed to be in kg/\u00b5mol}
 
-\item{molWeightUnit}{Optional Unit of the molecular weight value. If \code{NULL} (default), kg/µmol is assumed.}
+\item{molWeightUnit}{Optional Unit of the molecular weight value. If \code{NULL} (default), kg/\u00b5mol is assumed.}
 }
 \description{
 Converts values from one unit to another
