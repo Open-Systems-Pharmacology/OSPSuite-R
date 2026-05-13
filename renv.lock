@@ -2849,7 +2849,7 @@
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "OSPSuite.Plots",
       "RemoteRef": "main",
-      "RemoteSha": "bd3ef6454c17d1d33705c2c1be795a9f87b9a4d0"
+      "RemoteSha": "15f21282ad632480a9fe7c76b5298b2adfef9ca7"
     },
     "ospsuite.utils": {
       "Package": "ospsuite.utils",
@@ -3618,7 +3618,7 @@
     },
     "rSharp": {
       "Package": "rSharp",
-      "Version": "1.1.2.9000",
+      "Version": "1.2.0.9000",
       "Source": "GitHub",
       "Type": "Package",
       "Title": "Accessing .NET from R",
@@ -3654,7 +3654,7 @@
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "rSharp",
       "RemoteRef": "main",
-      "RemoteSha": "f4586432c7ed4ccb3de975f50e4e3cd42444ca7e"
+      "RemoteSha": "5073614ed91de91c79d8a510384d40f75a4a7e6a"
     },
     "ragg": {
       "Package": "ragg",
