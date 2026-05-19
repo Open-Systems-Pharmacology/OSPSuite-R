@@ -19,7 +19,7 @@ The molecular weight in the specified unit or \code{NA} if not found.
 }
 \description{
 Returns the molecular weight of the molecule for a given quantity.
-If no unit is provided, the value is returned in the base unit (\verb{kg/\\u00b5mol}).
+If no unit is provided, the value is returned in the base unit (\code{kg/µmol}).
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
