@@ -68,7 +68,8 @@ test_that("It throws an error when trying to set a new name with illegal charact
   newName <- "NewName|"
   expect_error(
     mutableSim$name <- newName,
-    regexp = "(The name)*(NewName\\|)*(contains illegal characters.)*(Illegal characters are)*(\\|)*(\\:)*(\\*)"
+    regexp = messages$illegalCharactersInName(newName),
+    fixed = TRUE
   )
 })
 
