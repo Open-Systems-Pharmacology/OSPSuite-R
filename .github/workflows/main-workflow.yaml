@@ -20,12 +20,18 @@ jobs:
   R-CMD-Check:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+    # TODO: revert to @main once Workflows#228 merges
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@dotnet-version-passthrough
+    with:
+      dotnet-version: '10.0.x'
 
   test-coverage:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
+    # TODO: revert to @main once Workflows#228 merges
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@dotnet-version-passthrough
+    with:
+      dotnet-version: '10.0.x'
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
