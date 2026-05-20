@@ -3,16 +3,16 @@
 \name{.wrapLoadedBB}
 \alias{.wrapLoadedBB}
 \title{Wrap a loaded .NET building block reference in the appropriate R6 class.
-Molecules building blocks are wrapped in \code{MoleculesBuildingBlock} so the
-molecule-name queries are available; all other types use the generic
-\code{BuildingBlock} wrapper.}
+\code{Molecules} blocks are wrapped in \code{MoleculesBuildingBlock} (molecule-name
+queries); \code{Individual} blocks in \code{IndividualBuildingBlock} (origin-data
+fields); all other types use the generic \code{BuildingBlock} wrapper.}
 \usage{
 .wrapLoadedBB(netBB, type)
 }
 \description{
 Wrap a loaded .NET building block reference in the appropriate R6 class.
-Molecules building blocks are wrapped in \code{MoleculesBuildingBlock} so the
-molecule-name queries are available; all other types use the generic
-\code{BuildingBlock} wrapper.
+\code{Molecules} blocks are wrapped in \code{MoleculesBuildingBlock} (molecule-name
+queries); \code{Individual} blocks in \code{IndividualBuildingBlock} (origin-data
+fields); all other types use the generic \code{BuildingBlock} wrapper.
 }
 \keyword{internal}

@@ -332,6 +332,7 @@ test_that("It can create a simulation configuration with an individual", {
     individualName = "DefaultIndividual"
   )
   expect_true(isOfType(simConfig, "SimulationConfiguration"))
+  expect_true(isOfType(simConfig$individual, "IndividualBuildingBlock"))
   expect_equal(simConfig$individual$name, "DefaultIndividual")
 })
 

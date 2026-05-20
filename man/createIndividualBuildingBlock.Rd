@@ -48,7 +48,7 @@ createIndividualBuildingBlock(
 \item{seed}{Optional seed parameter to use to generate start values for the created individual algorithm.}
 }
 \value{
-An object of type \code{BuildingBlock} representing the created individual.
+An \link{IndividualBuildingBlock} representing the created individual.
 }
 \description{
 Creates an individual building block in MoBi for a given species and

@@ -49,7 +49,6 @@ Suggests:
 Language: en-US
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
@@ -76,6 +75,7 @@ Collate:
     'formula.R'
     'get-net-task.R'
     'globals.R'
+    'individual-building-block.R'
     'individual-characteristics.R'
     'init-package.R'
     'interval.R'
@@ -161,3 +161,4 @@ Remotes:
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
     tlf=Open-Systems-Pharmacology/TLF-Library,
     ospsuite.plots=Open-Systems-Pharmacology/OSPSuite.Plots
+Config/roxygen2/version: 8.0.0

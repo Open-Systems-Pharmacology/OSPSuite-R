@@ -181,7 +181,7 @@ MoBiProject <- R6::R6Class(
     #' @param stopIfNotFound If `TRUE` (default), an error is thrown if the specified
     #' individual is not present in the project.
     #'
-    #' @returns An object of the type `BuildingBlock`. `NULL` if the project does not contain
+    #' @returns An object of the type `IndividualBuildingBlock`. `NULL` if the project does not contain
     #' such an individual and `stopIfNotFound = FALSE`.
     getIndividual = function(name, stopIfNotFound = TRUE) {
       validateIsCharacter(name)
@@ -198,7 +198,7 @@ MoBiProject <- R6::R6Class(
         return(NULL)
       }
 
-      bb <- BuildingBlock$new(individual, type = BuildingBlockTypes$Individual)
+      bb <- IndividualBuildingBlock$new(individual)
       return(bb)
     },
     #' @description

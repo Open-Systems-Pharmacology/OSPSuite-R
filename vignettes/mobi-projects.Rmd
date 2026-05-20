@@ -115,11 +115,23 @@ pvBBDf <- parameterValuesBBToDataFrame(pvBBs[["Rat"]])
 # Print the first few rows of the data frame
 head(pvBBDf)
 
-individual <- myProject$getIndividual("Rat")
+individual <- myProject$getIndividual("Human")
 individualDf <- individualsBBToDataFrame(individual)
 # Print the individual data frame
 head(individualDf)
+```
 
+The returned object is an `IndividualBuildingBlock` and exposes the demographic properties of the individual as read-only fields: `species`, `population`, `gender`, `age`, `gestationalAge`, `height`, and `weight`. Printing the building block also lists these values under an "Origin data" section.
+
+```{r individualBuildingBlockFields}
+individual$species
+individual$population
+individual$weight
+
+print(individual)
+```
+
+```{r expressionProfiles}
 expProfiles <- myProject$getExpressionProfiles("UDPGT1|Human|Healthy")
 expProfilesDf <- expressionProfileBBToDataFrame(expProfiles)
 # Print the first few rows of the data frame

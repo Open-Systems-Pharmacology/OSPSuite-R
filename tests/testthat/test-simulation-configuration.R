@@ -17,7 +17,10 @@ test_that("SimulationConfiguration can be created from a simulation loaded from 
   expect_named(modules, c("Vergin 1995 IV"))
 
   # Check that the individual is correct
+  expect_true(isOfType(configurationFromPKML$individual, "IndividualBuildingBlock"))
   expect_equal(configurationFromPKML$individual$name, "Vergin_1995_IV")
+  # Origin-data fields are accessible via the IndividualBuildingBlock subclass
+  expect_false(is.null(configurationFromPKML$individual$species))
   # Check that expression profiles are correct
   expect_true(isOfType(
     configurationFromPKML$expressionProfiles,
@@ -189,7 +192,7 @@ test_that("SimulationConfiguration individual throws an error when wrong BB type
 
   expect_error(
     configurationFromPKML$individual <- bb,
-    regexp = "Building Block with the name 'CYP3A4|Human|Healthy' is of type 'Expression Profile', but expected type is 'Individual'",
+    regexp = "<IndividualBuildingBlock>",
     fixed = TRUE
   )
 })

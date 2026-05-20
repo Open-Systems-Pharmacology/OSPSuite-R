@@ -17,7 +17,7 @@ createSimulationConfiguration(
 \item{modules}{A list of \code{MoBiModule} objects from which to create the simulation.
 The order of modules defines the order in which the modules will be combined to a simulation!}
 
-\item{individual}{Optional, an individual building block}
+\item{individual}{Optional, an \link{IndividualBuildingBlock}.}
 
 \item{expressionProfiles}{Optional, a list of expression profiles to apply to the simulation.}
 

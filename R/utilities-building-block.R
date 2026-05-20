@@ -1150,8 +1150,9 @@ saveParameterValuesToPKML <- function(
 #' automatically. When the type cannot be auto-detected, an error is thrown
 #' asking the caller to specify `type` explicitly.
 #'
-#' @returns A `BuildingBlock` object (or a `MoleculesBuildingBlock` when the
-#' loaded building block is of type `Molecules`).
+#' @returns A `BuildingBlock` object, or a specialized subclass when applicable:
+#' a `MoleculesBuildingBlock` for `Molecules`, or an `IndividualBuildingBlock`
+#' for `Individual`.
 #'
 #' @details If `type` is supplied, an error is thrown when the file does not
 #' contain a single building block of that type. The pkml must contain exactly
@@ -1247,13 +1248,16 @@ loadBuildingBlockFromPKML <- function(filePath, type = NULL) {
 }
 
 #' Wrap a loaded .NET building block reference in the appropriate R6 class.
-#' Molecules building blocks are wrapped in `MoleculesBuildingBlock` so the
-#' molecule-name queries are available; all other types use the generic
-#' `BuildingBlock` wrapper.
+#' `Molecules` blocks are wrapped in `MoleculesBuildingBlock` (molecule-name
+#' queries); `Individual` blocks in `IndividualBuildingBlock` (origin-data
+#' fields); all other types use the generic `BuildingBlock` wrapper.
 #' @keywords internal
 .wrapLoadedBB <- function(netBB, type) {
   if (type == BuildingBlockTypes$Molecules) {
     return(MoleculesBuildingBlock$new(netBB))
+  }
+  if (type == BuildingBlockTypes$Individual) {
+    return(IndividualBuildingBlock$new(netBB))
   }
   BuildingBlock$new(netBB, type = type)
 }
