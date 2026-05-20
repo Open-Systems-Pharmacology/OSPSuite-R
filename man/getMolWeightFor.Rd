@@ -9,7 +9,7 @@ getMolWeightFor(quantity, unit = NULL, stopIfNotFound = FALSE)
 \arguments{
 \item{quantity}{A \code{Quantity} object.}
 
-\item{unit}{Optional. Target unit for the molecular weight. Defaults to \verb{kg/\\u00b5mol}.}
+\item{unit}{Optional. Target unit for the molecular weight. Defaults to \code{kg/µmol}.}
 
 \item{stopIfNotFound}{Logical. If \code{TRUE}, throws an error when the molecular
 weight cannot be retrieved. If \code{FALSE}, returns \code{NA}. Default is \code{FALSE}.}
