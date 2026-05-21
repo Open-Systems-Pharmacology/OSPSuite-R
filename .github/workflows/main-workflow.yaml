@@ -21,11 +21,15 @@ jobs:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+    with:
+      dotnet-version: '10.0.x'
 
   test-coverage:
     if: ${{ !cancelled() }}
     needs: [bump-dev-version]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
+    with:
+      dotnet-version: '10.0.x'
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 

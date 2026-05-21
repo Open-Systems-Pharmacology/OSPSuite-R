@@ -87,7 +87,7 @@ to install the package and all required dependencies.
 ## Pre-requisites
 
 The `{ospsuite}` package requires `{rSharp}` and its external
-dependencies (Visual C++ Redistributable and .NET 8). Install these
+dependencies (Visual C++ Redistributable and .NET 10). Install these
 dependencies using the following instructions:
 
 - [For
