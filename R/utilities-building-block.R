@@ -184,6 +184,34 @@ initialConditionsBBToDataFrame <- function(initialConditionsBuildingBlock) {
 }
 
 
+#' Create an empty Initial Conditions Building Block
+#'
+#' Creates an empty Initial Conditions building block that can subsequently be
+#' populated via [setInitialConditionsInBB()] or [extendInitialConditionsBB()],
+#' and added to a module via [createMoBiModule()].
+#'
+#' @param name Name of the building block. Must be a non-empty string. Defaults
+#'   to `"Initial Conditions"`.
+#'
+#' @returns A `BuildingBlock` object of type `Initial Conditions` with no entries.
+#' @export
+#'
+#' @examples
+#' icBB <- createInitialConditionsBuildingBlock()
+#' icBB <- createInitialConditionsBuildingBlock(name = "My ICs")
+createInitialConditionsBuildingBlock <- function(name = "Initial Conditions") {
+  validateIsString(name)
+  ospsuite.utils::validateHasOnlyNonEmptyStrings(name)
+
+  icTask <- .getMoBiTaskFromCache("InitialConditionsTask")
+  netObject <- icTask$call("CreateBuildingBlock", name)
+  BuildingBlock$new(
+    netObject,
+    type = BuildingBlockTypes$`Initial Conditions`
+  )
+}
+
+
 #' Set or add initial conditions to an existing Initial Conditions building block.
 #'
 #' This functions allows adding or modifying initial condition entries. Only constant values are allowed. For setting or adding initial conditions defined by formulas, use the `setInitialConditionsFormulas` function.
@@ -444,6 +472,34 @@ parameterValuesBBToDataFrame <- function(parameterValuesBuildingBlock) {
   )
 
   return(.bbWithParameterValuesToDataFrame(parameterValuesBuildingBlock))
+}
+
+#' Create an empty Parameter Values Building Block
+#'
+#' Creates an empty Parameter Values building block that can subsequently be
+#' populated via [setParameterValuesInBB()] or
+#' [addLocalMoleculeParametersToParameterValuesBB()], and added to a module via
+#' [createMoBiModule()].
+#'
+#' @param name Name of the building block. Must be a non-empty string. Defaults
+#'   to `"Parameter Values"`.
+#'
+#' @returns A `BuildingBlock` object of type `Parameter Values` with no entries.
+#' @export
+#'
+#' @examples
+#' pvBB <- createParameterValuesBuildingBlock()
+#' pvBB <- createParameterValuesBuildingBlock(name = "My PVs")
+createParameterValuesBuildingBlock <- function(name = "Parameter Values") {
+  validateIsString(name)
+  ospsuite.utils::validateHasOnlyNonEmptyStrings(name)
+
+  pvTask <- .getMoBiTaskFromCache("ParameterValuesTask")
+  netObject <- pvTask$call("CreateBuildingBlock", name)
+  BuildingBlock$new(
+    netObject,
+    type = BuildingBlockTypes$`Parameter Values`
+  )
 }
 
 #' Set or add parameter values to an existing Parameter Values building block.

@@ -15,6 +15,7 @@ If no original PK-Sim project or snapshot are available, the user should use the
 
 ## Minor improvements and bug fixes
 
+- New `createInitialConditionsBuildingBlock()` and `createParameterValuesBuildingBlock()` create empty Initial Conditions and Parameter Values building blocks that can be populated programmatically and added to a module (#1937).
 - Individual building blocks are now returned as `IndividualBuildingBlock`, an R6 subclass of `BuildingBlock` with read-only fields for `species`, `population`, `gender`, `age`, `gestationalAge`, `height`, and `weight`. `createIndividualBuildingBlock()`, `MoBiProject$getIndividual()`, and `loadBuildingBlockFromPKML()` all return the new subclass.
 - `plotTimeProfile()` now defaults to `showLegendPerDataset = "all"`, showing individual dataset names for both observed and simulated data by default (#1844).
 - `DataSet$setValues()` and plotting functions (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, `plotQuantileQuantilePlot()`) now warn and replace negative `yErrorValues` with `NA` instead of silently accepting them (#1756).
