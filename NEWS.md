@@ -6,6 +6,7 @@
 
 ## Breaking changes
 
+- **.NET 10 runtime is now required** (previously .NET 8). The bundled assemblies in `inst/lib` target `net10.0`; on older runtimes the package fails to load with `System.Reflection.ReflectionTypeLoadException`. See the rSharp prerequisites links in the README for installation instructions on Windows and Linux.
 - `createIndividual()` and `createPopulation()` will not work with models developed prior to version 13.
 The reason is that in v13, the absorption model has been refined, adding new parameters.
 To be able to use creation of individuals or populations with earlier models, the user has to re-create the models from snapshot with the latest PK-Sim version.
