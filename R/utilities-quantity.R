@@ -390,10 +390,10 @@ isExplicitFormulaByPath <- function(path, simulation, stopIfNotFound = TRUE) {
 #' Retrieve molecular weight for a quantity's molecule
 #'
 #' @description Returns the molecular weight of the molecule for a given quantity.
-#' If no unit is provided, the value is returned in the base unit (`kg/µmol`).
+#' If no unit is provided, the value is returned in the base unit (`kg/\u00b5mol`).
 #'
 #' @param quantity A `Quantity` object.
-#' @param unit Optional. Target unit for the molecular weight. Defaults to `kg/µmol`.
+#' @param unit Optional. Target unit for the molecular weight. Defaults to `kg/\u00b5mol`.
 #' @param stopIfNotFound Logical. If `TRUE`, throws an error when the molecular
 #' weight cannot be retrieved. If `FALSE`, returns `NA`. Default is `FALSE`.
 #' @return The molecular weight in the specified unit or `NA` if not found.
@@ -447,7 +447,7 @@ getMolWeightFor <- function(quantity, unit = NULL, stopIfNotFound = FALSE) {
     ospDimensions$`Molecular weight`,
     values = molWeight,
     targetUnit = unit,
-    sourceUnit = "kg/µmol"
+    sourceUnit = "kg/\u00b5mol"
   )
 
   return(molWeightConverted)

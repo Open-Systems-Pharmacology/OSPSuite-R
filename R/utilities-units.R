@@ -95,8 +95,8 @@ getBaseUnit <- function(quantityOrDimension) {
 #' @param quantityOrDimension Instance of a quantity from which the dimension will be retrieved or name of dimension
 #' @param values Value in unit (single or vector)
 #' @param unit Unit of value
-#' @param molWeight Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration. If `molWeightUnit` is not specified, `molWeight` is assumed to be in kg/µmol
-#' @param molWeightUnit Unit of the molecular weight value. If `NULL` (default), kg/µmol is assumed.
+#' @param molWeight Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration. If `molWeightUnit` is not specified, `molWeight` is assumed to be in kg/\u00b5mol
+#' @param molWeightUnit Unit of the molecular weight value. If `NULL` (default), kg/\u00b5mol is assumed.
 
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -136,8 +136,8 @@ toBaseUnit <- function(
 #' @param values Values to convert (single or vector). If `sourceUnit` is not specified, `values` are in the base unit of the dimension
 #' @param targetUnit Unit to convert to
 #' @param sourceUnit Optional Name of the unit to convert from. If `NULL` (default), the values are assumed to be in base unit.
-#' @param molWeight Optional molecular weight to use when converting, for example,  from molar to mass amount or concentration. If `molWeightUnit` is not specified, `molWeight` is assumed to be in kg/µmol
-#' @param molWeightUnit Optional Unit of the molecular weight value. If `NULL` (default), kg/µmol is assumed.
+#' @param molWeight Optional molecular weight to use when converting, for example,  from molar to mass amount or concentration. If `molWeightUnit` is not specified, `molWeight` is assumed to be in kg/\u00b5mol
+#' @param molWeightUnit Optional Unit of the molecular weight value. If `NULL` (default), kg/\u00b5mol is assumed.
 #'
 #' @examples
 #' simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
@@ -226,7 +226,7 @@ toUnit <- function(
   # Convert molWeight value to base unit if a unit is provided
   if (
     !is.null(molWeightUnit) &&
-      molWeightUnit != ospUnits$`Molecular weight`$`kg/µmol`
+      molWeightUnit != ospUnits[["Molecular weight"]][["kg/\u00b5mol"]]
   ) {
     molWeight <- dimensionTask$call(
       "ConvertToBaseUnit",
@@ -797,7 +797,7 @@ ospUnits <- NULL
 #' @param data A data.frame or data.table.
 #' @param unitColumn Character string: column name containing units (e.g. `"xUnit"`).
 #'
-#' @return A single character scalar — the most frequent unit.
+#' @return A single character scalar - the most frequent unit.
 #' @keywords internal
 #' @noRd
 .extractMostFrequentUnit <- function(data, unitColumn) {
