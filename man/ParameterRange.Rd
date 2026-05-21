@@ -8,117 +8,120 @@
 A parameter range typically used in the definition of \code{PopulationCharacteristics} covariates (Height, Weight etc...)
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{ParameterRange}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{ParameterRange}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{min}}{Minimum value for the parameter range}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{min}}{Minimum value for the parameter range}
 
-\item{\code{max}}{Maximum value for the parameter range}
+    \item{\code{max}}{Maximum value for the parameter range}
 
-\item{\code{unit}}{Unit in which the value is defined}
-}
-\if{html}{\out{</div>}}
+    \item{\code{unit}}{Unit in which the value is defined}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-ParameterRange-new}{\code{ParameterRange$new()}}
-\item \href{#method-ParameterRange-print}{\code{ParameterRange$print()}}
-\item \href{#method-ParameterRange-printValue}{\code{ParameterRange$printValue()}}
-\item \href{#method-ParameterRange-getPrintValue}{\code{ParameterRange$getPrintValue()}}
+  \itemize{
+    \item \href{#method-ParameterRange-initialize}{\code{ParameterRange$new()}}
+    \item \href{#method-ParameterRange-print}{\code{ParameterRange$print()}}
+    \item \href{#method-ParameterRange-printValue}{\code{ParameterRange$printValue()}}
+    \item \href{#method-ParameterRange-getPrintValue}{\code{ParameterRange$getPrintValue()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ParameterRange-new"></a>}}
-\if{latex}{\out{\hypertarget{method-ParameterRange-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterRange$new(netObject = NULL, min = NULL, max = NULL, unit = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-ParameterRange-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-ParameterRange-initialize}{}}}
+\subsection{\code{ParameterRange$new()}}{
+  Initialize a new instance of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ParameterRange$new(netObject = NULL, min = NULL, max = NULL, unit = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{netObject}}{Optional \code{NetObject} of \code{ParameterRange}. If not defined, a new instance will be created}
+      \item{\code{min}}{Optional minimum value for the range}
+      \item{\code{max}}{Optional minimum value for the range}
+      \item{\code{unit}}{Optional unit of the specified min and max}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{ParameterRange} object.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{netObject}}{Optional \code{NetObject} of \code{ParameterRange}. If not defined, a new instance will be created}
-
-\item{\code{min}}{Optional minimum value for the range}
-
-\item{\code{max}}{Optional minimum value for the range}
-
-\item{\code{unit}}{Optional unit of the specified min and max}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{ParameterRange} object.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ParameterRange-print"></a>}}
 \if{latex}{\out{\hypertarget{method-ParameterRange-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterRange$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{ParameterRange$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ParameterRange$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ParameterRange-printValue"></a>}}
 \if{latex}{\out{\hypertarget{method-ParameterRange-printValue}{}}}
-\subsection{Method \code{printValue()}}{
-Print  the parameter in one line
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterRange$printValue(caption)}\if{html}{\out{</div>}}
+\subsection{\code{ParameterRange$printValue()}}{
+  Print  the parameter in one line
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ParameterRange$printValue(caption)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{caption}}{Caption to display before the value of the parameter}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{caption}}{Caption to display before the value of the parameter}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ParameterRange-getPrintValue"></a>}}
 \if{latex}{\out{\hypertarget{method-ParameterRange-getPrintValue}{}}}
-\subsection{Method \code{getPrintValue()}}{
-Return a string for printing the parameter in one line
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParameterRange$getPrintValue()}\if{html}{\out{</div>}}
+\subsection{\code{ParameterRange$getPrintValue()}}{
+  Return a string for printing the parameter in one line
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{ParameterRange$getPrintValue()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A string for printing the parameter in one line
+  }
 }
 
-\subsection{Returns}{
-A string for printing the parameter in one line
-}
-}
 }

@@ -17,7 +17,10 @@ test_that("SimulationConfiguration can be created from a simulation loaded from 
   expect_named(modules, c("Vergin 1995 IV"))
 
   # Check that the individual is correct
-  expect_true(isOfType(configurationFromPKML$individual, "IndividualBuildingBlock"))
+  expect_true(isOfType(
+    configurationFromPKML$individual,
+    "IndividualBuildingBlock"
+  ))
   expect_equal(configurationFromPKML$individual$name, "Vergin_1995_IV")
   # Origin-data fields are accessible via the IndividualBuildingBlock subclass
   expect_false(is.null(configurationFromPKML$individual$species))

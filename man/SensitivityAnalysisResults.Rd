@@ -9,101 +9,99 @@ Results of a sensitivity analysis run (either individual or
 population simulation).
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SensitivityAnalysisResults}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{SensitivityAnalysisResults}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or
 import the sensitivity analysis results (Read-Only).}
 
-\item{\code{count}}{the number of pk parameter sensitivity entries}
+    \item{\code{count}}{the number of pk parameter sensitivity entries}
 
-\item{\code{allPKParameterNames}}{Returns the name of all PK-Parameters
+    \item{\code{allPKParameterNames}}{Returns the name of all PK-Parameters
 available in this results. This will be a subset of all potential
 PK-Parameters available in the system.}
 
-\item{\code{allQuantityPaths}}{Returns the path of all outputs available in this
+    \item{\code{allQuantityPaths}}{Returns the path of all outputs available in this
 results.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-SensitivityAnalysisResults-new}{\code{SensitivityAnalysisResults$new()}}
-\item \href{#method-SensitivityAnalysisResults-allPKParameterSensitivitiesFor}{\code{SensitivityAnalysisResults$allPKParameterSensitivitiesFor()}}
-\item \href{#method-SensitivityAnalysisResults-pkParameterSensitivityValueFor}{\code{SensitivityAnalysisResults$pkParameterSensitivityValueFor()}}
-\item \href{#method-SensitivityAnalysisResults-print}{\code{SensitivityAnalysisResults$print()}}
+  \itemize{
+    \item \href{#method-SensitivityAnalysisResults-initialize}{\code{SensitivityAnalysisResults$new()}}
+    \item \href{#method-SensitivityAnalysisResults-allPKParameterSensitivitiesFor}{\code{SensitivityAnalysisResults$allPKParameterSensitivitiesFor()}}
+    \item \href{#method-SensitivityAnalysisResults-pkParameterSensitivityValueFor}{\code{SensitivityAnalysisResults$pkParameterSensitivityValueFor()}}
+    \item \href{#method-SensitivityAnalysisResults-print}{\code{SensitivityAnalysisResults$print()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-SensitivityAnalysisResults-new"></a>}}
-\if{latex}{\out{\hypertarget{method-SensitivityAnalysisResults-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$new(netObject, simulation)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{netObject}}{A \code{NetObject}.}
-
-\item{\code{simulation}}{Reference to the simulation object used to calculated
+\if{html}{\out{<a id="method-SensitivityAnalysisResults-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-SensitivityAnalysisResults-initialize}{}}}
+\subsection{\code{SensitivityAnalysisResults$new()}}{
+  Initialize a new instance of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SensitivityAnalysisResults$new(netObject, simulation)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{netObject}}{A \code{NetObject}.}
+      \item{\code{simulation}}{Reference to the simulation object used to calculated
 the results.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{SensitivityAnalysisResults} object.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{SensitivityAnalysisResults} object.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SensitivityAnalysisResults-allPKParameterSensitivitiesFor"></a>}}
 \if{latex}{\out{\hypertarget{method-SensitivityAnalysisResults-allPKParameterSensitivitiesFor}{}}}
-\subsection{Method \code{allPKParameterSensitivitiesFor()}}{
-Returns the \code{PKParameterSensitivity} for a given \code{pkParameter} and output
+\subsection{\code{SensitivityAnalysisResults$allPKParameterSensitivitiesFor()}}{
+  Returns the \code{PKParameterSensitivity} for a given \code{pkParameter} and output
 participating to a total sensitivity greater or equal to
 \code{totalSensitivityThreshold}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$allPKParameterSensitivitiesFor(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SensitivityAnalysisResults$allPKParameterSensitivitiesFor(
   pkParameterName,
   outputPath,
   totalSensitivityThreshold =
     ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{pkParameterName}}{Name of \code{pkParameter} for which sensitivity should
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{pkParameterName}}{Name of \code{pkParameter} for which sensitivity should
 be retrieved.}
-
-\item{\code{outputPath}}{Path of the output for which the sensitivity should be
+      \item{\code{outputPath}}{Path of the output for which the sensitivity should be
 retrieved}
-
-\item{\code{totalSensitivityThreshold}}{Threshold used to filter out the most
+      \item{\code{totalSensitivityThreshold}}{Threshold used to filter out the most
 sensitive parameter. A threshold of \code{0.9} means that only parameter
 participating to a total of \code{90} percent of the sensitivity would be
 returned. A value of \code{1} would return the sensitivity for all
@@ -113,59 +111,61 @@ The default value can be retrieved with
 \code{getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold}
 and can be changed by setting
 \code{ospsuiteEnv$sensitivityAnalysisConfig$totalSensitivityThreshold <- newValue}.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SensitivityAnalysisResults-pkParameterSensitivityValueFor"></a>}}
 \if{latex}{\out{\hypertarget{method-SensitivityAnalysisResults-pkParameterSensitivityValueFor}{}}}
-\subsection{Method \code{pkParameterSensitivityValueFor()}}{
-Returns the sensitivity value for a given \code{pkParameter}, output and model
+\subsection{\code{SensitivityAnalysisResults$pkParameterSensitivityValueFor()}}{
+  Returns the sensitivity value for a given \code{pkParameter}, output and model
 parameter (either by path or by name). If the sensitivity result does not
 exist, returns \code{NaN}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$pkParameterSensitivityValueFor(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SensitivityAnalysisResults$pkParameterSensitivityValueFor(
   pkParameterName,
   outputPath,
   parameterName = NULL,
   parameterPath = NULL
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{pkParameterName}}{Name of \code{pkParameter} for which sensitivity should
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{pkParameterName}}{Name of \code{pkParameter} for which sensitivity should
 be retrieved.}
-
-\item{\code{outputPath}}{Path of the output for which the sensitivity should be
+      \item{\code{outputPath}}{Path of the output for which the sensitivity should be
 retrieved.}
-
-\item{\code{parameterName}}{Name of the sensitivity parameter for which the
+      \item{\code{parameterName}}{Name of the sensitivity parameter for which the
 sensitivity should be retrieved.}
-
-\item{\code{parameterPath}}{Path of the sensitivity parameter for which the
+      \item{\code{parameterPath}}{Path of the sensitivity parameter for which the
 sensitivity should be retrieved. Wildcards (*) not accepted.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SensitivityAnalysisResults-print"></a>}}
 \if{latex}{\out{\hypertarget{method-SensitivityAnalysisResults-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysisResults$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{SensitivityAnalysisResults$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SensitivityAnalysisResults$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

@@ -125,176 +125,113 @@ myPlotConfiguration
 
 }
 \seealso{
-Other plotting: 
-\code{\link{plotIndividualTimeProfile}()},
-\code{\link{plotObservedVsSimulated}()},
-\code{\link{plotPopulationTimeProfile}()},
-\code{\link{plotResidualsVsSimulated}()},
-\code{\link{plotResidualsVsTime}()}
+Other plotting:
+\code{\link[=plotIndividualTimeProfile]{plotIndividualTimeProfile()}},
+\code{\link[=plotObservedVsSimulated]{plotObservedVsSimulated()}},
+\code{\link[=plotPopulationTimeProfile]{plotPopulationTimeProfile()}},
+\code{\link[=plotResidualsVsSimulated]{plotResidualsVsSimulated()}},
+\code{\link[=plotResidualsVsTime]{plotResidualsVsTime()}}
 }
 \concept{plotting}
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{xUnit, yUnit}}{Units for quantities plotted on x- and y-axes, respectively.}
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{xUnit, yUnit}}{Units for quantities plotted on x- and y-axes, respectively.}
 
-\item{\code{title, subtitle, caption, xLabel, yLabel, legendTitle, watermark}}{A character
+    \item{\code{title, subtitle, caption, xLabel, yLabel, legendTitle, watermark}}{A character
 string providing plot annotations for plot title, subtitle, caption, x-axis
 label, y-axis label, plot legend, watermark, respectively.}
 
-\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleAngle, titleAlign, titleMargin}}{Aesthetic properties for the plot title.}
+    \item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleAngle, titleAlign, titleMargin}}{Aesthetic properties for the plot title.}
 
-\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleAngle, subtitleAlign, subtitleMargin}}{Aesthetic properties for the plot subtitle.}
+    \item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleAngle, subtitleAlign, subtitleMargin}}{Aesthetic properties for the plot subtitle.}
 
-\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionAngle, captionAlign, captionMargin}}{Aesthetic properties for the plot caption.}
+    \item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionAngle, captionAlign, captionMargin}}{Aesthetic properties for the plot caption.}
 
-\item{\code{xLabelColor, xLabelSize, xLabelFontFace, xLabelFontFamily, xLabelAngle, xLabelAlign, xLabelMargin}}{Aesthetic properties for the plot xLabel.}
+    \item{\code{xLabelColor, xLabelSize, xLabelFontFace, xLabelFontFamily, xLabelAngle, xLabelAlign, xLabelMargin}}{Aesthetic properties for the plot xLabel.}
 
-\item{\code{yLabelColor, yLabelSize, yLabelFontFace, yLabelFontFamily, yLabelAngle, yLabelAlign, yLabelMargin}}{Aesthetic properties for the plot yLabel.}
+    \item{\code{yLabelColor, yLabelSize, yLabelFontFace, yLabelFontFamily, yLabelAngle, yLabelAlign, yLabelMargin}}{Aesthetic properties for the plot yLabel.}
 
-\item{\code{legendPosition}}{A character string defining the legend position.
+    \item{\code{legendPosition}}{A character string defining the legend position.
 Available options can be seen using \code{tlf::LegendPositions} list.}
 
-\item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign, legendTitleMargin}}{Aesthetic properties for the legend title.}
+    \item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign, legendTitleMargin}}{Aesthetic properties for the legend title.}
 
-\item{\code{legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign, legendKeysMargin}}{Aesthetic properties for the legend caption.}
+    \item{\code{legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign, legendKeysMargin}}{Aesthetic properties for the legend caption.}
 
-\item{\code{legendBackgroundColor, legendBackgroundAlpha, legendBorderColor, legendBorderType, legendBorderSize}}{Aesthetic properties for the legend box}
+    \item{\code{legendBackgroundColor, legendBackgroundAlpha, legendBorderColor, legendBorderType, legendBorderSize}}{Aesthetic properties for the legend box}
 
-\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisLabelTicksMargin, xAxisExpand}}{Aesthetic properties for the x-axis label.}
+    \item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisLabelTicksMargin, xAxisExpand}}{Aesthetic properties for the x-axis label.}
 
-\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisLabelTicksMargin, yAxisExpand}}{Aesthetic properties for the y-axis label.}
+    \item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisLabelTicksMargin, yAxisExpand}}{Aesthetic properties for the y-axis label.}
 
-\item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
+    \item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
 y-axis, respectively. This will preserve all data points but zoom in the plot.}
 
-\item{\code{xValuesLimits, yValuesLimits}}{A numeric vector of values limits for the x-and
+    \item{\code{xValuesLimits, yValuesLimits}}{A numeric vector of values limits for the x-and
 y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.}
 
-\item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to
+    \item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to
 position x-and y-axis ticks, respectively.}
 
-\item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale.
+    \item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale.
 Available options can be seen using \code{tlf::Scaling} list.}
 
-\item{\code{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle, watermarkAlign, watermarkMargin}}{A character string specifying the aesthetic properties for the watermark.}
+    \item{\code{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle, watermarkAlign, watermarkMargin}}{A character string specifying the aesthetic properties for the watermark.}
 
-\item{\code{plotBackgroundFill, plotBackgroundColor, plotBackgroundSize, plotBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot background.}
+    \item{\code{plotBackgroundFill, plotBackgroundColor, plotBackgroundSize, plotBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot background.}
 
-\item{\code{plotPanelBackgroundFill, plotPanelBackgroundColor, plotPanelBackgroundSize, plotPanelBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot panel (inside of plot) background.}
+    \item{\code{plotPanelBackgroundFill, plotPanelBackgroundColor, plotPanelBackgroundSize, plotPanelBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot panel (inside of plot) background.}
 
-\item{\code{xAxisColor, xAxisSize, xAxisLinetype}}{A character string specifying the aesthetic properties for the x-axis.}
+    \item{\code{xAxisColor, xAxisSize, xAxisLinetype}}{A character string specifying the aesthetic properties for the x-axis.}
 
-\item{\code{yAxisColor, yAxisSize, yAxisLinetype}}{A character string specifying the aesthetic properties for the y-axis.}
+    \item{\code{yAxisColor, yAxisSize, yAxisLinetype}}{A character string specifying the aesthetic properties for the y-axis.}
 
-\item{\code{xGridColor, xGridSize, xGridLinetype}}{A character string specifying the aesthetic properties for the x-axis grid.}
+    \item{\code{xGridColor, xGridSize, xGridLinetype}}{A character string specifying the aesthetic properties for the x-axis grid.}
 
-\item{\code{yGridColor, yGridSize, yGridLinetype}}{A character string specifying the aesthetic properties for the y-axis grid.}
+    \item{\code{yGridColor, yGridSize, yGridLinetype}}{A character string specifying the aesthetic properties for the y-axis grid.}
 
-\item{\code{linesColor, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
+    \item{\code{linesColor, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
 
-\item{\code{pointsColor, pointsShape, pointsSize, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
+    \item{\code{pointsColor, pointsShape, pointsSize, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
 
-\item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
+    \item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
 
-\item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha, errorbarsCapSize}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.}
+    \item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha, errorbarsCapSize}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.}
 
-\item{\code{displayLLOQ}}{A Boolean controlling display Lower Limit of Quantification lines. Default to True.}
+    \item{\code{displayLLOQ}}{A Boolean controlling display Lower Limit of Quantification lines. Default to True.}
 
-\item{\code{lloqDirection}}{A string controlling how the LLOQ lines are plotted. Can be "vertical", "horizontal" or "both". Default to NULL to respect specific plot configurations.}
+    \item{\code{lloqDirection}}{A string controlling how the LLOQ lines are plotted. Can be "vertical", "horizontal" or "both". Default to NULL to respect specific plot configurations.}
 
-\item{\code{foldLinesLegend}}{A Boolean controlling the drawing of the fold lines in the legend. Default to False.}
+    \item{\code{foldLinesLegend}}{A Boolean controlling the drawing of the fold lines in the legend. Default to False.}
 
-\item{\code{foldLinesLegendDiagonal}}{A Boolean controlling whether the fold lines legend should be horizontal or diagonal lines.}
-}
-\if{html}{\out{</div>}}
-}
-\section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{xUnit, yUnit}}{Units for quantities plotted on x- and y-axes, respectively.}
-
-\item{\code{title, subtitle, caption, xLabel, yLabel, legendTitle, watermark}}{A character
-string providing plot annotations for plot title, subtitle, caption, x-axis
-label, y-axis label, plot legend, watermark, respectively.}
-
-\item{\code{titleColor, titleSize, titleFontFace, titleFontFamily, titleAngle, titleAlign, titleMargin}}{Aesthetic properties for the plot title.}
-
-\item{\code{subtitleColor, subtitleSize, subtitleFontFace, subtitleFontFamily, subtitleAngle, subtitleAlign, subtitleMargin}}{Aesthetic properties for the plot subtitle.}
-
-\item{\code{captionColor, captionSize, captionFontFace, captionFontFamily, captionAngle, captionAlign, captionMargin}}{Aesthetic properties for the plot caption.}
-
-\item{\code{xLabelColor, xLabelSize, xLabelFontFace, xLabelFontFamily, xLabelAngle, xLabelAlign, xLabelMargin}}{Aesthetic properties for the plot xLabel.}
-
-\item{\code{yLabelColor, yLabelSize, yLabelFontFace, yLabelFontFamily, yLabelAngle, yLabelAlign, yLabelMargin}}{Aesthetic properties for the plot yLabel.}
-
-\item{\code{legendTitleSize, legendTitleColor, legendTitleFontFamily, legendTitleFontFace, legendTitleAngle, legendTitleAlign, legendTitleMargin}}{Aesthetic properties for the legend title.}
-
-\item{\code{legendKeysSize, legendKeysColor, legendKeysFontFamily, legendKeysFontFace, legendKeysAngle, legendKeysAlign, legendKeysMargin}}{Aesthetic properties for the legend caption.}
-
-\item{\code{legendBackgroundColor, legendBackgroundAlpha, legendBorderColor, legendBorderType, legendBorderSize}}{Aesthetic properties for the legend box}
-
-\item{\code{xAxisTicksLabels, xAxisLabelTicksSize, xAxisLabelTicksColor, xAxisLabelTicksFontFamily, xAxisLabelTicksFontFace, xAxisLabelTicksAngle, xAxisLabelTicksAlign, xAxisLabelTicksMargin, xAxisExpand}}{Aesthetic properties for the x-axis label.}
-
-\item{\code{yAxisTicksLabels, yAxisLabelTicksSize, yAxisLabelTicksColor, yAxisLabelTicksFontFamily, yAxisLabelTicksFontFace, yAxisLabelTicksAngle, yAxisLabelTicksAlign, yAxisLabelTicksMargin, yAxisExpand}}{Aesthetic properties for the y-axis label.}
-
-\item{\code{xAxisLimits, yAxisLimits}}{A numeric vector of axis limits for the x-and
-y-axis, respectively. This will preserve all data points but zoom in the plot.}
-
-\item{\code{xValuesLimits, yValuesLimits}}{A numeric vector of values limits for the x-and
-y-axis, respectively. This will filter out the data points outside the specified ranges before plotting.}
-
-\item{\code{xAxisTicks, yAxisTicks}}{A numeric vector or a function defining where to
-position x-and y-axis ticks, respectively.}
-
-\item{\code{xAxisScale, yAxisScale}}{A character string defining axis scale.
-Available options can be seen using \code{tlf::Scaling} list.}
-
-\item{\code{watermarkSize, watermarkColor, watermarkFontFamily, watermarkFontFace, watermarkAngle, watermarkAlign, watermarkMargin}}{A character string specifying the aesthetic properties for the watermark.}
-
-\item{\code{plotBackgroundFill, plotBackgroundColor, plotBackgroundSize, plotBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot background.}
-
-\item{\code{plotPanelBackgroundFill, plotPanelBackgroundColor, plotPanelBackgroundSize, plotPanelBackgroundLinetype}}{A character string specifying the aesthetic properties for the plot panel (inside of plot) background.}
-
-\item{\code{xAxisColor, xAxisSize, xAxisLinetype}}{A character string specifying the aesthetic properties for the x-axis.}
-
-\item{\code{yAxisColor, yAxisSize, yAxisLinetype}}{A character string specifying the aesthetic properties for the y-axis.}
-
-\item{\code{xGridColor, xGridSize, xGridLinetype}}{A character string specifying the aesthetic properties for the x-axis grid.}
-
-\item{\code{yGridColor, yGridSize, yGridLinetype}}{A character string specifying the aesthetic properties for the y-axis grid.}
-
-\item{\code{linesColor, linesSize, linesLinetype, linesAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for lines.}
-
-\item{\code{pointsColor, pointsShape, pointsSize, pointsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for points.}
-
-\item{\code{ribbonsFill, ribbonsSize, ribbonsLinetype, ribbonsAlpha}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, respectively, for ribbons.}
-
-\item{\code{errorbarsSize, errorbarsLinetype, errorbarsAlpha, errorbarsCapSize}}{A selection key or values for choice of color, fill, shape, size, linetype, alpha, cap width/height, respectively, for error bars.}
-}
-\if{html}{\out{</div>}}
+    \item{\code{foldLinesLegendDiagonal}}{A Boolean controlling whether the fold lines legend should be horizontal or diagonal lines.}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-DefaultPlotConfiguration-clone}{\code{DefaultPlotConfiguration$clone()}}
-}
+  \itemize{
+    \item \href{#method-DefaultPlotConfiguration-clone}{\code{DefaultPlotConfiguration$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DefaultPlotConfiguration-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-DefaultPlotConfiguration-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DefaultPlotConfiguration$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{DefaultPlotConfiguration$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DefaultPlotConfiguration$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

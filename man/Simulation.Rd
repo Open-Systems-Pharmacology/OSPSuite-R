@@ -8,199 +8,212 @@
 An OSPSuite simulation
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{Simulation}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ObjectBase}} -> \code{Simulation}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{root}}{Root container of the simulation (read-only)}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{root}}{Root container of the simulation (read-only)}
 
-\item{\code{path}}{Path of the root container of the simulation (read-only)}
+    \item{\code{path}}{Path of the root container of the simulation (read-only)}
 
-\item{\code{solver}}{SimulationSolver object for the simulation (read-only)}
+    \item{\code{solver}}{SimulationSolver object for the simulation (read-only)}
 
-\item{\code{outputSchema}}{outputSchema object for the simulation (read-only)}
+    \item{\code{outputSchema}}{outputSchema object for the simulation (read-only)}
 
-\item{\code{outputSelections}}{outputSelections object for the simulation (read-only)}
+    \item{\code{outputSelections}}{outputSelections object for the simulation (read-only)}
 
-\item{\code{sourceFile}}{Path to the file the simulation was loaded from (read-only)}
+    \item{\code{sourceFile}}{Path to the file the simulation was loaded from (read-only)}
 
-\item{\code{name}}{Name of the simulation}
+    \item{\code{name}}{Name of the simulation}
 
-\item{\code{configuration}}{An object of the type \code{SimulationConfiguration},
+    \item{\code{configuration}}{An object of the type \code{SimulationConfiguration},
 describing the modules used for the simulation, selected Parameter Values (PV) and Initial Conditions (IC).}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-Simulation-new}{\code{Simulation$new()}}
-\item \href{#method-Simulation-allEndogenousStationaryMoleculeNames}{\code{Simulation$allEndogenousStationaryMoleculeNames()}}
-\item \href{#method-Simulation-allXenobioticFloatingMoleculeNames}{\code{Simulation$allXenobioticFloatingMoleculeNames()}}
-\item \href{#method-Simulation-allStationaryMoleculeNames}{\code{Simulation$allStationaryMoleculeNames()}}
-\item \href{#method-Simulation-allFloatingMoleculeNames}{\code{Simulation$allFloatingMoleculeNames()}}
-\item \href{#method-Simulation-molWeightFor}{\code{Simulation$molWeightFor()}}
-\item \href{#method-Simulation-calculationMethodFor}{\code{Simulation$calculationMethodFor()}}
-\item \href{#method-Simulation-allApplicationsFor}{\code{Simulation$allApplicationsFor()}}
-\item \href{#method-Simulation-print}{\code{Simulation$print()}}
+  \itemize{
+    \item \href{#method-Simulation-initialize}{\code{Simulation$new()}}
+    \item \href{#method-Simulation-allEndogenousStationaryMoleculeNames}{\code{Simulation$allEndogenousStationaryMoleculeNames()}}
+    \item \href{#method-Simulation-allXenobioticFloatingMoleculeNames}{\code{Simulation$allXenobioticFloatingMoleculeNames()}}
+    \item \href{#method-Simulation-allStationaryMoleculeNames}{\code{Simulation$allStationaryMoleculeNames()}}
+    \item \href{#method-Simulation-allFloatingMoleculeNames}{\code{Simulation$allFloatingMoleculeNames()}}
+    \item \href{#method-Simulation-molWeightFor}{\code{Simulation$molWeightFor()}}
+    \item \href{#method-Simulation-calculationMethodFor}{\code{Simulation$calculationMethodFor()}}
+    \item \href{#method-Simulation-allApplicationsFor}{\code{Simulation$allApplicationsFor()}}
+    \item \href{#method-Simulation-print}{\code{Simulation$print()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Simulation-new"></a>}}
-\if{latex}{\out{\hypertarget{method-Simulation-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Simulation$new(netObject, sourceFile = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-Simulation-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-Simulation-initialize}{}}}
+\subsection{\code{Simulation$new()}}{
+  Initialize a new instance of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Simulation$new(netObject, sourceFile = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{netObject}}{Reference to \code{NetObject} .NET simulation object}
+      \item{\code{sourceFile}}{(Optional) File used to load the simulation}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{Simulation} object.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{netObject}}{Reference to \code{NetObject} .NET simulation object}
-
-\item{\code{sourceFile}}{(Optional) File used to load the simulation}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{Simulation} object.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Simulation-allEndogenousStationaryMoleculeNames"></a>}}
 \if{latex}{\out{\hypertarget{method-Simulation-allEndogenousStationaryMoleculeNames}{}}}
-\subsection{Method \code{allEndogenousStationaryMoleculeNames()}}{
-Returns the name of all endogenous stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
+\subsection{\code{Simulation$allEndogenousStationaryMoleculeNames()}}{
+  Returns the name of all endogenous stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
 This is a typically a molecule that is individual specific such as en Enzyme, Protein, Transporter, FcRn etc.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Simulation$allEndogenousStationaryMoleculeNames()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Simulation$allEndogenousStationaryMoleculeNames()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Simulation-allXenobioticFloatingMoleculeNames"></a>}}
 \if{latex}{\out{\hypertarget{method-Simulation-allXenobioticFloatingMoleculeNames}{}}}
-\subsection{Method \code{allXenobioticFloatingMoleculeNames()}}{
-Returns the name of all xenobiotic floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
+\subsection{\code{Simulation$allXenobioticFloatingMoleculeNames()}}{
+  Returns the name of all xenobiotic floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
 This is typically a molecule that is being explicitly simulated such as Compound, Inhibitor, DrugComplex.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Simulation$allXenobioticFloatingMoleculeNames()}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Simulation$allXenobioticFloatingMoleculeNames()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Simulation-allStationaryMoleculeNames"></a>}}
 \if{latex}{\out{\hypertarget{method-Simulation-allStationaryMoleculeNames}{}}}
-\subsection{Method \code{allStationaryMoleculeNames()}}{
-Returns the name of all stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Simulation$allStationaryMoleculeNames()}\if{html}{\out{</div>}}
+\subsection{\code{Simulation$allStationaryMoleculeNames()}}{
+  Returns the name of all stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Simulation$allStationaryMoleculeNames()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Simulation-allFloatingMoleculeNames"></a>}}
 \if{latex}{\out{\hypertarget{method-Simulation-allFloatingMoleculeNames}{}}}
-\subsection{Method \code{allFloatingMoleculeNames()}}{
-Returns the name of all floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Simulation$allFloatingMoleculeNames()}\if{html}{\out{</div>}}
+\subsection{\code{Simulation$allFloatingMoleculeNames()}}{
+  Returns the name of all floating molecules defined in the simulation. (e.g. with the flag IsStationary = FALSE)
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Simulation$allFloatingMoleculeNames()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Simulation-molWeightFor"></a>}}
 \if{latex}{\out{\hypertarget{method-Simulation-molWeightFor}{}}}
-\subsection{Method \code{molWeightFor()}}{
-Returns the mol weight value (in core unit) associated to the quantity with given path or NA if not found
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Simulation$molWeightFor(quantityPath)}\if{html}{\out{</div>}}
+\subsection{\code{Simulation$molWeightFor()}}{
+  Returns the mol weight value (in core unit) associated to the quantity with given path or NA if not found
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Simulation$molWeightFor(quantityPath)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{quantityPath}}{Path of quantity used to retrieve the molecular weight}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{quantityPath}}{Path of quantity used to retrieve the molecular weight}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Simulation-calculationMethodFor"></a>}}
 \if{latex}{\out{\hypertarget{method-Simulation-calculationMethodFor}{}}}
-\subsection{Method \code{calculationMethodFor()}}{
-Returns the calculation method name used for the given molecule and
+\subsection{\code{Simulation$calculationMethodFor()}}{
+  Returns the calculation method name used for the given molecule and
 category, or \code{NULL} if no override is set.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Simulation$calculationMethodFor(moleculeName, category)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{moleculeName}}{Name of the molecule.}
-
-\item{\code{category}}{One of the \code{CalculationMethodCategories} enum values
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Simulation$calculationMethodFor(moleculeName, category)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{moleculeName}}{Name of the molecule.}
+      \item{\code{category}}{One of the \code{CalculationMethodCategories} enum values
 (e.g. \code{CalculationMethodCategories$PartitionCoefficient}).}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Simulation-allApplicationsFor"></a>}}
 \if{latex}{\out{\hypertarget{method-Simulation-allApplicationsFor}{}}}
-\subsection{Method \code{allApplicationsFor()}}{
-Returns the applications ordered by start time associated to the quantity with path \code{quantityPath} or an empty list if not found
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Simulation$allApplicationsFor(quantityPath)}\if{html}{\out{</div>}}
+\subsection{\code{Simulation$allApplicationsFor()}}{
+  Returns the applications ordered by start time associated to the quantity with path \code{quantityPath} or an empty list if not found
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Simulation$allApplicationsFor(quantityPath)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{quantityPath}}{Path of quantity used to retrieve the applications (e.g. applications resulting in this quantity being applied)}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{quantityPath}}{Path of quantity used to retrieve the applications (e.g. applications resulting in this quantity being applied)}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Simulation-print"></a>}}
 \if{latex}{\out{\hypertarget{method-Simulation-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Simulation$print(printClassProperties = FALSE, ...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{printClassProperties}}{Logical, whether to print class properties (default: \code{FALSE}). If \code{TRUE}, calls first the \code{print} method of the parent class.
+\subsection{\code{Simulation$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Simulation$print(printClassProperties = FALSE, ...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{printClassProperties}}{Logical, whether to print class properties (default: \code{FALSE}). If \code{TRUE}, calls first the \code{print} method of the parent class.
 Useful for debugging.}
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
 
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }
