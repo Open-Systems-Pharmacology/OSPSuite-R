@@ -13,7 +13,7 @@
         * Population: European (ICRP, 2002)
         * Gender: Male
         * Age: 30.00 year(s)
-        * Gestational age: 2087.14 week(s)
+        * Gestational age: 40.00 week(s)
         * Height: 175.00 cm
         * Weight: 73.00 kg
 
