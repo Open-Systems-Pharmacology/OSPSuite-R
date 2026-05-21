@@ -23,12 +23,6 @@ jobs:
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
     with:
       dotnet-version: '10.0.x'
-      # Bypass org-default GHA_DEFAULT_RUNNER_WINDOWS (currently windows-2025-vs2026,
-      # which silently breaks pak's cpp11 binary install). Pin to known-good images.
-      os-matrix: >-
-        [{"os": "windows-2022", "r": "release"},
-         {"os": "ubuntu-22.04", "r": "release"},
-         {"os": "macos-15", "r": "release"}]
 
   test-coverage:
     if: ${{ !cancelled() }}
