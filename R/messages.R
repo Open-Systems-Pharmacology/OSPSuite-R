@@ -34,7 +34,7 @@ messages$unpairableDatasetsRemoved <- function() {
 }
 
 messages$printMultipleEntries <- function(header, entries) {
-  message(cliFormat("{header}:", paste(entries, collapse = "\n")))
+  message(cliFormat("{.emph {header}}:", paste("-", entries, collapse = "\n")))
 }
 
 messages$linearScaleWithFoldDistance <- function() {
@@ -42,10 +42,8 @@ messages$linearScaleWithFoldDistance <- function() {
 }
 
 messages$errorLoadingUnitsForDimension <- function(dimensions) {
-  messages$printMultipleEntries(
-    "Could not load {.field units} for {length(dimensions)} {.field dimension{?s}}",
-    dimensions
-  )
+  header <- cliFormat("Could not load {.field units} for {length(dimensions)} {.field dimension{?s}}")
+  messages$printMultipleEntries(header, dimensions)
 }
 
 messages$plottingWithEmptyDataCombined <- function() {
