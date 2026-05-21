@@ -362,8 +362,8 @@ test_that("assigning groups produces a message if dataset name is not found", {
       groups = list("m", "a", "b")
     ),
     "Following datasets were specified to be grouped but not found:
-x
-y
+- x
+- y
 ",
     fixed = TRUE
   )
