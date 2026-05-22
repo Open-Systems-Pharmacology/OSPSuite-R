@@ -99,7 +99,7 @@ MoleculesBuildingBlock <- R6::R6Class(
 #' @keywords internal
 .quantityTypeNetObject <- function(moleculeType) {
   rSharp::callStatic(
-    "System.Enum",
+    "System.Enum, System.Runtime",
     "ToObject",
     rSharp::getType("OSPSuite.Core.Domain.QuantityType"),
     as.integer(moleculeType)

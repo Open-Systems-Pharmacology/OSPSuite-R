@@ -199,7 +199,7 @@ loadAgingDataFromCSV <- function(filePath) {
 createPopulation <- function(populationCharacteristics) {
   validateIsOfType(populationCharacteristics, "PopulationCharacteristics")
 
-  populationFactory <- rSharp::callStatic("PKSim.R.Api", "GetPopulationFactory")
+  populationFactory <- rSharp::callStatic("PKSim.R.Api, PKSim.R", "GetPopulationFactory")
   results <- populationFactory$call(
     "CreatePopulation",
     populationCharacteristics

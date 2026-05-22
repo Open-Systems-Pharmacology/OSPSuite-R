@@ -16,7 +16,7 @@ initPKSim <- function() {
   }
 
   rSharp::loadAssembly(pksimR)
-  rSharp::callStatic("PKSim.R.Api", "InitializeOnce")
+  rSharp::callStatic("PKSim.R.Api, PKSim.R", "InitializeOnce")
 
   # Only set the flag if initialization was successful
   ospsuiteEnv$isPKSimLoaded <- TRUE

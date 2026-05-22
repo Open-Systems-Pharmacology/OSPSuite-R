@@ -58,7 +58,7 @@
   mobiR <- system.file("lib", "MoBi.R.dll", package = ospsuiteEnv$packageName)
 
   rSharp::loadAssembly(mobiR)
-  rSharp::callStatic("MoBi.R.Api", "InitializeOnce", apiConfig)
+  rSharp::callStatic("MoBi.R.Api, MoBi.R", "InitializeOnce", apiConfig)
 
   .initializeDimensionAndUnitLists()
   .loadEnums()
@@ -93,12 +93,12 @@
 #' @keywords internal
 .loadMoleculeTypeEnum <- function() {
   quantityType <- rSharp::getType("OSPSuite.Core.Domain.QuantityType")
-  netValues <- rSharp::callStatic("System.Enum", "GetValues", quantityType)
+  netValues <- rSharp::callStatic("System.Enum, System.Runtime", "GetValues", quantityType)
   flagByName <- list()
   for (netValue in netValues) {
     name <- netValue$call("ToString")
     flagByName[[name]] <- as.integer(rSharp::callStatic(
-      "System.Convert",
+      "System.Convert, System.Runtime",
       "ToInt32",
       netValue
     ))

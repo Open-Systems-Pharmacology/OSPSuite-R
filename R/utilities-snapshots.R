@@ -98,7 +98,7 @@ runSimulationsFromSnapshot <- function(
 
   tryCatch(
     {
-      invisible(rSharp::callStatic("PKSim.R.Api", "RunJson", JsonRunOptions))
+      invisible(rSharp::callStatic("PKSim.R.Api, PKSim.R", "RunJson", JsonRunOptions))
     },
     error = function(e) {
       message <- stringr::str_extract(as.character(e), "(?<=Message: )[^\\n]*")
@@ -161,7 +161,7 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
   tryCatch(
     {
       invisible(rSharp::callStatic(
-        "PKSim.R.Api",
+        "PKSim.R.Api, PKSim.R",
         "RunSnapshot",
         SnapshotRunOptions
       ))

@@ -1,4 +1,4 @@
-EntityExtensions <- "OSPSuite.Core.Domain.EntityExtensions"
+EntityExtensions <- "OSPSuite.Core.Domain.EntityExtensions, OSPSuite.Core"
 
 #' @title Entity
 #' @docType class
