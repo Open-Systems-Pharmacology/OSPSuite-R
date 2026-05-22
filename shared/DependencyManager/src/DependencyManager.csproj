@@ -44,10 +44,8 @@
    <ItemGroup>
       <AllowedAssembly Include="Antlr3.Runtime" />
       <AllowedAssembly Include="Autofac" />
-      <AllowedAssembly Include="BouncyCastle.Cryptography" />
       <AllowedAssembly Include="Castle.Core" />
       <AllowedAssembly Include="Castle.Windsor" />
-      <AllowedAssembly Include="ExtendedNumerics.BigDecimal" />
       <AllowedAssembly Include="FluentNHibernate" />
       <AllowedAssembly Include="ICSharpCode.SharpZipLib" />
       <AllowedAssembly Include="Iesi.Collections" />
