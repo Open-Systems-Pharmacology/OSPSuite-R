@@ -8,113 +8,117 @@
 A parameter typically used in the definition of \code{IndividualCharacteristics} covariates (Height, Weight etc...)
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SnapshotParameter}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{SnapshotParameter}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{value}}{Parameter value}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{value}}{Parameter value}
 
-\item{\code{unit}}{Unit in which the value is defined}
-}
-\if{html}{\out{</div>}}
+    \item{\code{unit}}{Unit in which the value is defined}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-SnapshotParameter-new}{\code{SnapshotParameter$new()}}
-\item \href{#method-SnapshotParameter-print}{\code{SnapshotParameter$print()}}
-\item \href{#method-SnapshotParameter-printValue}{\code{SnapshotParameter$printValue()}}
-\item \href{#method-SnapshotParameter-getPrintValue}{\code{SnapshotParameter$getPrintValue()}}
+  \itemize{
+    \item \href{#method-SnapshotParameter-initialize}{\code{SnapshotParameter$new()}}
+    \item \href{#method-SnapshotParameter-print}{\code{SnapshotParameter$print()}}
+    \item \href{#method-SnapshotParameter-printValue}{\code{SnapshotParameter$printValue()}}
+    \item \href{#method-SnapshotParameter-getPrintValue}{\code{SnapshotParameter$getPrintValue()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-SnapshotParameter-new"></a>}}
-\if{latex}{\out{\hypertarget{method-SnapshotParameter-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$new(netObject = NULL, value = NULL, unit = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-SnapshotParameter-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-SnapshotParameter-initialize}{}}}
+\subsection{\code{SnapshotParameter$new()}}{
+  Initialize a new instance of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SnapshotParameter$new(netObject = NULL, value = NULL, unit = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{netObject}}{Optional \code{NetObject}. If not defined, a new instance will be created}
+      \item{\code{value}}{Optional value of the parameter.}
+      \item{\code{unit}}{Optional unit of the value specified.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{SnapshotParameter} object.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{netObject}}{Optional \code{NetObject}. If not defined, a new instance will be created}
-
-\item{\code{value}}{Optional value of the parameter.}
-
-\item{\code{unit}}{Optional unit of the value specified.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{SnapshotParameter} object.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SnapshotParameter-print"></a>}}
 \if{latex}{\out{\hypertarget{method-SnapshotParameter-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{SnapshotParameter$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SnapshotParameter$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SnapshotParameter-printValue"></a>}}
 \if{latex}{\out{\hypertarget{method-SnapshotParameter-printValue}{}}}
-\subsection{Method \code{printValue()}}{
-Print the parameter in one line
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$printValue(caption)}\if{html}{\out{</div>}}
+\subsection{\code{SnapshotParameter$printValue()}}{
+  Print the parameter in one line
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SnapshotParameter$printValue(caption)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{caption}}{Caption to display before the value of the parameter}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{caption}}{Caption to display before the value of the parameter}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SnapshotParameter-getPrintValue"></a>}}
 \if{latex}{\out{\hypertarget{method-SnapshotParameter-getPrintValue}{}}}
-\subsection{Method \code{getPrintValue()}}{
-Return a string for printing the parameter in one line
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SnapshotParameter$getPrintValue()}\if{html}{\out{</div>}}
+\subsection{\code{SnapshotParameter$getPrintValue()}}{
+  Return a string for printing the parameter in one line
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SnapshotParameter$getPrintValue()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A string for printing the parameter in one line
+  }
 }
 
-\subsection{Returns}{
-A string for printing the parameter in one line
-}
-}
 }

@@ -12,85 +12,87 @@ Derived from \link{Quantity}, please see base class documentation.
 }
 \keyword{Parameter}
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{\link[ospsuite:Quantity]{ospsuite::Quantity}} -> \code{Parameter}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ObjectBase}} -> \code{\link[ospsuite:Entity]{Entity}} -> \code{\link[ospsuite:Quantity]{Quantity}} -> \code{Parameter}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{isStateVariable}}{Returns \code{TRUE} is the parameter has a RHS otherwise \code{FALSE}.
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{isStateVariable}}{Returns \code{TRUE} is the parameter has a RHS otherwise \code{FALSE}.
 Setting the value to \code{FALSE} will delete the RHS Formula.
 Setting it to \code{TRUE} is not currently supported and will throw an error.}
 
-\item{\code{rhsFormula}}{An instance of a \code{Formula} object representing the RHS Formula (Read-Only)}
-}
-\if{html}{\out{</div>}}
+    \item{\code{rhsFormula}}{An instance of a \code{Formula} object representing the RHS Formula (Read-Only)}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-Parameter-new}{\code{Parameter$new()}}
-\item \href{#method-Parameter-print}{\code{Parameter$print()}}
+  \itemize{
+    \item \href{#method-Parameter-initialize}{\code{Parameter$new()}}
+    \item \href{#method-Parameter-print}{\code{Parameter$print()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="getPrintValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-getPrintValue'><code>ospsuite::Quantity$getPrintValue()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="hasUnit"><a href='../../ospsuite/html/Quantity.html#method-Quantity-hasUnit'><code>ospsuite::Quantity$hasUnit()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printQuantityValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printQuantityValue'><code>ospsuite::Quantity$printQuantityValue()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printValue'><code>ospsuite::Quantity$printValue()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="reset"><a href='../../ospsuite/html/Quantity.html#method-Quantity-reset'><code>ospsuite::Quantity$reset()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="setValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-setValue'><code>ospsuite::Quantity$setValue()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="getPrintValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-getPrintValue'><code>Quantity$getPrintValue()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="hasUnit"><a href='../../ospsuite/html/Quantity.html#method-Quantity-hasUnit'><code>Quantity$hasUnit()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printQuantityValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printQuantityValue'><code>Quantity$printQuantityValue()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="printValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-printValue'><code>Quantity$printValue()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="reset"><a href='../../ospsuite/html/Quantity.html#method-Quantity-reset'><code>Quantity$reset()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="ospsuite" data-topic="Quantity" data-id="setValue"><a href='../../ospsuite/html/Quantity.html#method-Quantity-setValue'><code>Quantity$setValue()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Parameter-new"></a>}}
-\if{latex}{\out{\hypertarget{method-Parameter-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Parameter$new(netObject)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-Parameter-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-Parameter-initialize}{}}}
+\subsection{\code{Parameter$new()}}{
+  Initialize a new instance of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Parameter$new(netObject)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{netObject}}{An \code{rSharp::NetObject} object.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{Parameter} object.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{netObject}}{An \code{rSharp::NetObject} object.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{Parameter} object.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Parameter-print"></a>}}
 \if{latex}{\out{\hypertarget{method-Parameter-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Parameter$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{Parameter$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Parameter$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

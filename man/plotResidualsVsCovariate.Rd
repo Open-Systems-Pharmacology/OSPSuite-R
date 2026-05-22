@@ -147,10 +147,10 @@ plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "observed")
 }
 }
 \seealso{
-Other plot functions based on ospsuite.plots: 
-\code{\link{plotPredictedVsObserved}()},
-\code{\link{plotQuantileQuantilePlot}()},
-\code{\link{plotResidualsAsHistogram}()},
-\code{\link{plotTimeProfile}()}
+Other plot functions based on ospsuite.plots:
+\code{\link[=plotPredictedVsObserved]{plotPredictedVsObserved()}},
+\code{\link[=plotQuantileQuantilePlot]{plotQuantileQuantilePlot()}},
+\code{\link[=plotResidualsAsHistogram]{plotResidualsAsHistogram()}},
+\code{\link[=plotTimeProfile]{plotTimeProfile()}}
 }
 \concept{plot functions based on ospsuite.plots}

@@ -11,7 +11,7 @@ An optimized simulation with faster loading. The corresponding .NET class is
 \examples{
 
 ## ------------------------------------------------
-## Method `SimulationBatch$addRunValues`
+## Method `SimulationBatch$addRunValues()`
 ## ------------------------------------------------
 
 \dontrun{
@@ -36,100 +36,97 @@ res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulatio
 }
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationBatch}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{SimulationBatch}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{simulation}}{Underlying simulation used for the batch run. Read only.}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{simulation}}{Underlying simulation used for the batch run. Read only.}
 
-\item{\code{runValuesIds}}{Ids of the run values that will be executed on next run}
+    \item{\code{runValuesIds}}{Ids of the run values that will be executed on next run}
 
-\item{\code{id}}{The id of the .NET wrapped object. (read-only)}
-}
-\if{html}{\out{</div>}}
+    \item{\code{id}}{The id of the .NET wrapped object. (read-only)}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-SimulationBatch-new}{\code{SimulationBatch$new()}}
-\item \href{#method-SimulationBatch-addRunValues}{\code{SimulationBatch$addRunValues()}}
-\item \href{#method-SimulationBatch-getVariableParameters}{\code{SimulationBatch$getVariableParameters()}}
-\item \href{#method-SimulationBatch-getVariableMolecules}{\code{SimulationBatch$getVariableMolecules()}}
-\item \href{#method-SimulationBatch-print}{\code{SimulationBatch$print()}}
+  \itemize{
+    \item \href{#method-SimulationBatch-initialize}{\code{SimulationBatch$new()}}
+    \item \href{#method-SimulationBatch-addRunValues}{\code{SimulationBatch$addRunValues()}}
+    \item \href{#method-SimulationBatch-getVariableParameters}{\code{SimulationBatch$getVariableParameters()}}
+    \item \href{#method-SimulationBatch-getVariableMolecules}{\code{SimulationBatch$getVariableMolecules()}}
+    \item \href{#method-SimulationBatch-print}{\code{SimulationBatch$print()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-SimulationBatch-new"></a>}}
-\if{latex}{\out{\hypertarget{method-SimulationBatch-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$new(netObject, simulation)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-SimulationBatch-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationBatch-initialize}{}}}
+\subsection{\code{SimulationBatch$new()}}{
+  Initialize a new instance of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SimulationBatch$new(netObject, simulation)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{netObject}}{An \code{rSharp::NetObject} object.}
+      \item{\code{simulation}}{Simulation used in the batch run}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{SimulationBatch} object.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{netObject}}{An \code{rSharp::NetObject} object.}
-
-\item{\code{simulation}}{Simulation used in the batch run}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{SimulationBatch} object.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationBatch-addRunValues"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationBatch-addRunValues}{}}}
-\subsection{Method \code{addRunValues()}}{
-Add a set of parameter and start values for next execution.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$addRunValues(parameterValues = NULL, initialValues = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{parameterValues}}{Vector of parameter values to set in the simulation (default is \code{NULL})}
-
-\item{\code{initialValues}}{Vector of initial values to set in the simulation  (default is \code{NULL})}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Details}{
-Intended for the use with \code{runSimulationBatches}. The simulation batch is executed
+\subsection{\code{SimulationBatch$addRunValues()}}{
+  Add a set of parameter and start values for next execution.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SimulationBatch$addRunValues(parameterValues = NULL, initialValues = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{parameterValues}}{Vector of parameter values to set in the simulation (default is \code{NULL})}
+      \item{\code{initialValues}}{Vector of initial values to set in the simulation  (default is \code{NULL})}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Details}{
+    Intended for the use with \code{runSimulationBatches}. The simulation batch is executed
 with the sets of parameter and initial values that have been scheduled.
 The set of run values is cleared after successful run.
-}
-
-\subsection{Returns}{
-Id of the values set that can be used to get the correct result from \code{runSimulationBatches}.
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{\dontrun{
-sim1 <- loadSimulation("sim1", loadFromCache = TRUE)
+  }
+  \subsection{Returns}{
+    Id of the values set that can be used to get the correct result from \code{runSimulationBatches}.
+  }
+  \subsection{Examples}{
+    \if{html}{\out{<div class="r example copy">}}
+    \preformatted{sim1 <- loadSimulation("sim1", loadFromCache = TRUE)
 sim2 <- loadSimulation("sim2", loadFromCache = TRUE)
 parameters <- c("Organism|Liver|Volume", "R1|k1")
 molecules <- "Organism|Liver|A"
@@ -148,63 +145,65 @@ ids[[3]] <- simulationBatch2$addRunValues(parameterValues = c(4, 2), initialValu
 ids[[4]] <- simulationBatch2$addRunValues(parameterValues = c(2.6, 4.4), initialValues = 5)
 res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
 }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
 
-}
-
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationBatch-getVariableParameters"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationBatch-getVariableParameters}{}}}
-\subsection{Method \code{getVariableParameters()}}{
-Returns a list of parameter paths that are variable in this batch.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$getVariableParameters()}\if{html}{\out{</div>}}
-}
-
-\subsection{Details}{
-The order of parameters is the same as the order of parameter
+\subsection{\code{SimulationBatch$getVariableParameters()}}{
+  Returns a list of parameter paths that are variable in this batch.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SimulationBatch$getVariableParameters()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Details}{
+    The order of parameters is the same as the order of parameter
 values added with \verb{$addRunValues()} method.
+  }
+  \subsection{Returns}{
+    List of parameter paths, or \code{NULL} if no parameter is variable.
+  }
 }
 
-\subsection{Returns}{
-List of parameter paths, or \code{NULL} if no parameter is variable.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationBatch-getVariableMolecules"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationBatch-getVariableMolecules}{}}}
-\subsection{Method \code{getVariableMolecules()}}{
-Returns a list of molecules paths that are variable in this batch
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$getVariableMolecules()}\if{html}{\out{</div>}}
-}
-
-\subsection{Details}{
-The order of molecules is the same as the order of molecule
+\subsection{\code{SimulationBatch$getVariableMolecules()}}{
+  Returns a list of molecules paths that are variable in this batch
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SimulationBatch$getVariableMolecules()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Details}{
+    The order of molecules is the same as the order of molecule
 start values added with \verb{$addRunValues()} method.
+  }
+  \subsection{Returns}{
+    List of parameter paths, or \code{NULL} if no molecule is variable.
+  }
 }
 
-\subsection{Returns}{
-List of parameter paths, or \code{NULL} if no molecule is variable.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationBatch-print"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationBatch-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationBatch$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{SimulationBatch$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SimulationBatch$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Additional arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Additional arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }
