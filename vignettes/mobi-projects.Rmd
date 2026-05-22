@@ -179,7 +179,7 @@ pvBB <- createParameterValuesBuildingBlock(name = "My PVs")
 # Populate the IC BB with a single entry
 setInitialConditionsInBB(
   icBB,
-  quantityPaths = "Organism|Liver|Aciclovir",
+  quantityPaths = "Organism|Liver|Periportal|Intracellular|Aciclovir",
   quantityValues = 1.0
 )
 
