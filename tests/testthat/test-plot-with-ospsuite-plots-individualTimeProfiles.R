@@ -177,13 +177,13 @@ test_that("It warns when showLegendPerDataset setting doesn't match data", {
   # Only observed data, but asking for simulated differentiation
   expect_warning(
     plotTimeProfile(manyObsDC, showLegendPerDataset = "simulated"),
-    "showLegendPerDataset = 'simulated' but no simulated data present"
+    regexp = "showLegendPerDataset = \"simulated\".*but no.*simulated.*data present"
   )
 
   # Only simulated data, but asking for observed differentiation
   expect_warning(
     plotTimeProfile(manySimDC, showLegendPerDataset = "observed"),
-    "showLegendPerDataset = 'observed' but no observed data present"
+    regexp = "showLegendPerDataset = \"observed\".*but no.*observed.*data present"
   )
 })
 
