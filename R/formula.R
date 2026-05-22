@@ -1,4 +1,4 @@
-FormulaExtensions <- "OSPSuite.Core.Domain.Formulas.FormulaExtensions"
+FormulaExtensions <- "OSPSuite.Core.Domain.Formulas.FormulaExtensions, OSPSuite.Core"
 
 #' @title Formula
 #' @docType class

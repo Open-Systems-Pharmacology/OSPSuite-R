@@ -1,4 +1,4 @@
-MODEL_CORE_SIMULATION_EXTENSIONS <- "OSPSuite.Core.Domain.ModelCoreSimulationExtensions"
+MODEL_CORE_SIMULATION_EXTENSIONS <- "OSPSuite.Core.Domain.ModelCoreSimulationExtensions, OSPSuite.Core"
 
 #' @title Simulation
 #' @docType class
