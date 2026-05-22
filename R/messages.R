@@ -15,100 +15,98 @@ messages$errorPkmlContainsMultipleModules <- function() {
 }
 
 messages$errorWrongPopulation <- function(species, population) {
-  paste0(
-    "Could not find population '",
-    population,
-    "' for species '",
-    species,
-    "'"
-  )
+  cliFormat("Could not find {.field population} {.val {population}} for {.field species} {.val {species}}")
 }
 
 messages$errorOneOfNameAndPathMustBeSpecified <- function() {
-  "One of the `parameterName` or `parameterPath` must be specified, but not both."
+  cliFormat("One of the {.field parameterName} or {.field parameterPath} must be specified, but not both.")
 }
 
 messages$errorMissingColumns <- function(cols) {
-  paste0(
-    "The following required columns are missing from the data frame: ",
-    paste(cols, collapse = ", ")
-  )
+  cliFormat("{length(cols)} required column{?s} {?is/are} missing from the data.frame: {.val {cols}}")
 }
 
 messages$errorInvalidDataSetNames <- function() {
-  "The 'name' column must not contain NA or empty string values."
+  cliFormat("The {.field name} column must not contain NA or empty string values.")
 }
 
 messages$noDatasetsToGroup <- function() {
-  "There are currently no datasets to be grouped. You can add them with `$addDataSets()` and/or `$addSimulationResults()` methods."
-}
-
-messages$datasetsToGroupNotFound <- function() {
-  "Following datasets were specified to be grouped but not found"
-}
-
-messages$unpairableDatasetsRemoved <- function() {
-  "Following non-grouped or unpairable datasets have been removed"
-}
-
-messages$printMultipleEntries <- function(header, entries) {
-  message(paste0(header, ":\n"), paste0(entries, collapse = "\n"))
-}
-
-messages$linearScaleWithFoldDistance <- function() {
-  "Linear scale is inappropriate when `foldDistance` argument is specified."
-}
-
-messages$errorLoadingUnitsForDimension <- function(dimensions) {
-  messages$printMultipleEntries(
-    "Could not load units for the following dimensions",
-    dimensions
+  cliFormat(
+    "There are currently no datasets to be grouped.",
+    "You can add them with {.fun $addDataSets} and/or {.fun $addSimulationResults} methods."
   )
 }
 
+messages$datasetsToGroupNotFound <- function() {
+  cliFormat("Following datasets were specified to be grouped but not found")
+}
+
+messages$unpairableDatasetsRemoved <- function() {
+  cliFormat("Following non-grouped or unpairable datasets have been removed")
+}
+
+messages$printMultipleEntries <- function(header, entries) {
+  message(cliFormat("{.emph {header}}:", paste("-", entries, collapse = "\n")))
+}
+
+messages$linearScaleWithFoldDistance <- function() {
+  cliFormat("Linear scale is inappropriate when {.field foldDistance} argument is specified.")
+}
+
+messages$errorLoadingUnitsForDimension <- function(dimensions) {
+  header <- cliFormat("Could not load {.field units} for {length(dimensions)} {.field dimension{?s}}")
+  messages$printMultipleEntries(header, dimensions)
+}
+
 messages$plottingWithEmptyDataCombined <- function() {
-  "No plot can be created because the entered `DataCombined` object does not contain any datasets."
+  cliFormat("No plot can be created because the entered {.field DataCombined} object does not contain any datasets.")
 }
 
 messages$residualsCanNotBeComputed <- function() {
-  "No residuals can be computed because the entered `DataCombined` object does not contain any observed-simulated datasets that can be paired."
+  cliFormat(
+    "No residuals can be computed because the entered {.field DataCombined} object does not contain any observed-simulated datasets that can be paired."
+  )
 }
 
 messages$residualsColumnNotFound <- function(columnName) {
-  paste0("Column '", columnName, "' not found in pairedData.")
+  cliFormat("Column {.val {columnName}} not found in pairedData.")
 }
 
 messages$residualsLogNonPositive <- function(n) {
-  paste0(
-    n,
-    " residual value(s) could not be computed because the observed or predicted",
-    " value is zero or negative (log of non-positive values is undefined).",
-    " These data points are set to NaN and excluded from the output."
+  cliFormat(
+    paste(
+      "{.val {n}} residual value{?s} could not be computed because the observed or predicted",
+      "value is zero or negative (log of non-positive values is undefined)."
+    ),
+    "These data points are set to NaN and excluded from the output."
   )
 }
 
 messages$residualsRatioPredNonPositive <- function(n) {
-  paste0(
-    n,
-    " residual value(s) could not be computed because the predicted value is",
-    " zero or negative (division by zero or undefined denominator).",
-    " These data points are set to NaN and excluded from the output."
+  cliFormat(
+    paste(
+    "{.val {n}} residual value{?s} could not be computed because the predicted value is",
+    "zero or negative (division by zero or undefined denominator)."
+    ),
+    "These data points are set to NaN and excluded from the output."
   )
 }
 
 messages$logScaleNotAllowed <- function() {
-  "The Y-axis for this plot should not be on a log scale, since the residuals are expected to be centered around 0."
+  cliFormat("The Y-axis for this plot should {.strong not} be on a log scale, since the {.field residuals} are expected to be centered around 0.")
 }
 
 messages$lloqOnlyScalar <- function() {
-  "Only one LLOQ value per `DataSet` is supported! Please provide a scalar value and not a vector."
+  cliFormat(
+    "Only {.strong one} LLOQ value per {.field DataSet} is supported!",
+    "Please provide a scalar value and not a vector."
+  )
 }
 
 messages$simBatchStartValueNaN <- function(entityPaths) {
-  paste0(
-    "Start values of the entities with paths '",
-    paste(entityPaths, collapse = ", "),
-    "' is `NaN`! Cannot add such run values set"
+  cliFormat(
+    "Start values of the entities with paths {.val {entityPaths}} is {.val NaN}!",
+    "Cannot add such run values set"
   )
 }
 
@@ -116,88 +114,63 @@ messages$plotObservedVsSimulatedWrongFoldDistance <- function(
   parameterName,
   foldDistances
 ) {
-  paste0(
-    "Parameter '",
-    parameterName,
-    "' should be >1! Following values have
-         been passed: '",
-    paste(foldDistances, collapse = ", "),
-    "'."
+  cliFormat(
+    "Parameter {.val {parameterName}} should be {.strong >1}!",
+    "Following values have been passed: {.val {foldDistances}}."
   )
 }
 
 messages$DataFrameNameAlreadyUsed <- function(DataFrameName) {
-  warning(paste0(
-    "\r\n",
-    "The following name(s) already exist in DataCombined:",
-    "\r\n",
-    "  - ",
-    paste(DataFrameName, collapse = "\r\n  - "),
-    "\r\n",
+  warning(cliFormat(
+    "{length(DataFrameName)} name{?s} already {?exists/exist} in {.field DataCombined}: {.val {DataFrameName}}.",
     "Existing data will be overwritten."
   ))
 }
 
 messages$wrongUnitForQuantity <- function(quantityPath, unit, dimension) {
-  paste0(
-    "Unit '",
-    unit,
-    "' is not valid for quantity with path '",
-    quantityPath,
-    "' and dimension '",
-    dimension,
-    "'"
-  )
+  cliFormat(paste(
+    "Unit {.val {unit}} is {.strong not} valid for",
+    "quantity with path {.code {quantityPath}} and dimension {.val {dimension}}"
+  ))
 }
 
 messages$invalidDataType <- function(name, dataType) {
-  paste0(
-    "Data type '",
-    dataType,
-    "' specified for data set '",
-    name,
-    "' is not valid. Valid data types are: 'simulated' or 'observed'."
+  cliFormat(
+    "Data type {.val {dataType}} specified for data set {.val {name}} is {.strong not} valid.",
+    "Valid data types are: {.val simulated} or {.val observed}."
   )
 }
 
 messages$valueNotPositive <- function(value, propertyName) {
-  paste0(
-    "The value of `",
-    propertyName,
-    "` must be > 0, but it is '",
-    paste(value, collapse = ", "),
-    "'"
+  cliFormat(
+    "The value of {.field {propertyName}} must be > 0, but it is {.val {value}}"
   )
 }
 
 messages$yErrorValuesNegative <- function(n) {
   cliFormat(
-    "{.val {n}} negative yErrorValue(s) found.",
+    "{.val {n}} negative {.field yErrorValue{?s}} found.",
     "Negative values have been set to {.val NA}."
   )
 }
 
 messages$molWeightErrorMessage <- function(quantityPath) {
-  paste0("Unable to retrieve the molecular weight for: ", quantityPath)
+  cliFormat("Unable to retrieve the molecular weight for: {.code {quantityPath}}")
 }
 
 messages$illegalCharactersInName <- function(name) {
-  paste0(
-    "The name '",
-    name,
-    "' contains illegal characters. Illegal characters are: '",
-    paste0(.getIllegalCharacters(), collapse = ", "),
-    "'."
+  illegalChars <- .getIllegalCharacters()
+  cliFormat(
+    "The name {.val {name}} contains illegal characters.",
+    "Illegal characters are: {.val {illegalChars}}."
   )
 }
 
 messages$forbiddenSimulationName <- function(name, sim) {
-  paste0(
-    "The name '",
-    name,
-    "' is not allowed for this simulation. Forbidden names for this simulation are: '",
-    paste0(.getIllegalSimulationNames(sim), collapse = ", "),
-    "'."
+  forbiddenNames <- .getIllegalSimulationNames(sim)
+  cliFormat(
+    "The name {.val {name}} is {.strong not} allowed for this simulation.",
+    "Forbidden names for this simulation are: {.val {forbiddenNames}}."
   )
 }
 
@@ -211,46 +184,41 @@ messages$plotUnitConsistency <- function() {
 
 
 messages$plotMissingColumnPredicted <- function() {
-  "No column available for 'predicted'. Please use combinedData format or a data.frame with column 'predicted'."
+  cliFormat(
+    "No column available for {.val predicted}.",
+    "Please use combinedData format or a data.frame with column {.val predicted}."
+  )
 }
 
 
 messages$plotTooManyYDimension <- function(yDimensions) {
-  paste0(
-    "Data contains too many yDimensions: '",
-    paste(yDimensions, collapse = "', '"),
-    "'. Automatic y-Unit conversion failed."
+  cliFormat(
+    "Data contains too many yDimensions: {.val {yDimensions}}.",
+    "Automatic y-Unit conversion failed."
   )
 }
 
 messages$plotWrongColumnsForCustomErrorType <- function(errorTypes) {
-  paste0(
-    "The error values for custom errorTypes '",
-    paste(unique(errorTypes), collapse = "', '"),
-    "' must be provided in 'yMin' and 'yMax' columns. ",
-    "Only 'ArithmeticStdDev' and 'GeometricStdDev' can use 'yErrorValues'."
+  uniqueTypes <- unique(errorTypes)
+  cliFormat(
+    "The error values for custom errorTypes {.val {uniqueTypes}} must be provided in {.val yMin} and {.val yMax} columns.",
+    "Only {.val ArithmeticStdDev} and {.val GeometricStdDev} can use {.val yErrorValues}."
   )
 }
 
 messages$plotShowLegendPerDatasetHasNoEffect <- function(dataType) {
-  paste0(
-    "showLegendPerDataset = '",
-    dataType,
-    "' but no ",
-    dataType,
-    " data present. ",
+  cliFormat(
+    "{.code showLegendPerDataset = {.val {dataType}}} but no {.val {dataType}} data present.",
     "This setting will have no effect."
   )
 }
 
 
 messages$plotUntypicalAesthetic <- function(aesthetic, dataType) {
-  sprintf(
-    "aesthetic '%s' is set to mapping for %s data.
-      This aesthetic is usually only used for %s data mapping.",
-    aesthetic,
-    dataType,
-    setdiff(c('simulated', 'observed'), dataType)
+  otherDataType <- setdiff(c("simulated", "observed"), dataType)
+  cliFormat(
+    "Aesthetic {.val {aesthetic}} is set to mapping for {.val {dataType}} data.",
+    "This aesthetic is usually only used for {.val {otherDataType}} data mapping."
   )
 }
 
@@ -260,35 +228,29 @@ messages$errorParameterValuesCountMismatch <- function(
   expectedCount,
   actualCount
 ) {
-  paste0(
-    "Parameter values for '",
-    parameterPath,
-    "' does not have the expected number of elements. (Expected ",
-    expectedCount,
-    " vs Actual ",
-    actualCount,
-    ")"
+  cliFormat(
+    "Parameter values for {.code {parameterPath}} does not have the expected number of elements.",
+    "(Expected {.val {expectedCount}} vs Actual {.val {actualCount}})"
   )
 }
 
 messages$errorExportResultsOnlyOneObject <- function() {
-  "Only one 'SimulationResults' object is allowed. Lists of results are not supported."
+  cliFormat(
+    "Only {.strong one} {.field SimulationResults} object is allowed.",
+    "Lists of results are not supported."
+  )
 }
 
 messages$errorEmptyOutputSelections <- function(simulationName) {
-  paste0(
-    "The simulation '",
-    simulationName,
-    "' has no output selections defined. ",
-    "Please add outputs using `addOutputs()` or `setOutputs()`."
+  cliFormat(
+    "The simulation {.val {simulationName}} has no output selections defined.",
+    "Please add outputs using {.fun addOutputs} or {.fun setOutputs}."
   )
 }
 
 messages$errorIndividualIdsNotFoundInPopulation <- function(missingIds) {
-  paste0(
-    "The following individual id(s) were not found in the population: '",
-    paste(missingIds, collapse = ", "),
-    "'"
+  cliFormat(
+    "{length(missingIds)} individual id{?s} {?was/were} not found in the population: {.val {missingIds}}"
   )
 }
 
