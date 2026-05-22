@@ -249,7 +249,7 @@ test_that("addResidualColumn errors when observed column is missing", {
   paired <- data.frame(yValuesSimulated = c(1, 2))
   expect_error(
     addResidualColumn(paired, observed = "yValuesObserved", scaling = "log"),
-    regexp = "Column 'yValuesObserved' not found"
+    regexp = "Column.*yValuesObserved.*not found"
   )
 })
 
@@ -257,7 +257,7 @@ test_that("addResidualColumn errors when predicted column is missing", {
   paired <- data.frame(yValuesObserved = c(1, 2))
   expect_error(
     addResidualColumn(paired, predicted = "yValuesSimulated", scaling = "log"),
-    regexp = "Column 'yValuesSimulated' not found"
+    regexp = "Column.*yValuesSimulated.*not found"
   )
 })
 

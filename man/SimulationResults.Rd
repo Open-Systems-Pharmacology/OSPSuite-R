@@ -8,144 +8,149 @@
 Results of a simulation run (either individual or population simulation)
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SimulationResults}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{SimulationResults}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{count}}{the number of individual results (\code{Count==1} generally means that we are dealing with an individual simulation results).}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{count}}{the number of individual results (\code{Count==1} generally means that we are dealing with an individual simulation results).}
 
-\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the results (Read-Only).}
+    \item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the results (Read-Only).}
 
-\item{\code{timeValues}}{Vector of simulated time output values}
+    \item{\code{timeValues}}{Vector of simulated time output values}
 
-\item{\code{allQuantityPaths}}{List of all paths for which results are defined.}
+    \item{\code{allQuantityPaths}}{List of all paths for which results are defined.}
 
-\item{\code{allIndividualIds}}{List of Ids of all individuals that have been simulated}
-}
-\if{html}{\out{</div>}}
+    \item{\code{allIndividualIds}}{List of Ids of all individuals that have been simulated}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-SimulationResults-new}{\code{SimulationResults$new()}}
-\item \href{#method-SimulationResults-hasResultsForIndividual}{\code{SimulationResults$hasResultsForIndividual()}}
-\item \href{#method-SimulationResults-getValuesByPath}{\code{SimulationResults$getValuesByPath()}}
-\item \href{#method-SimulationResults-resultsForIndividual}{\code{SimulationResults$resultsForIndividual()}}
-\item \href{#method-SimulationResults-print}{\code{SimulationResults$print()}}
+  \itemize{
+    \item \href{#method-SimulationResults-initialize}{\code{SimulationResults$new()}}
+    \item \href{#method-SimulationResults-hasResultsForIndividual}{\code{SimulationResults$hasResultsForIndividual()}}
+    \item \href{#method-SimulationResults-getValuesByPath}{\code{SimulationResults$getValuesByPath()}}
+    \item \href{#method-SimulationResults-resultsForIndividual}{\code{SimulationResults$resultsForIndividual()}}
+    \item \href{#method-SimulationResults-print}{\code{SimulationResults$print()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-SimulationResults-new"></a>}}
-\if{latex}{\out{\hypertarget{method-SimulationResults-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationResults$new(netObject, simulation)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-SimulationResults-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-SimulationResults-initialize}{}}}
+\subsection{\code{SimulationResults$new()}}{
+  Initialize a new instance of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SimulationResults$new(netObject, simulation)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{netObject}}{An \code{rSharp::NetObject} object.}
+      \item{\code{simulation}}{Reference to the simulation object used to calculated the results}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{SimulationResults} object.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{netObject}}{An \code{rSharp::NetObject} object.}
-
-\item{\code{simulation}}{Reference to the simulation object used to calculated the results}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{SimulationResults} object.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationResults-hasResultsForIndividual"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationResults-hasResultsForIndividual}{}}}
-\subsection{Method \code{hasResultsForIndividual()}}{
-Returns \code{TRUE} if results are available for the individual with id \code{individualId} otherwise \code{FALSE}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationResults$hasResultsForIndividual(individualId)}\if{html}{\out{</div>}}
+\subsection{\code{SimulationResults$hasResultsForIndividual()}}{
+  Returns \code{TRUE} if results are available for the individual with id \code{individualId} otherwise \code{FALSE}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SimulationResults$hasResultsForIndividual(individualId)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{individualId}}{Id of the individual}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{individualId}}{Id of the individual}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationResults-getValuesByPath"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationResults-getValuesByPath}{}}}
-\subsection{Method \code{getValuesByPath()}}{
-Returns \code{TRUE} if results are available for the individual with id \code{individualId} otherwise \code{FALSE}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationResults$getValuesByPath(path, individualIds, stopIfNotFound = TRUE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{path}}{Path for which values should be retrieved}
-
-\item{\code{individualIds}}{One or more individual ids for which values should be returned}
-
-\item{\code{stopIfNotFound}}{If \code{TRUE} (default) an error is thrown if no values could be found for the \code{path}/
+\subsection{\code{SimulationResults$getValuesByPath()}}{
+  Returns \code{TRUE} if results are available for the individual with id \code{individualId} otherwise \code{FALSE}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SimulationResults$getValuesByPath(path, individualIds, stopIfNotFound = TRUE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{path}}{Path for which values should be retrieved}
+      \item{\code{individualIds}}{One or more individual ids for which values should be returned}
+      \item{\code{stopIfNotFound}}{If \code{TRUE} (default) an error is thrown if no values could be found for the \code{path}/
 If \code{FALSE}, a list of \code{NA} values is returned}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationResults-resultsForIndividual"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationResults-resultsForIndividual}{}}}
-\subsection{Method \code{resultsForIndividual()}}{
-Returns all available results for the individual with id \code{individualId}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationResults$resultsForIndividual(individualId)}\if{html}{\out{</div>}}
+\subsection{\code{SimulationResults$resultsForIndividual()}}{
+  Returns all available results for the individual with id \code{individualId}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SimulationResults$resultsForIndividual(individualId)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{individualId}}{Id for which the results should be returned}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{individualId}}{Id for which the results should be returned}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SimulationResults-print"></a>}}
 \if{latex}{\out{\hypertarget{method-SimulationResults-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimulationResults$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{SimulationResults$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SimulationResults$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

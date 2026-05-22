@@ -33,7 +33,7 @@ test_that("It throws an exception when adding values that have the wrong number 
   parameterPath <- "Organism|MyParameter"
   expect_error(
     population$setParameterValues(parameterPath, c(1:5) * 2.5),
-    regexp = "Parameter values for 'Organism\\|MyParameter' does not have the expected number of elements. \\(Expected 10 vs Actual 5\\)"
+    regexp = "Parameter values for.*Organism\\|MyParameter.*does not have the expected number of elements.*Expected 10 vs Actual 5"
   )
 })
 

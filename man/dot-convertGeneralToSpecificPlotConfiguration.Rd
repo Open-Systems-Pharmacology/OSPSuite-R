@@ -41,10 +41,10 @@ ospsuite:::.convertGeneralToSpecificPlotConfiguration(
 
 }
 \seealso{
-Other utilities-plotting: 
-\code{\link{.addMissingGroupings}()},
-\code{\link{.createAxesLabels}()},
-\code{\link{.extractAggregatedSimulatedData}()}
+Other utilities-plotting:
+\code{\link[=.addMissingGroupings]{.addMissingGroupings()}},
+\code{\link[=.createAxesLabels]{.createAxesLabels()}},
+\code{\link[=.extractAggregatedSimulatedData]{.extractAggregatedSimulatedData()}}
 }
 \concept{utilities-plotting}
 \keyword{internal}

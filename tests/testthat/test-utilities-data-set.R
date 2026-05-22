@@ -539,7 +539,7 @@ test_that("dataSetsFromDataFrame errors when required columns are missing", {
   df <- data.frame(xValues = 1, yValues = 2)
   expect_error(
     dataSetsFromDataFrame(df),
-    regexp = "The following required columns are missing from the data frame: name"
+    regexp = "1 required column is missing from the data.frame.*name"
   )
 })
 
@@ -552,7 +552,7 @@ test_that("dataSetsFromDataFrame errors when name column contains NA", {
   )
   expect_error(
     dataSetsFromDataFrame(df),
-    regexp = "The 'name' column must not contain NA or empty string values."
+    regexp = "The.*name.*column must not contain NA or empty string values"
   )
 })
 
@@ -565,7 +565,7 @@ test_that("dataSetsFromDataFrame errors when name column contains empty strings"
   )
   expect_error(
     dataSetsFromDataFrame(df),
-    regexp = "The 'name' column must not contain NA or empty string values."
+    regexp = "The.*name.*column must not contain NA or empty string values"
   )
 })
 

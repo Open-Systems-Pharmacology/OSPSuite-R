@@ -281,7 +281,11 @@ SimulationConfiguration <- R6::R6Class(
           "selectedParameterValues"
         )
       }
-      validateIsOfType(individual, "IndividualBuildingBlock", nullAllowed = TRUE)
+      validateIsOfType(
+        individual,
+        "IndividualBuildingBlock",
+        nullAllowed = TRUE
+      )
       validateIsOfType(expressionProfiles, "BuildingBlock", nullAllowed = TRUE)
       # Coerce a single BuildingBlock into a 1-element list. R6 objects are
       # environments and would not iterate correctly otherwise.

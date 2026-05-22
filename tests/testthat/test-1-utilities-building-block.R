@@ -1330,3 +1330,142 @@ test_that("loadBuildingBlockFromPKML errors when no BB type can be auto-detected
     regexp = "Could not auto-detect"
   )
 })
+
+# createInitialConditionsBuildingBlock ----
+
+test_that("createInitialConditionsBuildingBlock returns an empty IC BB with default name", {
+  icBB <- createInitialConditionsBuildingBlock()
+  expect_s3_class(icBB, "BuildingBlock")
+  expect_equal(icBB$type, BuildingBlockTypes$`Initial Conditions`)
+  expect_equal(icBB$name, "Initial Conditions")
+  expect_equal(nrow(initialConditionsBBToDataFrame(icBB)), 0)
+})
+
+test_that("createInitialConditionsBuildingBlock honors custom name", {
+  icBB <- createInitialConditionsBuildingBlock(name = "My ICs")
+  expect_equal(icBB$name, "My ICs")
+})
+
+test_that("createInitialConditionsBuildingBlock rejects non-string name", {
+  expect_error(
+    createInitialConditionsBuildingBlock(name = 1),
+    regexp = "expected <character>"
+  )
+})
+
+test_that("createInitialConditionsBuildingBlock rejects empty-string name", {
+  expect_error(
+    createInitialConditionsBuildingBlock(name = ""),
+    regexp = "empty strings"
+  )
+})
+
+test_that("createInitialConditionsBuildingBlock rejects NULL name", {
+  expect_error(
+    createInitialConditionsBuildingBlock(name = NULL),
+    regexp = "expected <character>"
+  )
+})
+
+test_that("empty IC BB accepts new entries via setInitialConditionsInBB", {
+  icBB <- createInitialConditionsBuildingBlock()
+  setInitialConditionsInBB(
+    icBB,
+    quantityPaths = "Organism|Liver|A",
+    quantityValues = 1.5
+  )
+  df <- initialConditionsBBToDataFrame(icBB)
+  expect_equal(nrow(df), 1)
+  expect_equal(df$Value, 1.5)
+})
+
+test_that("empty IC BB can be added to a module via createMoBiModule", {
+  icBB <- createInitialConditionsBuildingBlock(name = "IC1")
+  module <- createMoBiModule("M", buildingBlocks = icBB)
+  expect_equal(module$initialConditionsBBnames, "IC1")
+})
+
+test_that("empty IC BB round-trips through pkml", {
+  icBB <- createInitialConditionsBuildingBlock(name = "RoundTrip")
+  tmp <- tempfile(fileext = ".pkml")
+  on.exit(unlink(tmp), add = TRUE)
+
+  saveInitialConditionsToPKML(icBB, tmp)
+  loaded <- loadBuildingBlockFromPKML(
+    tmp,
+    type = BuildingBlockTypes$`Initial Conditions`
+  )
+
+  expect_equal(loaded$name, "RoundTrip")
+  expect_equal(nrow(initialConditionsBBToDataFrame(loaded)), 0)
+})
+
+# createParameterValuesBuildingBlock ----
+
+test_that("createParameterValuesBuildingBlock returns an empty PV BB with default name", {
+  pvBB <- createParameterValuesBuildingBlock()
+  expect_s3_class(pvBB, "BuildingBlock")
+  expect_equal(pvBB$type, BuildingBlockTypes$`Parameter Values`)
+  expect_equal(pvBB$name, "Parameter Values")
+  expect_equal(nrow(parameterValuesBBToDataFrame(pvBB)), 0)
+})
+
+test_that("createParameterValuesBuildingBlock honors custom name", {
+  pvBB <- createParameterValuesBuildingBlock(name = "My PVs")
+  expect_equal(pvBB$name, "My PVs")
+})
+
+test_that("createParameterValuesBuildingBlock rejects non-string name", {
+  expect_error(
+    createParameterValuesBuildingBlock(name = 1),
+    regexp = "expected <character>"
+  )
+})
+
+test_that("createParameterValuesBuildingBlock rejects empty-string name", {
+  expect_error(
+    createParameterValuesBuildingBlock(name = ""),
+    regexp = "empty strings"
+  )
+})
+
+test_that("createParameterValuesBuildingBlock rejects NULL name", {
+  expect_error(
+    createParameterValuesBuildingBlock(name = NULL),
+    regexp = "expected <character>"
+  )
+})
+
+test_that("empty PV BB accepts new entries via setParameterValuesInBB", {
+  pvBB <- createParameterValuesBuildingBlock()
+  setParameterValuesInBB(
+    pvBB,
+    quantityPaths = "Organism|Liver|Volume",
+    quantityValues = 2.0,
+    units = "l"
+  )
+  df <- parameterValuesBBToDataFrame(pvBB)
+  expect_equal(nrow(df), 1)
+  expect_equal(df$Value, 2.0)
+})
+
+test_that("empty PV BB can be added to a module via createMoBiModule", {
+  pvBB <- createParameterValuesBuildingBlock(name = "PV1")
+  module <- createMoBiModule("M", buildingBlocks = pvBB)
+  expect_equal(module$parameterValuesBBnames, "PV1")
+})
+
+test_that("empty PV BB round-trips through pkml", {
+  pvBB <- createParameterValuesBuildingBlock(name = "RoundTrip")
+  tmp <- tempfile(fileext = ".pkml")
+  on.exit(unlink(tmp), add = TRUE)
+
+  saveParameterValuesToPKML(pvBB, tmp)
+  loaded <- loadBuildingBlockFromPKML(
+    tmp,
+    type = BuildingBlockTypes$`Parameter Values`
+  )
+
+  expect_equal(loaded$name, "RoundTrip")
+  expect_equal(nrow(parameterValuesBBToDataFrame(loaded)), 0)
+})

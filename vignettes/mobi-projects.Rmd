@@ -168,6 +168,42 @@ autoLoadedBB <- loadBuildingBlockFromPKML(filePath = tmpFile)
 print(autoLoadedBB)
 ```
 
+## Creating empty Initial Conditions and Parameter Values building blocks
+
+Initial Conditions (IC) and Parameter Values (PV) building blocks can also be created from scratch and populated programmatically. Both `createInitialConditionsBuildingBlock()` and `createParameterValuesBuildingBlock()` accept an optional `name`; the returned building block is empty and ready to receive entries.
+
+```{r createEmptyICPVBBs}
+icBB <- createInitialConditionsBuildingBlock(name = "My ICs")
+pvBB <- createParameterValuesBuildingBlock(name = "My PVs")
+
+# Populate the IC BB with a single entry
+setInitialConditionsInBB(
+  icBB,
+  quantityPaths = "Organism|Liver|Periportal|Intracellular|Aciclovir",
+  quantityValues = 1.0
+)
+
+# Populate the PV BB with a single entry
+setParameterValuesInBB(
+  pvBB,
+  quantityPaths = "Organism|Liver|Volume",
+  quantityValues = 2.0,
+  units = "l"
+)
+```
+
+The freshly created building blocks can be passed directly to `createMoBiModule()`:
+
+```{r emptyICPVInModule}
+customModule <- createMoBiModule(
+  name = "CustomModule",
+  buildingBlocks = list(icBB, pvBB)
+)
+
+print(customModule$initialConditionsBBnames)
+print(customModule$parameterValuesBBnames)
+```
+
 ## Creating a MoBi module from R
 
 A new module can be assembled directly from R with `createMoBiModule()`. The function creates an empty module by default; building blocks can either be passed at creation time via the `buildingBlocks` argument or added later via `MoBiModule$addBuildingBlocks()`. Building blocks are removed individually via `MoBiModule$removeBuildingBlock()`.

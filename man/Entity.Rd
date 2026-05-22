@@ -8,18 +8,18 @@
 Abstract wrapper for an OSPSuite.Core Entity class
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{Entity}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ObjectBase}} -> \code{Entity}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{path}}{The path of the entity in the container hierarchy without the simulation name. (read-only)}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{path}}{The path of the entity in the container hierarchy without the simulation name. (read-only)}
 
-\item{\code{fullPath}}{Same as \code{path}, but with the simulation name. (read-only)}
+    \item{\code{fullPath}}{Same as \code{path}, but with the simulation name. (read-only)}
 
-\item{\code{parentContainer}}{Returns a new wrapper instance to the .NET parent container. Multiple call to this method
+    \item{\code{parentContainer}}{Returns a new wrapper instance to the .NET parent container. Multiple call to this method
 will always return the same instance. However two children of the same parent will return two different instances of \code{Container}
 pointing to the same .NET container}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
