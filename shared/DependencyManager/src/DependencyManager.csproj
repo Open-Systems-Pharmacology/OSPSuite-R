@@ -8,8 +8,8 @@
   </PropertyGroup>
 
    <ItemGroup>
-      <PackageReference Include="MoBi.R" Version="13.0.109" />
-      <PackageReference Include="PKSim.R" Version="13.0.70" GeneratePathProperty="true" />
+      <PackageReference Include="MoBi.R" Version="13.0.111" />
+      <PackageReference Include="PKSim.R" Version="13.0.71" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.FuncParser" Version="5.0.0.3" />
       <PackageReference Include="OSPSuite.SimModel" Version="5.0.0.76" />
       <PackageReference Include="OSPSuite.SimModelSolver_CVODES" Version="5.0.0.53" />
@@ -99,7 +99,6 @@
       <AllowedAssembly Include="SQLitePCLRaw.batteries_v2" />
       <AllowedAssembly Include="SQLitePCLRaw.core" />
       <AllowedAssembly Include="SQLitePCLRaw.provider.e_sqlite3" />
-      <AllowedAssembly Include="SkiaSharp" />
       <AllowedAssembly Include="System.Configuration.ConfigurationManager" />
       <AllowedAssembly Include="System.Formats.Nrbf" />
       <AllowedAssembly Include="ZString" />
@@ -116,13 +115,17 @@
       </ItemGroup>
       <Copy SourceFiles="@(AssemblyFiles); @(NativeMacFiles); @(NativeLinuxFiles); @(ConfigFiles); @(PKSimDataBaseFile)" DestinationFolder="$(SolutionDir)..\..\inst\lib\" />
 
-      <!-- Allow-list enforcement: delete any inst/lib *.dll whose name is not in @(AllowedAssembly). -->
+      <!-- Allow-list enforcement: delete any inst/lib binary (managed *.dll OR
+           native *.so / *.dylib) whose name is not in @(AllowedAssembly).
+           Native files follow the Unix lib<Name>.so / lib<Name>.dylib convention. -->
       <ItemGroup>
-         <_ShippedDll Include="$(SolutionDir)..\..\inst\lib\*.dll" />
+         <_Shipped Include="$(SolutionDir)..\..\inst\lib\*.dll;$(SolutionDir)..\..\inst\lib\*.so;$(SolutionDir)..\..\inst\lib\*.dylib" />
          <_AllowedPath Include="@(AllowedAssembly->'$(SolutionDir)..\..\inst\lib\%(Identity).dll')" />
-         <_DeniedDll Include="@(_ShippedDll)" Exclude="@(_AllowedPath)" />
+         <_AllowedPath Include="@(AllowedAssembly->'$(SolutionDir)..\..\inst\lib\lib%(Identity).so')" />
+         <_AllowedPath Include="@(AllowedAssembly->'$(SolutionDir)..\..\inst\lib\lib%(Identity).dylib')" />
+         <_Denied Include="@(_Shipped)" Exclude="@(_AllowedPath)" />
       </ItemGroup>
-      <Message Importance="high" Text="Allow-list sweep: deleting %(_DeniedDll.Filename)%(_DeniedDll.Extension)" Condition="'@(_DeniedDll)' != ''" />
-      <Delete Files="@(_DeniedDll)" />
+      <Message Importance="high" Text="Allow-list sweep: deleting %(_Denied.Filename)%(_Denied.Extension)" Condition="'@(_Denied)' != ''" />
+      <Delete Files="@(_Denied)" />
    </Target>
 </Project>
