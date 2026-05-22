@@ -4,16 +4,14 @@ Configuration of a simulation. Contains description of the modules used
 for the simulation, selected Parameter Values (PV) and Initial
 Conditions (IC), and molecule calculation methods.
 
-## Value
-
-A new `SimulationConfiguration` object.
-
 ## Active bindings
 
 - `individual`:
 
-  A building block of type "Individual" used in the configuration. Can
-  be `NULL` if no Individual should be applied.
+  An
+  [IndividualBuildingBlock](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/IndividualBuildingBlock.md)
+  used in the configuration. Can be `NULL` if no Individual should be
+  applied.
 
 - `expressionProfiles`:
 
@@ -24,9 +22,10 @@ A new `SimulationConfiguration` object.
 
   A named list of `MoBiModule` objects from which to create the
   simulation. The order of modules defines the order in which the
-  modules will be combined to a simulation! When setting the modules,
-  the selection of Initial Conditions and Parameter Values is reset to
-  the first available ones in the modules.
+  modules will be combined to a simulation! Replacing `modules` does not
+  automatically reset `selectedInitialConditions` or
+  `selectedParameterValues`. Reassign those fields explicitly if the new
+  modules do not contain the previously selected building blocks.
 
 - `selectedInitialConditions`:
 
@@ -67,7 +66,7 @@ A new `SimulationConfiguration` object.
 
 ### Public methods
 
-- [`SimulationConfiguration$new()`](#method-SimulationConfiguration-new)
+- [`SimulationConfiguration$new()`](#method-SimulationConfiguration-initialize)
 
 - [`SimulationConfiguration$setPartitionCoefficientMethods()`](#method-SimulationConfiguration-setPartitionCoefficientMethods)
 
@@ -77,7 +76,7 @@ A new `SimulationConfiguration` object.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `SimulationConfiguration$new()`
 
 Initialize a new instance of the class
 
@@ -102,7 +101,8 @@ Initialize a new instance of the class
 
 - `individual`:
 
-  Optional, an individual building block
+  Optional, an
+  [IndividualBuildingBlock](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/IndividualBuildingBlock.md).
 
 - `expressionProfiles`:
 
@@ -115,9 +115,8 @@ Initialize a new instance of the class
   possible to specify which IC BB to apply by providing a named list,
   where the name should be the name of the module and the value the name
   of the IC BB. By explicitly setting the value for a specific module to
-  `NULL`, no IC BB from the specified module will be applied. If the
-  list contains a module name that is not part of the provided modules,
-  it will be ignored.
+  `NULL`, no IC BB from the specified module will be applied. Names that
+  do not match any module passed via `modules` raise an error.
 
 - `selectedParameterValues`:
 
@@ -126,9 +125,8 @@ Initialize a new instance of the class
   possible to specify which PV BB to apply by providing a named list,
   where the name should be the name of the module and the value the name
   of the PV BB. By explicitly setting the value for a specific module to
-  `NULL`, no PV BB from the specified module will be applied. If the
-  list contains a module name that is not part of the provided modules,
-  it will be ignored.
+  `NULL`, no PV BB from the specified module will be applied. Names that
+  do not match any module passed via `modules` raise an error.
 
 - `settings`:
 
@@ -136,9 +134,13 @@ Initialize a new instance of the class
   settings. If no settings are provided, default settings will be used
   upon simulation creation.
 
+#### Returns
+
+A new `SimulationConfiguration` object.
+
 ------------------------------------------------------------------------
 
-### Method `setPartitionCoefficientMethods()`
+### `SimulationConfiguration$setPartitionCoefficientMethods()`
 
 Sets the method used for calculation of partition coefficients. This
 method can be used to specify the partition coefficient method for each
@@ -169,7 +171,7 @@ present will be used.
 
 ------------------------------------------------------------------------
 
-### Method `setCellularPermeabilityMethods()`
+### `SimulationConfiguration$setCellularPermeabilityMethods()`
 
 Sets the method used for calculation of cellular permeabilities. This
 method can be used to specify the cellular permeability method for each
@@ -200,7 +202,7 @@ present will be used.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `SimulationConfiguration$print()`
 
 Print the object to the console
 

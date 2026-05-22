@@ -7,18 +7,18 @@ A `Molecules` building block. Subclass of
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\>
-[`ospsuite::ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
+[`ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
 -\>
-[`ospsuite::BuildingBlock`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/BuildingBlock.md)
+[`BuildingBlock`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/BuildingBlock.md)
 -\> `MoleculesBuildingBlock`
 
 ## Methods
 
 ### Public methods
 
-- [`MoleculesBuildingBlock$new()`](#method-MoleculesBuildingBlock-new)
+- [`MoleculesBuildingBlock$new()`](#method-MoleculesBuildingBlock-initialize)
 
 - [`MoleculesBuildingBlock$allMoleculeNames()`](#method-MoleculesBuildingBlock-allMoleculeNames)
 
@@ -36,23 +36,23 @@ A `Molecules` building block. Subclass of
 
 Inherited methods
 
-- [`rSharp::NetObject$.printClass()`](https://www.open-systems-pharmacology.org/OSPSuite-R/rSharp/html/NetObject.html#method-NetObject-.printClass)
-- [`rSharp::NetObject$.printLine()`](https://www.open-systems-pharmacology.org/OSPSuite-R/rSharp/html/NetObject.html#method-NetObject-.printLine)
-- [`rSharp::NetObject$call()`](https://www.open-systems-pharmacology.org/OSPSuite-R/rSharp/html/NetObject.html#method-NetObject-call)
-- [`rSharp::NetObject$get()`](https://www.open-systems-pharmacology.org/OSPSuite-R/rSharp/html/NetObject.html#method-NetObject-get)
-- [`rSharp::NetObject$getFields()`](https://www.open-systems-pharmacology.org/OSPSuite-R/rSharp/html/NetObject.html#method-NetObject-getFields)
-- [`rSharp::NetObject$getMemberSignature()`](https://www.open-systems-pharmacology.org/OSPSuite-R/rSharp/html/NetObject.html#method-NetObject-getMemberSignature)
-- [`rSharp::NetObject$getMethods()`](https://www.open-systems-pharmacology.org/OSPSuite-R/rSharp/html/NetObject.html#method-NetObject-getMethods)
-- [`rSharp::NetObject$getProperties()`](https://www.open-systems-pharmacology.org/OSPSuite-R/rSharp/html/NetObject.html#method-NetObject-getProperties)
-- [`rSharp::NetObject$getStaticFields()`](https://www.open-systems-pharmacology.org/OSPSuite-R/rSharp/html/NetObject.html#method-NetObject-getStaticFields)
-- [`rSharp::NetObject$getStaticMethods()`](https://www.open-systems-pharmacology.org/OSPSuite-R/rSharp/html/NetObject.html#method-NetObject-getStaticMethods)
-- [`rSharp::NetObject$getStaticProperties()`](https://www.open-systems-pharmacology.org/OSPSuite-R/rSharp/html/NetObject.html#method-NetObject-getStaticProperties)
-- [`rSharp::NetObject$set()`](https://www.open-systems-pharmacology.org/OSPSuite-R/rSharp/html/NetObject.html#method-NetObject-set)
-- [`ospsuite::BuildingBlock$print()`](https://www.open-systems-pharmacology.org/OSPSuite-R/ospsuite/html/BuildingBlock.html#method-BuildingBlock-print)
+- [`rSharp::NetObject$.printClass()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printClass)
+- [`rSharp::NetObject$.printLine()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine)
+- [`rSharp::NetObject$call()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call)
+- [`rSharp::NetObject$get()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-get)
+- [`rSharp::NetObject$getFields()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getFields)
+- [`rSharp::NetObject$getMemberSignature()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMemberSignature)
+- [`rSharp::NetObject$getMethods()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMethods)
+- [`rSharp::NetObject$getProperties()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getProperties)
+- [`rSharp::NetObject$getStaticFields()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticFields)
+- [`rSharp::NetObject$getStaticMethods()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods)
+- [`rSharp::NetObject$getStaticProperties()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties)
+- [`rSharp::NetObject$set()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set)
+- [`BuildingBlock$print()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/BuildingBlock.html#method-print)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `MoleculesBuildingBlock$new()`
 
 Initialize a new instance of the class.
 
@@ -72,7 +72,7 @@ A new `MoleculesBuildingBlock` object.
 
 ------------------------------------------------------------------------
 
-### Method `allMoleculeNames()`
+### `MoleculesBuildingBlock$allMoleculeNames()`
 
 Returns the names of all molecules defined in the building block.
 
@@ -86,7 +86,7 @@ Character vector of molecule names.
 
 ------------------------------------------------------------------------
 
-### Method `allFloatingMoleculeNames()`
+### `MoleculesBuildingBlock$allFloatingMoleculeNames()`
 
 Returns the names of all floating molecules in the building block
 (molecules with `IsFloating = TRUE`, e.g. drugs, metabolites).
@@ -101,7 +101,7 @@ Character vector of molecule names.
 
 ------------------------------------------------------------------------
 
-### Method `allStationaryMoleculeNames()`
+### `MoleculesBuildingBlock$allStationaryMoleculeNames()`
 
 Returns the names of all stationary molecules in the building block
 (molecules with `IsFloating = FALSE`, e.g. enzymes, transporters).
@@ -116,7 +116,7 @@ Character vector of molecule names.
 
 ------------------------------------------------------------------------
 
-### Method `allMoleculeNamesOfType()`
+### `MoleculesBuildingBlock$allMoleculeNamesOfType()`
 
 Returns the names of all molecules of the given type. Pass
 `MoleculeType$Protein` to obtain all proteins (the union of `Enzyme`,
@@ -140,7 +140,7 @@ Character vector of molecule names.
 
 ------------------------------------------------------------------------
 
-### Method `allXenobioticFloatingMoleculeNames()`
+### `MoleculesBuildingBlock$allXenobioticFloatingMoleculeNames()`
 
 Returns the names of all xenobiotic floating molecules in the building
 block (e.g. drugs, drug complexes).
@@ -155,7 +155,7 @@ Character vector of molecule names.
 
 ------------------------------------------------------------------------
 
-### Method `allEndogenousStationaryMoleculeNames()`
+### `MoleculesBuildingBlock$allEndogenousStationaryMoleculeNames()`
 
 Returns the names of all endogenous stationary molecules in the building
 block (e.g. enzymes, transporters, other proteins).
@@ -170,7 +170,7 @@ Character vector of molecule names.
 
 ------------------------------------------------------------------------
 
-### Method `moleculeTypeFor()`
+### `MoleculesBuildingBlock$moleculeTypeFor()`
 
 Returns the type of a molecule by name as it is recorded in the building
 block (e.g. `"Drug"`, `"Enzyme"`, `"Transporter"`, `"Binding Partner"`).

@@ -84,7 +84,9 @@ createIndividualBuildingBlock(
 
 ## Value
 
-An object of type `BuildingBlock` representing the created individual.
+An
+[IndividualBuildingBlock](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/IndividualBuildingBlock.md)
+representing the created individual.
 
 ## Examples
 

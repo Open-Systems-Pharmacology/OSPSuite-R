@@ -7,7 +7,3 @@ Allowed categories for expression profiles
 ``` r
 ExpressionProfileCategories
 ```
-
-## Format
-
-An object of class `list` of length 3.

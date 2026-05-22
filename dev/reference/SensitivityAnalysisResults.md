@@ -7,7 +7,7 @@ simulation).
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `SensitivityAnalysisResults`
 
 ## Active bindings
@@ -35,7 +35,7 @@ simulation).
 
 ### Public methods
 
-- [`SensitivityAnalysisResults$new()`](#method-SensitivityAnalysisResults-new)
+- [`SensitivityAnalysisResults$new()`](#method-SensitivityAnalysisResults-initialize)
 
 - [`SensitivityAnalysisResults$allPKParameterSensitivitiesFor()`](#method-SensitivityAnalysisResults-allPKParameterSensitivitiesFor)
 
@@ -60,7 +60,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `SensitivityAnalysisResults$new()`
 
 Initialize a new instance of the class
 
@@ -84,7 +84,7 @@ A new `SensitivityAnalysisResults` object.
 
 ------------------------------------------------------------------------
 
-### Method `allPKParameterSensitivitiesFor()`
+### `SensitivityAnalysisResults$allPKParameterSensitivitiesFor()`
 
 Returns the `PKParameterSensitivity` for a given `pkParameter` and
 output participating to a total sensitivity greater or equal to
@@ -124,7 +124,7 @@ output participating to a total sensitivity greater or equal to
 
 ------------------------------------------------------------------------
 
-### Method `pkParameterSensitivityValueFor()`
+### `SensitivityAnalysisResults$pkParameterSensitivityValueFor()`
 
 Returns the sensitivity value for a given `pkParameter`, output and
 model parameter (either by path or by name). If the sensitivity result
@@ -161,7 +161,7 @@ does not exist, returns `NaN`.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `SensitivityAnalysisResults$print()`
 
 Print the object to the console
 

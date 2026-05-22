@@ -8,7 +8,3 @@ per-molecule basis in a simulation configuration.
 ``` r
 CalculationMethodCategories
 ```
-
-## Format
-
-An object of class `list` of length 2.

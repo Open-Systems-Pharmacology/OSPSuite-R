@@ -19,7 +19,7 @@ Transforming data with given offsets and scale factors.
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9026</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,10 @@ Transforming data with given offsets and scale factors.
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -66,7 +69,7 @@ Transforming data with given offsets and scale factors.
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Object combining simulated and observed data</h1>
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/R/data-combined.R" class="external-link"><code>R/data-combined.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/R/data-combined.R" class="external-link"><code>R/data-combined.R</code></a></small>
       <div class="d-none name"><code>DataCombined.Rd</code></div>
     </div>
 
@@ -96,14 +99,14 @@ can be further used in data wrangling or data visualization pipelines.</p>
 <code>DataCombined</code> class instance.</p></dd>
 
 
-<dt><code>groupMap</code></dt>
+    <dt><code>groupMap</code></dt>
 <dd><p>A data frame specifying which datasets have been grouped
 together and the name and the nature (observed or simulated?) of the
 data. If a dataset was not assigned to any group, this is denoted by
 <code>NA</code> in the data frame.</p></dd>
 
 
-<dt><code>dataTransformations</code></dt>
+    <dt><code>dataTransformations</code></dt>
 <dd><p>A data frame with offset and scale factor
 values were specified by the user for each dataset.</p></dd>
 
@@ -115,8 +118,7 @@ values were specified by the user for each dataset.</p></dd>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-DataCombined-addDataSets"><code>DataCombined$addDataSets()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-DataCombined-addDataSets"><code>DataCombined$addDataSets()</code></a></p></li>
 <li><p><a href="#method-DataCombined-addSimulationResults"><code>DataCombined$addSimulationResults()</code></a></p></li>
 <li><p><a href="#method-DataCombined-setGroups"><code>DataCombined$setGroups()</code></a></p></li>
 <li><p><a href="#method-DataCombined-setDataTypes"><code>DataCombined$setDataTypes()</code></a></p></li>
@@ -126,20 +128,17 @@ values were specified by the user for each dataset.</p></dd>
 <li><p><a href="#method-DataCombined-print"><code>DataCombined$print()</code></a></p></li>
 <li><p><a href="#method-DataCombined-clone"><code>DataCombined$clone()</code></a></p></li>
 </ul></div><p></p><hr><a id="method-DataCombined-addDataSets"></a><div class="section">
-<h3 id="method-adddatasets-">Method <code>addDataSets()</code><a class="anchor" aria-label="anchor" href="#method-adddatasets-"></a></h3>
+<h3 id="datacombined-adddatasets-"><code>DataCombined$addDataSets()</code><a class="anchor" aria-label="anchor" href="#datacombined-adddatasets-"></a></h3>
 <p>Adds observed data.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">addDataSets</span><span class="op">(</span><span class="va">dataSets</span>, names <span class="op">=</span> <span class="cn">NULL</span>, groups <span class="op">=</span> <span class="cn">NULL</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>dataSets</code></dt>
 <dd><p>An instance (or a <code>list</code> of instances) of the <code>DataSet</code>
 class.</p></dd>
 
-
-<dt><code>names</code></dt>
+      <dt><code>names</code></dt>
 <dd><p>A string or a <code>list</code> of strings assigning new names. These new
 names can be either for renaming <code>DataSet</code> objects, or for renaming
 quantities/paths in <code>SimulationResults</code> object. If an entity is not to be
@@ -148,8 +147,7 @@ be renamed. The list can either be named or unnamed. Names act as unique
 identifiers for data sets in the <code>DataCombined</code> object and, therefore,
 duplicate names are not allowed.</p></dd>
 
-
-<dt><code>groups</code></dt>
+      <dt><code>groups</code></dt>
 <dd><p>A string or a list of strings specifying group name
 corresponding to each data set. If an entry within the list is <code>NULL</code>, the
 corresponding data set is not assigned to any group (and the corresponding
@@ -158,21 +156,21 @@ have the same length as <code>dataSets</code> and/or <code>simulationResults$qua
 If no grouping is specified for any of the dataset, the column <code>group</code> in
 the data frame output will be all <code>NA</code>.</p></dd>
 
-
-<dt><code>silent</code></dt>
+      <dt><code>silent</code></dt>
 <dd><p>A binary flag showing if warnings should be triggered when
 data sets are overwritten in the <code>DataCombined</code> object</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p><code>DataCombined</code> object containing observed data.</p>
 </div>
 
-</div><p></p><hr><a id="method-DataCombined-addSimulationResults"></a><div class="section">
-<h3 id="method-addsimulationresults-">Method <code>addSimulationResults()</code><a class="anchor" aria-label="anchor" href="#method-addsimulationresults-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-DataCombined-addSimulationResults"></a><div class="section">
+<h3 id="datacombined-addsimulationresults-"><code>DataCombined$addSimulationResults()</code><a class="anchor" aria-label="anchor" href="#datacombined-addsimulationresults-"></a></h3>
 <p>Add simulated data using instance of <code>SimulationResults</code> class.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">addSimulationResults</span><span class="op">(</span></span>
@@ -184,16 +182,13 @@ data sets are overwritten in the <code>DataCombined</code> object</p></dd>
 <span>  groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  silent <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>simulationResults</code></dt>
 <dd><p>Object of type <code>SimulationResults</code> produced by
 calling <code>runSimulations</code> on a <code>Simulation</code> object.</p></dd>
 
-
-<dt><code>quantitiesOrPaths</code></dt>
+      <dt><code>quantitiesOrPaths</code></dt>
 <dd><p>Quantity instances (element or vector) typically
 retrieved using <code>getAllQuantitiesMatching</code> or quantity path (element or
 vector of strings) for which the results are to be returned. (optional)
@@ -201,21 +196,18 @@ When providing the paths, only absolute full paths are supported (i.e., no
 matching with '*' possible). If quantitiesOrPaths is <code>NULL</code> (default
 value), returns the results for all output defined in the results.</p></dd>
 
-
-<dt><code>population</code></dt>
+      <dt><code>population</code></dt>
 <dd><p>population used to calculate the <code>simulationResults</code>
 (optional). This is used only to add the population covariates to the
 resulting data table.</p></dd>
 
-
-<dt><code>individualIds</code></dt>
+      <dt><code>individualIds</code></dt>
 <dd><p><code>numeric</code> IDs of individuals for which the results
 should be extracted. By default, all individuals from the results are
 considered. If the individual with the provided ID is not found, the ID is
 ignored.</p></dd>
 
-
-<dt><code>names</code></dt>
+      <dt><code>names</code></dt>
 <dd><p>A string or a <code>list</code> of strings assigning new names. These new
 names can be either for renaming <code>DataSet</code> objects, or for renaming
 quantities/paths in <code>SimulationResults</code> object. If an entity is not to be
@@ -224,8 +216,7 @@ be renamed. The list can either be named or unnamed. Names act as unique
 identifiers for data sets in the <code>DataCombined</code> object and, therefore,
 duplicate names are not allowed.</p></dd>
 
-
-<dt><code>groups</code></dt>
+      <dt><code>groups</code></dt>
 <dd><p>A string or a list of strings specifying group name
 corresponding to each data set. If an entry within the list is <code>NULL</code>, the
 corresponding data set is not assigned to any group (and the corresponding
@@ -234,27 +225,25 @@ have the same length as <code>dataSets</code> and/or <code>simulationResults$qua
 If no grouping is specified for any of the dataset, the column <code>group</code> in
 the data frame output will be all <code>NA</code>.</p></dd>
 
-
-<dt><code>silent</code></dt>
+      <dt><code>silent</code></dt>
 <dd><p>A binary flag showing if warnings should be triggered when
 data sets are overwritten in the <code>DataCombined</code> object</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
 <p><code>DataCombined</code> object containing simulated data.</p>
 </div>
 
-</div><p></p><hr><a id="method-DataCombined-setGroups"></a><div class="section">
-<h3 id="method-setgroups-">Method <code>setGroups()</code><a class="anchor" aria-label="anchor" href="#method-setgroups-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-DataCombined-setGroups"></a><div class="section">
+<h3 id="datacombined-setgroups-"><code>DataCombined$setGroups()</code><a class="anchor" aria-label="anchor" href="#datacombined-setgroups-"></a></h3>
 <p>Adds grouping information to (observed and/or simulated) datasets.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">setGroups</span><span class="op">(</span><span class="va">names</span>, <span class="va">groups</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>names</code></dt>
 <dd><p>A list of dataset names which need to be grouped. Note that
@@ -265,8 +254,7 @@ can't be assigned to two different groupings in the <em>same</em>
 <code>$setGroups()</code> call. In other words, elements of <code>names</code> argument
 should be unique.</p></dd>
 
-
-<dt><code>groups</code></dt>
+      <dt><code>groups</code></dt>
 <dd><p>A list specifying which datasets belong to which group(s).
 Please note that the order in which groups are specified should match
 the order in which datasets were specified for <code>names</code> parameter. For
@@ -282,46 +270,43 @@ other groupings.</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
 <p><code>DataCombined</code> object with grouped datasets.</p>
 </div>
 
-</div><p></p><hr><a id="method-DataCombined-setDataTypes"></a><div class="section">
-<h3 id="method-setdatatypes-">Method <code>setDataTypes()</code><a class="anchor" aria-label="anchor" href="#method-setdatatypes-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-DataCombined-setDataTypes"></a><div class="section">
+<h3 id="datacombined-setdatatypes-"><code>DataCombined$setDataTypes()</code><a class="anchor" aria-label="anchor" href="#datacombined-setdatatypes-"></a></h3>
 <p>set the type of data (observed or simulated) for datasets.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">setDataTypes</span><span class="op">(</span><span class="va">names</span>, <span class="va">dataTypes</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>names</code></dt>
 <dd><p>a character vector of dataset names which dataTypes need to
 be changed.</p></dd>
 
-
-<dt><code>dataTypes</code></dt>
+      <dt><code>dataTypes</code></dt>
 <dd><p>a character vector of dataTypes (<code>"observed"</code> or
 <code>"simulated"</code>) to be assigned to the datasets (in order of <code>names</code>.</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
 <p><code>DataCombined</code> object with modified dataTypes datasets.</p>
 </div>
 
-</div><p></p><hr><a id="method-DataCombined-removeGroupAssignment"></a><div class="section">
-<h3 id="method-removegroupassignment-">Method <code>removeGroupAssignment()</code><a class="anchor" aria-label="anchor" href="#method-removegroupassignment-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-DataCombined-removeGroupAssignment"></a><div class="section">
+<h3 id="datacombined-removegroupassignment-"><code>DataCombined$removeGroupAssignment()</code><a class="anchor" aria-label="anchor" href="#datacombined-removegroupassignment-"></a></h3>
 <p>Remove existing groupings for (observed and/or simulated) datasets.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">removeGroupAssignment</span><span class="op">(</span><span class="va">names</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>names</code></dt>
 <dd><p>A list of dataset names whose group assignment needs to be
@@ -332,14 +317,15 @@ assignment. The elements of <code>names</code> argument should be unique.</p></d
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
 <p><code>DataCombined</code> object with updated group assignments.</p>
 </div>
 
-</div><p></p><hr><a id="method-DataCombined-setDataTransformations"></a><div class="section">
-<h3 id="method-setdatatransformations-">Method <code>setDataTransformations()</code><a class="anchor" aria-label="anchor" href="#method-setdatatransformations-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-DataCombined-setDataTransformations"></a><div class="section">
+<h3 id="datacombined-setdatatransformations-"><code>DataCombined$setDataTransformations()</code><a class="anchor" aria-label="anchor" href="#datacombined-setdatatransformations-"></a></h3>
 <p>Transform raw data with required offsets and scale factors.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">setDataTransformations</span><span class="op">(</span></span>
@@ -350,9 +336,7 @@ assignment. The elements of <code>names</code> argument should be unique.</p></d
 <span>  yScaleFactors <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  reset <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>forNames</code></dt>
 <dd><p>A list of names specifying which observed datasets and/or
@@ -360,16 +344,14 @@ paths in simulated dataset to transform with the specified
 transformations. Default is <code>NULL</code>, i.e., the transformations, if any
 specified, will be applied to all rows of the data frame.</p></dd>
 
-
-<dt><code>xOffsets, yOffsets, xScaleFactors, yScaleFactors</code></dt>
+      <dt><code>xOffsets, yOffsets, xScaleFactors, yScaleFactors</code></dt>
 <dd><p>Either a single
 numeric value or a list of numeric values specifying offsets and
 scale factors to apply to raw values. The default offset is <code>0</code>, while
 default scale factor is <code>1</code>, i.e., the data will not be modified. If a
 list is specified, it should be the same length as <code>forNames</code> argument.</p></dd>
 
-
-<dt><code>reset</code></dt>
+      <dt><code>reset</code></dt>
 <dd><p>IF <code>TRUE</code>, only data transformations that are specified will
 be retained. Not specified transformations will be reset to their defaults.
 Default behavior is <code>FALSE</code>, e.g., setting only <code>xOffsets</code> will not reset
@@ -377,19 +359,20 @@ Default behavior is <code>FALSE</code>, e.g., setting only <code>xOffsets</code>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h4>
 <p>A data frame with respective raw quantities transformed using specified
 offset and scale factor values.</p><ul><li><p>For X and Y variables:
 <code>newValue = (rawValue + offset) * scaleFactor</code></p></li>
 <li><p>For error term:
 <code>newErrorValue = rawErrorValue * scaleFactor</code></p></li>
-</ul></div>
+</ul><p></p>
+</div>
 
+</div>
 
-</div><p></p><hr><a id="method-DataCombined-toDataFrame"></a><div class="section">
-<h3 id="method-todataframe-">Method <code>toDataFrame()</code><a class="anchor" aria-label="anchor" href="#method-todataframe-"></a></h3>
+<p></p><hr><a id="method-DataCombined-toDataFrame"></a><div class="section">
+<h3 id="datacombined-todataframe-"><code>DataCombined$toDataFrame()</code><a class="anchor" aria-label="anchor" href="#datacombined-todataframe-"></a></h3>
 <p>A method to extract a tibble data frame of simulated and/or observed data
 (depending on instances of which classes have been added to the object).</p>
 <p>Note that the order in which you enter different object doesn't matter
@@ -397,31 +380,30 @@ because the returned data frame is arranged alphabetically by dataset
 name.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">toDataFrame</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
 <p>In the returned tibble data frame, the following columns will always be present:</p>
 <p>name - group - dataType - xValues - xDimension - xUnit - yValues -
 yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 </div>
 
-</div><p></p><hr><a id="method-DataCombined-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-DataCombined-print"></a><div class="section">
+<h3 id="datacombined-print-"><code>DataCombined$print()</code><a class="anchor" aria-label="anchor" href="#datacombined-print-"></a></h3>
 <p>Print the object to the console.</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-DataCombined-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+<p></p><hr><a id="method-DataCombined-clone"></a><div class="section">
+<h3 id="datacombined-clone-"><code>DataCombined$clone()</code><a class="anchor" aria-label="anchor" href="#datacombined-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -431,6 +413,7 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 </div>
 
 </div>
+
 
     </div>
 

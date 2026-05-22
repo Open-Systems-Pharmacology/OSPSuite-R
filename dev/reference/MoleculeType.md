@@ -11,7 +11,3 @@ Allowed types for molecules in a `Molecules` building block. Values are
 ``` r
 MoleculeType
 ```
-
-## Format
-
-An object of class `list` of length 7.

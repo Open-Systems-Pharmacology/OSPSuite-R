@@ -7,7 +7,3 @@ Available methods for calculation of cellular permeabilities.
 ``` r
 CellularPermeabilityMethods
 ```
-
-## Format
-
-An object of class `list` of length 3.

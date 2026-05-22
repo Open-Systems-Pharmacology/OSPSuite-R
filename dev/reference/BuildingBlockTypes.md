@@ -7,7 +7,3 @@ Types of building blocks supported.
 ``` r
 BuildingBlockTypes
 ```
-
-## Format
-
-An object of class `list` of length 10.

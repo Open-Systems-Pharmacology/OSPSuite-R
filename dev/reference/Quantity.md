@@ -7,11 +7,11 @@ Amount
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\>
-[`ospsuite::ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
+[`ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
 -\>
-[`ospsuite::Entity`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Entity.md)
+[`Entity`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Entity.md)
 -\> `Quantity`
 
 ## Active bindings
@@ -83,7 +83,7 @@ Amount
 
 ### Public methods
 
-- [`Quantity$new()`](#method-Quantity-new)
+- [`Quantity$new()`](#method-Quantity-initialize)
 
 - [`Quantity$print()`](#method-Quantity-print)
 
@@ -116,7 +116,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `Quantity$new()`
 
 Initialize a new instance of the class
 
@@ -136,7 +136,7 @@ A new `Quantity` object.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `Quantity$print()`
 
 Print the object to the console
 
@@ -152,7 +152,7 @@ Print the object to the console
 
 ------------------------------------------------------------------------
 
-### Method `printValue()`
+### `Quantity$printValue()`
 
 Print the name of the quantity and its value
 
@@ -162,7 +162,7 @@ Print the name of the quantity and its value
 
 ------------------------------------------------------------------------
 
-### Method `printQuantityValue()`
+### `Quantity$printQuantityValue()`
 
 Print the value (in scientific notation with 2 digits when needed) and
 unit of the quantity
@@ -179,7 +179,7 @@ unit of the quantity
 
 ------------------------------------------------------------------------
 
-### Method `getPrintValue()`
+### `Quantity$getPrintValue()`
 
 Return a string for printing the value (in scientific notation with 2
 digits when needed) and unit of the quantity
@@ -188,19 +188,13 @@ digits when needed) and unit of the quantity
 
     Quantity$getPrintValue()
 
-#### Arguments
-
-- `caption`:
-
-  Text to prepend to the value
-
 #### Returns
 
 A string for printing the quantity in one line
 
 ------------------------------------------------------------------------
 
-### Method `setValue()`
+### `Quantity$setValue()`
 
 Convert value from unit to the base unit and sets the value in base
 unit.
@@ -222,7 +216,7 @@ unit.
 
 ------------------------------------------------------------------------
 
-### Method [`hasUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/hasUnit.md)
+### `Quantity$hasUnit()`
 
 Returns `TRUE` if the quantity supports the given unit otherwise
 `FALSE`. For the list of supported units, use `allUnits`
@@ -239,7 +233,7 @@ Returns `TRUE` if the quantity supports the given unit otherwise
 
 ------------------------------------------------------------------------
 
-### Method `reset()`
+### `Quantity$reset()`
 
 Ensures that the quantity uses the value computed by its formula. It is
 a shortcut for `self$isFixedValue <- false`.

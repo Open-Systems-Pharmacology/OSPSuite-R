@@ -7,7 +7,3 @@ Standard parameter paths typically available in a PBPK simulation
 ``` r
 StandardPath
 ```
-
-## Format
-
-An object of class `list` of length 8.

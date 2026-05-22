@@ -7,7 +7,7 @@ simulation).
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `SimulationPKAnalyses`
 
 ## Active bindings
@@ -30,7 +30,7 @@ simulation).
 
 ### Public methods
 
-- [`SimulationPKAnalyses$new()`](#method-SimulationPKAnalyses-new)
+- [`SimulationPKAnalyses$new()`](#method-SimulationPKAnalyses-initialize)
 
 - [`SimulationPKAnalyses$allPKParametersFor()`](#method-SimulationPKAnalyses-allPKParametersFor)
 
@@ -55,7 +55,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `SimulationPKAnalyses$new()`
 
 Initialize a new instance of the class
 
@@ -79,7 +79,7 @@ A new `SimulationPKAnalyses` object.
 
 ------------------------------------------------------------------------
 
-### Method `allPKParametersFor()`
+### `SimulationPKAnalyses$allPKParametersFor()`
 
 Returns all QuantityPKParameter defined for a given path
 
@@ -95,7 +95,7 @@ Returns all QuantityPKParameter defined for a given path
 
 ------------------------------------------------------------------------
 
-### Method `pKParameterFor()`
+### `SimulationPKAnalyses$pKParameterFor()`
 
 The pK Parameter defined for the given path and name
 
@@ -115,7 +115,7 @@ The pK Parameter defined for the given path and name
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `SimulationPKAnalyses$print()`
 
 Print the object to the console
 

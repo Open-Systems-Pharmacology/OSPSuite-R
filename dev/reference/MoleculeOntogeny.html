@@ -9,7 +9,7 @@ allowing the user to retrieve potential ontogeny values."><meta name="robots" co
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9026</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,7 +22,10 @@ allowing the user to retrieve potential ontogeny values."><meta name="robots" co
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -56,7 +59,7 @@ allowing the user to retrieve potential ontogeny values."><meta name="robots" co
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>MoleculeOntogeny</h1>
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/R/molecule-ontogeny.R" class="external-link"><code>R/molecule-ontogeny.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/R/molecule-ontogeny.R" class="external-link"><code>R/molecule-ontogeny.R</code></a></small>
       <div class="d-none name"><code>MoleculeOntogeny.Rd</code></div>
     </div>
 
@@ -72,7 +75,7 @@ allowing the user to retrieve potential ontogeny values.</p>
 <dd><p>Name of the molecule in the model</p></dd>
 
 
-<dt><code>ontogeny</code></dt>
+    <dt><code>ontogeny</code></dt>
 <dd><p>Name of the ontogeny to use for the molecule</p></dd>
 
 
@@ -83,42 +86,37 @@ allowing the user to retrieve potential ontogeny values.</p>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-MoleculeOntogeny-new"><code>MoleculeOntogeny$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-MoleculeOntogeny-initialize"><code>MoleculeOntogeny$new()</code></a></p></li>
 <li><p><a href="#method-MoleculeOntogeny-print"><code>MoleculeOntogeny$print()</code></a></p></li>
 <li><p><a href="#method-MoleculeOntogeny-printMoleculeOntogeny"><code>MoleculeOntogeny$printMoleculeOntogeny()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-MoleculeOntogeny-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p></p><hr><a id="method-MoleculeOntogeny-initialize"></a><div class="section">
+<h3 id="moleculeontogeny-new-"><code>MoleculeOntogeny$new()</code><a class="anchor" aria-label="anchor" href="#moleculeontogeny-new-"></a></h3>
 <p>Initialize a new instance of the class</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/MoleculeOntogeny.html">MoleculeOntogeny</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">molecule</span>, <span class="va">ontogeny</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>molecule</code></dt>
 <dd><p>molecule name</p></dd>
 
-
-<dt><code>ontogeny</code></dt>
+      <dt><code>ontogeny</code></dt>
 <dd><p>ontogeny to use for the Molecule (one of StandardOntogeny)</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p>A new <code>MoleculeOntogeny</code> object.</p>
 </div>
 
-</div><p></p><hr><a id="method-MoleculeOntogeny-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-MoleculeOntogeny-print"></a><div class="section">
+<h3 id="moleculeontogeny-print-"><code>MoleculeOntogeny$print()</code><a class="anchor" aria-label="anchor" href="#moleculeontogeny-print-"></a></h3>
 <p>Print the object to the console</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MoleculeOntogeny</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>Rest arguments.</p></dd>
@@ -127,15 +125,17 @@ allowing the user to retrieve potential ontogeny values.</p>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-MoleculeOntogeny-printMoleculeOntogeny"></a><div class="section">
-<h3 id="method-printmoleculeontogeny-">Method <code>printMoleculeOntogeny()</code><a class="anchor" aria-label="anchor" href="#method-printmoleculeontogeny-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-MoleculeOntogeny-printMoleculeOntogeny"></a><div class="section">
+<h3 id="moleculeontogeny-printmoleculeontogeny-"><code>MoleculeOntogeny$printMoleculeOntogeny()</code><a class="anchor" aria-label="anchor" href="#moleculeontogeny-printmoleculeontogeny-"></a></h3>
 <p>Print the <code>MoleculeOntogeny</code> on one line</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">MoleculeOntogeny</span><span class="op">$</span><span class="fu">printMoleculeOntogeny</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
-
 </div>
+
 
     </div>
 

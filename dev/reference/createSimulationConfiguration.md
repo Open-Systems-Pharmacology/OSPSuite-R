@@ -25,7 +25,8 @@ createSimulationConfiguration(
 
 - individual:
 
-  Optional, an individual building block
+  Optional, an
+  [IndividualBuildingBlock](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/IndividualBuildingBlock.md).
 
 - expressionProfiles:
 

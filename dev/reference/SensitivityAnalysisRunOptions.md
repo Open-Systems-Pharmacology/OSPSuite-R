@@ -6,7 +6,7 @@ Options to be passed to the sensitivity analysis engine
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `SensitivityAnalysisRunOptions`
 
 ## Active bindings
@@ -27,7 +27,7 @@ Options to be passed to the sensitivity analysis engine
 
 ### Public methods
 
-- [`SensitivityAnalysisRunOptions$new()`](#method-SensitivityAnalysisRunOptions-new)
+- [`SensitivityAnalysisRunOptions$new()`](#method-SensitivityAnalysisRunOptions-initialize)
 
 - [`SensitivityAnalysisRunOptions$print()`](#method-SensitivityAnalysisRunOptions-print)
 
@@ -48,7 +48,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `SensitivityAnalysisRunOptions$new()`
 
 Initialize a new instance of the class
 
@@ -76,7 +76,7 @@ A new `SensitivityAnalysisRunOptions` object.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `SensitivityAnalysisRunOptions$print()`
 
 Print the object to the console
 

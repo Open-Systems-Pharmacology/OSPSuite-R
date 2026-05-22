@@ -5,6 +5,7 @@
 First, load a MoBi project:
 
 ``` r
+
 # Load the ospsuite package
 library(ospsuite)
 ```
@@ -17,6 +18,7 @@ library(ospsuite)
     ## You can edit your .Rprofile with usethis::edit_r_profile()
 
 ``` r
+
 projectPath <- system.file(
   "extdata",
   "TH_QST_Platform.mbp3",
@@ -29,6 +31,7 @@ We can browse the contents of the project, e.g., get the list of
 simulations in the project:
 
 ``` r
+
 simulationsInProject <- myProject$simulationNames
 
 ospsuite.utils::ospPrintItems(simulationsInProject, title = "Simulations")
@@ -41,6 +44,7 @@ ospsuite.utils::ospPrintItems(simulationsInProject, title = "Simulations")
 get the list of parameter identifications:
 
 ``` r
+
 PIs <- myProject$parameterIdentificationNames
 
 ospsuite.utils::ospPrintItems(
@@ -55,6 +59,7 @@ ospsuite.utils::ospPrintItems(
 get observed data from the project as `DataSet` objects:
 
 ``` r
+
 obsData <- myProject$getObservedData()
 
 print(names(obsData))
@@ -79,6 +84,7 @@ print(names(obsData))
 get the names of individuals and expression profiles from the project:
 
 ``` r
+
 individualsInProject <- myProject$individualNames
 expProfilesInProject <- myProject$expressionProfilesNames
 
@@ -90,6 +96,7 @@ ospsuite.utils::ospPrintItems(individualsInProject, title = "Individuals names")
     ##   • Rat
 
 ``` r
+
 ospsuite.utils::ospPrintItems(
   expProfilesInProject,
   title = "Expression profiles names"
@@ -107,6 +114,7 @@ ospsuite.utils::ospPrintItems(
 get the names of the modules in the project:
 
 ``` r
+
 modulesInProject <- myProject$moduleNames
 
 ospsuite.utils::ospPrintItems(modulesInProject, title = "Modules")
@@ -131,6 +139,7 @@ For modules, it is possible to retrieve the initial conditions and
 parameter values building blocks:
 
 ``` r
+
 # Get the module "Thyroid" from the project
 module <- myProject$getModules("Thyroid")[[1]]
 print(module)
@@ -147,6 +156,7 @@ print(module)
     ##   • Human
 
 ``` r
+
 icBBs <- module$getInitialConditionsBBs()
 
 # Get all parameter values BBs
@@ -161,6 +171,7 @@ how it affects the combination of modules can be found in the [MoBi
 documentation](https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/modularization-concept#creating-simulations-from-modules-and-combination-rules).
 
 ``` r
+
 # Inspect the current merge behavior
 print(module$mergeBehavior)
 ```
@@ -168,6 +179,7 @@ print(module$mergeBehavior)
     ## [1] "Extend"
 
 ``` r
+
 # Change the merge behavior to "Overwrite"
 module$mergeBehavior <- "Overwrite"
 print(module$mergeBehavior)
@@ -176,6 +188,7 @@ print(module$mergeBehavior)
     ## [1] "Overwrite"
 
 ``` r
+
 # Reset back to the default
 module$mergeBehavior <- "Extend"
 ```
@@ -185,6 +198,7 @@ values, individuals, and expression profiles to data frames for further
 processing:
 
 ``` r
+
 icBBDf <- initialConditionsBBToDataFrame(icBBs[[1]])
 # Print the first few rows of the data frame
 head(icBBDf)
@@ -206,6 +220,7 @@ head(icBBDf)
     ## 6               FALSE
 
 ``` r
+
 pvBBDf <- parameterValuesBBToDataFrame(pvBBs[["Rat"]])
 # Print the first few rows of the data frame
 head(pvBBDf)
@@ -227,28 +242,76 @@ head(pvBBDf)
     ## 6
 
 ``` r
-individual <- myProject$getIndividual("Rat")
+
+individual <- myProject$getIndividual("Human")
 individualDf <- individualsBBToDataFrame(individual)
 # Print the individual data frame
 head(individualDf)
 ```
 
-    ##   Container Path                                   Parameter Name Value Unit
-    ## 1       Organism Ontogeny factor (alpha1-acid glycoprotein) table 1.000     
-    ## 2       Organism                  Ontogeny factor (albumin) table 1.000     
-    ## 3       Organism                                       Hematocrit 0.450     
-    ## 4       Organism                                 pH (blood cells) 7.220     
-    ## 5       Organism                                      pH (plasma) 7.400     
-    ## 6       Organism                               Vf (lipid, plasma) 0.007     
-    ##                                                                                                                                                                                                 Value Origin
-    ## 1                                                                                                                                                                                                           
-    ## 2                                                                                                                                                                                                           
-    ## 3                                                                               Publication-Davies B, Morris T. Physiological parameters in laboratory animals and humans. Pharm Res. 1993 Jul;10(7):1093-5.
-    ## 4 Publication-ICRP, 2002. Basic Anatomical and Physiological Data for Use in Radiological Protection Reference Values. ICRP Publication 89. Ann. ICRP 32 (3-4). https://doi.org/10.1016/0146-6453(79)90123-4
-    ## 5 Publication-ICRP, 2002. Basic Anatomical and Physiological Data for Use in Radiological Protection Reference Values. ICRP Publication 89. Ann. ICRP 32 (3-4). https://doi.org/10.1016/0146-6453(79)90123-4
-    ## 6 Publication-ICRP, 2002. Basic Anatomical and Physiological Data for Use in Radiological Protection Reference Values. ICRP Publication 89. Ann. ICRP 32 (3-4). https://doi.org/10.1016/0146-6453(79)90123-4
+    ##   Container Path                                   Parameter Name Value    Unit
+    ## 1       Organism                        Ontogeny factor (albumin)   NaN        
+    ## 2       Organism       Ontogeny factor (alpha1-acid glycoprotein)   NaN        
+    ## 3       Organism Ontogeny factor (alpha1-acid glycoprotein) table   NaN        
+    ## 4       Organism                  Ontogeny factor (albumin) table   NaN        
+    ## 5       Organism                                              BMI   NaN  kg/dm²
+    ## 6       Organism                               Post menstrual age   NaN year(s)
+    ##                Value Origin
+    ## 1                          
+    ## 2                          
+    ## 3                          
+    ## 4                          
+    ## 5 Other-Standard definition
+    ## 6
+
+The returned object is an `IndividualBuildingBlock` and exposes the
+demographic properties of the individual as read-only fields: `species`,
+`population`, `gender`, `age`, `gestationalAge`, `height`, and `weight`.
+Printing the building block also lists these values under an “Origin
+data” section.
 
 ``` r
+
+individual$species
+```
+
+    ## [1] "Human"
+
+``` r
+
+individual$population
+```
+
+    ## [1] "European (ICRP, 2002)"
+
+``` r
+
+individual$weight
+```
+
+    ## [1] "73.0000 kg"
+
+``` r
+
+print(individual)
+```
+
+    ## <IndividualBuildingBlock>
+    ##   • Name: Human
+    ##   • Type: Individual
+    ## 
+    ## ── Origin data ──
+    ## 
+    ##   • Species: Human
+    ##   • Population: European (ICRP, 2002)
+    ##   • Gender: Male
+    ##   • Age: 30.0000 year(s)
+    ##   • Gestational age: 2087.1429 week(s)
+    ##   • Height: 176.0000 cm
+    ##   • Weight: 73.0000 kg
+
+``` r
+
 expProfiles <- myProject$getExpressionProfiles("UDPGT1|Human|Healthy")
 expProfilesDf <- expressionProfileBBToDataFrame(expProfiles)
 # Print the first few rows of the data frame
@@ -271,6 +334,7 @@ head(expProfilesDf$expressionParameters)
     ## 6
 
 ``` r
+
 head(expProfilesDf$initialConditions)
 ```
 
@@ -288,6 +352,192 @@ head(expProfilesDf$initialConditions)
     ## 4             1               FALSE
     ## 5             1               FALSE
     ## 6             1               FALSE
+
+## Loading building blocks from pkml
+
+A single building block exported to a `.pkml` file can be re-loaded with
+[`loadBuildingBlockFromPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadBuildingBlockFromPKML.md).
+The function works for every type listed in `BuildingBlockTypes`
+(Spatial Structure, Molecules, Reactions, Passive Transports, Observers,
+Event Groups, Initial Conditions, Parameter Values, Expression Profile,
+Individual). Pair it with the `save*ToPKML()` helpers
+([`saveInitialConditionsToPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/saveInitialConditionsToPKML.md),
+[`saveParameterValuesToPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/saveParameterValuesToPKML.md),
+[`saveIndividualToPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/saveIndividualToPKML.md),
+[`saveExpressionProfileToPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/saveExpressionProfileToPKML.md))
+to round-trip a building block in and out of a file.
+
+The `type` argument is optional. When supplied, an error is raised if
+the file does not contain exactly one building block of that type. When
+omitted, the type is detected from the file content; if detection fails,
+an error asks the caller to specify `type` explicitly.
+
+Supplying `type` is faster than auto-detect: when `type = NULL`, each
+candidate type is tried in turn until one matches, which adds overhead
+for every type tried before the match. Pass `type` explicitly when
+known.
+
+``` r
+
+# Get a Parameter Values BB from the project and save it to a temp pkml file
+module <- myProject$getModules("Thyroid")[[1]]
+pvBB <- module$getParameterValuesBBs()[["Rat"]]
+
+tmpFile <- tempfile(fileext = ".pkml")
+saveParameterValuesToPKML(pvBB, tmpFile)
+
+# Load it back with an explicit type
+loadedBB <- loadBuildingBlockFromPKML(
+  filePath = tmpFile,
+  type = BuildingBlockTypes$`Parameter Values`
+)
+print(loadedBB)
+```
+
+    ## <BuildingBlock>
+    ##   • Name: Rat
+    ##   • Type: Parameter Values
+
+``` r
+
+# Or let the function detect the type
+autoLoadedBB <- loadBuildingBlockFromPKML(filePath = tmpFile)
+print(autoLoadedBB)
+```
+
+    ## <BuildingBlock>
+    ##   • Name: Rat
+    ##   • Type: Parameter Values
+
+## Creating empty Initial Conditions and Parameter Values building blocks
+
+Initial Conditions (IC) and Parameter Values (PV) building blocks can
+also be created from scratch and populated programmatically. Both
+[`createInitialConditionsBuildingBlock()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createInitialConditionsBuildingBlock.md)
+and
+[`createParameterValuesBuildingBlock()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createParameterValuesBuildingBlock.md)
+accept an optional `name`; the returned building block is empty and
+ready to receive entries.
+
+``` r
+
+icBB <- createInitialConditionsBuildingBlock(name = "My ICs")
+pvBB <- createParameterValuesBuildingBlock(name = "My PVs")
+
+# Populate the IC BB with a single entry
+setInitialConditionsInBB(
+  icBB,
+  quantityPaths = "Organism|Liver|Periportal|Intracellular|Aciclovir",
+  quantityValues = 1.0
+)
+
+# Populate the PV BB with a single entry
+setParameterValuesInBB(
+  pvBB,
+  quantityPaths = "Organism|Liver|Volume",
+  quantityValues = 2.0,
+  units = "l"
+)
+```
+
+The freshly created building blocks can be passed directly to
+[`createMoBiModule()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createMoBiModule.md):
+
+``` r
+
+customModule <- createMoBiModule(
+  name = "CustomModule",
+  buildingBlocks = list(icBB, pvBB)
+)
+
+print(customModule$initialConditionsBBnames)
+```
+
+    ## [1] "My ICs"
+
+``` r
+
+print(customModule$parameterValuesBBnames)
+```
+
+    ## [1] "My PVs"
+
+## Creating a MoBi module from R
+
+A new module can be assembled directly from R with
+[`createMoBiModule()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createMoBiModule.md).
+The function creates an empty module by default; building blocks can
+either be passed at creation time via the `buildingBlocks` argument or
+added later via `MoBiModule$addBuildingBlocks()`. Building blocks are
+removed individually via `MoBiModule$removeBuildingBlock()`.
+
+Single-type building blocks (Molecules, Reactions, Spatial Structure,
+Passive Transports, Observers, Event Groups) can appear at most once per
+module. Adding a second building block of the same single type — either
+at creation or via `addBuildingBlocks()` — raises an error. Initial
+Conditions and Parameter Values building blocks may appear multiple
+times.
+
+``` r
+
+# Empty module
+myModule <- createMoBiModule("MyCustomModule")
+
+# Load a Parameter Values BB from a pkml file (reusing the round-trip from
+# the previous section) and attach it to the module. A single BB can be
+# passed directly; pass a list of BBs to attach several at once.
+pvBB <- loadBuildingBlockFromPKML(
+  filePath = tmpFile,
+  type = BuildingBlockTypes$`Parameter Values`
+)
+myModule$addBuildingBlocks(pvBB)
+
+print(myModule)
+```
+
+    ## <MoBiModule>
+    ##   • Name: MyCustomModule
+    ##   • PK-Sim module: FALSE
+    ##   • Merge behavior: Overwrite
+    ## Parameter Values Building Blocks:
+    ##   • Rat
+    ## Initial Conditions Building Blocks:
+
+A module can also be created with its building blocks in one call:
+
+``` r
+
+pvBB <- myProject$getModules("Thyroid")[[1]]$getParameterValuesBBs()[["Rat"]]
+icBB <- myProject$getModules("Thyroid")[[1]]$getInitialConditionsBBs()[[1]]
+moleculesBB <- myProject$getModules("Thyroid_QST")[[1]]$getMoleculesBB()
+myModule <- createMoBiModule(
+  "MyCustomModule",
+  buildingBlocks = list(moleculesBB, pvBB, icBB)
+)
+```
+
+`MoBiModule$removeBuildingBlock(name, type)` removes a building block by
+its name and type. For single-type building blocks (Molecules,
+Reactions, Spatial Structure, Passive Transports, Observers, Event
+Groups) the `name` is verified against the lone BB’s `Name` property;
+for Initial Conditions and Parameter Values, `name` selects the BB
+within the type. Removing Expression Profile or Individual via this
+method is not supported (neither is module-level).
+
+``` r
+
+# Remove the Molecules BB attached above (its name is the source BB's name)
+myModule$removeBuildingBlock(
+  name = moleculesBB$name,
+  type = BuildingBlockTypes$Molecules
+)
+
+# Remove an Initial Conditions BB by name
+myModule$removeBuildingBlock(
+  name = icBB$name,
+  type = BuildingBlockTypes$`Initial Conditions`
+)
+```
 
 ## Simulation configurations
 
@@ -314,6 +564,7 @@ configurations.
 Get a configuration of a simulation loaded from a pkml file:
 
 ``` r
+
 simulation <- loadSimulation(system.file(
   "extdata",
   "Aciclovir.pkml",
@@ -346,6 +597,7 @@ print(configuration)
 Get a configuration of a simulation from a MoBi project:
 
 ``` r
+
 simulation <- myProject$getSimulation("Thyroid_QST_Human")
 configuration <- simulation$configuration
 
@@ -404,7 +656,8 @@ when creating a simulation using the configuration. However, the
 simulation settings cannot be directly modified. To change these
 settings, the user must first create a simulation from the configuration
 and then modify the settings of the created simulation (see the article
-on [simulations](#run-simulation)).
+on
+[simulations](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/run-simulation.md)).
 
 ### Create simulation configuration from the project
 
@@ -418,6 +671,7 @@ the rat species from the modules “Thyroid_QST”, “Rat physiology”,
 parameter values building block “Rat” from the module “Thyroid”:
 
 ``` r
+
 simConfiguration <- myProject$createSimulationConfiguration(
   modulesNames = c(
     "Thyroid_QST",
@@ -452,6 +706,7 @@ in the example before, but the extension module “Thyroid” will be loaded
 from a pkml file, and a new individual will be created.
 
 ``` r
+
 # # Get modules from the project
 modules <- myProject$getModules()
 # Get the expression profiles from the project
@@ -506,6 +761,7 @@ defined in the module:
   (e.g., `"Drug"`, `"Enzyme"`, `"Transporter"`, `"Binding Partner"`).
 
 ``` r
+
 moleculesBB <- modules[["Thyroid_QST"]]$getMoleculesBB()
 moleculesBB$allMoleculeNames()
 moleculesBB$allMoleculeNamesOfType(MoleculeType$Protein)
@@ -548,6 +804,7 @@ So in the first step we load the extension module “Thyroid” from a pkml
 file:
 
 ``` r
+
 thyroidModule <- loadModuleFromPKML(system.file(
   "extdata",
   "Thyroid.pkml",
@@ -559,6 +816,7 @@ Then we extend the initial conditions BB of the loaded module by
 molecules defined in other modules of our project:
 
 ``` r
+
 # Get the IC BB from the Thyroid module. The module has only one IC BB.
 icBB <- thyroidModule$getInitialConditionsBBs()[[1]]
 # Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"
@@ -613,6 +871,7 @@ Both `moleculeNames` and `referenceExpressionProfiles` are optional:
   `Protein Binding Partner`.
 
 ``` r
+
 # Get the PV BB from the Thyroid module
 pvBB <- thyroidModule$getParameterValuesBBs()[["Human"]]
 # Add protein expression to the PV BB
@@ -621,7 +880,9 @@ proteinExpressionPaths <- addProteinExpressionToParameterValuesBB(
   spatialStructureModule = thyroidModule,
   moleculesModule = modules[["Thyroid_QST"]],
   moleculeNames = c("DIO1"),
-  referenceExpressionProfiles = list(expressionProfiles[["DIO1|Human|Healthy"]]),
+  referenceExpressionProfiles = list(expressionProfiles[[
+    "DIO1|Human|Healthy"
+  ]]),
   organPaths = "Organism|Thyroid"
 )
 
@@ -644,17 +905,20 @@ protein defined in the molecules module, using auto-created `"Human"`
 default profiles for any molecule without a supplied reference profile:
 
 ``` r
-addProteinExpressionToParameterValuesBB(
+
+addedPaths <- addProteinExpressionToParameterValuesBB(
   parameterValuesBuildingBlock = pvBB,
   spatialStructureModule = thyroidModule,
   moleculesModule = modules[["Thyroid_QST"]],
   organPaths = "Organism|Thyroid"
 )
+head(addedPaths)
 ```
 
 and overwrite the value of “Relative expression”:
 
 ``` r
+
 setParameterValuesInBB(
   parameterValuesBuildingBlock = pvBB,
   quantityPaths = "Organism|Thyroid|Intracellular|DIO1|Relative expression",
@@ -668,6 +932,7 @@ Finally, we can create a simulation configuration from the modules and
 the individual we created:
 
 ``` r
+
 simulationConfigurationHuman <- createSimulationConfiguration(
   modules = c(
     modules[["Thyroid_QST"]],
@@ -679,7 +944,7 @@ simulationConfigurationHuman <- createSimulationConfiguration(
   ),
   individual = myIndividual,
   expressionProfiles = expressionProfiles,
-  selectedParameterValues = list("Thyroid" = "Human")
+  selectedParameterValues = list("Thyroid_Generic" = "Human")
 )
 
 print(simulationConfigurationHuman)
@@ -735,6 +1000,7 @@ simulation can then be saved to a pkml file, or used for further
 analysis.
 
 ``` r
+
 simulation <- myProject$getSimulation("Thyroid_QST_Human")
 configuration <- simulation$configuration
 
@@ -756,6 +1022,7 @@ warnings and can be displayed by setting `showWarnings = TRUE`. The
 following example demonstrates an error case:
 
 ``` r
+
 simulation <- loadSimulation(
   system.file(
     "extdata",
@@ -795,6 +1062,7 @@ process rate parameters in the simulation or not by setting the argument
 These parameters can be used for model debugging and analysis.
 
 ``` r
+
 configuration$setPartitionCoefficientMethods(
   "T3",
   PartitionCoefficientMethods$Berezhkovskiy

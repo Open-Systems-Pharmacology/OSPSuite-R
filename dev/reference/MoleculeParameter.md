@@ -8,7 +8,3 @@ molecule (enzyme, transporter etc...) coming from PK-Sim
 ``` r
 MoleculeParameter
 ```
-
-## Format
-
-An object of class `list` of length 5.

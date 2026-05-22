@@ -19,7 +19,7 @@ A class that provides structure for caching objects.
 
 ### Public methods
 
-- [`Cache$new()`](#method-Cache-new)
+- [`Cache$new()`](#method-Cache-initialize)
 
 - [`Cache$reset()`](#method-Cache-reset)
 
@@ -35,7 +35,7 @@ A class that provides structure for caching objects.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `Cache$new()`
 
 Initialize a new instance of the class
 
@@ -55,7 +55,7 @@ A new `Cache` object.
 
 ------------------------------------------------------------------------
 
-### Method `reset()`
+### `Cache$reset()`
 
 Clear cache
 
@@ -65,7 +65,7 @@ Clear cache
 
 ------------------------------------------------------------------------
 
-### Method `set()`
+### `Cache$set()`
 
 Store the given value in cache with the given key
 
@@ -85,7 +85,7 @@ Store the given value in cache with the given key
 
 ------------------------------------------------------------------------
 
-### Method `hasKey()`
+### `Cache$hasKey()`
 
 Check if an entry with the given `key` exists in cache
 
@@ -101,7 +101,7 @@ Check if an entry with the given `key` exists in cache
 
 ------------------------------------------------------------------------
 
-### Method [`get()`](https://rdrr.io/r/base/get.html)
+### `Cache$get()`
 
 Get cached object by key
 
@@ -117,7 +117,7 @@ Get cached object by key
 
 ------------------------------------------------------------------------
 
-### Method `dropKey()`
+### `Cache$dropKey()`
 
 Remove the value associated with the key from cache.
 
@@ -134,7 +134,7 @@ Remove the value associated with the key from cache.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `Cache$print()`
 
 Print the object to the console
 

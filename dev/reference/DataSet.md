@@ -7,7 +7,7 @@ for y-values.
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `DataSet`
 
 ## Active bindings
@@ -85,7 +85,7 @@ for y-values.
 
 ### Public methods
 
-- [`DataSet$new()`](#method-DataSet-new)
+- [`DataSet$new()`](#method-DataSet-initialize)
 
 - [`DataSet$addMetaData()`](#method-DataSet-addMetaData)
 
@@ -112,7 +112,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `DataSet$new()`
 
 Initialize a new instance of the class. Either create a `DataSet` from a
 `DataRepository` (e.g. loaded from a PKML) or an empty `DataSet`. In
@@ -140,7 +140,7 @@ A new `DataSet` object.
 
 ------------------------------------------------------------------------
 
-### Method `addMetaData()`
+### `DataSet$addMetaData()`
 
 Adds a new entry to meta data list or changes its value if the name is
 already present.
@@ -161,7 +161,7 @@ already present.
 
 ------------------------------------------------------------------------
 
-### Method `removeMetaData()`
+### `DataSet$removeMetaData()`
 
 Removes the meta data entry in the list if one is defined with this name
 
@@ -177,7 +177,7 @@ Removes the meta data entry in the list if one is defined with this name
 
 ------------------------------------------------------------------------
 
-### Method `setValues()`
+### `DataSet$setValues()`
 
 Sets the xValues, yValues, and (optionally) yErrorValues into the
 dataSet. Note: xValues, yValues and yErrorValues must have the same
@@ -203,7 +203,7 @@ length
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `DataSet$print()`
 
 Print the object to the console
 

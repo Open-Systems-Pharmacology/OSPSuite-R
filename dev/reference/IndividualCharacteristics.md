@@ -6,7 +6,7 @@ Characteristics of an individual describing its origin
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `IndividualCharacteristics`
 
 ## Active bindings
@@ -58,7 +58,7 @@ Characteristics of an individual describing its origin
 
 ### Public methods
 
-- [`IndividualCharacteristics$new()`](#method-IndividualCharacteristics-new)
+- [`IndividualCharacteristics$new()`](#method-IndividualCharacteristics-initialize)
 
 - [`IndividualCharacteristics$print()`](#method-IndividualCharacteristics-print)
 
@@ -81,7 +81,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `IndividualCharacteristics$new()`
 
 Initialize a new instance of the class
 
@@ -95,7 +95,7 @@ A new `IndividualCharacteristics` object.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `IndividualCharacteristics$print()`
 
 Print the object to the console
 
@@ -111,7 +111,7 @@ Print the object to the console
 
 ------------------------------------------------------------------------
 
-### Method `addMoleculeOntogeny()`
+### `IndividualCharacteristics$addMoleculeOntogeny()`
 
 Add a molecule ontogeny `MoleculeOntogeny` to the individual
 characteristics
