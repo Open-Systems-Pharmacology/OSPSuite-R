@@ -20,8 +20,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{ospsuite.utils}{\code{\link[ospsuite.utils]{enum}}, \code{\link[ospsuite.utils]{enumGetKey}}, \code{\link[ospsuite.utils]{enumGetValue}}, \code{\link[ospsuite.utils]{enumHasKey}}, \code{\link[ospsuite.utils]{enumKeys}}, \code{\link[ospsuite.utils]{enumPut}}, \code{\link[ospsuite.utils]{enumRemove}}, \code{\link[ospsuite.utils]{enumValues}}}
+  \item{ospsuite.utils}{\code{\link[ospsuite.utils:enum]{enum()}}, \code{\link[ospsuite.utils:enumGetKey]{enumGetKey()}}, \code{\link[ospsuite.utils:enumGetValue]{enumGetValue()}}, \code{\link[ospsuite.utils:enumHasKey]{enumHasKey()}}, \code{\link[ospsuite.utils:enumKeys]{enumKeys()}}, \code{\link[ospsuite.utils:enumPut]{enumPut()}}, \code{\link[ospsuite.utils:enumRemove]{enumRemove()}}, \code{\link[ospsuite.utils:enumValues]{enumValues()}}}
 
-  \item{tlf}{\code{\link[tlf]{plotGrid}}, \code{\link[tlf]{PlotGridConfiguration}}}
+  \item{tlf}{\code{\link[tlf:plotGrid]{plotGrid()}}, \code{\link[tlf:PlotGridConfiguration]{PlotGridConfiguration}}}
 }}
 

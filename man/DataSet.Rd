@@ -9,184 +9,188 @@ A class for storage of numerical x- and y-value pairs and
 optional error for y-values.
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataSet}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{DataSet}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{name}}{The name of the DataSet}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{name}}{The name of the DataSet}
 
-\item{\code{dataRepository}}{The underlying DataRepository object}
+    \item{\code{dataRepository}}{The underlying DataRepository object}
 
-\item{\code{xDimension}}{Dimension in which the xValues are defined}
+    \item{\code{xDimension}}{Dimension in which the xValues are defined}
 
-\item{\code{xUnit}}{Unit in which the xValues are defined}
+    \item{\code{xUnit}}{Unit in which the xValues are defined}
 
-\item{\code{xValues}}{Values stored in the xUnit. This field is read-only.
+    \item{\code{xValues}}{Values stored in the xUnit. This field is read-only.
 Use \verb{$setValues()} to change the values.}
 
-\item{\code{yDimension}}{Dimension in which the yValues are defined}
+    \item{\code{yDimension}}{Dimension in which the yValues are defined}
 
-\item{\code{yUnit}}{Unit in which the yValues are defined}
+    \item{\code{yUnit}}{Unit in which the yValues are defined}
 
-\item{\code{yValues}}{Values stored in the yUnit. This field is read-only.
+    \item{\code{yValues}}{Values stored in the yUnit. This field is read-only.
 Use \verb{$setValues()} to change the values.}
 
-\item{\code{yErrorType}}{Type of the error - geometric or arithmetic.
+    \item{\code{yErrorType}}{Type of the error - geometric or arithmetic.
 When changing from arithmetic to geometric error, the values are
 considered in as fraction (1 = 100\%).
 When changing from geometric to arithmetic, the values are set to the
 same unit as \code{yErrorUnit}.
 In case no yError is defined, the value is \code{NULL} and cannot be changed}
 
-\item{\code{yErrorUnit}}{Unit in which the yErrorValues are defined. For
+    \item{\code{yErrorUnit}}{Unit in which the yErrorValues are defined. For
 arithmetic error, the unit must be valid for \code{yDimension}. For
 geometric error, the unit must be valid for \code{Dimensionless}.
 In case no yError is defined, the value is \code{NULL} and cannot be changed}
 
-\item{\code{yErrorValues}}{Values of error stored in the yErrorUnit unit. This field is read-only.
+    \item{\code{yErrorValues}}{Values of error stored in the yErrorUnit unit. This field is read-only.
 Use \verb{$setValues()} to change the values.
 In case no yError is defined, the value is \code{NULL} and cannot be changed.
 Use \verb{$setValues()} to change the values.}
 
-\item{\code{molWeight}}{Molecular weight of the yValues in g/mol}
+    \item{\code{molWeight}}{Molecular weight of the yValues in g/mol}
 
-\item{\code{LLOQ}}{Lower Limit Of Quantification.
+    \item{\code{LLOQ}}{Lower Limit Of Quantification.
 Value in yUnit associated with the yValues}
 
-\item{\code{metaData}}{Returns a named list of meta data defined for the data set.}
-}
-\if{html}{\out{</div>}}
+    \item{\code{metaData}}{Returns a named list of meta data defined for the data set.}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-DataSet-new}{\code{DataSet$new()}}
-\item \href{#method-DataSet-addMetaData}{\code{DataSet$addMetaData()}}
-\item \href{#method-DataSet-removeMetaData}{\code{DataSet$removeMetaData()}}
-\item \href{#method-DataSet-setValues}{\code{DataSet$setValues()}}
-\item \href{#method-DataSet-print}{\code{DataSet$print()}}
+  \itemize{
+    \item \href{#method-DataSet-initialize}{\code{DataSet$new()}}
+    \item \href{#method-DataSet-addMetaData}{\code{DataSet$addMetaData()}}
+    \item \href{#method-DataSet-removeMetaData}{\code{DataSet$removeMetaData()}}
+    \item \href{#method-DataSet-setValues}{\code{DataSet$setValues()}}
+    \item \href{#method-DataSet-print}{\code{DataSet$print()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-DataSet-new"></a>}}
-\if{latex}{\out{\hypertarget{method-DataSet-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class.
+\if{html}{\out{<a id="method-DataSet-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-DataSet-initialize}{}}}
+\subsection{\code{DataSet$new()}}{
+  Initialize a new instance of the class.
 Either create a \code{DataSet} from a \code{DataRepository} (e.g. loaded from a PKML)
 or an empty \code{DataSet}. In case of an empty \code{DataSet}, a \code{name} must be
 provided.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataSet$new(name = NULL, dataRepository = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{Name of the \code{DataSet} if created from scratch (no \code{dataRepository})
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataSet$new(name = NULL, dataRepository = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{name}}{Name of the \code{DataSet} if created from scratch (no \code{dataRepository})
 provided. Ignored if \code{dataRepository} is not \code{NULL}.}
-
-\item{\code{dataRepository}}{Instance of the \code{DataRepository} object to wrap.
+      \item{\code{dataRepository}}{Instance of the \code{DataRepository} object to wrap.
 If \code{NULL}, an empty \code{DataRepository} is created.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{DataSet} object.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{DataSet} object.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataSet-addMetaData"></a>}}
 \if{latex}{\out{\hypertarget{method-DataSet-addMetaData}{}}}
-\subsection{Method \code{addMetaData()}}{
-Adds a new entry to meta data list or changes its value if the name is
+\subsection{\code{DataSet$addMetaData()}}{
+  Adds a new entry to meta data list or changes its value if the name is
 already present.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataSet$addMetaData(name, value)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataSet$addMetaData(name, value)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{name}}{Name of new meta data list entry}
+      \item{\code{value}}{Value of new meta data list entry}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{Name of new meta data list entry}
-
-\item{\code{value}}{Value of new meta data list entry}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataSet-removeMetaData"></a>}}
 \if{latex}{\out{\hypertarget{method-DataSet-removeMetaData}{}}}
-\subsection{Method \code{removeMetaData()}}{
-Removes the meta data entry in the list if one is defined with this name
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataSet$removeMetaData(name)}\if{html}{\out{</div>}}
+\subsection{\code{DataSet$removeMetaData()}}{
+  Removes the meta data entry in the list if one is defined with this name
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataSet$removeMetaData(name)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{name}}{Name of meta data entry to delete}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{Name of meta data entry to delete}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataSet-setValues"></a>}}
 \if{latex}{\out{\hypertarget{method-DataSet-setValues}{}}}
-\subsection{Method \code{setValues()}}{
-Sets the xValues, yValues, and (optionally) yErrorValues into the dataSet.
+\subsection{\code{DataSet$setValues()}}{
+  Sets the xValues, yValues, and (optionally) yErrorValues into the dataSet.
 Note: xValues, yValues and yErrorValues must have the same length
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataSet$setValues(xValues, yValues, yErrorValues = NULL)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataSet$setValues(xValues, yValues, yErrorValues = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xValues}}{xValues to use}
+      \item{\code{yValues}}{yValues to use}
+      \item{\code{yErrorValues}}{Optional error values associated with yValues}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xValues}}{xValues to use}
-
-\item{\code{yValues}}{yValues to use}
-
-\item{\code{yErrorValues}}{Optional error values associated with yValues}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataSet-print"></a>}}
 \if{latex}{\out{\hypertarget{method-DataSet-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataSet$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{DataSet$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataSet$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

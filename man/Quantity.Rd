@@ -8,201 +8,207 @@
 A quantity of the model (with unit, value) such as a Parameter or an Amount
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Entity]{ospsuite::Entity}} -> \code{Quantity}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ObjectBase}} -> \code{\link[ospsuite:Entity]{Entity}} -> \code{Quantity}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{value}}{The value of the quantity in unit}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{value}}{The value of the quantity in unit}
 
-\item{\code{unit}}{The base unit in which the quantity value is defined (Read-Only)}
+    \item{\code{unit}}{The base unit in which the quantity value is defined (Read-Only)}
 
-\item{\code{displayUnit}}{The unit in which the quantity value is usually displayed (Read-Only)}
+    \item{\code{displayUnit}}{The unit in which the quantity value is usually displayed (Read-Only)}
 
-\item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
+    \item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
 
-\item{\code{allUnits}}{the list of all supported units (Read-Only)}
+    \item{\code{allUnits}}{the list of all supported units (Read-Only)}
 
-\item{\code{quantityType}}{The type of the quantity (Read-Only)}
+    \item{\code{quantityType}}{The type of the quantity (Read-Only)}
 
-\item{\code{formula}}{An instance of a \code{Formula} object used by this quantity (Read-Only)}
+    \item{\code{formula}}{An instance of a \code{Formula} object used by this quantity (Read-Only)}
 
-\item{\code{isTable}}{Returns \code{TRUE} if the formula used by this quantity is a table formula otherwise \code{FALSE}}
+    \item{\code{isTable}}{Returns \code{TRUE} if the formula used by this quantity is a table formula otherwise \code{FALSE}}
 
-\item{\code{isConstant}}{Returns \code{TRUE} if the formula used by this quantity is a constant formula otherwise \code{FALSE}}
+    \item{\code{isConstant}}{Returns \code{TRUE} if the formula used by this quantity is a constant formula otherwise \code{FALSE}}
 
-\item{\code{isFormula}}{Returns \code{TRUE} if the formula used by this quantity is an explicit formula (e.g an equation) otherwise \code{FALSE}}
+    \item{\code{isFormula}}{Returns \code{TRUE} if the formula used by this quantity is an explicit formula (e.g an equation) otherwise \code{FALSE}}
 
-\item{\code{isDistributed}}{Returns \code{TRUE} if the quantity represents a quantity with an underlying distribution otherwise \code{FALSE}}
+    \item{\code{isDistributed}}{Returns \code{TRUE} if the quantity represents a quantity with an underlying distribution otherwise \code{FALSE}}
 
-\item{\code{formulaString}}{Returns the equation of the formula for a quantity using an explicit formula (e.g. \code{isFormula == TRUE}) or \code{NULL} for a quantity that does not use an explicit formula.}
+    \item{\code{formulaString}}{Returns the equation of the formula for a quantity using an explicit formula (e.g. \code{isFormula == TRUE}) or \code{NULL} for a quantity that does not use an explicit formula.}
 
-\item{\code{isFixedValue}}{Returns \code{TRUE} if the formula was overridden by a constant value, otherwise \code{FALSE}}
+    \item{\code{isFixedValue}}{Returns \code{TRUE} if the formula was overridden by a constant value, otherwise \code{FALSE}}
 
-\item{\code{valueOrigin}}{The value origin of the quantity (Read-Only)}
-}
-\if{html}{\out{</div>}}
+    \item{\code{valueOrigin}}{The value origin of the quantity (Read-Only)}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-Quantity-new}{\code{Quantity$new()}}
-\item \href{#method-Quantity-print}{\code{Quantity$print()}}
-\item \href{#method-Quantity-printValue}{\code{Quantity$printValue()}}
-\item \href{#method-Quantity-printQuantityValue}{\code{Quantity$printQuantityValue()}}
-\item \href{#method-Quantity-getPrintValue}{\code{Quantity$getPrintValue()}}
-\item \href{#method-Quantity-setValue}{\code{Quantity$setValue()}}
-\item \href{#method-Quantity-hasUnit}{\code{Quantity$hasUnit()}}
-\item \href{#method-Quantity-reset}{\code{Quantity$reset()}}
+  \itemize{
+    \item \href{#method-Quantity-initialize}{\code{Quantity$new()}}
+    \item \href{#method-Quantity-print}{\code{Quantity$print()}}
+    \item \href{#method-Quantity-printValue}{\code{Quantity$printValue()}}
+    \item \href{#method-Quantity-printQuantityValue}{\code{Quantity$printQuantityValue()}}
+    \item \href{#method-Quantity-getPrintValue}{\code{Quantity$getPrintValue()}}
+    \item \href{#method-Quantity-setValue}{\code{Quantity$setValue()}}
+    \item \href{#method-Quantity-hasUnit}{\code{Quantity$hasUnit()}}
+    \item \href{#method-Quantity-reset}{\code{Quantity$reset()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Quantity-new"></a>}}
-\if{latex}{\out{\hypertarget{method-Quantity-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Quantity$new(netObject)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-Quantity-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-Quantity-initialize}{}}}
+\subsection{\code{Quantity$new()}}{
+  Initialize a new instance of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Quantity$new(netObject)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{netObject}}{A \code{NetObject} object with the pointer to the .NET \code{Quantity}}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{Quantity} object.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{netObject}}{A \code{NetObject} object with the pointer to the .NET \code{Quantity}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{Quantity} object.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Quantity-print"></a>}}
 \if{latex}{\out{\hypertarget{method-Quantity-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Quantity$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{Quantity$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Quantity$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Quantity-printValue"></a>}}
 \if{latex}{\out{\hypertarget{method-Quantity-printValue}{}}}
-\subsection{Method \code{printValue()}}{
-Print the name of the quantity and its value
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Quantity$printValue()}\if{html}{\out{</div>}}
+\subsection{\code{Quantity$printValue()}}{
+  Print the name of the quantity and its value
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Quantity$printValue()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Quantity-printQuantityValue"></a>}}
 \if{latex}{\out{\hypertarget{method-Quantity-printQuantityValue}{}}}
-\subsection{Method \code{printQuantityValue()}}{
-Print the value (in scientific notation with 2 digits when needed) and unit of the quantity
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Quantity$printQuantityValue(caption)}\if{html}{\out{</div>}}
+\subsection{\code{Quantity$printQuantityValue()}}{
+  Print the value (in scientific notation with 2 digits when needed) and unit of the quantity
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Quantity$printQuantityValue(caption)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{caption}}{Text to prepend to the value}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{caption}}{Text to prepend to the value}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Quantity-getPrintValue"></a>}}
 \if{latex}{\out{\hypertarget{method-Quantity-getPrintValue}{}}}
-\subsection{Method \code{getPrintValue()}}{
-Return a string for printing the value (in scientific notation with 2 digits when needed) and unit of the quantity
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Quantity$getPrintValue()}\if{html}{\out{</div>}}
+\subsection{\code{Quantity$getPrintValue()}}{
+  Return a string for printing the value (in scientific notation with 2 digits when needed) and unit of the quantity
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Quantity$getPrintValue()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A string for printing the quantity in one line
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{caption}}{Text to prepend to the value}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A string for printing the quantity in one line
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Quantity-setValue"></a>}}
 \if{latex}{\out{\hypertarget{method-Quantity-setValue}{}}}
-\subsection{Method \code{setValue()}}{
-Convert value from unit to the base unit and sets the value in base unit.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Quantity$setValue(value, unit = NULL)}\if{html}{\out{</div>}}
+\subsection{\code{Quantity$setValue()}}{
+  Convert value from unit to the base unit and sets the value in base unit.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Quantity$setValue(value, unit = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{value}}{Value to set. If unit is null, we assume that the value is in base unit}
+      \item{\code{unit}}{Optional unit in which the value is given.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{value}}{Value to set. If unit is null, we assume that the value is in base unit}
-
-\item{\code{unit}}{Optional unit in which the value is given.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Quantity-hasUnit"></a>}}
 \if{latex}{\out{\hypertarget{method-Quantity-hasUnit}{}}}
-\subsection{Method \code{hasUnit()}}{
-Returns \code{TRUE} if the quantity supports the given unit otherwise \code{FALSE}.
+\subsection{\code{Quantity$hasUnit()}}{
+  Returns \code{TRUE} if the quantity supports the given unit otherwise \code{FALSE}.
 For the list of supported units, use \code{allUnits}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Quantity$hasUnit(unit)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Quantity$hasUnit(unit)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{unit}}{Unit to check}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{unit}}{Unit to check}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Quantity-reset"></a>}}
 \if{latex}{\out{\hypertarget{method-Quantity-reset}{}}}
-\subsection{Method \code{reset()}}{
-Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Quantity$reset()}\if{html}{\out{</div>}}
+\subsection{\code{Quantity$reset()}}{
+  Ensures that the quantity uses the value computed by its formula. It is a shortcut for \code{self$isFixedValue <- false}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Quantity$reset()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 }

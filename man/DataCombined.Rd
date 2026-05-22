@@ -56,89 +56,89 @@ myDataCombined$toDataFrame()
 
 }
 \seealso{
-Other data-combined: 
-\code{\link{addResidualColumn}()},
-\code{\link{calculateResiduals}()},
-\code{\link{convertUnits}()}
+Other data-combined:
+\code{\link[=addResidualColumn]{addResidualColumn()}},
+\code{\link[=calculateResiduals]{calculateResiduals()}},
+\code{\link[=convertUnits]{convertUnits()}}
 }
 \concept{data-combined}
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{names}}{A vector of unique names of datasets contained in the
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{names}}{A vector of unique names of datasets contained in the
 \code{DataCombined} class instance.}
 
-\item{\code{groupMap}}{A data frame specifying which datasets have been grouped
+    \item{\code{groupMap}}{A data frame specifying which datasets have been grouped
 together and the name and the nature (observed or simulated?) of the
 data. If a dataset was not assigned to any group, this is denoted by
 \code{NA} in the data frame.}
 
-\item{\code{dataTransformations}}{A data frame with offset and scale factor
+    \item{\code{dataTransformations}}{A data frame with offset and scale factor
 values were specified by the user for each dataset.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-DataCombined-addDataSets}{\code{DataCombined$addDataSets()}}
-\item \href{#method-DataCombined-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
-\item \href{#method-DataCombined-setGroups}{\code{DataCombined$setGroups()}}
-\item \href{#method-DataCombined-setDataTypes}{\code{DataCombined$setDataTypes()}}
-\item \href{#method-DataCombined-removeGroupAssignment}{\code{DataCombined$removeGroupAssignment()}}
-\item \href{#method-DataCombined-setDataTransformations}{\code{DataCombined$setDataTransformations()}}
-\item \href{#method-DataCombined-toDataFrame}{\code{DataCombined$toDataFrame()}}
-\item \href{#method-DataCombined-print}{\code{DataCombined$print()}}
-\item \href{#method-DataCombined-clone}{\code{DataCombined$clone()}}
-}
+  \itemize{
+    \item \href{#method-DataCombined-addDataSets}{\code{DataCombined$addDataSets()}}
+    \item \href{#method-DataCombined-addSimulationResults}{\code{DataCombined$addSimulationResults()}}
+    \item \href{#method-DataCombined-setGroups}{\code{DataCombined$setGroups()}}
+    \item \href{#method-DataCombined-setDataTypes}{\code{DataCombined$setDataTypes()}}
+    \item \href{#method-DataCombined-removeGroupAssignment}{\code{DataCombined$removeGroupAssignment()}}
+    \item \href{#method-DataCombined-setDataTransformations}{\code{DataCombined$setDataTransformations()}}
+    \item \href{#method-DataCombined-toDataFrame}{\code{DataCombined$toDataFrame()}}
+    \item \href{#method-DataCombined-print}{\code{DataCombined$print()}}
+    \item \href{#method-DataCombined-clone}{\code{DataCombined$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataCombined-addDataSets"></a>}}
 \if{latex}{\out{\hypertarget{method-DataCombined-addDataSets}{}}}
-\subsection{Method \code{addDataSets()}}{
-Adds observed data.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addDataSets(dataSets, names = NULL, groups = NULL, silent = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dataSets}}{An instance (or a \code{list} of instances) of the \code{DataSet}
+\subsection{\code{DataCombined$addDataSets()}}{
+  Adds observed data.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataCombined$addDataSets(dataSets, names = NULL, groups = NULL, silent = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{dataSets}}{An instance (or a \code{list} of instances) of the \code{DataSet}
 class.}
-
-\item{\code{names}}{A string or a \code{list} of strings assigning new names. These new
+      \item{\code{names}}{A string or a \code{list} of strings assigning new names. These new
 names can be either for renaming \code{DataSet} objects, or for renaming
 quantities/paths in \code{SimulationResults} object. If an entity is not to be
 renamed, this can be specified as \code{NULL}. E.g., in \code{names = list("oldName1" = "newName1", "oldName2" = NULL)}), dataset with name \code{"oldName2"} will not
 be renamed. The list can either be named or unnamed. Names act as unique
 identifiers for data sets in the \code{DataCombined} object and, therefore,
 duplicate names are not allowed.}
-
-\item{\code{groups}}{A string or a list of strings specifying group name
+      \item{\code{groups}}{A string or a list of strings specifying group name
 corresponding to each data set. If an entry within the list is \code{NULL}, the
 corresponding data set is not assigned to any group (and the corresponding
 entry in the \code{group} column will be an \code{NA}). If provided, \code{groups} must
 have the same length as \code{dataSets} and/or \code{simulationResults$quantityPath}.
 If no grouping is specified for any of the dataset, the column \code{group} in
 the data frame output will be all \code{NA}.}
-
-\item{\code{silent}}{A binary flag showing if warnings should be triggered when
+      \item{\code{silent}}{A binary flag showing if warnings should be triggered when
 data sets are overwritten in the \code{DataCombined} object}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{DataCombined} object containing observed data.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{DataCombined} object containing observed data.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataCombined-addSimulationResults"></a>}}
 \if{latex}{\out{\hypertarget{method-DataCombined-addSimulationResults}{}}}
-\subsection{Method \code{addSimulationResults()}}{
-Add simulated data using instance of \code{SimulationResults} class.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$addSimulationResults(
+\subsection{\code{DataCombined$addSimulationResults()}}{
+  Add simulated data using instance of \code{SimulationResults} class.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataCombined$addSimulationResults(
   simulationResults,
   quantitiesOrPaths = NULL,
   population = NULL,
@@ -146,77 +146,72 @@ Add simulated data using instance of \code{SimulationResults} class.
   names = NULL,
   groups = NULL,
   silent = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{simulationResults}}{Object of type \code{SimulationResults} produced by
 calling \code{runSimulations} on a \code{Simulation} object.}
-
-\item{\code{quantitiesOrPaths}}{Quantity instances (element or vector) typically
+      \item{\code{quantitiesOrPaths}}{Quantity instances (element or vector) typically
 retrieved using \code{getAllQuantitiesMatching} or quantity path (element or
 vector of strings) for which the results are to be returned. (optional)
 When providing the paths, only absolute full paths are supported (i.e., no
 matching with '*' possible). If quantitiesOrPaths is \code{NULL} (default
 value), returns the results for all output defined in the results.}
-
-\item{\code{population}}{population used to calculate the \code{simulationResults}
+      \item{\code{population}}{population used to calculate the \code{simulationResults}
 (optional). This is used only to add the population covariates to the
 resulting data table.}
-
-\item{\code{individualIds}}{\code{numeric} IDs of individuals for which the results
+      \item{\code{individualIds}}{\code{numeric} IDs of individuals for which the results
 should be extracted. By default, all individuals from the results are
 considered. If the individual with the provided ID is not found, the ID is
 ignored.}
-
-\item{\code{names}}{A string or a \code{list} of strings assigning new names. These new
+      \item{\code{names}}{A string or a \code{list} of strings assigning new names. These new
 names can be either for renaming \code{DataSet} objects, or for renaming
 quantities/paths in \code{SimulationResults} object. If an entity is not to be
 renamed, this can be specified as \code{NULL}. E.g., in \code{names = list("oldName1" = "newName1", "oldName2" = NULL)}), dataset with name \code{"oldName2"} will not
 be renamed. The list can either be named or unnamed. Names act as unique
 identifiers for data sets in the \code{DataCombined} object and, therefore,
 duplicate names are not allowed.}
-
-\item{\code{groups}}{A string or a list of strings specifying group name
+      \item{\code{groups}}{A string or a list of strings specifying group name
 corresponding to each data set. If an entry within the list is \code{NULL}, the
 corresponding data set is not assigned to any group (and the corresponding
 entry in the \code{group} column will be an \code{NA}). If provided, \code{groups} must
 have the same length as \code{dataSets} and/or \code{simulationResults$quantityPath}.
 If no grouping is specified for any of the dataset, the column \code{group} in
 the data frame output will be all \code{NA}.}
-
-\item{\code{silent}}{A binary flag showing if warnings should be triggered when
+      \item{\code{silent}}{A binary flag showing if warnings should be triggered when
 data sets are overwritten in the \code{DataCombined} object}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{DataCombined} object containing simulated data.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{DataCombined} object containing simulated data.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataCombined-setGroups"></a>}}
 \if{latex}{\out{\hypertarget{method-DataCombined-setGroups}{}}}
-\subsection{Method \code{setGroups()}}{
-Adds grouping information to (observed and/or simulated) datasets.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$setGroups(names, groups)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{names}}{A list of dataset names which need to be grouped. Note that
+\subsection{\code{DataCombined$setGroups()}}{
+  Adds grouping information to (observed and/or simulated) datasets.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataCombined$setGroups(names, groups)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{names}}{A list of dataset names which need to be grouped. Note that
 if you have specified new \code{names} while adding datasets (using
 \verb{$addDataSets()} and \verb{$addSimulationResults()} methods), you will need
 to use these new names to specify group assignment. The same dataset
 can't be assigned to two different groupings in the \emph{same}
 \verb{$setGroups()} call. In other words, elements of \code{names} argument
 should be unique.}
-
-\item{\code{groups}}{A list specifying which datasets belong to which group(s).
+      \item{\code{groups}}{A list specifying which datasets belong to which group(s).
 Please note that the order in which groups are specified should match
 the order in which datasets were specified for \code{names} parameter. For
 example, if data sets are named \code{"x"}, \code{"y"}, \code{"z"}, and the desired
@@ -228,100 +223,103 @@ be \code{NA} for such datasets. If you wish to remove an \emph{existing} groupin
 assignment for a given dataset, you can specify it as following:
 \code{list("x" = NA)} or \code{list("x" = NULL)}. This will not change any of the
 other groupings.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{DataCombined} object with grouped datasets.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{DataCombined} object with grouped datasets.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataCombined-setDataTypes"></a>}}
 \if{latex}{\out{\hypertarget{method-DataCombined-setDataTypes}{}}}
-\subsection{Method \code{setDataTypes()}}{
-set the type of data (observed or simulated) for datasets.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$setDataTypes(names, dataTypes)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{names}}{a character vector of dataset names which dataTypes need to
+\subsection{\code{DataCombined$setDataTypes()}}{
+  set the type of data (observed or simulated) for datasets.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataCombined$setDataTypes(names, dataTypes)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{names}}{a character vector of dataset names which dataTypes need to
 be changed.}
-
-\item{\code{dataTypes}}{a character vector of dataTypes (\code{"observed"} or
+      \item{\code{dataTypes}}{a character vector of dataTypes (\code{"observed"} or
 \code{"simulated"}) to be assigned to the datasets (in order of \code{names}.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{DataCombined} object with modified dataTypes datasets.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{DataCombined} object with modified dataTypes datasets.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataCombined-removeGroupAssignment"></a>}}
 \if{latex}{\out{\hypertarget{method-DataCombined-removeGroupAssignment}{}}}
-\subsection{Method \code{removeGroupAssignment()}}{
-Remove existing groupings for (observed and/or simulated) datasets.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$removeGroupAssignment(names)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{names}}{A list of dataset names whose group assignment needs to be
+\subsection{\code{DataCombined$removeGroupAssignment()}}{
+  Remove existing groupings for (observed and/or simulated) datasets.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataCombined$removeGroupAssignment(names)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{names}}{A list of dataset names whose group assignment needs to be
 removed. Note that if you have specified new \code{names} while adding
 datasets (using \verb{$addDataSets()} and \verb{$addSimulationResults()}
 methods), you will need to use these new names to specify group
 assignment. The elements of \code{names} argument should be unique.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    \code{DataCombined} object with updated group assignments.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\code{DataCombined} object with updated group assignments.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataCombined-setDataTransformations"></a>}}
 \if{latex}{\out{\hypertarget{method-DataCombined-setDataTransformations}{}}}
-\subsection{Method \code{setDataTransformations()}}{
-Transform raw data with required offsets and scale factors.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$setDataTransformations(
+\subsection{\code{DataCombined$setDataTransformations()}}{
+  Transform raw data with required offsets and scale factors.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataCombined$setDataTransformations(
   forNames = NULL,
   xOffsets = 0,
   yOffsets = 0,
   xScaleFactors = 1,
   yScaleFactors = 1,
   reset = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{forNames}}{A list of names specifying which observed datasets and/or
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{forNames}}{A list of names specifying which observed datasets and/or
 paths in simulated dataset to transform with the specified
 transformations. Default is \code{NULL}, i.e., the transformations, if any
 specified, will be applied to all rows of the data frame.}
-
-\item{\code{xOffsets, yOffsets, xScaleFactors, yScaleFactors}}{Either a single
+      \item{\code{xOffsets, yOffsets, xScaleFactors, yScaleFactors}}{Either a single
 numeric value or a list of numeric values specifying offsets and
 scale factors to apply to raw values. The default offset is \code{0}, while
 default scale factor is \code{1}, i.e., the data will not be modified. If a
 list is specified, it should be the same length as \code{forNames} argument.}
-
-\item{\code{reset}}{IF \code{TRUE}, only data transformations that are specified will
+      \item{\code{reset}}{IF \code{TRUE}, only data transformations that are specified will
 be retained. Not specified transformations will be reset to their defaults.
 Default behavior is \code{FALSE}, e.g., setting only \code{xOffsets} will not reset
 \code{xScaleFactors} if those have been set previously.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Details}{
-A data frame with respective raw quantities transformed using specified
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Details}{
+    A data frame with respective raw quantities transformed using specified
 offset and scale factor values.
 \itemize{
 \item For X and Y variables:
@@ -329,55 +327,61 @@ offset and scale factor values.
 \item For error term:
 \code{newErrorValue = rawErrorValue * scaleFactor}
 }
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataCombined-toDataFrame"></a>}}
 \if{latex}{\out{\hypertarget{method-DataCombined-toDataFrame}{}}}
-\subsection{Method \code{toDataFrame()}}{
-A method to extract a tibble data frame of simulated and/or observed data
+\subsection{\code{DataCombined$toDataFrame()}}{
+  A method to extract a tibble data frame of simulated and/or observed data
 (depending on instances of which classes have been added to the object).
 
 Note that the order in which you enter different object doesn't matter
 because the returned data frame is arranged alphabetically by dataset
 name.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$toDataFrame()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-In the returned tibble data frame, the following columns will always be present:
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataCombined$toDataFrame()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    In the returned tibble data frame, the following columns will always be present:
 
 name - group - dataType - xValues - xDimension - xUnit - yValues -
 yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+  }
 }
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataCombined-print"></a>}}
 \if{latex}{\out{\hypertarget{method-DataCombined-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$print()}\if{html}{\out{</div>}}
+\subsection{\code{DataCombined$print()}}{
+  Print the object to the console.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataCombined$print()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataCombined-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-DataCombined-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataCombined$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{DataCombined$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataCombined$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }
