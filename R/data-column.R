@@ -1,5 +1,5 @@
-WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
-WITH_DISPLAY_UNIT_EXTENSION <- "OSPSuite.Core.Domain.WithDisplayUnitExtensions"
+WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions, OSPSuite.Core"
+WITH_DISPLAY_UNIT_EXTENSION <- "OSPSuite.Core.Domain.WithDisplayUnitExtensions, OSPSuite.Core"
 
 #' @title DataColumn
 #' @docType class

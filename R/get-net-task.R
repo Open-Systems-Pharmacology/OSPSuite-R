@@ -7,7 +7,7 @@
 #'
 #' @keywords internal
 .getCoreTask <- function(taskName) {
-  rSharp::callStatic("OSPSuite.R.Api", paste0("Get", taskName))
+  rSharp::callStatic("OSPSuite.R.Api, OSPSuite.R", paste0("Get", taskName))
 }
 
 #' @title .getMoBiTask
@@ -19,7 +19,7 @@
 #'
 #' @keywords internal
 .getMoBiTask <- function(taskName) {
-  rSharp::callStatic("MoBi.R.Api", paste0("Get", taskName))
+  rSharp::callStatic("MoBi.R.Api, MoBi.R", paste0("Get", taskName))
 }
 
 #' @title .getCoreTaskFromCache
