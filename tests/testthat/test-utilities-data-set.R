@@ -662,3 +662,52 @@ test_that("dataSetsFromDataFrame round-trips DataSets loaded from Excel", {
     expect_equal(restored$yUnit, orig$yUnit)
   }
 })
+
+# Regression test for the OSPSuite-R `inst/lib` allow-list audit (issue #1945).
+# `ExtendedNumerics.BigDecimal.dll` was dropped from `inst/lib` because
+# OSPSuite's NPOI usage never enters NPOI's `DataFormatter` — the only NPOI
+# code path that requires BigDecimal. `ExcelReader.cs` reads numeric cells via
+# `cellValue.NumberValue.ToString()` (raw double, .NET's `Double.ToString()`),
+# never `cell.GetCellValueAsString()` or `DataFormatter.FormatCellValue(...)`.
+#
+# Fixture `CompiledDataSet_highPrecisionFormat.xlsx` is a copy of
+# `CompiledDataSet_oneSheet.xlsx` with a custom number format
+# (`"0.000000000000000"` — 15 explicit decimal positions) overlaid on its
+# numeric cells. The format string requests scale-aware decimal display, which
+# is what enrolls NPOI's `DataFormatter` in the BigDecimal-using
+# `InternalDecimalFormatWithScale` path. The trigger is the format string
+# itself, not the magnitude of any value: even `0.1` stored as binary64
+# (actually `0.1000000000000000055511…`) needs BigDecimal to display
+# faithfully to 15 places.
+#
+# If a future refactor of `ExcelReader.cs` introduces a `DataFormatter` /
+# formatted-string-conversion call (e.g. someone changes the numeric path to
+# use `cell.ToString()` instead of `cellValue.NumberValue.ToString()`), this
+# test will fail with `System.IO.FileNotFoundException: Could not load file
+# or assembly 'ExtendedNumerics.BigDecimal'`.
+#
+# To regenerate the fixture (if `CompiledDataSet_oneSheet.xlsx` ever changes
+# shape), run from the repo root:
+#
+#   wb <- openxlsx::loadWorkbook("tests/data/CompiledDataSet_oneSheet.xlsx")
+#   openxlsx::addStyle(wb, 1,
+#     openxlsx::createStyle(numFmt = "0.000000000000000"),
+#     rows = seq_len(1000), cols = seq_len(50),
+#     gridExpand = TRUE, stack = TRUE)
+#   openxlsx::saveWorkbook(wb,
+#     "tests/data/CompiledDataSet_highPrecisionFormat.xlsx", overwrite = TRUE)
+
+test_that("Excel cells with high-precision custom number formats load without ExtendedNumerics.BigDecimal", {
+  xlsPath    <- getTestDataFilePath("CompiledDataSet_highPrecisionFormat.xlsx")
+  configPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+
+  expect_no_error({
+    dataSets <- loadDataSetsFromExcel(
+      xlsFilePath = xlsPath,
+      importerConfigurationOrPath = configPath
+    )
+  })
+
+  # Sanity: the format overlay didn't accidentally invalidate the workbook.
+  expect_gt(length(dataSets), 0)
+})
