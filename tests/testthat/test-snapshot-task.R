@@ -19,10 +19,9 @@ test_that("MoBi.R LoadSimulationsFromSnapshot returns every simulation in the sn
 
 test_that("MoBi.R LoadSimulationsFromSnapshot returns only simulations whose name matches", {
   task <- .getMoBiTaskFromCache("SnapshotTask")
-  existingName <- task$call(
-    "LoadSimulationsFromSnapshot",
-    mobiSnapshotFile
-  )[[1]]$get("Name")
+  allSimulations <- task$call("LoadSimulationsFromSnapshot", mobiSnapshotFile)
+  expect_gt(length(allSimulations), 0)
+  existingName <- allSimulations[[1]]$get("Name")
 
   simulations <- task$call(
     "LoadSimulationsFromSnapshot",
@@ -62,10 +61,9 @@ test_that("PKSim.R LoadSimulationsFromSnapshot returns every simulation in the s
 test_that("PKSim.R LoadSimulationsFromSnapshot returns only simulations whose name matches", {
   initPKSim()
   task <- rSharp::callStatic("PKSim.R.Api, PKSim.R", "GetSnapshotTask")
-  existingName <- task$call(
-    "LoadSimulationsFromSnapshot",
-    pksimSnapshotFile
-  )[[1]]$get("Name")
+  allSimulations <- task$call("LoadSimulationsFromSnapshot", pksimSnapshotFile)
+  expect_gt(length(allSimulations), 0)
+  existingName <- allSimulations[[1]]$get("Name")
 
   simulations <- task$call(
     "LoadSimulationsFromSnapshot",
