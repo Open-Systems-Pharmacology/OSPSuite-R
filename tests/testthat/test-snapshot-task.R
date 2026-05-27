@@ -7,7 +7,7 @@
 # ---- MoBi.R SnapshotTask (MoBi snapshot) ----
 
 mobiSnapshotFile <- normalizePath(
-  getTestDataFilePath("snapshot_no_pksim_modules.json")
+  getTestDataFilePath("snapshot.json")
 )
 
 test_that("MoBi.R LoadSimulationsFromSnapshot returns every simulation in the snapshot", {
