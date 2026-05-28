@@ -2790,7 +2790,7 @@
     },
     "ospsuite.plots": {
       "Package": "ospsuite.plots",
-      "Version": "1.1.0.9009",
+      "Version": "1.1.0.9010",
       "Source": "git",
       "Type": "Package",
       "Title": "Library for standardized graphs",
@@ -2838,7 +2838,7 @@
       "VignetteBuilder": "knitr",
       "Vignette": "inst/doc/ospsuite-plots.Rmd inst/doc/plot-time-profile.Rmd inst/doc/histogram.Rmd inst/doc/box-whisker-plots.Rmd inst/doc/goodness-of-fit.Rmd inst/doc/forest-plots.Rmd inst/doc/range-plot-visualization.Rmd",
       "Config/testthat/edition": "3",
-      "Collate": "'messages.R' 'utilities-defaults.R' 'utilities_enum.R' 'add_Layer.R' 'ggplotWithWatermark.R' 'CombinedPlot.R' 'data.R' 'MappedData.R' 'MappedDataBoxplot.R' 'MappedDataTimeProfile.R' 'MappedDataRangePlot.R' 'ospsuite.plots-package.R' 'plotBoxWhisker.R' 'plotHistogram.R' 'plotQQ.R' 'plotTimeProfile.R' 'plotYVsX.R' 'plotForest.R' 'plotRangeDistribution.R' 'utilities.R' 'utilities_export.R' 'utilities_shapes.R' 'zzz.R'",
+      "Collate": "'messages.R' 'utilities-defaults.R' 'utilities_enum.R' 'add_Layer.R' 'ggplotWithWatermark.R' 'CombinedPlot.R' 'data.R' 'MappedData.R' 'MappedDataBoxplot.R' 'MappedDataTimeProfile.R' 'MappedDataRangePlot.R' 'ospsuite.plots-package.R' 'plotBoxWhisker.R' 'plotHistogram.R' 'plotQQ.R' 'plotTimeProfile.R' 'plotYVsX.R' 'plotForest.R' 'plotRangeDistribution.R' 'utilities.R' 'utilities_export.R' 'utilities_shapes.R'",
       "LazyData": "true",
       "Author": "Open-Systems-Pharmacology Community [cph], Katrin Coboeken [aut, cre]",
       "Maintainer": "Katrin Coboeken <katrin.coboeken@bayer.com>",
@@ -2849,7 +2849,7 @@
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "OSPSuite.Plots",
       "RemoteRef": "main",
-      "RemoteSha": "15f21282ad632480a9fe7c76b5298b2adfef9ca7"
+      "RemoteSha": "5f98f865436db36c817fbb528e51a3d8c9cec122"
     },
     "ospsuite.utils": {
       "Package": "ospsuite.utils",
