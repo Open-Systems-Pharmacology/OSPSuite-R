@@ -954,5 +954,14 @@
         <Unit name="1/dm²" factor="1" visible="0" />
       </Units>
     </Dimension>
+    <Dimension name="Area per amount per time" baseUnit="dm²/µmol/min" defaultUnit="dm²/µmol/min">
+      <BaseRepresentation lengthExponent="2" massExponent="0" timeExponent="-1" electricCurrentExponent="0" temperatureExponent="0" amountExponent="-1" luminousIntensityExponent="0" />
+      <Units>
+        <Unit name="dm²/µmol/min" factor="1" />
+        <Unit name="cm²/µmol/s" factor="1E-2*60" />
+        <Unit name="µm²/µmol/s" factor="1E-10*60" />
+        <Unit name="m²/mol/s" factor="1E2*1E-6*60" />
+      </Units>
+    </Dimension>
   </Dimensions>
 </DimensionFactory>
