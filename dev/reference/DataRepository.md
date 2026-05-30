@@ -6,7 +6,7 @@ An object typically holding observed data
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `DataRepository`
 
 ## Active bindings
@@ -41,7 +41,7 @@ An object typically holding observed data
 
 - [`DataRepository$addColumn()`](#method-DataRepository-addColumn)
 
-- [`DataRepository$new()`](#method-DataRepository-initialize)
+- [`DataRepository$new()`](#method-DataRepository-new)
 
 - [`DataRepository$print()`](#method-DataRepository-print)
 
@@ -66,7 +66,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### `DataRepository$addColumn()`
+### Method `addColumn()`
 
 Adds a column to the data repository
 
@@ -82,7 +82,7 @@ Adds a column to the data repository
 
 ------------------------------------------------------------------------
 
-### `DataRepository$new()`
+### Method `new()`
 
 Initialize a new instance of the class
 
@@ -104,7 +104,7 @@ A new `DataRepository` object.
 
 ------------------------------------------------------------------------
 
-### `DataRepository$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 
@@ -120,7 +120,7 @@ Print the object to the console
 
 ------------------------------------------------------------------------
 
-### `DataRepository$addMetaData()`
+### Method `addMetaData()`
 
 Adds a new entry to meta data list or changes its value if the name is
 already present.
@@ -141,7 +141,7 @@ already present.
 
 ------------------------------------------------------------------------
 
-### `DataRepository$removeMetaData()`
+### Method `removeMetaData()`
 
 Removes the meta data entry in the list if one is defined with this name
 

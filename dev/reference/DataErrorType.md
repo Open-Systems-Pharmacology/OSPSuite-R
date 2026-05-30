@@ -7,3 +7,7 @@ Supported types of the error
 ``` r
 DataErrorType
 ```
+
+## Format
+
+An object of class `list` of length 2.

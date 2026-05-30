@@ -6,7 +6,7 @@ Solver settings associated with a given simulation
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `SolverSettings`
 
 ## Active bindings
@@ -40,10 +40,6 @@ Solver settings associated with a given simulation
 
   Absolute tolerance of unknowns
 
-- `checkForNegativeValues`:
-
-  Should the solver check for negative values
-
 ## Methods
 
 ### Public methods
@@ -64,11 +60,11 @@ Inherited methods
 - [`rSharp::NetObject$getStaticMethods()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods)
 - [`rSharp::NetObject$getStaticProperties()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties)
 - [`rSharp::NetObject$set()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set)
-- [`DotNetWrapper$initialize()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.html#method-initialize)
+- [`ospsuite::DotNetWrapper$initialize()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.html#method-initialize)
 
 ------------------------------------------------------------------------
 
-### `SolverSettings$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 

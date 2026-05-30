@@ -8,6 +8,10 @@ Supported dimensions defined as a named list
 ospDimensions
 ```
 
+## Format
+
+An object of class `list` of length 94.
+
 ## Details
 
 ospDimensions\$Mass =\> "Mass"

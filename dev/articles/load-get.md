@@ -12,12 +12,6 @@ simulation object.
 ``` r
 
 library(ospsuite)
-#> The option 'ospsuite.plots.watermarkEnabled' is not set.
-#> To enable watermarks, add the following to your .Rprofile:
-#>   options(ospsuite.plots.watermarkEnabled = TRUE)
-#> To disable watermarks, add:
-#>   options(ospsuite.plots.watermarkEnabled = FALSE)
-#> You can edit your .Rprofile with usethis::edit_r_profile()
 
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 
@@ -125,13 +119,13 @@ molecules <- getAllMoleculesMatching(c(
 print(molecules)
 #> [[1]]
 #> <Molecule>
-#>   • Path: Organism|VenousBlood|Plasma|Aciclovir
+#>   • Path: Organism|Liver|Periportal|Intracellular|Aciclovir
 #>   • Scale Divisor: 1
 #>   • Initial Value: 0.00e+00 [µmol]
 #> 
 #> [[2]]
 #> <Molecule>
-#>   • Path: Organism|Liver|Periportal|Intracellular|Aciclovir
+#>   • Path: Organism|VenousBlood|Plasma|Aciclovir
 #>   • Scale Divisor: 1
 #>   • Initial Value: 0.00e+00 [µmol]
 ```

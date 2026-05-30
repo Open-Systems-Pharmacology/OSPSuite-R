@@ -7,7 +7,7 @@ class is "OSPSuite.R.Services.ConcurrentRunSimulationBatch"
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `SimulationBatch`
 
 ## Active bindings
@@ -28,7 +28,7 @@ class is "OSPSuite.R.Services.ConcurrentRunSimulationBatch"
 
 ### Public methods
 
-- [`SimulationBatch$new()`](#method-SimulationBatch-initialize)
+- [`SimulationBatch$new()`](#method-SimulationBatch-new)
 
 - [`SimulationBatch$addRunValues()`](#method-SimulationBatch-addRunValues)
 
@@ -55,7 +55,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### `SimulationBatch$new()`
+### Method `new()`
 
 Initialize a new instance of the class
 
@@ -81,7 +81,7 @@ A new `SimulationBatch` object.
 
 ------------------------------------------------------------------------
 
-### `SimulationBatch$addRunValues()`
+### Method `addRunValues()`
 
 Add a set of parameter and start values for next execution.
 
@@ -113,6 +113,7 @@ Id of the values set that can be used to get the correct result from
 
 #### Examples
 
+    \dontrun{
     sim1 <- loadSimulation("sim1", loadFromCache = TRUE)
     sim2 <- loadSimulation("sim2", loadFromCache = TRUE)
     parameters <- c("Organism|Liver|Volume", "R1|k1")
@@ -131,10 +132,11 @@ Id of the values set that can be used to get the correct result from
     ids[[3]] <- simulationBatch2$addRunValues(parameterValues = c(4, 2), initialValues = 4)
     ids[[4]] <- simulationBatch2$addRunValues(parameterValues = c(2.6, 4.4), initialValues = 5)
     res <- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
+    }
 
 ------------------------------------------------------------------------
 
-### `SimulationBatch$getVariableParameters()`
+### Method `getVariableParameters()`
 
 Returns a list of parameter paths that are variable in this batch.
 
@@ -153,7 +155,7 @@ List of parameter paths, or `NULL` if no parameter is variable.
 
 ------------------------------------------------------------------------
 
-### `SimulationBatch$getVariableMolecules()`
+### Method `getVariableMolecules()`
 
 Returns a list of molecules paths that are variable in this batch
 
@@ -172,7 +174,7 @@ List of parameter paths, or `NULL` if no molecule is variable.
 
 ------------------------------------------------------------------------
 
-### `SimulationBatch$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 
@@ -191,7 +193,7 @@ Print the object to the console
 ``` r
 
 ## ------------------------------------------------
-## Method `SimulationBatch$addRunValues()`
+## Method `SimulationBatch$addRunValues`
 ## ------------------------------------------------
 
 if (FALSE) { # \dontrun{

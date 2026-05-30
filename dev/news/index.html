@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9027</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,10 +20,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
-    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -57,29 +54,14 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="ospsuite-development-version">ospsuite (development version)<a class="anchor" aria-label="anchor" href="#ospsuite-development-version"></a></h2>
 <div class="section level3">
-<h3 id="major-changes-development-version">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-development-version"></a></h3>
-<ul><li>Added MoBi project support: load <code>.mbp3</code> projects, query modules, individuals, expression profiles, and simulations, and assemble simulations from project building blocks. New classes <code>MoBiProject</code>, <code>MoBiModule</code>, <code>SimulationConfiguration</code>, <code>MoleculesBuildingBlock</code>, plus helpers for creating and saving Initial Conditions, Parameter Values, Individual, and Expression Profile building blocks. See <code><a href="../articles/mobi-projects.html">vignette("mobi-projects")</a></code> for an end-to-end walkthrough.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
-<ul><li>
-<strong>.NET 10 runtime is now required</strong> (previously .NET 8). The bundled assemblies in <code>inst/lib</code> target <code>net10.0</code>; on older runtimes the package fails to load with <code>System.Reflection.ReflectionTypeLoadException</code>. See the rSharp prerequisites links in the README for installation instructions on Windows and Linux.</li>
-<li>
-<code><a href="../reference/createIndividual.html">createIndividual()</a></code> and <code><a href="../reference/createPopulation.html">createPopulation()</a></code> will not work with models developed prior to version 13. The reason is that in v13, the absorption model has been refined, adding new parameters. To be able to use creation of individuals or populations with earlier models, the user has to re-create the models from snapshot with the latest PK-Sim version. If no original PK-Sim project or snapshot are available, the user should use the latest version 12 of the R package.</li>
-<li>
-<code>SimulationRunOptions$checkForNegativeValues</code> field has been removed. The property is now on <code>SolverSettings</code> and accessible via <code>simulation$solver$checkForNegativeValues</code>. The <code>checkForNegativeValues</code> argument of <code>SimulationRunOptions$new()</code> is kept for backward compatibility but issues a deprecation warning and has no effect.</li>
-</ul></div>
-<div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
-<ul><li>New <code><a href="../reference/createInitialConditionsBuildingBlock.html">createInitialConditionsBuildingBlock()</a></code> and <code><a href="../reference/createParameterValuesBuildingBlock.html">createParameterValuesBuildingBlock()</a></code> create empty Initial Conditions and Parameter Values building blocks that can be populated programmatically and added to a module (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1937" class="external-link">#1937</a>).</li>
-<li>Individual building blocks are now returned as <code>IndividualBuildingBlock</code>, an R6 subclass of <code>BuildingBlock</code> with read-only fields for <code>species</code>, <code>population</code>, <code>gender</code>, <code>age</code>, <code>gestationalAge</code>, <code>height</code>, and <code>weight</code>. <code><a href="../reference/createIndividualBuildingBlock.html">createIndividualBuildingBlock()</a></code>, <code>MoBiProject$getIndividual()</code>, and <code><a href="../reference/loadBuildingBlockFromPKML.html">loadBuildingBlockFromPKML()</a></code> all return the new subclass.</li>
-<li>
+<ul><li>
 <code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code> now defaults to <code>showLegendPerDataset = "all"</code>, showing individual dataset names for both observed and simulated data by default (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1844" class="external-link">#1844</a>).</li>
 <li>
 <code>DataSet$setValues()</code> and plotting functions (<code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code>, <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code>, <code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>, <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code>, <code><a href="../reference/plotQuantileQuantilePlot.html">plotQuantileQuantilePlot()</a></code>) now warn and replace negative <code>yErrorValues</code> with <code>NA</code> instead of silently accepting them (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1756" class="external-link">#1756</a>).</li>
@@ -142,11 +124,6 @@
 <div class="section level3">
 <h3 id="major-changes-12-4-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-12-4-0"></a></h3>
 <ul><li>Added support for macOS (both Intel and Apple Silicon architectures). (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1621" class="external-link">#1621</a>)</li>
-</ul></div>
-<div class="section level3">
-<h3 id="deprecations-12-4-0">Deprecations<a class="anchor" aria-label="anchor" href="#deprecations-12-4-0"></a></h3>
-<ul><li>
-<code>checkForNegativeValues</code> parameter in <code>SimulationRunOptions$new()</code> is deprecated. Use <code>sim$solver$checkForNegativeValues</code> instead. The parameter is still accepted but will issue a deprecation warning. The property has moved from <code>SimulationRunOptions</code> to <code>SolverSettings</code> to align with .NET binaries changes.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-12-4-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-12-4-0"></a></h3>

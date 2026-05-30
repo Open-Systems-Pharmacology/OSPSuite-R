@@ -2,59 +2,8 @@
 
 ## ospsuite (development version)
 
-### Major changes
-
-- Added MoBi project support: load `.mbp3` projects, query modules,
-  individuals, expression profiles, and simulations, and assemble
-  simulations from project building blocks. New classes `MoBiProject`,
-  `MoBiModule`, `SimulationConfiguration`, `MoleculesBuildingBlock`,
-  plus helpers for creating and saving Initial Conditions, Parameter
-  Values, Individual, and Expression Profile building blocks. See
-  [`vignette("mobi-projects")`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/mobi-projects.md)
-  for an end-to-end walkthrough.
-
-### Breaking changes
-
-- **.NET 10 runtime is now required** (previously .NET 8). The bundled
-  assemblies in `inst/lib` target `net10.0`; on older runtimes the
-  package fails to load with
-  `System.Reflection.ReflectionTypeLoadException`. See the rSharp
-  prerequisites links in the README for installation instructions on
-  Windows and Linux.
-- [`createIndividual()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividual.md)
-  and
-  [`createPopulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createPopulation.md)
-  will not work with models developed prior to version 13. The reason is
-  that in v13, the absorption model has been refined, adding new
-  parameters. To be able to use creation of individuals or populations
-  with earlier models, the user has to re-create the models from
-  snapshot with the latest PK-Sim version. If no original PK-Sim project
-  or snapshot are available, the user should use the latest version 12
-  of the R package.
-- `SimulationRunOptions$checkForNegativeValues` field has been removed.
-  The property is now on `SolverSettings` and accessible via
-  `simulation$solver$checkForNegativeValues`. The
-  `checkForNegativeValues` argument of `SimulationRunOptions$new()` is
-  kept for backward compatibility but issues a deprecation warning and
-  has no effect.
-
 ### Minor improvements and bug fixes
 
-- New
-  [`createInitialConditionsBuildingBlock()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createInitialConditionsBuildingBlock.md)
-  and
-  [`createParameterValuesBuildingBlock()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createParameterValuesBuildingBlock.md)
-  create empty Initial Conditions and Parameter Values building blocks
-  that can be populated programmatically and added to a module
-  ([\#1937](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1937)).
-- Individual building blocks are now returned as
-  `IndividualBuildingBlock`, an R6 subclass of `BuildingBlock` with
-  read-only fields for `species`, `population`, `gender`, `age`,
-  `gestationalAge`, `height`, and `weight`.
-  [`createIndividualBuildingBlock()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividualBuildingBlock.md),
-  `MoBiProject$getIndividual()`, and
-  [`loadBuildingBlockFromPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadBuildingBlockFromPKML.md)
-  all return the new subclass.
 - [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md)
   now defaults to `showLegendPerDataset = "all"`, showing individual
   dataset names for both observed and simulated data by default
@@ -230,14 +179,6 @@
 
 - Added support for macOS (both Intel and Apple Silicon architectures).
   ([\#1621](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1621))
-
-### Deprecations
-
-- `checkForNegativeValues` parameter in `SimulationRunOptions$new()` is
-  deprecated. Use `sim$solver$checkForNegativeValues` instead. The
-  parameter is still accepted but will issue a deprecation warning. The
-  property has moved from `SimulationRunOptions` to `SolverSettings` to
-  align with .NET binaries changes.
 
 ### Minor improvements and bug fixes
 

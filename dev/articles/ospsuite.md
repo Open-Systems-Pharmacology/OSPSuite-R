@@ -210,6 +210,7 @@ Adjust simulation outputs and solver settings:
 
 ``` r
 
+
 # Originally, the simulation outputs plasma concentrations
 sim$outputSelections
 #> <OutputSelections>
@@ -238,7 +239,7 @@ addOutputInterval(
   startTime = 1440, # 1 day
   endTime = 3000, # ~2 days
   resolution = 10, # Every 10 minutes
-  intervalName = "HighRes"
+  intervalName = "highRes"
 )
 
 # Check current output schema
@@ -263,7 +264,7 @@ print(sim$outputSchema)
 #>   • End time: 1440.00 [min]
 #>   • Resolution: 0.07 [pts/min]
 #> <Interval>
-#>   • Name: HighRes
+#>   • Name: highRes
 #>   • Start time: 1440.00 [min]
 #>   • End time: 3000.00 [min]
 #>   • Resolution: 10.00 [pts/min]

@@ -54,20 +54,11 @@ is calculated for each dose of interest.
 ``` r
 
 library(ospsuite)
-#> The option 'ospsuite.plots.watermarkEnabled' is not set.
-#> To enable watermarks, add the following to your .Rprofile:
-#>   options(ospsuite.plots.watermarkEnabled = TRUE)
-#> To disable watermarks, add:
-#>   options(ospsuite.plots.watermarkEnabled = FALSE)
-#> You can edit your .Rprofile with usethis::edit_r_profile()
 
 # Load and run the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
-doseParameter <- getAllParametersMatching(
-  toPathString("Applications", "**", "Dose"),
-  sim
-)[[1]]
+doseParameter <- getAllParametersMatching(toPathString("Applications", "**", "Dose"), sim)[[1]]
 
 # run for dose 100mg
 doseParameter$value <- toBaseUnit(doseParameter, 100, "mg")
@@ -109,15 +100,13 @@ Consider the following implementation:
 
 ``` r
 
+library(ospsuite)
 # Load and run the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 
 loadSimulationWithDose <- function(doseInMg) {
   sim <- loadSimulation(simFilePath, loadFromCache = FALSE)
-  doseParameter <- getAllParametersMatching(
-    toPathString("Applications", "**", "Dose"),
-    sim
-  )[[1]]
+  doseParameter <- getAllParametersMatching(toPathString("Applications", "**", "Dose"), sim)[[1]]
   doseParameter$value <- toBaseUnit(doseParameter, doseInMg, "mg")
   return(sim)
 }
@@ -141,9 +130,7 @@ sim500 <- loadSimulationWithDose(doseInMg = 500)
 
 
 # Runs the simulation in parallel
-results <- runSimulations(
-  simulations = list(sim100, sim200, sim300, sim400, sim500)
-)
+results <- runSimulations(simulations = list(sim100, sim200, sim300, sim400, sim500))
 #> Error:
 #> ! object 'sim100' not found
 
@@ -184,6 +171,7 @@ the outputs or simulation time.
 
 ``` r
 
+library(ospsuite)
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 
 # We load the simulation for which the batches will be created
@@ -194,10 +182,7 @@ sim1 <- loadSimulation(simFilePath, loadFromCache = FALSE)
 parameterPaths <- c("Aciclovir|Lipophilicity", "Aciclovir|Permeability")
 
 # define a first simulation batch
-simBatch1 <- createSimulationBatch(
-  simulation = sim1,
-  parametersOrPaths = parameterPaths
-)
+simBatch1 <- createSimulationBatch(simulation = sim1, parametersOrPaths = parameterPaths)
 
 # for the second batch, we will vary Molecular Weight
 simBatch2 <- createSimulationBatch(
@@ -220,21 +205,21 @@ performance.
 # now setting some parameter run values (the size of the array should match
 # the number of parameters to vary for each batch
 simBatch1$addRunValues(parameterValues = c(1, 2))
-#> [1] "954a8100-527c-4d14-9c65-43b089dfbcc8"
+#> [1] "a4da8a33-ad2c-4135-807d-d10fb7d38c0c"
 simBatch1$addRunValues(parameterValues = c(3, 4))
-#> [1] "89083bee-58e8-42d7-9dab-6fd0cb060f09"
+#> [1] "134685b3-cd0d-46d6-9a98-661c5bede3b4"
 simBatch1$addRunValues(parameterValues = c(5, 6))
-#> [1] "f45e25a6-5cb6-41b5-af88-57fc18508e9a"
+#> [1] "49b4ff3b-69ed-4a00-8c4c-4bfd4bc9e21e"
 
 # We only have one parameter to vary for simBatch2, therefore only one value to set
 simBatch2$addRunValues(parameterValues = 150)
-#> [1] "51cf7e85-bf92-41d2-bee8-5294366a6150"
+#> [1] "9c9391a8-781b-44a7-8c26-d26b7734f1eb"
 simBatch2$addRunValues(parameterValues = 200)
-#> [1] "a5b7d362-7500-4567-a49e-9029954a250e"
+#> [1] "6e1b3ccc-1800-4688-85e5-31442f2e520b"
 simBatch2$addRunValues(parameterValues = 300)
-#> [1] "7db561e5-3a0d-409f-9efd-38604531e0af"
+#> [1] "17ff7bd7-2ac6-448b-8714-367d5f8c8be8"
 simBatch2$addRunValues(parameterValues = 400)
-#> [1] "039a32a5-07b2-4d37-9b85-720ef87b3dc0"
+#> [1] "687c6270-f711-41fd-9f53-893d12e013f8"
 ```
 
 So far, we created 2 simulation batches, one with 3 parameter sets and
@@ -251,13 +236,13 @@ simulated set of parameters.
 # The resulting output is a named list, where the names are the ids of the enqueued runs.
 results <- runSimulationBatches(simulationBatches)
 print(names(unlist(results)))
-#> [1] "fd2922fe-aafb-42cc-b3d5-987778c86ad8.954a8100-527c-4d14-9c65-43b089dfbcc8"
-#> [2] "fd2922fe-aafb-42cc-b3d5-987778c86ad8.89083bee-58e8-42d7-9dab-6fd0cb060f09"
-#> [3] "fd2922fe-aafb-42cc-b3d5-987778c86ad8.f45e25a6-5cb6-41b5-af88-57fc18508e9a"
-#> [4] "ddd92f50-d216-49f6-9f48-cf232bd1f966.51cf7e85-bf92-41d2-bee8-5294366a6150"
-#> [5] "ddd92f50-d216-49f6-9f48-cf232bd1f966.a5b7d362-7500-4567-a49e-9029954a250e"
-#> [6] "ddd92f50-d216-49f6-9f48-cf232bd1f966.7db561e5-3a0d-409f-9efd-38604531e0af"
-#> [7] "ddd92f50-d216-49f6-9f48-cf232bd1f966.039a32a5-07b2-4d37-9b85-720ef87b3dc0"
+#> [1] "435e94b8-6c70-4d87-b197-ca806244c1c1.a4da8a33-ad2c-4135-807d-d10fb7d38c0c"
+#> [2] "435e94b8-6c70-4d87-b197-ca806244c1c1.134685b3-cd0d-46d6-9a98-661c5bede3b4"
+#> [3] "435e94b8-6c70-4d87-b197-ca806244c1c1.49b4ff3b-69ed-4a00-8c4c-4bfd4bc9e21e"
+#> [4] "d8f3c69d-c3d6-4d3c-be0d-5b4b657631fa.9c9391a8-781b-44a7-8c26-d26b7734f1eb"
+#> [5] "d8f3c69d-c3d6-4d3c-be0d-5b4b657631fa.6e1b3ccc-1800-4688-85e5-31442f2e520b"
+#> [6] "d8f3c69d-c3d6-4d3c-be0d-5b4b657631fa.17ff7bd7-2ac6-448b-8714-367d5f8c8be8"
+#> [7] "d8f3c69d-c3d6-4d3c-be0d-5b4b657631fa.687c6270-f711-41fd-9f53-893d12e013f8"
 ```
 
 The enqueued run values are cleared after calling
@@ -272,13 +257,13 @@ is called.
 ``` r
 
 simBatch1$addRunValues(parameterValues = c(10, 20))
-#> [1] "24e75e1d-9a12-4d64-af31-a968a2a178dc"
+#> [1] "944ada4e-9bcc-499f-b739-04186d7bc055"
 simBatch1$addRunValues(parameterValues = c(30, 40))
-#> [1] "5d681c55-3d5f-4b9d-bd98-1e5f1b3a5c0f"
+#> [1] "d0a5d39a-432d-4492-a378-45c889e0da91"
 simBatch2$addRunValues(parameterValues = 500)
-#> [1] "015f52c2-f06c-41a8-872a-efdd2e85d434"
+#> [1] "78cf2ce0-3e99-4d20-b0f2-1995169bcea1"
 simBatch2$addRunValues(parameterValues = 200)
-#> [1] "34872249-9876-4132-b7c4-9ab9b9d15188"
+#> [1] "6d4d0da9-d645-4403-8931-b485441c13dd"
 
 # this run will be much faster as the simulation won't be initialized again.
 # Only the new value will be set as specified when adding new run values with addRunValues
@@ -304,10 +289,7 @@ parameter will result in an error:
 
 ``` r
 
-stateVariableParam <- getParameter(
-  path = "Organism|Lumen|Stomach|Liquid",
-  container = sim1
-)
+stateVariableParam <- getParameter(path = "Organism|Lumen|Stomach|Liquid", container = sim1)
 print(stateVariableParam)
 #> <Parameter>
 #>   • Quantity Type: Parameter
@@ -329,10 +311,7 @@ print(stateVariableParam)
 #>   • formula: OralApplicationsEnabled ? -LT_sto + Inflow*FillLevelFlag : 0
 
 # Create simulation batch with state variable parameter set as a variable parameter
-simBatch <- createSimulationBatch(
-  simulation = sim1,
-  parametersOrPaths = stateVariableParam
-)
+simBatch <- createSimulationBatch(simulation = sim1, parametersOrPaths = stateVariableParam)
 
 # Add run values
 resId <- simBatch$addRunValues(parameterValues = 0.5)
@@ -356,15 +335,9 @@ set as a variable molecule start value.
 
 ``` r
 
-stateVariableParam <- getParameter(
-  path = "Organism|Lumen|Stomach|Liquid",
-  container = sim1
-)
+stateVariableParam <- getParameter(path = "Organism|Lumen|Stomach|Liquid", container = sim1)
 # Create simulation batch with state variable parameter set as a variable molecule
-simBatch <- createSimulationBatch(
-  simulation = sim1,
-  moleculesOrPaths = stateVariableParam
-)
+simBatch <- createSimulationBatch(simulation = sim1, moleculesOrPaths = stateVariableParam)
 # Add run values
 resId <- simBatch$addRunValues(initialValues = 0.5)
 # Try to run batch

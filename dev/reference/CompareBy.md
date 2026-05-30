@@ -7,3 +7,7 @@ How should comparison of entities be performed
 ``` r
 CompareBy
 ```
+
+## Format
+
+An object of class `list` of length 3.

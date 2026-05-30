@@ -13,12 +13,6 @@ produces a list of `SimulationResults` objects.
 ``` r
 
 library(ospsuite)
-#> The option 'ospsuite.plots.watermarkEnabled' is not set.
-#> To enable watermarks, add the following to your .Rprofile:
-#>   options(ospsuite.plots.watermarkEnabled = TRUE)
-#> To disable watermarks, add:
-#>   options(ospsuite.plots.watermarkEnabled = FALSE)
-#> You can edit your .Rprofile with usethis::edit_r_profile()
 
 # Load the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
@@ -160,11 +154,11 @@ for the specific simulation
 # Get the id of the second simulation
 id <- sim2$id
 print(id)
-#> [1] "aJEq1MoIc0-UYa-yqky1tw"
+#> [1] "HANXBVp8Hkuo_xJpSxsO3w"
 # get the corresponding result
 sim2Results <- simulationResults[[id]]
 print(sim2Results$simulation$id)
-#> [1] "aJEq1MoIc0-UYa-yqky1tw"
+#> [1] "HANXBVp8Hkuo_xJpSxsO3w"
 ```
 
 ## Adding new outputs
@@ -354,7 +348,6 @@ print(sim$solver)
 #>   • mxStep: 100000
 #>   • relTol: 1e-05
 #>   • absTol: 1e-10
-#>   • checkForNegativeValues: TRUE
 ```
 
 In some cases, a simulation may fail to run successfully due to

@@ -2,6 +2,8 @@
 
 Wrapper class for `.NET` objects
 
+Wrapper class for `.NET` objects
+
 ## Super class
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
@@ -11,7 +13,7 @@ Wrapper class for `.NET` objects
 
 ### Public methods
 
-- [`DotNetWrapper$new()`](#method-DotNetWrapper-initialize)
+- [`DotNetWrapper$new()`](#method-DotNetWrapper-new)
 
 Inherited methods
 
@@ -31,7 +33,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### `DotNetWrapper$new()`
+### Method `new()`
 
 Initialize a new instance of the class
 
@@ -59,7 +61,7 @@ sim <- loadSimulation(system.file("extdata", "simple.pkml", package = "ospsuite"
 
 # looking at a reference to `.NET` simulation object
 sim$pointer
-#> <pointer: 0x55ae56438570>
+#> <pointer: 0x558791b084c0>
 
 # create a new instance of `DotNetWrapper` class using this reference
 DotNetWrapper$new(sim)
@@ -74,10 +76,10 @@ DotNetWrapper$new(sim)
 #>   • `add_PropertyChanged()`
 #>   • `AddAnalysis()`
 #>   • `All()`
-#>   • `CalculationMethodFor()`
 #>   • `Equals()`
 #>   • `get_Analyses()`
 #>   • `get_BodyWeight()`
+#>   • `get_BuildConfiguration()`
 #>   • `get_Charts()`
 #>   • `get_ComesFromPKSim()`
 #>   • `get_CompoundNames()`
@@ -128,6 +130,7 @@ DotNetWrapper$new(sim)
 #> ── Available Properties 
 #>   • Analyses
 #>   • BodyWeight
+#>   • BuildConfiguration
 #>   • Charts
 #>   • ComesFromPKSim
 #>   • CompoundNames

@@ -7,7 +7,7 @@ A parameter typically used in the definition of
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `SnapshotParameter`
 
 ## Active bindings
@@ -24,7 +24,7 @@ A parameter typically used in the definition of
 
 ### Public methods
 
-- [`SnapshotParameter$new()`](#method-SnapshotParameter-initialize)
+- [`SnapshotParameter$new()`](#method-SnapshotParameter-new)
 
 - [`SnapshotParameter$print()`](#method-SnapshotParameter-print)
 
@@ -49,7 +49,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### `SnapshotParameter$new()`
+### Method `new()`
 
 Initialize a new instance of the class
 
@@ -77,7 +77,7 @@ A new `SnapshotParameter` object.
 
 ------------------------------------------------------------------------
 
-### `SnapshotParameter$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 
@@ -93,7 +93,7 @@ Print the object to the console
 
 ------------------------------------------------------------------------
 
-### `SnapshotParameter$printValue()`
+### Method `printValue()`
 
 Print the parameter in one line
 
@@ -109,7 +109,7 @@ Print the parameter in one line
 
 ------------------------------------------------------------------------
 
-### `SnapshotParameter$getPrintValue()`
+### Method `getPrintValue()`
 
 Return a string for printing the parameter in one line
 

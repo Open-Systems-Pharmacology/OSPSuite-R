@@ -7,7 +7,7 @@ A parameter range typically used in the definition of
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `ParameterRange`
 
 ## Active bindings
@@ -28,7 +28,7 @@ A parameter range typically used in the definition of
 
 ### Public methods
 
-- [`ParameterRange$new()`](#method-ParameterRange-initialize)
+- [`ParameterRange$new()`](#method-ParameterRange-new)
 
 - [`ParameterRange$print()`](#method-ParameterRange-print)
 
@@ -53,7 +53,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### `ParameterRange$new()`
+### Method `new()`
 
 Initialize a new instance of the class
 
@@ -86,7 +86,7 @@ A new `ParameterRange` object.
 
 ------------------------------------------------------------------------
 
-### `ParameterRange$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 
@@ -102,7 +102,7 @@ Print the object to the console
 
 ------------------------------------------------------------------------
 
-### `ParameterRange$printValue()`
+### Method `printValue()`
 
 Print the parameter in one line
 
@@ -118,7 +118,7 @@ Print the parameter in one line
 
 ------------------------------------------------------------------------
 
-### `ParameterRange$getPrintValue()`
+### Method `getPrintValue()`
 
 Return a string for printing the parameter in one line
 

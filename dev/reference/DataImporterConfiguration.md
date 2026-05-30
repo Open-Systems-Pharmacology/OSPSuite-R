@@ -1,13 +1,13 @@
 # DataImporterConfiguration
 
 Configuration of data import from excel or csv files. To be used with
-`loadDataSetsFromExcel`.
+\#TODO
 
 ## Super classes
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `DataImporterConfiguration`
 
 ## Active bindings
@@ -98,7 +98,7 @@ Configuration of data import from excel or csv files. To be used with
 
 ### Public methods
 
-- [`DataImporterConfiguration$new()`](#method-DataImporterConfiguration-initialize)
+- [`DataImporterConfiguration$new()`](#method-DataImporterConfiguration-new)
 
 - [`DataImporterConfiguration$saveConfiguration()`](#method-DataImporterConfiguration-saveConfiguration)
 
@@ -125,7 +125,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### `DataImporterConfiguration$new()`
+### Method `new()`
 
 Initialize a new instance of the class
 
@@ -147,7 +147,7 @@ A new `DataImporterConfiguration` object.
 
 ------------------------------------------------------------------------
 
-### `DataImporterConfiguration$saveConfiguration()`
+### Method `saveConfiguration()`
 
 Save configuration to a XML file that can be used in PK-Sim/MoBi
 
@@ -164,7 +164,7 @@ Save configuration to a XML file that can be used in PK-Sim/MoBi
 
 ------------------------------------------------------------------------
 
-### `DataImporterConfiguration$addGroupingColumn()`
+### Method `addGroupingColumn()`
 
 Add a column for grouping the data sets
 
@@ -180,7 +180,7 @@ Add a column for grouping the data sets
 
 ------------------------------------------------------------------------
 
-### `DataImporterConfiguration$removeGroupingColumn()`
+### Method `removeGroupingColumn()`
 
 Remove a column for grouping the data sets
 
@@ -196,7 +196,7 @@ Remove a column for grouping the data sets
 
 ------------------------------------------------------------------------
 
-### `DataImporterConfiguration$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 

@@ -7,3 +7,7 @@ List of ontogeny supported in PK-Sim
 ``` r
 StandardOntogeny
 ```
+
+## Format
+
+An object of class `list` of length 16.

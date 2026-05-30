@@ -18,7 +18,7 @@ Ontogeny) allowing the user to retrieve potential ontogeny values.
 
 ### Public methods
 
-- [`MoleculeOntogeny$new()`](#method-MoleculeOntogeny-initialize)
+- [`MoleculeOntogeny$new()`](#method-MoleculeOntogeny-new)
 
 - [`MoleculeOntogeny$print()`](#method-MoleculeOntogeny-print)
 
@@ -26,7 +26,7 @@ Ontogeny) allowing the user to retrieve potential ontogeny values.
 
 ------------------------------------------------------------------------
 
-### `MoleculeOntogeny$new()`
+### Method `new()`
 
 Initialize a new instance of the class
 
@@ -50,7 +50,7 @@ A new `MoleculeOntogeny` object.
 
 ------------------------------------------------------------------------
 
-### `MoleculeOntogeny$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 
@@ -66,7 +66,7 @@ Print the object to the console
 
 ------------------------------------------------------------------------
 
-### `MoleculeOntogeny$printMoleculeOntogeny()`
+### Method `printMoleculeOntogeny()`
 
 Print the `MoleculeOntogeny` on one line
 

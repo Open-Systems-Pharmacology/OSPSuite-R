@@ -7,3 +7,7 @@ Default genders defined in PK-Sim
 ``` r
 Gender
 ```
+
+## Format
+
+An object of class `list` of length 3.

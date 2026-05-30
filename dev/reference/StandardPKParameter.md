@@ -8,3 +8,7 @@ defined how a user defined PK Parameter should be calculated
 ``` r
 StandardPKParameter
 ```
+
+## Format
+
+An object of class `list` of length 23.

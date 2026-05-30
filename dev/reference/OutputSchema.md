@@ -6,7 +6,7 @@ Output schema associated with a given simulation
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `OutputSchema`
 
 ## Active bindings
@@ -51,11 +51,11 @@ Inherited methods
 - [`rSharp::NetObject$getStaticMethods()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods)
 - [`rSharp::NetObject$getStaticProperties()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties)
 - [`rSharp::NetObject$set()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set)
-- [`DotNetWrapper$initialize()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.html#method-initialize)
+- [`ospsuite::DotNetWrapper$initialize()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.html#method-initialize)
 
 ------------------------------------------------------------------------
 
-### `OutputSchema$clear()`
+### Method `clear()`
 
 Clears all intervals and time points
 
@@ -65,7 +65,7 @@ Clears all intervals and time points
 
 ------------------------------------------------------------------------
 
-### `OutputSchema$addInterval()`
+### Method `addInterval()`
 
 Adds an interval to the schema
 
@@ -81,7 +81,7 @@ Adds an interval to the schema
 
 ------------------------------------------------------------------------
 
-### `OutputSchema$removeInterval()`
+### Method `removeInterval()`
 
 Removes the interval from the schema
 
@@ -97,7 +97,7 @@ Removes the interval from the schema
 
 ------------------------------------------------------------------------
 
-### `OutputSchema$addTimePoints()`
+### Method `addTimePoints()`
 
 Adds the time points to the schema. Note that time points and intervals
 exists concurrently. Use time points only if you need to ensure that
@@ -115,7 +115,7 @@ specific time are used.
 
 ------------------------------------------------------------------------
 
-### `OutputSchema$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 

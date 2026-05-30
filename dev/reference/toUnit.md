@@ -40,12 +40,12 @@ toUnit(
 
   Optional molecular weight to use when converting, for example, from
   molar to mass amount or concentration. If `molWeightUnit` is not
-  specified, `molWeight` is assumed to be in kg/
+  specified, `molWeight` is assumed to be in kg/µmol
 
 - molWeightUnit:
 
-  Optional Unit of the molecular weight value. If `NULL` (default), kg/
-  is assumed.
+  Optional Unit of the molecular weight value. If `NULL` (default),
+  kg/µmol is assumed.
 
 ## Examples
 

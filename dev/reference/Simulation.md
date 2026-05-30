@@ -6,9 +6,9 @@ An OSPSuite simulation
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\>
-[`ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
+[`ospsuite::ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
 -\> `Simulation`
 
 ## Active bindings
@@ -41,17 +41,11 @@ An OSPSuite simulation
 
   Name of the simulation
 
-- `configuration`:
-
-  An object of the type `SimulationConfiguration`, describing the
-  modules used for the simulation, selected Parameter Values (PV) and
-  Initial Conditions (IC).
-
 ## Methods
 
 ### Public methods
 
-- [`Simulation$new()`](#method-Simulation-initialize)
+- [`Simulation$new()`](#method-Simulation-new)
 
 - [`Simulation$allEndogenousStationaryMoleculeNames()`](#method-Simulation-allEndogenousStationaryMoleculeNames)
 
@@ -62,8 +56,6 @@ An OSPSuite simulation
 - [`Simulation$allFloatingMoleculeNames()`](#method-Simulation-allFloatingMoleculeNames)
 
 - [`Simulation$molWeightFor()`](#method-Simulation-molWeightFor)
-
-- [`Simulation$calculationMethodFor()`](#method-Simulation-calculationMethodFor)
 
 - [`Simulation$allApplicationsFor()`](#method-Simulation-allApplicationsFor)
 
@@ -86,7 +78,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### `Simulation$new()`
+### Method `new()`
 
 Initialize a new instance of the class
 
@@ -110,7 +102,7 @@ A new `Simulation` object.
 
 ------------------------------------------------------------------------
 
-### `Simulation$allEndogenousStationaryMoleculeNames()`
+### Method `allEndogenousStationaryMoleculeNames()`
 
 Returns the name of all endogenous stationary molecules defined in the
 simulation. (e.g. with the flag IsStationary = TRUE) This is a typically
@@ -123,7 +115,7 @@ Transporter, FcRn etc.
 
 ------------------------------------------------------------------------
 
-### `Simulation$allXenobioticFloatingMoleculeNames()`
+### Method `allXenobioticFloatingMoleculeNames()`
 
 Returns the name of all xenobiotic floating molecules defined in the
 simulation. (e.g. with the flag IsStationary = FALSE) This is typically
@@ -136,7 +128,7 @@ Inhibitor, DrugComplex.
 
 ------------------------------------------------------------------------
 
-### `Simulation$allStationaryMoleculeNames()`
+### Method `allStationaryMoleculeNames()`
 
 Returns the name of all stationary molecules defined in the simulation.
 (e.g. with the flag IsStationary = TRUE)
@@ -147,7 +139,7 @@ Returns the name of all stationary molecules defined in the simulation.
 
 ------------------------------------------------------------------------
 
-### `Simulation$allFloatingMoleculeNames()`
+### Method `allFloatingMoleculeNames()`
 
 Returns the name of all floating molecules defined in the simulation.
 (e.g. with the flag IsStationary = FALSE)
@@ -158,7 +150,7 @@ Returns the name of all floating molecules defined in the simulation.
 
 ------------------------------------------------------------------------
 
-### `Simulation$molWeightFor()`
+### Method `molWeightFor()`
 
 Returns the mol weight value (in core unit) associated to the quantity
 with given path or NA if not found
@@ -175,29 +167,7 @@ with given path or NA if not found
 
 ------------------------------------------------------------------------
 
-### `Simulation$calculationMethodFor()`
-
-Returns the calculation method name used for the given molecule and
-category, or `NULL` if no override is set.
-
-#### Usage
-
-    Simulation$calculationMethodFor(moleculeName, category)
-
-#### Arguments
-
-- `moleculeName`:
-
-  Name of the molecule.
-
-- `category`:
-
-  One of the `CalculationMethodCategories` enum values (e.g.
-  `CalculationMethodCategories$PartitionCoefficient`).
-
-------------------------------------------------------------------------
-
-### `Simulation$allApplicationsFor()`
+### Method `allApplicationsFor()`
 
 Returns the applications ordered by start time associated to the
 quantity with path `quantityPath` or an empty list if not found
@@ -215,21 +185,15 @@ quantity with path `quantityPath` or an empty list if not found
 
 ------------------------------------------------------------------------
 
-### `Simulation$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 
 #### Usage
 
-    Simulation$print(printClassProperties = FALSE, ...)
+    Simulation$print(...)
 
 #### Arguments
-
-- `printClassProperties`:
-
-  Logical, whether to print class properties (default: `FALSE`). If
-  `TRUE`, calls first the `print` method of the parent class. Useful for
-  debugging.
 
 - `...`:
 

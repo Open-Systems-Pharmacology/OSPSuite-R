@@ -1,15 +1,8 @@
 # Articles
 
-### Working with projects
+### Primary functions
 
-Details about primary functions that work on projects
-
-- [Working with MoBi
-  projects](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/mobi-projects.md):
-
-### Working with simulations
-
-Details about primary functions that work on simulations
+Details about primary functions
 
 - [Loading a simulation and accessing
   entities](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/load-get.md):

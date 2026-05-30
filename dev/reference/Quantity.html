@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9027</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,10 +20,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
-    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -57,7 +54,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Quantity</h1>
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/R/quantity.R" class="external-link"><code>R/quantity.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/R/quantity.R" class="external-link"><code>R/quantity.R</code></a></small>
       <div class="d-none name"><code>Quantity.Rd</code></div>
     </div>
 
@@ -68,7 +65,7 @@
 
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">DotNetWrapper</a></code> -&gt; <code><a href="ObjectBase.html">ObjectBase</a></code> -&gt; <code><a href="Entity.html">Entity</a></code> -&gt; <code>Quantity</code></p>
+    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">ospsuite::DotNetWrapper</a></code> -&gt; <code><a href="ObjectBase.html">ospsuite::ObjectBase</a></code> -&gt; <code><a href="Entity.html">ospsuite::Entity</a></code> -&gt; <code>Quantity</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -76,55 +73,55 @@
 <dd><p>The value of the quantity in unit</p></dd>
 
 
-    <dt><code>unit</code></dt>
+<dt><code>unit</code></dt>
 <dd><p>The base unit in which the quantity value is defined (Read-Only)</p></dd>
 
 
-    <dt><code>displayUnit</code></dt>
+<dt><code>displayUnit</code></dt>
 <dd><p>The unit in which the quantity value is usually displayed (Read-Only)</p></dd>
 
 
-    <dt><code>dimension</code></dt>
+<dt><code>dimension</code></dt>
 <dd><p>The dimension in which the quantity is defined  (Read-Only)</p></dd>
 
 
-    <dt><code>allUnits</code></dt>
+<dt><code>allUnits</code></dt>
 <dd><p>the list of all supported units (Read-Only)</p></dd>
 
 
-    <dt><code>quantityType</code></dt>
+<dt><code>quantityType</code></dt>
 <dd><p>The type of the quantity (Read-Only)</p></dd>
 
 
-    <dt><code>formula</code></dt>
+<dt><code>formula</code></dt>
 <dd><p>An instance of a <code>Formula</code> object used by this quantity (Read-Only)</p></dd>
 
 
-    <dt><code>isTable</code></dt>
+<dt><code>isTable</code></dt>
 <dd><p>Returns <code>TRUE</code> if the formula used by this quantity is a table formula otherwise <code>FALSE</code></p></dd>
 
 
-    <dt><code>isConstant</code></dt>
+<dt><code>isConstant</code></dt>
 <dd><p>Returns <code>TRUE</code> if the formula used by this quantity is a constant formula otherwise <code>FALSE</code></p></dd>
 
 
-    <dt><code>isFormula</code></dt>
+<dt><code>isFormula</code></dt>
 <dd><p>Returns <code>TRUE</code> if the formula used by this quantity is an explicit formula (e.g an equation) otherwise <code>FALSE</code></p></dd>
 
 
-    <dt><code>isDistributed</code></dt>
+<dt><code>isDistributed</code></dt>
 <dd><p>Returns <code>TRUE</code> if the quantity represents a quantity with an underlying distribution otherwise <code>FALSE</code></p></dd>
 
 
-    <dt><code>formulaString</code></dt>
+<dt><code>formulaString</code></dt>
 <dd><p>Returns the equation of the formula for a quantity using an explicit formula (e.g. <code>isFormula == TRUE</code>) or <code>NULL</code> for a quantity that does not use an explicit formula.</p></dd>
 
 
-    <dt><code>isFixedValue</code></dt>
+<dt><code>isFixedValue</code></dt>
 <dd><p>Returns <code>TRUE</code> if the formula was overridden by a constant value, otherwise <code>FALSE</code></p></dd>
 
 
-    <dt><code>valueOrigin</code></dt>
+<dt><code>valueOrigin</code></dt>
 <dd><p>The value origin of the quantity (Read-Only)</p></dd>
 
 
@@ -135,7 +132,8 @@
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-<p></p><ul><li><p><a href="#method-Quantity-initialize"><code>Quantity$new()</code></a></p></li>
+
+<ul><li><p><a href="#method-Quantity-new"><code>Quantity$new()</code></a></p></li>
 <li><p><a href="#method-Quantity-print"><code>Quantity$print()</code></a></p></li>
 <li><p><a href="#method-Quantity-printValue"><code>Quantity$printValue()</code></a></p></li>
 <li><p><a href="#method-Quantity-printQuantityValue"><code>Quantity$printQuantityValue()</code></a></p></li>
@@ -144,42 +142,45 @@
 <li><p><a href="#method-Quantity-hasUnit"><code>Quantity$hasUnit()</code></a></p></li>
 <li><p><a href="#method-Quantity-reset"><code>Quantity$reset()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printClass"><code>rSharp::NetObject$.printClass()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call"><code>rSharp::NetObject$call()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-get"><code>rSharp::NetObject$get()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMethods"><code>rSharp::NetObject$getMethods()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getProperties"><code>rSharp::NetObject$getProperties()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticFields"><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods"><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties"><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set"><code>rSharp::NetObject$set()</code></a></span></li>
-</ul></details></p><hr><a id="method-Quantity-initialize"></a><div class="section">
-<h3 id="quantity-new-"><code>Quantity$new()</code><a class="anchor" aria-label="anchor" href="#quantity-new-"></a></h3>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call"><code>rSharp::NetObject$call()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-get"><code>rSharp::NetObject$get()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMethods"><code>rSharp::NetObject$getMethods()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getProperties"><code>rSharp::NetObject$getProperties()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticFields"><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods"><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties"><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set"><code>rSharp::NetObject$set()</code></a></span></li>
+</ul></details></p><hr><a id="method-Quantity-new"></a><div class="section">
+<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Initialize a new instance of the class</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/Quantity.html">Quantity</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">netObject</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div><p></p><div class="section">
+</div>
+
+<div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>netObject</code></dt>
 <dd><p>A <code>NetObject</code> object with the pointer to the .NET <code>Quantity</code></p></dd>
 
 
 </dl><p></p></div>
-</div><p></p><div class="section">
+</div>
+<div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p>A new <code>Quantity</code> object.</p>
 </div>
 
-</div>
-
-<p></p><hr><a id="method-Quantity-print"></a><div class="section">
-<h3 id="quantity-print-"><code>Quantity$print()</code><a class="anchor" aria-label="anchor" href="#quantity-print-"></a></h3>
+</div><p></p><hr><a id="method-Quantity-print"></a><div class="section">
+<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Print the object to the console</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Quantity</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div><p></p><div class="section">
+</div>
+
+<div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>Rest arguments.</p></dd>
@@ -188,23 +189,22 @@
 </dl><p></p></div>
 </div>
 
-</div>
-
-<p></p><hr><a id="method-Quantity-printValue"></a><div class="section">
-<h3 id="quantity-printvalue-"><code>Quantity$printValue()</code><a class="anchor" aria-label="anchor" href="#quantity-printvalue-"></a></h3>
+</div><p></p><hr><a id="method-Quantity-printValue"></a><div class="section">
+<h3 id="method-printvalue-">Method <code>printValue()</code><a class="anchor" aria-label="anchor" href="#method-printvalue-"></a></h3>
 <p>Print the name of the quantity and its value</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Quantity</span><span class="op">$</span><span class="fu">printValue</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
-</div>
 
-<p></p><hr><a id="method-Quantity-printQuantityValue"></a><div class="section">
-<h3 id="quantity-printquantityvalue-"><code>Quantity$printQuantityValue()</code><a class="anchor" aria-label="anchor" href="#quantity-printquantityvalue-"></a></h3>
+</div><p></p><hr><a id="method-Quantity-printQuantityValue"></a><div class="section">
+<h3 id="method-printquantityvalue-">Method <code>printQuantityValue()</code><a class="anchor" aria-label="anchor" href="#method-printquantityvalue-"></a></h3>
 <p>Print the value (in scientific notation with 2 digits when needed) and unit of the quantity</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Quantity</span><span class="op">$</span><span class="fu">printQuantityValue</span><span class="op">(</span><span class="va">caption</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div><p></p><div class="section">
+</div>
+
+<div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>caption</code></dt>
 <dd><p>Text to prepend to the value</p></dd>
@@ -213,47 +213,56 @@
 </dl><p></p></div>
 </div>
 
-</div>
-
-<p></p><hr><a id="method-Quantity-getPrintValue"></a><div class="section">
-<h3 id="quantity-getprintvalue-"><code>Quantity$getPrintValue()</code><a class="anchor" aria-label="anchor" href="#quantity-getprintvalue-"></a></h3>
+</div><p></p><hr><a id="method-Quantity-getPrintValue"></a><div class="section">
+<h3 id="method-getprintvalue-">Method <code>getPrintValue()</code><a class="anchor" aria-label="anchor" href="#method-getprintvalue-"></a></h3>
 <p>Return a string for printing the value (in scientific notation with 2 digits when needed) and unit of the quantity</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Quantity</span><span class="op">$</span><span class="fu">getPrintValue</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div><p></p><div class="section">
+</div>
+
+<div class="section">
+<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>caption</code></dt>
+<dd><p>Text to prepend to the value</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
 <h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
 <p>A string for printing the quantity in one line</p>
 </div>
 
-</div>
-
-<p></p><hr><a id="method-Quantity-setValue"></a><div class="section">
-<h3 id="quantity-setvalue-"><code>Quantity$setValue()</code><a class="anchor" aria-label="anchor" href="#quantity-setvalue-"></a></h3>
+</div><p></p><hr><a id="method-Quantity-setValue"></a><div class="section">
+<h3 id="method-setvalue-">Method <code>setValue()</code><a class="anchor" aria-label="anchor" href="#method-setvalue-"></a></h3>
 <p>Convert value from unit to the base unit and sets the value in base unit.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Quantity</span><span class="op">$</span><span class="fu">setValue</span><span class="op">(</span><span class="va">value</span>, unit <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div><p></p><div class="section">
-<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+</div>
+
+<div class="section">
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>value</code></dt>
 <dd><p>Value to set. If unit is null, we assume that the value is in base unit</p></dd>
 
-      <dt><code>unit</code></dt>
+
+<dt><code>unit</code></dt>
 <dd><p>Optional unit in which the value is given.</p></dd>
 
 
 </dl><p></p></div>
 </div>
 
-</div>
-
-<p></p><hr><a id="method-Quantity-hasUnit"></a><div class="section">
-<h3 id="quantity-hasunit-"><code>Quantity$hasUnit()</code><a class="anchor" aria-label="anchor" href="#quantity-hasunit-"></a></h3>
+</div><p></p><hr><a id="method-Quantity-hasUnit"></a><div class="section">
+<h3 id="method-hasunit-">Method <code><a href="hasUnit.html">hasUnit()</a></code><a class="anchor" aria-label="anchor" href="#method-hasunit-"></a></h3>
 <p>Returns <code>TRUE</code> if the quantity supports the given unit otherwise <code>FALSE</code>.
 For the list of supported units, use <code>allUnits</code></p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Quantity</span><span class="op">$</span><span class="fu">hasUnit</span><span class="op">(</span><span class="va">unit</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div><p></p><div class="section">
-<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+</div>
+
+<div class="section">
+<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>unit</code></dt>
 <dd><p>Unit to check</p></dd>
 
@@ -261,17 +270,15 @@ For the list of supported units, use <code>allUnits</code></p><div class="sectio
 </dl><p></p></div>
 </div>
 
-</div>
-
-<p></p><hr><a id="method-Quantity-reset"></a><div class="section">
-<h3 id="quantity-reset-"><code>Quantity$reset()</code><a class="anchor" aria-label="anchor" href="#quantity-reset-"></a></h3>
+</div><p></p><hr><a id="method-Quantity-reset"></a><div class="section">
+<h3 id="method-reset-">Method <code>reset()</code><a class="anchor" aria-label="anchor" href="#method-reset-"></a></h3>
 <p>Ensures that the quantity uses the value computed by its formula. It is a shortcut for <code>self$isFixedValue &lt;- false</code>.</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Quantity</span><span class="op">$</span><span class="fu">reset</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
-</div>
 
+</div>
 
     </div>
 

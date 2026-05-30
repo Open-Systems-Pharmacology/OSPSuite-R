@@ -6,7 +6,7 @@ List of individuals used in a population simulation
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `Population`
 
 ## Active bindings
@@ -61,11 +61,11 @@ Inherited methods
 - [`rSharp::NetObject$getStaticMethods()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods)
 - [`rSharp::NetObject$getStaticProperties()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties)
 - [`rSharp::NetObject$set()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set)
-- [`DotNetWrapper$initialize()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.html#method-initialize)
+- [`ospsuite::DotNetWrapper$initialize()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.html#method-initialize)
 
 ------------------------------------------------------------------------
 
-### `Population$has()`
+### Method `has()`
 
 Returns `TRUE` if the population has variability defined for
 `parameterOrPath` otherwise `FALSE`
@@ -82,7 +82,7 @@ Returns `TRUE` if the population has variability defined for
 
 ------------------------------------------------------------------------
 
-### `Population$setParameterValues()`
+### Method [`setParameterValues()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setParameterValues.md)
 
 Updates or adds the variability values in the population for
 `parameterOrPath`.
@@ -105,7 +105,7 @@ Updates or adds the variability values in the population for
 
 ------------------------------------------------------------------------
 
-### `Population$getParameterValues()`
+### Method `getParameterValues()`
 
 Returns the variability values defined in the population for
 `parameterOrPath`
@@ -122,7 +122,7 @@ Returns the variability values defined in the population for
 
 ------------------------------------------------------------------------
 
-### `Population$getCovariateValues()`
+### Method `getCovariateValues()`
 
 Returns the values defined in the population for the covariate named
 `covariateName`
@@ -139,7 +139,7 @@ Returns the values defined in the population for the covariate named
 
 ------------------------------------------------------------------------
 
-### `Population$getCovariateValue()`
+### Method `getCovariateValue()`
 
 Returns the values defined in the population for the covariate named
 `covariateName` and individual with id `individualId`
@@ -161,7 +161,7 @@ Returns the values defined in the population for the covariate named
 
 ------------------------------------------------------------------------
 
-### `Population$getParameterValuesForIndividual()`
+### Method `getParameterValuesForIndividual()`
 
 Returns all values defined in the population the individual with id
 `individualId`
@@ -178,7 +178,7 @@ Returns all values defined in the population the individual with id
 
 ------------------------------------------------------------------------
 
-### `Population$remove()`
+### Method [`remove()`](https://rdrr.io/r/base/rm.html)
 
 Removes the value of a parameter by path
 
@@ -194,7 +194,7 @@ Removes the value of a parameter by path
 
 ------------------------------------------------------------------------
 
-### `Population$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 

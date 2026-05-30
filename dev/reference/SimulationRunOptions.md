@@ -6,7 +6,7 @@ Options to be passed to the simulation engine
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `SimulationRunOptions`
 
 ## Active bindings
@@ -16,6 +16,11 @@ Options to be passed to the simulation engine
   (Maximal) number of cores to be used. This is only relevant when
   simulating a population simulation. Default is
   `getOSPSuiteSetting("numberOfCores")`.
+
+- `checkForNegativeValues`:
+
+  Specifies whether negative values check is on or off. Default is
+  `TRUE`
 
 - `showProgress`:
 
@@ -31,7 +36,7 @@ Options to be passed to the simulation engine
 
 ### Public methods
 
-- [`SimulationRunOptions$new()`](#method-SimulationRunOptions-initialize)
+- [`SimulationRunOptions$new()`](#method-SimulationRunOptions-new)
 
 - [`SimulationRunOptions$print()`](#method-SimulationRunOptions-print)
 
@@ -52,7 +57,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### `SimulationRunOptions$new()`
+### Method `new()`
 
 Initialize a new instance of the class
 
@@ -73,7 +78,7 @@ Initialize a new instance of the class
 
 - `checkForNegativeValues`:
 
-  **\[deprecated\]** Use `sim$solver$checkForNegativeValues` instead.
+  Should the solver check for negative values. Default is `TRUE`
 
 - `showProgress`:
 
@@ -91,7 +96,7 @@ A new `SimulationRunOptions` object.
 
 ------------------------------------------------------------------------
 
-### `SimulationRunOptions$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 

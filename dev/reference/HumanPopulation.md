@@ -7,3 +7,7 @@ Default human population defined in PK-Sim
 ``` r
 HumanPopulation
 ```
+
+## Format
+
+An object of class `list` of length 8.

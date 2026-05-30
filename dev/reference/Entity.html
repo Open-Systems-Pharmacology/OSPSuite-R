@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9027</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,10 +20,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
-    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -57,7 +54,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Entity</h1>
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/R/entity.R" class="external-link"><code>R/entity.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/R/entity.R" class="external-link"><code>R/entity.R</code></a></small>
       <div class="d-none name"><code>Entity.Rd</code></div>
     </div>
 
@@ -68,7 +65,7 @@
 
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">DotNetWrapper</a></code> -&gt; <code><a href="ObjectBase.html">ObjectBase</a></code> -&gt; <code>Entity</code></p>
+    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">ospsuite::DotNetWrapper</a></code> -&gt; <code><a href="ObjectBase.html">ospsuite::ObjectBase</a></code> -&gt; <code>Entity</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -76,11 +73,11 @@
 <dd><p>The path of the entity in the container hierarchy without the simulation name. (read-only)</p></dd>
 
 
-    <dt><code>fullPath</code></dt>
+<dt><code>fullPath</code></dt>
 <dd><p>Same as <code>path</code>, but with the simulation name. (read-only)</p></dd>
 
 
-    <dt><code>parentContainer</code></dt>
+<dt><code>parentContainer</code></dt>
 <dd><p>Returns a new wrapper instance to the .NET parent container. Multiple call to this method
 will always return the same instance. However two children of the same parent will return two different instances of <code>Container</code>
 pointing to the same .NET container</p></dd>

@@ -12,13 +12,13 @@ please see base class documentation.
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\>
-[`ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
+[`ospsuite::ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
 -\>
-[`Entity`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Entity.md)
+[`ospsuite::Entity`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Entity.md)
 -\>
-[`Quantity`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.md)
+[`ospsuite::Quantity`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.md)
 -\> `Molecule`
 
 ## Active bindings
@@ -37,7 +37,7 @@ please see base class documentation.
 
 ### Public methods
 
-- [`Molecule$new()`](#method-Molecule-initialize)
+- [`Molecule$new()`](#method-Molecule-new)
 
 - [`Molecule$print()`](#method-Molecule-print)
 
@@ -55,16 +55,16 @@ Inherited methods
 - [`rSharp::NetObject$getStaticMethods()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods)
 - [`rSharp::NetObject$getStaticProperties()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties)
 - [`rSharp::NetObject$set()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set)
-- [`Quantity$getPrintValue()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.html#method-getPrintValue)
-- [`Quantity$hasUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.html#method-hasUnit)
-- [`Quantity$printQuantityValue()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.html#method-printQuantityValue)
-- [`Quantity$printValue()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.html#method-printValue)
-- [`Quantity$reset()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.html#method-reset)
-- [`Quantity$setValue()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.html#method-setValue)
+- [`ospsuite::Quantity$getPrintValue()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.html#method-getPrintValue)
+- [`ospsuite::Quantity$hasUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.html#method-hasUnit)
+- [`ospsuite::Quantity$printQuantityValue()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.html#method-printQuantityValue)
+- [`ospsuite::Quantity$printValue()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.html#method-printValue)
+- [`ospsuite::Quantity$reset()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.html#method-reset)
+- [`ospsuite::Quantity$setValue()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/Quantity.html#method-setValue)
 
 ------------------------------------------------------------------------
 
-### `Molecule$new()`
+### Method `new()`
 
 Initialize a new instance of the class
 
@@ -86,7 +86,7 @@ A new `Molecule` object.
 
 ------------------------------------------------------------------------
 
-### `Molecule$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 

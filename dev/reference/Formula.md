@@ -10,9 +10,9 @@ a parameter)
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\>
-[`ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
+[`ospsuite::ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
 -\> `Formula`
 
 ## Active bindings
@@ -72,11 +72,11 @@ Inherited methods
 - [`rSharp::NetObject$getStaticMethods()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods)
 - [`rSharp::NetObject$getStaticProperties()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties)
 - [`rSharp::NetObject$set()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set)
-- [`DotNetWrapper$initialize()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.html#method-initialize)
+- [`ospsuite::DotNetWrapper$initialize()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.html#method-initialize)
 
 ------------------------------------------------------------------------
 
-### `Formula$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 
@@ -92,7 +92,7 @@ Print the object to the console
 
 ------------------------------------------------------------------------
 
-### `Formula$printFormula()`
+### Method `printFormula()`
 
 Print the formula to the console without the name of the class
 
@@ -104,10 +104,10 @@ Print the formula to the console without the name of the class
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\>
-[`ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
--\> `Formula` -\> `TableFormula`
+[`ospsuite::ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
+-\> `ospsuite::Formula` -\> `TableFormula`
 
 ## Active bindings
 
@@ -157,11 +157,11 @@ Inherited methods
 - [`rSharp::NetObject$getStaticMethods()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods)
 - [`rSharp::NetObject$getStaticProperties()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties)
 - [`rSharp::NetObject$set()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set)
-- [`DotNetWrapper$initialize()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.html#method-initialize)
+- [`ospsuite::DotNetWrapper$initialize()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.html#method-initialize)
 
 ------------------------------------------------------------------------
 
-### `TableFormula$addPoints()`
+### Method `addPoints()`
 
 Adds one or more points to a table
 
@@ -181,7 +181,7 @@ Adds one or more points to a table
 
 ------------------------------------------------------------------------
 
-### `TableFormula$removePoint()`
+### Method `removePoint()`
 
 Remove the point having the same x and y from the table
 
@@ -201,7 +201,7 @@ Remove the point having the same x and y from the table
 
 ------------------------------------------------------------------------
 
-### `TableFormula$clearPoints()`
+### Method `clearPoints()`
 
 Remove all points from the table
 
@@ -211,7 +211,7 @@ Remove all points from the table
 
 ------------------------------------------------------------------------
 
-### `TableFormula$setPoints()`
+### Method `setPoints()`
 
 Replace all points defined in the table with the new values given. This
 is a convenience method for calling `clearPoints` and `addPoints`
@@ -232,7 +232,7 @@ is a convenience method for calling `clearPoints` and `addPoints`
 
 ------------------------------------------------------------------------
 
-### `TableFormula$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 
@@ -248,7 +248,7 @@ Print the object to the console
 
 ------------------------------------------------------------------------
 
-### `TableFormula$valueAt()`
+### Method `valueAt()`
 
 Returns the y defined for the x value in base unit. If not exact match
 is found, value will be interpolated between two existing points If the
@@ -266,7 +266,7 @@ table contains no point, 0 is returned
 
 ------------------------------------------------------------------------
 
-### `TableFormula$printFormula()`
+### Method `printFormula()`
 
 Print the formula to the console
 

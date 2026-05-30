@@ -9,7 +9,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9027</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,10 +22,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
-    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -59,7 +56,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>SimulationBatch</h1>
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/R/simulation-batch.R" class="external-link"><code>R/simulation-batch.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/R/simulation-batch.R" class="external-link"><code>R/simulation-batch.R</code></a></small>
       <div class="d-none name"><code>SimulationBatch.Rd</code></div>
     </div>
 
@@ -71,7 +68,7 @@
 
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">DotNetWrapper</a></code> -&gt; <code>SimulationBatch</code></p>
+    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">ospsuite::DotNetWrapper</a></code> -&gt; <code>SimulationBatch</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -79,11 +76,11 @@
 <dd><p>Underlying simulation used for the batch run. Read only.</p></dd>
 
 
-    <dt><code>runValuesIds</code></dt>
+<dt><code>runValuesIds</code></dt>
 <dd><p>Ids of the run values that will be executed on next run</p></dd>
 
 
-    <dt><code>id</code></dt>
+<dt><code>id</code></dt>
 <dd><p>The id of the .NET wrapped object. (read-only)</p></dd>
 
 
@@ -94,130 +91,148 @@
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-<p></p><ul><li><p><a href="#method-SimulationBatch-initialize"><code>SimulationBatch$new()</code></a></p></li>
+
+<ul><li><p><a href="#method-SimulationBatch-new"><code>SimulationBatch$new()</code></a></p></li>
 <li><p><a href="#method-SimulationBatch-addRunValues"><code>SimulationBatch$addRunValues()</code></a></p></li>
 <li><p><a href="#method-SimulationBatch-getVariableParameters"><code>SimulationBatch$getVariableParameters()</code></a></p></li>
 <li><p><a href="#method-SimulationBatch-getVariableMolecules"><code>SimulationBatch$getVariableMolecules()</code></a></p></li>
 <li><p><a href="#method-SimulationBatch-print"><code>SimulationBatch$print()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printClass"><code>rSharp::NetObject$.printClass()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call"><code>rSharp::NetObject$call()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-get"><code>rSharp::NetObject$get()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMethods"><code>rSharp::NetObject$getMethods()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getProperties"><code>rSharp::NetObject$getProperties()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticFields"><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods"><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties"><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set"><code>rSharp::NetObject$set()</code></a></span></li>
-</ul></details></p><hr><a id="method-SimulationBatch-initialize"></a><div class="section">
-<h3 id="simulationbatch-new-"><code>SimulationBatch$new()</code><a class="anchor" aria-label="anchor" href="#simulationbatch-new-"></a></h3>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call"><code>rSharp::NetObject$call()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-get"><code>rSharp::NetObject$get()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMethods"><code>rSharp::NetObject$getMethods()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getProperties"><code>rSharp::NetObject$getProperties()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticFields"><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods"><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties"><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set"><code>rSharp::NetObject$set()</code></a></span></li>
+</ul></details></p><hr><a id="method-SimulationBatch-new"></a><div class="section">
+<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Initialize a new instance of the class</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/SimulationBatch.html">SimulationBatch</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">netObject</span>, <span class="va">simulation</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div><p></p><div class="section">
+</div>
+
+<div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>netObject</code></dt>
 <dd><p>An <code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> object.</p></dd>
 
-      <dt><code>simulation</code></dt>
+
+<dt><code>simulation</code></dt>
 <dd><p>Simulation used in the batch run</p></dd>
 
 
 </dl><p></p></div>
-</div><p></p><div class="section">
+</div>
+<div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p>A new <code>SimulationBatch</code> object.</p>
 </div>
 
-</div>
-
-<p></p><hr><a id="method-SimulationBatch-addRunValues"></a><div class="section">
-<h3 id="simulationbatch-addrunvalues-"><code>SimulationBatch$addRunValues()</code><a class="anchor" aria-label="anchor" href="#simulationbatch-addrunvalues-"></a></h3>
+</div><p></p><hr><a id="method-SimulationBatch-addRunValues"></a><div class="section">
+<h3 id="method-addrunvalues-">Method <code>addRunValues()</code><a class="anchor" aria-label="anchor" href="#method-addrunvalues-"></a></h3>
 <p>Add a set of parameter and start values for next execution.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">SimulationBatch</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="cn">NULL</span>, initialValues <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div><p></p><div class="section">
+</div>
+
+<div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>parameterValues</code></dt>
 <dd><p>Vector of parameter values to set in the simulation (default is <code>NULL</code>)</p></dd>
 
-      <dt><code>initialValues</code></dt>
+
+<dt><code>initialValues</code></dt>
 <dd><p>Vector of initial values to set in the simulation  (default is <code>NULL</code>)</p></dd>
 
 
 </dl><p></p></div>
-</div><p></p><div class="section">
+</div>
+<div class="section">
 <h4 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h4>
 <p>Intended for the use with <code>runSimulationBatches</code>. The simulation batch is executed
 with the sets of parameter and initial values that have been scheduled.
 The set of run values is cleared after successful run.</p>
-</div><p></p><div class="section">
+</div>
+
+<div class="section">
 <h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
 <p>Id of the values set that can be used to get the correct result from <code>runSimulationBatches</code>.</p>
-</div><p></p><div class="section">
+</div>
+<div class="section">
 <h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">sim1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="st">"sim1"</span>, loadFromCache <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">sim2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="st">"sim2"</span>, loadFromCache <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Organism|Liver|Volume"</span>, <span class="st">"R1|k1"</span><span class="op">)</span></span>
-<span><span class="va">molecules</span> <span class="op">&lt;-</span> <span class="st">"Organism|Liver|A"</span></span>
-<span><span class="co"># Create two simulation batches.</span></span>
-<span><span class="va">simulationBatch1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulationBatch.html">createSimulationBatch</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim1</span>,</span>
-<span>parametersOrPaths <span class="op">=</span> <span class="va">parameters</span>,</span>
-<span>moleculesOrPaths <span class="op">=</span> <span class="va">molecules</span><span class="op">)</span></span>
-<span><span class="va">simulationBatch2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulationBatch.html">createSimulationBatch</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim2</span>,</span>
-<span>parametersOrPaths <span class="op">=</span> <span class="va">parameters</span>,</span>
-<span>moleculesOrPaths <span class="op">=</span> <span class="va">molecules</span><span class="op">)</span></span>
-<span><span class="co">#Ids of run values</span></span>
-<span><span class="va">ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">ids</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">simulationBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, initialValues <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">ids</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">simulationBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.6</span>, <span class="fl">2.4</span><span class="op">)</span>, initialValues <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="va">ids</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">simulationBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>, initialValues <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="va">ids</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">simulationBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.6</span>, <span class="fl">4.4</span><span class="op">)</span>, initialValues <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulationBatches.html">runSimulationBatches</a></span><span class="op">(</span>simulationBatches <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">simulationBatch1</span>, <span class="va">simulationBatch2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code>\dontrun{
+sim1 &lt;- loadSimulation("sim1", loadFromCache = TRUE)
+sim2 &lt;- loadSimulation("sim2", loadFromCache = TRUE)
+parameters &lt;- c("Organism|Liver|Volume", "R1|k1")
+molecules &lt;- "Organism|Liver|A"
+# Create two simulation batches.
+simulationBatch1 &lt;- createSimulationBatch(simulation = sim1,
+parametersOrPaths = parameters,
+moleculesOrPaths = molecules)
+simulationBatch2 &lt;- createSimulationBatch(simulation = sim2,
+parametersOrPaths = parameters,
+moleculesOrPaths = molecules)
+#Ids of run values
+ids &lt;- c()
+ids[[1]] &lt;- simulationBatch1$addRunValues(parameterValues = c(1, 2), initialValues = 1)
+ids[[2]] &lt;- simulationBatch1$addRunValues(parameterValues = c(1.6, 2.4), initialValues = 3)
+ids[[3]] &lt;- simulationBatch2$addRunValues(parameterValues = c(4, 2), initialValues = 4)
+ids[[4]] &lt;- simulationBatch2$addRunValues(parameterValues = c(2.6, 4.4), initialValues = 5)
+res &lt;- runSimulationBatches(simulationBatches = list(simulationBatch1, simulationBatch2))
+}
+</code></pre></div><p></p></div>
 </div>
 
-</div>
 
-<p></p><hr><a id="method-SimulationBatch-getVariableParameters"></a><div class="section">
-<h3 id="simulationbatch-getvariableparameters-"><code>SimulationBatch$getVariableParameters()</code><a class="anchor" aria-label="anchor" href="#simulationbatch-getvariableparameters-"></a></h3>
+</div><p></p><hr><a id="method-SimulationBatch-getVariableParameters"></a><div class="section">
+<h3 id="method-getvariableparameters-">Method <code>getVariableParameters()</code><a class="anchor" aria-label="anchor" href="#method-getvariableparameters-"></a></h3>
 <p>Returns a list of parameter paths that are variable in this batch.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">SimulationBatch</span><span class="op">$</span><span class="fu">getVariableParameters</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div><p></p><div class="section">
+</div>
+
+<div class="section">
 <h4 id="details-1">Details<a class="anchor" aria-label="anchor" href="#details-1"></a></h4>
 <p>The order of parameters is the same as the order of parameter
 values added with <code>$addRunValues()</code> method.</p>
-</div><p></p><div class="section">
+</div>
+
+<div class="section">
 <h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
 <p>List of parameter paths, or <code>NULL</code> if no parameter is variable.</p>
 </div>
 
-</div>
-
-<p></p><hr><a id="method-SimulationBatch-getVariableMolecules"></a><div class="section">
-<h3 id="simulationbatch-getvariablemolecules-"><code>SimulationBatch$getVariableMolecules()</code><a class="anchor" aria-label="anchor" href="#simulationbatch-getvariablemolecules-"></a></h3>
+</div><p></p><hr><a id="method-SimulationBatch-getVariableMolecules"></a><div class="section">
+<h3 id="method-getvariablemolecules-">Method <code>getVariableMolecules()</code><a class="anchor" aria-label="anchor" href="#method-getvariablemolecules-"></a></h3>
 <p>Returns a list of molecules paths that are variable in this batch</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">SimulationBatch</span><span class="op">$</span><span class="fu">getVariableMolecules</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div><p></p><div class="section">
+</div>
+
+<div class="section">
 <h4 id="details-2">Details<a class="anchor" aria-label="anchor" href="#details-2"></a></h4>
 <p>The order of molecules is the same as the order of molecule
 start values added with <code>$addRunValues()</code> method.</p>
-</div><p></p><div class="section">
+</div>
+
+<div class="section">
 <h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
 <p>List of parameter paths, or <code>NULL</code> if no molecule is variable.</p>
 </div>
 
-</div>
-
-<p></p><hr><a id="method-SimulationBatch-print"></a><div class="section">
-<h3 id="simulationbatch-print-"><code>SimulationBatch$print()</code><a class="anchor" aria-label="anchor" href="#simulationbatch-print-"></a></h3>
+</div><p></p><hr><a id="method-SimulationBatch-print"></a><div class="section">
+<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Print the object to the console</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">SimulationBatch</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div><p></p><div class="section">
+</div>
+
+<div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>Additional arguments.</p></dd>
@@ -228,14 +243,13 @@ start values added with <code>$addRunValues()</code> method.</p>
 
 </div>
 
-
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
-<span class="r-in"><span><span class="co">## Method `SimulationBatch$addRunValues()`</span></span></span>
+<span class="r-in"><span><span class="co">## Method `SimulationBatch$addRunValues`</span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>

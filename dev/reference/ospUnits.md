@@ -7,3 +7,7 @@ ospUnits\$Mass\$kg =\> "kg"
 ``` r
 ospUnits
 ```
+
+## Format
+
+An object of class `list` of length 94.

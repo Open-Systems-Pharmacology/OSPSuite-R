@@ -6,7 +6,7 @@ Options to be passed to the `SimulationBatch`.
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `SimulationBatchOptions`
 
 ## Active bindings
@@ -23,7 +23,7 @@ Options to be passed to the `SimulationBatch`.
 
 ### Public methods
 
-- [`SimulationBatchOptions$new()`](#method-SimulationBatchOptions-initialize)
+- [`SimulationBatchOptions$new()`](#method-SimulationBatchOptions-new)
 
 - [`SimulationBatchOptions$print()`](#method-SimulationBatchOptions-print)
 
@@ -44,7 +44,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### `SimulationBatchOptions$new()`
+### Method `new()`
 
 Initialize a new instance of the class
 
@@ -68,7 +68,7 @@ A new `SimulationBatchOptions` object.
 
 ------------------------------------------------------------------------
 
-### `SimulationBatchOptions$print()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
 Print the object to the console
 

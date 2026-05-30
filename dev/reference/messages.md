@@ -8,3 +8,7 @@ List of functions and strings used to signal error messages Extends the
 ``` r
 messages
 ```
+
+## Format
+
+An object of class `list` of length 85.
