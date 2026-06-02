@@ -1,7 +1,13 @@
-# ospsuite (development version)
+# ospsuite 12.4.3
+
+## Major changes
+
+- Computational core libraries updated to match OSPS Version 12 update 3 release.
 
 ## Minor improvements and bug fixes
 
+- `plotPredictedVsObserved()` and `plotResidualsVsCovariate()` gain a `showLegendPerDataset` argument (`"none"`, `"observed"`, `"all"`, default `"all"`) to differentiate observed datasets within a group by point shape, consistent with `plotTimeProfile()` (#1839).
+- `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()` now compute residuals consistently with `calculateResiduals()`, producing `NaN` with a warning for zero or negative values on the log scale instead of extreme values (#1713).
 - `plotTimeProfile()` now defaults to `showLegendPerDataset = "all"`, showing individual dataset names for both observed and simulated data by default (#1844).
 - `DataSet$setValues()` and plotting functions (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, `plotQuantileQuantilePlot()`) now warn and replace negative `yErrorValues` with `NA` instead of silently accepting them (#1756).
 - Fixed `plotPredictedVsObserved()` error bar mapping: when `predictedAxis = "x"`, error bars are now correctly placed on the y-axis (#1715).
