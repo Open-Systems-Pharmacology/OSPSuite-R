@@ -86,15 +86,15 @@ plotResidualsVsTime <- function(
   # in a group (indicated by color), we have to override the default shape legend
   # and assign a manual shape to each legend entry
   # The shapes follow the settings in the user-provided plot configuration
-  overrideShapeAssignment <- pairedData %>%
-    dplyr::select(name, group) %>%
-    dplyr::distinct() %>%
-    dplyr::arrange(name) %>%
+  overrideShapeAssignment <- pairedData |>
+    dplyr::select(name, group) |>
+    dplyr::distinct() |>
+    dplyr::arrange(name) |>
     dplyr::mutate(
       shapeAssn = unlist(tlf::Shapes[resVsTimePlotConfiguration$points$shape[
-        1:nrow(.)
+        seq_len(dplyr::n())
       ]])
-    ) %>%
+    ) |>
     dplyr::filter(!duplicated(group))
 
   # axes labels -----------------------------

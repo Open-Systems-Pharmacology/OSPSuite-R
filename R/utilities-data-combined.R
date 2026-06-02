@@ -318,10 +318,10 @@ calculateResiduals <- function(
   # grouping level and combine the resulting data frames in a row-wise manner.
   #
   # Both of these routines will be carried out by `dplyr::group_modify()`.
-  pairedData <- combinedData %>%
-    dplyr::group_by(group) %>%
-    dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) %>%
-    dplyr::ungroup() %>%
+  pairedData <- combinedData |>
+    dplyr::group_by(group) |>
+    dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) |>
+    dplyr::ungroup() |>
     dplyr::relocate(group, name, nameSimulated)
 
   return(pairedData)
@@ -483,9 +483,9 @@ calculateResiduals <- function(
 
   # Remove groups (and the datasets therein) with only one type (either only
   # observed or only simulated) of dataset.
-  data <- data %>%
-    dplyr::group_by(group) %>%
-    dplyr::filter(length(unique(dataType)) > 1L) %>%
+  data <- data |>
+    dplyr::group_by(group) |>
+    dplyr::filter(length(unique(dataType)) > 1L) |>
     dplyr::ungroup()
 
   # Compare to find which datasets were removed
