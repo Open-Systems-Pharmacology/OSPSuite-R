@@ -78,13 +78,12 @@ This function generates a histogram of the residuals, providing a visual
 representation of their distribution.
 }
 \examples{
-\dontrun{
 # Generate a histogram of residuals with default settings
-plotResidualsAsHistogram(myDataCombined)
+plotResidualsAsHistogram(dataCombinedAciclovir)
 
 # Generate a histogram with linear scale
-plotResidualsAsHistogram(myDataCombined, residualScale = "linear")
-}
+plotResidualsAsHistogram(dataCombinedAciclovir, residualScale = "linear")
+
 }
 \seealso{
 Other plot functions based on ospsuite.plots:
