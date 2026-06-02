@@ -22,6 +22,7 @@ or `NULL` if the dimension cannot be found.
 ## Examples
 
 ``` r
+
 getDimensionForUnit("mg")
 #> [1] "Mass"
 ```

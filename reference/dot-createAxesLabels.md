@@ -38,6 +38,7 @@ Other utilities-plotting:
 ## Examples
 
 ``` r
+
 df <- dplyr::tibble(
   dataType = c(rep("simulated", 3), rep("observed", 3)),
   xValues = c(0, 14.482, 28.965, 0, 1, 2),

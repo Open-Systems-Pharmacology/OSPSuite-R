@@ -22,6 +22,7 @@ When creating a `DataSet` from scratch (e.g. when the user wants to
 manually input observed data), a name must be provided:
 
 ``` r
+
 library(ospsuite)
 
 # Create an empty data set
@@ -39,6 +40,7 @@ Setting numerical values (or overwriting current values) is performed by
 the `$setValues()` method:
 
 ``` r
+
 dataSet$setValues(
   xValues = c(1, 2, 3, 4),
   yValues = c(0, 0.1, 0.6, 10),
@@ -65,6 +67,7 @@ of the dimension. Changing the dimension or unit *does not* transform
 the values.
 
 ``` r
+
 # Print x, y, and error values
 dataSet$xValues
 #> [1] 1 2 3 4
@@ -118,6 +121,7 @@ geometric error, the latter being given in fraction. The user can change
 the error type:
 
 ``` r
+
 # Default error type is "ArithmeticStdDev"
 dataSet$yErrorType
 #> [1] "ArithmeticStdDev"
@@ -150,6 +154,7 @@ A `DataSet` can store any kind of text meta data as name-values pairs
 and can be added by the `addMetaData()` method:
 
 ``` r
+
 # Add new meta data entries
 dataSet$addMetaData(
   name = "Molecule",
@@ -174,6 +179,7 @@ A `DataSet` or multiple `DataSet`s can be converted to `data.frame` (or
 workflows:
 
 ``` r
+
 # Create a second data set
 dataSet2 <- DataSet$new(name = "Second data set")
 dataSet2$setValues(
@@ -212,6 +218,7 @@ constructing `DataSet` objects programmatically or after manipulating
 data in a `data.frame`:
 
 ``` r
+
 # Create a data set and convert to data.frame
 dsOriginal <- DataSet$new(name = "Aciclovir")
 dsOriginal$setValues(
@@ -262,6 +269,7 @@ standard columns are optional, and any additional columns are
 interpreted as meta data.
 
 ``` r
+
 # Construct a data.frame manually and create DataSet objects from it
 observedDf <- data.frame(
   name = c("Study A", "Study A", "Study B", "Study B"),
@@ -301,6 +309,7 @@ that allows to export any `DataSet` to a `*.pkml` that can be loaded
 e.g. in MoBi.
 
 ``` r
+
 # Load a data set from PKML
 filePath <- system.file("extdata", "ObsDataAciclovir_1.pkml", package = "ospsuite")
 
@@ -352,6 +361,7 @@ an `*.xml`) file, and load it in R with the
 function:
 
 ``` r
+
 # Load a configuration from xml file
 filePath <- system.file("extdata", "dataImporterConfiguration.xml", package = "ospsuite")
 importerConfiguration <- loadDataImporterConfiguration(configurationFilePath = filePath)
@@ -381,6 +391,7 @@ to be manually populated by the user. Alternatively, the user can let
 the software “guess” the configuration for a given excel sheet:
 
 ``` r
+
 # Excel file
 excelFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
 sheetName <- "TestSheet_1"
@@ -420,6 +431,7 @@ be specified in the `ImporterConfiguration`. The following example loads
 the sheets `TestSheet_1` and `TestSheet_1_withMW`:
 
 ``` r
+
 # Excel file
 excelFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
 sheetName <- "TestSheet_1"

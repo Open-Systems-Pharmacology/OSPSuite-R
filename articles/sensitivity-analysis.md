@@ -46,6 +46,7 @@ parameter is tested at **two points**: 90% and 110% of its reference
 value
 
 ``` r
+
 library(ospsuite)
 
 # Load simulation
@@ -87,6 +88,7 @@ calculation parameters are considered. - In such cases, calling
 `addParameterPaths()` will only vary the newly added parameters.
 
 ``` r
+
 library(ospsuite)
 
 # Load simulation
@@ -115,6 +117,7 @@ Analysis](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/pk-analy
 for more information) of all model outputs.
 
 ``` r
+
 # Load simulation
 simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -165,6 +168,7 @@ The default values for `numberOfSteps`, `variationRange`, and
 changed for a session by directly setting the values in `ospsuiteEnv`:
 
 ``` r
+
 # View current defaults
 getOSPSuiteSetting("sensitivityAnalysisConfig")
 
@@ -178,6 +182,7 @@ Note that these changes only affect new `SensitivityAnalysis` objects
 created after the change. Existing objects retain their original values.
 
 ``` r
+
 # Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -198,7 +203,7 @@ sa <- SensitivityAnalysis$new(
 saResult <- runSensitivityAnalysis(sa)
 print(saResult)
 #> <SensitivityAnalysisResults>
-#>   • Number of calculated sensitivities: 11
+#>   • Number of calculated sensitivities: 22
 #> Available PK Parameters:
 #>   • C_max
 #>   • t_max
@@ -213,6 +218,7 @@ print(saResult)
 #>   • Vd
 #> For the following outputs:
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
 
 # Get sensitivities for the parameter "AUC_inf" of the simulated output with a threshold of 0.8
 outputPath <- sim$outputSelections$allOutputs[[1]]$path
@@ -224,7 +230,7 @@ print(sensitivities)
 #>   • PK-Parameter: AUC_inf
 #>   • Output path: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral
 #>   Venous Blood)
-#>   • Value: 0.00470852808265833
+#>   • Value: 0.00465402182994968
 ```
 
 The value `-1` for the sensitivity of “AUC_inf” of the output
@@ -240,6 +246,7 @@ Sensitivity analysis calculated in R can be exported to a \*.csv file,
 which can be loaded in another instance.
 
 ``` r
+
 # Load and run the simulation
 simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)

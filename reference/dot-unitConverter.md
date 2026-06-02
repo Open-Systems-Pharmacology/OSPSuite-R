@@ -32,6 +32,7 @@ toUnit
 ## Examples
 
 ``` r
+
 # small dataframe to illustrate the conversion
 (df <- dplyr::tibble(
   dataType = c(rep("simulated", 3), rep("observed", 3)),

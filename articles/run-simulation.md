@@ -11,6 +11,7 @@ to produce an object of the class `SimulationResults`. Keep in mind that
 produces a list of `SimulationResults` objects.
 
 ``` r
+
 library(ospsuite)
 
 # Load the simulation
@@ -25,6 +26,7 @@ print(simulationResults)
 #>   • Number of individuals: 1
 #> For paths:
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
 ```
 
 The advantage of storing the results in a object is the option to keep
@@ -42,8 +44,10 @@ available in the simulation results are returned.
 The paths of all available outputs can be accessed via
 
 ``` r
+
 simulationResults$allQuantityPaths
 #> [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+#> [2] "Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound"
 ```
 
 `getOutputValues` returns a list with two entries: `data` and
@@ -62,6 +66,7 @@ simulationResults$allQuantityPaths
   dimension or the unit.
 
 ``` r
+
 # Get simulated results by path
 resultsPath <- simulationResults$allQuantityPaths[[1]]
 print(resultsPath)
@@ -84,6 +89,7 @@ The results can be stored in and imported from a \*.csv file with the
 methods `exportResultsToCSV` and `importResultsFromCSV`.
 
 ``` r
+
 # Load and run the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -105,6 +111,7 @@ print(resultsLoaded)
 #>   • Number of individuals: 1
 #> For paths:
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
 ```
 
 ## Running multiple individual simulations and retrieving the results
@@ -123,6 +130,7 @@ hand, if the user simulates 10 simulations with only 8 cores available,
 7 will be used and then the first 3 available.
 
 ``` r
+
 # Load and run multiple simulations concurrently.
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 
@@ -142,14 +150,15 @@ results correspond. This way, it is easy to retrieve the correct results
 for the specific simulation
 
 ``` r
+
 # Get the id of the second simulation
 id <- sim2$id
 print(id)
-#> [1] "wb7B7OicLkWiy_Jw6rOXlg"
+#> [1] "SmhfL6d9vkye9yx9vZ1ZGg"
 # get the corresponding result
 sim2Results <- simulationResults[[id]]
 print(sim2Results$simulation$id)
-#> [1] "wb7B7OicLkWiy_Jw6rOXlg"
+#> [1] "SmhfL6d9vkye9yx9vZ1ZGg"
 ```
 
 ## Adding new outputs
@@ -164,6 +173,7 @@ corresponding simulation needs to be re-run in order to generate updated
 results.
 
 ``` r
+
 # Clear the list of generated outputs
 clearOutputs(sim)
 
@@ -208,23 +218,24 @@ stored) are stored as the property `$outputSchema` of a `Simulation`
 object.
 
 ``` r
+
 print(sim$outputSchema)
 #> <OutputSchema>
 #> 
 #> ── Output intervals ──
 #> 
 #> <Interval>
-#>   • Name: Simulation interval high resolution
+#>   • Name: Simulation Interval 1
 #>   • Start time: 0.00e+00 [min]
 #>   • End time: 15.00 [min]
 #>   • Resolution: 1.00 [pts/min]
 #> <Interval>
-#>   • Name: Simulation Interval 1
+#>   • Name: Simulation Interval 2
 #>   • Start time: 15.00 [min]
 #>   • End time: 1440.00 [min]
 #>   • Resolution: 0.33 [pts/min]
 #> <Interval>
-#>   • Name: Simulation Interval 2
+#>   • Name: Simulation Interval 3
 #>   • Start time: 120.00 [min]
 #>   • End time: 1440.00 [min]
 #>   • Resolution: 0.07 [pts/min]
@@ -237,6 +248,7 @@ and
 [`setOutputInterval()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/setOutputInterval.md).
 
 ``` r
+
 # Remove all output intervals - simulation not possible!
 clearOutputIntervals(simulation = sim)
 runSimulations(simulations = sim)
@@ -325,6 +337,7 @@ be accessed and modified through the `$solver` property of a
 `Simulation` object.
 
 ``` r
+
 # View current solver settings
 print(sim$solver)
 #> <SolverSettings>
@@ -349,6 +362,7 @@ main tolerance parameters are:
   relative to the magnitude of the values
 
 ``` r
+
 # If a simulation fails to run, try reducing the tolerances
 # Reduce absolute tolerance by a factor of 10
 sim$solver$absTol <- sim$solver$absTol * 1e-1

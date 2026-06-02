@@ -17,6 +17,7 @@ clearOutputs(simulation)
 ## Examples
 
 ``` r
+
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath, )
 

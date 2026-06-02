@@ -78,6 +78,7 @@ Then, include the following code lines at the beginning of the projects
 scripts:
 
 ``` r
+
 ospsuite::initPKSim(pksimFolderPath = "PKSim")
 ```
 

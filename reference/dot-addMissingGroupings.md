@@ -26,6 +26,7 @@ Other utilities-plotting:
 ## Examples
 
 ``` r
+
 df <- dplyr::tibble(
   group = c(
     "Stevens 2012 solid total",

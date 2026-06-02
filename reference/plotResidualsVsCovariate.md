@@ -17,6 +17,7 @@ plotResidualsVsCovariate(
   yUnit = NULL,
   residualScale = "log",
   xAxis = "observed",
+  showLegendPerDataset = "all",
   ...
 )
 ```
@@ -91,6 +92,18 @@ plotResidualsVsCovariate(
   are `"time"` (time points from xValues), `"observed"` (observed
   values, default), or `"predicted"` (predicted/simulated values).
 
+- showLegendPerDataset:
+
+  Controls display of separate legend entries for individual datasets.
+  One of:
+
+  - `"none"`: No per-dataset differentiation. Only group-level legend.
+
+  - `"all"` (default) or `"observed"`: Differentiate observed datasets
+    via different shapes (using the `name` column).
+
+  User-provided `mapping` will override internal settings.
+
 - ...:
 
   Arguments passed on to
@@ -101,6 +114,11 @@ plotResidualsVsCovariate(
 
   :   A `list` with arguments which are passed on to the call
       [`ggplot2::geom_point`](https://ggplot2.tidyverse.org/reference/geom_point.html)
+
+  `geomErrorbarAttributes`
+
+  :   A `list` with arguments which are passed on to the call
+      [`ggplot2::geom_errorbar`](https://ggplot2.tidyverse.org/reference/geom_linerange.html)
 
   `geomComparisonLineAttributes`
 
@@ -147,6 +165,13 @@ plotResidualsVsCovariate(
       [`ggplot2::scale_y_log10()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
       is used
 
+  `yScaleArgs`
+
+  :   list of arguments passed to
+      [`ggplot2::scale_y_continuous()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
+      or
+      [`ggplot2::scale_y_log10()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
+
   `comparisonLineVector`
 
   :   A vector defining the comparison lines.
@@ -154,7 +179,7 @@ plotResidualsVsCovariate(
 ## Value
 
 A `ggplot2` plot object representing residuals vs time, observed, or
-predicted values.
+predicted values, or `NULL` if the data contains no plottable entries.
 
 ## Details
 
@@ -211,5 +236,8 @@ plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
 
 # Generate a residuals vs time plot
 plotResidualsVsCovariate(myDataCombined, xAxis = "time")
+
+# Show individual dataset names in legend
+plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "observed")
 } # }
 ```

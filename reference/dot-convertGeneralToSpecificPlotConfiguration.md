@@ -51,6 +51,7 @@ Other utilities-plotting:
 ## Examples
 
 ``` r
+
 ospsuite:::.convertGeneralToSpecificPlotConfiguration(
   tlf::TimeProfilePlotConfiguration$new(),
   ospsuite::DefaultPlotConfiguration$new()

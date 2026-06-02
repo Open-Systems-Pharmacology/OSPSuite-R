@@ -19,7 +19,7 @@ loadDataSetFromPKML(filePath)
 ## Examples
 
 ``` r
-filePath <- system.file("extdata", "obs_data.pkml", package = "ospsuite")
+filePath <- system.file("extdata", "ObsDataAciclovir_1.pkml", package = "ospsuite")
 
 obsData <- loadDataSetFromPKML(filePath)
 ```

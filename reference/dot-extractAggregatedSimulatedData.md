@@ -65,6 +65,7 @@ Other utilities-plotting:
 ## Examples
 
 ``` r
+
 # let's create a data frame to test this function
 df <- dplyr::tibble(
   xValues = c(

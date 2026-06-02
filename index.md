@@ -95,6 +95,7 @@ Install the latest released version from GitHub using the
 downloads and installs all required dependencies.
 
 ``` r
+
 install.packages("remotes")
 remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R@*release")
 ```
@@ -102,6 +103,7 @@ remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R@*release")
 To install the latest development version:
 
 ``` r
+
 install.packages("remotes")
 remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R")
 ```
@@ -117,6 +119,7 @@ Installing from archive files requires manual installation of CRAN
 dependencies first.
 
 ``` r
+
 # Install dependencies (e.g. R6) which are on CRAN
 install.packages("cli")
 install.packages("crayon")
@@ -164,6 +167,7 @@ to install packages from binary files.
 installed in the previous step.
 
 ``` r
+
 # Install rSharp from local file 
 # Replace pathTo_rSharp.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
 install.packages(pathTo_rSharp.zip, repos = NULL)
@@ -213,16 +217,14 @@ cannot be re-used.
 When developing the
 [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
 package, you need to prepare platform-specific library files before
-using
-[`devtools::load_all()`](https://devtools.r-lib.org/reference/load_all.html).
-The package uses configure scripts during installation to rename
-platform-specific DLLs, but
-[`devtools::load_all()`](https://devtools.r-lib.org/reference/load_all.html)
-bypasses this process.
+using `devtools::load_all()`. The package uses configure scripts during
+installation to rename platform-specific DLLs, but
+`devtools::load_all()` bypasses this process.
 
 **Run the development setup script:**
 
 ``` r
+
 source("tools/setup_dev.R")
 setup_dev()
 ```

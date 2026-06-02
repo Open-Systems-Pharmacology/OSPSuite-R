@@ -126,6 +126,13 @@ plotResidualsAsHistogram(
       [`ggplot2::scale_y_log10()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
       is used
 
+  `yScaleArgs`
+
+  :   list of arguments passed to
+      [`ggplot2::scale_y_continuous()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
+      or
+      [`ggplot2::scale_y_log10()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
+
   `meanFunction`
 
   :   Function selection for the display of a vertical line. Options:
@@ -136,7 +143,8 @@ plotResidualsAsHistogram(
 
 ## Value
 
-A `ggplot2` plot object representing the histogram of residuals.
+A `ggplot2` plot object representing the histogram of residuals, or
+`NULL` if the data contains no plottable entries.
 
 ## See also
 

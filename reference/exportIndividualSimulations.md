@@ -41,12 +41,13 @@ An array containing the path of all exported simulations.
 ## Examples
 
 ``` r
-simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 
-popPath <- system.file("extdata", "simple_pop.csv", package = "ospsuite")
+popPath <- system.file("extdata", "pop.csv", package = "ospsuite")
 population <- loadPopulation(popPath)
 
 exportIndividualSimulations(population, c(1, 2), tempdir(), sim)
-#> [1] "/tmp/Rtmpd3iWma/Simple_1.pkml" "/tmp/Rtmpd3iWma/Simple_2.pkml"
+#> [1] "/tmp/Rtmp3QhBnq/Vergin 1995 IV_1.pkml"
+#> [2] "/tmp/Rtmp3QhBnq/Vergin 1995 IV_2.pkml"
 ```

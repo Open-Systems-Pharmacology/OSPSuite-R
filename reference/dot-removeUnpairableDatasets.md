@@ -26,6 +26,7 @@ To this end, current function removes the following datasets:
 ## Examples
 
 ``` r
+
 df <- dplyr::tribble(
   ~name, ~dataType, ~group,
   "Sim1", "Simulated", "GroupA",
@@ -75,12 +76,12 @@ df
 # transformed
 ospsuite:::.removeUnpairableDatasets(df)
 #> Following non-grouped or unpairable datasets have been removed:
-#> Sim1
-#> Sim2
-#> Obs1
-#> Obs2
-#> Sim9
-#> Obs10
+#> - Sim1
+#> - Sim2
+#> - Obs1
+#> - Obs2
+#> - Sim9
+#> - Obs10
 #> 
 #> # A tibble: 12 × 3
 #>    name  dataType  group 

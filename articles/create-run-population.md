@@ -19,6 +19,7 @@ method (see [Running simulations and retrieving the
 results](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/run-simulation.md)).
 
 ``` r
+
 library(ospsuite)
 # Load population information from csv
 popFilePath <- system.file("extdata", "pop.csv", package = "ospsuite")
@@ -45,6 +46,7 @@ ontogenies can be added as described in the vignette [Creating
 individuals](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-individual.md).
 
 ``` r
+
 library(ospsuite)
 
 # If no unit is specified, the default units are used. For "height" it is "dm", for "weight" it is "kg", for "age" it is "year(s)".
@@ -90,6 +92,7 @@ To run a population simulation, the `Population` object created by the
 method:
 
 ``` r
+
 library(ospsuite)
 
 # Load simulation
@@ -103,6 +106,7 @@ print(simulationResults)
 #>   • Number of individuals: 50
 #> For paths:
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
 ```
 
 Population simulations are run in parallel on multi-core machines - one
@@ -114,6 +118,7 @@ The user can change the default behavior by providing custom
 [`SimulationRunOptions()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/SimulationRunOptions.md).
 
 ``` r
+
 # Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -137,6 +142,7 @@ print(populationResults)
 #>   • Number of individuals: 50
 #> For paths:
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
 ```
 
 Simulated time-value pairs for a specific output from the
@@ -151,8 +157,10 @@ returned.
 The paths of all available outputs can be accessed via
 
 ``` r
+
 populationResults$allQuantityPaths
 #> [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+#> [2] "Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound"
 ```
 
 [`getOutputValues()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getOutputValues.md)
@@ -170,6 +178,7 @@ appended for each simulated individual. Note that this results in
 non-monotonously increasing column `Time`.
 
 ``` r
+
 # Get simulated results by path
 resultsPath <- populationResults$allQuantityPaths[[1]]
 print(resultsPath)
@@ -191,6 +200,7 @@ the argument `individualIds` of the method
 can be specified:
 
 ``` r
+
 # Get simulated results by path
 resultsPath <- populationResults$allQuantityPaths[[1]]
 print(resultsPath)

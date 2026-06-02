@@ -1,5 +1,50 @@
 # Changelog
 
+## ospsuite 12.4.3
+
+### Major changes
+
+- Computational core libraries updated to match OSPS Version 12 update 3
+  release.
+
+### Minor improvements and bug fixes
+
+- [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotPredictedVsObserved.md)
+  and
+  [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsCovariate.md)
+  gain a `showLegendPerDataset` argument (`"none"`, `"observed"`,
+  `"all"`, default `"all"`) to differentiate observed datasets within a
+  group by point shape, consistent with
+  [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotTimeProfile.md)
+  ([\#1839](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1839)).
+- [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsCovariate.md),
+  [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsAsHistogram.md),
+  and
+  [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotQuantileQuantilePlot.md)
+  now compute residuals consistently with
+  [`calculateResiduals()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/calculateResiduals.md),
+  producing `NaN` with a warning for zero or negative values on the log
+  scale instead of extreme values
+  ([\#1713](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1713)).
+- [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotTimeProfile.md)
+  now defaults to `showLegendPerDataset = "all"`, showing individual
+  dataset names for both observed and simulated data by default
+  ([\#1844](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1844)).
+- `DataSet$setValues()` and plotting functions
+  ([`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotTimeProfile.md),
+  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotPredictedVsObserved.md),
+  [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsCovariate.md),
+  [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsAsHistogram.md),
+  [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotQuantileQuantilePlot.md))
+  now warn and replace negative `yErrorValues` with `NA` instead of
+  silently accepting them
+  ([\#1756](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1756)).
+- Fixed
+  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotPredictedVsObserved.md)
+  error bar mapping: when `predictedAxis = "x"`, error bars are now
+  correctly placed on the y-axis
+  ([\#1715](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1715)).
+
 ## ospsuite 12.4.2
 
 ### Major changes
@@ -14,7 +59,8 @@
   [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotQuantileQuantilePlot.md).
   These functions accept `DataCombined` objects or data frames and
   handle mixed error types and unit conversion directly, without
-  requiring data preprocessing.
+  requiring data preprocessing
+  ([\#1652](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1652)).
 - The
   [tlf](https://github.com/open-systems-pharmacology/tlf-library)-based
   plotting functions

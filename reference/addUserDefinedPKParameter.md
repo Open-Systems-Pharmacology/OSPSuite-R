@@ -41,6 +41,7 @@ PK-Parameters
 ## Examples
 
 ``` r
+
 # Adds a user defined parameter named MyAuc that will calculate the value of AUC
 # between t=50 min and t=80min
 myAUC <- addUserDefinedPKParameter(

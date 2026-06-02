@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Working with `DataCombined` class • ospsuite</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Working with `DataCombined` class">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -468,17 +468,17 @@ is issued.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Linear residuals</span></span>
 <span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span></span>
-<span><span class="co">#&gt;  [1]  2.13792816 -0.03274317  0.04046021  0.41573761  0.79398335  0.82012495</span></span>
-<span><span class="co">#&gt;  [7]  0.71088603  0.53688426  0.33489522  0.11380446  0.01803885 -0.03354008</span></span>
-<span><span class="co">#&gt; [13] -0.06620067</span></span>
+<span><span class="co">#&gt;  [1]  2.13793038 -0.03274317  0.04046023  0.41573747  0.79398400  0.82012473</span></span>
+<span><span class="co">#&gt;  [7]  0.71088624  0.53688435  0.33489522  0.11380446  0.01803883 -0.03354010</span></span>
+<span><span class="co">#&gt; [13] -0.06620068</span></span>
 <span><span class="co">#&gt; attr(,"label")</span></span>
 <span><span class="co">#&gt; [1] "residuals\npredicted - observed"</span></span>
 <span></span>
 <span><span class="co"># Logarithmic residuals</span></span>
 <span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span></span>
-<span><span class="co">#&gt;  [1]  0.239719620 -0.007286928  0.012618336  0.155242835  0.384912455</span></span>
-<span><span class="co">#&gt;  [6]  0.482210178  0.578799737  0.577914238  0.647582143  0.457679775</span></span>
-<span><span class="co">#&gt; [11]  0.137321647 -0.418715711 -2.305882655</span></span>
+<span><span class="co">#&gt;  [1]  0.239719842 -0.007286928  0.012618343  0.155242789  0.384912714</span></span>
+<span><span class="co">#&gt;  [6]  0.482210078  0.578799870  0.577914304  0.647582143  0.457679775</span></span>
+<span><span class="co">#&gt; [11]  0.137321456 -0.418716062 -2.305883113</span></span>
 <span><span class="co">#&gt; attr(,"label")</span></span>
 <span><span class="co">#&gt; [1] "residuals\nlog(predicted) - log(observed)"</span></span></code></pre></div>
 <p>To quickly calculate the total error of the
@@ -489,7 +489,7 @@ residuals:</p>
 <span><span class="va">totalError</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">Scaling</a></span><span class="op">$</span><span class="va">lin</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">totalError</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 6.055227</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 6.05523</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visualizations-with-datacombined">Visualizations with <code>DataCombined</code><a class="anchor" aria-label="anchor" href="#visualizations-with-datacombined"></a>
@@ -506,7 +506,7 @@ data stored in <code>DataCombined</code> object.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
 </div>
 
 <div class="pkgdown-footer-right">

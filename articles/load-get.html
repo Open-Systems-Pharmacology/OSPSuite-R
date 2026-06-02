@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Loading a simulation and accessing entities • ospsuite</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Loading a simulation and accessing entities">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -286,11 +286,6 @@ strings representing the path to the entity.</p>
 <span><span class="co"># Getting all entities located under "Organism|Liver|Periportal|Intracellular"</span></span>
 <span><span class="va">entitiesList</span> <span class="op">&lt;-</span> <span class="va">simTree</span><span class="op">$</span><span class="va">Organism</span><span class="op">$</span><span class="va">Liver</span><span class="op">$</span><span class="va">Periportal</span><span class="op">$</span><span class="va">Intracellular</span></span>
 <span><span class="va">entitiesList</span></span>
-<span><span class="co">#&gt; $`Volume of protein container`</span></span>
-<span><span class="co">#&gt; $`Volume of protein container`$path</span></span>
-<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Volume of protein container"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Volume</span></span>
 <span><span class="co">#&gt; $Volume$path</span></span>
 <span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Volume"</span></span>
@@ -299,6 +294,106 @@ strings representing the path to the entity.</p>
 <span><span class="co">#&gt; $pH</span></span>
 <span><span class="co">#&gt; $pH$path</span></span>
 <span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|pH"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $CYP3A4</span></span>
+<span><span class="co">#&gt; $CYP3A4$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|CYP3A4"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $CYP3A4$`Degradation coefficient`</span></span>
+<span><span class="co">#&gt; $CYP3A4$`Degradation coefficient`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Degradation coefficient"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $CYP3A4$`Relative expression`</span></span>
+<span><span class="co">#&gt; $CYP3A4$`Relative expression`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Relative expression"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $CYP3A4$`Initial concentration`</span></span>
+<span><span class="co">#&gt; $CYP3A4$`Initial concentration`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Initial concentration"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $CYP3A4$`Start amount`</span></span>
+<span><span class="co">#&gt; $CYP3A4$`Start amount`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Start amount"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $CYP3A4$`Fraction expressed intracellular`</span></span>
+<span><span class="co">#&gt; $CYP3A4$`Fraction expressed intracellular`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Fraction expressed intracellular"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $CYP3A4$Concentration</span></span>
+<span><span class="co">#&gt; $CYP3A4$Concentration$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Concentration"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $CYP3A4$`Ontogeny factor`</span></span>
+<span><span class="co">#&gt; $CYP3A4$`Ontogeny factor`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Ontogeny factor"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $CYP3A4$`t1/2`</span></span>
+<span><span class="co">#&gt; $CYP3A4$`t1/2`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|t1/2"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $CYP3A4$`Concentration in container`</span></span>
+<span><span class="co">#&gt; $CYP3A4$`Concentration in container`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|CYP3A4|Concentration in container"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Undefined Liver`</span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Degradation coefficient`</span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Degradation coefficient`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Degradation coefficient"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Relative expression`</span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Relative expression`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Relative expression"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Initial concentration`</span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Initial concentration`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Initial concentration"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Start amount`</span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Start amount`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Start amount"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Fraction expressed intracellular`</span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Fraction expressed intracellular`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Fraction expressed intracellular"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$Concentration</span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$Concentration$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Concentration"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Ontogeny factor`</span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Ontogeny factor`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Ontogeny factor"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`t1/2`</span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`t1/2`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|t1/2"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Concentration in container`</span></span>
+<span><span class="co">#&gt; $`Undefined Liver`$`Concentration in container`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Undefined Liver|Concentration in container"</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Aciclovir</span></span>
@@ -317,7 +412,17 @@ strings representing the path to the entity.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $Aciclovir$`Concentration in container`</span></span>
 <span><span class="co">#&gt; $Aciclovir$`Concentration in container`$path</span></span>
-<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Aciclovir|Concentration in container"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Aciclovir|Concentration in container"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Aciclovir-Undefined Liver Metabolite`</span></span>
+<span><span class="co">#&gt; $`Aciclovir-Undefined Liver Metabolite`$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Aciclovir-Undefined Liver Metabolite"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Aciclovir-Undefined Liver Metabolite`$Concentration</span></span>
+<span><span class="co">#&gt; $`Aciclovir-Undefined Liver Metabolite`$Concentration$path</span></span>
+<span><span class="co">#&gt; [1] "Organism|Liver|Periportal|Intracellular|Aciclovir-Undefined Liver Metabolite|Concentration"</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -326,7 +431,7 @@ strings representing the path to the entity.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
 </div>
 
 <div class="pkgdown-footer-right">

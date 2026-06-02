@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Population simulations • ospsuite</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Population simulations">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -182,7 +182,8 @@ the <code><a href="../reference/runSimulation.html">runSimulation()</a></code> m
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SimulationResults&gt;</span></span></span>
 <span><span class="co">#&gt;   • Number of individuals: 50</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">For paths</span>:</span></span>
-<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span></code></pre></div>
+<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound</span></span></code></pre></div>
 <p>Population simulations are run in parallel on multi-core machines -
 one core simulates a subset of all individuals defined in the
 population. By default, the number of cores used equals the maximal
@@ -212,7 +213,8 @@ number of logical cores available minus one.</p>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SimulationResults&gt;</span></span></span>
 <span><span class="co">#&gt;   • Number of individuals: 50</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">For paths</span>:</span></span>
-<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span></code></pre></div>
+<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span>
+<span><span class="co">#&gt;   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound</span></span></code></pre></div>
 <p>Simulated time-value pairs for a specific output from the
 <code>SimulationResults</code>-object returned by the
 <code>runSimulation</code> method can be accessed with the method
@@ -225,7 +227,8 @@ available in the simulation results are returned.</p>
 <p>The paths of all available outputs can be accessed via</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">populationResults</span><span class="op">$</span><span class="va">allQuantityPaths</span></span>
-<span><span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span></span>
+<span><span class="co">#&gt; [2] "Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound"</span></span></code></pre></div>
 <p><code><a href="../reference/getOutputValues.html">getOutputValues()</a></code> returns a list with two entries:
 <code>data</code> and <code>metadata</code>:</p>
 <ul>
@@ -285,7 +288,7 @@ results</a>.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
 </div>
 
 <div class="pkgdown-footer-right">

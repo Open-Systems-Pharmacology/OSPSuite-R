@@ -16,6 +16,7 @@ plotPredictedVsObserved(
   xyScale = "log",
   predictedAxis = "y",
   comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
+  showLegendPerDataset = "all",
   ...
 )
 ```
@@ -90,6 +91,18 @@ plotPredictedVsObserved(
   and its reciprocal. The identity fold (1) will be included if
   specified in `getFoldDistanceList`.
 
+- showLegendPerDataset:
+
+  Controls display of separate legend entries for individual datasets.
+  One of:
+
+  - `"none"` : No per-dataset differentiation. Only group-level legend.
+
+  - `"all"` (default) or `"observed"`: Differentiate observed datasets
+    via different shapes (using the `name` column).
+
+  User-provided `mapping` will override internal settings.
+
 - ...:
 
   Arguments passed on to
@@ -99,6 +112,11 @@ plotPredictedVsObserved(
 
   :   A `list` with arguments which are passed on to the call
       [`ggplot2::geom_point`](https://ggplot2.tidyverse.org/reference/geom_point.html)
+
+  `geomErrorbarAttributes`
+
+  :   A `list` with arguments which are passed on to the call
+      [`ggplot2::geom_errorbar`](https://ggplot2.tidyverse.org/reference/geom_linerange.html)
 
   `geomGuestLineAttributes`
 
@@ -116,9 +134,21 @@ plotPredictedVsObserved(
   :   A `list` with arguments which are passed on to the call
       [`ggplot2::geom_hline`](https://ggplot2.tidyverse.org/reference/geom_abline.html)
 
+  `groupAesthetics`
+
+  :   A character vector of aesthetic names used for grouping data
+      points when calculating comparison statistics. Data will be
+      grouped by combinations of these aesthetics before computing
+      counts and proportions within comparison lines. Common grouping
+      aesthetics include `"colour"`, `"fill"`, `"shape"`.
+
   `addRegression`
 
   :   A boolean that activates the insertion of a regression line.
+
+  `addGuestLimits`
+
+  :   A boolean that activates the insertion of guest limits.
 
   `deltaGuest`
 
@@ -143,10 +173,18 @@ plotPredictedVsObserved(
       or
       [`ggplot2::scale_y_log10()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
 
+  `lloqOnBothAxes`
+
+  :   A boolean; if `TRUE`, LLOQ lines are drawn on both axes. If
+      `FALSE` (default), the LLOQ line is drawn for the observed-data
+      axis only. (`geom_vline` when `observedDataDirection = "x"`,
+      `geom_hline` when `observedDataDirection = "y"`).
+
 ## Value
 
 A `ggplot2` plot object representing predicted vs observed values,
-including aesthetics for the x and y axes.
+including aesthetics for the x and y axes, or `NULL` if the data
+contains no plottable entries.
 
 ## See also
 
@@ -165,5 +203,8 @@ plotPredictedVsObserved(myDataCombined)
 
 # Generate an observed vs predicted plot (swap axes)
 plotPredictedVsObserved(myDataCombined, predictedAxis = "x")
+
+# Show individual dataset names in legend
+plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "observed")
 } # }
 ```

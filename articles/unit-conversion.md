@@ -7,6 +7,7 @@ dimension, like *Amount*, *Concentration*, or *Volume*. The dimension is
 a property of an entity:
 
 ``` r
+
 library(ospsuite)
 
 # Load a simulation
@@ -39,6 +40,7 @@ for the dimension *Amount*. The list of all available units for an
 entity can be obtained using `allUnits()` method:
 
 ``` r
+
 # Dimension of the parameter
 livParam$dimension
 #> [1] "Volume"
@@ -68,6 +70,7 @@ require the quantity to get the correct dimension and units; however, it
 does not change the value of the quantity!
 
 ``` r
+
 # Get the BMI parameter
 heightParam <- getParameter("Organism|Height", sim)
 print(heightParam)

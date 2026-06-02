@@ -41,6 +41,7 @@ Other plotting:
 ## Examples
 
 ``` r
+if (FALSE) { # \dontrun{
 # simulated data
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
@@ -76,8 +77,5 @@ myPlotConfiguration$caption <- "My Sources"
 
 # plot
 plotResidualsVsTime(myDataCombined, scaling = "lin", defaultPlotConfiguration = myPlotConfiguration)
-#> Warning: `plotResidualsVsTime()` was deprecated in ospsuite 12.4.2.
-#> ℹ Please use `plotResidualsVsCovariate()` instead.
-#> ℹ It will be removed in version 14.0.
-
+} # }
 ```

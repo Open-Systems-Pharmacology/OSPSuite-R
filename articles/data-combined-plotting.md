@@ -11,6 +11,7 @@ Let’s first create a `DataCombined` object, which we will use to
 demonstrate different visualizations available.
 
 ``` r
+
 library(ospsuite)
 
 # simulated data
@@ -47,6 +48,7 @@ and help assess if the observed data (represented by symbols and error
 bars) match the simulated data (represented by lines).
 
 ``` r
+
 plotIndividualTimeProfile(myDataCombined)
 ```
 
@@ -58,6 +60,7 @@ Observed versus simulated plots allow to assess how far simulated
 results are from observed values.
 
 ``` r
+
 plotObservedVsSimulated(myDataCombined)
 ```
 
@@ -70,6 +73,7 @@ higher and `1/x`-fold lower than the observed ones. The user can specify
 multiple ranges by the `foldDistance` argument.
 
 ``` r
+
 plotObservedVsSimulated(myDataCombined, foldDistance = c(1.3, 2))
 ```
 
@@ -82,12 +86,14 @@ either in high-concentration or low-concentration regions, or,
 alternatively, in early or late time periods.
 
 ``` r
+
 plotResidualsVsSimulated(myDataCombined)
 ```
 
 ![](data-combined-plotting_files/figure-html/unnamed-chunk-6-1.png)
 
 ``` r
+
 plotResidualsVsTime(myDataCombined)
 ```
 
@@ -96,6 +102,7 @@ plotResidualsVsTime(myDataCombined)
 Residuals of log values can be visualized with the `scaling` argument.
 
 ``` r
+
 plotResidualsVsTime(myDataCombined, scaling = "log")
 ```
 
@@ -108,6 +115,7 @@ The look and feel for plots can be customized using the
 that can be used to modify the *appearance* of the plot.
 
 ``` r
+
 myPlotConfiguration <- DefaultPlotConfiguration$new()
 
 # Define x units
@@ -127,6 +135,7 @@ myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
 This configuration class can be passed to all plotting functions:
 
 ``` r
+
 plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
 ```
 
@@ -139,6 +148,7 @@ different plots from the same `DataCombined` and store them as
 variables.
 
 ``` r
+
 indivProfile <- plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
 obsVsSim <- plotObservedVsSimulated(myDataCombined, myPlotConfiguration)
 resVsSim <- plotResidualsVsSimulated(myDataCombined)
@@ -151,6 +161,7 @@ These plots can be combined into a multi-panel figure using the
 create a figure.
 
 ``` r
+
 plotGridConfiguration <- PlotGridConfiguration$new()
 plotGridConfiguration$tagLevels <- "a"
 plotGridConfiguration$title <- "Multiple plots in one figure"
@@ -167,6 +178,7 @@ equals to the number of colums. You can also specify the number of rows
 or columns through the `PlotGridConfiguration`:
 
 ``` r
+
 plotGridConfiguration$nColumns <- 1
 
 plotGrid(plotGridConfiguration)
@@ -187,6 +199,7 @@ edit various properties of the export, including the resolution, file
 format, or file name.
 
 ``` r
+
 # Create new export configuration
 exportConfiguration <- tlf::ExportConfiguration$new()
 # Define the path to the folder where the file will be stored

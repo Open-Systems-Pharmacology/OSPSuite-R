@@ -37,6 +37,7 @@ and `getContainer()` to create objects of type Container or Simulation
 ## Examples
 
 ``` r
+
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simPath)
 container <- getContainer("Organism|Liver", sim)

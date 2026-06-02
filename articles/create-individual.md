@@ -39,6 +39,7 @@ parameter values. The algorithm behind is the same used in PK-Sim when
 creating an Individual-Building Block.
 
 ``` r
+
 library(ospsuite)
 
 # If no unit is specified, the default units are used. For "weight" it is "kg", for "age" it is "year(s)".
@@ -81,12 +82,13 @@ parameter values can be conveniently applied using the
 `setParameterValuesByPath` method:
 
 ``` r
+
 library(ospsuite)
 
 # Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 print(simFilePath)
-#> [1] "/home/runner/.cache/R/renv/library/OSPSuite-R-d4dfdcc6/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/ospsuite/extdata/Aciclovir.pkml"
+#> [1] "/home/runner/.cache/R/renv/library/OSPSuite-R-d4dfdcc6/linux-ubuntu-jammy/R-4.6/x86_64-pc-linux-gnu/ospsuite/extdata/Aciclovir.pkml"
 sim <- loadSimulation(simFilePath)
 
 # Apply individual parameters
@@ -110,6 +112,7 @@ The list of supported ontogenies is stored in the
 `StandardOntogeny`-list.
 
 ``` r
+
 library(ospsuite)
 
 # All supported ontogenies
