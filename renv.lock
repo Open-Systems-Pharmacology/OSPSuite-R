@@ -2144,7 +2144,7 @@
     "ospsuite.plots": {
       "Package": "ospsuite.plots",
       "Version": "1.2.0",
-      "Source": "GitHub",
+      "Source": "git",
       "Type": "Package",
       "Title": "Library for standardized graphs",
       "Authors@R": "c(person(given = \"Open-Systems-Pharmacology Community\", role = \"cph\"), person(given = \"Katrin\", family = \"Coboeken\", role = c(\"aut\", \"cre\"), email = \"katrin.coboeken@bayer.com\"))",
@@ -2193,18 +2193,17 @@
       "Config/testthat/edition": "3",
       "Collate": "'messages.R' 'utilities-defaults.R' 'utilities_enum.R' 'add_Layer.R' 'ggplotWithWatermark.R' 'geom-errorbar-osp.R' 'CombinedPlot.R' 'data.R' 'MappedData.R' 'MappedDataBoxplot.R' 'MappedDataTimeProfile.R' 'MappedDataRangePlot.R' 'ospsuite.plots-package.R' 'plotBoxWhisker.R' 'plotHistogram.R' 'plotQQ.R' 'plotTimeProfile.R' 'plotYVsX.R' 'plotForest.R' 'plotRangeDistribution.R' 'utilities.R' 'utilities_export.R' 'utilities_shapes.R'",
       "LazyData": "true",
-      "Remotes": "ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils@*release",
       "Config/roxygen2/version": "8.0.0",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "OSPSuite.Plots",
-      "RemoteUsername": "Open-Systems-Pharmacology",
-      "RemotePkgRef": "ospsuite.plots=Open-Systems-Pharmacology/OSPSuite.Plots@*release",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "23c7e6519f6e625687367259ac54d063217cf822",
-      "NeedsCompilation": "no",
       "Author": "Open-Systems-Pharmacology Community [cph], Katrin Coboeken [aut, cre]",
-      "Maintainer": "Katrin Coboeken <katrin.coboeken@bayer.com>"
+      "Maintainer": "Katrin Coboeken <katrin.coboeken@bayer.com>",
+      "RemoteType": "git",
+      "Remotes": "ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils@*release",
+      "RemoteUrl": "https://github.com/Open-Systems-Pharmacology/OSPSuite.Plots",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "Open-Systems-Pharmacology",
+      "RemoteRepo": "OSPSuite.Plots",
+      "RemoteRef": "v1.2.0",
+      "RemoteSha": "23c7e6519f6e625687367259ac54d063217cf822"
     },
     "ospsuite.utils": {
       "Package": "ospsuite.utils",
@@ -2243,15 +2242,13 @@
       "RoxygenNote": "7.3.3",
       "Collate": "'enum.R' 'formatNumerics.R' 'logger.R' 'messages.R' 'objectCount.R' 'osp_print.R' 'utilities.R' 'ospsuite.utils-env.R' 'printable.R' 'utilities-conditional.R' 'utilities-logger.R' 'utilities-validation.R' 'validation-emptiness.R' 'validation-enum.R' 'validation-expected-length.R' 'validation-file-extensions.R' 'validation-inclusion.R' 'validation-options.R' 'validation-paths.R' 'validation-same-length.R' 'validation-type.R' 'validation-uniqueness.R' 'validation-utf.R' 'validation-vector.R'",
       "VignetteBuilder": "knitr",
+      "Author": "Open-Systems-Pharmacology Community [cph, fnd], Michael Sevestre [aut, cre], Pavel Balazki [aut], Juri Solodenko [aut], Indrajeet Patil [aut] (ORCID: <https://orcid.org/0000-0003-1995-6531>, Twitter: @patilindrajeets)",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteRepo": "OSPSuite.RUtils",
       "RemoteUsername": "Open-Systems-Pharmacology",
-      "RemotePkgRef": "ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils@*release",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "6d22617df457ec6e89b21bd25a99bb3080e4fb6c",
-      "NeedsCompilation": "no",
-      "Author": "Open-Systems-Pharmacology Community [cph, fnd], Michael Sevestre [aut, cre], Pavel Balazki [aut], Juri Solodenko [aut], Indrajeet Patil [aut] (ORCID: <https://orcid.org/0000-0003-1995-6531>, Twitter: @patilindrajeets)"
+      "RemoteRepo": "OSPSuite.RUtils",
+      "RemoteRef": "v1.11.1",
+      "RemoteSha": "6d22617df457ec6e89b21bd25a99bb3080e4fb6c"
     },
     "patchwork": {
       "Package": "patchwork",
@@ -2725,16 +2722,14 @@
       "RoxygenNote": "7.3.3",
       "VignetteBuilder": "knitr",
       "Config/testthat/edition": "3",
+      "Author": "Open-Systems-Pharmacology Community [cph], esqLABS GmbH [fnd], Pavel Balazki [aut, cre], Juri Solodenko [aut] (ORCID: <https://orcid.org/0000-0001-6922-588X>), Michael Sevestre [aut], Robert McIntosh [aut], Felix Mil [aut], Jean-Michel Perraud [aut], Ian Peter Du [ctb]",
+      "Maintainer": "Pavel Balazki <pavel.balazki@gmail.com>",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteRepo": "rSharp",
       "RemoteUsername": "Open-Systems-Pharmacology",
-      "RemotePkgRef": "rSharp=Open-Systems-Pharmacology/rSharp@*release",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "86480c4c467d461ed95338d9eec950b355d84c93",
-      "NeedsCompilation": "no",
-      "Author": "Open-Systems-Pharmacology Community [cph], esqLABS GmbH [fnd], Pavel Balazki [aut, cre], Juri Solodenko [aut] (ORCID: <https://orcid.org/0000-0001-6922-588X>), Michael Sevestre [aut], Robert McIntosh [aut], Felix Mil [aut], Jean-Michel Perraud [aut], Ian Peter Du [ctb]",
-      "Maintainer": "Pavel Balazki <pavel.balazki@gmail.com>"
+      "RemoteRepo": "rSharp",
+      "RemoteRef": "v1.2.0",
+      "RemoteSha": "86480c4c467d461ed95338d9eec950b355d84c93"
     },
     "rappdirs": {
       "Package": "rappdirs",
@@ -3562,7 +3557,6 @@
       "Depends": [
         "R (>= 4.1)"
       ],
-      "Remotes": "ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils@*release",
       "Encoding": "UTF-8",
       "RoxygenNote": "7.3.3",
       "Roxygen": "list(markdown = TRUE)",
@@ -3582,16 +3576,15 @@
       "VignetteBuilder": "knitr",
       "Collate": "'aaa-utilities.R' 'aggregation-input.R' 'aggregation-summary.R' 'atom-plots.R' 'boxwhisker-datamapping.R' 'boxwhisker-get-measure.R' 'boxwhisker-plotconfiguration.R' 'cumulative-time-profile-datamapping.R' 'datamapping-grouping.R' 'datamapping-groupmapping.R' 'datamapping-range.R' 'datamapping-xy.R' 'datamapping-xygroup.R' 'ddiratio-datamapping.R' 'error-checks.R' 'font.R' 'global-vars.R' 'helpers.R' 'histogram-datamapping.R' 'label.R' 'messages.R' 'obs-vs-pred-datamapping.R' 'observed-data-mapping.R' 'pkratio-datamapping.R' 'pkratio-get-measure.R' 'plot-boxwhisker.R' 'plot-cumulative-time-profile.R' 'plot-ddiratio.R' 'utilities-enums.R' 'plot-grid.R' 'plot-histogram.R' 'plot-obs-vs-pred.R' 'plot-observed-time-profile.R' 'plot-piechart.R' 'plot-pkratio.R' 'plot-qq.R' 'plot-res-vs-pred.R' 'plot-simulated-time-profile.R' 'plot-timeprofile.R' 'plot-tornado.R' 'plotconfiguration-axis.R' 'plotconfiguration-background.R' 'plotconfiguration-export.R' 'plotconfiguration-label.R' 'plotconfiguration-legend.R' 'plotconfiguration-sub-classes.R' 'plotconfiguration.R' 'qq-datamapping.R' 'themes.R' 'timeprofile-datamapping.R' 'timeprofile-helper.R' 'timeprofile-plotconfiguration.R' 'tlf-env.R' 'tornado-datamapping.R' 'tornado-plotconfiguration.R' 'utilities-aesthetics.R' 'utilities-axis.R' 'utilities-background.R' 'utilities-export.R' 'utilities-ggplot.R' 'utilities-label.R' 'utilities-legend.R' 'utilities-mapping.R' 'utilities-molecule-plots.R' 'utilities-theme.R' 'utilities-tlf.R' 'utils.R' 'zzz.R'",
       "Config/testthat/edition": "3",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "TLF-Library",
-      "RemoteUsername": "Open-Systems-Pharmacology",
-      "RemotePkgRef": "tlf=Open-Systems-Pharmacology/TLF-Library@*release",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "68303a85f41fc26e8508e52a94dcb989b9a86cd2",
-      "NeedsCompilation": "no",
       "Author": "Open-Systems-Pharmacology Community [cph], Michael Sevestre [aut, cre], Pierre Chelle [aut], Abdullah Hamadeh [aut], Indrajeet Patil [ctb] (ORCID: <https://orcid.org/0000-0003-1995-6531>, Twitter: @patilindrajeets)",
-      "Maintainer": "Michael Sevestre <michael@design2code.ca>"
+      "Maintainer": "Michael Sevestre <michael@design2code.ca>",
+      "RemoteType": "github",
+      "Remotes": "ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils@*release",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "Open-Systems-Pharmacology",
+      "RemoteRepo": "TLF-Library",
+      "RemoteRef": "v1.6.2",
+      "RemoteSha": "68303a85f41fc26e8508e52a94dcb989b9a86cd2"
     },
     "tzdb": {
       "Package": "tzdb",
@@ -3924,7 +3917,7 @@
     },
     "xfun": {
       "Package": "xfun",
-      "Version": "0.57",
+      "Version": "0.58",
       "Source": "Repository",
       "Type": "Package",
       "Title": "Supporting Functions for Packages Maintained by 'Yihui Xie'",
@@ -3963,12 +3956,12 @@
       "URL": "https://github.com/yihui/xfun",
       "BugReports": "https://github.com/yihui/xfun/issues",
       "Encoding": "UTF-8",
-      "RoxygenNote": "7.3.3",
       "VignetteBuilder": "litedown",
+      "Config/roxygen2/version": "8.0.0",
       "NeedsCompilation": "yes",
       "Author": "Yihui Xie [aut, cre, cph] (ORCID: <https://orcid.org/0000-0003-0645-5666>, URL: https://yihui.org), Wush Wu [ctb], Daijiang Li [ctb], Xianying Tan [ctb], Salim Brüggemann [ctb] (ORCID: <https://orcid.org/0000-0002-5329-5987>), Christophe Dervieux [ctb]",
       "Maintainer": "Yihui Xie <xie@yihui.name>",
-      "Repository": "PPM"
+      "Repository": "CRAN"
     },
     "xml2": {
       "Package": "xml2",
