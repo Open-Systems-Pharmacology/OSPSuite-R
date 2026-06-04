@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.2.9027</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,9 +59,20 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="ospsuite-development-version">ospsuite (development version)<a class="anchor" aria-label="anchor" href="#ospsuite-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="12.4.3" id="ospsuite-1243">ospsuite 12.4.3<a class="anchor" aria-label="anchor" href="#ospsuite-1243"></a></h2>
 <div class="section level3">
-<h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
+<h3 id="major-changes-12-4-3">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-12-4-3"></a></h3>
+<ul><li>Computational core libraries updated to match OSPS Version 12 update 3 release.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-improvements-and-bug-fixes-12-4-3">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-12-4-3"></a></h3>
 <ul><li>
+<code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code> and <code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code> gain a <code>showLegendPerDataset</code> argument (<code>"none"</code>, <code>"observed"</code>, <code>"all"</code>, default <code>"all"</code>) to differentiate observed datasets within a group by point shape, consistent with <code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code> (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1839" class="external-link">#1839</a>).</li>
+<li>
+<code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>, <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code>, and <code><a href="../reference/plotQuantileQuantilePlot.html">plotQuantileQuantilePlot()</a></code> now compute residuals consistently with <code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code>, producing <code>NaN</code> with a warning for zero or negative values on the log scale instead of extreme values (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1713" class="external-link">#1713</a>).</li>
+<li>
 <code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code> now defaults to <code>showLegendPerDataset = "all"</code>, showing individual dataset names for both observed and simulated data by default (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1844" class="external-link">#1844</a>).</li>
 <li>
 <code>DataSet$setValues()</code> and plotting functions (<code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code>, <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code>, <code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>, <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code>, <code><a href="../reference/plotQuantileQuantilePlot.html">plotQuantileQuantilePlot()</a></code>) now warn and replace negative <code>yErrorValues</code> with <code>NA</code> instead of silently accepting them (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1756" class="external-link">#1756</a>).</li>

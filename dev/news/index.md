@@ -2,8 +2,32 @@
 
 ## ospsuite (development version)
 
+## ospsuite 12.4.3
+
+### Major changes
+
+- Computational core libraries updated to match OSPS Version 12 update 3
+  release.
+
 ### Minor improvements and bug fixes
 
+- [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md)
+  and
+  [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md)
+  gain a `showLegendPerDataset` argument (`"none"`, `"observed"`,
+  `"all"`, default `"all"`) to differentiate observed datasets within a
+  group by point shape, consistent with
+  [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md)
+  ([\#1839](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1839)).
+- [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md),
+  [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsAsHistogram.md),
+  and
+  [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotQuantileQuantilePlot.md)
+  now compute residuals consistently with
+  [`calculateResiduals()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/calculateResiduals.md),
+  producing `NaN` with a warning for zero or negative values on the log
+  scale instead of extreme values
+  ([\#1713](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1713)).
 - [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md)
   now defaults to `showLegendPerDataset = "all"`, showing individual
   dataset names for both observed and simulated data by default

@@ -217,12 +217,9 @@ cannot be re-used.
 When developing the
 [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
 package, you need to prepare platform-specific library files before
-using
-[`devtools::load_all()`](https://devtools.r-lib.org/reference/load_all.html).
-The package uses configure scripts during installation to rename
-platform-specific DLLs, but
-[`devtools::load_all()`](https://devtools.r-lib.org/reference/load_all.html)
-bypasses this process.
+using `devtools::load_all()`. The package uses configure scripts during
+installation to rename platform-specific DLLs, but
+`devtools::load_all()` bypasses this process.
 
 **Run the development setup script:**
 
