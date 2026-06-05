@@ -2143,7 +2143,7 @@
     },
     "ospsuite.plots": {
       "Package": "ospsuite.plots",
-      "Version": "1.2.0",
+      "Version": "1.2.0.9002",
       "Source": "git",
       "Type": "Package",
       "Title": "Library for standardized graphs",
@@ -2194,20 +2194,21 @@
       "Collate": "'messages.R' 'utilities-defaults.R' 'utilities_enum.R' 'add_Layer.R' 'ggplotWithWatermark.R' 'geom-errorbar-osp.R' 'CombinedPlot.R' 'data.R' 'MappedData.R' 'MappedDataBoxplot.R' 'MappedDataTimeProfile.R' 'MappedDataRangePlot.R' 'ospsuite.plots-package.R' 'plotBoxWhisker.R' 'plotHistogram.R' 'plotQQ.R' 'plotTimeProfile.R' 'plotYVsX.R' 'plotForest.R' 'plotRangeDistribution.R' 'utilities.R' 'utilities_export.R' 'utilities_shapes.R'",
       "LazyData": "true",
       "Config/roxygen2/version": "8.0.0",
+      "RoxygenNote": "8.0.0",
       "Author": "Open-Systems-Pharmacology Community [cph], Katrin Coboeken [aut, cre]",
       "Maintainer": "Katrin Coboeken <katrin.coboeken@bayer.com>",
       "RemoteType": "git",
-      "Remotes": "ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils@*release",
+      "Remotes": "ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils",
       "RemoteUrl": "https://github.com/Open-Systems-Pharmacology/OSPSuite.Plots",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "OSPSuite.Plots",
-      "RemoteRef": "v1.2.0",
-      "RemoteSha": "23c7e6519f6e625687367259ac54d063217cf822"
+      "RemoteRef": "main",
+      "RemoteSha": "115214f74c679158be12be1112e75f42feb135c9"
     },
     "ospsuite.utils": {
       "Package": "ospsuite.utils",
-      "Version": "1.11.1",
+      "Version": "1.11.1.9001",
       "Source": "GitHub",
       "Type": "Package",
       "Title": "Utility Functions for Open Systems Pharmacology R Packages",
@@ -2247,8 +2248,8 @@
       "RemoteHost": "api.github.com",
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "OSPSuite.RUtils",
-      "RemoteRef": "v1.11.1",
-      "RemoteSha": "6d22617df457ec6e89b21bd25a99bb3080e4fb6c"
+      "RemoteRef": "main",
+      "RemoteSha": "c4481711af9bb5d083ed89e0e16a32edf0c723a1"
     },
     "patchwork": {
       "Package": "patchwork",
@@ -2693,7 +2694,7 @@
     },
     "rSharp": {
       "Package": "rSharp",
-      "Version": "1.2.0",
+      "Version": "1.2.0.9000",
       "Source": "GitHub",
       "Type": "Package",
       "Title": "Accessing .NET from R",
@@ -2728,8 +2729,8 @@
       "RemoteHost": "api.github.com",
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "rSharp",
-      "RemoteRef": "v1.2.0",
-      "RemoteSha": "86480c4c467d461ed95338d9eec950b355d84c93"
+      "RemoteRef": "main",
+      "RemoteSha": "5073614ed91de91c79d8a510384d40f75a4a7e6a"
     },
     "rappdirs": {
       "Package": "rappdirs",
@@ -3533,7 +3534,7 @@
     },
     "tlf": {
       "Package": "tlf",
-      "Version": "1.6.2",
+      "Version": "1.6.2.9001",
       "Source": "GitHub",
       "Type": "Package",
       "Title": "TLF Library",
@@ -3579,12 +3580,12 @@
       "Author": "Open-Systems-Pharmacology Community [cph], Michael Sevestre [aut, cre], Pierre Chelle [aut], Abdullah Hamadeh [aut], Indrajeet Patil [ctb] (ORCID: <https://orcid.org/0000-0003-1995-6531>, Twitter: @patilindrajeets)",
       "Maintainer": "Michael Sevestre <michael@design2code.ca>",
       "RemoteType": "github",
-      "Remotes": "ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils@*release",
+      "Remotes": "ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "TLF-Library",
-      "RemoteRef": "v1.6.2",
-      "RemoteSha": "68303a85f41fc26e8508e52a94dcb989b9a86cd2"
+      "RemoteRef": "main",
+      "RemoteSha": "a1118acd4483693e4433ae79a5eeedaa44a20d57"
     },
     "tzdb": {
       "Package": "tzdb",
