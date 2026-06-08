@@ -13,10 +13,16 @@ To be able to use creation of individuals or populations with earlier models, th
 If no original PK-Sim project or snapshot are available, the user should use the latest version 12 of the R package.
 - `SimulationRunOptions$checkForNegativeValues` field has been removed. The property is now on `SolverSettings` and accessible via `simulation$solver$checkForNegativeValues`. The `checkForNegativeValues` argument of `SimulationRunOptions$new()` is kept for backward compatibility but issues a deprecation warning and has no effect.
 
+# ospsuite 12.4.3
+
+## Major changes
+
+- Computational core libraries updated to match OSPS Version 12 update 3 release.
+
 ## Minor improvements and bug fixes
 
-- New `createInitialConditionsBuildingBlock()` and `createParameterValuesBuildingBlock()` create empty Initial Conditions and Parameter Values building blocks that can be populated programmatically and added to a module (#1937).
-- Individual building blocks are now returned as `IndividualBuildingBlock`, an R6 subclass of `BuildingBlock` with read-only fields for `species`, `population`, `gender`, `age`, `gestationalAge`, `height`, and `weight`. `createIndividualBuildingBlock()`, `MoBiProject$getIndividual()`, and `loadBuildingBlockFromPKML()` all return the new subclass.
+- `plotPredictedVsObserved()` and `plotResidualsVsCovariate()` gain a `showLegendPerDataset` argument (`"none"`, `"observed"`, `"all"`, default `"all"`) to differentiate observed datasets within a group by point shape, consistent with `plotTimeProfile()` (#1839).
+- `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()` now compute residuals consistently with `calculateResiduals()`, producing `NaN` with a warning for zero or negative values on the log scale instead of extreme values (#1713).
 - `plotTimeProfile()` now defaults to `showLegendPerDataset = "all"`, showing individual dataset names for both observed and simulated data by default (#1844).
 - `DataSet$setValues()` and plotting functions (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, `plotQuantileQuantilePlot()`) now warn and replace negative `yErrorValues` with `NA` instead of silently accepting them (#1756).
 - Fixed `plotPredictedVsObserved()` error bar mapping: when `predictedAxis = "x"`, error bars are now correctly placed on the y-axis (#1715).
