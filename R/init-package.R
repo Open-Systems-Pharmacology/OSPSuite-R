@@ -93,7 +93,11 @@
 #' @keywords internal
 .loadMoleculeTypeEnum <- function() {
   quantityType <- rSharp::getType("OSPSuite.Core.Domain.QuantityType")
-  netValues <- rSharp::callStatic("System.Enum, System.Runtime", "GetValues", quantityType)
+  netValues <- rSharp::callStatic(
+    "System.Enum, System.Runtime",
+    "GetValues",
+    quantityType
+  )
   flagByName <- list()
   for (netValue in netValues) {
     name <- netValue$call("ToString")

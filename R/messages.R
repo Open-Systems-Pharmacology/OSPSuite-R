@@ -15,19 +15,27 @@ messages$errorPkmlContainsMultipleModules <- function() {
 }
 
 messages$errorWrongPopulation <- function(species, population) {
-  cliFormat("Could not find {.field population} {.val {population}} for {.field species} {.val {species}}")
+  cliFormat(
+    "Could not find {.field population} {.val {population}} for {.field species} {.val {species}}"
+  )
 }
 
 messages$errorOneOfNameAndPathMustBeSpecified <- function() {
-  cliFormat("One of the {.field parameterName} or {.field parameterPath} must be specified, but not both.")
+  cliFormat(
+    "One of the {.field parameterName} or {.field parameterPath} must be specified, but not both."
+  )
 }
 
 messages$errorMissingColumns <- function(cols) {
-  cliFormat("{length(cols)} required column{?s} {?is/are} missing from the data.frame: {.val {cols}}")
+  cliFormat(
+    "{length(cols)} required column{?s} {?is/are} missing from the data.frame: {.val {cols}}"
+  )
 }
 
 messages$errorInvalidDataSetNames <- function() {
-  cliFormat("The {.field name} column must not contain NA or empty string values.")
+  cliFormat(
+    "The {.field name} column must not contain NA or empty string values."
+  )
 }
 
 messages$noDatasetsToGroup <- function() {
@@ -50,16 +58,22 @@ messages$printMultipleEntries <- function(header, entries) {
 }
 
 messages$linearScaleWithFoldDistance <- function() {
-  cliFormat("Linear scale is inappropriate when {.field foldDistance} argument is specified.")
+  cliFormat(
+    "Linear scale is inappropriate when {.field foldDistance} argument is specified."
+  )
 }
 
 messages$errorLoadingUnitsForDimension <- function(dimensions) {
-  header <- cliFormat("Could not load {.field units} for {length(dimensions)} {.field dimension{?s}}")
+  header <- cliFormat(
+    "Could not load {.field units} for {length(dimensions)} {.field dimension{?s}}"
+  )
   messages$printMultipleEntries(header, dimensions)
 }
 
 messages$plottingWithEmptyDataCombined <- function() {
-  cliFormat("No plot can be created because the entered {.field DataCombined} object does not contain any datasets.")
+  cliFormat(
+    "No plot can be created because the entered {.field DataCombined} object does not contain any datasets."
+  )
 }
 
 messages$residualsCanNotBeComputed <- function() {
@@ -85,15 +99,17 @@ messages$residualsLogNonPositive <- function(n) {
 messages$residualsRatioPredNonPositive <- function(n) {
   cliFormat(
     paste(
-    "{.val {n}} residual value{?s} could not be computed because the predicted value is",
-    "zero or negative (division by zero or undefined denominator)."
+      "{.val {n}} residual value{?s} could not be computed because the predicted value is",
+      "zero or negative (division by zero or undefined denominator)."
     ),
     "These data points are set to NaN and excluded from the output."
   )
 }
 
 messages$logScaleNotAllowed <- function() {
-  cliFormat("The Y-axis for this plot should {.strong not} be on a log scale, since the {.field residuals} are expected to be centered around 0.")
+  cliFormat(
+    "The Y-axis for this plot should {.strong not} be on a log scale, since the {.field residuals} are expected to be centered around 0."
+  )
 }
 
 messages$lloqOnlyScalar <- function() {
@@ -155,7 +171,9 @@ messages$yErrorValuesNegative <- function(n) {
 }
 
 messages$molWeightErrorMessage <- function(quantityPath) {
-  cliFormat("Unable to retrieve the molecular weight for: {.code {quantityPath}}")
+  cliFormat(
+    "Unable to retrieve the molecular weight for: {.code {quantityPath}}"
+  )
 }
 
 messages$illegalCharactersInName <- function(name) {

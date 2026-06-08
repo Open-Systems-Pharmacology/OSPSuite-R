@@ -698,7 +698,7 @@ test_that("dataSetsFromDataFrame round-trips DataSets loaded from Excel", {
 #     "tests/data/CompiledDataSet_highPrecisionFormat.xlsx", overwrite = TRUE)
 
 test_that("Excel cells with high-precision custom number formats load without ExtendedNumerics.BigDecimal", {
-  xlsPath    <- getTestDataFilePath("CompiledDataSet_highPrecisionFormat.xlsx")
+  xlsPath <- getTestDataFilePath("CompiledDataSet_highPrecisionFormat.xlsx")
   configPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
 
   expect_no_error({
