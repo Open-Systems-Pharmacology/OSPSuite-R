@@ -74,7 +74,7 @@ User-provided \code{mapping} will override internal settings.}
   Arguments passed on to \code{\link[ospsuite.plots:plotYVsX]{ospsuite.plots::plotYVsX}}
   \describe{
     \item{\code{geomPointAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_point}}
-    \item{\code{geomErrorbarAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_errorbar}}
+    \item{\code{geomErrorbarAttributes}}{A \code{list} with arguments which are passed on to the call \code{geom_errorbar_osp}}
     \item{\code{geomGuestLineAttributes}}{A \code{list} of arguments passed to \code{ggplot2::geom_function} to display guest criteria.}
     \item{\code{geomComparisonLineAttributes}}{A \code{list} of arguments passed to \code{ggplot2::hline} or \code{ggplot2::abline} to display comparison lines.}
     \item{\code{geomLLOQAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_hline}}
@@ -116,10 +116,10 @@ plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "observed")
 }
 }
 \seealso{
-Other plot functions based on ospsuite.plots: 
-\code{\link{plotQuantileQuantilePlot}()},
-\code{\link{plotResidualsAsHistogram}()},
-\code{\link{plotResidualsVsCovariate}()},
-\code{\link{plotTimeProfile}()}
+Other plot functions based on ospsuite.plots:
+\code{\link[=plotQuantileQuantilePlot]{plotQuantileQuantilePlot()}},
+\code{\link[=plotResidualsAsHistogram]{plotResidualsAsHistogram()}},
+\code{\link[=plotResidualsVsCovariate]{plotResidualsVsCovariate()}},
+\code{\link[=plotTimeProfile]{plotTimeProfile()}}
 }
 \concept{plot functions based on ospsuite.plots}

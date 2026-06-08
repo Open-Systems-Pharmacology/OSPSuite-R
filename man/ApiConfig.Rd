@@ -9,14 +9,14 @@ Global configuration for the OSPSuite .NET API
 }
 \keyword{internal}
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{ApiConfig}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{ApiConfig}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{pkParametersFilePath}}{Full path of the pkParameter file}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{pkParametersFilePath}}{Full path of the pkParameter file}
 
-\item{\code{dimensionFilePath}}{Full path of the dimension file}
-}
-\if{html}{\out{</div>}}
+    \item{\code{dimensionFilePath}}{Full path of the dimension file}
+  }
+  \if{html}{\out{</div>}}
 }

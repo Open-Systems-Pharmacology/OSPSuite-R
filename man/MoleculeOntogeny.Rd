@@ -9,69 +9,74 @@ Use when retrieving individual values using the createIndividualAlgorithm. This 
 allowing the user to retrieve potential ontogeny values.
 }
 \section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{molecule}}{Name of the molecule in the model}
+  \if{html}{\out{<div class="r6-fields">}}
+  \describe{
+    \item{\code{molecule}}{Name of the molecule in the model}
 
-\item{\code{ontogeny}}{Name of the ontogeny to use for the molecule}
-}
-\if{html}{\out{</div>}}
+    \item{\code{ontogeny}}{Name of the ontogeny to use for the molecule}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-MoleculeOntogeny-new}{\code{MoleculeOntogeny$new()}}
-\item \href{#method-MoleculeOntogeny-print}{\code{MoleculeOntogeny$print()}}
-\item \href{#method-MoleculeOntogeny-printMoleculeOntogeny}{\code{MoleculeOntogeny$printMoleculeOntogeny()}}
-}
+  \itemize{
+    \item \href{#method-MoleculeOntogeny-initialize}{\code{MoleculeOntogeny$new()}}
+    \item \href{#method-MoleculeOntogeny-print}{\code{MoleculeOntogeny$print()}}
+    \item \href{#method-MoleculeOntogeny-printMoleculeOntogeny}{\code{MoleculeOntogeny$printMoleculeOntogeny()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-MoleculeOntogeny-new"></a>}}
-\if{latex}{\out{\hypertarget{method-MoleculeOntogeny-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$new(molecule, ontogeny)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-MoleculeOntogeny-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-MoleculeOntogeny-initialize}{}}}
+\subsection{\code{MoleculeOntogeny$new()}}{
+  Initialize a new instance of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{MoleculeOntogeny$new(molecule, ontogeny)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{molecule}}{molecule name}
+      \item{\code{ontogeny}}{ontogeny to use for the Molecule (one of StandardOntogeny)}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{MoleculeOntogeny} object.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{molecule}}{molecule name}
-
-\item{\code{ontogeny}}{ontogeny to use for the Molecule (one of StandardOntogeny)}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{MoleculeOntogeny} object.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-MoleculeOntogeny-print"></a>}}
 \if{latex}{\out{\hypertarget{method-MoleculeOntogeny-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{MoleculeOntogeny$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{MoleculeOntogeny$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-MoleculeOntogeny-printMoleculeOntogeny"></a>}}
 \if{latex}{\out{\hypertarget{method-MoleculeOntogeny-printMoleculeOntogeny}{}}}
-\subsection{Method \code{printMoleculeOntogeny()}}{
-Print the \code{MoleculeOntogeny} on one line
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MoleculeOntogeny$printMoleculeOntogeny()}\if{html}{\out{</div>}}
+\subsection{\code{MoleculeOntogeny$printMoleculeOntogeny()}}{
+  Print the \code{MoleculeOntogeny} on one line
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{MoleculeOntogeny$printMoleculeOntogeny()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 }

@@ -85,10 +85,10 @@ plotQuantileQuantilePlot(myDataCombined, residualScale = "linear")
 }
 }
 \seealso{
-Other plot functions based on ospsuite.plots: 
-\code{\link{plotPredictedVsObserved}()},
-\code{\link{plotResidualsAsHistogram}()},
-\code{\link{plotResidualsVsCovariate}()},
-\code{\link{plotTimeProfile}()}
+Other plot functions based on ospsuite.plots:
+\code{\link[=plotPredictedVsObserved]{plotPredictedVsObserved()}},
+\code{\link[=plotResidualsAsHistogram]{plotResidualsAsHistogram()}},
+\code{\link[=plotResidualsVsCovariate]{plotResidualsVsCovariate()}},
+\code{\link[=plotTimeProfile]{plotTimeProfile()}}
 }
 \concept{plot functions based on ospsuite.plots}

@@ -11,239 +11,250 @@ A formula of the model (Typically related to a \code{Quantity} such as a paramet
 A table formula of the model (Typically related to a \code{Quantity} such as a parameter)
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{Formula}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ObjectBase}} -> \code{Formula}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{isTable}}{Is this a table formula (Read-Only)}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{isTable}}{Is this a table formula (Read-Only)}
 
-\item{\code{isTableWithOffSet}}{Is this a table formula with Offset (Read-Only)}
+    \item{\code{isTableWithOffSet}}{Is this a table formula with Offset (Read-Only)}
 
-\item{\code{isTableWithXArgument}}{Is this a table formula with xArgs (typically time, or pH) (Read-Only)}
+    \item{\code{isTableWithXArgument}}{Is this a table formula with xArgs (typically time, or pH) (Read-Only)}
 
-\item{\code{isConstant}}{Is this a constant formula (Read-Only)}
+    \item{\code{isConstant}}{Is this a constant formula (Read-Only)}
 
-\item{\code{isExplicit}}{Is this an explicit formula (Read-Only)}
+    \item{\code{isExplicit}}{Is this an explicit formula (Read-Only)}
 
-\item{\code{isDistributed}}{Is this a distributed formula (Read-Only)}
+    \item{\code{isDistributed}}{Is this a distributed formula (Read-Only)}
 
-\item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
+    \item{\code{dimension}}{The dimension in which the quantity is defined  (Read-Only)}
 
-\item{\code{formulaString}}{Returns the formula as a string for an \code{ExplicitFormula} or \code{NULL} otherwise (Read-Only).}
-}
-\if{html}{\out{</div>}}
+    \item{\code{formulaString}}{Returns the formula as a string for an \code{ExplicitFormula} or \code{NULL} otherwise (Read-Only).}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-Formula-print}{\code{Formula$print()}}
-\item \href{#method-Formula-printFormula}{\code{Formula$printFormula()}}
+  \itemize{
+    \item \href{#method-Formula-print}{\code{Formula$print()}}
+    \item \href{#method-Formula-printFormula}{\code{Formula$printFormula()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>DotNetWrapper$initialize()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Formula-print"></a>}}
 \if{latex}{\out{\hypertarget{method-Formula-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Formula$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{Formula$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Formula$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Formula-printFormula"></a>}}
 \if{latex}{\out{\hypertarget{method-Formula-printFormula}{}}}
-\subsection{Method \code{printFormula()}}{
-Print the formula to the console without the name of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Formula$printFormula()}\if{html}{\out{</div>}}
+\subsection{\code{Formula$printFormula()}}{
+  Print the formula to the console without the name of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Formula$printFormula()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ospsuite::ObjectBase}} -> \code{\link[ospsuite:Formula]{ospsuite::Formula}} -> \code{TableFormula}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{\link[ospsuite:ObjectBase]{ObjectBase}} -> \code{\link[ospsuite:Formula]{Formula}} -> \code{TableFormula}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{allPoints}}{Returns all points defined in the table formula for a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{allPoints}}{Returns all points defined in the table formula for a \code{TableFormula} or \code{NULL}  otherwise (Read-Only).}
 
-\item{\code{useDerivedValues}}{Indicates whether table values should be derived during solving. the ODE system. Default value is \code{TRUE}}
+    \item{\code{useDerivedValues}}{Indicates whether table values should be derived during solving. the ODE system. Default value is \code{TRUE}}
 
-\item{\code{xDimension}}{The dimension in which the x values are defined (Read-Only).}
-}
-\if{html}{\out{</div>}}
+    \item{\code{xDimension}}{The dimension in which the x values are defined (Read-Only).}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-TableFormula-addPoints}{\code{TableFormula$addPoints()}}
-\item \href{#method-TableFormula-removePoint}{\code{TableFormula$removePoint()}}
-\item \href{#method-TableFormula-clearPoints}{\code{TableFormula$clearPoints()}}
-\item \href{#method-TableFormula-setPoints}{\code{TableFormula$setPoints()}}
-\item \href{#method-TableFormula-print}{\code{TableFormula$print()}}
-\item \href{#method-TableFormula-valueAt}{\code{TableFormula$valueAt()}}
-\item \href{#method-TableFormula-printFormula}{\code{TableFormula$printFormula()}}
+  \itemize{
+    \item \href{#method-TableFormula-addPoints}{\code{TableFormula$addPoints()}}
+    \item \href{#method-TableFormula-removePoint}{\code{TableFormula$removePoint()}}
+    \item \href{#method-TableFormula-clearPoints}{\code{TableFormula$clearPoints()}}
+    \item \href{#method-TableFormula-setPoints}{\code{TableFormula$setPoints()}}
+    \item \href{#method-TableFormula-print}{\code{TableFormula$print()}}
+    \item \href{#method-TableFormula-valueAt}{\code{TableFormula$valueAt()}}
+    \item \href{#method-TableFormula-printFormula}{\code{TableFormula$printFormula()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>DotNetWrapper$initialize()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TableFormula-addPoints"></a>}}
 \if{latex}{\out{\hypertarget{method-TableFormula-addPoints}{}}}
-\subsection{Method \code{addPoints()}}{
-Adds one or more points to a table
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TableFormula$addPoints(xValues, yValues)}\if{html}{\out{</div>}}
+\subsection{\code{TableFormula$addPoints()}}{
+  Adds one or more points to a table
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TableFormula$addPoints(xValues, yValues)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xValues}}{x values (single value or array) in base unit for XDimension}
+      \item{\code{yValues}}{y values (single value or array) in base unit for Dimension}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xValues}}{x values (single value or array) in base unit for XDimension}
-
-\item{\code{yValues}}{y values (single value or array) in base unit for Dimension}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TableFormula-removePoint"></a>}}
 \if{latex}{\out{\hypertarget{method-TableFormula-removePoint}{}}}
-\subsection{Method \code{removePoint()}}{
-Remove the point having the same x and y from the table
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TableFormula$removePoint(xValue, yValue)}\if{html}{\out{</div>}}
+\subsection{\code{TableFormula$removePoint()}}{
+  Remove the point having the same x and y from the table
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TableFormula$removePoint(xValue, yValue)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xValue}}{xValue value in base unit for XDimension}
+      \item{\code{yValue}}{yValue value in base unit for Dimension}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xValue}}{xValue value in base unit for XDimension}
-
-\item{\code{yValue}}{yValue value in base unit for Dimension}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TableFormula-clearPoints"></a>}}
 \if{latex}{\out{\hypertarget{method-TableFormula-clearPoints}{}}}
-\subsection{Method \code{clearPoints()}}{
-Remove all points from the table
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TableFormula$clearPoints()}\if{html}{\out{</div>}}
+\subsection{\code{TableFormula$clearPoints()}}{
+  Remove all points from the table
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TableFormula$clearPoints()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TableFormula-setPoints"></a>}}
 \if{latex}{\out{\hypertarget{method-TableFormula-setPoints}{}}}
-\subsection{Method \code{setPoints()}}{
-Replace all points defined in the table with the new values given.
+\subsection{\code{TableFormula$setPoints()}}{
+  Replace all points defined in the table with the new values given.
 This is a convenience method for calling \code{clearPoints} and \code{addPoints}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TableFormula$setPoints(xValues, yValues)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TableFormula$setPoints(xValues, yValues)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xValues}}{x values (single value or array) in base unit for XDimension}
+      \item{\code{yValues}}{y values (single value or array) in base unit for Dimension}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xValues}}{x values (single value or array) in base unit for XDimension}
-
-\item{\code{yValues}}{y values (single value or array) in base unit for Dimension}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TableFormula-print"></a>}}
 \if{latex}{\out{\hypertarget{method-TableFormula-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TableFormula$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{TableFormula$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TableFormula$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TableFormula-valueAt"></a>}}
 \if{latex}{\out{\hypertarget{method-TableFormula-valueAt}{}}}
-\subsection{Method \code{valueAt()}}{
-Returns the y defined for the x value in base unit. If not exact match is found, value will be interpolated between two existing points
+\subsection{\code{TableFormula$valueAt()}}{
+  Returns the y defined for the x value in base unit. If not exact match is found, value will be interpolated between two existing points
 If the table contains no point, 0 is returned
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TableFormula$valueAt(xValue)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TableFormula$valueAt(xValue)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{xValue}}{x value for in base unit for which the yValue should be returned}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{xValue}}{x value for in base unit for which the yValue should be returned}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TableFormula-printFormula"></a>}}
 \if{latex}{\out{\hypertarget{method-TableFormula-printFormula}{}}}
-\subsection{Method \code{printFormula()}}{
-Print the formula to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TableFormula$printFormula()}\if{html}{\out{</div>}}
+\subsection{\code{TableFormula$printFormula()}}{
+  Print the formula to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{TableFormula$printFormula()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 }

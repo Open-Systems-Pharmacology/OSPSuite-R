@@ -128,9 +128,9 @@ myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
 calculateResiduals(myDataCombined, scaling = "linear")
 }
 \seealso{
-Other data-combined: 
+Other data-combined:
 \code{\link{DataCombined}},
-\code{\link{addResidualColumn}()},
-\code{\link{convertUnits}()}
+\code{\link[=addResidualColumn]{addResidualColumn()}},
+\code{\link[=convertUnits]{convertUnits()}}
 }
 \concept{data-combined}

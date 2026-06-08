@@ -49,7 +49,6 @@ Suggests:
 Language: en-US
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
@@ -149,3 +148,4 @@ Remotes:
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
     tlf=Open-Systems-Pharmacology/TLF-Library,
     ospsuite.plots=Open-Systems-Pharmacology/OSPSuite.Plots
+Config/roxygen2/version: 8.0.0

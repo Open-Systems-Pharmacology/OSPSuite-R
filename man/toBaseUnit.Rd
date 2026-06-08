@@ -19,9 +19,9 @@ toBaseUnit(
 
 \item{unit}{Unit of value}
 
-\item{molWeight}{Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration. If \code{molWeightUnit} is not specified, \code{molWeight} is assumed to be in kg/µmol}
+\item{molWeight}{Optional molecule weight to use when converting, for example,  from molar to mass amount or concentration. If \code{molWeightUnit} is not specified, \code{molWeight} is assumed to be in kg/\u00b5mol}
 
-\item{molWeightUnit}{Unit of the molecular weight value. If \code{NULL} (default), kg/µmol is assumed.}
+\item{molWeightUnit}{Unit of the molecular weight value. If \code{NULL} (default), kg/\u00b5mol is assumed.}
 }
 \description{
 Converts a value given in a specified unit into the base unit of a quantity

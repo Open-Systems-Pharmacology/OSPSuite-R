@@ -69,11 +69,11 @@ plotObservedVsSimulated(myDataCombined, myPlotConfiguration)
 }
 }
 \seealso{
-Other plotting: 
+Other plotting:
 \code{\link{DefaultPlotConfiguration}},
-\code{\link{plotIndividualTimeProfile}()},
-\code{\link{plotPopulationTimeProfile}()},
-\code{\link{plotResidualsVsSimulated}()},
-\code{\link{plotResidualsVsTime}()}
+\code{\link[=plotIndividualTimeProfile]{plotIndividualTimeProfile()}},
+\code{\link[=plotPopulationTimeProfile]{plotPopulationTimeProfile()}},
+\code{\link[=plotResidualsVsSimulated]{plotResidualsVsSimulated()}},
+\code{\link[=plotResidualsVsTime]{plotResidualsVsTime()}}
 }
 \concept{plotting}

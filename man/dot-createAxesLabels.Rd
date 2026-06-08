@@ -44,10 +44,10 @@ ospsuite:::.createAxesLabels(df, tlf::TimeProfilePlotConfiguration$new())
 
 }
 \seealso{
-Other utilities-plotting: 
-\code{\link{.addMissingGroupings}()},
-\code{\link{.convertGeneralToSpecificPlotConfiguration}()},
-\code{\link{.extractAggregatedSimulatedData}()}
+Other utilities-plotting:
+\code{\link[=.addMissingGroupings]{.addMissingGroupings()}},
+\code{\link[=.convertGeneralToSpecificPlotConfiguration]{.convertGeneralToSpecificPlotConfiguration()}},
+\code{\link[=.extractAggregatedSimulatedData]{.extractAggregatedSimulatedData()}}
 }
 \concept{utilities-plotting}
 \keyword{internal}
