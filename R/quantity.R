@@ -1,6 +1,6 @@
-WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions"
-WITH_DISPLAY_UNIT_EXTENSION <- "OSPSuite.Core.Domain.WithDisplayUnitExtensions"
-QUANTITY_EXTENSIONS <- "OSPSuite.Core.Domain.QuantityExtensions"
+WITH_DIMENSION_EXTENSION <- "OSPSuite.Core.Domain.WithDimensionExtensions, OSPSuite.Core"
+WITH_DISPLAY_UNIT_EXTENSION <- "OSPSuite.Core.Domain.WithDisplayUnitExtensions, OSPSuite.Core"
+QUANTITY_EXTENSIONS <- "OSPSuite.Core.Domain.QuantityExtensions, OSPSuite.Core"
 
 #' @title Quantity
 #' @docType class

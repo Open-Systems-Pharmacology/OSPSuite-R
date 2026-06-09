@@ -1,11 +1,3 @@
-#' Supported types of the error
-#'
-#' @export
-DataErrorType <- enum(c(
-  "ArithmeticStdDev",
-  "GeometricStdDev"
-))
-
 #' @title DataSet
 #' @docType class
 #' @description A class for storage of numerical x- and y-value pairs and
@@ -267,7 +259,7 @@ DataSet <- R6::R6Class(
       # yError column must be removed in case yError is NULL and there is a
       # yErrorColumn already
       if (is.null(yErrorValues) && !is.null(private$.yErrorColumn)) {
-        dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
+        dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
         dataRepositoryTask$call(
           "RemoveColumn",
           private$.dataRepository,
@@ -389,7 +381,7 @@ DataSet <- R6::R6Class(
       invisible(self)
     },
     .createDataRepository = function() {
-      dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
+      dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
       dataRepository <- dataRepositoryTask$call(
         "CreateEmptyObservationRepository",
         "xValues",
@@ -398,7 +390,7 @@ DataSet <- R6::R6Class(
       return(DataRepository$new(dataRepository))
     },
     .initializeCache = function() {
-      dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
+      dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
       private$.xColumn <- private$.dataRepository$baseGrid
 
       netYColumn <- dataRepositoryTask$call(
@@ -417,7 +409,7 @@ DataSet <- R6::R6Class(
         return()
       }
 
-      dataRepositoryTask <- .getNetTaskFromCache("DataRepositoryTask")
+      dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
       netYErrorColumn <- dataRepositoryTask$call(
         "AddErrorColumn",
         private$.yColumn,
