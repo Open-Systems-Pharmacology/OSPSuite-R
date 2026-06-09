@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,7 @@
 
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">ospsuite::DotNetWrapper</a></code> -&gt; <code>IndividualCharacteristics</code></p>
+    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">DotNetWrapper</a></code> -&gt; <code>IndividualCharacteristics</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -73,35 +73,35 @@
 <dd><p>Specifies the species of the individual. It should be a species available in PK-Sim (see <code>Species</code>)</p></dd>
 
 
-<dt><code>population</code></dt>
+    <dt><code>population</code></dt>
 <dd><p>For a Human species, the population of interest. It should be a population available in PK-Sim (see <code>HumanPopulation</code>)</p></dd>
 
 
-<dt><code>gender</code></dt>
+    <dt><code>gender</code></dt>
 <dd><p>Gender of the individual. It should be defined for the species in PK-Sim  (see <code>Gender</code>)</p></dd>
 
 
-<dt><code>age</code></dt>
+    <dt><code>age</code></dt>
 <dd><p>Age of the individual as in instance of a <code>SnapshotParameter</code> (optional)</p></dd>
 
 
-<dt><code>gestationalAge</code></dt>
+    <dt><code>gestationalAge</code></dt>
 <dd><p>Gestational Age of the individual as in instance of a <code>SnapshotParameter</code> (optional)</p></dd>
 
 
-<dt><code>weight</code></dt>
+    <dt><code>weight</code></dt>
 <dd><p>Weight of the individual as in instance of a <code>SnapshotParameter</code> (optional)</p></dd>
 
 
-<dt><code>height</code></dt>
+    <dt><code>height</code></dt>
 <dd><p>Height of the individual as in instance of a <code>SnapshotParameter</code> (optional)</p></dd>
 
 
-<dt><code>allMoleculeOntogenies</code></dt>
+    <dt><code>allMoleculeOntogenies</code></dt>
 <dd><p>All molecule ontogenies defined for this individual characteristics.</p></dd>
 
 
-<dt><code>seed</code></dt>
+    <dt><code>seed</code></dt>
 <dd><p>Seed used to generate the population</p></dd>
 
 
@@ -112,42 +112,39 @@
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-IndividualCharacteristics-new"><code>IndividualCharacteristics$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-IndividualCharacteristics-initialize"><code>IndividualCharacteristics$new()</code></a></p></li>
 <li><p><a href="#method-IndividualCharacteristics-print"><code>IndividualCharacteristics$print()</code></a></p></li>
 <li><p><a href="#method-IndividualCharacteristics-addMoleculeOntogeny"><code>IndividualCharacteristics$addMoleculeOntogeny()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printClass"><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call"><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-get"><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMethods"><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getProperties"><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticFields"><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods"><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties"><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set"><code>rSharp::NetObject$set()</code></a></span></li>
-</ul></details></p><hr><a id="method-IndividualCharacteristics-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call"><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-get"><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMethods"><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getProperties"><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticFields"><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods"><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties"><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set"><code>rSharp::NetObject$set()</code></a></span></li>
+</ul></details></p><hr><a id="method-IndividualCharacteristics-initialize"></a><div class="section">
+<h3 id="individualcharacteristics-new-"><code>IndividualCharacteristics$new()</code><a class="anchor" aria-label="anchor" href="#individualcharacteristics-new-"></a></h3>
 <p>Initialize a new instance of the class</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/IndividualCharacteristics.html">IndividualCharacteristics</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p>A new <code>IndividualCharacteristics</code> object.</p>
 </div>
 
-</div><p></p><hr><a id="method-IndividualCharacteristics-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-IndividualCharacteristics-print"></a><div class="section">
+<h3 id="individualcharacteristics-print-"><code>IndividualCharacteristics$print()</code><a class="anchor" aria-label="anchor" href="#individualcharacteristics-print-"></a></h3>
 <p>Print the object to the console</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">IndividualCharacteristics</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>Rest arguments.</p></dd>
@@ -156,14 +153,14 @@
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-IndividualCharacteristics-addMoleculeOntogeny"></a><div class="section">
-<h3 id="method-addmoleculeontogeny-">Method <code>addMoleculeOntogeny()</code><a class="anchor" aria-label="anchor" href="#method-addmoleculeontogeny-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-IndividualCharacteristics-addMoleculeOntogeny"></a><div class="section">
+<h3 id="individualcharacteristics-addmoleculeontogeny-"><code>IndividualCharacteristics$addMoleculeOntogeny()</code><a class="anchor" aria-label="anchor" href="#individualcharacteristics-addmoleculeontogeny-"></a></h3>
 <p>Add a molecule ontogeny <code>MoleculeOntogeny</code> to the individual characteristics</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">IndividualCharacteristics</span><span class="op">$</span><span class="fu">addMoleculeOntogeny</span><span class="op">(</span><span class="va">moleculeOntogeny</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>moleculeOntogeny</code></dt>
 <dd><p>Molecule ontogeny to add</p></dd>
@@ -173,6 +170,7 @@
 </div>
 
 </div>
+
 
     </div>
 

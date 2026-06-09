@@ -6,7 +6,7 @@ Options to be passed to the simulation engine
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `SimulationRunOptions`
 
 ## Active bindings
@@ -36,7 +36,7 @@ Options to be passed to the simulation engine
 
 ### Public methods
 
-- [`SimulationRunOptions$new()`](#method-SimulationRunOptions-new)
+- [`SimulationRunOptions$new()`](#method-SimulationRunOptions-initialize)
 
 - [`SimulationRunOptions$print()`](#method-SimulationRunOptions-print)
 
@@ -57,7 +57,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `SimulationRunOptions$new()`
 
 Initialize a new instance of the class
 
@@ -96,7 +96,7 @@ A new `SimulationRunOptions` object.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `SimulationRunOptions$print()`
 
 Print the object to the console
 

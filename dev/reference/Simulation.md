@@ -6,9 +6,9 @@ An OSPSuite simulation
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\>
-[`ospsuite::ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
+[`ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/ObjectBase.md)
 -\> `Simulation`
 
 ## Active bindings
@@ -45,7 +45,7 @@ An OSPSuite simulation
 
 ### Public methods
 
-- [`Simulation$new()`](#method-Simulation-new)
+- [`Simulation$new()`](#method-Simulation-initialize)
 
 - [`Simulation$allEndogenousStationaryMoleculeNames()`](#method-Simulation-allEndogenousStationaryMoleculeNames)
 
@@ -78,7 +78,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `Simulation$new()`
 
 Initialize a new instance of the class
 
@@ -102,7 +102,7 @@ A new `Simulation` object.
 
 ------------------------------------------------------------------------
 
-### Method `allEndogenousStationaryMoleculeNames()`
+### `Simulation$allEndogenousStationaryMoleculeNames()`
 
 Returns the name of all endogenous stationary molecules defined in the
 simulation. (e.g. with the flag IsStationary = TRUE) This is a typically
@@ -115,7 +115,7 @@ Transporter, FcRn etc.
 
 ------------------------------------------------------------------------
 
-### Method `allXenobioticFloatingMoleculeNames()`
+### `Simulation$allXenobioticFloatingMoleculeNames()`
 
 Returns the name of all xenobiotic floating molecules defined in the
 simulation. (e.g. with the flag IsStationary = FALSE) This is typically
@@ -128,7 +128,7 @@ Inhibitor, DrugComplex.
 
 ------------------------------------------------------------------------
 
-### Method `allStationaryMoleculeNames()`
+### `Simulation$allStationaryMoleculeNames()`
 
 Returns the name of all stationary molecules defined in the simulation.
 (e.g. with the flag IsStationary = TRUE)
@@ -139,7 +139,7 @@ Returns the name of all stationary molecules defined in the simulation.
 
 ------------------------------------------------------------------------
 
-### Method `allFloatingMoleculeNames()`
+### `Simulation$allFloatingMoleculeNames()`
 
 Returns the name of all floating molecules defined in the simulation.
 (e.g. with the flag IsStationary = FALSE)
@@ -150,7 +150,7 @@ Returns the name of all floating molecules defined in the simulation.
 
 ------------------------------------------------------------------------
 
-### Method `molWeightFor()`
+### `Simulation$molWeightFor()`
 
 Returns the mol weight value (in core unit) associated to the quantity
 with given path or NA if not found
@@ -167,7 +167,7 @@ with given path or NA if not found
 
 ------------------------------------------------------------------------
 
-### Method `allApplicationsFor()`
+### `Simulation$allApplicationsFor()`
 
 Returns the applications ordered by start time associated to the
 quantity with path `quantityPath` or an empty list if not found
@@ -185,7 +185,7 @@ quantity with path `quantityPath` or an empty list if not found
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `Simulation$print()`
 
 Print the object to the console
 

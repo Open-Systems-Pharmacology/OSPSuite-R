@@ -54,6 +54,6 @@ setMoleculeValuesByPath(
   c("Organism|Liver|A", "Organism|Liver|B"),
   c(2, 3),
   sim,
-  units = c("µmol", "mmol")
+  units = c("\u00b5mol", "mmol")
 )
 ```

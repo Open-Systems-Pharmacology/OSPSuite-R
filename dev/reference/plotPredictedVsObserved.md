@@ -116,7 +116,7 @@ plotPredictedVsObserved(
   `geomErrorbarAttributes`
 
   :   A `list` with arguments which are passed on to the call
-      [`ggplot2::geom_errorbar`](https://ggplot2.tidyverse.org/reference/geom_linerange.html)
+      `geom_errorbar_osp`
 
   `geomGuestLineAttributes`
 

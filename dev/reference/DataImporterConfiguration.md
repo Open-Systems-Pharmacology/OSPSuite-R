@@ -7,7 +7,7 @@ Configuration of data import from excel or csv files. To be used with
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `DataImporterConfiguration`
 
 ## Active bindings
@@ -98,7 +98,7 @@ Configuration of data import from excel or csv files. To be used with
 
 ### Public methods
 
-- [`DataImporterConfiguration$new()`](#method-DataImporterConfiguration-new)
+- [`DataImporterConfiguration$new()`](#method-DataImporterConfiguration-initialize)
 
 - [`DataImporterConfiguration$saveConfiguration()`](#method-DataImporterConfiguration-saveConfiguration)
 
@@ -125,7 +125,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `DataImporterConfiguration$new()`
 
 Initialize a new instance of the class
 
@@ -147,7 +147,7 @@ A new `DataImporterConfiguration` object.
 
 ------------------------------------------------------------------------
 
-### Method `saveConfiguration()`
+### `DataImporterConfiguration$saveConfiguration()`
 
 Save configuration to a XML file that can be used in PK-Sim/MoBi
 
@@ -164,7 +164,7 @@ Save configuration to a XML file that can be used in PK-Sim/MoBi
 
 ------------------------------------------------------------------------
 
-### Method `addGroupingColumn()`
+### `DataImporterConfiguration$addGroupingColumn()`
 
 Add a column for grouping the data sets
 
@@ -180,7 +180,7 @@ Add a column for grouping the data sets
 
 ------------------------------------------------------------------------
 
-### Method `removeGroupingColumn()`
+### `DataImporterConfiguration$removeGroupingColumn()`
 
 Remove a column for grouping the data sets
 
@@ -196,7 +196,7 @@ Remove a column for grouping the data sets
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `DataImporterConfiguration$print()`
 
 Print the object to the console
 

@@ -9,7 +9,7 @@ optional error for y-values."><meta name="robots" content="noindex"></head><body
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,7 @@ optional error for y-values.</p>
 
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">ospsuite::DotNetWrapper</a></code> -&gt; <code>DataSet</code></p>
+    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">DotNetWrapper</a></code> -&gt; <code>DataSet</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -76,37 +76,37 @@ optional error for y-values.</p>
 <dd><p>The name of the DataSet</p></dd>
 
 
-<dt><code>dataRepository</code></dt>
+    <dt><code>dataRepository</code></dt>
 <dd><p>The underlying DataRepository object</p></dd>
 
 
-<dt><code>xDimension</code></dt>
+    <dt><code>xDimension</code></dt>
 <dd><p>Dimension in which the xValues are defined</p></dd>
 
 
-<dt><code>xUnit</code></dt>
+    <dt><code>xUnit</code></dt>
 <dd><p>Unit in which the xValues are defined</p></dd>
 
 
-<dt><code>xValues</code></dt>
+    <dt><code>xValues</code></dt>
 <dd><p>Values stored in the xUnit. This field is read-only.
 Use <code>$setValues()</code> to change the values.</p></dd>
 
 
-<dt><code>yDimension</code></dt>
+    <dt><code>yDimension</code></dt>
 <dd><p>Dimension in which the yValues are defined</p></dd>
 
 
-<dt><code>yUnit</code></dt>
+    <dt><code>yUnit</code></dt>
 <dd><p>Unit in which the yValues are defined</p></dd>
 
 
-<dt><code>yValues</code></dt>
+    <dt><code>yValues</code></dt>
 <dd><p>Values stored in the yUnit. This field is read-only.
 Use <code>$setValues()</code> to change the values.</p></dd>
 
 
-<dt><code>yErrorType</code></dt>
+    <dt><code>yErrorType</code></dt>
 <dd><p>Type of the error - geometric or arithmetic.
 When changing from arithmetic to geometric error, the values are
 considered in as fraction (1 = 100%).
@@ -115,30 +115,30 @@ same unit as <code>yErrorUnit</code>.
 In case no yError is defined, the value is <code>NULL</code> and cannot be changed</p></dd>
 
 
-<dt><code>yErrorUnit</code></dt>
+    <dt><code>yErrorUnit</code></dt>
 <dd><p>Unit in which the yErrorValues are defined. For
 arithmetic error, the unit must be valid for <code>yDimension</code>. For
 geometric error, the unit must be valid for <code>Dimensionless</code>.
 In case no yError is defined, the value is <code>NULL</code> and cannot be changed</p></dd>
 
 
-<dt><code>yErrorValues</code></dt>
+    <dt><code>yErrorValues</code></dt>
 <dd><p>Values of error stored in the yErrorUnit unit. This field is read-only.
 Use <code>$setValues()</code> to change the values.
 In case no yError is defined, the value is <code>NULL</code> and cannot be changed.
 Use <code>$setValues()</code> to change the values.</p></dd>
 
 
-<dt><code>molWeight</code></dt>
+    <dt><code>molWeight</code></dt>
 <dd><p>Molecular weight of the yValues in g/mol</p></dd>
 
 
-<dt><code>LLOQ</code></dt>
+    <dt><code>LLOQ</code></dt>
 <dd><p>Lower Limit Of Quantification.
 Value in yUnit associated with the yValues</p></dd>
 
 
-<dt><code>metaData</code></dt>
+    <dt><code>metaData</code></dt>
 <dd><p>Returns a named list of meta data defined for the data set.</p></dd>
 
 
@@ -149,82 +149,76 @@ Value in yUnit associated with the yValues</p></dd>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-DataSet-new"><code>DataSet$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-DataSet-initialize"><code>DataSet$new()</code></a></p></li>
 <li><p><a href="#method-DataSet-addMetaData"><code>DataSet$addMetaData()</code></a></p></li>
 <li><p><a href="#method-DataSet-removeMetaData"><code>DataSet$removeMetaData()</code></a></p></li>
 <li><p><a href="#method-DataSet-setValues"><code>DataSet$setValues()</code></a></p></li>
 <li><p><a href="#method-DataSet-print"><code>DataSet$print()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printClass"><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call"><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-get"><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMethods"><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getProperties"><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticFields"><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods"><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties"><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set"><code>rSharp::NetObject$set()</code></a></span></li>
-</ul></details></p><hr><a id="method-DataSet-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call"><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-get"><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMethods"><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getProperties"><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticFields"><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods"><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties"><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set"><code>rSharp::NetObject$set()</code></a></span></li>
+</ul></details></p><hr><a id="method-DataSet-initialize"></a><div class="section">
+<h3 id="dataset-new-"><code>DataSet$new()</code><a class="anchor" aria-label="anchor" href="#dataset-new-"></a></h3>
 <p>Initialize a new instance of the class.
 Either create a <code>DataSet</code> from a <code>DataRepository</code> (e.g. loaded from a PKML)
 or an empty <code>DataSet</code>. In case of an empty <code>DataSet</code>, a <code>name</code> must be
 provided.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/DataSet.html">DataSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="cn">NULL</span>, dataRepository <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>name</code></dt>
 <dd><p>Name of the <code>DataSet</code> if created from scratch (no <code>dataRepository</code>)
 provided. Ignored if <code>dataRepository</code> is not <code>NULL</code>.</p></dd>
 
-
-<dt><code>dataRepository</code></dt>
+      <dt><code>dataRepository</code></dt>
 <dd><p>Instance of the <code>DataRepository</code> object to wrap.
 If <code>NULL</code>, an empty <code>DataRepository</code> is created.</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p>A new <code>DataSet</code> object.</p>
 </div>
 
-</div><p></p><hr><a id="method-DataSet-addMetaData"></a><div class="section">
-<h3 id="method-addmetadata-">Method <code>addMetaData()</code><a class="anchor" aria-label="anchor" href="#method-addmetadata-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-DataSet-addMetaData"></a><div class="section">
+<h3 id="dataset-addmetadata-"><code>DataSet$addMetaData()</code><a class="anchor" aria-label="anchor" href="#dataset-addmetadata-"></a></h3>
 <p>Adds a new entry to meta data list or changes its value if the name is
 already present.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataSet</span><span class="op">$</span><span class="fu">addMetaData</span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>name</code></dt>
 <dd><p>Name of new meta data list entry</p></dd>
 
-
-<dt><code>value</code></dt>
+      <dt><code>value</code></dt>
 <dd><p>Value of new meta data list entry</p></dd>
 
 
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-DataSet-removeMetaData"></a><div class="section">
-<h3 id="method-removemetadata-">Method <code>removeMetaData()</code><a class="anchor" aria-label="anchor" href="#method-removemetadata-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-DataSet-removeMetaData"></a><div class="section">
+<h3 id="dataset-removemetadata-"><code>DataSet$removeMetaData()</code><a class="anchor" aria-label="anchor" href="#dataset-removemetadata-"></a></h3>
 <p>Removes the meta data entry in the list if one is defined with this name</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataSet</span><span class="op">$</span><span class="fu">removeMetaData</span><span class="op">(</span><span class="va">name</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>name</code></dt>
 <dd><p>Name of meta data entry to delete</p></dd>
@@ -233,39 +227,37 @@ already present.</p><div class="section">
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-DataSet-setValues"></a><div class="section">
-<h3 id="method-setvalues-">Method <code>setValues()</code><a class="anchor" aria-label="anchor" href="#method-setvalues-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-DataSet-setValues"></a><div class="section">
+<h3 id="dataset-setvalues-"><code>DataSet$setValues()</code><a class="anchor" aria-label="anchor" href="#dataset-setvalues-"></a></h3>
 <p>Sets the xValues, yValues, and (optionally) yErrorValues into the dataSet.
 Note: xValues, yValues and yErrorValues must have the same length</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataSet</span><span class="op">$</span><span class="fu">setValues</span><span class="op">(</span><span class="va">xValues</span>, <span class="va">yValues</span>, yErrorValues <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>xValues</code></dt>
 <dd><p>xValues to use</p></dd>
 
-
-<dt><code>yValues</code></dt>
+      <dt><code>yValues</code></dt>
 <dd><p>yValues to use</p></dd>
 
-
-<dt><code>yErrorValues</code></dt>
+      <dt><code>yErrorValues</code></dt>
 <dd><p>Optional error values associated with yValues</p></dd>
 
 
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-DataSet-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-DataSet-print"></a><div class="section">
+<h3 id="dataset-print-"><code>DataSet$print()</code><a class="anchor" aria-label="anchor" href="#dataset-print-"></a></h3>
 <p>Print the object to the console</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataSet</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>Rest arguments.</p></dd>
@@ -275,6 +267,7 @@ Note: xValues, yValues and yErrorValues must have the same length</p><div class=
 </div>
 
 </div>
+
 
     </div>
 

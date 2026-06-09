@@ -2,8 +2,6 @@
 
 Wrapper class for `.NET` objects
 
-Wrapper class for `.NET` objects
-
 ## Super class
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
@@ -13,7 +11,7 @@ Wrapper class for `.NET` objects
 
 ### Public methods
 
-- [`DotNetWrapper$new()`](#method-DotNetWrapper-new)
+- [`DotNetWrapper$new()`](#method-DotNetWrapper-initialize)
 
 Inherited methods
 
@@ -33,7 +31,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `DotNetWrapper$new()`
 
 Initialize a new instance of the class
 
@@ -61,7 +59,7 @@ sim <- loadSimulation(system.file("extdata", "simple.pkml", package = "ospsuite"
 
 # looking at a reference to `.NET` simulation object
 sim$pointer
-#> <pointer: 0x55eef28b9b10>
+#> <pointer: 0x55f0e957f580>
 
 # create a new instance of `DotNetWrapper` class using this reference
 DotNetWrapper$new(sim)

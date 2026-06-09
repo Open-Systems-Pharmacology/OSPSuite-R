@@ -9,7 +9,7 @@ population simulation)."><meta name="robots" content="noindex"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,7 @@ population simulation).</p>
 
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">ospsuite::DotNetWrapper</a></code> -&gt; <code>SensitivityAnalysisResults</code></p>
+    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">DotNetWrapper</a></code> -&gt; <code>SensitivityAnalysisResults</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -77,17 +77,17 @@ population simulation).</p>
 import the sensitivity analysis results (Read-Only).</p></dd>
 
 
-<dt><code>count</code></dt>
+    <dt><code>count</code></dt>
 <dd><p>the number of pk parameter sensitivity entries</p></dd>
 
 
-<dt><code>allPKParameterNames</code></dt>
+    <dt><code>allPKParameterNames</code></dt>
 <dd><p>Returns the name of all PK-Parameters
 available in this results. This will be a subset of all potential
 PK-Parameters available in the system.</p></dd>
 
 
-<dt><code>allQuantityPaths</code></dt>
+    <dt><code>allQuantityPaths</code></dt>
 <dd><p>Returns the path of all outputs available in this
 results.</p></dd>
 
@@ -99,50 +99,47 @@ results.</p></dd>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-SensitivityAnalysisResults-new"><code>SensitivityAnalysisResults$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-SensitivityAnalysisResults-initialize"><code>SensitivityAnalysisResults$new()</code></a></p></li>
 <li><p><a href="#method-SensitivityAnalysisResults-allPKParameterSensitivitiesFor"><code>SensitivityAnalysisResults$allPKParameterSensitivitiesFor()</code></a></p></li>
 <li><p><a href="#method-SensitivityAnalysisResults-pkParameterSensitivityValueFor"><code>SensitivityAnalysisResults$pkParameterSensitivityValueFor()</code></a></p></li>
 <li><p><a href="#method-SensitivityAnalysisResults-print"><code>SensitivityAnalysisResults$print()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printClass"><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call"><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-get"><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMethods"><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getProperties"><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticFields"><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods"><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties"><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set"><code>rSharp::NetObject$set()</code></a></span></li>
-</ul></details></p><hr><a id="method-SensitivityAnalysisResults-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call"><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-get"><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMethods"><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getProperties"><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticFields"><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods"><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties"><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set"><code>rSharp::NetObject$set()</code></a></span></li>
+</ul></details></p><hr><a id="method-SensitivityAnalysisResults-initialize"></a><div class="section">
+<h3 id="sensitivityanalysisresults-new-"><code>SensitivityAnalysisResults$new()</code><a class="anchor" aria-label="anchor" href="#sensitivityanalysisresults-new-"></a></h3>
 <p>Initialize a new instance of the class</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/SensitivityAnalysisResults.html">SensitivityAnalysisResults</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">netObject</span>, <span class="va">simulation</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>netObject</code></dt>
 <dd><p>A <code>NetObject</code>.</p></dd>
 
-
-<dt><code>simulation</code></dt>
+      <dt><code>simulation</code></dt>
 <dd><p>Reference to the simulation object used to calculated
 the results.</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p>A new <code>SensitivityAnalysisResults</code> object.</p>
 </div>
 
-</div><p></p><hr><a id="method-SensitivityAnalysisResults-allPKParameterSensitivitiesFor"></a><div class="section">
-<h3 id="method-allpkparametersensitivitiesfor-">Method <code>allPKParameterSensitivitiesFor()</code><a class="anchor" aria-label="anchor" href="#method-allpkparametersensitivitiesfor-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-SensitivityAnalysisResults-allPKParameterSensitivitiesFor"></a><div class="section">
+<h3 id="sensitivityanalysisresults-allpkparametersensitivitiesfor-"><code>SensitivityAnalysisResults$allPKParameterSensitivitiesFor()</code><a class="anchor" aria-label="anchor" href="#sensitivityanalysisresults-allpkparametersensitivitiesfor-"></a></h3>
 <p>Returns the <code>PKParameterSensitivity</code> for a given <code>pkParameter</code> and output
 participating to a total sensitivity greater or equal to
 <code>totalSensitivityThreshold</code>.</p><div class="section">
@@ -153,21 +150,17 @@ participating to a total sensitivity greater or equal to
 <span>  totalSensitivityThreshold <span class="op">=</span></span>
 <span>    <span class="va">ospsuiteEnv</span><span class="op">$</span><span class="va">sensitivityAnalysisConfig</span><span class="op">$</span><span class="va">totalSensitivityThreshold</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>pkParameterName</code></dt>
 <dd><p>Name of <code>pkParameter</code> for which sensitivity should
 be retrieved.</p></dd>
 
-
-<dt><code>outputPath</code></dt>
+      <dt><code>outputPath</code></dt>
 <dd><p>Path of the output for which the sensitivity should be
 retrieved</p></dd>
 
-
-<dt><code>totalSensitivityThreshold</code></dt>
+      <dt><code>totalSensitivityThreshold</code></dt>
 <dd><p>Threshold used to filter out the most
 sensitive parameter. A threshold of <code>0.9</code> means that only parameter
 participating to a total of <code>90</code> percent of the sensitivity would be
@@ -183,8 +176,10 @@ and can be changed by setting
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-SensitivityAnalysisResults-pkParameterSensitivityValueFor"></a><div class="section">
-<h3 id="method-pkparametersensitivityvaluefor-">Method <code>pkParameterSensitivityValueFor()</code><a class="anchor" aria-label="anchor" href="#method-pkparametersensitivityvaluefor-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-SensitivityAnalysisResults-pkParameterSensitivityValueFor"></a><div class="section">
+<h3 id="sensitivityanalysisresults-pkparametersensitivityvaluefor-"><code>SensitivityAnalysisResults$pkParameterSensitivityValueFor()</code><a class="anchor" aria-label="anchor" href="#sensitivityanalysisresults-pkparametersensitivityvaluefor-"></a></h3>
 <p>Returns the sensitivity value for a given <code>pkParameter</code>, output and model
 parameter (either by path or by name). If the sensitivity result does not
 exist, returns <code>NaN</code>.</p><div class="section">
@@ -195,26 +190,21 @@ exist, returns <code>NaN</code>.</p><div class="section">
 <span>  parameterName <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  parameterPath <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>pkParameterName</code></dt>
 <dd><p>Name of <code>pkParameter</code> for which sensitivity should
 be retrieved.</p></dd>
 
-
-<dt><code>outputPath</code></dt>
+      <dt><code>outputPath</code></dt>
 <dd><p>Path of the output for which the sensitivity should be
 retrieved.</p></dd>
 
-
-<dt><code>parameterName</code></dt>
+      <dt><code>parameterName</code></dt>
 <dd><p>Name of the sensitivity parameter for which the
 sensitivity should be retrieved.</p></dd>
 
-
-<dt><code>parameterPath</code></dt>
+      <dt><code>parameterPath</code></dt>
 <dd><p>Path of the sensitivity parameter for which the
 sensitivity should be retrieved. Wildcards (*) not accepted.</p></dd>
 
@@ -222,14 +212,14 @@ sensitivity should be retrieved. Wildcards (*) not accepted.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-SensitivityAnalysisResults-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-SensitivityAnalysisResults-print"></a><div class="section">
+<h3 id="sensitivityanalysisresults-print-"><code>SensitivityAnalysisResults$print()</code><a class="anchor" aria-label="anchor" href="#sensitivityanalysisresults-print-"></a></h3>
 <p>Print the object to the console</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">SensitivityAnalysisResults</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>Rest arguments.</p></dd>
@@ -239,6 +229,7 @@ sensitivity should be retrieved. Wildcards (*) not accepted.</p></dd>
 </div>
 
 </div>
+
 
     </div>
 

@@ -7,7 +7,7 @@ simulation)
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `AgingData`
 
 ## Active bindings
@@ -36,7 +36,7 @@ simulation)
 
 ### Public methods
 
-- [`AgingData$new()`](#method-AgingData-new)
+- [`AgingData$new()`](#method-AgingData-initialize)
 
 - [`AgingData$print()`](#method-AgingData-print)
 
@@ -57,7 +57,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `AgingData$new()`
 
 Initialize a new instance of the class
 
@@ -71,7 +71,7 @@ A new `OSPSuite.R.Domain.AgingData` object.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `AgingData$print()`
 
 Print the object to the console
 

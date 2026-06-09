@@ -7,7 +7,7 @@ parameters on the simulation outputs
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `SensitivityAnalysis`
 
 ## Active bindings
@@ -51,7 +51,7 @@ parameters on the simulation outputs
 
 ### Public methods
 
-- [`SensitivityAnalysis$new()`](#method-SensitivityAnalysis-new)
+- [`SensitivityAnalysis$new()`](#method-SensitivityAnalysis-initialize)
 
 - [`SensitivityAnalysis$addParameterPaths()`](#method-SensitivityAnalysis-addParameterPaths)
 
@@ -76,7 +76,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `SensitivityAnalysis$new()`
 
 Initialize a new instance of the class
 
@@ -131,7 +131,7 @@ A new `SensitivityAnalysis` object.
 
 ------------------------------------------------------------------------
 
-### Method `addParameterPaths()`
+### `SensitivityAnalysis$addParameterPaths()`
 
 Adds the parameterPaths to the list of parameter path to vary in the
 sensitivity analysis
@@ -151,7 +151,7 @@ sensitivity analysis
 
 ------------------------------------------------------------------------
 
-### Method `clearParameterPaths()`
+### `SensitivityAnalysis$clearParameterPaths()`
 
 Removes all parameter paths defined in the Sensitivity Analysis
 
@@ -161,7 +161,7 @@ Removes all parameter paths defined in the Sensitivity Analysis
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `SensitivityAnalysis$print()`
 
 Print the object to the console
 

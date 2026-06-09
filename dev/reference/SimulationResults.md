@@ -6,7 +6,7 @@ Results of a simulation run (either individual or population simulation)
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `SimulationResults`
 
 ## Active bindings
@@ -37,7 +37,7 @@ Results of a simulation run (either individual or population simulation)
 
 ### Public methods
 
-- [`SimulationResults$new()`](#method-SimulationResults-new)
+- [`SimulationResults$new()`](#method-SimulationResults-initialize)
 
 - [`SimulationResults$hasResultsForIndividual()`](#method-SimulationResults-hasResultsForIndividual)
 
@@ -64,7 +64,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `SimulationResults$new()`
 
 Initialize a new instance of the class
 
@@ -90,7 +90,7 @@ A new `SimulationResults` object.
 
 ------------------------------------------------------------------------
 
-### Method `hasResultsForIndividual()`
+### `SimulationResults$hasResultsForIndividual()`
 
 Returns `TRUE` if results are available for the individual with id
 `individualId` otherwise `FALSE`
@@ -107,7 +107,7 @@ Returns `TRUE` if results are available for the individual with id
 
 ------------------------------------------------------------------------
 
-### Method `getValuesByPath()`
+### `SimulationResults$getValuesByPath()`
 
 Returns `TRUE` if results are available for the individual with id
 `individualId` otherwise `FALSE`
@@ -133,7 +133,7 @@ Returns `TRUE` if results are available for the individual with id
 
 ------------------------------------------------------------------------
 
-### Method `resultsForIndividual()`
+### `SimulationResults$resultsForIndividual()`
 
 Returns all available results for the individual with id `individualId`
 
@@ -149,7 +149,7 @@ Returns all available results for the individual with id `individualId`
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `SimulationResults$print()`
 
 Print the object to the console
 

@@ -64,7 +64,7 @@ Other data-combined:
 
 ------------------------------------------------------------------------
 
-### Method `addDataSets()`
+### `DataCombined$addDataSets()`
 
 Adds observed data.
 
@@ -111,7 +111,7 @@ Adds observed data.
 
 ------------------------------------------------------------------------
 
-### Method `addSimulationResults()`
+### `DataCombined$addSimulationResults()`
 
 Add simulated data using instance of `SimulationResults` class.
 
@@ -189,7 +189,7 @@ Add simulated data using instance of `SimulationResults` class.
 
 ------------------------------------------------------------------------
 
-### Method `setGroups()`
+### `DataCombined$setGroups()`
 
 Adds grouping information to (observed and/or simulated) datasets.
 
@@ -230,7 +230,7 @@ Adds grouping information to (observed and/or simulated) datasets.
 
 ------------------------------------------------------------------------
 
-### Method `setDataTypes()`
+### `DataCombined$setDataTypes()`
 
 set the type of data (observed or simulated) for datasets.
 
@@ -256,7 +256,7 @@ set the type of data (observed or simulated) for datasets.
 
 ------------------------------------------------------------------------
 
-### Method `removeGroupAssignment()`
+### `DataCombined$removeGroupAssignment()`
 
 Remove existing groupings for (observed and/or simulated) datasets.
 
@@ -280,7 +280,7 @@ Remove existing groupings for (observed and/or simulated) datasets.
 
 ------------------------------------------------------------------------
 
-### Method `setDataTransformations()`
+### `DataCombined$setDataTransformations()`
 
 Transform raw data with required offsets and scale factors.
 
@@ -330,7 +330,7 @@ offset and scale factor values.
 
 ------------------------------------------------------------------------
 
-### Method `toDataFrame()`
+### `DataCombined$toDataFrame()`
 
 A method to extract a tibble data frame of simulated and/or observed
 data (depending on instances of which classes have been added to the
@@ -354,7 +354,7 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `DataCombined$print()`
 
 Print the object to the console.
 
@@ -364,7 +364,7 @@ Print the object to the console.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `DataCombined$clone()`
 
 The objects of this class are cloneable with this method.
 

@@ -6,7 +6,7 @@ Characteristics of a population used for population creation
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `PopulationCharacteristics`
 
 ## Active bindings
@@ -66,7 +66,7 @@ Characteristics of a population used for population creation
 
 ### Public methods
 
-- [`PopulationCharacteristics$new()`](#method-PopulationCharacteristics-new)
+- [`PopulationCharacteristics$new()`](#method-PopulationCharacteristics-initialize)
 
 - [`PopulationCharacteristics$print()`](#method-PopulationCharacteristics-print)
 
@@ -89,7 +89,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `PopulationCharacteristics$new()`
 
 Initialize a new instance of the class
 
@@ -103,7 +103,7 @@ A new `PopulationCharacteristics` object.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `PopulationCharacteristics$print()`
 
 Print the object to the console
 
@@ -119,7 +119,7 @@ Print the object to the console
 
 ------------------------------------------------------------------------
 
-### Method `addMoleculeOntogeny()`
+### `PopulationCharacteristics$addMoleculeOntogeny()`
 
 Add a molecule ontogeny `MoleculeOntogeny` to the individual
 characteristics

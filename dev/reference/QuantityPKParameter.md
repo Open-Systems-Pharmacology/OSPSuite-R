@@ -7,7 +7,7 @@ calculated for a specific quantity with path `quantityPath`
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
 -\> `QuantityPKParameter`
 
 ## Active bindings
@@ -36,7 +36,7 @@ calculated for a specific quantity with path `quantityPath`
 
 ### Public methods
 
-- [`QuantityPKParameter$new()`](#method-QuantityPKParameter-new)
+- [`QuantityPKParameter$new()`](#method-QuantityPKParameter-initialize)
 
 - [`QuantityPKParameter$print()`](#method-QuantityPKParameter-print)
 
@@ -57,7 +57,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `QuantityPKParameter$new()`
 
 Initialize a new instance of the class
 
@@ -79,7 +79,7 @@ A new `QuantityPKParameter` object.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `QuantityPKParameter$print()`
 
 Print the object to the console
 

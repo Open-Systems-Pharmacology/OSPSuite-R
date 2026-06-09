@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,7 @@
 
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">ospsuite::DotNetWrapper</a></code> -&gt; <code>SensitivityAnalysis</code></p>
+    <p><code><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html" class="external-link">rSharp::NetObject</a></code> -&gt; <code><a href="DotNetWrapper.html">DotNetWrapper</a></code> -&gt; <code>SensitivityAnalysis</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -73,7 +73,7 @@
 <dd><p>Reference to the <code>Simulation</code> used to calculate or import the sensitivity analysis results (Read-Only).</p></dd>
 
 
-<dt><code>numberOfSteps</code></dt>
+    <dt><code>numberOfSteps</code></dt>
 <dd><p>Number of steps used for the variation of each parameter in one direction from the reference value.
 The parameter is varied in both positive and negative directions, so the total number of variations per parameter
 is <code>2 * numberOfSteps</code>. For example, <code>numberOfSteps = 2</code> with <code>variationRange = 0.1</code> tests the parameter at
@@ -81,7 +81,7 @@ four points: 90%, 95%, 105%, and 110% of the reference value.
 Default value can be retrieved with <code>getOSPSuiteSetting("sensitivityAnalysisConfig")$numberOfSteps</code>.</p></dd>
 
 
-<dt><code>variationRange</code></dt>
+    <dt><code>variationRange</code></dt>
 <dd><p>Relative variation range applied to each parameter. This defines the total range of variation
 from the reference value. For example, <code>variationRange = 0.1</code> means ±10% variation.
 Combined with <code>numberOfSteps = 2</code>, the parameter would be tested at 90%, 95%, 105%, and 110% of its reference value
@@ -89,7 +89,7 @@ Combined with <code>numberOfSteps = 2</code>, the parameter would be tested at 9
 Default value can be retrieved with <code>getOSPSuiteSetting("sensitivityAnalysisConfig")$variationRange</code>.</p></dd>
 
 
-<dt><code>parameterPaths</code></dt>
+    <dt><code>parameterPaths</code></dt>
 <dd><p>List of parameters to use for sensitivity calculation. If empty, the sensitivity will be performed automatically
 on all constant parameters that are really in use in the simulation. Constant parameter means all parameters with a constant value or a formula parameter
 with a value that was overridden by the user</p></dd>
@@ -102,25 +102,24 @@ with a value that was overridden by the user</p></dd>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-SensitivityAnalysis-new"><code>SensitivityAnalysis$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-SensitivityAnalysis-initialize"><code>SensitivityAnalysis$new()</code></a></p></li>
 <li><p><a href="#method-SensitivityAnalysis-addParameterPaths"><code>SensitivityAnalysis$addParameterPaths()</code></a></p></li>
 <li><p><a href="#method-SensitivityAnalysis-clearParameterPaths"><code>SensitivityAnalysis$clearParameterPaths()</code></a></p></li>
 <li><p><a href="#method-SensitivityAnalysis-print"><code>SensitivityAnalysis$print()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printClass"><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call"><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-get"><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMethods"><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getProperties"><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticFields"><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods"><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties"><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set"><code>rSharp::NetObject$set()</code></a></span></li>
-</ul></details></p><hr><a id="method-SensitivityAnalysis-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call"><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-get"><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getFields"><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMemberSignature"><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getMethods"><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getProperties"><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticFields"><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticMethods"><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-getStaticProperties"><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-set"><code>rSharp::NetObject$set()</code></a></span></li>
+</ul></details></p><hr><a id="method-SensitivityAnalysis-initialize"></a><div class="section">
+<h3 id="sensitivityanalysis-new-"><code>SensitivityAnalysis$new()</code><a class="anchor" aria-label="anchor" href="#sensitivityanalysis-new-"></a></h3>
 <p>Initialize a new instance of the class</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/SensitivityAnalysis.html">SensitivityAnalysis</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
@@ -129,21 +128,17 @@ with a value that was overridden by the user</p></dd>
 <span>  numberOfSteps <span class="op">=</span> <span class="va">ospsuiteEnv</span><span class="op">$</span><span class="va">sensitivityAnalysisConfig</span><span class="op">$</span><span class="va">numberOfSteps</span>,</span>
 <span>  variationRange <span class="op">=</span> <span class="va">ospsuiteEnv</span><span class="op">$</span><span class="va">sensitivityAnalysisConfig</span><span class="op">$</span><span class="va">variationRange</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>simulation</code></dt>
 <dd><p>Simulation for which a sensitivity analysis should be performed</p></dd>
 
-
-<dt><code>parameterPaths</code></dt>
+      <dt><code>parameterPaths</code></dt>
 <dd><p>Vector of parameter paths to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
 on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
 with a value that was overridden by the user</p></dd>
 
-
-<dt><code>numberOfSteps</code></dt>
+      <dt><code>numberOfSteps</code></dt>
 <dd><p>Number of steps used for the variation of each parameter in one direction
 from the reference value (optional, default specified in <code>getOSPSuiteSetting("sensitivityAnalysisConfig")</code>).
 The parameter is varied in both positive and negative directions, so the total number of variations
@@ -152,28 +147,26 @@ each parameter will be tested at four points: 90% (refValue * 0.9), 95% (refValu
 105% (refValue * 1.05), and 110% (refValue * 1.1) of its reference value.
 The total number of simulations is <code>2 * numberOfSteps * number_of_parameters</code>.</p></dd>
 
-
-<dt><code>variationRange</code></dt>
+      <dt><code>variationRange</code></dt>
 <dd><p>Relative variation range applied to each parameter (optional, default specified in <code>getOSPSuiteSetting("sensitivityAnalysisConfig")</code>).
 This defines the total range of variation. For example, <code>variationRange = 0.1</code> means ±10% variation.
 The variation range is divided into <code>numberOfSteps</code> equal intervals in each direction (positive and negative).</p></dd>
 
 
 </dl><p></p></div>
-</div>
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="returns">Returns<a class="anchor" aria-label="anchor" href="#returns"></a></h4>
 <p>A new <code>SensitivityAnalysis</code> object.</p>
 </div>
 
-</div><p></p><hr><a id="method-SensitivityAnalysis-addParameterPaths"></a><div class="section">
-<h3 id="method-addparameterpaths-">Method <code>addParameterPaths()</code><a class="anchor" aria-label="anchor" href="#method-addparameterpaths-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-SensitivityAnalysis-addParameterPaths"></a><div class="section">
+<h3 id="sensitivityanalysis-addparameterpaths-"><code>SensitivityAnalysis$addParameterPaths()</code><a class="anchor" aria-label="anchor" href="#sensitivityanalysis-addparameterpaths-"></a></h3>
 <p>Adds the parameterPaths to the list of parameter path to vary in the sensitivity analysis</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">SensitivityAnalysis</span><span class="op">$</span><span class="fu">addParameterPaths</span><span class="op">(</span><span class="va">parameterPaths</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>parameterPaths</code></dt>
 <dd><p>Parameter paths to add (single or multiple values)
@@ -184,22 +177,23 @@ calling <code>addParameterPaths</code> will make only the manually added paramet
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-SensitivityAnalysis-clearParameterPaths"></a><div class="section">
-<h3 id="method-clearparameterpaths-">Method <code>clearParameterPaths()</code><a class="anchor" aria-label="anchor" href="#method-clearparameterpaths-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-SensitivityAnalysis-clearParameterPaths"></a><div class="section">
+<h3 id="sensitivityanalysis-clearparameterpaths-"><code>SensitivityAnalysis$clearParameterPaths()</code><a class="anchor" aria-label="anchor" href="#sensitivityanalysis-clearparameterpaths-"></a></h3>
 <p>Removes all parameter paths defined in the Sensitivity Analysis</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">SensitivityAnalysis</span><span class="op">$</span><span class="fu">clearParameterPaths</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+</div>
 
-</div><p></p><hr><a id="method-SensitivityAnalysis-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
+<p></p><hr><a id="method-SensitivityAnalysis-print"></a><div class="section">
+<h3 id="sensitivityanalysis-print-"><code>SensitivityAnalysis$print()</code><a class="anchor" aria-label="anchor" href="#sensitivityanalysis-print-"></a></h3>
 <p>Print the object to the console</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">SensitivityAnalysis</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>Rest arguments.</p></dd>
@@ -209,6 +203,7 @@ calling <code>addParameterPaths</code> will make only the manually added paramet
 </div>
 
 </div>
+
 
     </div>
 
