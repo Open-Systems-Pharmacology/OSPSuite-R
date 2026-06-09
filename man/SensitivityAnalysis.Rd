@@ -8,143 +8,146 @@
 Supports Sensitivity Analysis workflow to assess the impact of input parameters on the simulation outputs
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{SensitivityAnalysis}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{SensitivityAnalysis}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the sensitivity analysis results (Read-Only).}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{simulation}}{Reference to the \code{Simulation} used to calculate or import the sensitivity analysis results (Read-Only).}
 
-\item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter in one direction from the reference value.
+    \item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter in one direction from the reference value.
 The parameter is varied in both positive and negative directions, so the total number of variations per parameter
 is \code{2 * numberOfSteps}. For example, \code{numberOfSteps = 2} with \code{variationRange = 0.1} tests the parameter at
 four points: 90\%, 95\%, 105\%, and 110\% of the reference value.
 Default value can be retrieved with \code{getOSPSuiteSetting("sensitivityAnalysisConfig")$numberOfSteps}.}
 
-\item{\code{variationRange}}{Relative variation range applied to each parameter. This defines the total range of variation
+    \item{\code{variationRange}}{Relative variation range applied to each parameter. This defines the total range of variation
 from the reference value. For example, \code{variationRange = 0.1} means ±10\% variation.
 Combined with \code{numberOfSteps = 2}, the parameter would be tested at 90\%, 95\%, 105\%, and 110\% of its reference value
 (i.e., the variation range is divided into \code{numberOfSteps} equal intervals in each direction).
 Default value can be retrieved with \code{getOSPSuiteSetting("sensitivityAnalysisConfig")$variationRange}.}
 
-\item{\code{parameterPaths}}{List of parameters to use for sensitivity calculation. If empty, the sensitivity will be performed automatically
+    \item{\code{parameterPaths}}{List of parameters to use for sensitivity calculation. If empty, the sensitivity will be performed automatically
 on all constant parameters that are really in use in the simulation. Constant parameter means all parameters with a constant value or a formula parameter
 with a value that was overridden by the user}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-SensitivityAnalysis-new}{\code{SensitivityAnalysis$new()}}
-\item \href{#method-SensitivityAnalysis-addParameterPaths}{\code{SensitivityAnalysis$addParameterPaths()}}
-\item \href{#method-SensitivityAnalysis-clearParameterPaths}{\code{SensitivityAnalysis$clearParameterPaths()}}
-\item \href{#method-SensitivityAnalysis-print}{\code{SensitivityAnalysis$print()}}
+  \itemize{
+    \item \href{#method-SensitivityAnalysis-initialize}{\code{SensitivityAnalysis$new()}}
+    \item \href{#method-SensitivityAnalysis-addParameterPaths}{\code{SensitivityAnalysis$addParameterPaths()}}
+    \item \href{#method-SensitivityAnalysis-clearParameterPaths}{\code{SensitivityAnalysis$clearParameterPaths()}}
+    \item \href{#method-SensitivityAnalysis-print}{\code{SensitivityAnalysis$print()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-SensitivityAnalysis-new"></a>}}
-\if{latex}{\out{\hypertarget{method-SensitivityAnalysis-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$new(
+\if{html}{\out{<a id="method-SensitivityAnalysis-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-SensitivityAnalysis-initialize}{}}}
+\subsection{\code{SensitivityAnalysis$new()}}{
+  Initialize a new instance of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SensitivityAnalysis$new(
   simulation,
   parameterPaths = NULL,
   numberOfSteps = ospsuiteEnv$sensitivityAnalysisConfig$numberOfSteps,
   variationRange = ospsuiteEnv$sensitivityAnalysisConfig$variationRange
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{simulation}}{Simulation for which a sensitivity analysis should be performed}
-
-\item{\code{parameterPaths}}{Vector of parameter paths to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{simulation}}{Simulation for which a sensitivity analysis should be performed}
+      \item{\code{parameterPaths}}{Vector of parameter paths to use for sensitivity calculation (optional). If undefined, the sensitivity will be performed automatically
 on all constant parameters of the simulation. Constant parameter means all parameters with a constant value or a formula parameter
 with a value that was overridden by the user}
-
-\item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter in one direction
+      \item{\code{numberOfSteps}}{Number of steps used for the variation of each parameter in one direction
 from the reference value (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")}).
 The parameter is varied in both positive and negative directions, so the total number of variations
 per parameter is \code{2 * numberOfSteps}. For example, with \code{numberOfSteps = 2} and \code{variationRange = 0.1},
 each parameter will be tested at four points: 90\% (refValue * 0.9), 95\% (refValue * 0.95),
 105\% (refValue * 1.05), and 110\% (refValue * 1.1) of its reference value.
 The total number of simulations is \code{2 * numberOfSteps * number_of_parameters}.}
-
-\item{\code{variationRange}}{Relative variation range applied to each parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")}).
+      \item{\code{variationRange}}{Relative variation range applied to each parameter (optional, default specified in \code{getOSPSuiteSetting("sensitivityAnalysisConfig")}).
 This defines the total range of variation. For example, \code{variationRange = 0.1} means ±10\% variation.
 The variation range is divided into \code{numberOfSteps} equal intervals in each direction (positive and negative).}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{SensitivityAnalysis} object.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{SensitivityAnalysis} object.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SensitivityAnalysis-addParameterPaths"></a>}}
 \if{latex}{\out{\hypertarget{method-SensitivityAnalysis-addParameterPaths}{}}}
-\subsection{Method \code{addParameterPaths()}}{
-Adds the parameterPaths to the list of parameter path to vary in the sensitivity analysis
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$addParameterPaths(parameterPaths)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{parameterPaths}}{Parameter paths to add (single or multiple values)
+\subsection{\code{SensitivityAnalysis$addParameterPaths()}}{
+  Adds the parameterPaths to the list of parameter path to vary in the sensitivity analysis
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SensitivityAnalysis$addParameterPaths(parameterPaths)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{parameterPaths}}{Parameter paths to add (single or multiple values)
 If no parameters were specified during creating of a \code{SensitivityAnalysis} (all constant parameters are considered),
 calling \code{addParameterPaths} will make only the manually added parameters being varied.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
-\if{html}{\out{</div>}}
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SensitivityAnalysis-clearParameterPaths"></a>}}
 \if{latex}{\out{\hypertarget{method-SensitivityAnalysis-clearParameterPaths}{}}}
-\subsection{Method \code{clearParameterPaths()}}{
-Removes all parameter paths defined in the Sensitivity Analysis
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$clearParameterPaths()}\if{html}{\out{</div>}}
+\subsection{\code{SensitivityAnalysis$clearParameterPaths()}}{
+  Removes all parameter paths defined in the Sensitivity Analysis
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SensitivityAnalysis$clearParameterPaths()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SensitivityAnalysis-print"></a>}}
 \if{latex}{\out{\hypertarget{method-SensitivityAnalysis-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SensitivityAnalysis$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{SensitivityAnalysis$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{SensitivityAnalysis$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

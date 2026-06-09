@@ -8,141 +8,148 @@
 An object typically holding observed data
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataRepository}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{DataRepository}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{name}}{The name of the object.}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{name}}{The name of the object.}
 
-\item{\code{baseGrid}}{Returns the base column for the data repository (typically time column).}
+    \item{\code{baseGrid}}{Returns the base column for the data repository (typically time column).}
 
-\item{\code{columns}}{Returns all columns (including baseGrid) defined in the data repository.}
+    \item{\code{columns}}{Returns all columns (including baseGrid) defined in the data repository.}
 
-\item{\code{allButBaseGrid}}{Returns all columns excluding baseGrid defined on the data repository.}
+    \item{\code{allButBaseGrid}}{Returns all columns excluding baseGrid defined on the data repository.}
 
-\item{\code{metaData}}{Returns a named list of meta data defined for the data repository.
+    \item{\code{metaData}}{Returns a named list of meta data defined for the data repository.
 where the name is the name of the metaData and the value is the meta data value.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-DataRepository-addColumn}{\code{DataRepository$addColumn()}}
-\item \href{#method-DataRepository-new}{\code{DataRepository$new()}}
-\item \href{#method-DataRepository-print}{\code{DataRepository$print()}}
-\item \href{#method-DataRepository-addMetaData}{\code{DataRepository$addMetaData()}}
-\item \href{#method-DataRepository-removeMetaData}{\code{DataRepository$removeMetaData()}}
+  \itemize{
+    \item \href{#method-DataRepository-addColumn}{\code{DataRepository$addColumn()}}
+    \item \href{#method-DataRepository-initialize}{\code{DataRepository$new()}}
+    \item \href{#method-DataRepository-print}{\code{DataRepository$print()}}
+    \item \href{#method-DataRepository-addMetaData}{\code{DataRepository$addMetaData()}}
+    \item \href{#method-DataRepository-removeMetaData}{\code{DataRepository$removeMetaData()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataRepository-addColumn"></a>}}
 \if{latex}{\out{\hypertarget{method-DataRepository-addColumn}{}}}
-\subsection{Method \code{addColumn()}}{
-Adds a column to the data repository
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataRepository$addColumn(column)}\if{html}{\out{</div>}}
+\subsection{\code{DataRepository$addColumn()}}{
+  Adds a column to the data repository
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataRepository$addColumn(column)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{column}}{Column to add}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{column}}{Column to add}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-DataRepository-new"></a>}}
-\if{latex}{\out{\hypertarget{method-DataRepository-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataRepository$new(netObj = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-DataRepository-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-DataRepository-initialize}{}}}
+\subsection{\code{DataRepository$new()}}{
+  Initialize a new instance of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataRepository$new(netObj = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{netObj}}{Optional \code{NetObject} to the pointer of the underlying \code{DataRepository}.
+If it is not provided, a new instance will be created}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{DataRepository} object.
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{netObj}}{Optional \code{NetObject} to the pointer of the underlying \code{DataRepository}.
-If it is not provided, a new instance will be created}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{DataRepository} object.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataRepository-print"></a>}}
 \if{latex}{\out{\hypertarget{method-DataRepository-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataRepository$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{DataRepository$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataRepository$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataRepository-addMetaData"></a>}}
 \if{latex}{\out{\hypertarget{method-DataRepository-addMetaData}{}}}
-\subsection{Method \code{addMetaData()}}{
-Adds a new entry to meta data list or changes its value if the name is already present.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataRepository$addMetaData(name, value)}\if{html}{\out{</div>}}
+\subsection{\code{DataRepository$addMetaData()}}{
+  Adds a new entry to meta data list or changes its value if the name is already present.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataRepository$addMetaData(name, value)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{name}}{Name of new meta data list entry}
+      \item{\code{value}}{Value of new meta data list entry}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{Name of new meta data list entry}
-
-\item{\code{value}}{Value of new meta data list entry}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataRepository-removeMetaData"></a>}}
 \if{latex}{\out{\hypertarget{method-DataRepository-removeMetaData}{}}}
-\subsection{Method \code{removeMetaData()}}{
-Removes the meta data entry in the list if one is defined with this name
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataRepository$removeMetaData(name)}\if{html}{\out{</div>}}
+\subsection{\code{DataRepository$removeMetaData()}}{
+  Removes the meta data entry in the list if one is defined with this name
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataRepository$removeMetaData(name)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{name}}{Name of meta data entry to delete}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{name}}{Name of meta data entry to delete}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

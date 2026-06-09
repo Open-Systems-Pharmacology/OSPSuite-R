@@ -8,192 +8,204 @@
 List of individuals used in a population simulation
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{Population}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{Population}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{count}}{the number of individual in the population}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{count}}{the number of individual in the population}
 
-\item{\code{allCovariateNames}}{the names of all covariates defined in the population}
+    \item{\code{allCovariateNames}}{the names of all covariates defined in the population}
 
-\item{\code{allParameterPaths}}{the paths of all parameters defined in the population}
+    \item{\code{allParameterPaths}}{the paths of all parameters defined in the population}
 
-\item{\code{allIndividualIds}}{Ids of individuals defined in the population}
-}
-\if{html}{\out{</div>}}
+    \item{\code{allIndividualIds}}{Ids of individuals defined in the population}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-Population-has}{\code{Population$has()}}
-\item \href{#method-Population-setParameterValues}{\code{Population$setParameterValues()}}
-\item \href{#method-Population-getParameterValues}{\code{Population$getParameterValues()}}
-\item \href{#method-Population-getCovariateValues}{\code{Population$getCovariateValues()}}
-\item \href{#method-Population-getCovariateValue}{\code{Population$getCovariateValue()}}
-\item \href{#method-Population-getParameterValuesForIndividual}{\code{Population$getParameterValuesForIndividual()}}
-\item \href{#method-Population-remove}{\code{Population$remove()}}
-\item \href{#method-Population-print}{\code{Population$print()}}
+  \itemize{
+    \item \href{#method-Population-has}{\code{Population$has()}}
+    \item \href{#method-Population-setParameterValues}{\code{Population$setParameterValues()}}
+    \item \href{#method-Population-getParameterValues}{\code{Population$getParameterValues()}}
+    \item \href{#method-Population-getCovariateValues}{\code{Population$getCovariateValues()}}
+    \item \href{#method-Population-getCovariateValue}{\code{Population$getCovariateValue()}}
+    \item \href{#method-Population-getParameterValuesForIndividual}{\code{Population$getParameterValuesForIndividual()}}
+    \item \href{#method-Population-remove}{\code{Population$remove()}}
+    \item \href{#method-Population-print}{\code{Population$print()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>DotNetWrapper$initialize()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Population-has"></a>}}
 \if{latex}{\out{\hypertarget{method-Population-has}{}}}
-\subsection{Method \code{has()}}{
-Returns \code{TRUE} if the population has variability defined for \code{parameterOrPath} otherwise \code{FALSE}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Population$has(parameterOrPath)}\if{html}{\out{</div>}}
+\subsection{\code{Population$has()}}{
+  Returns \code{TRUE} if the population has variability defined for \code{parameterOrPath} otherwise \code{FALSE}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Population$has(parameterOrPath)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{parameterOrPath}}{Parameter instance of parameter path}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{parameterOrPath}}{Parameter instance of parameter path}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Population-setParameterValues"></a>}}
 \if{latex}{\out{\hypertarget{method-Population-setParameterValues}{}}}
-\subsection{Method \code{setParameterValues()}}{
-Updates or adds the variability values in the population for \code{parameterOrPath}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Population$setParameterValues(parameterOrPath, values)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{parameterOrPath}}{Parameter instance of parameter path.
+\subsection{\code{Population$setParameterValues()}}{
+  Updates or adds the variability values in the population for \code{parameterOrPath}.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Population$setParameterValues(parameterOrPath, values)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{parameterOrPath}}{Parameter instance of parameter path.
 If an entry already exists for this parameter by path, its values be overwritten, otherwise it will be created.}
+      \item{\code{values}}{double vector containing the value to set for the \code{parameterOrPath}}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
 
-\item{\code{values}}{double vector containing the value to set for the \code{parameterOrPath}}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Population-getParameterValues"></a>}}
 \if{latex}{\out{\hypertarget{method-Population-getParameterValues}{}}}
-\subsection{Method \code{getParameterValues()}}{
-Returns the variability values defined in the population for \code{parameterOrPath}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Population$getParameterValues(parameterOrPath)}\if{html}{\out{</div>}}
+\subsection{\code{Population$getParameterValues()}}{
+  Returns the variability values defined in the population for \code{parameterOrPath}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Population$getParameterValues(parameterOrPath)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{parameterOrPath}}{Parameter instance of parameter path}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{parameterOrPath}}{Parameter instance of parameter path}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Population-getCovariateValues"></a>}}
 \if{latex}{\out{\hypertarget{method-Population-getCovariateValues}{}}}
-\subsection{Method \code{getCovariateValues()}}{
-Returns the values defined in the population for the covariate named \code{covariateName}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Population$getCovariateValues(covariateName)}\if{html}{\out{</div>}}
+\subsection{\code{Population$getCovariateValues()}}{
+  Returns the values defined in the population for the covariate named \code{covariateName}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Population$getCovariateValues(covariateName)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{covariateName}}{Name of covariate for which values should be retrieved}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{covariateName}}{Name of covariate for which values should be retrieved}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Population-getCovariateValue"></a>}}
 \if{latex}{\out{\hypertarget{method-Population-getCovariateValue}{}}}
-\subsection{Method \code{getCovariateValue()}}{
-Returns the values defined in the population for the covariate named \code{covariateName} and individual with id \code{individualId}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Population$getCovariateValue(covariateName, individualId)}\if{html}{\out{</div>}}
+\subsection{\code{Population$getCovariateValue()}}{
+  Returns the values defined in the population for the covariate named \code{covariateName} and individual with id \code{individualId}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Population$getCovariateValue(covariateName, individualId)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{covariateName}}{Name of covariate for which values should be retrieved}
+      \item{\code{individualId}}{Id of individual for which the value for covariate \code{covariateName} should be retrieved}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{covariateName}}{Name of covariate for which values should be retrieved}
-
-\item{\code{individualId}}{Id of individual for which the value for covariate \code{covariateName} should be retrieved}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Population-getParameterValuesForIndividual"></a>}}
 \if{latex}{\out{\hypertarget{method-Population-getParameterValuesForIndividual}{}}}
-\subsection{Method \code{getParameterValuesForIndividual()}}{
-Returns all values defined in the population the individual with id \code{individualId}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Population$getParameterValuesForIndividual(individualId)}\if{html}{\out{</div>}}
+\subsection{\code{Population$getParameterValuesForIndividual()}}{
+  Returns all values defined in the population the individual with id \code{individualId}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Population$getParameterValuesForIndividual(individualId)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{individualId}}{Id of individual for which all values should be returned}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{individualId}}{Id of individual for which all values should be returned}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Population-remove"></a>}}
 \if{latex}{\out{\hypertarget{method-Population-remove}{}}}
-\subsection{Method \code{remove()}}{
-Removes the value of a parameter by path
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Population$remove(parameterPath)}\if{html}{\out{</div>}}
+\subsection{\code{Population$remove()}}{
+  Removes the value of a parameter by path
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Population$remove(parameterPath)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{parameterPath}}{Path of the parameter values to remove}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{parameterPath}}{Path of the parameter values to remove}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Population-print"></a>}}
 \if{latex}{\out{\hypertarget{method-Population-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Population$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{Population$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Population$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

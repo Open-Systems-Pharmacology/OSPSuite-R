@@ -103,7 +103,7 @@ differentiation.}
     \item{\code{geomLineAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_line}}
     \item{\code{geomRibbonAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_ribbon}}
     \item{\code{geomPointAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_point}}
-    \item{\code{geomErrorbarAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_errorbar}}
+    \item{\code{geomErrorbarAttributes}}{A \code{list} with arguments which are passed on to the call \code{geom_errorbar_osp}}
     \item{\code{geomLLOQAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_hline}}
     \item{\code{groupAesthetics}}{vector of aesthetics, which are used for columns mapped with \code{groupby},}
   }}
@@ -164,10 +164,10 @@ plotTimeProfile(manyObsSimDC, showLegendPerDataset = "all")
 }
 }
 \seealso{
-Other plot functions based on ospsuite.plots: 
-\code{\link{plotPredictedVsObserved}()},
-\code{\link{plotQuantileQuantilePlot}()},
-\code{\link{plotResidualsAsHistogram}()},
-\code{\link{plotResidualsVsCovariate}()}
+Other plot functions based on ospsuite.plots:
+\code{\link[=plotPredictedVsObserved]{plotPredictedVsObserved()}},
+\code{\link[=plotQuantileQuantilePlot]{plotQuantileQuantilePlot()}},
+\code{\link[=plotResidualsAsHistogram]{plotResidualsAsHistogram()}},
+\code{\link[=plotResidualsVsCovariate]{plotResidualsVsCovariate()}}
 }
 \concept{plot functions based on ospsuite.plots}

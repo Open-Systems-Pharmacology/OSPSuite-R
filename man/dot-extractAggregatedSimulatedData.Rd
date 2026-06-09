@@ -17,7 +17,7 @@ arithmetic or geometric average and add a set of upper and lower bounds
 (\code{yValuesLower} and \code{yValuesHigher}).}
 
 \item{...}{
-  Arguments passed on to \code{\link[=.normRange]{.normRange}}
+  Arguments passed on to \code{\link{.normRange}}
   \describe{
     \item{\code{nsd}}{optional argument defining the number of standard deviation to add
 and substract to the mean}
@@ -76,10 +76,10 @@ ospsuite:::.extractAggregatedSimulatedData(df)
 
 }
 \seealso{
-Other utilities-plotting: 
-\code{\link{.addMissingGroupings}()},
-\code{\link{.convertGeneralToSpecificPlotConfiguration}()},
-\code{\link{.createAxesLabels}()}
+Other utilities-plotting:
+\code{\link[=.addMissingGroupings]{.addMissingGroupings()}},
+\code{\link[=.convertGeneralToSpecificPlotConfiguration]{.convertGeneralToSpecificPlotConfiguration()}},
+\code{\link[=.createAxesLabels]{.createAxesLabels()}}
 }
 \concept{utilities-plotting}
 \keyword{internal}

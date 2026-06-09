@@ -8,102 +8,106 @@
 Characteristics of an individual describing its origin
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{IndividualCharacteristics}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{IndividualCharacteristics}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{species}}{Specifies the species of the individual. It should be a species available in PK-Sim (see \code{Species})}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{species}}{Specifies the species of the individual. It should be a species available in PK-Sim (see \code{Species})}
 
-\item{\code{population}}{For a Human species, the population of interest. It should be a population available in PK-Sim (see \code{HumanPopulation})}
+    \item{\code{population}}{For a Human species, the population of interest. It should be a population available in PK-Sim (see \code{HumanPopulation})}
 
-\item{\code{gender}}{Gender of the individual. It should be defined for the species in PK-Sim  (see \code{Gender})}
+    \item{\code{gender}}{Gender of the individual. It should be defined for the species in PK-Sim  (see \code{Gender})}
 
-\item{\code{age}}{Age of the individual as in instance of a \code{SnapshotParameter} (optional)}
+    \item{\code{age}}{Age of the individual as in instance of a \code{SnapshotParameter} (optional)}
 
-\item{\code{gestationalAge}}{Gestational Age of the individual as in instance of a \code{SnapshotParameter} (optional)}
+    \item{\code{gestationalAge}}{Gestational Age of the individual as in instance of a \code{SnapshotParameter} (optional)}
 
-\item{\code{weight}}{Weight of the individual as in instance of a \code{SnapshotParameter} (optional)}
+    \item{\code{weight}}{Weight of the individual as in instance of a \code{SnapshotParameter} (optional)}
 
-\item{\code{height}}{Height of the individual as in instance of a \code{SnapshotParameter} (optional)}
+    \item{\code{height}}{Height of the individual as in instance of a \code{SnapshotParameter} (optional)}
 
-\item{\code{allMoleculeOntogenies}}{All molecule ontogenies defined for this individual characteristics.}
+    \item{\code{allMoleculeOntogenies}}{All molecule ontogenies defined for this individual characteristics.}
 
-\item{\code{seed}}{Seed used to generate the population}
-}
-\if{html}{\out{</div>}}
+    \item{\code{seed}}{Seed used to generate the population}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-IndividualCharacteristics-new}{\code{IndividualCharacteristics$new()}}
-\item \href{#method-IndividualCharacteristics-print}{\code{IndividualCharacteristics$print()}}
-\item \href{#method-IndividualCharacteristics-addMoleculeOntogeny}{\code{IndividualCharacteristics$addMoleculeOntogeny()}}
+  \itemize{
+    \item \href{#method-IndividualCharacteristics-initialize}{\code{IndividualCharacteristics$new()}}
+    \item \href{#method-IndividualCharacteristics-print}{\code{IndividualCharacteristics$print()}}
+    \item \href{#method-IndividualCharacteristics-addMoleculeOntogeny}{\code{IndividualCharacteristics$addMoleculeOntogeny()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-IndividualCharacteristics-new"></a>}}
-\if{latex}{\out{\hypertarget{method-IndividualCharacteristics-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{IndividualCharacteristics$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-IndividualCharacteristics-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-IndividualCharacteristics-initialize}{}}}
+\subsection{\code{IndividualCharacteristics$new()}}{
+  Initialize a new instance of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{IndividualCharacteristics$new()}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{IndividualCharacteristics} object.
+  }
 }
 
-\subsection{Returns}{
-A new \code{IndividualCharacteristics} object.
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-IndividualCharacteristics-print"></a>}}
 \if{latex}{\out{\hypertarget{method-IndividualCharacteristics-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{IndividualCharacteristics$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{IndividualCharacteristics$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{IndividualCharacteristics$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-IndividualCharacteristics-addMoleculeOntogeny"></a>}}
 \if{latex}{\out{\hypertarget{method-IndividualCharacteristics-addMoleculeOntogeny}{}}}
-\subsection{Method \code{addMoleculeOntogeny()}}{
-Add a molecule ontogeny \code{MoleculeOntogeny} to the individual characteristics
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{IndividualCharacteristics$addMoleculeOntogeny(moleculeOntogeny)}\if{html}{\out{</div>}}
+\subsection{\code{IndividualCharacteristics$addMoleculeOntogeny()}}{
+  Add a molecule ontogeny \code{MoleculeOntogeny} to the individual characteristics
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{IndividualCharacteristics$addMoleculeOntogeny(moleculeOntogeny)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{moleculeOntogeny}}{Molecule ontogeny to add}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{moleculeOntogeny}}{Molecule ontogeny to add}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

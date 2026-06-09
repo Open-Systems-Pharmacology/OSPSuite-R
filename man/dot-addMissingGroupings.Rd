@@ -47,10 +47,10 @@ ospsuite:::.addMissingGroupings(df)
 
 }
 \seealso{
-Other utilities-plotting: 
-\code{\link{.convertGeneralToSpecificPlotConfiguration}()},
-\code{\link{.createAxesLabels}()},
-\code{\link{.extractAggregatedSimulatedData}()}
+Other utilities-plotting:
+\code{\link[=.convertGeneralToSpecificPlotConfiguration]{.convertGeneralToSpecificPlotConfiguration()}},
+\code{\link[=.createAxesLabels]{.createAxesLabels()}},
+\code{\link[=.extractAggregatedSimulatedData]{.extractAggregatedSimulatedData()}}
 }
 \concept{utilities-plotting}
 \keyword{internal}
