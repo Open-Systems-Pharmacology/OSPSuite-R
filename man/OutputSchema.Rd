@@ -8,125 +8,133 @@
 Output schema associated with a given simulation
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{OutputSchema}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{OutputSchema}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{intervals}}{All intervals defined in the schema (Read-Only)}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{intervals}}{All intervals defined in the schema (Read-Only)}
 
-\item{\code{timePoints}}{All single time points defined in the schema (Read-Only)}
+    \item{\code{timePoints}}{All single time points defined in the schema (Read-Only)}
 
-\item{\code{endTime}}{Returns the end time of the simulation in kernel unit (Read-Only)}
-}
-\if{html}{\out{</div>}}
+    \item{\code{endTime}}{Returns the end time of the simulation in kernel unit (Read-Only)}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-OutputSchema-clear}{\code{OutputSchema$clear()}}
-\item \href{#method-OutputSchema-addInterval}{\code{OutputSchema$addInterval()}}
-\item \href{#method-OutputSchema-removeInterval}{\code{OutputSchema$removeInterval()}}
-\item \href{#method-OutputSchema-addTimePoints}{\code{OutputSchema$addTimePoints()}}
-\item \href{#method-OutputSchema-print}{\code{OutputSchema$print()}}
+  \itemize{
+    \item \href{#method-OutputSchema-clear}{\code{OutputSchema$clear()}}
+    \item \href{#method-OutputSchema-addInterval}{\code{OutputSchema$addInterval()}}
+    \item \href{#method-OutputSchema-removeInterval}{\code{OutputSchema$removeInterval()}}
+    \item \href{#method-OutputSchema-addTimePoints}{\code{OutputSchema$addTimePoints()}}
+    \item \href{#method-OutputSchema-print}{\code{OutputSchema$print()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>ospsuite::DotNetWrapper$initialize()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="ospsuite" data-topic="DotNetWrapper" data-id="initialize"><a href='../../ospsuite/html/DotNetWrapper.html#method-DotNetWrapper-initialize'><code>DotNetWrapper$initialize()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OutputSchema-clear"></a>}}
 \if{latex}{\out{\hypertarget{method-OutputSchema-clear}{}}}
-\subsection{Method \code{clear()}}{
-Clears all intervals and time points
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OutputSchema$clear()}\if{html}{\out{</div>}}
+\subsection{\code{OutputSchema$clear()}}{
+  Clears all intervals and time points
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OutputSchema$clear()}
+    \if{html}{\out{</div>}}
+  }
 }
 
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OutputSchema-addInterval"></a>}}
 \if{latex}{\out{\hypertarget{method-OutputSchema-addInterval}{}}}
-\subsection{Method \code{addInterval()}}{
-Adds an interval to the schema
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OutputSchema$addInterval(interval)}\if{html}{\out{</div>}}
+\subsection{\code{OutputSchema$addInterval()}}{
+  Adds an interval to the schema
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OutputSchema$addInterval(interval)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{interval}}{Interval to add}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{interval}}{Interval to add}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OutputSchema-removeInterval"></a>}}
 \if{latex}{\out{\hypertarget{method-OutputSchema-removeInterval}{}}}
-\subsection{Method \code{removeInterval()}}{
-Removes the interval from the schema
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OutputSchema$removeInterval(interval)}\if{html}{\out{</div>}}
+\subsection{\code{OutputSchema$removeInterval()}}{
+  Removes the interval from the schema
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OutputSchema$removeInterval(interval)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{interval}}{Interval to remove}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{interval}}{Interval to remove}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OutputSchema-addTimePoints"></a>}}
 \if{latex}{\out{\hypertarget{method-OutputSchema-addTimePoints}{}}}
-\subsection{Method \code{addTimePoints()}}{
-Adds the time points to the schema. Note that time points and intervals exists concurrently.
+\subsection{\code{OutputSchema$addTimePoints()}}{
+  Adds the time points to the schema. Note that time points and intervals exists concurrently.
 Use time points only if you need to ensure that specific time are used.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OutputSchema$addTimePoints(timePoints)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OutputSchema$addTimePoints(timePoints)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{timePoints}}{Time points to add to the schema}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{timePoints}}{Time points to add to the schema}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OutputSchema-print"></a>}}
 \if{latex}{\out{\hypertarget{method-OutputSchema-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OutputSchema$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{OutputSchema$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{OutputSchema$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }
