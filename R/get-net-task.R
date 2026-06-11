@@ -1,17 +1,17 @@
-#' @title .getNetTask
-#' @description Get an instance of the specified `.NET` Task
+#' @title .getCoreTask
+#' @description Get an instance of the specified `.NET` Task in OSPSuite.R.Api
 #'
 #' @param taskName The name of the task to retrieve (**without** `Get` prefix).
 #'
 #' @return returns a new instance of of the specified `.NET` task.
 #'
 #' @keywords internal
-.getNetTask <- function(taskName) {
-  rSharp::callStatic("OSPSuite.R.Api", paste0("Get", taskName))
+.getCoreTask <- function(taskName) {
+  rSharp::callStatic("OSPSuite.R.Api, OSPSuite.R", paste0("Get", taskName))
 }
 
-#' @title .getNetTaskFromCache
-#' @description Get an instance of the specified `.NET` Task that is retrieved
+#' @title .getCoreTaskFromCache
+#' @description Get an instance of the specified `.NET` Task from OSPSuite.R.Api that is retrieved
 #' from cache if already initiated. Otherwise a new task will be initiated and
 #' cached in the `tasksEnv`.
 #'
@@ -20,9 +20,10 @@
 #' @return returns an instance of of the specified `.NET` task.
 #'
 #' @keywords internal
-.getNetTaskFromCache <- function(taskName) {
-  if (is.null(tasksEnv[[taskName]])) {
-    tasksEnv[[taskName]] <- .getNetTask(taskName)
+.getCoreTaskFromCache <- function(taskName) {
+  cacheName <- paste("core", taskName)
+  if (is.null(tasksEnv[[cacheName]])) {
+    tasksEnv[[cacheName]] <- .getCoreTask(taskName)
   }
-  return(tasksEnv[[taskName]])
+  return(tasksEnv[[cacheName]])
 }

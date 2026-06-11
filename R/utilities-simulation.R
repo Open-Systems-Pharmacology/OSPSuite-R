@@ -57,11 +57,11 @@ loadSimulation <- function(
 
   # If the simulation has not been loaded so far, or loadFromCache == FALSE,
   # new simulation object will be created
-  simulationPersister <- .getNetTask("SimulationPersister")
+  simulationPersister <- .getCoreTask("SimulationPersister")
   # Note: We do not expand the variable filePath here as we want the cache to be created using the path given by the user
   netSim <- simulationPersister$call(
     "LoadSimulation",
-    .expandPath(filePath),
+    path.expand(filePath),
     resetIds
   )
 
@@ -84,8 +84,8 @@ loadSimulation <- function(
 saveSimulation <- function(simulation, filePath) {
   validateIsOfType(simulation, "Simulation")
   validateIsString(filePath)
-  filePath <- .expandPath(filePath)
-  simulationPersister <- .getNetTask("SimulationPersister")
+  filePath <- path.expand(filePath)
+  simulationPersister <- .getCoreTask("SimulationPersister")
   simulationPersister$call("SaveSimulation", simulation, filePath)
   invisible()
 }
@@ -282,7 +282,7 @@ runSimulations <- function(
     validateIsOfType(population, "Population", nullAllowed = TRUE)
   }
   validateIsOfType(agingData, "AgingData", nullAllowed = TRUE)
-  simulationRunner <- .getNetTask("SimulationRunner")
+  simulationRunner <- .getCoreTask("SimulationRunner")
   simulationRunArgs <- rSharp::newObjectFromName(
     "OSPSuite.R.Services.SimulationRunArgs"
   )
@@ -308,7 +308,7 @@ runSimulations <- function(
   silentMode = FALSE,
   stopIfFails = FALSE
 ) {
-  simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
+  simulationRunner <- .getCoreTask("ConcurrentSimulationRunner")
   tryCatch(
     {
       validateIsOfType(simulations, "Simulation")
@@ -482,7 +482,7 @@ runSimulationBatches <- function(
   stopIfFails = FALSE
 ) {
   validateIsOfType(simulationBatches, "SimulationBatch")
-  simulationRunner <- .getNetTask("ConcurrentSimulationRunner")
+  simulationRunner <- .getCoreTask("ConcurrentSimulationRunner")
   validateIsOfType(
     simulationRunOptions,
     "SimulationRunOptions",
@@ -696,7 +696,7 @@ exportIndividualSimulations <- function(
   validateIsOfType(simulation, "Simulation")
   validateIsOfType(population, "Population")
   individualIds <- c(individualIds)
-  outputFolder <- .expandPath(outputFolder)
+  outputFolder <- path.expand(outputFolder)
 
   simuationPaths <- NULL
   for (individualId in individualIds) {
