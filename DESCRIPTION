@@ -1,7 +1,7 @@
 Type: Package
 Package: ospsuite
 Title: R package to manipulate OSPSuite Models
-Version: 12.4.3.9001
+Version: 12.4.3.9002
 Authors@R:
     c(person("Open-Systems-Pharmacology Community", role = c("cph", "fnd")),
       person("Michael", "Sevestre", role = c("aut", "cre"), email = "michael@design2code.ca"),
@@ -49,7 +49,6 @@ Suggests:
 Language: en-US
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
@@ -67,6 +66,7 @@ Collate:
     'default-plot-configuration.R'
     'dot-net-wrapper.R'
     'entity.R'
+    'enums.R'
     'formula.R'
     'get-net-task.R'
     'globals.R'
@@ -85,7 +85,6 @@ Collate:
     'parameter.R'
     'pk-parameter-sensitivity.R'
     'pk-parameter.R'
-    'pk-sim.R'
     'plot-individual-time-profile.R'
     'plot-observed-vs-simulated.R'
     'plot-population-time-profile.R'
@@ -149,3 +148,4 @@ Remotes:
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
     tlf=Open-Systems-Pharmacology/TLF-Library,
     ospsuite.plots=Open-Systems-Pharmacology/OSPSuite.Plots
+Config/roxygen2/version: 8.0.0

@@ -71,9 +71,9 @@ addResidualColumn(paired, scaling = "ratio")
 
 }
 \seealso{
-Other data-combined: 
+Other data-combined:
 \code{\link{DataCombined}},
-\code{\link{calculateResiduals}()},
-\code{\link{convertUnits}()}
+\code{\link[=calculateResiduals]{calculateResiduals()}},
+\code{\link[=convertUnits]{convertUnits()}}
 }
 \concept{data-combined}

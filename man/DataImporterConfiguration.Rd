@@ -5,186 +5,194 @@
 \alias{DataImporterConfiguration}
 \title{DataImporterConfiguration}
 \description{
-Configuration of data import from excel or csv files. To be used with #TODO
+Configuration of data import from excel or csv files. To be used with \code{loadDataSetsFromExcel}.
 }
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{DataImporterConfiguration}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{DataImporterConfiguration}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{timeColumn}}{Name of the column for time values}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{timeColumn}}{Name of the column for time values}
 
-\item{\code{timeUnit}}{If \code{isTimeUnitFromColumn} is \code{FALSE}, unit of the values
+    \item{\code{timeUnit}}{If \code{isTimeUnitFromColumn} is \code{FALSE}, unit of the values
 in time column If \code{isTimeUnitFromColumn} is \code{TRUE}, name of the column
 with units of the values in time column.}
 
-\item{\code{isTimeUnitFromColumn}}{If \code{TRUE}, units of the values in time column
+    \item{\code{isTimeUnitFromColumn}}{If \code{TRUE}, units of the values in time column
 are defined in the column \code{timeUnit}. If \code{FALSE}, the unit is defined by
 the value of \code{timeUnit}.}
 
-\item{\code{measurementColumn}}{Name of the column for measurement values}
+    \item{\code{measurementColumn}}{Name of the column for measurement values}
 
-\item{\code{lloqColumn}}{Name of the column for LLOQ values
+    \item{\code{lloqColumn}}{Name of the column for LLOQ values
 If the column name is not set (value \code{NULL}), LLOQ values
 will be imported from the measurement column if values are written in the form '< xxx' (e.g., '<0.001').
 Otherwise, the values will be imported from the specified column}
 
-\item{\code{measurementDimension}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE},
+    \item{\code{measurementDimension}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE},
 dimension of the values in measurement column If
 \code{isMeasurementUnitFromColumn} is \code{TRUE}, the dimension is guessed from
 the unit defined in the column \code{measurementUnit} during import process
 and \verb{$measurementDimension} is \code{NULL}. When changing dimension, the
 unit is set to the base unit of this dimension.}
 
-\item{\code{measurementUnit}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE}, unit of the values in measurement column
+    \item{\code{measurementUnit}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE}, unit of the values in measurement column
 If \code{isMeasurementUnitFromColumn} is \code{TRUE}, name of the column with units of the values in measurement column}
 
-\item{\code{isMeasurementUnitFromColumn}}{If \code{TRUE}, units of the values in measurement column
+    \item{\code{isMeasurementUnitFromColumn}}{If \code{TRUE}, units of the values in measurement column
 are defined in the column \code{measurementUnit}. If \code{FALSE}, the unit is defined by
 the value of \code{measurementUnit}.}
 
-\item{\code{errorColumn}}{Name of the column for measurement error values
+    \item{\code{errorColumn}}{Name of the column for measurement error values
 If no error column is defined, the value is \code{NULL}. Setting the value
 to \code{NULL} removes an existing error column.}
 
-\item{\code{errorUnit}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE}, unit of the values in the error column
+    \item{\code{errorUnit}}{If \code{isMeasurementUnitFromColumn} is \code{FALSE}, unit of the values in the error column
 If \code{isMeasurementUnitFromColumn} is \code{TRUE}, name of the column with units of the values in error column
 If no error column is present, the value is \code{NULL}}
 
-\item{\code{errorType}}{Type of the measurement error values. See enum \code{DataErrorType}
+    \item{\code{errorType}}{Type of the measurement error values. See enum \code{DataErrorType}
 for possible values
 If no error column is present, the value is \code{NULL}}
 
-\item{\code{groupingColumns}}{Column names by which the data will be grouped}
+    \item{\code{groupingColumns}}{Column names by which the data will be grouped}
 
-\item{\code{sheets}}{Names of the sheets (list of strings) of the excel workbook for which the
+    \item{\code{sheets}}{Names of the sheets (list of strings) of the excel workbook for which the
 configuration will be applied.}
 
-\item{\code{namingPattern}}{Regular expression used for naming of loaded data sets.
+    \item{\code{namingPattern}}{Regular expression used for naming of loaded data sets.
 Words between curly brackets (e.g. \verb{\{Group Id\}}) will be replaced by the value
 in the corresponding column. Further keywords are \code{{Source}} for the file name
 and \code{{Sheet}} for sheet name.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-DataImporterConfiguration-new}{\code{DataImporterConfiguration$new()}}
-\item \href{#method-DataImporterConfiguration-saveConfiguration}{\code{DataImporterConfiguration$saveConfiguration()}}
-\item \href{#method-DataImporterConfiguration-addGroupingColumn}{\code{DataImporterConfiguration$addGroupingColumn()}}
-\item \href{#method-DataImporterConfiguration-removeGroupingColumn}{\code{DataImporterConfiguration$removeGroupingColumn()}}
-\item \href{#method-DataImporterConfiguration-print}{\code{DataImporterConfiguration$print()}}
+  \itemize{
+    \item \href{#method-DataImporterConfiguration-initialize}{\code{DataImporterConfiguration$new()}}
+    \item \href{#method-DataImporterConfiguration-saveConfiguration}{\code{DataImporterConfiguration$saveConfiguration()}}
+    \item \href{#method-DataImporterConfiguration-addGroupingColumn}{\code{DataImporterConfiguration$addGroupingColumn()}}
+    \item \href{#method-DataImporterConfiguration-removeGroupingColumn}{\code{DataImporterConfiguration$removeGroupingColumn()}}
+    \item \href{#method-DataImporterConfiguration-print}{\code{DataImporterConfiguration$print()}}
+  }
 }
-}
-\if{html}{\out{
-<details><summary>Inherited methods</summary>
+\if{html}{\out{<details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printClass'><code>rSharp::NetObject$.printClass()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href='../../rSharp/html/NetObject.html#method-NetObject-.printLine'><code>rSharp::NetObject$.printLine()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href='../../rSharp/html/NetObject.html#method-NetObject-call'><code>rSharp::NetObject$call()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="get"><a href='../../rSharp/html/NetObject.html#method-NetObject-get'><code>rSharp::NetObject$get()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getFields'><code>rSharp::NetObject$getFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMemberSignature"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMemberSignature'><code>rSharp::NetObject$getMemberSignature()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getMethods'><code>rSharp::NetObject$getMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getProperties'><code>rSharp::NetObject$getProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticFields"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticFields'><code>rSharp::NetObject$getStaticFields()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticMethods"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticMethods'><code>rSharp::NetObject$getStaticMethods()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="getStaticProperties"><a href='../../rSharp/html/NetObject.html#method-NetObject-getStaticProperties'><code>rSharp::NetObject$getStaticProperties()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="set"><a href='../../rSharp/html/NetObject.html#method-NetObject-set'><code>rSharp::NetObject$set()</code></a></span></li>
 </ul>
-</details>
-}}
+</details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-DataImporterConfiguration-new"></a>}}
-\if{latex}{\out{\hypertarget{method-DataImporterConfiguration-new}{}}}
-\subsection{Method \code{new()}}{
-Initialize a new instance of the class
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$new(netObject = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{netObject}}{A \code{NetObject} with the reference to .NET DataImporterConfiguration object
+\if{html}{\out{<a id="method-DataImporterConfiguration-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-DataImporterConfiguration-initialize}{}}}
+\subsection{\code{DataImporterConfiguration$new()}}{
+  Initialize a new instance of the class
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataImporterConfiguration$new(netObject = NULL)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{netObject}}{A \code{NetObject} with the reference to .NET DataImporterConfiguration object
 If \code{NULL} (default), an empty configuration with columns "Time" and
 "Measurement" is created.}
+    }
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Returns}{
+    A new \code{DataImporterConfiguration} object.
+  }
 }
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{DataImporterConfiguration} object.
-}
-}
+
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataImporterConfiguration-saveConfiguration"></a>}}
 \if{latex}{\out{\hypertarget{method-DataImporterConfiguration-saveConfiguration}{}}}
-\subsection{Method \code{saveConfiguration()}}{
-Save configuration to a XML file that can be used in PK-Sim/MoBi
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$saveConfiguration(filePath)}\if{html}{\out{</div>}}
+\subsection{\code{DataImporterConfiguration$saveConfiguration()}}{
+  Save configuration to a XML file that can be used in PK-Sim/MoBi
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataImporterConfiguration$saveConfiguration(filePath)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{filePath}}{Path (incl. file name) to the location where the configuration
+will be exported to.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{filePath}}{Path (incl. file name) to the location where the configuration
-will be exported to.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataImporterConfiguration-addGroupingColumn"></a>}}
 \if{latex}{\out{\hypertarget{method-DataImporterConfiguration-addGroupingColumn}{}}}
-\subsection{Method \code{addGroupingColumn()}}{
-Add a column for grouping the data sets
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$addGroupingColumn(column)}\if{html}{\out{</div>}}
+\subsection{\code{DataImporterConfiguration$addGroupingColumn()}}{
+  Add a column for grouping the data sets
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataImporterConfiguration$addGroupingColumn(column)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{column}}{Name of the column}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{column}}{Name of the column}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataImporterConfiguration-removeGroupingColumn"></a>}}
 \if{latex}{\out{\hypertarget{method-DataImporterConfiguration-removeGroupingColumn}{}}}
-\subsection{Method \code{removeGroupingColumn()}}{
-Remove a column for grouping the data sets
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$removeGroupingColumn(column)}\if{html}{\out{</div>}}
+\subsection{\code{DataImporterConfiguration$removeGroupingColumn()}}{
+  Remove a column for grouping the data sets
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataImporterConfiguration$removeGroupingColumn(column)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{column}}{Name of the column}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{column}}{Name of the column}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-DataImporterConfiguration-print"></a>}}
 \if{latex}{\out{\hypertarget{method-DataImporterConfiguration-print}{}}}
-\subsection{Method \code{print()}}{
-Print the object to the console
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DataImporterConfiguration$print(...)}\if{html}{\out{</div>}}
+\subsection{\code{DataImporterConfiguration$print()}}{
+  Print the object to the console
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataImporterConfiguration$print(...)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{...}}{Rest arguments.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{Rest arguments.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

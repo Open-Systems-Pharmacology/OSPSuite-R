@@ -9,14 +9,14 @@ Abstract wrapper for an OSPSuite.Core ObjectBase.
 }
 \keyword{internal}
 \section{Super classes}{
-\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{ospsuite::DotNetWrapper}} -> \code{ObjectBase}
+\code{\link[rSharp:NetObject]{rSharp::NetObject}} -> \code{\link[ospsuite:DotNetWrapper]{DotNetWrapper}} -> \code{ObjectBase}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{name}}{The name of the object. (read-only)}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{name}}{The name of the object. (read-only)}
 
-\item{\code{id}}{The id of the .NET wrapped object. (read-only)}
-}
-\if{html}{\out{</div>}}
+    \item{\code{id}}{The id of the .NET wrapped object. (read-only)}
+  }
+  \if{html}{\out{</div>}}
 }
