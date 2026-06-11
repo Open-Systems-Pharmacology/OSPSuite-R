@@ -254,12 +254,6 @@
 
   Creates a list of `DataSet` objects from a `data.frame`
 
-- [`.expandPath()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-expandPath.md)
-  :
-
-  Returns the expanded path for `path` and ensure that encoding is
-  applied properly
-
 - [`.gatherFiles()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-gatherFiles.md)
   : Gather files and files from folders to one location
 

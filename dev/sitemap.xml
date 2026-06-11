@@ -106,15 +106,14 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-convertGeneralToSpecificPlotConfiguration.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-createAxesLabels.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-encodeUnit.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-expandPath.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-extractAggregatedSimulatedData.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-extractResidualsToTibble.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-gatherFiles.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-geoRange.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getConcurrentSimulationRunnerResults.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getCoreTask.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getCoreTaskFromCache.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getDimensionsEnum.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getNetTask.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getNetTaskFromCache.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getOspDimensions.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getOspUnits.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dot-getParentContainerByType.html</loc></url>
