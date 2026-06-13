@@ -232,8 +232,7 @@ test_that("it loads all sheets when no sheets in configuration and sheets = NULL
   expect_equal(length(dataSets), 4)
 })
 
-test_that("it can load when loading from file with one sheet without
-          sheet definition in configuration and importAllSheets == FALSE", {
+test_that("it can load when loading from file with one sheet without sheet definition in configuration and importAllSheets == FALSE", {
   dataSets <- loadDataSetsFromExcel(
     xlsFilePath = xlsFilePath,
     importerConfigurationOrPath = importerConfiguration,
