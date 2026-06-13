@@ -103,7 +103,7 @@ differentiation.}
     \item{\code{geomLineAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_line}}
     \item{\code{geomRibbonAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_ribbon}}
     \item{\code{geomPointAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_point}}
-    \item{\code{geomErrorbarAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_errorbar}}
+    \item{\code{geomErrorbarAttributes}}{A \code{list} with arguments which are passed on to the call \code{geom_errorbar_osp}}
     \item{\code{geomLLOQAttributes}}{A \code{list} with arguments which are passed on to the call \code{ggplot2::geom_hline}}
     \item{\code{groupAesthetics}}{vector of aesthetics, which are used for columns mapped with \code{groupby},}
   }}
