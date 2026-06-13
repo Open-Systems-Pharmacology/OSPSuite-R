@@ -432,7 +432,7 @@ getMolWeightFor <- function(quantity, unit = NULL, stopIfNotFound = FALSE) {
   paramPath <- paste(moleculeContainer$name, "Molecular weight", sep = "|")
 
   rootContainer <- .getParentContainerByType(quantity, "Simulation")
-  task <- .getCoreTask("ContainerTask")
+  task <- .getCoreTaskFromCache("ContainerTask")
   paramMW <- task$call("AllParametersMatching", rootContainer, paramPath)
 
   if (length(paramMW) == 0) {
