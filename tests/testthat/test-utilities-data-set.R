@@ -517,6 +517,10 @@ test_that("it preserves configuration sheets after using sheets parameter", {
 })
 
 test_that("importAllSheets parameter is deprecated", {
+  # setup.R silences lifecycle warnings globally; re-enable locally so the
+  # deprecation warning is emitted and captured by the snapshot.
+  withr::local_options(lifecycle_verbosity = "warning")
+
   xlsPath <- getTestDataFilePath("CompiledDataSet_oneSheet.xlsx")
   configPath <- getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
 
