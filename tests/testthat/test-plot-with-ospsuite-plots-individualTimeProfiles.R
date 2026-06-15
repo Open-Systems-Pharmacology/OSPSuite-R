@@ -262,11 +262,7 @@ test_that("It plots LLOQ correctly on log scale", {
 test_that("It plots data with two y-axis dimensions (fraction and concentration)", {
   vdiffr::expect_doppelganger(
     title = "with_secAxis",
-    fig = plotTimeProfile(manyObsSimDCWithFraction, yScale = "log") +
-      ggplot2::theme(
-        legend.position = c(0.95, 0.05),
-        legend.justification = c("right", "bottom")
-      )
+    fig = plotTimeProfile(manyObsSimDCWithFraction, yScale = "log")
   )
 })
 
