@@ -1,7 +1,3 @@
-# Set defaults
-ggplot2::theme_update(legend.position = c(0.95, 0.95))
-ggplot2::theme_update(legend.justification = c("right", "top"))
-
 # data to be used ---------------------------------------
 
 # load the simulation
