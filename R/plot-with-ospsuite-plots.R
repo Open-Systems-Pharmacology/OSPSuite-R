@@ -1,3 +1,15 @@
+#' Apply ospsuite default theme tweaks to a returned plot object
+#'
+#' Blanks the redundant legend title. Applied locally to the returned ggplot
+#' object, so it does not mutate the global ggplot2 theme (unlike
+#' `ggplot2::theme_update()`).
+#'
+#' @keywords internal
+#' @noRd
+.applyOspsuitePlotTheme <- function(plotObject) {
+  plotObject + ggplot2::theme(legend.title = ggplot2::element_blank())
+}
+
 #' @title Create Time Profile Plot
 #'
 #' @description Creates a time profile plot for given data.
@@ -198,7 +210,7 @@ plotTimeProfile <- function(
     )
   )
 
-  return(plotObject)
+  return(.applyOspsuitePlotTheme(plotObject))
 }
 
 #' @title Plot Predicted vs Observed Values
@@ -319,7 +331,7 @@ plotPredictedVsObserved <- function(
   plotObject$labels[[predictedAxis]] <-
     paste(c(commonLabel, "predicted"), collapse = "\n")
 
-  return(plotObject)
+  return(.applyOspsuitePlotTheme(plotObject))
 }
 
 #' @title Plot Residuals vs Covariate
@@ -475,7 +487,7 @@ plotResidualsVsCovariate <- function(
     plotObject$labels[['x']] <- paste0(plotObject$labels[['x']], '\n', xAxis)
   }
 
-  return(plotObject)
+  return(.applyOspsuitePlotTheme(plotObject))
 }
 
 #' @title Plot Residuals Histogram
@@ -554,7 +566,7 @@ plotResidualsAsHistogram <- function(
     )
   )
 
-  return(plotObject)
+  return(.applyOspsuitePlotTheme(plotObject))
 }
 
 #' @title Plot Quantile-Quantile Plot
@@ -633,7 +645,7 @@ plotQuantileQuantilePlot <- function(
     )
   )
 
-  return(plotObject)
+  return(.applyOspsuitePlotTheme(plotObject))
 }
 
 #' Validates observed data and converts it to appropriate format.

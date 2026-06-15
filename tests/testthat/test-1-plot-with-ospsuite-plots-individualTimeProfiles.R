@@ -1,8 +1,3 @@
-# Set defaults
-ggplot2::theme_update(legend.title = ggplot2::element_blank())
-ggplot2::theme_update(legend.position = c(0.95, 0.95))
-ggplot2::theme_update(legend.justification = c("right", "top"))
-
 ### only observed ------------------------
 test_that("It creates default plots as expected for single observed dataset", {
   set.seed(123)
@@ -255,8 +250,9 @@ test_that("It plots data with two y-axis dimensions (fraction and concentration)
     title = "with_secAxis",
     fig = plotTimeProfile(manyObsSimDCWithFraction(), yScale = "log") +
       ggplot2::theme(
-        legend.position = c(0.95, 0.05),
-        legend.justification = c("right", "bottom")
+        legend.position = "inside",
+        legend.position.inside = c(0.95, 0.05),
+        legend.justification.inside = c("right", "bottom")
       )
   )
 })

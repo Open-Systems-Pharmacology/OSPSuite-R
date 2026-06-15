@@ -70,15 +70,16 @@ test_that("It creates default plots as expected for both observed and simulated"
 
 test_that("It respects custom plot configuration", {
   set.seed(123)
+  dpc <- customDPC()
   vdiffr::expect_doppelganger(
     title = "both - custom",
-    fig = plotIndividualTimeProfile(oneObsSimDC(), customDPC())
+    fig = plotIndividualTimeProfile(oneObsSimDC(), dpc)
   )
 
   # Since these were not specified by the user, they should not be updated
   # after plotting function is done with it.
-  expect_null(customDPC()$xLabel)
-  expect_null(customDPC()$yLabel)
+  expect_null(dpc$xLabel)
+  expect_null(dpc$yLabel)
 })
 
 test_that("It plots both observed and simulated datasets with dataset name legend entries", {

@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-individual.R
 \name{createIndividualCharacteristics}
 \alias{createIndividualCharacteristics}
-\title{Creates an individual using the PK-Sim Database.}
+\title{Create the characteristics of an individual using the PK-Sim Database.}
 \usage{
 createIndividualCharacteristics(
   species,
@@ -44,15 +44,15 @@ createIndividualCharacteristics(
 \item{gestationalAgeUnit}{Unit in which the gestational age value is defined. Default is week(s)}
 
 \item{moleculeOntogenies}{Optional list of \code{MoleculeOntogeny} that will be used to retrieve ontogeny information for molecules.
-A \code{MoleculeOntogeny} is an object with the name a \code{molecule} property (e.g the name of the molecule as defined in your simulation)
+A \code{MoleculeOntogeny} is an object with a \code{molecule} property (e.g. the name of the molecule as defined in your simulation)
 and an \code{ontogeny} property (e.g. the name of the predefined ontogeny to use for this molecule). The list of all available ontogenies
 can be accessed programmatically using the enum \code{StandardOntogeny}}
 
 \item{seed}{Optional seed parameter to use to generate start values for the created individual algorithm.}
 }
 \value{
-An array of \code{ParameterValue} containing the value of each individual parameter
+An \code{IndividualCharacteristics} object.
 }
 \description{
-Creates an individual using the PK-Sim Database.
+Create the characteristics of an individual using the PK-Sim Database.
 }
