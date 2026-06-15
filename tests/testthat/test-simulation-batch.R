@@ -37,8 +37,7 @@ test_that("It can print simulation batch", {
   expect_snapshot(print(simBatch), transform = transformId)
 })
 
-test_that("It returns correct lists for variable parameters or molecules, or NULL
-          when no variable entities are specified", {
+test_that("It returns correct lists for variable parameters or molecules, or NULL when no variable entities are specified", {
   # Create simulation batch and define all parameters as variable
   simBatch <- createSimulationBatch(
     simulation = sim,
