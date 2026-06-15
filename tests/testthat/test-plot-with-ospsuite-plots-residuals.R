@@ -277,11 +277,7 @@ test_that("showLegendPerDataset adds shape mapping for observed datasets", {
       myCombDat,
       residualScale = "linear",
       showLegendPerDataset = "observed"
-    ) +
-      ggplot2::theme(
-        legend.position = c(0.05, 0.05),
-        legend.justification = c("left", "bottom")
-      )
+    )
   )
 
   set.seed(123)
@@ -291,11 +287,7 @@ test_that("showLegendPerDataset adds shape mapping for observed datasets", {
       myCombDat,
       residualScale = "linear",
       showLegendPerDataset = "none"
-    ) +
-      ggplot2::theme(
-        legend.position = c(0.05, 0.05),
-        legend.justification = c("left", "bottom")
-      )
+    )
   )
 })
 
@@ -340,10 +332,6 @@ test_that("User mapping overrides showLegendPerDataset in residuals", {
       residualScale = "linear",
       showLegendPerDataset = "observed",
       mapping = ggplot2::aes(groupby = name)
-    ) +
-      ggplot2::theme(
-        legend.position = c(0.05, 0.05),
-        legend.justification = c("left", "bottom")
-      )
+    )
   )
 })
