@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-individual.R
 \name{createIndividualCharacteristics}
 \alias{createIndividualCharacteristics}
-\title{Creates an individual using the PK-Sim Database.}
+\title{Create the characteristics of an individual using the PK-Sim Database.}
 \usage{
 createIndividualCharacteristics(
   species,
@@ -51,8 +51,8 @@ can be accessed programmatically using the enum \code{StandardOntogeny}}
 \item{seed}{Optional seed parameter to use to generate start values for the created individual algorithm.}
 }
 \value{
-An array of \code{ParameterValue} containing the value of each individual parameter
+An \code{IndividualCharacteristics} object.
 }
 \description{
-Creates an individual using the PK-Sim Database.
+Create the characteristics of an individual using the PK-Sim Database.
 }

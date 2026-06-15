@@ -49,6 +49,6 @@ toPathString <- function(...) {
   if (length(pathEntries) <= 1) {
     return(NULL)
   }
-  parentPathEntries <- head(pathEntries, -1)
+  parentPathEntries <- utils::head(pathEntries, -1)
   toPathString(parentPathEntries)
 }
