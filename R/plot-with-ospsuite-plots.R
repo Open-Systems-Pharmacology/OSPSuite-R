@@ -1,19 +1,13 @@
 #' Apply ospsuite default theme tweaks to a returned plot object
 #'
-#' Blanks the redundant legend title and places the legend inside the panel
-#' (top-right). Applied locally to the returned ggplot object, so it does not
-#' mutate the global ggplot2 theme (unlike `ggplot2::theme_update()`).
+#' Blanks the redundant legend title. Applied locally to the returned ggplot
+#' object, so it does not mutate the global ggplot2 theme (unlike
+#' `ggplot2::theme_update()`).
 #'
 #' @keywords internal
 #' @noRd
 .applyOspsuitePlotTheme <- function(plotObject) {
-  plotObject +
-    ggplot2::theme(
-      legend.title = ggplot2::element_blank(),
-      legend.position = "inside",
-      legend.position.inside = c(0.95, 0.95),
-      legend.justification.inside = c("right", "top")
-    )
+  plotObject + ggplot2::theme(legend.title = ggplot2::element_blank())
 }
 
 #' @title Create Time Profile Plot
