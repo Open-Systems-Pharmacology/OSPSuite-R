@@ -60,6 +60,7 @@ validateUnit <- function(unit, dimension) {
 #' @export
 isSupportedUnit <- function(unit) {
   validateIsString(unit)
+  validateIsOfLength(unit, 1)
   return(unit %in% unlist(ospUnits))
 }
 
