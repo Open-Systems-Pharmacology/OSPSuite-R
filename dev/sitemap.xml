@@ -183,6 +183,7 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/index.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/initPKSim.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/isExplicitFormulaByPath.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/isSupportedUnit.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadAgingDataFromCSV.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataImporterConfiguration.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetFromPKML.html</loc></url>
@@ -239,6 +240,7 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/uniqueEntities.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/updatePKParameter.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateDimension.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateIsNamedList.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateUnit.html</loc></url>
 </urlset>
 

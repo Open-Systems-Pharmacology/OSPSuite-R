@@ -2,6 +2,14 @@
 
 ## ospsuite (development version)
 
+### Minor improvements and bug fixes
+
+- Added
+  [`isSupportedUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/isSupportedUnit.md)
+  and
+  [`validateIsNamedList()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateIsNamedList.md)
+  helper functions to the exported API.
+
 ## ospsuite 12.4.3
 
 ### Major changes

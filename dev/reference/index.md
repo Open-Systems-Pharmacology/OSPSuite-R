@@ -226,10 +226,12 @@
   Create a `DataImporterConfiguration` for an XLS sheet
 
 - [`createIndividual()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividual.md)
-  : Creates an individual using the PK-Sim Database
+  : Creates a set of parameter values describing an individual using the
+  PK-Sim Database
 
 - [`createIndividualCharacteristics()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividualCharacteristics.md)
-  : Creates an individual using the PK-Sim Database.
+  : Create the characteristics of an individual using the PK-Sim
+  Database.
 
 - [`createPopulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createPopulation.md)
   : Creates an population using the PK-Sim Database
@@ -453,6 +455,9 @@
 - [`isExplicitFormulaByPath()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/isExplicitFormulaByPath.md)
   : Is the value defined by an explicit formula
 
+- [`isSupportedUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/isSupportedUnit.md)
+  : Check if unit is supported in the OSPSuite platform
+
 - [`loadAgingDataFromCSV()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadAgingDataFromCSV.md)
   : Loads aging data (typically generated from PK-Sim) i
 
@@ -648,6 +653,9 @@
 
 - [`validateDimension()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateDimension.md)
   : Validate dimension
+
+- [`validateIsNamedList()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateIsNamedList.md)
+  : Validate that an object is a named list
 
 - [`validateUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateUnit.md)
   : Validate unit
