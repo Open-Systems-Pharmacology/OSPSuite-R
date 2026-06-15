@@ -222,8 +222,7 @@ test_that("It returns true for an existing unit in the dimension, false otherwis
 })
 
 # validateUnit
-test_that("It returns NULL when the unit exists in the dimension,
-          or throws an error otherwise", {
+test_that("It returns NULL when the unit exists in the dimension, or throws an error otherwise", {
   expect_null(validateUnit(unit = .encodeUnit("µmol"), dimension = "Amount"))
   expect_error(
     validateUnit(unit = "g", dimension = "Amount"),

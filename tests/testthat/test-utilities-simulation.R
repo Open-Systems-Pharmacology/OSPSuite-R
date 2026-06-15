@@ -693,6 +693,10 @@ test_that("`exportSteadyStateToXLS` generates excel file with correct sheets", {
 # runSimulation
 
 test_that("`runSimulation()` is deprecated", {
+  # setup.R silences lifecycle warnings globally; re-enable locally so the
+  # deprecation warning is emitted and captured by the snapshot.
+  withr::local_options(lifecycle_verbosity = "warning")
+
   expect_snapshot({
     sim <- loadTestSimulation("simple", loadFromCache = TRUE)
     results <- runSimulation(sim)
