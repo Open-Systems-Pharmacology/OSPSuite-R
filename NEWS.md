@@ -1,5 +1,9 @@
 # ospsuite (development version)
 
+## Minor improvements and bug fixes
+
+- Added `isSupportedUnit()` and `validateIsNamedList()` helper functions to the exported API.
+
 # ospsuite 12.4.3
 
 ## Major changes
