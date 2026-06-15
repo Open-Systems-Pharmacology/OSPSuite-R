@@ -281,7 +281,6 @@ loadDataSetsFromExcel <- function(
 
   validateIsLogical(importAllSheets)
 
-  dataImporterTask <- .getCoreTaskFromCache("DataImporterTask")
   # Validate sheets parameter
   if (!is.null(sheets)) {
     validateIsString(sheets)
