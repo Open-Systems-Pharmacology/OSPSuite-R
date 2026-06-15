@@ -1,8 +1,3 @@
-# Set defaults
-ggplot2::theme_update(legend.title = ggplot2::element_blank())
-ggplot2::theme_update(legend.position = c(0.95, 0.95))
-ggplot2::theme_update(legend.justification = c("right", "top"))
-
 # `DataCombined` objects ------------------------
 
 oneObsDC <- readRDS(getTestDataFilePath("oneObsDC"))
@@ -267,11 +262,7 @@ test_that("It plots LLOQ correctly on log scale", {
 test_that("It plots data with two y-axis dimensions (fraction and concentration)", {
   vdiffr::expect_doppelganger(
     title = "with_secAxis",
-    fig = plotTimeProfile(manyObsSimDCWithFraction, yScale = "log") +
-      ggplot2::theme(
-        legend.position = c(0.95, 0.05),
-        legend.justification = c("right", "bottom")
-      )
+    fig = plotTimeProfile(manyObsSimDCWithFraction, yScale = "log")
   )
 })
 
