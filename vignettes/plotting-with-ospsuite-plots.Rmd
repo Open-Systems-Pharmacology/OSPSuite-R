@@ -503,6 +503,20 @@ p <- p +
 print(p)
 ```
 
+### Legend title
+
+By default these plotting functions blank the legend title, since the grouping
+is usually self-explanatory. To show a legend title again, add a
+`theme(legend.title = ...)` layer:
+
+```{r legend-title, eval=FALSE}
+# Re-enable the (default ggplot2) legend title
+p <- plotTimeProfile(myDataCombined) +
+  ggplot2::theme(legend.title = ggplot2::element_text())
+
+print(p)
+```
+
 ## Saving Plots
 
 Since all functions return `ggplot2` objects, you can save them using `ospsuite.plots::exportPlot()`:
