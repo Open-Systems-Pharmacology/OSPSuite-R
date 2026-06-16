@@ -1,5 +1,9 @@
 name: Check against released dependencies
 
+# Nightly R-CMD-check against the latest *released* OSP dependencies: the
+# reusable workflow pins Remotes to @*release before checking. Complements
+# check-dev-deps.yaml, which checks against the current (development) deps.
+
 on:
   schedule:
     - cron: '0 3 * * *' # Run at 3 AM UTC daily (after renv nightly at 2 AM)
