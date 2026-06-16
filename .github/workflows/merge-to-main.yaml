@@ -37,4 +37,5 @@ jobs:
     if: ${{ !cancelled() }}
     permissions:
       contents: write # deploys the built pkgdown site
+      pull-requests: read # the workflow's check-changes job reads PR file changes
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
