@@ -1,0 +1,20 @@
+name: Publish Release Workflow
+
+# Manual "publish the release": dispatch after a release PR has merged (so
+# DESCRIPTION is at x.y.z). R-CMD-check builds the per-OS binaries; publish-release
+# then force-tags vX.Y.Z at the main HEAD and creates/updates the GitHub Release
+# with NEWS.md notes and the binaries attached. A dev version is a no-op.
+
+on:
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  R-CMD-Check:
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+
+  publish-release:
+    needs: [R-CMD-Check]
+    if: ${{ needs.R-CMD-Check.result == 'success' }}
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/publish-release.yaml@main
