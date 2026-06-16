@@ -503,6 +503,49 @@ p <- p +
 print(p)
 ```
 
+### Legend title
+
+By default these plotting functions blank the legend title, since the grouping
+is usually self-explanatory. To show a legend title again, add a
+`theme(legend.title = ...)` layer:
+
+```{r legend-title, eval=FALSE}
+# Re-enable the (default ggplot2) legend title
+p <- plotTimeProfile(myDataCombined) +
+  ggplot2::theme(legend.title = ggplot2::element_text())
+
+print(p)
+```
+
+### Legend position
+
+By default the legend is placed to the right of the panel (the `ggplot2`
+default). Adjust its location to suit your needs with a `theme()` layer:
+
+```{r legend-position, eval=FALSE}
+library(ggplot2)
+
+p <- plotTimeProfile(myDataCombined)
+
+# Move the legend below the plot
+p + theme(legend.position = "bottom")
+
+# Remove the legend entirely
+p + theme(legend.position = "none")
+
+# Place the legend inside the panel, anchored to its top-right corner
+p + theme(
+  legend.position = "inside",
+  legend.position.inside = c(0.95, 0.95),
+  legend.justification.inside = c("right", "top")
+)
+```
+
+The `"inside"` placement together with `legend.position.inside` /
+`legend.justification.inside` requires `ggplot2 >= 3.5`. In older versions use
+the numeric form `legend.position = c(0.95, 0.95)` and
+`legend.justification = c("right", "top")` instead.
+
 ## Saving Plots
 
 Since all functions return `ggplot2` objects, you can save them using `ospsuite.plots::exportPlot()`:

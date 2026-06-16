@@ -13,6 +13,10 @@ To be able to use creation of individuals or populations with earlier models, th
 If no original PK-Sim project or snapshot are available, the user should use the latest version 12 of the R package.
 - `SimulationRunOptions$checkForNegativeValues` field has been removed. The property is now on `SolverSettings` and accessible via `simulation$solver$checkForNegativeValues`. The `checkForNegativeValues` argument of `SimulationRunOptions$new()` is kept for backward compatibility but issues a deprecation warning and has no effect.
 
+## Minor improvements and bug fixes
+
+- Added `isSupportedUnit()` and `validateIsNamedList()` helper functions to the exported API.
+
 # ospsuite 12.4.3
 
 ## Major changes

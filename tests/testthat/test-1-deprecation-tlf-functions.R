@@ -1,5 +1,12 @@
 # Soft deprecation warnings for tlf-based plotting functions
 
+# setup.R silences lifecycle warnings globally; re-enable them for this file
+# since the assertions below depend on the deprecation warnings firing.
+withr::local_options(
+  lifecycle_verbosity = "warning",
+  .local_envir = teardown_env()
+)
+
 # plotIndividualTimeProfile -----------------------------------------------
 
 test_that("plotIndividualTimeProfile emits a soft deprecation warning pointing to plotTimeProfile", {

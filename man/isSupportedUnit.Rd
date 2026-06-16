@@ -9,9 +9,17 @@ isSupportedUnit(unit)
 \arguments{
 \item{unit}{String name of the unit}
 }
+\value{
+Logical: \code{TRUE} if the unit is supported, \code{FALSE} otherwise.
+}
 \description{
 Check if unit is supported in the OSPSuite platform
 }
 \details{
 Returns \code{TRUE} if the provided unit is supported in the OSPSuite platform, otherwise \code{FALSE}
+}
+\examples{
+isSupportedUnit("kg")
+isSupportedUnit("invalid_unit")
+
 }
