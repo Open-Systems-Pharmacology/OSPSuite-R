@@ -8,7 +8,7 @@ name: Publish Release Workflow
 on:
   workflow_dispatch:
 
-permissions: write-all
+permissions: read-all
 
 jobs:
   R-CMD-Check:
@@ -17,4 +17,7 @@ jobs:
   publish-release:
     needs: [R-CMD-Check]
     if: ${{ needs.R-CMD-Check.result == 'success' }}
+    permissions:
+      contents: write # force-tags vX.Y.Z and creates/updates the GitHub Release
+      actions: read # download-artifact reads the run's binaries
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/publish-release.yaml@main

@@ -10,12 +10,14 @@ on:
     branches: [main]
   workflow_dispatch:
 
-permissions: write-all
+permissions: read-all
 
 jobs:
   # Pushes the dev bump directly to the protected main branch, so it needs an
   # App token whose identity is in the branch ruleset's bypass list.
   bump-dev-version:
+    permissions:
+      contents: write # pushes the dev-version bump to main
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/bump-dev-version.yaml@main
     with:
       app-id: ${{ vars.VERSION_BUMPER_APPID }}

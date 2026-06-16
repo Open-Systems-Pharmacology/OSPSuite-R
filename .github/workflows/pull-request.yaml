@@ -7,10 +7,12 @@ name: Pull Request Workflow
 on:
   pull_request:
 
-permissions: write-all
+permissions: read-all
 
 jobs:
   sync-remotes:
+    permissions:
+      contents: write # commits the synced Remotes back to the PR branch
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/sync-remotes.yaml@main
     secrets: inherit
 
