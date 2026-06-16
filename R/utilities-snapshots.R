@@ -183,6 +183,76 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
 }
 
 
+#' Load simulations from a snapshot file
+#'
+#' @description
+#' Loads the simulations stored in a snapshot file and returns them as a list of
+#' [Simulation] objects. By default every simulation in the snapshot is loaded.
+#' When `simulationNames` are supplied, only the simulations whose name matches
+#' (case-sensitive) are returned.
+#'
+#' The returned simulations behave like simulations loaded from a `.pkml` file
+#' with [loadSimulation()], so they can be inspected, modified, and run.
+#'
+#' @details
+#' `r lifecycle::badge("experimental")`
+#'
+#' Note: this requires the computational core to attach a `SimulationConfiguration`
+#' to simulations loaded from a snapshot. Until that is in place, wrapping the
+#' loaded simulations into [Simulation] objects fails (the configuration is
+#' `NULL`). Tracked in
+#' \url{https://github.com/Open-Systems-Pharmacology/PK-Sim/issues/3560}.
+#'
+#' @param snapshotFile Character string, path to the snapshot file (`.json`).
+#' @param simulationNames Optional character vector of simulation names to load.
+#'   If `NULL` (default), all simulations in the snapshot are loaded.
+#'
+#' @return A list of [Simulation] objects. The list is empty if no simulation
+#'   matches the requested names.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # Load every simulation from a snapshot
+#' simulations <- loadSimulationsFromSnapshot("path/to/snapshot.json")
+#' # Names of the loaded simulations
+#' vapply(simulations, function(sim) sim$name, character(1))
+#'
+#' # Load only a specific simulation by name
+#' simulations <- loadSimulationsFromSnapshot(
+#'   "path/to/snapshot.json",
+#'   simulationNames = "My simulation"
+#' )
+#' }
+loadSimulationsFromSnapshot <- function(snapshotFile, simulationNames = NULL) {
+  validateIsString(snapshotFile)
+  validateIsString(simulationNames, nullAllowed = TRUE)
+
+  if (!file.exists(snapshotFile)) {
+    cli::cli_abort(
+      message = c(
+        "x" = "The snapshot file provided does not exist: {.file {snapshotFile}}"
+      )
+    )
+  }
+
+  initPKSim()
+
+  snapshotTask <- rSharp::callStatic("PKSim.R.Api, PKSim.R", "GetSnapshotTask")
+
+  # `LoadSimulationsFromSnapshot(string file, params string[] names)` expects the
+  # names spread as individual positional arguments so each is marshalled as an
+  # element of the `params` array.
+  args <- c(
+    list("LoadSimulationsFromSnapshot", normalizePath(snapshotFile)),
+    as.list(simulationNames)
+  )
+  netSimulations <- do.call(snapshotTask$call, args)
+
+  lapply(netSimulations, function(netSimulation) Simulation$new(netSimulation))
+}
+
 #' Gather files and files from folders to one location
 #'
 #' @param ... character strings of file paths or folder paths

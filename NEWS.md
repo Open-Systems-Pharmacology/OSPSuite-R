@@ -15,6 +15,7 @@ If no original PK-Sim project or snapshot are available, the user should use the
 
 ## Minor improvements and bug fixes
 
+- Added experimental `loadSimulationsFromSnapshot()` to load simulations stored in a snapshot file as `Simulation` objects, optionally filtering by simulation name (#1929). Note: full functionality depends on a computational-core follow-up that attaches a simulation configuration to snapshot-loaded simulations ([PK-Sim#3560](https://github.com/Open-Systems-Pharmacology/PK-Sim/issues/3560)). See `vignette("snapshots")` for an overview of the snapshot helpers.
 - Added `isSupportedUnit()` and `validateIsNamedList()` helper functions to the exported API.
 
 # ospsuite 12.4.3

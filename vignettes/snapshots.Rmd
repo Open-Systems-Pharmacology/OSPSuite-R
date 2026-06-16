@@ -1,0 +1,137 @@
+---
+title: "Working with snapshots"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Working with snapshots}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+A *snapshot* is a JSON representation of a PK-Sim or MoBi project. Snapshots are
+human-readable, diff-friendly, and version-control-tractable, which makes them a
+convenient exchange format for projects. `{ospsuite}` exposes helpers to load
+simulations from a snapshot, run simulations stored in a snapshot, and convert
+between the snapshot and project formats.
+
+All snapshot helpers require PK-Sim to be installed and initialized. The
+functions take care of initialization for you, but make sure PK-Sim is available
+(see `vignette("PKSim-installation")`).
+
+```{r library}
+library(ospsuite)
+```
+
+## Loading simulations from a snapshot
+
+`loadSimulationsFromSnapshot()` reads the simulations stored in a snapshot file
+and returns them as a list of `Simulation` objects. These behave exactly like
+simulations loaded from a `.pkml` file with `loadSimulation()`, so you can
+inspect their parameters, modify them, and run them.
+
+By default, every simulation in the snapshot is loaded:
+
+```{r loadAll}
+simulations <- loadSimulationsFromSnapshot("path/to/snapshot.json")
+
+# Names of the loaded simulations
+vapply(simulations, function(sim) sim$name, character(1))
+```
+
+When you only need specific simulations, pass their names via `simulationNames`.
+The match is case-sensitive:
+
+```{r loadByName}
+simulations <- loadSimulationsFromSnapshot(
+  "path/to/snapshot.json",
+  simulationNames = c("Simulation A", "Simulation B")
+)
+```
+
+If no simulation in the snapshot matches the requested names, an empty list is
+returned.
+
+Once loaded, a simulation can be used like any other:
+
+```{r useSimulation}
+simulation <- loadSimulationsFromSnapshot("path/to/snapshot.json")[[1]]
+
+results <- runSimulations(simulation)[[1]]
+```
+
+> **Note**
+>
+> `loadSimulationsFromSnapshot()` is **experimental** and depends on a
+> computational-core follow-up
+> ([PK-Sim#3560](https://github.com/Open-Systems-Pharmacology/PK-Sim/issues/3560)):
+> snapshot-loaded simulations must carry a simulation configuration before they
+> can be wrapped into `Simulation` objects. Until that ships, this function
+> errors. To *run* simulations stored in a snapshot in the meantime, use
+> `runSimulationsFromSnapshot()` (see below).
+
+## Running simulations from a snapshot
+
+`runSimulationsFromSnapshot()` runs every simulation contained in one or more
+snapshot files (or directories of snapshot files) and writes the results to an
+output directory. Unlike `loadSimulationsFromSnapshot()`, it does not return the
+simulations to R; instead it exports the results to disk in the requested
+formats.
+
+```{r runFromSnapshot}
+runSimulationsFromSnapshot(
+  "path/to/snapshot.json",
+  output = "path/to/output",
+  exportCSV = TRUE,
+  exportPKML = TRUE
+)
+```
+
+The export formats are controlled independently:
+
+* `exportCSV` (default `TRUE`) — results as CSV.
+* `exportPKML` (default `FALSE`) — results as PKML.
+* `exportJSON` (default `FALSE`) — results as JSON.
+* `exportXML` (default `FALSE`) — results as XML.
+
+Set `RunForAllOutputs = TRUE` to compute all model outputs instead of only the
+output selections defined in the snapshot.
+
+You can pass several snapshot files or directories at once:
+
+```{r runMultiple}
+runSimulationsFromSnapshot(
+  "path/to/snapshot1.json",
+  "path/to/folder_of_snapshots",
+  output = "path/to/output"
+)
+```
+
+## Converting between snapshot and project formats
+
+`convertSnapshot()` converts files between the snapshot (`.json`) and project
+(`.pksim5`) formats. The `format` argument names the *target* format:
+
+```{r convertToProject}
+# Snapshot -> project
+convertSnapshot(
+  "path/to/snapshot.json",
+  format = "project",
+  output = "path/to/output"
+)
+
+# Project -> snapshot
+convertSnapshot(
+  "path/to/project.pksim5",
+  format = "snapshot",
+  output = "path/to/output"
+)
+```
+
+When converting from a snapshot to a project, set `runSimulations = TRUE` to also
+run the simulations during conversion.
+
+As with `runSimulationsFromSnapshot()`, you can pass several files or directories
+at once.
