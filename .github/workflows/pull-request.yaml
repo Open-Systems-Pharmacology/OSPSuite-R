@@ -31,4 +31,6 @@ jobs:
   pkgdown:
     needs: [sync-remotes]
     if: ${{ !cancelled() }}
+    permissions:
+      contents: write # required by the pkgdown reusable workflow (no deploy on PRs)
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main

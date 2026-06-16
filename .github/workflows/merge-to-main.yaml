@@ -36,4 +36,6 @@ jobs:
 
   pkgdown:
     if: ${{ !cancelled() }}
+    permissions:
+      contents: write # deploys the built pkgdown site
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
