@@ -2,16 +2,6 @@
 # `LoadSimulationsFromSnapshot` API. It returns the simulations stored in a
 # snapshot file as `Simulation` objects, or - when simulation names are supplied -
 # only the matching simulations (case-sensitive match).
-#
-# KNOWN FAILURE: these tests currently FAIL on purpose. The computational core
-# returns snapshot-loaded simulations without a `SimulationConfiguration` (it is
-# `NULL`), so wrapping them into `Simulation` objects via `Simulation$new()`
-# throws a `NullReferenceException` in `CreateSimulationBuilderFor`. The tests
-# encode the intended behaviour and act as the acceptance criterion for the
-# .NET-side fix tracked in:
-#   https://github.com/Open-Systems-Pharmacology/PK-Sim/issues/3560
-# Once the core attaches a configuration to snapshot-loaded simulations, these
-# tests must pass unchanged.
 
 snapshotFile <- getTestDataFilePath("test_snapshot.json")
 

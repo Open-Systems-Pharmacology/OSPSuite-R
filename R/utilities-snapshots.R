@@ -194,15 +194,6 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
 #' The returned simulations behave like simulations loaded from a `.pkml` file
 #' with [loadSimulation()], so they can be inspected, modified, and run.
 #'
-#' @details
-#' `r lifecycle::badge("experimental")`
-#'
-#' Note: this requires the computational core to attach a `SimulationConfiguration`
-#' to simulations loaded from a snapshot. Until that is in place, wrapping the
-#' loaded simulations into [Simulation] objects fails (the configuration is
-#' `NULL`). Tracked in
-#' \url{https://github.com/Open-Systems-Pharmacology/PK-Sim/issues/3560}.
-#'
 #' @param snapshotFile Character string, path to the snapshot file (`.json`).
 #' @param simulationNames Optional character vector of simulation names to load.
 #'   If `NULL` (default), all simulations in the snapshot are loaded.

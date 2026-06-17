@@ -62,16 +62,6 @@ simulation <- loadSimulationsFromSnapshot("path/to/snapshot.json")[[1]]
 results <- runSimulations(simulation)[[1]]
 ```
 
-> **Note**
->
-> `loadSimulationsFromSnapshot()` is **experimental** and depends on a
-> computational-core follow-up
-> ([PK-Sim#3560](https://github.com/Open-Systems-Pharmacology/PK-Sim/issues/3560)):
-> snapshot-loaded simulations must carry a simulation configuration before they
-> can be wrapped into `Simulation` objects. Until that ships, this function
-> errors. To *run* simulations stored in a snapshot in the meantime, use
-> `runSimulationsFromSnapshot()` (see below).
-
 ## Running simulations from a snapshot
 
 `runSimulationsFromSnapshot()` runs every simulation contained in one or more

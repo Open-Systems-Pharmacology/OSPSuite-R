@@ -25,15 +25,6 @@ When \code{simulationNames} are supplied, only the simulations whose name matche
 The returned simulations behave like simulations loaded from a \code{.pkml} file
 with \code{\link[=loadSimulation]{loadSimulation()}}, so they can be inspected, modified, and run.
 }
-\details{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
-Note: this requires the computational core to attach a \code{SimulationConfiguration}
-to simulations loaded from a snapshot. Until that is in place, wrapping the
-loaded simulations into \link{Simulation} objects fails (the configuration is
-\code{NULL}). Tracked in
-\url{https://github.com/Open-Systems-Pharmacology/PK-Sim/issues/3560}.
-}
 \examples{
 \dontrun{
 # Load every simulation from a snapshot
