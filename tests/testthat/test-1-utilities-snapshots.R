@@ -86,39 +86,52 @@ test_that("runSimulationsFromSnapshot arguments are checked", {
   ))
 })
 
-test_that("Convert snapshot to project works", {
+test_that("loadProjectFromSnapshot converts a snapshot to a project", {
   path <- getTestDataFilePath("test_snapshot.json")
   temp_dir <- withr::local_tempdir()
-  convertSnapshot(path, output = temp_dir, format = "project")
+  loadProjectFromSnapshot(path, output = temp_dir)
 
   expect_length(list.files(temp_dir, pattern = ".pksim5"), 1)
 })
 
-test_that("Convert project to snapshot works", {
+test_that("exportProjectToSnapshot converts a project to a snapshot", {
   path <- getTestDataFilePath("test_project.pksim5")
   temp_dir <- withr::local_tempdir()
-  convertSnapshot(path, output = temp_dir, format = "snapshot")
+  exportProjectToSnapshot(path, output = temp_dir)
 
   expect_length(list.files(temp_dir, pattern = ".json"), 1)
 })
 
-test_that("RunSimulations argument is supported", {
+test_that("loadProjectFromSnapshot runSimulations argument is supported", {
   path <- getTestDataFilePath("test_snapshot.json")
   temp_dir <- withr::local_tempdir()
   expect_no_error({
-    convertSnapshot(
-      path,
-      output = temp_dir,
-      format = "project",
-      runSimulations = TRUE
-    )
-    convertSnapshot(
-      path,
-      output = temp_dir,
-      format = "project",
-      runSimulations = FALSE
-    )
+    loadProjectFromSnapshot(path, output = temp_dir, runSimulations = TRUE)
+    loadProjectFromSnapshot(path, output = temp_dir, runSimulations = FALSE)
   })
+})
+
+test_that("convertSnapshot is deprecated but still delegates", {
+  # setup.R silences lifecycle warnings globally; force them on so the
+  # deprecation warning is emitted and can be captured here.
+  withr::local_options(lifecycle_verbosity = "warning")
+
+  path <- getTestDataFilePath("test_snapshot.json")
+  temp_dir <- withr::local_tempdir()
+
+  expect_warning(
+    convertSnapshot(path, output = temp_dir, format = "project"),
+    regexp = "deprecated"
+  )
+  expect_length(list.files(temp_dir, pattern = ".pksim5"), 1)
+
+  path <- getTestDataFilePath("test_project.pksim5")
+  temp_dir <- withr::local_tempdir()
+  expect_warning(
+    convertSnapshot(path, output = temp_dir, format = "snapshot"),
+    regexp = "deprecated"
+  )
+  expect_length(list.files(temp_dir, pattern = ".json"), 1)
 })
 
 test_that("gather files  handles one file path", {
