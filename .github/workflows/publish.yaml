@@ -5,8 +5,9 @@ name: Publish Release Workflow
 # then force-tags vX.Y.Z at the main HEAD and creates/updates the GitHub Release
 # with NEWS.md notes and the binaries attached. A dev version is a no-op.
 #
-# workflow_dispatch lets the operator pick any branch in the Actions UI, so both
-# jobs guard on github.ref to ensure the release is only ever cut from main.
+# workflow_dispatch lets the operator pick any branch in the Actions UI, so the
+# guard-branch job fails the whole run with an explicit message when dispatched
+# from anything other than main; the build/publish jobs depend on it.
 
 on:
   workflow_dispatch:
@@ -14,13 +15,21 @@ on:
 permissions: read-all
 
 jobs:
+  guard-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure the workflow runs from main
+        if: ${{ github.ref != 'refs/heads/main' }}
+        run: |
+          echo "::error::This workflow must be run from the 'main' branch, but it was dispatched from '${{ github.ref_name }}'. Re-run it with 'main' selected as the branch."
+          exit 1
+
   R-CMD-Check:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: [guard-branch]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
 
   publish-release:
-    needs: [R-CMD-Check]
-    if: ${{ github.ref == 'refs/heads/main' && needs.R-CMD-Check.result == 'success' }}
+    needs: [guard-branch, R-CMD-Check]
     permissions:
       contents: write # force-tags vX.Y.Z and creates/updates the GitHub Release
       actions: read # download-artifact reads the run's binaries
