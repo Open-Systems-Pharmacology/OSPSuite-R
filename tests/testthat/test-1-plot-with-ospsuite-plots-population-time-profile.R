@@ -1,0 +1,179 @@
+# Load simulation
+sim <- loadSimulation(
+  aciclovirSimulationPath,
+  loadFromCache = TRUE,
+  addToCache = TRUE
+)
+
+populationResults <- importResultsFromCSV(
+  simulation = sim,
+  filePaths = getTestDataFilePath(
+    "SimResults_pop.csv"
+  )
+)
+
+# observed data
+obsData <- lapply(
+  c(
+    "ObsDataAciclovir_1.pkml",
+    "ObsDataAciclovir_2.pkml",
+    "ObsDataAciclovir_3.pkml"
+  ),
+  function(x) {
+    loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
+  }
+)
+names(obsData) <- lapply(obsData, function(x) x$name)
+
+# both observed and simulated ------------------------
+
+test_that("It produces expected plot for both observed and simulated datasets", {
+  outputPaths <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  myDataCombined <- DataCombined$new()
+
+  # Add simulated results
+  myDataCombined$addSimulationResults(
+    simulationResults = populationResults,
+    quantitiesOrPaths = outputPaths,
+    groups = "Aciclovir PVB"
+  )
+
+  # Add observed data set
+  myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
+
+  myDataCombined$setDataTransformations(
+    forNames = obsData$`Vergin 1995.Iv`$name,
+    xOffsets = 2
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "obs and sim",
+    fig = plotTimeProfile(
+      myDataCombined,
+      yScale = "log",
+      yScaleArgs = list(limits = c(0.01, 1000))
+    )
+  )
+})
+
+# multiple datasets per group ---------------------
+
+test_that("It produces expected plot for multiple simulated datasets per group", {
+  outputPaths <- c(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+    "Organism|Muscle|Intracellular|Aciclovir|Concentration"
+  )
+
+  myDataCombined <- DataCombined$new()
+
+  myDataCombined$addSimulationResults(
+    simulationResults = populationResults,
+    quantitiesOrPaths = outputPaths,
+    groups = "Aciclovir PVB"
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple sim",
+    fig = plotTimeProfile(myDataCombined)
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple sim - dataset legend",
+    fig = plotTimeProfile(
+      myDataCombined,
+      mapping = ggplot2::aes(linetype = group)
+    )
+  )
+})
+
+test_that("It produces expected plot for multiple simulated and observed datasets per group", {
+  outputPaths <- c(
+    "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+    "Organism|Muscle|Intracellular|Aciclovir|Concentration"
+  )
+
+  myDataCombined <- DataCombined$new()
+
+  myDataCombined$addSimulationResults(
+    simulationResults = populationResults,
+    quantitiesOrPaths = outputPaths,
+    groups = "Aciclovir PVB"
+  )
+
+  myDataCombined$addDataSets(obsData[c(1, 3)], groups = "Aciclovir observed")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple sim and obs",
+    fig = plotTimeProfile(myDataCombined)
+  )
+})
+
+# edge cases ------------------------
+
+test_that("It returns `NULL` with warning when `DataCombined` is empty", {
+  myCombDat <- DataCombined$new()
+
+  expect_warning(
+    result <- plotTimeProfile(myCombDat),
+    regexp = messages$plotNoDataAvailable()
+  )
+  expect_null(result)
+})
+
+# Aggregations ------------------------
+
+test_that("Aggregations are computed and displayed correctly", {
+  myDataComb <- DataCombined$new()
+  myDataComb$addSimulationResults(populationResults)
+
+  vdiffr::expect_doppelganger(
+    title = "default (quantiles)",
+    fig = plotTimeProfile(myDataComb)
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "modified quantiles",
+    fig = plotTimeProfile(
+      myDataComb,
+      quantiles = c(0.1, 0.5, 0.9)
+    )
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "arithmetic mean",
+    fig = plotTimeProfile(
+      myDataComb,
+      aggregation = "arithmetic"
+    )
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "arithmetic mean with 2sd",
+    fig = plotTimeProfile(
+      myDataComb,
+      aggregation = "arithmetic",
+      nsd = 2
+    )
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "geometric mean",
+    fig = plotTimeProfile(
+      myDataComb,
+      aggregation = "geometric"
+    )
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "geometric mean with 2sd",
+    fig = plotTimeProfile(
+      myDataComb,
+      aggregation = "geometric",
+      nsd = 2
+    )
+  )
+})

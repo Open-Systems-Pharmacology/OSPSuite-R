@@ -1,7 +1,7 @@
 Type: Package
 Package: ospsuite
 Title: R package to manipulate OSPSuite Models
-Version: 12.4.3.9003
+Version: 12.4.3.9008
 Authors@R:
     c(person("Open-Systems-Pharmacology Community", role = c("cph", "fnd")),
       person("Michael", "Sevestre", role = c("aut", "cre"), email = "michael@design2code.ca"),
@@ -52,6 +52,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Config/testthat/parallel: true
 Collate:
     'aging-data.R'
     'api-config.R'

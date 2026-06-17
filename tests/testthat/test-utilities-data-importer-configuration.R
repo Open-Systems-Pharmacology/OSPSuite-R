@@ -29,8 +29,7 @@ test_that("It can create a DataImporterConfiguration from a XLS file", {
   expect_equal(importerConfiguration$sheets, "TestSheet_1")
 })
 
-test_that("It can create a DataImporterConfiguration from a XLS file when dimensions
-          and units can not be retrieved, they can be set afterwards", {
+test_that("It can create a DataImporterConfiguration from a XLS file when dimensions and units can not be retrieved, they can be set afterwards", {
   importerConfiguration <- createImporterConfigurationForFile(
     filePath = filePath,
     sheet = "DefaultConfig"
