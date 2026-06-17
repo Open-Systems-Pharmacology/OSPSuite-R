@@ -112,6 +112,10 @@ test_that("loadProjectFromSnapshot runSimulations argument is supported", {
 })
 
 test_that("convertSnapshot is deprecated but still delegates", {
+  # setup.R silences lifecycle warnings globally; force them on so the
+  # deprecation warning is emitted and can be captured here.
+  withr::local_options(lifecycle_verbosity = "warning")
+
   path <- getTestDataFilePath("test_snapshot.json")
   temp_dir <- withr::local_tempdir()
 

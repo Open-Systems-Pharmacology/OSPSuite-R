@@ -23,9 +23,3 @@ Only when converting from snapshot to project.}
 Use \code{\link[=loadProjectFromSnapshot]{loadProjectFromSnapshot()}} to convert a snapshot to a project, and
 \code{\link[=exportProjectToSnapshot]{exportProjectToSnapshot()}} to convert a project to a snapshot.
 }
-\examples{
-\dontrun{
-convertSnapshot("path/to/snapshot.json", format = "project")
-convertSnapshot("path/to/project.pksim5", format = "snapshot")
-}
-}

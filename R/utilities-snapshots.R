@@ -114,6 +114,52 @@ runSimulationsFromSnapshot <- function(
   )
 }
 
+#' Validate inputs of the snapshot conversion functions
+#'
+#' @param inputs character vector, paths to the files/directories to convert.
+#' @param output character string, the output directory.
+#' @param runSimulations logical (or `NULL` to skip the check).
+#'
+#' @return NULL, called for its side effect of aborting on invalid input.
+#' @keywords internal
+#' @noRd
+.validateSnapshotConversionInputs <- function(
+  inputs,
+  output,
+  runSimulations = NULL
+) {
+  ospsuite.utils::validateIsCharacter(object = c(inputs, output))
+
+  if (length(inputs) == 0L) {
+    cli::cli_abort(
+      message = c("x" = "Please provide at least one input path.")
+    )
+  }
+
+  if (!is.null(runSimulations)) {
+    ospsuite.utils::validateIsLogical(object = runSimulations)
+  }
+
+  missingInputs <- inputs[!file.exists(inputs)]
+  if (length(missingInputs) > 0L) {
+    cli::cli_abort(
+      message = c(
+        "x" = "Some of the input paths provided do not exist: {.file {missingInputs}}"
+      )
+    )
+  }
+
+  if (!dir.exists(output)) {
+    cli::cli_abort(
+      message = c(
+        "x" = "The output directory does not exist: {.file {output}}"
+      )
+    )
+  }
+
+  invisible(NULL)
+}
+
 #' Load a project from a snapshot
 #'
 #' @description
@@ -138,8 +184,15 @@ runSimulationsFromSnapshot <- function(
 #' loadProjectFromSnapshot("path/to/snapshot.json", output = "path/to/output")
 #' }
 loadProjectFromSnapshot <- function(..., output = ".", runSimulations = FALSE) {
-  temp_dir <- .gatherFiles(c(...))
-  nfiles <- length(list.files(temp_dir, pattern = ".json"))
+  inputs <- c(...)
+  .validateSnapshotConversionInputs(
+    inputs = inputs,
+    output = output,
+    runSimulations = runSimulations
+  )
+
+  temp_dir <- .gatherFiles(inputs)
+  nfiles <- length(list.files(temp_dir, pattern = "\\.json$"))
 
   .runSnapshotConversion(
     inputFolder = temp_dir,
@@ -173,8 +226,11 @@ loadProjectFromSnapshot <- function(..., output = ".", runSimulations = FALSE) {
 #' exportProjectToSnapshot("path/to/project.pksim5", output = "path/to/output")
 #' }
 exportProjectToSnapshot <- function(..., output = ".") {
-  temp_dir <- .gatherFiles(c(...))
-  nfiles <- length(list.files(temp_dir, pattern = ".pksim5"))
+  inputs <- c(...)
+  .validateSnapshotConversionInputs(inputs = inputs, output = output)
+
+  temp_dir <- .gatherFiles(inputs)
+  nfiles <- length(list.files(temp_dir, pattern = "\\.pksim5$"))
 
   .runSnapshotConversion(
     inputFolder = temp_dir,
@@ -203,12 +259,6 @@ exportProjectToSnapshot <- function(..., output = ".") {
 #'
 #' @return NULL
 #' @export
-#'
-#' @examples
-#' \dontrun{
-#' convertSnapshot("path/to/snapshot.json", format = "project")
-#' convertSnapshot("path/to/project.pksim5", format = "snapshot")
-#' }
 convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
   rlang::arg_match(arg = format, values = c("snapshot", "project"))
 
