@@ -114,7 +114,86 @@ runSimulationsFromSnapshot <- function(
   )
 }
 
+#' Load a project from a snapshot
+#'
+#' @description
+#' Converts one or more snapshot files (`.json`) into project files and writes
+#' them to an output directory.
+#'
+#' Only PK-Sim projects (`.pksim5`) are supported for now. Support for MoBi
+#' projects is planned.
+#'
+#' @param ... character strings, path to snapshot files (`.json`) or a directory
+#'   containing snapshot files to convert.
+#' @param output character string, path to the output directory where to write
+#'   the converted project files.
+#' @param runSimulations logical, whether to run the simulations during
+#'   conversion (default = `FALSE`).
+#'
+#' @return NULL
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' loadProjectFromSnapshot("path/to/snapshot.json", output = "path/to/output")
+#' }
+loadProjectFromSnapshot <- function(..., output = ".", runSimulations = FALSE) {
+  temp_dir <- .gatherFiles(c(...))
+  nfiles <- length(list.files(temp_dir, pattern = ".json"))
+
+  .runSnapshotConversion(
+    inputFolder = temp_dir,
+    output = output,
+    exportMode = 0L,
+    runSimulations = runSimulations,
+    nfiles = nfiles,
+    targetFormat = "project"
+  )
+}
+
+#' Export a project to a snapshot
+#'
+#' @description
+#' Converts one or more project files into snapshot files (`.json`) and writes
+#' them to an output directory.
+#'
+#' Only PK-Sim projects (`.pksim5`) are supported for now. Support for MoBi
+#' projects is planned.
+#'
+#' @param ... character strings, path to project files (`.pksim5`) or a directory
+#'   containing project files to convert.
+#' @param output character string, path to the output directory where to write
+#'   the converted snapshot files.
+#'
+#' @return NULL
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' exportProjectToSnapshot("path/to/project.pksim5", output = "path/to/output")
+#' }
+exportProjectToSnapshot <- function(..., output = ".") {
+  temp_dir <- .gatherFiles(c(...))
+  nfiles <- length(list.files(temp_dir, pattern = ".pksim5"))
+
+  .runSnapshotConversion(
+    inputFolder = temp_dir,
+    output = output,
+    exportMode = 1L,
+    runSimulations = FALSE,
+    nfiles = nfiles,
+    targetFormat = "snapshot"
+  )
+}
+
 #' Convert between snapshot and project formats
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `convertSnapshot()` is deprecated and will be removed in a future release.
+#' Use [loadProjectFromSnapshot()] to convert a snapshot to a project, and
+#' [exportProjectToSnapshot()] to convert a project to a snapshot.
 #'
 #' @param ... character strings, path to files or a directory containing files to convert
 #' @param format, character string, target format either "snapshot" or "project".
@@ -133,32 +212,62 @@ runSimulationsFromSnapshot <- function(
 convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
   rlang::arg_match(arg = format, values = c("snapshot", "project"))
 
-  initPKSim()
+  if (format == "project") {
+    lifecycle::deprecate_warn(
+      when = "12.4.4",
+      what = "convertSnapshot()",
+      with = "loadProjectFromSnapshot()"
+    )
+    loadProjectFromSnapshot(
+      ...,
+      output = output,
+      runSimulations = runSimulations
+    )
+  } else {
+    lifecycle::deprecate_warn(
+      when = "12.4.4",
+      what = "convertSnapshot()",
+      with = "exportProjectToSnapshot()"
+    )
+    exportProjectToSnapshot(..., output = output)
+  }
+}
 
-  temp_dir <- .gatherFiles(c(...))
+#' Run a snapshot/project conversion via the PK-Sim core
+#'
+#' @param inputFolder character string, directory holding the files to convert.
+#' @param output character string, output directory for the converted files.
+#' @param exportMode integer, `0L` for snapshot -> project, `1L` for project -> snapshot.
+#' @param runSimulations logical, whether to run simulations during conversion.
+#' @param nfiles integer, number of input files (used for the progress message).
+#' @param targetFormat character string, target format used in the progress message.
+#'
+#' @return NULL
+#' @keywords internal
+#' @noRd
+.runSnapshotConversion <- function(
+  inputFolder,
+  output,
+  exportMode,
+  runSimulations,
+  nfiles,
+  targetFormat
+) {
+  initPKSim()
 
   SnapshotRunOptions <- rSharp::newObjectFromName(
     "PKSim.CLI.Core.RunOptions.SnapshotRunOptions"
   )
-  SnapshotRunOptions$set(name = "InputFolder", value = temp_dir)
+  SnapshotRunOptions$set(name = "InputFolder", value = inputFolder)
   SnapshotRunOptions$set(name = "OutputFolder", value = normalizePath(output))
-
-  if (isTRUE(runSimulations)) {
-    SnapshotRunOptions$set(name = "RunSimulations", value = TRUE)
-  } else {
-    SnapshotRunOptions$set(name = "RunSimulations", value = FALSE)
-  }
-
-  if (format == "project") {
-    SnapshotRunOptions$set("ExportMode", 0L)
-    nfiles <- length(list.files(temp_dir, pattern = ".json"))
-  } else if (format == "snapshot") {
-    SnapshotRunOptions$set("ExportMode", 1L)
-    nfiles <- length(list.files(temp_dir, pattern = ".pksim5"))
-  }
+  SnapshotRunOptions$set(
+    name = "RunSimulations",
+    value = isTRUE(runSimulations)
+  )
+  SnapshotRunOptions$set("ExportMode", exportMode)
 
   cli::cli_process_start(
-    msg = "Converting {nfiles} file{?s} to {format} format",
+    msg = "Converting {nfiles} file{?s} to {targetFormat} format",
     msg_done = "Conversion completed",
     msg_failed = "An error occured while converting files"
   )

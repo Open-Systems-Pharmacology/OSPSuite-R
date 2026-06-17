@@ -17,7 +17,11 @@ convertSnapshot(..., format, output = ".", runSimulations = FALSE)
 Only when converting from snapshot to project.}
 }
 \description{
-Convert between snapshot and project formats
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+\code{convertSnapshot()} is deprecated and will be removed in a future release.
+Use \code{\link[=loadProjectFromSnapshot]{loadProjectFromSnapshot()}} to convert a snapshot to a project, and
+\code{\link[=exportProjectToSnapshot]{exportProjectToSnapshot()}} to convert a project to a snapshot.
 }
 \examples{
 \dontrun{
