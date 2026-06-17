@@ -253,6 +253,11 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
   nfiles,
   targetFormat
 ) {
+  # Attribute conversion errors to the public function that called this helper
+  # (loadProjectFromSnapshot/exportProjectToSnapshot). Forced here, not in the
+  # error handler, so it resolves to this frame's caller rather than the handler.
+  call <- rlang::caller_env()
+
   initPKSim()
 
   SnapshotRunOptions <- rSharp::newObjectFromName(
@@ -287,7 +292,7 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
         message <- e
       }
 
-      cli::cli_abort(message = message, call = rlang::caller_env(n = 4))
+      cli::cli_abort(message = message, call = call)
     }
   )
 }
