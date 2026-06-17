@@ -195,8 +195,8 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
 #' @param simulationNames Optional character vector of simulation names to load.
 #'   If `NULL` (default), all simulations in the snapshot are loaded.
 #'
-#' @return A list of [Simulation] objects. The list is empty if no simulation
-#'   matches the requested names.
+#' @return A named list of [Simulation] objects, with names being the simulation
+#'   names. The list is empty if no simulation matches the requested names.
 #'
 #' @export
 #'
@@ -205,9 +205,6 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
 #'
 #' # Load every simulation from a snapshot
 #' simulations <- loadSimulationsFromSnapshot(snapshotPath)
-#'
-#' # Names of the loaded simulations
-#' vapply(simulations, function(sim) sim$name, character(1))
 #'
 #' # Load only a specific simulation by name
 #' firstName <- simulations[[1]]$name
@@ -240,7 +237,17 @@ loadSimulationsFromSnapshot <- function(snapshotFile, simulationNames = NULL) {
   )
   netSimulations <- do.call(snapshotTask$call, args)
 
-  lapply(netSimulations, function(netSimulation) Simulation$new(netSimulation))
+  simulations <- lapply(
+    netSimulations,
+    function(netSimulation) Simulation$new(netSimulation)
+  )
+  names(simulations) <- vapply(
+    simulations,
+    function(simulation) simulation$name,
+    FUN.VALUE = character(1)
+  )
+
+  simulations
 }
 
 #' Gather files and files from folders to one location

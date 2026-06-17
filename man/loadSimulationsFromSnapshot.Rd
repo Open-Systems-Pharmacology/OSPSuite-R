@@ -13,8 +13,8 @@ loadSimulationsFromSnapshot(snapshotFile, simulationNames = NULL)
 If \code{NULL} (default), all simulations in the snapshot are loaded.}
 }
 \value{
-A list of \link{Simulation} objects. The list is empty if no simulation
-matches the requested names.
+A named list of \link{Simulation} objects, with names being the simulation
+names. The list is empty if no simulation matches the requested names.
 }
 \description{
 Loads the simulations stored in a snapshot file and returns them as a list of
@@ -27,9 +27,6 @@ snapshotPath <- system.file("extdata", "test_snapshot.json", package = "ospsuite
 
 # Load every simulation from a snapshot
 simulations <- loadSimulationsFromSnapshot(snapshotPath)
-
-# Names of the loaded simulations
-vapply(simulations, function(sim) sim$name, character(1))
 
 # Load only a specific simulation by name
 firstName <- simulations[[1]]$name
