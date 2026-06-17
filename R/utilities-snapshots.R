@@ -218,7 +218,7 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
 #' }
 loadSimulationsFromSnapshot <- function(snapshotFile, simulationNames = NULL) {
   validateIsString(snapshotFile)
-  validateIsString(simulationNames, nullAllowed = TRUE)
+  validateIsCharacter(simulationNames, nullAllowed = TRUE)
 
   if (!file.exists(snapshotFile)) {
     cli::cli_abort(
