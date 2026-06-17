@@ -13,26 +13,25 @@ knitr::opts_chunk$set(echo = TRUE)
 
 A *snapshot* is a JSON representation of a PK-Sim or MoBi project. Snapshots are
 human-readable, diff-friendly, and version-control-tractable, which makes them a
-convenient exchange format for projects. `{ospsuite}` exposes helpers to load
+convenient exchange format for projects. Read more about OSP snapshots in the [documentation](https://docs.open-systems-pharmacology.org/working-with-pk-sim/pk-sim-documentation/importing-exporting-project-data-models#exporting-project-to-snapshot-loading-project-from-snapshot). `{ospsuite}` exposes helpers to load
 simulations from a snapshot, run simulations stored in a snapshot, and convert
 between the snapshot and project formats.
-
-All snapshot helpers initialize PK-Sim for you (see
-`vignette("PKSim-installation")` for the prerequisites).
 
 ```{r library, message=FALSE}
 library(ospsuite)
 
 # This vignette uses the example snapshot shipped with the package
-snapshotPath <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
+snapshotPath <- system.file(
+  "extdata",
+  "test_snapshot.json",
+  package = "ospsuite"
+)
 ```
 
 ## Loading simulations from a snapshot
 
-`loadSimulationsFromSnapshot()` reads the simulations stored in a snapshot file
-and returns them as a list of `Simulation` objects. These behave exactly like
-simulations loaded from a `.pkml` file with `loadSimulation()`, so you can
-inspect their parameters, modify them, and run them.
+`loadSimulationsFromSnapshot()` creates the simulations stored in a snapshot file
+and returns them as a named list of `Simulation` objects.
 
 By default, every simulation in the snapshot is loaded:
 
@@ -40,7 +39,7 @@ By default, every simulation in the snapshot is loaded:
 simulations <- loadSimulationsFromSnapshot(snapshotPath)
 
 # Names of the loaded simulations
-allNames <- vapply(simulations, function(sim) sim$name, character(1))
+allNames <- names(simulations)
 allNames
 ```
 
@@ -97,9 +96,9 @@ list.files(outputDir)
 The export formats are controlled independently:
 
 * `exportCSV` (default `TRUE`) — results as CSV.
-* `exportPKML` (default `FALSE`) — results as PKML.
+* `exportPKML` (default `FALSE`) — simulations as PKML.
 * `exportJSON` (default `FALSE`) — results as JSON.
-* `exportXML` (default `FALSE`) — results as XML.
+* `exportXML` (default `FALSE`) — simulations as XML.
 
 Set `RunForAllOutputs = TRUE` to compute all model outputs instead of only the
 output selections defined in the snapshot.

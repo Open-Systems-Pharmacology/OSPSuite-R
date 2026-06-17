@@ -4,9 +4,9 @@
 #' @param output character string, path to the output directory where to write simulation results
 #' @param RunForAllOutputs logical, whether to run the simulation for all outputs or only OutputSelections (default = FALSE)
 #' @param exportCSV logical, whether to export the results as csv (default = TRUE)
-#' @param exportPKML logical, whether to export the results as pkml (default = FALSE)
+#' @param exportPKML logical, whether to export the simulations as pkml (default = FALSE)
 #' @param exportJSON logical, whether to export simulation results as json (default = FALSE)
-#' @param exportXML logical, whether to export the results as xml (default = FALSE)
+#' @param exportXML logical, whether to export the simulations as xml (default = FALSE)
 #'
 #' @return NULL
 #' @export
