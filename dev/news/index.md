@@ -10,6 +10,17 @@
   [`validateIsNamedList()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateIsNamedList.md)
   helper functions to the exported API.
 
+- [`convertSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/convertSnapshot.md)
+  is soft-deprecated in favor of two dedicated functions:
+  [`loadProjectFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadProjectFromSnapshot.md)
+  (snapshot `.json` -\> project) and
+  [`exportProjectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportProjectToSnapshot.md)
+  (project -\> snapshot `.json`).
+  [`convertSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/convertSnapshot.md)
+  still works but issues a deprecation warning and will be removed in a
+  future release. Only PK-Sim projects (`.pksim5`) are supported for
+  now; MoBi support is planned.
+
 ## ospsuite 12.4.3
 
 ### Major changes

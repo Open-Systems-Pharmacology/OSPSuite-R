@@ -1,6 +1,13 @@
 # Convert between snapshot and project formats
 
-Convert between snapshot and project formats
+**\[deprecated\]**
+
+`convertSnapshot()` is deprecated and will be removed in a future
+release. Use
+[`loadProjectFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadProjectFromSnapshot.md)
+to convert a snapshot to a project, and
+[`exportProjectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportProjectToSnapshot.md)
+to convert a project to a snapshot.
 
 ## Usage
 
@@ -28,12 +35,3 @@ convertSnapshot(..., format, output = ".", runSimulations = FALSE)
 
   logical, whether to run simulations during conversion (default =
   FALSE). Only when converting from snapshot to project.
-
-## Examples
-
-``` r
-if (FALSE) { # \dontrun{
-convertSnapshot("path/to/snapshot.json", format = "project")
-convertSnapshot("path/to/project.pksim5", format = "snapshot")
-} # }
-```

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9008</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,8 @@
 <h2 class="pkg-version" data-toc-text="development version" id="ospsuite-development-version">ospsuite (development version)<a class="anchor" aria-label="anchor" href="#ospsuite-development-version"></a></h2>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
-<ul><li>Added <code><a href="../reference/isSupportedUnit.html">isSupportedUnit()</a></code> and <code><a href="../reference/validateIsNamedList.html">validateIsNamedList()</a></code> helper functions to the exported API.</li>
+<ul><li><p>Added <code><a href="../reference/isSupportedUnit.html">isSupportedUnit()</a></code> and <code><a href="../reference/validateIsNamedList.html">validateIsNamedList()</a></code> helper functions to the exported API.</p></li>
+<li><p><code><a href="../reference/convertSnapshot.html">convertSnapshot()</a></code> is soft-deprecated in favor of two dedicated functions: <code><a href="../reference/loadProjectFromSnapshot.html">loadProjectFromSnapshot()</a></code> (snapshot <code>.json</code> -&gt; project) and <code><a href="../reference/exportProjectToSnapshot.html">exportProjectToSnapshot()</a></code> (project -&gt; snapshot <code>.json</code>). <code><a href="../reference/convertSnapshot.html">convertSnapshot()</a></code> still works but issues a deprecation warning and will be removed in a future release. Only PK-Sim projects (<code>.pksim5</code>) are supported for now; MoBi support is planned.</p></li>
 </ul></div>
 </div>
     <div class="section level2">

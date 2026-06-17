@@ -207,7 +207,7 @@
   Removes all selected output from the given `simulation`
 
 - [`convertSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/convertSnapshot.md)
-  : Convert between snapshot and project formats
+  **\[deprecated\]** : Convert between snapshot and project formats
 
 - [`convertUnits()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/convertUnits.md)
   :
@@ -319,6 +319,9 @@
 
 - [`exportPopulationToCSV()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportPopulationToCSV.md)
   : Saves the population to csv file
+
+- [`exportProjectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportProjectToSnapshot.md)
+  : Export a project to a snapshot
 
 - [`exportResultsToCSV()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportResultsToCSV.md)
   : Saves the simulation results to csv file
@@ -478,6 +481,9 @@
 
 - [`loadPopulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadPopulation.md)
   : Loads a population from a csv file and returns the population.
+
+- [`loadProjectFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadProjectFromSnapshot.md)
+  : Load a project from a snapshot
 
 - [`loadSimulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadSimulation.md)
   : Load a simulation from a pkml file
