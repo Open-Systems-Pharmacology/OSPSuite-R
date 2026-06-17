@@ -8,7 +8,7 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 A *snapshot* is a JSON representation of a PK-Sim or MoBi project. Snapshots are
@@ -17,12 +17,14 @@ convenient exchange format for projects. `{ospsuite}` exposes helpers to load
 simulations from a snapshot, run simulations stored in a snapshot, and convert
 between the snapshot and project formats.
 
-All snapshot helpers require PK-Sim to be installed and initialized. The
-functions take care of initialization for you, but make sure PK-Sim is available
-(see `vignette("PKSim-installation")`).
+All snapshot helpers initialize PK-Sim for you (see
+`vignette("PKSim-installation")` for the prerequisites).
 
-```{r library}
+```{r library, message=FALSE}
 library(ospsuite)
+
+# This vignette uses the example snapshot shipped with the package
+snapshotPath <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
 ```
 
 ## Loading simulations from a snapshot
@@ -35,31 +37,39 @@ inspect their parameters, modify them, and run them.
 By default, every simulation in the snapshot is loaded:
 
 ```{r loadAll}
-simulations <- loadSimulationsFromSnapshot("path/to/snapshot.json")
+simulations <- loadSimulationsFromSnapshot(snapshotPath)
 
 # Names of the loaded simulations
-vapply(simulations, function(sim) sim$name, character(1))
+allNames <- vapply(simulations, function(sim) sim$name, character(1))
+allNames
 ```
 
 When you only need specific simulations, pass their names via `simulationNames`.
 The match is case-sensitive:
 
 ```{r loadByName}
-simulations <- loadSimulationsFromSnapshot(
-  "path/to/snapshot.json",
-  simulationNames = c("Simulation A", "Simulation B")
+oneSimulation <- loadSimulationsFromSnapshot(
+  snapshotPath,
+  simulationNames = allNames[1]
 )
+
+oneSimulation[[1]]$name
 ```
 
 If no simulation in the snapshot matches the requested names, an empty list is
-returned.
+returned:
+
+```{r loadNoMatch}
+loadSimulationsFromSnapshot(snapshotPath, simulationNames = "Does not exist")
+```
 
 Once loaded, a simulation can be used like any other:
 
 ```{r useSimulation}
-simulation <- loadSimulationsFromSnapshot("path/to/snapshot.json")[[1]]
+simulation <- simulations[[1]]
 
 results <- runSimulations(simulation)[[1]]
+results
 ```
 
 ## Running simulations from a snapshot
@@ -71,12 +81,17 @@ simulations to R; instead it exports the results to disk in the requested
 formats.
 
 ```{r runFromSnapshot}
+outputDir <- file.path(tempdir(), "snapshot-results")
+dir.create(outputDir, showWarnings = FALSE)
+
 runSimulationsFromSnapshot(
-  "path/to/snapshot.json",
-  output = "path/to/output",
+  snapshotPath,
+  output = outputDir,
   exportCSV = TRUE,
   exportPKML = TRUE
 )
+
+list.files(outputDir)
 ```
 
 The export formats are controlled independently:
@@ -89,39 +104,46 @@ The export formats are controlled independently:
 Set `RunForAllOutputs = TRUE` to compute all model outputs instead of only the
 output selections defined in the snapshot.
 
-You can pass several snapshot files or directories at once:
+You can also point the function at a directory and it will process every snapshot
+in it:
 
-```{r runMultiple}
-runSimulationsFromSnapshot(
-  "path/to/snapshot1.json",
-  "path/to/folder_of_snapshots",
-  output = "path/to/output"
-)
+```{r runDirectory}
+snapshotDir <- file.path(tempdir(), "snapshots")
+dir.create(snapshotDir, showWarnings = FALSE)
+file.copy(snapshotPath, snapshotDir, overwrite = TRUE)
+
+runSimulationsFromSnapshot(snapshotDir, output = outputDir)
 ```
 
 ## Converting between snapshot and project formats
 
 `convertSnapshot()` converts files between the snapshot (`.json`) and project
-(`.pksim5`) formats. The `format` argument names the *target* format:
+(`.pksim5`) formats. The `format` argument names the *target* format.
+
+Convert a snapshot to a PK-Sim project:
 
 ```{r convertToProject}
-# Snapshot -> project
-convertSnapshot(
-  "path/to/snapshot.json",
-  format = "project",
-  output = "path/to/output"
-)
+projectDir <- file.path(tempdir(), "project")
+dir.create(projectDir, showWarnings = FALSE)
 
-# Project -> snapshot
-convertSnapshot(
-  "path/to/project.pksim5",
-  format = "snapshot",
-  output = "path/to/output"
-)
+convertSnapshot(snapshotPath, format = "project", output = projectDir)
+
+projectFile <- list.files(projectDir, pattern = "\\.pksim5$", full.names = TRUE)
+projectFile
 ```
 
-When converting from a snapshot to a project, set `runSimulations = TRUE` to also
-run the simulations during conversion.
+Set `runSimulations = TRUE` to also run the simulations during this conversion.
+
+And convert a project back to a snapshot:
+
+```{r convertToSnapshot}
+snapshotOut <- file.path(tempdir(), "snapshot")
+dir.create(snapshotOut, showWarnings = FALSE)
+
+convertSnapshot(projectFile, format = "snapshot", output = snapshotOut)
+
+list.files(snapshotOut)
+```
 
 As with `runSimulationsFromSnapshot()`, you can pass several files or directories
 at once.
