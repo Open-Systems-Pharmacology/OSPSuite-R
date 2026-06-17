@@ -191,9 +191,6 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
 #' When `simulationNames` are supplied, only the simulations whose name matches
 #' (case-sensitive) are returned.
 #'
-#' The returned simulations behave like simulations loaded from a `.pkml` file
-#' with [loadSimulation()], so they can be inspected, modified, and run.
-#'
 #' @param snapshotFile Character string, path to the snapshot file (`.json`).
 #' @param simulationNames Optional character vector of simulation names to load.
 #'   If `NULL` (default), all simulations in the snapshot are loaded.
@@ -204,18 +201,20 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' snapshotPath <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
+#'
 #' # Load every simulation from a snapshot
-#' simulations <- loadSimulationsFromSnapshot("path/to/snapshot.json")
+#' simulations <- loadSimulationsFromSnapshot(snapshotPath)
+#'
 #' # Names of the loaded simulations
 #' vapply(simulations, function(sim) sim$name, character(1))
 #'
 #' # Load only a specific simulation by name
-#' simulations <- loadSimulationsFromSnapshot(
-#'   "path/to/snapshot.json",
-#'   simulationNames = "My simulation"
+#' firstName <- simulations[[1]]$name
+#' oneSimulation <- loadSimulationsFromSnapshot(
+#'   snapshotPath,
+#'   simulationNames = firstName
 #' )
-#' }
 loadSimulationsFromSnapshot <- function(snapshotFile, simulationNames = NULL) {
   validateIsString(snapshotFile)
   validateIsCharacter(simulationNames, nullAllowed = TRUE)

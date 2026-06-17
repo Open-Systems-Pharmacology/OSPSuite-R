@@ -21,21 +21,20 @@ Loads the simulations stored in a snapshot file and returns them as a list of
 \link{Simulation} objects. By default every simulation in the snapshot is loaded.
 When \code{simulationNames} are supplied, only the simulations whose name matches
 (case-sensitive) are returned.
-
-The returned simulations behave like simulations loaded from a \code{.pkml} file
-with \code{\link[=loadSimulation]{loadSimulation()}}, so they can be inspected, modified, and run.
 }
 \examples{
-\dontrun{
+snapshotPath <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
+
 # Load every simulation from a snapshot
-simulations <- loadSimulationsFromSnapshot("path/to/snapshot.json")
+simulations <- loadSimulationsFromSnapshot(snapshotPath)
+
 # Names of the loaded simulations
 vapply(simulations, function(sim) sim$name, character(1))
 
 # Load only a specific simulation by name
-simulations <- loadSimulationsFromSnapshot(
-  "path/to/snapshot.json",
-  simulationNames = "My simulation"
+firstName <- simulations[[1]]$name
+oneSimulation <- loadSimulationsFromSnapshot(
+  snapshotPath,
+  simulationNames = firstName
 )
-}
 }

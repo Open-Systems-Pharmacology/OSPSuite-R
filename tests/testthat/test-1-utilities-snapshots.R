@@ -1,5 +1,5 @@
 test_that("Run simulation from snapshot works", {
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
 
   temp_dir <- withr::local_tempdir()
 
@@ -18,7 +18,7 @@ test_that("Run simulation from snapshot works", {
 })
 
 test_that("RunForAllOutputs argument works", {
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
 
   temp_dir1 <- withr::local_tempdir()
 
@@ -48,7 +48,7 @@ test_that("RunForAllOutputs argument works", {
 })
 
 test_that("runSimulationsFromSnapshot arguments are checked", {
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
 
   temp_dir <- withr::local_tempdir()
 
@@ -64,7 +64,7 @@ test_that("runSimulationsFromSnapshot arguments are checked", {
 })
 
 test_that("Convert snapshot to project works", {
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
   temp_dir <- withr::local_tempdir()
   convertSnapshot(path, output = temp_dir, format = "project")
 
@@ -80,7 +80,7 @@ test_that("Convert project to snapshot works", {
 })
 
 test_that("RunSimulations argument works", {
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
   temp_dir <- withr::local_tempdir()
   expect_no_error({
     convertSnapshot(

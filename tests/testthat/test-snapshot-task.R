@@ -3,7 +3,7 @@
 # snapshot file as `Simulation` objects, or - when simulation names are supplied -
 # only the matching simulations (case-sensitive match).
 
-snapshotFile <- getTestDataFilePath("test_snapshot.json")
+snapshotFile <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
 
 test_that("loadSimulationsFromSnapshot returns every simulation in the snapshot", {
   simulations <- loadSimulationsFromSnapshot(snapshotFile)
