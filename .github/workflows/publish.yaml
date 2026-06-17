@@ -4,6 +4,9 @@ name: Publish Release Workflow
 # DESCRIPTION is at x.y.z). R-CMD-check builds the per-OS binaries; publish-release
 # then force-tags vX.Y.Z at the main HEAD and creates/updates the GitHub Release
 # with NEWS.md notes and the binaries attached. A dev version is a no-op.
+#
+# workflow_dispatch lets the operator pick any branch in the Actions UI, so both
+# jobs guard on github.ref to ensure the release is only ever cut from main.
 
 on:
   workflow_dispatch:
@@ -12,11 +15,12 @@ permissions: read-all
 
 jobs:
   R-CMD-Check:
+    if: ${{ github.ref == 'refs/heads/main' }}
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
 
   publish-release:
     needs: [R-CMD-Check]
-    if: ${{ needs.R-CMD-Check.result == 'success' }}
+    if: ${{ github.ref == 'refs/heads/main' && needs.R-CMD-Check.result == 'success' }}
     permissions:
       contents: write # force-tags vX.Y.Z and creates/updates the GitHub Release
       actions: read # download-artifact reads the run's binaries
