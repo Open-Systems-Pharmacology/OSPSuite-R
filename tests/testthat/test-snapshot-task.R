@@ -30,6 +30,23 @@ test_that("loadSimulationsFromSnapshot returns only simulations whose name match
   expect_equal(simulations[[1]]$name, existingName)
 })
 
+test_that("loadSimulationsFromSnapshot accepts several names", {
+  allSimulations <- loadSimulationsFromSnapshot(snapshotFile)
+  allNames <- vapply(allSimulations, function(sim) sim$name, character(1))
+  expect_gt(length(allNames), 1)
+
+  simulations <- loadSimulationsFromSnapshot(
+    snapshotFile,
+    simulationNames = allNames
+  )
+
+  expect_length(simulations, length(allNames))
+  expect_setequal(
+    vapply(simulations, function(sim) sim$name, character(1)),
+    allNames
+  )
+})
+
 test_that("loadSimulationsFromSnapshot returns nothing for a non-existing name", {
   simulations <- loadSimulationsFromSnapshot(
     snapshotFile,
