@@ -1,0 +1,33 @@
+name: Release PR
+
+# Manually open a release pull request: runs usethis::use_version(<which>) to
+# set the release Version and rename the NEWS.md development heading, pins
+# Remotes to @*release, then opens a `release-pr-<version>` PR. The PR is
+# validated by the normal pull request pipeline before merge; tagging and the
+# GitHub Release happen afterwards via a manual dispatch of publish.yaml.
+
+on:
+  workflow_dispatch:
+    inputs:
+      which:
+        description: 'Which component to bump for the release.'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-pr:
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/release-pr.yaml@main
+    with:
+      which: ${{ inputs.which }}
+      app-id: ${{ vars.VERSION_BUMPER_APPID }}
+    secrets:
+      private-key: ${{ secrets.VERSION_BUMPER_SECRET }}

@@ -1,0 +1,41 @@
+name: Merge to Main Workflow
+
+# Runs on push to main (i.e. when a PR merges). bump-dev-version advances a dev
+# version's trailing component (release versions no-op); the checks run in
+# parallel. Tagging and publishing a release are not automatic here: that is a
+# deliberate manual dispatch (see release-pr.yaml then publish.yaml).
+
+on:
+  push:
+    branches: [main]
+
+permissions: read-all
+
+jobs:
+  # Pushes the dev bump directly to the protected main branch, so it needs an
+  # App token whose identity is in the branch ruleset's bypass list.
+  bump-dev-version:
+    permissions:
+      contents: write # pushes the dev-version bump to main
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/bump-dev-version.yaml@main
+    with:
+      app-id: ${{ vars.VERSION_BUMPER_APPID }}
+    secrets:
+      private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
+
+  R-CMD-Check:
+    if: ${{ !cancelled() }}
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+
+  test-coverage:
+    if: ${{ !cancelled() }}
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  pkgdown:
+    if: ${{ !cancelled() }}
+    permissions:
+      contents: write # deploys the built pkgdown site
+      pull-requests: read # the workflow's check-changes job reads PR file changes
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
