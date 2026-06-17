@@ -121,6 +121,7 @@ dependencies first.
 ``` r
 
 # Install dependencies (e.g. R6) which are on CRAN
+install.packages("checkmate")
 install.packages("cli")
 install.packages("crayon")
 install.packages("data.table")
@@ -132,12 +133,12 @@ install.packages("jsonlite")
 install.packages("lifecycle")
 install.packages("logger")
 install.packages("openxlsx")
+install.packages("ospsuite.plots")
 install.packages("patchwork")
 install.packages("purrr")
 install.packages("R6")
 install.packages("readr")
 install.packages("rlang")
-install.packages("showtext")
 install.packages("stringi")
 install.packages("stringr")
 install.packages("tidyr")
@@ -259,7 +260,7 @@ collaboration
 guide](https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide#releasing-versions).
 
 For development versions, [this GitHub
-action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/main-workflow.yaml#L11-L17)
+action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/merge-to-main.yaml)
 automatically increments the `.9000` version suffix when pull requests
 are merged.
 
