@@ -1,5 +1,5 @@
 test_that("Run simulation from snapshot works", {
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
 
   temp_dir <- withr::local_tempdir()
 
@@ -18,7 +18,7 @@ test_that("Run simulation from snapshot works", {
 })
 
 test_that("RunForAllOutputs argument works", {
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
 
   temp_dir1 <- withr::local_tempdir()
 
@@ -48,7 +48,7 @@ test_that("RunForAllOutputs argument works", {
 })
 
 test_that("runSimulationsFromSnapshot arguments are checked", {
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
 
   temp_dir <- withr::local_tempdir()
 
@@ -64,7 +64,7 @@ test_that("runSimulationsFromSnapshot arguments are checked", {
 })
 
 test_that("loadProjectFromSnapshot converts a snapshot to a project", {
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
   temp_dir <- withr::local_tempdir()
   loadProjectFromSnapshot(path, output = temp_dir)
 
@@ -80,7 +80,7 @@ test_that("exportProjectToSnapshot converts a project to a snapshot", {
 })
 
 test_that("loadProjectFromSnapshot runSimulations argument is supported", {
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
   temp_dir <- withr::local_tempdir()
   expect_no_error({
     loadProjectFromSnapshot(path, output = temp_dir, runSimulations = TRUE)
@@ -93,7 +93,7 @@ test_that("convertSnapshot is deprecated but still delegates", {
   # deprecation warning is emitted and can be captured here.
   withr::local_options(lifecycle_verbosity = "warning")
 
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
   temp_dir <- withr::local_tempdir()
 
   expect_warning(
@@ -159,4 +159,100 @@ test_that("gather files handles files and directories", {
 
   new_temp_dir <- .gatherFiles(file, sub_dir)
   expect_true(length(list.files(new_temp_dir, pattern = ".json")) == 3)
+})
+
+###### Load simulations from snapshot
+# Tests for `loadSimulationsFromSnapshot()`, the R wrapper around the SnapshotTask
+# `LoadSimulationsFromSnapshot` API. It returns the simulations stored in a
+# snapshot file as `Simulation` objects, or - when simulation names are supplied -
+# only the matching simulations (case-sensitive match).
+
+snapshotFile <- system.file(
+  "extdata",
+  "test_snapshot.json",
+  package = "ospsuite"
+)
+
+test_that("loadSimulationsFromSnapshot returns every simulation in the snapshot", {
+  simulations <- loadSimulationsFromSnapshot(snapshotFile)
+
+  expect_length(simulations, 2)
+  expect_true(isOfType(simulations, Simulation))
+})
+
+test_that("loadSimulationsFromSnapshot returns a list named by simulation name", {
+  simulations <- loadSimulationsFromSnapshot(snapshotFile)
+
+  expect_named(simulations)
+  expect_equal(
+    names(simulations),
+    vapply(simulations, function(sim) sim$name, character(1), USE.NAMES = FALSE)
+  )
+})
+
+test_that("loadSimulationsFromSnapshot returns only simulations whose name matches", {
+  simName <- "Simulation - IV + Weibull - Default tolerance"
+
+  simulations <- loadSimulationsFromSnapshot(
+    snapshotFile,
+    simulationNames = simName
+  )
+
+  expect_length(simulations, 1)
+  expect_equal(simulations[[1]]$name, simName)
+})
+
+test_that("loadSimulationsFromSnapshot errors for a non-existing name", {
+  expect_error(
+    loadSimulationsFromSnapshot(
+      snapshotFile,
+      simulationNames = "ThisSimulationDoesNotExist"
+    ),
+    regexp = "not found in the snapshot"
+  )
+})
+
+test_that("loadSimulationsFromSnapshot errors when only some names are found", {
+  existingName <- "Simulation - IV + Weibull - Default tolerance"
+  expect_error(
+    loadSimulationsFromSnapshot(
+      snapshotFile,
+      simulationNames = c(existingName, "ThisSimulationDoesNotExist")
+    ),
+    regexp = "ThisSimulationDoesNotExist"
+  )
+})
+
+test_that("loadSimulationsFromSnapshot returns NULL for missing names when ignoreIfNotFound = TRUE", {
+  existingName <- "Simulation - IV + Weibull - Default tolerance"
+  requested <- c(existingName, "ThisSimulationDoesNotExist")
+
+  simulations <- loadSimulationsFromSnapshot(
+    snapshotFile,
+    simulationNames = requested,
+    ignoreIfNotFound = TRUE
+  )
+
+  expect_length(simulations, 2)
+  expect_named(simulations, requested)
+  expect_true(isOfType(simulations[[1]], Simulation))
+  expect_null(simulations[[2]])
+})
+
+test_that("a simulation loaded from a snapshot can be run", {
+  simulation <- loadSimulationsFromSnapshot(snapshotFile)[[1]]
+
+  results <- runSimulations(simulation)[[1]]
+  expect_true(isOfType(results, "SimulationResults"))
+})
+
+test_that("loadSimulationsFromSnapshot validates its arguments", {
+  expect_error(
+    loadSimulationsFromSnapshot(snapshotFile, simulationNames = 1),
+    regexp = "expected <character>"
+  )
+  expect_error(
+    loadSimulationsFromSnapshot("does_not_exist.json"),
+    regexp = "does not exist"
+  )
 })

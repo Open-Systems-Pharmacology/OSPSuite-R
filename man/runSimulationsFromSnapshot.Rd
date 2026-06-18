@@ -23,11 +23,11 @@ runSimulationsFromSnapshot(
 
 \item{exportCSV}{logical, whether to export the results as csv (default = TRUE)}
 
-\item{exportPKML}{logical, whether to export the results as pkml (default = FALSE)}
+\item{exportPKML}{logical, whether to export the simulations as pkml (default = FALSE)}
 
 \item{exportJSON}{logical, whether to export simulation results as json (default = FALSE)}
 
-\item{exportXML}{logical, whether to export the results as xml (default = FALSE)}
+\item{exportXML}{logical, whether to export the simulations as xml (default = FALSE)}
 }
 \description{
 Run Simulations From Snapshot Files

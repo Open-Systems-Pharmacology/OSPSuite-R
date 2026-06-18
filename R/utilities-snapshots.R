@@ -4,9 +4,9 @@
 #' @param output character string, path to the output directory where to write simulation results
 #' @param RunForAllOutputs logical, whether to run the simulation for all outputs or only OutputSelections (default = FALSE)
 #' @param exportCSV logical, whether to export the results as csv (default = TRUE)
-#' @param exportPKML logical, whether to export the results as pkml (default = FALSE)
+#' @param exportPKML logical, whether to export the simulations as pkml (default = FALSE)
 #' @param exportJSON logical, whether to export simulation results as json (default = FALSE)
-#' @param exportXML logical, whether to export the results as xml (default = FALSE)
+#' @param exportXML logical, whether to export the simulations as xml (default = FALSE)
 #'
 #' @return NULL
 #' @export
@@ -345,6 +345,107 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
   )
 }
 
+
+#' Load simulations from a snapshot file
+#'
+#' @description
+#' Loads the simulations stored in a snapshot file and returns them as a list of
+#' [Simulation] objects. By default every simulation in the snapshot is loaded.
+#' When `simulationNames` are supplied, only the simulations whose name matches
+#' (case-sensitive) are returned. By default, an error is thrown if any of the
+#' requested names is not present in the snapshot. Set `ignoreIfNotFound = TRUE`
+#' to instead return `NULL` for the names that were not found.
+#'
+#' @param snapshotFile Character string, path to the snapshot file (`.json`).
+#' @param simulationNames Optional character vector of simulation names to load.
+#'   If `NULL` (default), all simulations in the snapshot are loaded.
+#' @param ignoreIfNotFound Logical. If `FALSE` (default), an error is thrown when
+#'   any of the requested `simulationNames` is not found in the snapshot. If
+#'   `TRUE`, missing names are returned as `NULL` entries instead. Has no effect
+#'   when `simulationNames` is `NULL`.
+#'
+#' @return A named list of [Simulation] objects, with names being the simulation
+#'   names. When `simulationNames` is supplied, the returned list keeps the order
+#'   of the requested names; with `ignoreIfNotFound = TRUE`, entries for names
+#'   that were not found are `NULL`.
+#'
+#' @export
+#'
+#' @examples
+#' snapshotPath <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
+#'
+#' # Load every simulation from a snapshot
+#' simulations <- loadSimulationsFromSnapshot(snapshotPath)
+#'
+#' # Load only a specific simulation by name
+#' firstName <- simulations[[1]]$name
+#' oneSimulation <- loadSimulationsFromSnapshot(
+#'   snapshotPath,
+#'   simulationNames = firstName
+#' )
+loadSimulationsFromSnapshot <- function(
+  snapshotFile,
+  simulationNames = NULL,
+  ignoreIfNotFound = FALSE
+) {
+  validateIsString(snapshotFile)
+  validateIsCharacter(simulationNames, nullAllowed = TRUE)
+  validateIsLogical(ignoreIfNotFound)
+
+  if (!file.exists(snapshotFile)) {
+    cli::cli_abort(
+      message = c(
+        "x" = "The snapshot file provided does not exist: {.file {snapshotFile}}"
+      )
+    )
+  }
+
+  initPKSim()
+
+  snapshotTask <- rSharp::callStatic("PKSim.R.Api, PKSim.R", "GetSnapshotTask")
+
+  # `LoadSimulationsFromSnapshot(string file, params string[] names)` expects the
+  # names spread as individual positional arguments so each is marshalled as an
+  # element of the `params` array.
+  args <- c(
+    list("LoadSimulationsFromSnapshot", normalizePath(snapshotFile)),
+    as.list(simulationNames)
+  )
+  netSimulations <- do.call(snapshotTask$call, args)
+
+  simulations <- lapply(
+    netSimulations,
+    function(netSimulation) Simulation$new(netSimulation)
+  )
+  names(simulations) <- vapply(
+    simulations,
+    function(simulation) simulation$name,
+    FUN.VALUE = character(1)
+  )
+
+  # When specific names were requested, check that all of them were found.
+  if (!is.null(simulationNames)) {
+    notFound <- setdiff(simulationNames, names(simulations))
+
+    if (length(notFound) > 0 && !ignoreIfNotFound) {
+      cli::cli_abort(
+        message = c(
+          "x" = "Simulation{?s} not found in the snapshot: {.val {notFound}}",
+          "i" = "Set {.code ignoreIfNotFound = TRUE} to return {.code NULL} for missing simulations instead."
+        )
+      )
+    }
+
+    # Return one entry per requested name, in the requested order, with `NULL`
+    # for the names that were not found.
+    simulations <- stats::setNames(
+      simulations[simulationNames],
+      simulationNames
+    )
+  }
+
+  simulations
+}
 
 #' Gather files and files from folders to one location
 #'
