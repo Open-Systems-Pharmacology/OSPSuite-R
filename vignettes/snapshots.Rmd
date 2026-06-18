@@ -116,16 +116,17 @@ runSimulationsFromSnapshot(snapshotDir, output = outputDir)
 
 ## Converting between snapshot and project formats
 
-`convertSnapshot()` converts files between the snapshot (`.json`) and project
-(`.pksim5`) formats. The `format` argument names the *target* format.
+Snapshots and PK-Sim project files (`.pksim5`) can be converted into each other.
+Use `loadProjectFromSnapshot()` to build a project from a snapshot, and
+`exportProjectToSnapshot()` to write a project back out as a snapshot.
 
 Convert a snapshot to a PK-Sim project:
 
-```{r convertToProject}
+```{r loadProjectFromSnapshot}
 projectDir <- file.path(tempdir(), "project")
 dir.create(projectDir, showWarnings = FALSE)
 
-convertSnapshot(snapshotPath, format = "project", output = projectDir)
+loadProjectFromSnapshot(snapshotPath, output = projectDir)
 
 projectFile <- list.files(projectDir, pattern = "\\.pksim5$", full.names = TRUE)
 projectFile
@@ -135,14 +136,19 @@ Set `runSimulations = TRUE` to also run the simulations during this conversion.
 
 And convert a project back to a snapshot:
 
-```{r convertToSnapshot}
+```{r exportProjectToSnapshot}
 snapshotOut <- file.path(tempdir(), "snapshot")
 dir.create(snapshotOut, showWarnings = FALSE)
 
-convertSnapshot(projectFile, format = "snapshot", output = snapshotOut)
+exportProjectToSnapshot(projectFile, output = snapshotOut)
 
 list.files(snapshotOut)
 ```
 
-As with `runSimulationsFromSnapshot()`, you can pass several files or directories
-at once.
+As with `runSimulationsFromSnapshot()`, both functions accept several files or
+directories at once.
+
+> **Note**
+>
+> `convertSnapshot()` is deprecated in favour of `loadProjectFromSnapshot()` and
+> `exportProjectToSnapshot()`.

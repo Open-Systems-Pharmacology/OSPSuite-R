@@ -18,6 +18,8 @@ If no original PK-Sim project or snapshot are available, the user should use the
 - Added `loadSimulationsFromSnapshot()` to load simulations stored in a snapshot file as `Simulation` objects, optionally filtering by simulation name (#1929). See `vignette("snapshots")` for an overview of the snapshot helpers.
 - Added `isSupportedUnit()` and `validateIsNamedList()` helper functions to the exported API.
 
+- `convertSnapshot()` is soft-deprecated in favor of two dedicated functions: `loadProjectFromSnapshot()` (snapshot `.json` -> project) and `exportProjectToSnapshot()` (project -> snapshot `.json`). `convertSnapshot()` still works but issues a deprecation warning and will be removed in a future release. Only PK-Sim projects (`.pksim5`) are supported for now; MoBi support is planned.
+
 # ospsuite 12.4.3
 
 ## Major changes

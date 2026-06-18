@@ -1,0 +1,21 @@
+name: Dev PR
+
+# Manually open a "restore development mode" pull request: runs
+# usethis::use_dev_version() (Version x.y.z -> x.y.z.9000 and a new NEWS.md
+# development heading), unpins Remotes (strips @*release), then opens a
+# `dev-pr-<version>` PR. Run after a release, or on demand.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  dev-pr:
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/dev-pr.yaml@main
+    with:
+      app-id: ${{ vars.VERSION_BUMPER_APPID }}
+    secrets:
+      private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
