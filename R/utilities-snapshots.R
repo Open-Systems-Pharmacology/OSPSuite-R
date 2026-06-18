@@ -352,14 +352,22 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
 #' Loads the simulations stored in a snapshot file and returns them as a list of
 #' [Simulation] objects. By default every simulation in the snapshot is loaded.
 #' When `simulationNames` are supplied, only the simulations whose name matches
-#' (case-sensitive) are returned.
+#' (case-sensitive) are returned. By default, an error is thrown if any of the
+#' requested names is not present in the snapshot. Set `ignoreIfNotFound = TRUE`
+#' to instead return `NULL` for the names that were not found.
 #'
 #' @param snapshotFile Character string, path to the snapshot file (`.json`).
 #' @param simulationNames Optional character vector of simulation names to load.
 #'   If `NULL` (default), all simulations in the snapshot are loaded.
+#' @param ignoreIfNotFound Logical. If `FALSE` (default), an error is thrown when
+#'   any of the requested `simulationNames` is not found in the snapshot. If
+#'   `TRUE`, missing names are returned as `NULL` entries instead. Has no effect
+#'   when `simulationNames` is `NULL`.
 #'
 #' @return A named list of [Simulation] objects, with names being the simulation
-#'   names. The list is empty if no simulation matches the requested names.
+#'   names. When `simulationNames` is supplied, the returned list keeps the order
+#'   of the requested names; with `ignoreIfNotFound = TRUE`, entries for names
+#'   that were not found are `NULL`.
 #'
 #' @export
 #'
@@ -375,9 +383,14 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
 #'   snapshotPath,
 #'   simulationNames = firstName
 #' )
-loadSimulationsFromSnapshot <- function(snapshotFile, simulationNames = NULL) {
+loadSimulationsFromSnapshot <- function(
+  snapshotFile,
+  simulationNames = NULL,
+  ignoreIfNotFound = FALSE
+) {
   validateIsString(snapshotFile)
   validateIsCharacter(simulationNames, nullAllowed = TRUE)
+  validateIsLogical(ignoreIfNotFound)
 
   if (!file.exists(snapshotFile)) {
     cli::cli_abort(
@@ -409,6 +422,27 @@ loadSimulationsFromSnapshot <- function(snapshotFile, simulationNames = NULL) {
     function(simulation) simulation$name,
     FUN.VALUE = character(1)
   )
+
+  # When specific names were requested, check that all of them were found.
+  if (!is.null(simulationNames)) {
+    notFound <- setdiff(simulationNames, names(simulations))
+
+    if (length(notFound) > 0 && !ignoreIfNotFound) {
+      cli::cli_abort(
+        message = c(
+          "x" = "Simulation{?s} not found in the snapshot: {.val {notFound}}",
+          "i" = "Set {.code ignoreIfNotFound = TRUE} to return {.code NULL} for missing simulations instead."
+        )
+      )
+    }
+
+    # Return one entry per requested name, in the requested order, with `NULL`
+    # for the names that were not found.
+    simulations <- stats::setNames(
+      simulations[simulationNames],
+      simulationNames
+    )
+  }
 
   simulations
 }

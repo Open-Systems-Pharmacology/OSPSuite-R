@@ -55,11 +55,16 @@ oneSimulation <- loadSimulationsFromSnapshot(
 oneSimulation[[1]]$name
 ```
 
-If no simulation in the snapshot matches the requested names, an empty list is
-returned:
+By default, requesting a name that is not in the snapshot raises an error. Set
+`ignoreIfNotFound = TRUE` to instead get a `NULL` entry for each missing name,
+keeping the order of the requested names:
 
 ```{r loadNoMatch}
-loadSimulationsFromSnapshot(snapshotPath, simulationNames = "Does not exist")
+loadSimulationsFromSnapshot(
+  snapshotPath,
+  simulationNames = c(allNames[1], "Does not exist"),
+  ignoreIfNotFound = TRUE
+)
 ```
 
 Once loaded, a simulation can be used like any other:

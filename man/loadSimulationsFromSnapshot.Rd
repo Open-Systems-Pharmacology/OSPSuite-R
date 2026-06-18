@@ -4,23 +4,36 @@
 \alias{loadSimulationsFromSnapshot}
 \title{Load simulations from a snapshot file}
 \usage{
-loadSimulationsFromSnapshot(snapshotFile, simulationNames = NULL)
+loadSimulationsFromSnapshot(
+  snapshotFile,
+  simulationNames = NULL,
+  ignoreIfNotFound = FALSE
+)
 }
 \arguments{
 \item{snapshotFile}{Character string, path to the snapshot file (\code{.json}).}
 
 \item{simulationNames}{Optional character vector of simulation names to load.
 If \code{NULL} (default), all simulations in the snapshot are loaded.}
+
+\item{ignoreIfNotFound}{Logical. If \code{FALSE} (default), an error is thrown when
+any of the requested \code{simulationNames} is not found in the snapshot. If
+\code{TRUE}, missing names are returned as \code{NULL} entries instead. Has no effect
+when \code{simulationNames} is \code{NULL}.}
 }
 \value{
 A named list of \link{Simulation} objects, with names being the simulation
-names. The list is empty if no simulation matches the requested names.
+names. When \code{simulationNames} is supplied, the returned list keeps the order
+of the requested names; with \code{ignoreIfNotFound = TRUE}, entries for names
+that were not found are \code{NULL}.
 }
 \description{
 Loads the simulations stored in a snapshot file and returns them as a list of
 \link{Simulation} objects. By default every simulation in the snapshot is loaded.
 When \code{simulationNames} are supplied, only the simulations whose name matches
-(case-sensitive) are returned.
+(case-sensitive) are returned. By default, an error is thrown if any of the
+requested names is not present in the snapshot. Set \code{ignoreIfNotFound = TRUE}
+to instead return \code{NULL} for the names that were not found.
 }
 \examples{
 snapshotPath <- system.file("extdata", "test_snapshot.json", package = "ospsuite")

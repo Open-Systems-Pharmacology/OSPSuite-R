@@ -202,13 +202,41 @@ test_that("loadSimulationsFromSnapshot returns only simulations whose name match
   expect_equal(simulations[[1]]$name, simName)
 })
 
-test_that("loadSimulationsFromSnapshot returns nothing for a non-existing name", {
+test_that("loadSimulationsFromSnapshot errors for a non-existing name", {
+  expect_error(
+    loadSimulationsFromSnapshot(
+      snapshotFile,
+      simulationNames = "ThisSimulationDoesNotExist"
+    ),
+    regexp = "not found in the snapshot"
+  )
+})
+
+test_that("loadSimulationsFromSnapshot errors when only some names are found", {
+  existingName <- "Simulation - IV + Weibull - Default tolerance"
+  expect_error(
+    loadSimulationsFromSnapshot(
+      snapshotFile,
+      simulationNames = c(existingName, "ThisSimulationDoesNotExist")
+    ),
+    regexp = "ThisSimulationDoesNotExist"
+  )
+})
+
+test_that("loadSimulationsFromSnapshot returns NULL for missing names when ignoreIfNotFound = TRUE", {
+  existingName <- "Simulation - IV + Weibull - Default tolerance"
+  requested <- c(existingName, "ThisSimulationDoesNotExist")
+
   simulations <- loadSimulationsFromSnapshot(
     snapshotFile,
-    simulationNames = "ThisSimulationDoesNotExist"
+    simulationNames = requested,
+    ignoreIfNotFound = TRUE
   )
 
-  expect_length(simulations, 0)
+  expect_length(simulations, 2)
+  expect_named(simulations, requested)
+  expect_true(isOfType(simulations[[1]], Simulation))
+  expect_null(simulations[[2]])
 })
 
 test_that("a simulation loaded from a snapshot can be run", {
