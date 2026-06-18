@@ -4,7 +4,7 @@
 <!-- badges: start -->
 
 [![Build
-Badge](https://img.shields.io/github/actions/workflow/status/Open-Systems-Pharmacology/OSPSuite-R/main-workflow.yaml?branch=main&label=Build)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/main-workflow.yaml)
+Badge](https://img.shields.io/github/actions/workflow/status/Open-Systems-Pharmacology/OSPSuite-R/merge-to-main.yaml?branch=main&label=Build)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/merge-to-main.yaml)
 [![Codecov test coverage
 Badge](https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R?branch=main)
 
@@ -125,6 +125,7 @@ dependencies first.
 
 ``` r
 # Install dependencies (e.g. R6) which are on CRAN
+install.packages("checkmate")
 install.packages("cli")
 install.packages("crayon")
 install.packages("data.table")
@@ -136,12 +137,12 @@ install.packages("jsonlite")
 install.packages("lifecycle")
 install.packages("logger")
 install.packages("openxlsx")
+install.packages("ospsuite.plots")
 install.packages("patchwork")
 install.packages("purrr")
 install.packages("R6")
 install.packages("readr")
 install.packages("rlang")
-install.packages("showtext")
 install.packages("stringi")
 install.packages("stringr")
 install.packages("tidyr")
@@ -150,8 +151,8 @@ install.packages("xml2")
 
 #### Install non-CRAN dependencies
 
-Pre-built packages are available as binary files (*.zip for Windows,
-*.tar.gz for Linux) Download the OSPSuite-R binary archive from the
+Pre-built packages are available as binary files (*.zip for Windows,*
+.tar.gz for Linux) Download the OSPSuite-R binary archive from the
 [releases
 page](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
 Download and install these additional non-CRAN dependencies:
@@ -250,7 +251,7 @@ collaboration
 guide](https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide#releasing-versions).
 
 For development versions, [this GitHub
-action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/main-workflow.yaml#L11-L17)
+action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/merge-to-main.yaml)
 automatically increments the `.9000` version suffix when pull requests
 are merged.
 

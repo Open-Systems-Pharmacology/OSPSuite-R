@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-[![Build Badge](https://img.shields.io/github/actions/workflow/status/Open-Systems-Pharmacology/OSPSuite-R/main-workflow.yaml?branch=main&label=Build)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/main-workflow.yaml)
+[![Build Badge](https://img.shields.io/github/actions/workflow/status/Open-Systems-Pharmacology/OSPSuite-R/merge-to-main.yaml?branch=main&label=Build)](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/actions/workflows/merge-to-main.yaml)
 [![Codecov test coverage Badge](https://codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Open-Systems-Pharmacology/OSPSuite-R?branch=main)
 
 <!-- badges: end -->
@@ -242,7 +242,7 @@ The package follows the versioning process described in the [OSP R collaboration
 guide](https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide#releasing-versions).
 
 For development versions, [this GitHub
-action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/main-workflow.yaml#L11-L17)
+action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/merge-to-main.yaml)
 automatically increments the `.9000` version suffix when pull requests are merged.
 
 

@@ -17,11 +17,9 @@ convertSnapshot(..., format, output = ".", runSimulations = FALSE)
 Only when converting from snapshot to project.}
 }
 \description{
-Convert between snapshot and project formats
-}
-\examples{
-\dontrun{
-convertSnapshot("path/to/snapshot.json", format = "project")
-convertSnapshot("path/to/project.pksim5", format = "snapshot")
-}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+\code{convertSnapshot()} is deprecated and will be removed in a future release.
+Use \code{\link[=loadProjectFromSnapshot]{loadProjectFromSnapshot()}} to convert a snapshot to a project, and
+\code{\link[=exportProjectToSnapshot]{exportProjectToSnapshot()}} to convert a project to a snapshot.
 }
