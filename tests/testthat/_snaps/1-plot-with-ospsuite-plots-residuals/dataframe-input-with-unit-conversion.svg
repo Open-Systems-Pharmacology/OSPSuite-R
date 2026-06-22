@@ -41,7 +41,7 @@
 <polyline points='378.85,544.42 378.85,22.90 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' />
 <polyline points='428.98,544.42 428.98,22.90 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' />
 <polyline points='479.12,544.42 479.12,22.90 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' />
-<line x1='57.79' y1='90.46' x2='502.88' y2='90.46' style='stroke-width: 1.07; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
+<line x1='57.79' y1='90.46' x2='502.88' y2='90.46' style='stroke-width: 2.13; stroke-dasharray: 11.38,11.38; stroke-linecap: butt;' />
 <polygon points='78.02,518.58 75.65,522.68 80.39,522.68 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
 <polygon points='100.03,92.27 97.67,96.37 102.40,96.37 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
 <polygon points='127.16,98.03 124.79,102.13 129.53,102.13 ' style='stroke-width: 0.71; stroke: #107C10; fill: #107C10;' />
