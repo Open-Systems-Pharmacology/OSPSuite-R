@@ -146,15 +146,8 @@ Collate:
     'zzz.R'
     'zzz_deprecated.R'
 Remotes:
-<<<<<<< HEAD
-    rSharp=Open-Systems-Pharmacology/rSharp,
-    ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
-    tlf=Open-Systems-Pharmacology/TLF-Library,
-    ospsuite.plots=Open-Systems-Pharmacology/OSPSuite.Plots
-=======
     rSharp=Open-Systems-Pharmacology/rSharp@*release,
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils@*release,
     tlf=Open-Systems-Pharmacology/TLF-Library@*release,
     ospsuite.plots=Open-Systems-Pharmacology/OSPSuite.Plots@*release
->>>>>>> c4fbe917 (Fixes #1834 refactor DataCombined plot examples)
 Config/roxygen2/version: 8.0.0
