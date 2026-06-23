@@ -38,7 +38,6 @@ explanations follow in subsequent sections.
 
 # Load the ospsuite package
 library(ospsuite)
-ospsuite.plots::setDefaults()
 options(ospsuite.plots.watermarkEnabled = FALSE)
 
 # Load the built-in example simulation

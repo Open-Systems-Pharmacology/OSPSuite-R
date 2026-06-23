@@ -4,6 +4,23 @@
 
 ### Minor improvements and bug fixes
 
+- [`library(ospsuite)`](https://github.com/open-systems-pharmacology/ospsuite-r)
+  no longer changes the global `ggplot2` theme and geom defaults: the
+  [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)-based
+  plotting functions
+  ([`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md),
+  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md),
+  [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md),
+  [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsAsHistogram.md),
+  [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotQuantileQuantilePlot.md))
+  now style each plot individually, and the styling of unrelated plots
+  in the session is left untouched. As a consequence, the appearance of
+  the deprecated
+  [tlf](https://github.com/open-systems-pharmacology/tlf-library)-based
+  plotting functions may change slightly, since they no longer inherit
+  the global theme
+  ([\#1968](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1968)).
+
 - Added
   [`isSupportedUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/isSupportedUnit.md)
   and

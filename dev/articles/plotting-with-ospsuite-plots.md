@@ -33,10 +33,10 @@ repository](https://github.com/Open-Systems-Pharmacology/OSPSuite.Plots)
 
 ## Initial Setup
 
-Before creating plots with `ospsuite.plots`, it’s important to
-initialize the plotting environment properly. When `ospsuite` is loaded,
-[`ospsuite.plots::setDefaults()`](https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/setDefaults.html)
-is called automatically. You must also configure the watermark option:
+The plotting functions style each plot individually, so no global setup
+is required and loading `ospsuite` leaves your `ggplot2` theme and geom
+defaults untouched. The only optional setting is the watermark, which
+must be configured before creating plots:
 
 ``` r
 
@@ -44,22 +44,6 @@ library(ospsuite)
 
 # Enable or disable watermark for plots
 options(ospsuite.plots.watermarkEnabled = TRUE)
-```
-
-The `setDefaults()` function initializes various plotting defaults that
-ensure consistent appearance across all plots, and is called
-automatically on package load. The watermark option controls whether a
-watermark is added to your plots and must be set before creating plots.
-
-The settings that were in place before `setDefaults()` was called are
-stored in `ospsuiteEnv$ggplotDefaults`. You can restore them at any time
-using
-[`getOSPSuiteSetting()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getOSPSuiteSetting.md),
-which provides access to any named setting stored in `ospsuiteEnv`:
-
-``` r
-
-ospsuite.plots::resetDefaults(getOSPSuiteSetting("ggplotDefaults"))
 ```
 
 Refer to the
