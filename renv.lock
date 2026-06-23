@@ -2146,7 +2146,7 @@
     },
     "ospsuite.plots": {
       "Package": "ospsuite.plots",
-      "Version": "1.2.0.9002",
+      "Version": "1.2.0.9003",
       "Source": "git",
       "Type": "Package",
       "Title": "Library for standardized graphs",
@@ -2168,6 +2168,7 @@
         "fs",
         "ggh4x",
         "ggnewscale",
+        "lifecycle",
         "ospsuite.utils (>= 1.4.0)",
         "R6",
         "rlang",
@@ -2202,12 +2203,12 @@
       "Maintainer": "Katrin Coboeken <katrin.coboeken@bayer.com>",
       "RemoteType": "git",
       "Remotes": "ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils",
-      "RemoteUrl": "https://github.com/Open-Systems-Pharmacology/OSPSuite.Plots",
+      "RemoteUrl": "https://github.com/Open-Systems-Pharmacology/ospsuite.plots",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "Open-Systems-Pharmacology",
-      "RemoteRepo": "OSPSuite.Plots",
+      "RemoteRepo": "ospsuite.plots",
       "RemoteRef": "main",
-      "RemoteSha": "115214f74c679158be12be1112e75f42feb135c9"
+      "RemoteSha": "d985e8234957e50dc3574f6df24ac7c139eaeb68"
     },
     "ospsuite.utils": {
       "Package": "ospsuite.utils",
