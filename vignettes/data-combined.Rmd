@@ -85,8 +85,7 @@ myDataCombined$addDataSets(
 )
 ```
 
-The package exports `dataCombinedAciclovir` — a `DataCombined` object equivalent to the example built above — which 
-can be used directly to illustrate and test how `DataCombined` objects work:
+The package exports `dataCombinedAciclovir` — a `DataCombined` object equivalent to the example built above — which can be used directly to illustrate and test how `DataCombined` objects work:
 
 ```{r}
 dataCombinedAciclovir
