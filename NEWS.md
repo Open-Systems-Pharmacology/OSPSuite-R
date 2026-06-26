@@ -6,6 +6,8 @@
 
 - Added `isSupportedUnit()` and `validateIsNamedList()` helper functions to the exported API.
 
+- Added `dataCombinedAciclovir`, a pre-built `DataCombined` object combining simulated and observed aciclovir data, exported for use in examples, vignettes, and tests.
+
 - `convertSnapshot()` is soft-deprecated in favor of two dedicated functions: `loadProjectFromSnapshot()` (snapshot `.json` -> project) and `exportProjectToSnapshot()` (project -> snapshot `.json`). `convertSnapshot()` still works but issues a deprecation warning and will be removed in a future release. Only PK-Sim projects (`.pksim5`) are supported for now; MoBi support is planned.
 
 # ospsuite 12.4.3
