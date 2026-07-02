@@ -27,6 +27,11 @@
   [`validateIsNamedList()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateIsNamedList.md)
   helper functions to the exported API.
 
+- [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
+  now treats an empty `sheets` vector (`character(0)`) the same as
+  `sheets = NULL`, falling back to the configuration/all-sheets logic
+  instead of overriding with no sheets.
+
 - [`convertSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/convertSnapshot.md)
   is soft-deprecated in favor of two dedicated functions:
   [`loadProjectFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadProjectFromSnapshot.md)

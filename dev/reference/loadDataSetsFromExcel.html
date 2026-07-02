@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9010</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,6 +96,7 @@ over the <code>sheets</code> parameter and configuration sheets.</p>
 
 <dt id="arg-sheets">sheets<a class="anchor" aria-label="anchor" href="#arg-sheets"></a></dt>
 <dd><p>Character vector of sheet names to load, or <code>NULL</code> (default).
+An empty character vector (<code>character(0)</code>) is treated the same as <code>NULL</code>.
 If <code>NULL</code> and <code>importAllSheets</code> is <code>FALSE</code>, the sheets defined in the <code>importerConfiguration</code> will be used.
 If the configuration has no sheets defined and <code>sheets</code> is <code>NULL</code> and <code>importAllSheets</code> is <code>FALSE</code>, all sheets
 will be loaded. If a character vector is provided, only the specified sheets
