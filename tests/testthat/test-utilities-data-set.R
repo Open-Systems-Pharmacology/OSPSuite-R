@@ -516,6 +516,32 @@ test_that("it preserves configuration sheets after using sheets parameter", {
   expect_equal(importConfig$sheets, originalSheets)
 })
 
+test_that("it treats an empty sheets vector the same as sheets = NULL", {
+  # Configuration with a specific sheet; an empty character vector must NOT
+  # override it with no sheets, but fall back to the configuration sheets
+  # exactly as `sheets = NULL` does.
+  importConfig <- createImporterConfigurationForFile(
+    filePath = defaultDataSetFile,
+    sheet = "TestSheet_1"
+  )
+
+  fromNull <- loadDataSetsFromExcel(
+    xlsFilePath = defaultDataSetFile,
+    importerConfigurationOrPath = importConfig,
+    sheets = NULL
+  )
+  fromEmpty <- loadDataSetsFromExcel(
+    xlsFilePath = defaultDataSetFile,
+    importerConfigurationOrPath = importConfig,
+    sheets = character(0)
+  )
+
+  # Empty vector loads the configuration sheet, identically to sheets = NULL
+  expect_true(length(fromEmpty) > 0)
+  expect_true(isOfType(fromEmpty, "DataSet"))
+  expect_equal(names(fromEmpty), names(fromNull))
+})
+
 test_that("importAllSheets parameter is deprecated", {
   # setup.R silences lifecycle warnings globally; re-enable locally so the
   # deprecation warning is emitted and captured by the snapshot.

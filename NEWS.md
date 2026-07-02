@@ -16,7 +16,11 @@ If no original PK-Sim project or snapshot are available, the user should use the
 ## Minor improvements and bug fixes
 
 - Added `loadSimulationsFromSnapshot()` to load simulations stored in a snapshot file as `Simulation` objects, optionally filtering by simulation name (#1929). Requesting a name that is not in the snapshot raises an error; pass `ignoreIfNotFound = TRUE` to return `NULL` for missing names instead. See `vignette("snapshots")` for an overview of the snapshot helpers.
+- `library(ospsuite)` no longer changes the global `ggplot2` theme and geom defaults: the `{ospsuite.plots}`-based plotting functions (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, `plotQuantileQuantilePlot()`) now style each plot individually, and the styling of unrelated plots in the session is left untouched. As a consequence, the appearance of the deprecated `{tlf}`-based plotting functions may change slightly, since they no longer inherit the global theme (#1968).
+
 - Added `isSupportedUnit()` and `validateIsNamedList()` helper functions to the exported API.
+
+- `loadDataSetsFromExcel()` now treats an empty `sheets` vector (`character(0)`) the same as `sheets = NULL`, falling back to the configuration/all-sheets logic instead of overriding with no sheets.
 
 - `convertSnapshot()` is soft-deprecated in favor of two dedicated functions: `loadProjectFromSnapshot()` (snapshot `.json` -> project) and `exportProjectToSnapshot()` (project -> snapshot `.json`). `convertSnapshot()` still works but issues a deprecation warning and will be removed in a future release. Only PK-Sim projects (`.pksim5`) are supported for now; MoBi support is planned.
 
