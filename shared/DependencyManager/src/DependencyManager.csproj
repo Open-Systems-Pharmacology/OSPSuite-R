@@ -46,6 +46,7 @@
       <AllowedAssembly Include="Autofac" />
       <AllowedAssembly Include="Castle.Core" />
       <AllowedAssembly Include="Castle.Windsor" />
+      <AllowedAssembly Include="Enums.NET" />
       <AllowedAssembly Include="FluentNHibernate" />
       <AllowedAssembly Include="ICSharpCode.SharpZipLib" />
       <AllowedAssembly Include="Iesi.Collections" />
