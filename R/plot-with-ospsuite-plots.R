@@ -780,7 +780,8 @@ plotQuantileQuantilePlot <- function(
     return(NULL)
   }
 
-  if (scaling == "linear") {
+  isLinearScale <- any(scaling %in% "linear")
+  if (isLinearScale) {
     attr(plotData$residualValues, "label") <- paste0(
       ospsuite.plots::constructLabelWithUnit("residuals", yUnit),
       "\npredicted - observed"
