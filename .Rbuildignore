@@ -38,3 +38,5 @@ tests\^spelling
 ^codecov\.yml$
 ^[.]?air[.]toml$
 ^\.vscode$
+^CLAUDE\.md$
+^AGENTS\.md$
