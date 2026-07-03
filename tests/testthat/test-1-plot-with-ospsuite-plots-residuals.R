@@ -335,3 +335,68 @@ test_that("User mapping overrides showLegendPerDataset in residuals", {
     )
   )
 })
+
+# y-axis unit label ----
+
+test_that("y-axis label shows unit in linear scale and omits it in log scale", {
+  obsData <- DataSet$new(name = "Observed")
+  obsData$setValues(
+    xValues = c(0, 1, 2, 3, 4),
+    yValues = c(0.5, 3.0, 6.5, 5.0, 2.5)
+  )
+  obsData$xUnit <- "min"
+  obsData$yDimension <- ospDimensions$`Concentration (molar)`
+
+  dcConc <- DataCombined$new()
+  dcConc$addSimulationResults(aciclovirSimData, groups = "aciclovir")
+  dcConc$addDataSets(obsData, groups = "aciclovir")
+
+  set.seed(123)
+  resultLinear <- plotResidualsVsCovariate(
+    dcConc,
+    residualScale = "linear",
+    yUnit = "µmol/l"
+  )
+
+  # unit bracketed in y-axis label for linear scale
+  expect_match(resultLinear$labels$y, "µmol/l", fixed = TRUE)
+
+  set.seed(123)
+  resultLog <- suppressWarnings(plotResidualsVsCovariate(
+    dcConc,
+    residualScale = "log"
+  ))
+
+  # log residuals are dimensionless — no unit brackets in y-axis label
+  expect_false(grepl("[", resultLog$labels$y, fixed = TRUE))
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "residuals y-label linear with unit",
+    fig = resultLinear
+  )
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "residuals y-label log no unit",
+    fig = resultLog
+  )
+})
+
+test_that("y-axis label shows no unit brackets for fraction dimension (empty unit)", {
+  set.seed(123)
+  resultFraction <- plotResidualsVsCovariate(
+    myCombDat,
+    residualScale = "linear",
+    yUnit = ""
+  )
+
+  # empty-string unit must not produce "[]" in the label
+  expect_false(grepl("[]", resultFraction$labels$y, fixed = TRUE))
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "residuals y-label linear fraction no brackets",
+    fig = resultFraction
+  )
+})
