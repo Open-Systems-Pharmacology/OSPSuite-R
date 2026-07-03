@@ -354,9 +354,9 @@ plotPredictedVsObserved <- function(
 #' ## Residual Scales
 #'
 #' The `residualScale` parameter controls how residuals are displayed:
-#' - `linear`: Absolute residuals (Observed - Predicted). Values centered around
+#' - `linear`: Absolute residuals (Predicted-Observed). Values centered around
 #' zero indicate good model fit. Useful for normally distributed errors.
-#' - `log`: Log-transformed residuals, calculated as log(Observed / Predicted).
+#' - `log`: Log-transformed residuals, calculated as log(Predicted / Observed).
 #' Values centered around zero indicate good fit. Preferred for log-normally
 #' distributed data or when errors are proportional to magnitude.
 #' - `ratio`: Ratio of observed to predicted (Observed / Predicted). Values
