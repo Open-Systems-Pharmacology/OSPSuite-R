@@ -267,11 +267,19 @@ runSimulation <- function(
   )[[1]]
 }
 
-#' @title  Runs multiple simulations concurrently.
+#' @title Runs one or several simulations (individual and/or population)
 #'
-#' @details For multiple simulations, only individual simulations are possible.
-#' For single simulation, either individual or population simulations can be
-#' performed.
+#' @details
+#' A list of simulations may mix individual and population simulations. A population simulation is
+#' one that carries a population (an `IndividualValuesCache`) on the underlying object, e.g. as
+#' produced by [loadSimulationsFromSnapshot()]; such a simulation is run as a population. Individual
+#' simulations are run in parallel and population simulations sequentially - the scheduling is
+#' handled by `OSPSuite.Core`, which is handed the full list.
+#'
+#' The `population` (and optional `agingData`) arguments are a convenience for the **single
+#' simulation** case only: they bind a population to that one simulation for this run. They cannot be
+#' used with more than one simulation (there is no per-simulation slot for them); to run several
+#' population simulations, carry the population on each simulation object instead.
 #'
 #' @param simulations One `Simulation` or a list or vector of `Simulation` objects
 #' to simulate. List or vector can be named (names must be uniques), in which case the names will reused in the `simulationResults` output list.
@@ -332,9 +340,14 @@ runSimulations <- function(
   ospsuite.utils::validateHasOnlyDistinctValues(names(simulations))
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
 
-  # only one simulation? We allow population run
-  if (length(simulations) == 1) {
-    results <- .runSingleSimulation(
+  # Special case: a population (and optional aging data) passed via the positional arguments binds
+  # that population to a single simulation for this run. The positional arguments have no
+  # per-simulation slot, so they are only valid for a single simulation.
+  if (!is.null(population)) {
+    if (length(simulations) != 1) {
+      stop(messages$errorMultipleSimulationsCannotBeUsedWithPopulation)
+    }
+    results <- .runSimulationWithPopulation(
       simulation = simulations[[1]],
       simulationRunOptions = simulationRunOptions,
       population = population,
@@ -343,15 +356,8 @@ runSimulations <- function(
     outputList <- list()
     outputList[[simulations[[1]]$id]] <- results
   } else {
-    # more than one simulation? This is a concurrent run.
-
-    # We do not allow population variation
-    if (!is.null(population)) {
-      stop(messages$errorMultipleSimulationsCannotBeUsedWithPopulation)
-    }
-
-    # we are now running the simulations concurrently
-    outputList <- .runSimulationsConcurrently(
+    # more than one simulation? This is a concurrent/parallel run.
+    outputList <- .runSimulations(
       simulations = simulations,
       simulationRunOptions = simulationRunOptions,
       silentMode = silentMode,
@@ -372,7 +378,7 @@ runSimulations <- function(
   return(outputList)
 }
 
-.runSingleSimulation <- function(
+.runSimulationWithPopulation <- function(
   simulation,
   simulationRunOptions,
   population = NULL,
@@ -411,55 +417,44 @@ runSimulations <- function(
   SimulationResults$new(results, simulation)
 }
 
-.runSimulationsConcurrently <- function(
+.runSimulations <- function(
   simulations,
   simulationRunOptions,
-  silentMode = FALSE,
-  stopIfFails = FALSE
+  silentMode,
+  stopIfFails
 ) {
-  simulationRunner <- .getCoreTask("ConcurrentSimulationRunner")
-  tryCatch(
-    {
-      validateIsOfType(simulations, "Simulation")
-      simulationRunner$set("SimulationRunOptions", simulationRunOptions)
+  validateIsOfType(simulations, "Simulation")
 
-      # Map of simulations ids to simulations objects
-      simulationIdSimulationMap <- vector("list", length(simulations))
-
-      # Add simulations
-      for (simulationIdx in seq_along(simulations)) {
-        simulation <- simulations[[simulationIdx]]
-        if (length(simulation$outputSelections$allOutputs) == 0) {
-          stop(messages$errorEmptyOutputSelections(simulation$name))
-        }
-        simulationIdSimulationMap[[simulationIdx]] <- simulation
-        names(simulationIdSimulationMap)[[simulationIdx]] <- simulation$id
-
-        simulationRunner$call("AddSimulation", simulation)
-      }
-      # Run all simulations
-      results <- simulationRunner$call("RunConcurrently")
-
-      # Ids of the results are Ids of the simulations
-      resultsIdSimulationIdMap <- names(simulationIdSimulationMap)
-      names(resultsIdSimulationIdMap) <- names(simulationIdSimulationMap)
-      simulationResults <- .getConcurrentSimulationRunnerResults(
-        results = results,
-        resultsIdSimulationIdMap = resultsIdSimulationIdMap,
-        simulationIdSimulationMap = simulationIdSimulationMap,
-        silentMode = silentMode,
-        stopIfFails = stopIfFails
-      )
-
-      return(simulationResults)
-    },
-    finally = {
-      # Dispose of the runner to release any possible instances still in memory (.NET side)
-      simulationRunner$call("Dispose")
+  # Map of simulation ids to simulation objects
+  simulationIdSimulationMap <- vector("list", length(simulations))
+  for (simulationIdx in seq_along(simulations)) {
+    simulation <- simulations[[simulationIdx]]
+    if (length(simulation$outputSelections$allOutputs) == 0) {
+      stop(messages$errorEmptyOutputSelections(simulation$name))
     }
+    simulationIdSimulationMap[[simulationIdx]] <- simulation
+    names(simulationIdSimulationMap)[[simulationIdx]] <- simulation$id
+  }
+
+  simulationRunner <- .getCoreTask("SimulationRunner")
+
+  args <- c(
+    list("RunSimulations", simulationRunOptions),
+    unname(simulations)
+  )
+  results <- do.call(simulationRunner$call, args)
+
+  resultsIdSimulationIdMap <- names(simulationIdSimulationMap)
+  names(resultsIdSimulationIdMap) <- names(simulationIdSimulationMap)
+
+  .getConcurrentSimulationRunnerResults(
+    results = results,
+    resultsIdSimulationIdMap = resultsIdSimulationIdMap,
+    simulationIdSimulationMap = simulationIdSimulationMap,
+    silentMode = silentMode,
+    stopIfFails = stopIfFails
   )
 }
-
 #' @title  Creates and returns an instance of a `SimulationBatch` that can be used to efficiently vary parameters and initial values in a simulation
 #'
 #' @param simulation Instance of a `Simulation` to simulate in a batch mode

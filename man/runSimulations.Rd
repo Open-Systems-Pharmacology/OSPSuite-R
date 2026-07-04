@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-simulation.R
 \name{runSimulations}
 \alias{runSimulations}
-\title{Runs multiple simulations concurrently.}
+\title{Runs one or several simulations (individual and/or population)}
 \usage{
 runSimulations(
   simulations,
@@ -38,12 +38,19 @@ of the respective simulations. If a simulation fails, the result for this
 simulation is \code{NULL}
 }
 \description{
-Runs multiple simulations concurrently.
+Runs one or several simulations (individual and/or population)
 }
 \details{
-For multiple simulations, only individual simulations are possible.
-For single simulation, either individual or population simulations can be
-performed.
+A list of simulations may mix individual and population simulations. A population simulation is
+one that carries a population (an \code{IndividualValuesCache}) on the underlying object, e.g. as
+produced by \code{\link[=loadSimulationsFromSnapshot]{loadSimulationsFromSnapshot()}}; such a simulation is run as a population. Individual
+simulations are run in parallel and population simulations sequentially - the scheduling is
+handled by \code{OSPSuite.Core}, which is handed the full list.
+
+The \code{population} (and optional \code{agingData}) arguments are a convenience for the \strong{single
+simulation} case only: they bind a population to that one simulation for this run. They cannot be
+used with more than one simulation (there is no per-simulation slot for them); to run several
+population simulations, carry the population on each simulation object instead.
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")

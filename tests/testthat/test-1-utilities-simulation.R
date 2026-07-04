@@ -155,7 +155,7 @@ test_that("It throws an exception when running simulation with the wrong argumen
     runSimulations(
       simulations = population
     ),
-    regexp = "argument \"simulation\" is of type"
+    regexp = "is of type <.*>, but expected <Simulation>"
   )
 })
 
