@@ -1,7 +1,7 @@
-# OSPSuite-R — agent & contributor guide
+# OSPSuite-R (v13) — agent & contributor guide
 
-Guidance for working in this repository with coding agents (Claude Code, Copilot,
-CodeRabbit, …). Tool-neutral; `CLAUDE.md` points here.
+Guidance for working on the **v13** line of this repository with coding agents
+(Claude Code, Copilot, CodeRabbit, …). Tool-neutral; `CLAUDE.md` points here.
 
 ## What this package is
 
@@ -14,27 +14,40 @@ loaded at runtime by rSharp when the package initializes.
 
 The R functions are thin wrappers over .NET. When you need to understand what a
 method *actually does* — or why it throws — read the .NET source in the upstream
-repositories, on the **`develop`** branch (the branch this line of the R package
-builds against):
+repositories, on the branch this line builds against:
 
-- **OSPSuite.Core** — https://github.com/Open-Systems-Pharmacology/OSPSuite.Core
+- **OSPSuite.Core** — https://github.com/Open-Systems-Pharmacology/OSPSuite.Core/tree/V13
   (core domain/import/simulation logic, e.g. `ExcelDataSourceFile`, `DataImporter`).
-- **MoBi** — https://github.com/Open-Systems-Pharmacology/MoBi
-- **PK-Sim** — https://github.com/Open-Systems-Pharmacology/PK-Sim
-  (`PKSim.R` is the entry assembly the R package initializes).
+- **MoBi** — https://github.com/Open-Systems-Pharmacology/MoBi/tree/v13
+  (`MoBi.R` is an entry assembly the R package initializes).
+- **PK-Sim** — https://github.com/Open-Systems-Pharmacology/PK-Sim/tree/V13
+  (`PKSim.R` is an entry assembly the R package initializes).
 
 Fetch raw files directly, e.g.
-`https://raw.githubusercontent.com/Open-Systems-Pharmacology/OSPSuite.Core/develop/src/...`.
+`https://raw.githubusercontent.com/Open-Systems-Pharmacology/OSPSuite.Core/V13/src/...`.
 
-## How `inst/lib` is populated
+## How `inst/lib` is populated (DependencyManager + allow-list)
 
 The `.NET` binaries in `inst/lib/` are generated, not hand-maintained.
+
 `shared/DependencyManager/` is a .NET project whose `.csproj` references the pinned
 NuGet packages (`MoBi.R`, `PKSim.R`, `OSPSuite.*`) and copies their DLLs into
 `inst/lib/`. To regenerate them, build the DependencyManager locally and commit the
 result, or run the **Build Libraries** workflow (`build-libraries.yaml`), which is a
 manual `workflow_dispatch`: it rebuilds `inst/lib` and opens a PR targeting the
 branch it was dispatched on.
+
+**To ship a new DLL, add its name (without extension) to `@(AllowedAssembly)`** in
+`DependencyManager.csproj`. (This is exactly how a missing transitive dependency bites:
+NPOI needs `Enums.NET` at runtime to parse sheets with a sort/filter, but it was not
+on the allow-list, so `loadDataSetsFromExcel()` failed until `Enums.NET` was added.)
+
+There is a reusable `.github/workflows/build-libraries.yaml` that *can* rebuild the
+solution and commit the regenerated `inst/lib`, but it is a `workflow_call` workflow
+that **no workflow on this branch invokes**, so it does not run automatically. In
+practice: **build the DependencyManager locally and commit the updated `inst/lib`
+yourself** (both the `.csproj` change and the resulting DLLs).
+
 
 ## renv, branch switching, and worktrees
 
@@ -65,7 +78,7 @@ The package uses **renv**; the pinned dependency set (including `rSharp`) is in
   renv **cache** safely. This avoids the restore/restart thrash entirely:
 
   ```bash
-  git worktree add ../OSPSuite-R-main main
+  git worktree add ../OSPSuite-R-v13 v13
   git worktree add ../OSPSuite-R-<branch> <branch>
   # then run renv::restore() once in each
   ```
