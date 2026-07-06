@@ -270,24 +270,31 @@ runSimulation <- function(
 #' @title Runs one or several simulations (individual and/or population)
 #'
 #' @details
-#' A list of simulations may mix individual and population simulations. A population simulation is
-#' one that carries a population (an `IndividualValuesCache`) on the underlying object, e.g. as
-#' produced by [loadSimulationsFromSnapshot()]; such a simulation is run as a population. Individual
-#' simulations are run in parallel and population simulations sequentially - the scheduling is
-#' handled by `OSPSuite.Core`, which is handed the full list.
+#' A list of simulations may mix individual and population simulations. Whether a simulation is run
+#' as a population simulation is determined by whether a population is assigned to it (see
+#' `simulation$population` and `simulation$isPopulation`); a simulation loaded from a snapshot with
+#' [loadSimulationsFromSnapshot()] may already carry one. Individual simulations are run in parallel
+#' and population simulations sequentially.
 #'
-#' The `population` (and optional `agingData`) arguments are a convenience for the **single
-#' simulation** case only: they bind a population to that one simulation for this run. They cannot be
-#' used with more than one simulation (there is no per-simulation slot for them); to run several
-#' population simulations, carry the population on each simulation object instead.
+#' There are two ways to run a population simulation:
+#'
+#' * **Assign a population to the simulation** with `simulation$population <- myPopulation` and then
+#'   call `runSimulations(simulation)`. Because the population travels with the simulation, this is
+#'   the only way to run **several** population simulations in a single call - assign a population to
+#'   each simulation and pass them all together.
+#' * **Pass the `population` argument** (and optionally `agingData`). This is a convenience for the
+#'   **single simulation** case only and cannot be combined with more than one simulation. The
+#'   population is applied to the simulation for this run only and the simulation's original state is
+#'   restored afterwards, so the simulation object you pass in is left unchanged.
 #'
 #' @param simulations One `Simulation` or a list or vector of `Simulation` objects
 #' to simulate. List or vector can be named (names must be uniques), in which case the names will reused in the `simulationResults` output list.
 #' If not named, the output list will use simulation ids for names.
 #' @param population Optional instance of a `Population` to use for the simulation.
-#' Only allowed when simulating one simulation.
+#' Only allowed when simulating one simulation, and applied for this run only (see Details).
 #' Alternatively, you can also pass the result of `createPopulation` directly.
-#' In this case, the population will be extracted.
+#' In this case, the population will be extracted. To run several population simulations at once,
+#' assign a population to each simulation with `simulation$population <- myPopulation` instead.
 #' @param agingData Optional instance of `AgingData` to use for the simulation.
 #' This is only used with a population simulation
 #' @param simulationRunOptions Optional instance of a `SimulationRunOptions` used during the simulation run
@@ -340,23 +347,26 @@ runSimulations <- function(
   ospsuite.utils::validateHasOnlyDistinctValues(names(simulations))
   simulationRunOptions <- simulationRunOptions %||% SimulationRunOptions$new()
 
-  # Special case: a population (and optional aging data) passed via the positional arguments binds
-  # that population to a single simulation for this run. The positional arguments have no
-  # per-simulation slot, so they are only valid for a single simulation.
-  if (!is.null(population)) {
+  # The `population` (and optional `agingData`) arguments are a convenience for the single
+  # simulation case: they bind a population to that one simulation for this run only. They have
+  # no per-simulation slot, so they are only valid for a single simulation. The population/aging
+  # data are applied to the simulation, the run is performed through the same code path as every
+  # other run, and the simulation's original state is restored afterwards (set-then-restore), so
+  # the caller's simulation object is left unchanged.
+  if (!is.null(population) || !is.null(agingData)) {
     if (length(simulations) != 1) {
       stop(messages$errorMultipleSimulationsCannotBeUsedWithPopulation)
     }
-    results <- .runSimulationWithPopulation(
+    outputList <- .runSingleSimulationWithPopulationOverride(
       simulation = simulations[[1]],
-      simulationRunOptions = simulationRunOptions,
       population = population,
-      agingData = agingData
+      agingData = agingData,
+      simulationRunOptions = simulationRunOptions,
+      silentMode = silentMode,
+      stopIfFails = stopIfFails
     )
-    outputList <- list()
-    outputList[[simulations[[1]]$id]] <- results
   } else {
-    # more than one simulation? This is a concurrent/parallel run.
+    # All simulations (individual and/or population) are dispatched through the same runner.
     outputList <- .runSimulations(
       simulations = simulations,
       simulationRunOptions = simulationRunOptions,
@@ -378,43 +388,51 @@ runSimulations <- function(
   return(outputList)
 }
 
-.runSimulationWithPopulation <- function(
+# Runs a single simulation with a population (and optional aging data) supplied via the
+# `runSimulations()` arguments. The population/aging data are applied to the simulation only for
+# the duration of the run and the simulation's original state is restored afterwards, so the
+# caller's simulation object is not modified. The run itself goes through the same `.runSimulations()`
+# path as every other run.
+.runSingleSimulationWithPopulationOverride <- function(
   simulation,
+  population,
+  agingData,
   simulationRunOptions,
-  population = NULL,
-  agingData = NULL
+  silentMode,
+  stopIfFails
 ) {
   validateIsOfType(simulation, "Simulation")
-  if (length(simulation$outputSelections$allOutputs) == 0) {
-    stop(messages$errorEmptyOutputSelections(simulation$name))
-  }
+  # `createPopulation()` returns a list carrying the `Population` object; accept it directly.
   if (is.list(population)) {
-    # if a list was given as parameter, we assume that the user wants to run a population simulation
-    # The population object must be present otherwise, this is an error => nullAllowed is FALSE
     population <- population$population
     validateIsOfType(population, "Population")
   } else {
     validateIsOfType(population, "Population", nullAllowed = TRUE)
   }
   validateIsOfType(agingData, "AgingData", nullAllowed = TRUE)
-  simulationRunner <- .getCoreTask("SimulationRunner")
-  simulationRunArgs <- rSharp::newObjectFromName(
-    "OSPSuite.R.Services.SimulationRunArgs"
-  )
-  simulationRunArgs$set("Simulation", simulation)
-  simulationRunArgs$set("SimulationRunOptions", simulationRunOptions)
 
+  # Remember the simulation's current population/aging state so it can be restored after the run.
+  originalPopulation <- simulation$get("IndividualValuesCache")
+  originalAgingData <- simulation$get("AgingData")
+  on.exit({
+    simulation$set("IndividualValuesCache", originalPopulation)
+    simulation$set("AgingData", originalAgingData)
+  })
+
+  # Apply the requested population/aging data for this run only.
   if (!is.null(population)) {
-    simulationRunArgs$set("Population", population)
+    simulation$set("IndividualValuesCache", population)
   }
-
   if (!is.null(agingData)) {
-    simulationRunArgs$set("AgingData", agingData)
+    simulation$set("AgingData", agingData)
   }
 
-  results <- simulationRunner$call("Run", simulationRunArgs)
-
-  SimulationResults$new(results, simulation)
+  .runSimulations(
+    simulations = list(simulation),
+    simulationRunOptions = simulationRunOptions,
+    silentMode = silentMode,
+    stopIfFails = stopIfFails
+  )
 }
 
 .runSimulations <- function(
