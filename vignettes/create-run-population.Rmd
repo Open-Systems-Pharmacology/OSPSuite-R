@@ -135,13 +135,20 @@ sim$isPopulation
 
 This is simply an **alternative** to the `population` argument shown above - both approaches are fully supported. Assigning the population to the simulation is useful when you want to **run several population simulations in a single call**: assign a population to each simulation and pass them all to `runSimulations()` together. (The `population` argument, by contrast, only works with a single simulation.)
 
-```{r multiplePopulations, eval = FALSE}
+```{r multiplePopulations}
+# Load two separate simulations (here from the same file, for illustration)
+sim1 <- loadSimulation(simFilePath, loadFromCache = FALSE, addToCache = FALSE)
+sim2 <- loadSimulation(simFilePath, loadFromCache = FALSE, addToCache = FALSE)
+
 # Each simulation carries its own population
-sim1$population <- myPopulation1
-sim2$population <- myPopulation2
+sim1$population <- myPopulation
+sim2$population <- myPopulation
 
 # Both population simulations are run in one call
 results <- runSimulations(list(sim1, sim2))
+
+# `results` is a named list with one `SimulationResults` object per simulation
+print(results)
 ```
 
 Note that the `population` argument of `runSimulations()` and a population assigned to the simulation can be combined: if you pass a `population` argument for a simulation that already has a population assigned, the argument takes precedence **for that run only**, and the simulation's assigned population is left untouched afterwards.
