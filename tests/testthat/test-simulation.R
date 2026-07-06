@@ -121,3 +121,54 @@ test_that("It throws an error when trying to set a new configuration", {
     fixed = TRUE
   )
 })
+
+# isPopulation / population fields
+test_that("A freshly loaded simulation is an individual simulation", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  expect_false(sim$isPopulation)
+  expect_null(sim$population)
+})
+
+test_that("isPopulation is read-only", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  expect_error(
+    (sim$isPopulation <- TRUE),
+    regexp = "Property 'isPopulation' is read-only and cannot be modified.",
+    fixed = TRUE
+  )
+})
+
+test_that("Assigning a population turns the simulation into a population simulation", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  population <- loadPopulation(
+    system.file("extdata", "pop.csv", package = "ospsuite")
+  )
+
+  sim$population <- population
+
+  expect_true(sim$isPopulation)
+  expect_true(isOfType(sim$population, "Population"))
+  expect_equal(sim$population$count, population$count)
+})
+
+test_that("Assigning NULL switches a population simulation back to individual", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  population <- loadPopulation(
+    system.file("extdata", "pop.csv", package = "ospsuite")
+  )
+
+  sim$population <- population
+  expect_true(sim$isPopulation)
+
+  sim$population <- NULL
+  expect_false(sim$isPopulation)
+  expect_null(sim$population)
+})
+
+test_that("Assigning a population validates the input type", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  expect_error(
+    (sim$population <- "not a population"),
+    regexp = "is of type <.*>, but expected <Population>"
+  )
+})

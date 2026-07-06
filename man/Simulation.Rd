@@ -29,6 +29,19 @@ An OSPSuite simulation
 
     \item{\code{configuration}}{An object of the type \code{SimulationConfiguration},
 describing the modules used for the simulation, selected Parameter Values (PV) and Initial Conditions (IC).}
+
+    \item{\code{isPopulation}}{\code{TRUE} if a population is currently assigned to the
+simulation, meaning it will be run as a population simulation; \code{FALSE}
+if it will be run for a single individual. To change this, assign a
+population (or \code{NULL}) to the \code{population} field. (read-only)}
+
+    \item{\code{population}}{The \code{Population} assigned to the simulation, or \code{NULL}
+if the simulation is run for a single individual.
+
+Assigning a \code{Population} turns the simulation into a population
+simulation, so that a subsequent \code{runSimulations(simulation)} runs it for
+the whole population. Assigning \code{NULL} removes the population and switches
+the simulation back to an individual simulation.}
   }
   \if{html}{\out{</div>}}
 }

@@ -120,6 +120,36 @@ Simulation <- R6::R6Class(
       } else {
         private$.throwPropertyIsReadonly("configuration")
       }
+    },
+    #' @field isPopulation `TRUE` if a population is currently assigned to the
+    #' simulation, meaning it will be run as a population simulation; `FALSE`
+    #' if it will be run for a single individual. To change this, assign a
+    #' population (or `NULL`) to the `population` field. (read-only)
+    isPopulation = function(value) {
+      private$.readOnlyProperty("isPopulation", value, self$get("IsPopulation"))
+    },
+    #' @field population The `Population` assigned to the simulation, or `NULL`
+    #' if the simulation is run for a single individual.
+    #'
+    #' Assigning a `Population` turns the simulation into a population
+    #' simulation, so that a subsequent `runSimulations(simulation)` runs it for
+    #' the whole population. Assigning `NULL` removes the population and switches
+    #' the simulation back to an individual simulation.
+    population = function(value) {
+      if (missing(value)) {
+        netPopulation <- self$get("IndividualValuesCache")
+        if (is.null(netPopulation)) {
+          return(NULL)
+        }
+        return(Population$new(netPopulation))
+      }
+      # Not using validateIsOfType() here: it inspects the calling frame to build
+      # its message, which fails when called directly from an R6 active binding.
+      if (!is.null(value) && !isOfType(value, "Population")) {
+        stop(messages$errorWrongType("population", class(value)[1], "Population"))
+      }
+      self$set("IndividualValuesCache", value)
+      invisible(self)
     }
   ),
   public = list(
