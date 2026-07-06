@@ -1,11 +1,11 @@
 on:
-  workflow_call:
+  workflow_dispatch:
 
 name: Build Libraries
 
 permissions:
   contents: write
-
+  pull-requests: write
 
 jobs:
   build-libraries:
@@ -14,31 +14,27 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
+      # App token so the commit and PR are authored by the App identity, which
+      # lets the opened PR trigger the pull-request.yaml checks (a PR opened with
+      # the default GITHUB_TOKEN would not).
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.VERSION_BUMPER_APPID }}
+          private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
+
       - name: checkout
         uses: actions/checkout@v6
         with:
-          fetch-depth: 0  # Full history for comparison
-
-      - name: Check for csproj changes
-        uses: dorny/paths-filter@v4
-        id: filter
-        with:
-          filters: |
-            csproj:
-              - 'shared/DependencyManager/src/DependencyManager.csproj'
-
-      - name: Skip build if no csproj changes
-        if: steps.filter.outputs.csproj != 'true'
-        run: echo "No changes detected in DependencyManager.csproj. Skipping library build."
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Setup .NET
-        if: steps.filter.outputs.csproj == 'true'
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '10.0.x'
 
       - name: Configure NuGet
-        if: steps.filter.outputs.csproj == 'true'
         run: |
           dotnet nuget add source "https://nuget.pkg.github.com/Open-Systems-Pharmacology/index.json" \
             --name "OSP-GitHub-Packages" \
@@ -47,14 +43,36 @@ jobs:
             --store-password-in-clear-text
 
       - name: Build libraries
-        if: steps.filter.outputs.csproj == 'true'
         run: |
           cd inst/lib
           dotnet build ../../shared/DependencyManager/DependencyManager.sln --configuration Release
 
-      - uses: EndBug/add-and-commit@v10
-        if: ${{ steps.filter.outputs.csproj == 'true'}}
+      - name: Commit changes to a new branch
+        id: commit
+        uses: EndBug/add-and-commit@v10
         with:
           message: 'Update Libraries'
           default_author: github_actions
           add: 'inst/lib'
+          new_branch: build-libraries-${{ github.run_id }}
+          github_token: ${{ steps.app-token.outputs.token }}
+
+      - name: Create Pull Request
+        if: steps.commit.outputs.committed == 'true'
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Update Libraries',
+              head: 'build-libraries-${{ github.run_id }}',
+              base: '${{ github.ref_name }}',
+              body: `Auto-generated PR to update the .NET libraries in \`inst/lib\`.
+
+              Built from \`shared/DependencyManager\` by the **Build Libraries** workflow.
+              - Triggered by: ${{ github.actor }}
+              - Target branch: \`${{ github.ref_name }}\``
+            });
+            console.log(`Created PR #${pr.number}: ${pr.html_url}`);

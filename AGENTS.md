@@ -29,8 +29,12 @@ Fetch raw files directly, e.g.
 ## How `inst/lib` is populated
 
 The `.NET` binaries in `inst/lib/` are generated, not hand-maintained.
-`.github/scripts/update_core_files.R` (run by the **Update Core Files** workflow)
-downloads and unzips the DLL set from the PK-Sim build artifacts into `inst/lib`.
+`shared/DependencyManager/` is a .NET project whose `.csproj` references the pinned
+NuGet packages (`MoBi.R`, `PKSim.R`, `OSPSuite.*`) and copies their DLLs into
+`inst/lib/`. To regenerate them, build the DependencyManager locally and commit the
+result, or run the **Build Libraries** workflow (`build-libraries.yaml`), which is a
+manual `workflow_dispatch`: it rebuilds `inst/lib` and opens a PR targeting the
+branch it was dispatched on.
 
 ## renv, branch switching, and worktrees
 
