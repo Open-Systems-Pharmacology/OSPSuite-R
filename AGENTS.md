@@ -29,13 +29,13 @@ Fetch raw files directly, e.g.
 ## How `inst/lib` is populated (DependencyManager + allow-list)
 
 The `.NET` binaries in `inst/lib/` are generated, not hand-maintained.
-`shared/DependencyManager/` is a .NET project whose only purpose is dependency
-resolution. Its `.csproj` references the pinned NuGet packages (`MoBi.R`, `PKSim.R`,
-`OSPSuite.*`) and, on **PostBuild**, copies their DLLs into `inst/lib/` then enforces
-an **allow-list** (`@(AllowedAssembly)`): any `inst/lib` binary whose name is not on
-the list is **deleted**. This is deliberate (issue #1587) — a new upstream transitive
-dependency then surfaces as a runtime `FileNotFoundException` instead of silently
-bloating the package.
+
+`shared/DependencyManager/` is a .NET project whose `.csproj` references the pinned
+NuGet packages (`MoBi.R`, `PKSim.R`, `OSPSuite.*`) and copies their DLLs into
+`inst/lib/`. To regenerate them, build the DependencyManager locally and commit the
+result, or run the **Build Libraries** workflow (`build-libraries.yaml`), which is a
+manual `workflow_dispatch`: it rebuilds `inst/lib` and opens a PR targeting the
+branch it was dispatched on.
 
 **To ship a new DLL, add its name (without extension) to `@(AllowedAssembly)`** in
 `DependencyManager.csproj`. (This is exactly how a missing transitive dependency bites:
@@ -47,6 +47,7 @@ solution and commit the regenerated `inst/lib`, but it is a `workflow_call` work
 that **no workflow on this branch invokes**, so it does not run automatically. In
 practice: **build the DependencyManager locally and commit the updated `inst/lib`
 yourself** (both the `.csproj` change and the resulting DLLs).
+
 
 ## renv, branch switching, and worktrees
 
