@@ -155,8 +155,56 @@ test_that("It throws an exception when running simulation with the wrong argumen
     runSimulations(
       simulations = population
     ),
-    regexp = "argument \"simulation\" is of type"
+    regexp = "is of type <.*>, but expected <Simulation>"
   )
+})
+
+test_that("It runs a population simulation when a population is assigned to the simulation", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  sim$population <- population
+
+  results <- runSimulations(simulations = sim)[[1]]
+  expect_equal(results$count, population$count)
+})
+
+test_that("It runs several population simulations in one call when each carries a population", {
+  sim1 <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  sim2 <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  sim1$population <- population
+  sim2$population <- population
+
+  results <- runSimulations(simulations = list(sim1, sim2))
+  expect_equal(length(results), 2)
+  expect_equal(results[[sim1$id]]$count, population$count)
+  expect_equal(results[[sim2$id]]$count, population$count)
+})
+
+test_that("The population argument leaves the simulation object unchanged (set-then-restore)", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  expect_false(sim$isPopulation)
+
+  runSimulations(simulations = sim, population = population)
+
+  # The convenience argument must not mutate the caller's simulation
+  expect_false(sim$isPopulation)
+  expect_null(sim$population)
+})
+
+test_that("The population argument overrides an assigned population for the run only", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  assignedPopulation <- population
+  overridePopulation <- loadPopulation(getTestDataFilePath("baby.csv"))
+  # sanity check: the two populations differ in size, so we can tell which one ran
+  expect_false(assignedPopulation$count == overridePopulation$count)
+
+  sim$population <- assignedPopulation
+
+  results <- runSimulations(simulations = sim, population = overridePopulation)[[1]]
+  # the override population is used for this run
+  expect_equal(results$count, overridePopulation$count)
+  # the originally assigned population is restored afterwards
+  expect_true(sim$isPopulation)
+  expect_equal(sim$population$count, assignedPopulation$count)
 })
 
 test_that("It runs one individual simulation without simulationRunOptions and returns a named list", {

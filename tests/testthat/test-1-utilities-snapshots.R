@@ -256,3 +256,52 @@ test_that("loadSimulationsFromSnapshot validates its arguments", {
     regexp = "does not exist"
   )
 })
+
+# End-to-end "seam" test (OSPSuite-R#1981): a population snapshot ->
+# loadSimulationsFromSnapshot -> runSimulations on a mixed list ->
+# population results (Count > 1) with aging applied. This exercises the full
+# cross-repo chain (PK-Sim snapshot converter + OSPSuite.Core RunSimulations).
+test_that("a population snapshot loads and runs through runSimulations (cross-repo seam)", {
+  snapshotFile <- system.file(
+    "extdata",
+    "ind_and_pop_snapshot.json",
+    package = "ospsuite"
+  )
+
+  simulations <- loadSimulationsFromSnapshot(snapshotFile)
+  expect_length(simulations, 2)
+
+  # population vs individual is distinguished by the IsPopulation flag on the .NET object
+  populationSim <- Filter(function(s) s$get("IsPopulation"), simulations)[[1]]
+  individualSim <- Filter(function(s) !s$get("IsPopulation"), simulations)[[1]]
+
+  # the snapshot converter carried the population and aging data onto the underlying .NET object,
+  # readable via rSharp $get() (there is no R6 accessor)
+  expect_equal(populationSim$get("IndividualValuesCache")$get("Count"), 6)
+  expect_false(is.null(populationSim$get("AgingData")))
+  expect_true(is.null(individualSim$get("IndividualValuesCache")))
+
+  # the snapshot does not define output selections, so add an output to each simulation
+  for (simulation in simulations) {
+    addOutputs(
+      getAllQuantitiesMatching(
+        "Organism|PeripheralVenousBlood|*|Plasma (Peripheral Venous Blood)",
+        simulation
+      ),
+      simulation
+    )
+  }
+
+  results <- runSimulations(simulations)
+  expect_length(results, 2)
+
+  # loadSimulationsFromSnapshot returns a list named by simulation name, which
+  # runSimulations reuses for the result list
+  populationResults <- results[[populationSim$name]]
+  individualResults <- results[[individualSim$name]]
+
+  expect_true(isOfType(populationResults, "SimulationResults"))
+  # Count > 1 proves it ran as a population (with aging applied)
+  expect_equal(populationResults$count, 6)
+  expect_equal(individualResults$count, 1)
+})

@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.6.0",
+    "Version": "4.6.1",
     "Repositories": [
       {
         "Name": "PPM",
@@ -2759,18 +2759,18 @@
         "rmarkdown"
       ],
       "License": "file LICENSE",
-      "SystemRequirements": "dotnet8",
+      "SystemRequirements": "dotnet10",
       "RoxygenNote": "7.3.3",
       "VignetteBuilder": "knitr",
       "Config/testthat/edition": "3",
       "Author": "Open-Systems-Pharmacology Community [cph], esqLABS GmbH [fnd], Pavel Balazki [aut, cre], Juri Solodenko [aut] (ORCID: <https://orcid.org/0000-0001-6922-588X>), Michael Sevestre [aut], Robert McIntosh [aut], Felix Mil [aut], Jean-Michel Perraud [aut], Ian Peter Du [ctb]",
       "Maintainer": "Pavel Balazki <pavel.balazki@gmail.com>",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "rSharp",
       "RemoteRef": "V13",
-      "RemoteSha": "e7042aad9bffbe73868230dadb3477c83d9c303a"
+      "RemoteSha": "f798918997b836099e3335ee2c81126d9a3e4ee1",
+      "RemoteHost": "api.github.com"
     },
     "rappdirs": {
       "Package": "rappdirs",

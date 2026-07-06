@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-simulation.R
 \name{runSimulations}
 \alias{runSimulations}
-\title{Runs multiple simulations concurrently.}
+\title{Runs one or several simulations (individual and/or population)}
 \usage{
 runSimulations(
   simulations,
@@ -19,9 +19,10 @@ to simulate. List or vector can be named (names must be uniques), in which case 
 If not named, the output list will use simulation ids for names.}
 
 \item{population}{Optional instance of a \code{Population} to use for the simulation.
-Only allowed when simulating one simulation.
+Only allowed when simulating one simulation, and applied for this run only (see Details).
 Alternatively, you can also pass the result of \code{createPopulation} directly.
-In this case, the population will be extracted.}
+In this case, the population will be extracted. To run several population simulations at once,
+assign a population to each simulation with \code{simulation$population <- myPopulation} instead.}
 
 \item{agingData}{Optional instance of \code{AgingData} to use for the simulation.
 This is only used with a population simulation}
@@ -38,12 +39,26 @@ of the respective simulations. If a simulation fails, the result for this
 simulation is \code{NULL}
 }
 \description{
-Runs multiple simulations concurrently.
+Runs one or several simulations (individual and/or population)
 }
 \details{
-For multiple simulations, only individual simulations are possible.
-For single simulation, either individual or population simulations can be
-performed.
+A list of simulations may mix individual and population simulations. Whether a simulation is run
+as a population simulation is determined by whether a population is assigned to it (see
+\code{simulation$population} and \code{simulation$isPopulation}); a simulation loaded from a snapshot with
+\code{\link[=loadSimulationsFromSnapshot]{loadSimulationsFromSnapshot()}} may already carry one. Individual simulations are run in parallel
+and population simulations sequentially.
+
+There are two ways to run a population simulation:
+\itemize{
+\item \strong{Assign a population to the simulation} with \code{simulation$population <- myPopulation} and then
+call \code{runSimulations(simulation)}. Because the population travels with the simulation, this is
+the only way to run \strong{several} population simulations in a single call - assign a population to
+each simulation and pass them all together.
+\item \strong{Pass the \code{population} argument} (and optionally \code{agingData}). This is a convenience for the
+\strong{single simulation} case only and cannot be combined with more than one simulation. The
+population is applied to the simulation for this run only and the simulation's original state is
+restored afterwards, so the simulation object you pass in is left unchanged.
+}
 }
 \examples{
 simPath <- system.file("extdata", "simple.pkml", package = "ospsuite")
