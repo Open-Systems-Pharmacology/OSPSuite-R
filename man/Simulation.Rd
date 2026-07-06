@@ -41,7 +41,11 @@ if the simulation is run for a single individual.
 Assigning a \code{Population} turns the simulation into a population
 simulation, so that a subsequent \code{runSimulations(simulation)} runs it for
 the whole population. Assigning \code{NULL} removes the population and switches
-the simulation back to an individual simulation.}
+the simulation back to an individual simulation.
+
+Any aging data previously set on the simulation is cleared whenever the
+population is (re)assigned or removed, since aging data only applies to
+the population it was generated for.}
   }
   \if{html}{\out{</div>}}
 }

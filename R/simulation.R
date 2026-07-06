@@ -135,6 +135,10 @@ Simulation <- R6::R6Class(
     #' simulation, so that a subsequent `runSimulations(simulation)` runs it for
     #' the whole population. Assigning `NULL` removes the population and switches
     #' the simulation back to an individual simulation.
+    #'
+    #' Any aging data previously set on the simulation is cleared whenever the
+    #' population is (re)assigned or removed, since aging data only applies to
+    #' the population it was generated for.
     population = function(value) {
       if (missing(value)) {
         netPopulation <- self$get("IndividualValuesCache")
@@ -149,6 +153,10 @@ Simulation <- R6::R6Class(
         stop(messages$errorWrongType("population", class(value)[1], "Population"))
       }
       self$set("IndividualValuesCache", value)
+      # Aging data is only meaningful together with the population it belongs to.
+      # Drop it on any (re)assignment so stale aging data cannot be silently
+      # applied to a different population or to an individual simulation.
+      self$set("AgingData", NULL)
       invisible(self)
     }
   ),

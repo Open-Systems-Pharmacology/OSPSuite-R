@@ -172,3 +172,31 @@ test_that("Assigning a population validates the input type", {
     regexp = "is of type <.*>, but expected <Population>"
   )
 })
+
+test_that("Removing the population also clears any aging data", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  population <- loadPopulation(
+    system.file("extdata", "pop.csv", package = "ospsuite")
+  )
+  sim$population <- population
+  # attach aging data on the underlying object
+  sim$set("AgingData", AgingData$new())
+  expect_false(is.null(sim$get("AgingData")))
+
+  # switching back to an individual simulation clears the aging data too
+  sim$population <- NULL
+  expect_false(sim$isPopulation)
+  expect_true(is.null(sim$get("AgingData")))
+})
+
+test_that("Re-assigning a population clears stale aging data", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  population <- loadPopulation(
+    system.file("extdata", "pop.csv", package = "ospsuite")
+  )
+  sim$set("AgingData", AgingData$new())
+  expect_false(is.null(sim$get("AgingData")))
+
+  sim$population <- population
+  expect_true(is.null(sim$get("AgingData")))
+})
