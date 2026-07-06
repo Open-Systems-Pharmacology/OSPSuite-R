@@ -63,16 +63,19 @@ jobs:
         with:
           github-token: ${{ steps.app-token.outputs.token }}
           script: |
+            const body = [
+              'Auto-generated PR to update the .NET libraries in `inst/lib`.',
+              '',
+              'Built from `shared/DependencyManager` by the **Build Libraries** workflow.',
+              '- Triggered by: ${{ github.actor }}',
+              '- Target branch: `${{ github.ref_name }}`',
+            ].join('\n');
             const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: 'Update Libraries',
               head: 'build-libraries-${{ github.run_id }}',
               base: '${{ github.ref_name }}',
-              body: `Auto-generated PR to update the .NET libraries in \`inst/lib\`.
-
-              Built from \`shared/DependencyManager\` by the **Build Libraries** workflow.
-              - Triggered by: ${{ github.actor }}
-              - Target branch: \`${{ github.ref_name }}\``
+              body,
             });
             console.log(`Created PR #${pr.number}: ${pr.html_url}`);
