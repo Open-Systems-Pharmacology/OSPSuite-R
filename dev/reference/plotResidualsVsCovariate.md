@@ -221,23 +221,25 @@ Other plot functions based on ospsuite.plots:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 # Generate a residuals vs observed plot for the provided data
 plotResidualsVsCovariate(
-  myDataCombined,
+  dataCombinedAciclovir,
   xUnit = ospUnits$Time$h,
   yUnit = ospUnits$`Concentration [mass]`$`µg/l`,
   xAxis = "time",
   residualScale = 'linear'
 )
 
+
 # Generate a residuals vs predicted plot
-plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
+plotResidualsVsCovariate(dataCombinedAciclovir, xAxis = "predicted")
+
 
 # Generate a residuals vs time plot
-plotResidualsVsCovariate(myDataCombined, xAxis = "time")
+plotResidualsVsCovariate(dataCombinedAciclovir, xAxis = "time")
+
 
 # Show individual dataset names in legend
-plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "observed")
-} # }
+plotResidualsVsCovariate(dataCombinedAciclovir, showLegendPerDataset = "observed")
+
 ```

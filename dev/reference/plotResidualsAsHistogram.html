@@ -11,7 +11,7 @@ representation of their distribution.'><meta name="robots" content="noindex"></h
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9012</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -177,13 +177,14 @@ or <code>NULL</code> if the data contains no plottable entries.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># Generate a histogram of residuals with default settings</span></span></span>
-<span class="r-in"><span><span class="fu">plotResidualsAsHistogram</span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Generate a histogram of residuals with default settings</span></span></span>
+<span class="r-in"><span><span class="fu">plotResidualsAsHistogram</span><span class="op">(</span><span class="va">dataCombinedAciclovir</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plotResidualsAsHistogram-1.png" alt="" width="960" height="593"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate a histogram with linear scale</span></span></span>
-<span class="r-in"><span><span class="fu">plotResidualsAsHistogram</span><span class="op">(</span><span class="va">myDataCombined</span>, residualScale <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="fu">plotResidualsAsHistogram</span><span class="op">(</span><span class="va">dataCombinedAciclovir</span>, residualScale <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plotResidualsAsHistogram-2.png" alt="" width="960" height="593"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -195,7 +196,7 @@ or <code>NULL</code> if the data contains no plottable entries.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

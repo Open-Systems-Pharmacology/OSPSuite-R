@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9012</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,6 +147,21 @@ class.</p>
 <span>  <span class="va">obsData</span><span class="op">$</span><span class="va">`Vergin 1995.Iv`</span>,</span>
 <span>  groups <span class="op">=</span> <span class="st">"Aciclovir PVB"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p>The package exports <code>dataCombinedAciclovir</code> — a
+<code>DataCombined</code> object equivalent to the example built above —
+which can be used directly to illustrate and test how
+<code>DataCombined</code> objects work:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dataCombinedAciclovir</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;DataCombined&gt;</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Datasets and groupings:</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 3</span></span></span>
+<span><span class="co">#&gt;   name                                                            group dataType</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Ve… Acic… simulat…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Vergin 1995.Iv                                                  Acic… observed</span></span></code></pre></div>
 <p>Every data, be it simulated results or from <code>DataSet</code>,
 must have a unique name within <code>DataCombined</code>. If not
 specified by user, the path of simulated results or the
@@ -189,7 +204,7 @@ calculating residuals with such a <code>DataCombined</code>.</p>
 <p>Let’s create a <code>DataCombined</code> and add simulation results
 and observed data <em>without</em> specifying their grouping and create
 a time profile:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">myDataCombined</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/DataCombined.html">DataCombined</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">myDataCombined</span><span class="op">$</span><span class="fu">addSimulationResults</span><span class="op">(</span></span>
@@ -203,23 +218,23 @@ a time profile:</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="100%"></p>
+<p><img src="data-combined_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="100%"></p>
 <p>If you do not specify <code>groups</code> when you add datasets, and
 wish to update groupings later, you can use the
 <code>$setGroups()</code> method. All data within one group will get one
 entry in the legend with the name of the group, and will be plotted with
 the same color.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="fu">setGroups</span><span class="op">(</span></span>
 <span>  names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Aciclovir Plasma"</span>, <span class="va">obsData</span><span class="op">$</span><span class="va">`Vergin 1995.Iv`</span><span class="op">$</span><span class="va">name</span><span class="op">)</span>,</span>
 <span>  groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Aciclovir PVB"</span>, <span class="st">"Aciclovir PVB"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="100%"></p>
+<p><img src="data-combined_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="100%"></p>
 <p>At any point, you can check the current names and groupings with the
 following active field:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="va">groupMap</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 3</span></span></span>
 <span><span class="co">#&gt;   name             group         dataType </span></span>
@@ -256,7 +271,7 @@ as:</p>
 </ul>
 <p>At any point, you can check the applied offsets and scale factors
 with the following active field:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="va">dataTransformations</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 5</span></span></span>
 <span><span class="co">#&gt;   name             xOffsets yOffsets xScaleFactors yScaleFactors</span></span>
@@ -267,7 +282,7 @@ with the following active field:</p>
 apply any transformations. Consider the observed data from the examples
 above. It reports concentrations of aciclovir after single intravenous
 administration.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">myDataCombinedTranformations</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/DataCombined.html">DataCombined</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">myDataCombinedTranformations</span><span class="op">$</span><span class="fu">addDataSets</span><span class="op">(</span></span>
@@ -275,13 +290,13 @@ administration.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombinedTranformations</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="100%"></p>
+<p><img src="data-combined_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="100%"></p>
 <p>However, we might want to use this data set with a simulation where
 aciclovir is administered 24 hours after simulation begin. To be able to
 compare simulation results with the data set, we can <em>offset</em> the
 observed data time by 24 hours. Keep in mind that the offset must be
 given in the same unit as the data set values are.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Check the units of the observed time values</span></span>
 <span><span class="va">obsData</span><span class="op">$</span><span class="va">`Vergin 1995.Iv`</span><span class="op">$</span><span class="va">xUnit</span></span>
 <span><span class="co">#&gt; [1] "h"</span></span>
@@ -292,19 +307,19 @@ given in the same unit as the data set values are.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombinedTranformations</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="100%"></p>
+<p><img src="data-combined_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="100%"></p>
 <p>In the next step, we want to <em>normalize</em> observed
 concentrations to a dose. We can easily achieve this with the scale
 factor. In the next example, we normalize observed values to 250 mg dose
 by setting the <code>yScaleFactor</code> to 1/250:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">myDataCombinedTranformations</span><span class="op">$</span><span class="fu">setDataTransformations</span><span class="op">(</span></span>
 <span>  forNames <span class="op">=</span> <span class="va">obsData</span><span class="op">$</span><span class="va">`Vergin 1995.Iv`</span><span class="op">$</span><span class="va">name</span>,</span>
 <span>  yScaleFactors <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">250</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombinedTranformations</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="100%">
+<p><img src="data-combined_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="100%">
 Finally, offsetting the observation values might be useful when working
 with measurements of endogenous substrates, such as the hormone
 glucagon, and want to correct for the individual specific baseline
@@ -318,7 +333,7 @@ central to R-based workflows, and, thus, we may wish to extract a data
 frame for datasets present in the object.</p>
 <p>Internally, <code>DataCombined</code> extracts data frames for
 observed and simulated datasets and combines them.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="fu">toDataFrame</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 504 × 27</span></span></span>
 <span><span class="co">#&gt;    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit</span></span>
@@ -343,7 +358,7 @@ observed and simulated datasets and combines them.</p>
 data frame</a>. If you wish to modify how it is printed, you can have a
 look at the available options <a href="https://pillar.r-lib.org/reference/pillar_options.html" class="external-link">here</a>.
 In fact, let’s change a few options and print the data frame again.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span></span>
 <span>  pillar.width <span class="op">=</span> <span class="cn">Inf</span>, <span class="co"># show all columns</span></span>
 <span>  pillar.min_chars <span class="op">=</span> <span class="cn">Inf</span> <span class="co"># to turn off truncation of column titles</span></span>
@@ -409,7 +424,7 @@ unit. The function will not modify the <code>DataCombined</code> object
 but return a new data frame with unified units.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Note that if you are using &lt;code&gt;DataCombined&lt;/code&gt;
 object for plotting functions, you don’t need to this conversion; the
 plotting functions will take care of this internally.&lt;/p&gt;"><sup>1</sup></a>.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/convertUnits.html">convertUnits</a></span><span class="op">(</span></span>
 <span>  <span class="va">myDataCombined</span>,</span>
 <span>  xUnit <span class="op">=</span> <span class="va">ospUnits</span><span class="op">$</span><span class="va">Time</span><span class="op">$</span><span class="va">s</span>,</span>
@@ -466,7 +481,7 @@ is issued.</p>
 <blockquote>
 <p>Residuals are calculated as: Observed value / Simulation value.</p>
 </blockquote>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Linear residuals</span></span>
 <span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="st">"linear"</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span></span>
 <span><span class="co">#&gt;  [1]  2.13793038 -0.03274317  0.04046023  0.41573747  0.79398400  0.82012473</span></span>
@@ -485,7 +500,7 @@ is issued.</p>
 <p>To quickly calculate the total error of the
 <code>DataCombined</code>, one can sum up the absolute values of the
 residuals:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Linear residuals</span></span>
 <span><span class="va">totalError</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">Scaling</a></span><span class="op">$</span><span class="va">lin</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -511,7 +526,7 @@ data stored in <code>DataCombined</code> object.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

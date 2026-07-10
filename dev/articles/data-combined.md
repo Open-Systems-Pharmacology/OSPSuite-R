@@ -76,6 +76,24 @@ myDataCombined$addDataSets(
 )
 ```
 
+The package exports `dataCombinedAciclovir` — a `DataCombined` object
+equivalent to the example built above — which can be used directly to
+illustrate and test how `DataCombined` objects work:
+
+``` r
+
+dataCombinedAciclovir
+#> <DataCombined>
+#> 
+#> ── Datasets and groupings: ─────────────────────────────────────────────────────
+#> 
+#> # A tibble: 2 × 3
+#>   name                                                            group dataType
+#>   <chr>                                                           <chr> <chr>   
+#> 1 Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Ve… Acic… simulat…
+#> 2 Vergin 1995.Iv                                                  Acic… observed
+```
+
 Every data, be it simulated results or from `DataSet`, must have a
 unique name within `DataCombined`. If not specified by user, the path of
 simulated results or the `$name` property of the `DataSet` are used as
@@ -134,7 +152,7 @@ myDataCombined$addDataSets(
 plotIndividualTimeProfile(dataCombined = myDataCombined)
 ```
 
-![](data-combined_files/figure-html/unnamed-chunk-6-1.png)
+![](data-combined_files/figure-html/unnamed-chunk-7-1.png)
 
 If you do not specify `groups` when you add datasets, and wish to update
 groupings later, you can use the `$setGroups()` method. All data within
@@ -151,7 +169,7 @@ myDataCombined$setGroups(
 plotIndividualTimeProfile(dataCombined = myDataCombined)
 ```
 
-![](data-combined_files/figure-html/unnamed-chunk-7-1.png)
+![](data-combined_files/figure-html/unnamed-chunk-8-1.png)
 
 At any point, you can check the current names and groupings with the
 following active field:
@@ -217,7 +235,7 @@ myDataCombinedTranformations$addDataSets(
 plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
 ```
 
-![](data-combined_files/figure-html/unnamed-chunk-10-1.png)
+![](data-combined_files/figure-html/unnamed-chunk-11-1.png)
 
 However, we might want to use this data set with a simulation where
 aciclovir is administered 24 hours after simulation begin. To be able to
@@ -239,7 +257,7 @@ myDataCombinedTranformations$setDataTransformations(
 plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
 ```
 
-![](data-combined_files/figure-html/unnamed-chunk-11-1.png)
+![](data-combined_files/figure-html/unnamed-chunk-12-1.png)
 
 In the next step, we want to *normalize* observed concentrations to a
 dose. We can easily achieve this with the scale factor. In the next
@@ -256,7 +274,7 @@ myDataCombinedTranformations$setDataTransformations(
 plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
 ```
 
-![](data-combined_files/figure-html/unnamed-chunk-12-1.png) Finally,
+![](data-combined_files/figure-html/unnamed-chunk-13-1.png) Finally,
 offsetting the observation values might be useful when working with
 measurements of endogenous substrates, such as the hormone glucagon, and
 want to correct for the individual specific baseline levels of the

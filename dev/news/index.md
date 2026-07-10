@@ -27,6 +27,10 @@
   [`validateIsNamedList()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/validateIsNamedList.md)
   helper functions to the exported API.
 
+- Added `dataCombinedAciclovir`, a pre-built `DataCombined` object
+  combining simulated and observed aciclovir data, exported for use in
+  examples, vignettes, and tests.
+
 - [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
   now treats an empty `sheets` vector (`character(0)`) the same as
   `sheets = NULL`, falling back to the configuration/all-sheets logic

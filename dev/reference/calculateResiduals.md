@@ -168,34 +168,7 @@ Other data-combined:
 ## Examples
 
 ``` r
-# simulated data
-simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-sim <- loadSimulation(simFilePath)
-simResults <- runSimulations(sim)[[1]]
-outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
-
-# observed data
-obsData <- lapply(
-  c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
-  function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
-)
-names(obsData) <- lapply(obsData, function(x) x$name)
-
-
-# Create a new instance of `DataCombined` class
-myDataCombined <- DataCombined$new()
-
-# Add simulated results
-myDataCombined$addSimulationResults(
-  simulationResults = simResults,
-  quantitiesOrPaths = outputPath,
-  groups = "Aciclovir PVB"
-)
-
-# Add observed data set
-myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
-
-calculateResiduals(myDataCombined, scaling = "linear")
+calculateResiduals(dataCombinedAciclovir, scaling = "linear")
 #> # A tibble: 13 × 15
 #>    group      name  nameSimulated xValues xUnit xDimension yValuesObserved yUnit
 #>    <chr>      <chr> <chr>           <dbl> <chr> <chr>                <dbl> <chr>

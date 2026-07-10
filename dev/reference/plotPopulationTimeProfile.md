@@ -82,13 +82,12 @@ Other plotting:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 populationResults <- importResultsFromCSV(
   simulation = sim,
-  filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite")
+  filePaths = system.file("extdata", "SimResults.csv", package = "ospsuite")
 )
 
 # Create a new instance of `DataCombined` class
@@ -98,13 +97,18 @@ myDataComb$addSimulationResults(populationResults)
 
 # plot
 plotPopulationTimeProfile(myDataComb)
+#> Warning: `plotPopulationTimeProfile()` was deprecated in ospsuite 12.4.2.
+#> ℹ Please use `plotTimeProfile()` instead.
+#> ℹ It will be removed in version 14.0.
+
 
 # plot with other quantiles
 plotPopulationTimeProfile(myDataComb, quantiles = c(0.1, 0.5, 0.9))
+
 
 # plot with arithmetic mean
 plotPopulationTimeProfile(myDataComb,
   aggregation = "arithmetic"
 )
-} # }
+
 ```

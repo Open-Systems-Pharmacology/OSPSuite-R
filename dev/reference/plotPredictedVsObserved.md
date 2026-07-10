@@ -197,14 +197,15 @@ Other plot functions based on ospsuite.plots:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-# Generate a predicted vs observed plot for the provided data
-plotPredictedVsObserved(myDataCombined)
+# Generate a predicted vs observed plot
+plotPredictedVsObserved(dataCombinedAciclovir)
+
 
 # Generate an observed vs predicted plot (swap axes)
-plotPredictedVsObserved(myDataCombined, predictedAxis = "x")
+plotPredictedVsObserved(dataCombinedAciclovir, predictedAxis = "x")
+
 
 # Show individual dataset names in legend
-plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "observed")
-} # }
+plotPredictedVsObserved(dataCombinedAciclovir, showLegendPerDataset = "observed")
+
 ```

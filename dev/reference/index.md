@@ -245,6 +245,9 @@
   Creates and returns an instance of a `SimulationBatch` that can be
   used to efficiently vary parameters and initial values in a simulation
 
+- [`dataCombinedAciclovir`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataCombinedAciclovir.md)
+  : dataCombinedAciclovir
+
 - [`dataSetToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md)
   [`dataSetToTibble()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md)
   :
