@@ -211,6 +211,7 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 #'
 #' **Deprecated**: Use `sheets = NULL` instead. This parameter will be removed in version 14.
 #' @param sheets Character vector of sheet names to load, or `NULL` (default).
+#' An empty character vector (`character(0)`) is treated the same as `NULL`.
 #' If `NULL` and `importAllSheets` is `FALSE`, the sheets defined in the `importerConfiguration` will be used.
 #' If the configuration has no sheets defined and `sheets` is `NULL` and `importAllSheets` is `FALSE`, all sheets
 #' will be loaded. If a character vector is provided, only the specified sheets
@@ -280,6 +281,12 @@ loadDataSetsFromExcel <- function(
   }
 
   validateIsLogical(importAllSheets)
+
+  # Treat an empty character vector the same as `NULL` so it falls back to the
+  # configuration/all-sheets logic instead of overriding with no sheets.
+  if (!is.null(sheets) && length(sheets) == 0) {
+    sheets <- NULL
+  }
 
   # Validate sheets parameter
   if (!is.null(sheets)) {

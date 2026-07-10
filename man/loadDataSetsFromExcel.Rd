@@ -26,6 +26,7 @@ over the \code{sheets} parameter and configuration sheets.
 \strong{Deprecated}: Use \code{sheets = NULL} instead. This parameter will be removed in version 14.}
 
 \item{sheets}{Character vector of sheet names to load, or \code{NULL} (default).
+An empty character vector (\code{character(0)}) is treated the same as \code{NULL}.
 If \code{NULL} and \code{importAllSheets} is \code{FALSE}, the sheets defined in the \code{importerConfiguration} will be used.
 If the configuration has no sheets defined and \code{sheets} is \code{NULL} and \code{importAllSheets} is \code{FALSE}, all sheets
 will be loaded. If a character vector is provided, only the specified sheets
