@@ -18,13 +18,12 @@
 #' @family plotting
 #'
 #' @examples
-#' \dontrun{
 #' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 #' sim <- loadSimulation(simFilePath)
 #'
 #' populationResults <- importResultsFromCSV(
 #'   simulation = sim,
-#'   filePaths = system.file("extdata", "SimResults_pop.csv", package = "ospsuite")
+#'   filePaths = system.file("extdata", "SimResults.csv", package = "ospsuite")
 #' )
 #'
 #' # Create a new instance of `DataCombined` class
@@ -42,7 +41,6 @@
 #' plotPopulationTimeProfile(myDataComb,
 #'   aggregation = "arithmetic"
 #' )
-#' }
 #'
 #' @export
 plotPopulationTimeProfile <- function(

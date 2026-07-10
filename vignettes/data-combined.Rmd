@@ -85,6 +85,12 @@ myDataCombined$addDataSets(
 )
 ```
 
+The package exports `dataCombinedAciclovir` — a `DataCombined` object equivalent to the example built above — which can be used directly to illustrate and test how `DataCombined` objects work:
+
+```{r}
+dataCombinedAciclovir
+```
+
 Every data, be it simulated results or from `DataSet`, must have a unique name 
 within `DataCombined`. If not specified by user, the path of simulated results 
 or the `$name` property of the `DataSet` are used as the name. Alternatively, we 

@@ -881,9 +881,9 @@ getSimulationTree <- function(simulationOrFilePath, quantityType = "Quantity") {
   # entities in `simulation` that fall under the types specified in quantityType
   allPaths <- sapply(quantityType, function(type) {
     quantityTypeList[[type]](simulation)
-  }) %>%
-    unname() %>%
-    unlist(use.names = FALSE) %>%
+  }) |>
+    unname() |>
+    unlist(use.names = FALSE) |>
     unique()
 
   # Initiate list to be returned as a null list.

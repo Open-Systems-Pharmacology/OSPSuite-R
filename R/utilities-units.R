@@ -444,7 +444,7 @@ ospUnits <- NULL
 .getOspDimensions <- function(xmlData) {
   ospDimensions <- list()
 
-  dimensionsNodes <- xmlData %>%
+  dimensionsNodes <- xmlData |>
     xml2::xml_find_all(".//Dimension")
 
   for (dimNode in dimensionsNodes) {
@@ -466,23 +466,23 @@ ospUnits <- NULL
 #' @return a list of supported units
 .getOspUnits <- function(xmlData) {
   # Extract information from the XML
-  dimensionsNodes <- xmlData %>%
+  dimensionsNodes <- xmlData |>
     xml2::xml_find_all(".//Dimension")
 
   ospUnits <- list()
 
   for (dim in dimensionsNodes) {
-    dim_name <- dim %>%
-      xml2::xml_attr("name") %>%
-      gsub(pattern = "[(]", replacement = "[") %>%
+    dim_name <- dim |>
+      xml2::xml_attr("name") |>
+      gsub(pattern = "[(]", replacement = "[") |>
       gsub(pattern = "[)]", replacement = "]")
-    dim_units <- dim %>%
+    dim_units <- dim |>
       xml2::xml_find_all(".//Unit")
 
     unit_list <- list()
 
     for (unit in dim_units) {
-      unit_name <- unit %>% xml2::xml_attr("name")
+      unit_name <- unit |> xml2::xml_attr("name")
       # If unit_name equals "" use "Unitless" as key but keep "" as value.
       if (unit_name == "") {
         unit_list[["Unitless"]] <- ""
