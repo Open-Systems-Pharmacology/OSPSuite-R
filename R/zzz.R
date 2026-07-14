@@ -25,12 +25,7 @@
   # it can be suppressed. `.onLoad()` stays silent, as required for a bare
   # namespace load.
   if (!is.null(ospsuiteEnv$loadError)) {
-    packageStartupMessage(
-      "The OSPSuite .NET runtime could not be initialised.\n",
-      "ospsuite is installed, but calls into the .NET API will fail until a working runtime is available.\n",
-      "Details: ",
-      ospsuiteEnv$loadError
-    )
+    packageStartupMessage(messages$runtimeNotInitialised(ospsuiteEnv$loadError))
   }
 }
 # nocov end

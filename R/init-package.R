@@ -40,9 +40,9 @@
   # linked against). Loading the package must never fail in that case: `ospsuite`
   # still has to install and load so it can be built, checked, and resolved as a
   # dependency. When initialisation fails we record the reason in
-  # `ospsuiteEnv$loadError` and return quietly. The reason is surfaced to the
-  # user in `.onAttach()` and on the first call into the .NET API (see
-  # `.ensureInitialised()`).
+  # `ospsuiteEnv$loadError` (and leave `ospsuiteEnv$initialized` FALSE) and
+  # return quietly. The reason is surfaced to the user in `.onAttach()`; calls
+  # into the .NET API then fail with rSharp's own runtime error.
   ospsuiteEnv$loadError <- tryCatch(
     {
       .loadNativeLibraries(libDir)
@@ -89,11 +89,7 @@
     # Only arm64 (Apple Silicon) is supported on macOS
     machine <- Sys.info()[["machine"]]
     if (machine != "arm64") {
-      stop(
-        "Unsupported architecture for macOS: ",
-        machine,
-        ". Only arm64 (Apple Silicon) is supported."
-      )
+      stop(messages$errorUnsupportedMacArchitecture(machine))
     }
     dylibFiles <- list.files(libDir, pattern = "\\.dylib$", full.names = TRUE)
     for (dylibFile in dylibFiles) {
@@ -101,25 +97,4 @@
     }
   }
   invisible()
-}
-
-# Ensures the .NET runtime and native libraries were initialised before a call
-# into the .NET API. Aborts with the recorded reason so callers get an
-# actionable error instead of a low-level failure from the native layer.
-.ensureInitialised <- function() {
-  if (isTRUE(ospsuiteEnv$initialized)) {
-    return(invisible())
-  }
-  stop(
-    paste(
-      "The OSPSuite .NET runtime could not be initialised, so this function",
-      "cannot be used. ospsuite is installed, but calls into the .NET API will",
-      "fail until a working runtime is available.",
-      if (!is.null(ospsuiteEnv$loadError)) {
-        paste0("Details: ", ospsuiteEnv$loadError)
-      },
-      sep = "\n"
-    ),
-    call. = FALSE
-  )
 }

@@ -8,10 +8,12 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
+# Evaluate the runtime chunks only when the OSPSuite .NET runtime initialised
+# successfully (native libraries + .NET). On machines without a working runtime
+# the code is shown but not executed, so the vignette still renders.
 .ospRuntimeAvailable <- isTRUE(tryCatch(
-  requireNamespace("rSharp", quietly = TRUE) &&
-    "dotnetAvailable" %in% getNamespaceExports("rSharp") &&
-    rSharp::dotnetAvailable(),
+  requireNamespace("ospsuite", quietly = TRUE) &&
+    ospsuite::getOSPSuiteSetting("initialized"),
   error = function(e) FALSE
 ))
 knitr::opts_chunk$set(
