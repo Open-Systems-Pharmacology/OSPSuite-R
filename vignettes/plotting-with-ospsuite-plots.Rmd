@@ -8,7 +8,9 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+.ospRuntimeAvailable <- requireNamespace("rSharp", quietly = TRUE) && rSharp::dotnetAvailable()
 knitr::opts_chunk$set(
+  eval = .ospRuntimeAvailable,
   collapse = TRUE,
   warning = FALSE,
   message = FALSE,
@@ -209,7 +211,7 @@ By default, `showLegendPerDataset = "all"`, which differentiates both observed (
 
 You can customize this behavior using the `showLegendPerDataset` parameter:
 
-```{r timeprofile-legend-per-dataset, eval=TRUE}
+```{r timeprofile-legend-per-dataset, eval=.ospRuntimeAvailable}
 # Show all individual dataset names (both observed and simulated) - default
 plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "all")
 

@@ -8,7 +8,9 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+.ospRuntimeAvailable <- requireNamespace("rSharp", quietly = TRUE) && rSharp::dotnetAvailable()
 knitr::opts_chunk$set(
+  eval = .ospRuntimeAvailable,
   collapse = TRUE,
   comment = "#>"
 )
