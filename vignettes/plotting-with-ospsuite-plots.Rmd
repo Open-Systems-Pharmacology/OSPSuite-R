@@ -8,7 +8,12 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-.ospRuntimeAvailable <- requireNamespace("rSharp", quietly = TRUE) && rSharp::dotnetAvailable()
+.ospRuntimeAvailable <- isTRUE(tryCatch(
+  requireNamespace("rSharp", quietly = TRUE) &&
+    "dotnetAvailable" %in% getNamespaceExports("rSharp") &&
+    rSharp::dotnetAvailable(),
+  error = function(e) FALSE
+))
 knitr::opts_chunk$set(
   eval = .ospRuntimeAvailable,
   collapse = TRUE,
