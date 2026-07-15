@@ -508,12 +508,12 @@ DataCombined <- R6::R6Class(
           return(NULL)
         }
         return(
-          dplyr::tibble(name = self$names) %>%
-            dplyr::rowwise() %>%
+          dplyr::tibble(name = self$names) |>
+            dplyr::rowwise() |>
             dplyr::mutate(
               group = private$.groupMap[[name]] %||% NA_character_,
               dataType = private$.dataType[[name]]
-            ) %>%
+            ) |>
             dplyr::ungroup()
         )
       }
@@ -547,14 +547,14 @@ DataCombined <- R6::R6Class(
             # For scale factors: `1` (default for no change)
             xScaleFactors = 1,
             yScaleFactors = 1
-          ) %>%
-            dplyr::rowwise() %>%
+          ) |>
+            dplyr::rowwise() |>
             dplyr::mutate(
               xOffsets = private$.xOffsets[[name]] %||% xOffsets,
               yOffsets = private$.yOffsets[[name]] %||% yOffsets,
               xScaleFactors = private$.xScaleFactors[[name]] %||% xScaleFactors,
               yScaleFactors = private$.yScaleFactors[[name]] %||% yScaleFactors
-            ) %>%
+            ) |>
             dplyr::ungroup()
         )
       }
@@ -715,7 +715,7 @@ DataCombined <- R6::R6Class(
             yErrorValues = yErrorValues * abs(yScaleFactors)
           ),
           on = .(name)
-        ] %>%
+        ] |>
         # convert back to tibble
         tibble::as_tibble()
       return(data)

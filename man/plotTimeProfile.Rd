@@ -147,21 +147,20 @@ error bounds directly in \code{yMin} and \code{yMax} columns.
 }
 }
 \examples{
-\dontrun{
 # Generate a time profile plot for the provided data
-plotTimeProfile(myDataCombined,
+plotTimeProfile(dataCombinedAciclovir,
   xUnit = ospUnits$Time$h,
   yUnit = ospUnits$`Concentration [mass]`$`mg/l`)
 
 # Show individual dataset names for observed data only
-plotTimeProfile(manyObsDC, showLegendPerDataset = "observed")
+plotTimeProfile(dataCombinedAciclovir, showLegendPerDataset = "observed")
 
 # Show individual dataset names for simulated data only
-plotTimeProfile(manySimDC, showLegendPerDataset = "simulated")
+plotTimeProfile(dataCombinedAciclovir, showLegendPerDataset = "simulated")
 
 # Show individual dataset names for both observed and simulated
-plotTimeProfile(manyObsSimDC, showLegendPerDataset = "all")
-}
+plotTimeProfile(dataCombinedAciclovir, showLegendPerDataset = "all")
+
 }
 \seealso{
 Other plot functions based on ospsuite.plots:

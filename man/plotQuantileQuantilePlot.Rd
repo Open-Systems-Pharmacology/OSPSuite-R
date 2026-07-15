@@ -76,13 +76,12 @@ This function visualizes the distribution of predicted vs observed values
 using a Q-Q plot.
 }
 \examples{
-\dontrun{
 # Generate a Q-Q plot with default settings
-plotQuantileQuantilePlot(myDataCombined)
+plotQuantileQuantilePlot(dataCombinedAciclovir)
 
 # Generate a Q-Q plot with linear scale
-plotQuantileQuantilePlot(myDataCombined, residualScale = "linear")
-}
+plotQuantileQuantilePlot(dataCombinedAciclovir, residualScale = "linear")
+
 }
 \seealso{
 Other plot functions based on ospsuite.plots:
