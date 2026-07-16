@@ -36,6 +36,13 @@
   `sheets = NULL`, falling back to the configuration/all-sheets logic
   instead of overriding with no sheets.
 
+- [`plotIndividualTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotIndividualTimeProfile.md)
+  and
+  [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPopulationTimeProfile.md)
+  now produce a stable legend entry order when
+  `showLegendPerDataset = TRUE`; previously the order of the
+  dataset-name legend entries could vary between sessions.
+
 - [`convertSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/convertSnapshot.md)
   is soft-deprecated in favor of two dedicated functions:
   [`loadProjectFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadProjectFromSnapshot.md)

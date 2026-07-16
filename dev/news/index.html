@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9014</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9015</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,6 +65,7 @@
 <li><p>Added <code><a href="../reference/isSupportedUnit.html">isSupportedUnit()</a></code> and <code><a href="../reference/validateIsNamedList.html">validateIsNamedList()</a></code> helper functions to the exported API.</p></li>
 <li><p>Added <code>dataCombinedAciclovir</code>, a pre-built <code>DataCombined</code> object combining simulated and observed aciclovir data, exported for use in examples, vignettes, and tests.</p></li>
 <li><p><code><a href="../reference/loadDataSetsFromExcel.html">loadDataSetsFromExcel()</a></code> now treats an empty <code>sheets</code> vector (<code>character(0)</code>) the same as <code>sheets = NULL</code>, falling back to the configuration/all-sheets logic instead of overriding with no sheets.</p></li>
+<li><p><code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> and <code><a href="../reference/plotPopulationTimeProfile.html">plotPopulationTimeProfile()</a></code> now produce a stable legend entry order when <code>showLegendPerDataset = TRUE</code>; previously the order of the dataset-name legend entries could vary between sessions.</p></li>
 <li><p><code><a href="../reference/convertSnapshot.html">convertSnapshot()</a></code> is soft-deprecated in favor of two dedicated functions: <code><a href="../reference/loadProjectFromSnapshot.html">loadProjectFromSnapshot()</a></code> (snapshot <code>.json</code> -&gt; project) and <code><a href="../reference/exportProjectToSnapshot.html">exportProjectToSnapshot()</a></code> (project -&gt; snapshot <code>.json</code>). <code><a href="../reference/convertSnapshot.html">convertSnapshot()</a></code> still works but issues a deprecation warning and will be removed in a future release. Only PK-Sim projects (<code>.pksim5</code>) are supported for now; MoBi support is planned.</p></li>
 </ul></div>
 </div>
