@@ -259,3 +259,18 @@ messages$errorIndividualIdsNotFoundInPopulation <- function(missingIds) {
     "{length(missingIds)} individual id{?s} {?was/were} not found in the population: {.val {missingIds}}"
   )
 }
+
+messages$errorUnsupportedMacArchitecture <- function(machine) {
+  cliFormat(
+    "Unsupported architecture for macOS: {.val {machine}}.",
+    "Only {.val arm64} (Apple Silicon) is supported."
+  )
+}
+
+messages$runtimeNotInitialised <- function(loadError = NULL) {
+  cliFormat(
+    "The OSPSuite .NET runtime could not be initialised.",
+    "ospsuite is installed, but calls into the .NET API will fail until a working runtime is available.",
+    if (!is.null(loadError)) "Details: {loadError}"
+  )
+}

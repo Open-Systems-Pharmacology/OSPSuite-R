@@ -12,6 +12,14 @@ ospsuiteEnv <- new.env(parent = emptyenv())
 # name of the package. This will be used to retrieve information on the package at run time
 ospsuiteEnv$packageName <- "ospsuite"
 
+# Whether the native libraries and .NET runtime were successfully initialised at
+# load time (see `.initPackage()`). `NULL` until `.onLoad()` runs. Readable via
+# `getOSPSuiteSetting("initialized")`, e.g. to gate runtime-dependent code.
+ospsuiteEnv$initialized <- NULL
+# Reason the runtime could not be initialised, or `NULL` when it was. Surfaced in
+# `.onAttach()`.
+ospsuiteEnv$loadError <- NULL
+
 # Major version of the suite. Corresponds to the version of installed `ospsuite-r`
 ospsuiteEnv$suiteVersion <- .getSuiteVersion()
 
