@@ -9,7 +9,10 @@ vignette: >
 
 
 ```{r setup, include = FALSE}
+# Load the shared runtime gate; see vignettes/_setup.R.
+source("_setup.R")
 knitr::opts_chunk$set(
+  eval = .ospRuntimeAvailable,
   collapse = TRUE,
   comment = "#>",
   fig.showtext = TRUE

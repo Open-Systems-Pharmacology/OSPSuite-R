@@ -8,7 +8,10 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+# Load the shared runtime gate; see vignettes/_setup.R.
+source("_setup.R")
 knitr::opts_chunk$set(
+  eval = .ospRuntimeAvailable,
   collapse = TRUE,
   comment = "#>",
   error = TRUE,
@@ -83,7 +86,7 @@ When the simulation run time (5) is much greater than the loading (1) and initia
 
 Consider the following implementation:
 
-```{r ParallelRun, eval=TRUE}
+```{r ParallelRun, eval=.ospRuntimeAvailable}
 library(ospsuite)
 # Load and run the simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
@@ -124,7 +127,7 @@ and define the parameter values that can be changed between runs. Note that, as 
 the `Simulation` object, we do not have access to any parameter/species values nor can we change
 the outputs or simulation time.
 
-```{r BatchRunInit, eval=TRUE}
+```{r BatchRunInit, eval=.ospRuntimeAvailable}
 library(ospsuite)
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 
@@ -150,7 +153,7 @@ simulationBatches <- list(simBatch1, simBatch2)
 In the next step, we define multiple runs of the simulation batch by adding different
 parameter (and/or species start) values set. Each set of values correspond to one run. The benefit of this approach is that the initialization steps (1 and 4) are only performed once. After that, only the execution time (step 5) will have an impact on the total performance.
 
-```{r BatchRunEnque, eval=TRUE}
+```{r BatchRunEnque, eval=.ospRuntimeAvailable}
 # now setting some parameter run values (the size of the array should match
 # the number of parameters to vary for each batch
 simBatch1$addRunValues(parameterValues = c(1, 2))
@@ -169,7 +172,7 @@ other one with 4. That means that 3 runs will be enqueued for simBatch1 and
 4 will be enqueued for simBatch2. Each run gets a unique id that can later be used
 to correctly assign simulation results to the simulated set of parameters.
 
-```{r BatchRunRun, eval=TRUE}
+```{r BatchRunRun, eval=.ospRuntimeAvailable}
 # Now we run the simulation batches.
 # By doing so, 7 runs (3 for simBatch1 and 4 for simBatch2) will be executed in parallel.
 # Please see documentation of runSimulationBatches for more details.
@@ -184,7 +187,7 @@ Notes:
   - We do not have to always set the same number of values at the same time
   - Previous `runValues` are automatically cleared when `runSimulationBatches()` is called. 
   
-```{r BatchRunRunNewValues, eval=TRUE}  
+```{r BatchRunRunNewValues, eval=.ospRuntimeAvailable}
 simBatch1$addRunValues(parameterValues = c(10, 20))
 simBatch1$addRunValues(parameterValues = c(30, 40))
 simBatch2$addRunValues(parameterValues = 500)
@@ -225,7 +228,7 @@ results <- runSimulationBatches(simBatch)
 
 Instead, the state variable parameter should be treated as a species and set as a variable molecule start value.
 
-```{r BatchRunStateVarMolecule, eval=TRUE}
+```{r BatchRunStateVarMolecule, eval=.ospRuntimeAvailable}
 stateVariableParam <- getParameter(path = "Organism|Lumen|Stomach|Liquid", container = sim1)
 # Create simulation batch with state variable parameter set as a variable molecule
 simBatch <- createSimulationBatch(simulation = sim1, moleculesOrPaths = stateVariableParam)

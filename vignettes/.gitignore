@@ -1,2 +1,4 @@
 *.html
 *.R
+# Keep the shared vignette setup script, which is a source file (not generated).
+!_setup.R
