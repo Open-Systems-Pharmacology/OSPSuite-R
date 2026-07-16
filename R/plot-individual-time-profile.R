@@ -184,11 +184,16 @@ plotIndividualTimeProfile <- function(
     profilePlot <- profilePlot +
       ggplot2::guides(linetype = "none", shape = "none")
   } else {
-    # Build guides list conditionally based on whether fill is used
+    # `shape` and `linetype` get distinct `order` values: sharing an `order`
+    # leaves their relative order to a ggplot2 heuristic that is not stable
+    # across R sessions, making the legend (and the snapshot) flip between runs.
+    # `color` and `fill` intentionally share `order`: they map to the same
+    # variable, so an equal `order` lets ggplot2 merge them into one legend
+    # group (splitting them would duplicate the group in population plots).
     guidesList <- list(
-      linetype = ggplot2::guide_legend(title = NULL, order = 0),
-      shape = ggplot2::guide_legend(title = NULL, order = 0),
-      color = ggplot2::guide_legend(title = NULL, order = 1)
+      color = ggplot2::guide_legend(title = NULL, order = 1),
+      shape = ggplot2::guide_legend(title = NULL, order = 2),
+      linetype = ggplot2::guide_legend(title = NULL, order = 3)
     )
     # Only include fill guide if aggregation is used (population plots)
     if (!is.null(aggregation)) {
