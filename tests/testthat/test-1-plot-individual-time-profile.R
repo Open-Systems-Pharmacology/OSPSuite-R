@@ -115,6 +115,17 @@ test_that("It maps multiple observed and simulated datasets to different visual 
   )
 })
 
+test_that("It plots multiple observed and simulated datasets with dataset name legend entries", {
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "multiple obs and sim - separate legend",
+    fig = plotIndividualTimeProfile(
+      manyObsSimDC(),
+      showLegendPerDataset = TRUE
+    )
+  )
+})
+
 # edge cases ------------------------
 
 test_that("It works when geometric error is present", {
