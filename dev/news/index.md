@@ -4,6 +4,16 @@
 
 ### Minor improvements and bug fixes
 
+- `ospsuite` now installs and loads even when its native libraries or
+  the .NET runtime cannot be initialised (for example on build machines
+  that lack a compatible `libxml2` or the .NET runtime), instead of
+  failing at load time. The reason is reported when the package is
+  attached and raised with an actionable message on the first call into
+  the .NET API. Vignette code that requires the runtime is only executed
+  when it is available. Together this allows the package to be built,
+  checked, and resolved as a dependency in environments without a
+  working runtime.
+
 - [`library(ospsuite)`](https://github.com/open-systems-pharmacology/ospsuite-r)
   no longer changes the global `ggplot2` theme and geom defaults: the
   [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)-based
