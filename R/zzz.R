@@ -16,6 +16,16 @@
     )
   }
 
+  # macOS only ships arm64 (Apple Silicon) native libraries. An unsupported
+  # macOS architecture (for example x86_64) is a hard failure and must abort
+  # loading with a precise diagnostic, so it runs here, before `.initPackage()`
+  # wraps native-library loading in graceful degradation. Otherwise the abort
+  # would be swallowed and misreported as a generic "runtime not initialised".
+  sysInfo <- Sys.info()
+  if (sysInfo[["sysname"]] == "Darwin" && sysInfo[["machine"]] != "arm64") {
+    stop(messages$errorUnsupportedMacArchitecture(sysInfo[["machine"]]))
+  }
+
   .initPackage()
 }
 

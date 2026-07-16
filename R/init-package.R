@@ -86,11 +86,9 @@
       dyn.load(soFile)
     }
   } else if (sysname == "Darwin") {
-    # Only arm64 (Apple Silicon) is supported on macOS
-    machine <- Sys.info()[["machine"]]
-    if (machine != "arm64") {
-      stop(messages$errorUnsupportedMacArchitecture(machine))
-    }
+    # The unsupported-architecture guard for macOS lives in `.onLoad()`, which
+    # aborts before this graceful-degradation path runs, so by the time we get
+    # here macOS is known to be arm64 (Apple Silicon).
     dylibFiles <- list.files(libDir, pattern = "\\.dylib$", full.names = TRUE)
     for (dylibFile in dylibFiles) {
       dyn.load(dylibFile)
