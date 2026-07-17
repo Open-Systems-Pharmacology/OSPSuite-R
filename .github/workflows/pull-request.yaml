@@ -19,7 +19,9 @@ jobs:
   R-CMD-Check:
     needs: [sync-remotes]
     if: ${{ !cancelled() }} # a skipped fork-PR sync must not block the check
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+    # TEMPORARY (#1996): local copy of the shared R-CMD-check-build workflow that
+    # captures Windows crash dumps. Revert to the @main workflow once resolved.
+    uses: ./.github/workflows/R-CMD-check-build-crashdumps.yaml
 
   test-coverage:
     needs: [sync-remotes]

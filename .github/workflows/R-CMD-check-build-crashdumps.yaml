@@ -1,0 +1,161 @@
+# TEMPORARY diagnostic copy — remove when #1996 is resolved.
+#
+# This is a local copy of
+# Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+# with two Windows-only steps added around "Check R package" ("Enable Windows crash
+# dump capture" / "Upload crash dumps"). It exists so we can collect a crash dump for
+# the intermittent 0xC0000005 access violation in Windows test runs (#1996) without
+# modifying the shared workflow used across the whole organisation.
+# Only pull-request.yaml points here; everything else still uses the shared workflow.
+
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+
+on:
+  workflow_call:
+    inputs:
+      ignore-renv:
+        description: 'Skip renv setup if set to true'
+        required: false
+        type: boolean
+        default: false
+      os-matrix:
+        description: 'JSON array of {os, r} objects for the build matrix. Defaults to all three platforms with R release.'
+        required: false
+        type: string
+        default: >-
+          [{"os": "${{ vars.GHA_DEFAULT_RUNNER_WINDOWS || 'windows-latest' }}", "r": "release"},
+          {"os": "${{ vars.GHA_DEFAULT_RUNNER_UBUNTU || 'ubuntu-latest' }}", "r": "release"},
+          {"os": "${{ vars.GHA_DEFAULT_RUNNER_MACOS || 'macos-latest' }}", "r": "release"}]
+      build-binary:
+        description: 'Whether to build and upload the binary package. Set to false on PRs to save ~4 min per OS.'
+        required: false
+        type: boolean
+        default: true
+      setup-quarto:
+        description: 'Whether to install Quarto (needed for packages with Quarto vignettes).'
+        required: false
+        type: boolean
+        default: false
+      setup-pandoc:
+        description: 'Whether to install pandoc.'
+        required: false
+        type: boolean
+        default: true
+      setup-tinytex:
+        description: 'Whether to install TinyTeX (provides pdflatex for PDF manual builds).'
+        required: false
+        type: boolean
+        default: false
+      extra-packages:
+        description: 'Additional CI tool packages to install, on top of rcmdcheck (and pkgbuild when build-binary is true). One package per line.'
+        required: false
+        type: string
+        default: ''
+      dotnet-version:
+        description: '.NET SDK version to install on all runners (forwarded to setup-r-env). Set to an empty string to skip setup-dotnet and use whatever the runner image ships with (which may be no .NET at all, e.g. on macOS).'
+        required: false
+        type: string
+        default: '8.0.x'
+name: R-CMD-check-build.yaml
+
+permissions: read-all
+
+jobs:
+  R-CMD-check:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config: ${{ fromJSON(inputs.os-matrix) }}
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup R environment
+        id: setup-r-env
+        uses: Open-Systems-Pharmacology/Workflows/.github/actions/setup-r-env@main
+        with:
+          r-version: ${{ matrix.config.r }}
+          setup-pandoc: ${{ inputs.setup-pandoc }}
+          setup-tinytex: ${{ inputs.setup-tinytex }}
+          setup-quarto: ${{ inputs.setup-quarto }}
+          ignore-renv: ${{ inputs.ignore-renv }}
+          dotnet-version: ${{ inputs.dotnet-version }}
+          extra-packages: |
+            rcmdcheck
+            ${{ inputs.build-binary && 'pkgbuild' || '' }}
+            ${{ inputs.extra-packages }}
+
+      # OSP R packages intermittently crash with an access violation (0xC0000005) on
+      # Windows runners (Open-Systems-Pharmacology/OSPSuite-R#1996). Register a
+      # machine-wide Windows Error Reporting LocalDumps key so any process that
+      # crashes during the check writes a full dump, uploaded below on failure.
+      - name: Enable Windows crash dump capture
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $dumpDir = Join-Path $env:RUNNER_TEMP 'crashdumps'
+          New-Item -ItemType Directory -Force -Path $dumpDir | Out-Null
+          $wer = 'HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting'
+          New-Item -Path "$wer\LocalDumps" -Force | Out-Null
+          Set-ItemProperty -Path "$wer\LocalDumps" -Name DumpFolder -Value $dumpDir -Type ExpandString
+          Set-ItemProperty -Path "$wer\LocalDumps" -Name DumpType -Value 2 -Type DWord # full dump
+          Set-ItemProperty -Path "$wer\LocalDumps" -Name DumpCount -Value 5 -Type DWord
+          Set-ItemProperty -Path $wer -Name DontShowUI -Value 1 -Type DWord # never block on a WER dialog
+          "CRASH_DUMP_DIR=$dumpDir" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: Check R package
+        uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+          args: 'c("--no-manual")'
+          build_args: 'c("--no-manual")'
+          error-on: 'c("error")'
+
+      - name: Upload crash dumps
+        if: failure() && runner.os == 'Windows'
+        uses: actions/upload-artifact@v7
+        with:
+          name: crash-dumps-${{ matrix.config.os }}-r_${{ matrix.config.r }}
+          path: ${{ env.CRASH_DUMP_DIR }}/*.dmp
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Build binary package
+        if: inputs.build-binary
+        shell: Rscript {0}
+        run: |
+          output_dir <- file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "built_package")
+          dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+          tarball <- list.files("check", pattern = "\\.tar\\.gz$", full.names = TRUE)[1]
+          built <- pkgbuild::build(
+            path = tarball,
+            dest_path = output_dir,
+            binary = TRUE,
+            args = c("--preclean", "--install-tests")
+          )
+          cat("Built binary:", built, "\n")
+
+      - name: Get package name, version and R versions and store in environment
+        if: inputs.build-binary
+        run: |
+          echo "PKG_NAME=$(grep '^Package:' DESCRIPTION | sed 's/^Package:[[:space:]]*//')" >> $GITHUB_ENV
+          echo "PKG_VERSION=$(grep '^Version:' DESCRIPTION | sed 's/^Version:[[:space:]]*//')" >> $GITHUB_ENV
+          echo "R_VERSION=${{ steps.setup-r-env.outputs.installed-r-version }}" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Upload built package
+        if: inputs.build-binary
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ env.PKG_NAME }}-v${{ env.PKG_VERSION }}-${{ matrix.config.os }}-r_${{ env.R_VERSION }}
+          path: ${{ runner.temp }}/built_package/*

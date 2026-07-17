@@ -10,7 +10,9 @@ permissions:
 
 jobs:
   update-renv-nightly:
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/update-renv-lockfile.yaml@main
+    # TEMPORARY (#1996): local copy of the shared update-renv-lockfile workflow that
+    # captures Windows crash dumps. Revert to the @main workflow once resolved.
+    uses: ./.github/workflows/update-renv-lockfile-crashdumps.yaml
     with:
       app-id: ${{ vars.VERSION_BUMPER_APPID }}
     secrets:
