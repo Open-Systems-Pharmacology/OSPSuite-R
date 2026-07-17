@@ -2,6 +2,8 @@
 
 ## Minor improvements and bug fixes
 
+- `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()` now include the data unit in the y-axis label for `residualScale = "linear"` (e.g. `"residuals [µmol/l]"`). For `"log"` and `"ratio"` scales the residuals are dimensionless and no unit is shown. An empty-string unit (dimensionless data such as fractions) no longer produces empty brackets `[]` in the label.
+
 - `ospsuite` now installs and loads even when its native libraries or the .NET runtime cannot be initialised (for example on build machines that lack a compatible `libxml2` or the .NET runtime), instead of failing at load time. The reason is reported when the package is attached and raised with an actionable message on the first call into the .NET API. Vignette code that requires the runtime is only executed when it is available. Together this allows the package to be built, checked, and resolved as a dependency in environments without a working runtime.
 
 - `library(ospsuite)` no longer changes the global `ggplot2` theme and geom defaults: the `{ospsuite.plots}`-based plotting functions (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, `plotQuantileQuantilePlot()`) now style each plot individually, and the styling of unrelated plots in the session is left untouched. As a consequence, the appearance of the deprecated `{tlf}`-based plotting functions may change slightly, since they no longer inherit the global theme (#1968).
