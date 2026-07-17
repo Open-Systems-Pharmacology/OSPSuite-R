@@ -117,7 +117,20 @@ jobs:
           Set-ItemProperty -Path "$wer\LocalDumps" -Name DumpType -Value 2 -Type DWord # full dump
           Set-ItemProperty -Path "$wer\LocalDumps" -Name DumpCount -Value 5 -Type DWord
           Set-ItemProperty -Path $wer -Name DontShowUI -Value 1 -Type DWord # never block on a WER dialog
+          # GitHub runner images ship with WER reporting disabled, which also disables
+          # LocalDumps collection (observed: a 0xC0000005 crash left no dump). Re-enable it.
+          Set-ItemProperty -Path $wer -Name Disabled -Value 0 -Type DWord
+          $werPolicy = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting'
+          if (Test-Path $werPolicy) { Set-ItemProperty -Path $werPolicy -Name Disabled -Value 0 -Type DWord }
+          try { Set-Service WerSvc -StartupType Manual } catch {}
           "CRASH_DUMP_DIR=$dumpDir" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          # Belt and braces: the crashing R worker hosts CoreCLR (rSharp), whose
+          # unhandled-exception filter can terminate the process before WER runs.
+          # With these set, the runtime writes its own full dump on any fatal exception,
+          # independent of WER. %p expands to the crashing PID.
+          "DOTNET_DbgEnableMiniDump=1" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "DOTNET_DbgMiniDumpType=4" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "DOTNET_DbgMiniDumpName=$dumpDir\coreclr.%p.dmp" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
 
       - name: Check R package
         uses: r-lib/actions/check-r-package@v2
