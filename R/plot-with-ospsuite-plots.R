@@ -113,7 +113,7 @@
 #'
 #' # Show individual dataset names for both observed and simulated
 #' plotTimeProfile(dataCombinedAciclovir, showLegendPerDataset = "all")
-#' 
+#'
 plotTimeProfile <- function(
   plotData, # nolint
   metaData = NULL,
@@ -251,7 +251,7 @@ plotTimeProfile <- function(
 #'
 #' @family plot functions based on ospsuite.plots
 #'
-#' @examples 
+#' @examples
 #' # Generate a predicted vs observed plot
 #' plotPredictedVsObserved(dataCombinedAciclovir)
 #'
@@ -260,7 +260,7 @@ plotTimeProfile <- function(
 #'
 #' # Show individual dataset names in legend
 #' plotPredictedVsObserved(dataCombinedAciclovir, showLegendPerDataset = "observed")
-#' 
+#'
 plotPredictedVsObserved <- function(
   plotData, # nolint
   metaData = NULL,
@@ -354,7 +354,7 @@ plotPredictedVsObserved <- function(
 #' ## Residual Scales
 #'
 #' The `residualScale` parameter controls how residuals are displayed:
-#' - `linear`: Absolute residuals (Predicted-Observed). Values centered around
+#' - `linear`: Absolute residuals (Predicted - Observed). Values centered around
 #' zero indicate good model fit. Useful for normally distributed errors.
 #' - `log`: Log-transformed residuals, calculated as log(Predicted / Observed).
 #' Values centered around zero indicate good fit. Preferred for log-normally
@@ -412,7 +412,7 @@ plotPredictedVsObserved <- function(
 #'
 #' # Show individual dataset names in legend
 #' plotResidualsVsCovariate(dataCombinedAciclovir, showLegendPerDataset = "observed")
-#' 
+#'
 plotResidualsVsCovariate <- function(
   plotData,
   metaData = NULL,
@@ -513,7 +513,7 @@ plotResidualsVsCovariate <- function(
 #'
 #' @family plot functions based on ospsuite.plots
 #'
-#' @examples 
+#' @examples
 #' # Generate a histogram of residuals with default settings
 #' plotResidualsAsHistogram(dataCombinedAciclovir)
 #'
@@ -597,7 +597,7 @@ plotResidualsAsHistogram <- function(
 #'
 #' # Generate a Q-Q plot with linear scale
 #' plotQuantileQuantilePlot(dataCombinedAciclovir, residualScale = "linear")
-#' 
+#'
 plotQuantileQuantilePlot <- function(
   plotData,
   metaData = NULL,
@@ -704,7 +704,9 @@ plotQuantileQuantilePlot <- function(
     )
   }
 
-  if (predictedIsNeeded & !('predicted' %in% names(plotData))) {
+  residualsComputedInternally <- predictedIsNeeded & !('predicted' %in% names(plotData))
+
+  if (residualsComputedInternally) {
     plotData <- .convertUnitsForPlot(
       plotData,
       maxAllowedYDimensions = 1,
@@ -780,7 +782,7 @@ plotQuantileQuantilePlot <- function(
   }
 
   isLinearScale <- any(scaling %in% c("linear", "lin", "identity"))
-  if (isLinearScale && "residualValues" %in% names(plotData)) {
+  if (residualsComputedInternally && isLinearScale && "residualValues" %in% names(plotData)) {
     attr(plotData$residualValues, "label") <- paste0(
       ospsuite.plots::constructLabelWithUnit("residuals", plotData$yUnit[1]),
       "\npredicted - observed"

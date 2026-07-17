@@ -114,7 +114,7 @@ residuals as the difference between observed and predicted values.
 
 The \code{residualScale} parameter controls how residuals are displayed:
 \itemize{
-\item \code{linear}: Absolute residuals (Predicted-Observed). Values centered around
+\item \code{linear}: Absolute residuals (Predicted - Observed). Values centered around
 zero indicate good model fit. Useful for normally distributed errors.
 \item \code{log}: Log-transformed residuals, calculated as log(Predicted / Observed).
 Values centered around zero indicate good fit. Preferred for log-normally

@@ -345,11 +345,20 @@ test_that("y-axis label shows unit in linear scale and omits it in log or ratio 
   )
 
   # unit bracketed in y-axis label for linear scale
-  expect_match(resultLinear$labels$y, "µmol/l", fixed = TRUE)
+  expect_identical(
+    resultLinear$labels$y,
+    "residuals [µmol/l]\npredicted - observed"
+  )
   # log residuals are dimensionless — no unit brackets in y-axis label
-  expect_false(grepl("[", resultLog$labels$y, fixed = TRUE))
+  expect_identical(
+    resultLog$labels$y,
+    "residuals\nlog(predicted) - log(observed)"
+  )
   # log residuals are dimensionless — no unit brackets in y-axis label
-  expect_false(grepl("[", resultRatio$labels$y, fixed = TRUE))
+  expect_identical(
+    resultRatio$labels$y,
+    "residuals\nobserved / predicted"
+  )
 
   vdiffr::expect_doppelganger(
     title = "residuals y-label linear with unit",
