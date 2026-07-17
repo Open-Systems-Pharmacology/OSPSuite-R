@@ -57,10 +57,15 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # Mirror the PR-shape check job (R-CMD-check-build.yaml as called by
+      # pull-request.yaml): same setup inputs and same check flags, so each hunt run
+      # exercises everything a PR check does — tests AND vignette execution.
       - name: Setup R environment
         uses: Open-Systems-Pharmacology/Workflows/.github/actions/setup-r-env@main
         with:
+          r-version: release
           setup-pandoc: 'true'
+          dotnet-version: '8.0.x'
           extra-packages: |
             rcmdcheck
 
@@ -80,8 +85,9 @@ jobs:
       - name: Check R package
         uses: r-lib/actions/check-r-package@v2
         with:
-          args: 'c("--no-manual", "--no-vignettes")'
-          build_args: 'c("--no-manual", "--no-build-vignettes")'
+          upload-snapshots: true
+          args: 'c("--no-manual")'
+          build_args: 'c("--no-manual")'
           error-on: 'c("error")'
 
       - name: Upload crash dumps
