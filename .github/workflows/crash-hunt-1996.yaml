@@ -6,8 +6,11 @@
 # identical Windows-only R CMD check jobs, each with Windows Error Reporting crash-dump
 # capture. Any job that crashes uploads a crash-hunt-dumps-<n> artifact.
 #
-# Dispatch from this branch, e.g.:
-#   gh workflow run crash-hunt-1996.yaml --ref ci/windows-crash-dumps-1996 -f runs=20
+# workflow_dispatch only works once a workflow exists on the default branch, so this
+# also triggers on every push to its own branch: start a hunt with an empty commit,
+#   git commit --allow-empty -m "trigger crash hunt" && git push
+# (push runs use the default of 20). If this ever lands on main, it also becomes
+# dispatchable: gh workflow run crash-hunt-1996.yaml -f runs=20
 #
 # At ~5% crash probability per run: 10 runs ≈ 40%, 20 runs ≈ 64%, 40 runs ≈ 87%
 # chance of catching at least one dump. max-parallel is capped so the hunt does not
@@ -16,6 +19,8 @@
 name: Crash hunt (#1996)
 
 on:
+  push:
+    branches: [ci/windows-crash-dumps-1996]
   workflow_dispatch:
     inputs:
       runs:
@@ -33,7 +38,8 @@ jobs:
       runs: ${{ steps.gen.outputs.runs }}
     steps:
       - id: gen
-        run: echo "runs=$(jq -cn "[range(1; ${{ inputs.runs }} + 1)]")" >> "$GITHUB_OUTPUT"
+        # inputs.runs is empty on push events; default to 20 there
+        run: echo "runs=$(jq -cn "[range(1; ${{ inputs.runs || 20 }} + 1)]")" >> "$GITHUB_OUTPUT"
 
   hunt:
     needs: generate-matrix
