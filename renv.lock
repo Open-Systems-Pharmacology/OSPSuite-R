@@ -246,7 +246,8 @@
       "URL": "https://www.rforge.net/base64enc",
       "BugReports": "https://github.com/s-u/base64enc/issues",
       "NeedsCompilation": "yes",
-      "Repository": "CRAN"
+      "Repository": "CRAN",
+      "Encoding": "UTF-8"
     },
     "bit": {
       "Package": "bit",
@@ -2146,7 +2147,7 @@
     },
     "ospsuite.plots": {
       "Package": "ospsuite.plots",
-      "Version": "1.2.0.9004",
+      "Version": "1.2.0.9005",
       "Source": "git",
       "Type": "Package",
       "Title": "Library for standardized graphs",
@@ -2208,7 +2209,7 @@
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "OSPSuite.Plots",
       "RemoteRef": "main",
-      "RemoteSha": "d02300e7bb1f83b5bfc09b556c278dfb4ed6cd2d"
+      "RemoteSha": "8c2fde4f08ad551dbcf9edf77f1a0c853f705a0e"
     },
     "ospsuite.utils": {
       "Package": "ospsuite.utils",
@@ -2249,11 +2250,11 @@
       "VignetteBuilder": "knitr",
       "Author": "Open-Systems-Pharmacology Community [cph, fnd], Michael Sevestre [aut, cre], Pavel Balazki [aut], Juri Solodenko [aut], Indrajeet Patil [aut] (ORCID: <https://orcid.org/0000-0003-1995-6531>, Twitter: @patilindrajeets)",
       "RemoteType": "github",
+      "RemoteHost": "api.github.com",
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "OSPSuite.RUtils",
       "RemoteRef": "main",
-      "RemoteSha": "c4481711af9bb5d083ed89e0e16a32edf0c723a1",
-      "RemoteHost": "api.github.com"
+      "RemoteSha": "c4481711af9bb5d083ed89e0e16a32edf0c723a1"
     },
     "otel": {
       "Package": "otel",
@@ -2521,7 +2522,8 @@
       "URL": "https://www.rforge.net/png/",
       "BugReports": "https://github.com/s-u/png/issues/",
       "NeedsCompilation": "yes",
-      "Repository": "CRAN"
+      "Repository": "CRAN",
+      "Encoding": "UTF-8"
     },
     "praise": {
       "Package": "praise",
@@ -2765,11 +2767,11 @@
       "Author": "Open-Systems-Pharmacology Community [cph], esqLABS GmbH [fnd], Pavel Balazki [aut, cre], Juri Solodenko [aut] (ORCID: <https://orcid.org/0000-0001-6922-588X>), Michael Sevestre [aut], Robert McIntosh [aut], Felix Mil [aut], Jean-Michel Perraud [aut], Ian Peter Du [ctb]",
       "Maintainer": "Pavel Balazki <pavel.balazki@gmail.com>",
       "RemoteType": "github",
+      "RemoteHost": "api.github.com",
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "rSharp",
       "RemoteRef": "main",
-      "RemoteSha": "dd12d852921740553b3ed4e44f7aa20bf0eab411",
-      "RemoteHost": "api.github.com"
+      "RemoteSha": "dd12d852921740553b3ed4e44f7aa20bf0eab411"
     },
     "rappdirs": {
       "Package": "rappdirs",
