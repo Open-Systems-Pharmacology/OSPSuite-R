@@ -437,9 +437,9 @@ The `residualScale` parameter controls how residuals are calculated and
 displayed (this same parameter is used in `plotResidualsAsHistogram` and
 `plotQuantileQuantilePlot`):
 
-- `"log"` (default) - Logarithmic residuals: `log(observed/predicted)`
-- `"linear"` - Linear residuals: `observed - predicted`
-- `"ratio"` - Ratio: `observed/predicted`
+- `"log"` (default) - Logarithmic residuals: `log(predicted / observed)`
+- `"linear"` - Linear residuals: `predicted - observed`
+- `"ratio"` - Ratio: `observed / predicted`
 
 ``` r
 

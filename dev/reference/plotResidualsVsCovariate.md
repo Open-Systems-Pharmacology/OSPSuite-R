@@ -197,12 +197,12 @@ and predicted values.
 
 The `residualScale` parameter controls how residuals are displayed:
 
-- `linear`: Absolute residuals (Observed - Predicted). Values centered
+- `linear`: Absolute residuals (Predicted - Observed). Values centered
   around zero indicate good model fit. Useful for normally distributed
   errors.
 
-- `log`: Log-transformed residuals, calculated as log(Observed /
-  Predicted). Values centered around zero indicate good fit. Preferred
+- `log`: Log-transformed residuals, calculated as log(Predicted /
+  Observed). Values centered around zero indicate good fit. Preferred
   for log-normally distributed data or when errors are proportional to
   magnitude.
 

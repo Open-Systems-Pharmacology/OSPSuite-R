@@ -4,6 +4,16 @@
 
 ### Minor improvements and bug fixes
 
+- [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md),
+  [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsAsHistogram.md),
+  and
+  [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotQuantileQuantilePlot.md)
+  now include the data unit in the y-axis label for
+  `residualScale = "linear"` (e.g. `"residuals [µmol/l]"`). For `"log"`
+  and `"ratio"` scales the residuals are dimensionless and no unit is
+  shown. An empty-string unit (dimensionless data such as fractions) no
+  longer produces empty brackets `[]` in the label.
+
 - `ospsuite` now installs and loads even when its native libraries or
   the .NET runtime cannot be initialised (for example on build machines
   that lack a compatible `libxml2` or the .NET runtime), instead of

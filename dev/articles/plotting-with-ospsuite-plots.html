@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9016</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9017</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -465,14 +465,14 @@ calculated and displayed (this same parameter is used in
 <ul>
 <li>
 <code>"log"</code> (default) - Logarithmic residuals:
-<code>log(observed/predicted)</code>
+<code>log(predicted / observed)</code>
 </li>
 <li>
 <code>"linear"</code> - Linear residuals:
-<code>observed - predicted</code>
+<code>predicted - observed</code>
 </li>
 <li>
-<code>"ratio"</code> - Ratio: <code>observed/predicted</code>
+<code>"ratio"</code> - Ratio: <code>observed / predicted</code>
 </li>
 </ul>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">

@@ -13,7 +13,7 @@ This function visualizes the residuals against time, observed, or predicted
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9016</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9017</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -215,9 +215,9 @@ residuals as the difference between observed and predicted values.</p>
 <h3 id="residual-scales">Residual Scales<a class="anchor" aria-label="anchor" href="#residual-scales"></a></h3>
 
 
-<p>The <code>residualScale</code> parameter controls how residuals are displayed:</p><ul><li><p><code>linear</code>: Absolute residuals (Observed - Predicted). Values centered around
+<p>The <code>residualScale</code> parameter controls how residuals are displayed:</p><ul><li><p><code>linear</code>: Absolute residuals (Predicted - Observed). Values centered around
 zero indicate good model fit. Useful for normally distributed errors.</p></li>
-<li><p><code>log</code>: Log-transformed residuals, calculated as log(Observed / Predicted).
+<li><p><code>log</code>: Log-transformed residuals, calculated as log(Predicted / Observed).
 Values centered around zero indicate good fit. Preferred for log-normally
 distributed data or when errors are proportional to magnitude.</p></li>
 <li><p><code>ratio</code>: Ratio of observed to predicted (Observed / Predicted). Values
