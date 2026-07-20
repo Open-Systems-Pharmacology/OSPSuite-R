@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9018</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.4.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -274,21 +274,21 @@ performance.</p>
 <code class="sourceCode R"><span><span class="co"># now setting some parameter run values (the size of the array should match</span></span>
 <span><span class="co"># the number of parameters to vary for each batch</span></span>
 <span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "602fab0c-db7c-445f-9987-2219c4a71f95"</span></span>
+<span><span class="co">#&gt; [1] "9b35355a-ede8-4f40-8b68-c44e199f9064"</span></span>
 <span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "ff6914d2-bfb5-4c90-96ef-f71d6c8d12b6"</span></span>
+<span><span class="co">#&gt; [1] "64a3f39b-a218-40a8-844e-d300ab5cc85d"</span></span>
 <span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "defbd53d-e9e1-4952-8c61-a3fd5cb8ee43"</span></span>
+<span><span class="co">#&gt; [1] "ceb565b8-4343-47e4-9b6a-4f7e225de36c"</span></span>
 <span></span>
 <span><span class="co"># We only have one parameter to vary for simBatch2, therefore only one value to set</span></span>
 <span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">150</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "1fcdbec8-9688-4014-ae6a-ab79dc04094d"</span></span>
+<span><span class="co">#&gt; [1] "141a13ac-4a85-4e13-8bbd-f15570c92bbd"</span></span>
 <span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "eb8330de-5c2b-4b96-a3be-b48bf8d16c46"</span></span>
+<span><span class="co">#&gt; [1] "134a3d2b-04cf-442e-8c8a-5736941b4baf"</span></span>
 <span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "34dd7a8e-42c5-4d60-8fec-52ce0bf059ab"</span></span>
+<span><span class="co">#&gt; [1] "5fb52038-71ae-4451-8fff-9d5a2e8baa37"</span></span>
 <span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">400</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "96ee116c-7fff-4c7d-843d-1f2cdd6cf917"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "69eea79b-ce0e-4b71-bf47-81295600c591"</span></span></code></pre></div>
 <p>So far, we created 2 simulation batches, one with 3 parameter sets
 and the other one with 4. That means that 3 runs will be enqueued for
 simBatch1 and 4 will be enqueued for simBatch2. Each run gets a unique
@@ -301,13 +301,13 @@ simulated set of parameters.</p>
 <span><span class="co"># The resulting output is a named list, where the names are the ids of the enqueued runs.</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulationBatches.html">runSimulationBatches</a></span><span class="op">(</span><span class="va">simulationBatches</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "867b49e2-18b8-4df4-9989-1ab852ea83f1.602fab0c-db7c-445f-9987-2219c4a71f95"</span></span>
-<span><span class="co">#&gt; [2] "867b49e2-18b8-4df4-9989-1ab852ea83f1.ff6914d2-bfb5-4c90-96ef-f71d6c8d12b6"</span></span>
-<span><span class="co">#&gt; [3] "867b49e2-18b8-4df4-9989-1ab852ea83f1.defbd53d-e9e1-4952-8c61-a3fd5cb8ee43"</span></span>
-<span><span class="co">#&gt; [4] "3ea5f265-da2a-4090-929b-c73cc9d00c38.1fcdbec8-9688-4014-ae6a-ab79dc04094d"</span></span>
-<span><span class="co">#&gt; [5] "3ea5f265-da2a-4090-929b-c73cc9d00c38.eb8330de-5c2b-4b96-a3be-b48bf8d16c46"</span></span>
-<span><span class="co">#&gt; [6] "3ea5f265-da2a-4090-929b-c73cc9d00c38.34dd7a8e-42c5-4d60-8fec-52ce0bf059ab"</span></span>
-<span><span class="co">#&gt; [7] "3ea5f265-da2a-4090-929b-c73cc9d00c38.96ee116c-7fff-4c7d-843d-1f2cdd6cf917"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "7dac52b2-8363-4882-9d67-31d599fb2653.9b35355a-ede8-4f40-8b68-c44e199f9064"</span></span>
+<span><span class="co">#&gt; [2] "7dac52b2-8363-4882-9d67-31d599fb2653.64a3f39b-a218-40a8-844e-d300ab5cc85d"</span></span>
+<span><span class="co">#&gt; [3] "7dac52b2-8363-4882-9d67-31d599fb2653.ceb565b8-4343-47e4-9b6a-4f7e225de36c"</span></span>
+<span><span class="co">#&gt; [4] "af309599-0d9c-41e3-90cc-3f06c1cd28be.141a13ac-4a85-4e13-8bbd-f15570c92bbd"</span></span>
+<span><span class="co">#&gt; [5] "af309599-0d9c-41e3-90cc-3f06c1cd28be.134a3d2b-04cf-442e-8c8a-5736941b4baf"</span></span>
+<span><span class="co">#&gt; [6] "af309599-0d9c-41e3-90cc-3f06c1cd28be.5fb52038-71ae-4451-8fff-9d5a2e8baa37"</span></span>
+<span><span class="co">#&gt; [7] "af309599-0d9c-41e3-90cc-3f06c1cd28be.69eea79b-ce0e-4b71-bf47-81295600c591"</span></span></code></pre></div>
 <p>The enqueued run values are cleared after calling
 <code><a href="../reference/runSimulationBatches.html">runSimulationBatches()</a></code>, so executing the run again would
 result in an empty results list. We can now set more values to the
@@ -317,13 +317,13 @@ are automatically cleared when <code><a href="../reference/runSimulationBatches.
 called.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "4417bf8d-1363-4097-86bd-2926cae22beb"</span></span>
+<span><span class="co">#&gt; [1] "5495307f-7c58-4bf8-acf6-7aefdc90ff8f"</span></span>
 <span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">40</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "5e1dcf25-1c09-4823-9ea2-ff4f44686ec9"</span></span>
+<span><span class="co">#&gt; [1] "20c934b4-6709-4b67-81db-b8e502803a55"</span></span>
 <span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "5d0595ca-d533-41d3-8f65-c39fcc68ff0e"</span></span>
+<span><span class="co">#&gt; [1] "1493220c-9d18-48a7-b4c3-5eee260a565e"</span></span>
 <span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "bcb23b6f-b9cb-4d7e-8f72-82198758431b"</span></span>
+<span><span class="co">#&gt; [1] "1a7a6b7f-c384-480a-815a-441b0bfffc8b"</span></span>
 <span></span>
 <span><span class="co"># this run will be much faster as the simulation won't be initialized again.</span></span>
 <span><span class="co"># Only the new value will be set as specified when adding new run values with addRunValues</span></span>

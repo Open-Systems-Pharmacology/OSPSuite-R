@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.3.9018</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.4.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,8 +59,11 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="ospsuite-development-version">ospsuite (development version)<a class="anchor" aria-label="anchor" href="#ospsuite-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="12.4.4" id="ospsuite-1244">ospsuite 12.4.4<a class="anchor" aria-label="anchor" href="#ospsuite-1244"></a></h2>
 <div class="section level3">
-<h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
+<h3 id="minor-improvements-and-bug-fixes-12-4-4">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-12-4-4"></a></h3>
 <ul><li><p><code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>, <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code>, and <code><a href="../reference/plotQuantileQuantilePlot.html">plotQuantileQuantilePlot()</a></code> now include the data unit in the y-axis label for <code>residualScale = "linear"</code> (e.g. <code>"residuals [µmol/l]"</code>). For <code>"log"</code> and <code>"ratio"</code> scales the residuals are dimensionless and no unit is shown. An empty-string unit (dimensionless data such as fractions) no longer produces empty brackets <code>[]</code> in the label.</p></li>
 <li><p><code>ospsuite</code> now installs and loads even when its native libraries or the .NET runtime cannot be initialised (for example on build machines that lack a compatible <code>libxml2</code> or the .NET runtime), instead of failing at load time. The reason is reported when the package is attached and raised with an actionable message on the first call into the .NET API. Vignette code that requires the runtime is only executed when it is available. Together this allows the package to be built, checked, and resolved as a dependency in environments without a working runtime.</p></li>
 <li><p><code><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">library(ospsuite)</a></code> no longer changes the global <code>ggplot2</code> theme and geom defaults: the <a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">ospsuite.plots</a>-based plotting functions (<code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code>, <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code>, <code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>, <code><a href="../reference/plotResidualsAsHistogram.html">plotResidualsAsHistogram()</a></code>, <code><a href="../reference/plotQuantileQuantilePlot.html">plotQuantileQuantilePlot()</a></code>) now style each plot individually, and the styling of unrelated plots in the session is left untouched. As a consequence, the appearance of the deprecated <a href="https://github.com/open-systems-pharmacology/tlf-library" class="external-link">tlf</a>-based plotting functions may change slightly, since they no longer inherit the global theme (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1968" class="external-link">#1968</a>).</p></li>
