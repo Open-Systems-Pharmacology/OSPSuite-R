@@ -1,7 +1,7 @@
 Type: Package
 Package: ospsuite
 Title: R package to manipulate OSPSuite Models
-Version: 12.4.3.9019
+Version: 12.4.4
 Authors@R:
     c(person("Open-Systems-Pharmacology Community", role = c("cph", "fnd")),
       person("Michael", "Sevestre", role = c("aut", "cre"), email = "michael@design2code.ca"),
@@ -30,7 +30,7 @@ Imports:
     ggplot2,
     rlang,
     tlf (>= 1.6.0),
-    ospsuite.plots (>= 1.2.0.9003),
+    ospsuite.plots (>= 1.3.0),
     data.table,
     xml2,
     openxlsx,
@@ -146,8 +146,8 @@ Collate:
     'zzz.R'
     'zzz_deprecated.R'
 Remotes:
-    rSharp=Open-Systems-Pharmacology/rSharp,
-    ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
-    tlf=Open-Systems-Pharmacology/TLF-Library,
-    ospsuite.plots=Open-Systems-Pharmacology/OSPSuite.Plots
+    rSharp=Open-Systems-Pharmacology/rSharp@*release,
+    ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils@*release,
+    tlf=Open-Systems-Pharmacology/TLF-Library@*release,
+    ospsuite.plots=Open-Systems-Pharmacology/OSPSuite.Plots@*release
 Config/roxygen2/version: 8.0.0
