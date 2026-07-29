@@ -436,9 +436,10 @@ DataCombined <- R6::R6Class(
     #' A method to extract a tibble data frame of simulated and/or observed data
     #' (depending on instances of which classes have been added to the object).
     #'
-    #' Note that the order in which you enter different object doesn't matter
-    #' because the returned data frame is arranged alphabetically by dataset
-    #' name.
+    #' The returned data frame follows the order in which datasets were added
+    #' to the object. The `name` column is returned as a factor whose levels
+    #' preserve this insertion order, so that downstream plots display legend
+    #' entries in the order datasets were added (and not alphabetically).
     #'
     #' @return
     #'
@@ -466,7 +467,28 @@ DataCombined <- R6::R6Class(
       }
 
       # Apply data transformations
-      private$.dataTransform(private$.dataCombined)
+      data <- private$.dataTransform(private$.dataCombined)
+      
+      # Encode `name` as a factor whose levels follow the order in which
+      # datasets were added (i.e. `self$names`, which preserves insertion
+      # order). This guarantees that downstream ggplot2 legends display
+      # entries in the order datasets were added, rather than the default
+      # alphabetical ordering applied to character columns.
+      data$name <- factor(data$name, levels = self$names)
+
+      # Encode `group` as a factor too, with levels following the order in
+      # which each group is first introduced (i.e. the order of first
+      # appearance among the insertion-ordered datasets). Keeping both `group`
+      # and `name` as ordered factors ensures consistent legend ordering in
+      # plots, especially in observed-vs-predicted plots where the `group` and
+      # `name` variables may otherwise diverge and produce mismatched legends.
+      groupLevels <- unique(data$group)
+      groupLevels <- groupLevels[!is.na(groupLevels)]
+      if (length(groupLevels) > 0L) {
+        data$group <- factor(data$group, levels = groupLevels)
+      }
+
+      return(data)
     },
 
     #' @description

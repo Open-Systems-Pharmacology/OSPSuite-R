@@ -337,9 +337,10 @@ offset and scale factor values.
   A method to extract a tibble data frame of simulated and/or observed data
 (depending on instances of which classes have been added to the object).
 
-Note that the order in which you enter different object doesn't matter
-because the returned data frame is arranged alphabetically by dataset
-name.
+The returned data frame follows the order in which datasets were added
+to the object. The \code{name} column is returned as a factor whose levels
+preserve this insertion order, so that downstream plots display legend
+entries in the order datasets were added (and not alphabetically).
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{DataCombined$toDataFrame()}

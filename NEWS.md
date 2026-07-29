@@ -1,5 +1,9 @@
 # ospsuite (development version)
 
+## Minor improvements and bug fixes
+
+- `DataCombined$toDataFrame()` now returns the `name` and `group` columns as factors whose levels follow the order in which datasets (and groups) were added. As a result, plots built from `DataCombined` objects (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, etc.) now display legend entries in the order `DataSet` and `SimulationResults` objects were added, rather than in alphabetical order. This also keeps `name`- and `group`-based legends consistent in observed-vs-predicted plots, where the two variables may otherwise diverge (#1968).
+
 # ospsuite 12.4.4
 
 ## Minor improvements and bug fixes
