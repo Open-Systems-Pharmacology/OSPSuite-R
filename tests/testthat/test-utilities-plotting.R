@@ -117,11 +117,14 @@ test_that("It adds dataset names as groups when grouping is missing", {
 
   df_new <- .addMissingGroupings(df)
 
+  # `group` is now re-encoded as a factor (preserving insertion order), so the
+  # values are compared via `as.character()`.
+  expect_s3_class(df_new$group, "factor")
   missing_idx <- which(is.na(df$group))
 
   expect_equal(
     df$name[missing_idx],
-    df_new$group[missing_idx]
+    as.character(df_new$group[missing_idx])
   )
 })
 
