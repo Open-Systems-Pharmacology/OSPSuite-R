@@ -145,6 +145,7 @@ Collate:
     'value-point.R'
     'zzz.R'
     'zzz_deprecated.R'
+Additional_repositories: https://open-systems-pharmacology.r-universe.dev
 Remotes:
     rSharp=Open-Systems-Pharmacology/rSharp,
     ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
