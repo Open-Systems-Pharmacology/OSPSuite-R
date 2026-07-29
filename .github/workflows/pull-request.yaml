@@ -1,8 +1,7 @@
 name: Pull Request Workflow
 
-# Runs on every pull request. sync-remotes pins/unpins `Remotes:` in DESCRIPTION
-# to match the package Version and commits the fix to the PR branch; the checks
-# then run on that synced tree so what gets validated is what will be merged.
+# Runs on every pull request. Dependencies resolve from the OSP R-universe, so
+# there is no `Remotes:` field to keep in sync with the package version.
 
 on:
   pull_request:
@@ -10,22 +9,12 @@ on:
 permissions: read-all
 
 jobs:
-  sync-remotes:
-    permissions:
-      contents: write # commits the synced Remotes back to the PR branch
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/sync-remotes.yaml@main
-    secrets: inherit
-
   R-CMD-Check:
-    needs: [sync-remotes]
-    if: ${{ !cancelled() }} # a skipped fork-PR sync must not block the check
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
     with:
       extra-repositories: https://open-systems-pharmacology.r-universe.dev
 
   test-coverage:
-    needs: [sync-remotes]
-    if: ${{ !cancelled() }}
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
     with:
       extra-repositories: https://open-systems-pharmacology.r-universe.dev
@@ -33,8 +22,6 @@ jobs:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   pkgdown:
-    needs: [sync-remotes]
-    if: ${{ !cancelled() }}
     permissions:
       contents: write # required by the pkgdown reusable workflow (no deploy on PRs)
       pull-requests: read # the workflow's check-changes job reads PR file changes

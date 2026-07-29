@@ -146,9 +146,4 @@ Collate:
     'zzz.R'
     'zzz_deprecated.R'
 Additional_repositories: https://open-systems-pharmacology.r-universe.dev
-Remotes:
-    rSharp=Open-Systems-Pharmacology/rSharp,
-    ospsuite.utils=Open-Systems-Pharmacology/OSPSuite.RUtils,
-    tlf=Open-Systems-Pharmacology/TLF-Library,
-    ospsuite.plots=Open-Systems-Pharmacology/OSPSuite.Plots
 Config/roxygen2/version: 8.0.0
