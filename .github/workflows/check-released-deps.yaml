@@ -14,4 +14,6 @@ permissions: read-all
 jobs:
   check-released-deps:
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-released-deps.yaml@main
+    with:
+      extra-repositories: https://open-systems-pharmacology.r-universe.dev
     secrets: inherit

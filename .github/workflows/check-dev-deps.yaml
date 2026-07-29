@@ -15,3 +15,5 @@ permissions: read-all
 jobs:
   check-dev-deps:
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+    with:
+      extra-repositories: https://open-systems-pharmacology.r-universe.dev

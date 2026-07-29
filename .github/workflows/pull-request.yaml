@@ -20,11 +20,15 @@ jobs:
     needs: [sync-remotes]
     if: ${{ !cancelled() }} # a skipped fork-PR sync must not block the check
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+    with:
+      extra-repositories: https://open-systems-pharmacology.r-universe.dev
 
   test-coverage:
     needs: [sync-remotes]
     if: ${{ !cancelled() }}
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
+    with:
+      extra-repositories: https://open-systems-pharmacology.r-universe.dev
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
@@ -35,3 +39,5 @@ jobs:
       contents: write # required by the pkgdown reusable workflow (no deploy on PRs)
       pull-requests: read # the workflow's check-changes job reads PR file changes
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
+    with:
+      extra-repositories: https://open-systems-pharmacology.r-universe.dev
