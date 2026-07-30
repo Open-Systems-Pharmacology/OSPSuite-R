@@ -1,8 +1,10 @@
 name: Check against released dependencies
 
-# Nightly R-CMD-check against the latest *released* OSP dependencies: the
-# reusable workflow pins Remotes to @*release before checking. Complements
-# check-dev-deps.yaml, which checks against the current (development) deps.
+# Nightly R-CMD-check against the latest *released* OSP dependencies. This job
+# runs with `ignore-renv`, so pak resolves the dependencies rather than renv
+# restoring the pinned lockfile, and with no `Remotes:` field the released
+# siblings come from the OSP R-universe. The reusable workflow's Remotes-pinning
+# step is a documented no-op in that case.
 
 on:
   schedule:
@@ -14,4 +16,6 @@ permissions: read-all
 jobs:
   check-released-deps:
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-released-deps.yaml@main
+    with:
+      extra-repositories: https://open-systems-pharmacology.r-universe.dev
     secrets: inherit
