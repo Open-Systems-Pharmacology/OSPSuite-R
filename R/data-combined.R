@@ -484,9 +484,7 @@ DataCombined <- R6::R6Class(
       # `name` variables may otherwise diverge and produce mismatched legends.
       groupLevels <- unique(data$group)
       groupLevels <- groupLevels[!is.na(groupLevels)]
-      if (length(groupLevels) > 0L) {
-        data$group <- factor(data$group, levels = groupLevels)
-      }
+      data$group <- factor(data$group, levels = groupLevels)
 
       return(data)
     },
