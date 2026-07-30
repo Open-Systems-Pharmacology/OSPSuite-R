@@ -97,11 +97,8 @@ dependencies using the following instructions:
 
 ## From the OSP R-universe (recommended)
 
-`{ospsuite}` and the OSP packages it depends on are published on the
-[OSP R-universe](https://open-systems-pharmacology.r-universe.dev). A single
-call installs the released version and resolves `{rSharp}`,
-`{ospsuite.utils}`, `{tlf}` and `{ospsuite.plots}` along with the CRAN
-dependencies:
+Install the released version from the [OSP
+R-universe](https://open-systems-pharmacology.r-universe.dev):
 
 ``` r
 install.packages(
@@ -110,16 +107,10 @@ install.packages(
 )
 ```
 
-Note that installing is not the same as running: the .NET runtime covered under
-[Pre-requisites](#pre-requisites) is a separate machine prerequisite and is not
-installed by the command above.
-
 ## Development version
 
 To install the unreleased development version from GitHub, use
-[pak](https://pak.r-lib.org). The universe still has to be on `repos` for this:
-the development sources declare their OSP dependencies without saying where
-to find them, and pak does not read `Additional_repositories`.
+[pak](https://pak.r-lib.org):
 
 ``` r
 # install.packages("pak")
