@@ -27,6 +27,8 @@ jobs:
   R-CMD-Check:
     needs: [guard-branch]
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
+    with:
+      extra-repositories: https://open-systems-pharmacology.r-universe.dev
 
   publish-release:
     needs: [guard-branch, R-CMD-Check]
