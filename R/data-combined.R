@@ -468,20 +468,11 @@ DataCombined <- R6::R6Class(
 
       # Apply data transformations
       data <- private$.dataTransform(private$.dataCombined)
-      
-      # Encode `name` as a factor whose levels follow the order in which
-      # datasets were added (i.e. `self$names`, which preserves insertion
-      # order). This guarantees that downstream ggplot2 legends display
-      # entries in the order datasets were added, rather than the default
-      # alphabetical ordering applied to character columns.
-      data$name <- factor(data$name, levels = self$names)
 
-      # Encode `group` as a factor too, with levels following the order in
-      # which each group is first introduced (i.e. the order of first
-      # appearance among the insertion-ordered datasets). Keeping both `group`
-      # and `name` as ordered factors ensures consistent legend ordering in
-      # plots, especially in observed-vs-predicted plots where the `group` and
-      # `name` variables may otherwise diverge and produce mismatched legends.
+      # Use `self$names` to preserve insertion order in ggplot2 legends
+      data$name <- factor(data$name, levels = self$names)
+      # Use same approach for groups to preserve consistent legend order
+      # when `group` is different from `name`
       groupLevels <- unique(data$group)
       groupLevels <- groupLevels[!is.na(groupLevels)]
       data$group <- factor(data$group, levels = groupLevels)
