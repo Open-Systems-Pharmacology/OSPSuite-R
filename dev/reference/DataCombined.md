@@ -336,9 +336,10 @@ A method to extract a tibble data frame of simulated and/or observed
 data (depending on instances of which classes have been added to the
 object).
 
-Note that the order in which you enter different object doesn't matter
-because the returned data frame is arranged alphabetically by dataset
-name.
+The returned data frame follows the order in which datasets were added
+to the object. The `name` column is returned as a factor whose levels
+preserve this insertion order, so that downstream plots display legend
+entries in the order datasets were added (and not alphabetically).
 
 #### Usage
 
@@ -428,7 +429,7 @@ myDataCombined$dataTransformations
 myDataCombined$toDataFrame()
 #> # A tibble: 504 × 27
 #>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit
-#>           <int>   <dbl> <chr>            <dbl> <chr>      <chr> <chr>      <chr>
+#>           <int>   <dbl> <fct>            <dbl> <chr>      <chr> <chr>      <chr>
 #>  1            0       0 Organism|Peri…    0    Time       min   Concentra… µmol…
 #>  2            0       1 Organism|Peri…    3.25 Time       min   Concentra… µmol…
 #>  3            0       2 Organism|Peri…    9.10 Time       min   Concentra… µmol…
@@ -444,5 +445,5 @@ myDataCombined$toDataFrame()
 #> #   yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>, Source <chr>, File <chr>,
 #> #   Sheet <chr>, Molecule <chr>, Species <chr>, Organ <chr>, Compartment <chr>,
 #> #   `Study Id` <chr>, Gender <chr>, Dose <chr>, Route <chr>,
-#> #   `Patient Id` <chr>, group <chr>
+#> #   `Patient Id` <chr>, group <fct>
 ```

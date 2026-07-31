@@ -294,7 +294,7 @@ simulated datasets and combines them.
 myDataCombined$toDataFrame()
 #> # A tibble: 504 × 27
 #>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit
-#>           <int>   <dbl> <chr>            <dbl> <chr>      <chr> <chr>      <chr>
+#>           <int>   <dbl> <fct>            <dbl> <chr>      <chr> <chr>      <chr>
 #>  1            0       0 Aciclovir Pla…    0    Time       min   Concentra… µmol…
 #>  2            0       1 Aciclovir Pla…    3.25 Time       min   Concentra… µmol…
 #>  3            0       2 Aciclovir Pla…    9.10 Time       min   Concentra… µmol…
@@ -310,7 +310,7 @@ myDataCombined$toDataFrame()
 #> #   yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>, Source <chr>, File <chr>,
 #> #   Sheet <chr>, Molecule <chr>, Species <chr>, Organ <chr>, Compartment <chr>,
 #> #   `Study Id` <chr>, Gender <chr>, Dose <chr>, Route <chr>,
-#> #   `Patient Id` <chr>, group <chr>
+#> #   `Patient Id` <chr>, group <fct>
 ```
 
 This function returns a [tibble data
@@ -332,7 +332,7 @@ myDataCombined$toDataFrame()
 
     #> # A tibble: 504 × 27
     #>    IndividualId xValues name             yValues xDimension xUnit
-    #>           <int>   <dbl> <chr>              <dbl> <chr>      <chr>
+    #>           <int>   <dbl> <fct>              <dbl> <chr>      <chr>
     #>  1            0       0 Aciclovir Plasma    0    Time       min  
     #>  2            0       1 Aciclovir Plasma    3.25 Time       min  
     #>  3            0       2 Aciclovir Plasma    9.10 Time       min  
@@ -368,7 +368,7 @@ myDataCombined$toDataFrame()
     #>  9 NA            NA NA     NA    NA    NA       NA      NA    NA         
     #> 10 NA            NA NA     NA    NA    NA       NA      NA    NA         
     #>    `Study Id` Gender Dose  Route `Patient Id` group        
-    #>    <chr>      <chr>  <chr> <chr> <chr>        <chr>        
+    #>    <chr>      <chr>  <chr> <chr> <chr>        <fct>        
     #>  1 NA         NA     NA    NA    NA           Aciclovir PVB
     #>  2 NA         NA     NA    NA    NA           Aciclovir PVB
     #>  3 NA         NA     NA    NA    NA           Aciclovir PVB
@@ -400,7 +400,7 @@ convertUnits(
 )
 #> # A tibble: 504 × 27
 #>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit
-#>           <int>   <dbl> <chr>            <dbl> <chr>      <chr> <chr>      <chr>
+#>           <int>   <dbl> <fct>            <dbl> <chr>      <chr> <chr>      <chr>
 #>  1            0       0 Aciclovir Pla…      0  Time       s     Concentra… µg/l 
 #>  2            0      60 Aciclovir Pla…    733. Time       s     Concentra… µg/l 
 #>  3            0     120 Aciclovir Pla…   2050. Time       s     Concentra… µg/l 
@@ -416,7 +416,7 @@ convertUnits(
 #> #   yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>, Source <chr>, File <chr>,
 #> #   Sheet <chr>, Molecule <chr>, Species <chr>, Organ <chr>, Compartment <chr>,
 #> #   `Study Id` <chr>, Gender <chr>, Dose <chr>, Route <chr>,
-#> #   `Patient Id` <chr>, group <chr>
+#> #   `Patient Id` <chr>, group <fct>
 ```
 
 ## Further functionalities

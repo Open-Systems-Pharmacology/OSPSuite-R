@@ -19,7 +19,7 @@ Transforming data with given offsets and scale factors.
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.4.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.4.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -372,9 +372,10 @@ offset and scale factor values.</p><ul><li><p>For X and Y variables:
 <h3 id="datacombined-todataframe-"><code>DataCombined$toDataFrame()</code><a class="anchor" aria-label="anchor" href="#datacombined-todataframe-"></a></h3>
 <p>A method to extract a tibble data frame of simulated and/or observed data
 (depending on instances of which classes have been added to the object).</p>
-<p>Note that the order in which you enter different object doesn't matter
-because the returned data frame is arranged alphabetically by dataset
-name.</p><div class="section">
+<p>The returned data frame follows the order in which datasets were added
+to the object. The <code>name</code> column is returned as a factor whose levels
+preserve this insertion order, so that downstream plots display legend
+entries in the order datasets were added (and not alphabetically).</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">toDataFrame</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
@@ -463,7 +464,7 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 <span class="r-in"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="fu">toDataFrame</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 504 × 27</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>            0       0 Organism|Peri…    0    Time       min   Concentra… µmol…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>            0       1 Organism|Peri…    3.25 Time       min   Concentra… µmol…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>            0       2 Organism|Peri…    9.10 Time       min   Concentra… µmol…</span>
@@ -479,7 +480,7 @@ yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   yErrorType &lt;chr&gt;, yErrorUnit &lt;chr&gt;, lloq &lt;dbl&gt;, Source &lt;chr&gt;, File &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Sheet &lt;chr&gt;, Molecule &lt;chr&gt;, Species &lt;chr&gt;, Organ &lt;chr&gt;, Compartment &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Study Id` &lt;chr&gt;, Gender &lt;chr&gt;, Dose &lt;chr&gt;, Route &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Patient Id` &lt;chr&gt;, group &lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Patient Id` &lt;chr&gt;, group &lt;fct&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

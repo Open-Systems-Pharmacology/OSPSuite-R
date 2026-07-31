@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.4.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.4.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -337,7 +337,7 @@ observed and simulated datasets and combines them.</p>
 <code class="sourceCode R"><span><span class="va">myDataCombined</span><span class="op">$</span><span class="fu">toDataFrame</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 504 × 27</span></span></span>
 <span><span class="co">#&gt;    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit</span></span>
-<span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            0       0 Aciclovir Pla…    0    Time       min   Concentra… µmol…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            0       1 Aciclovir Pla…    3.25 Time       min   Concentra… µmol…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            0       2 Aciclovir Pla…    9.10 Time       min   Concentra… µmol…</span></span>
@@ -353,7 +353,7 @@ observed and simulated datasets and combines them.</p>
 <span><span class="co">#&gt; <span style="color: #949494;">#   yErrorType &lt;chr&gt;, yErrorUnit &lt;chr&gt;, lloq &lt;dbl&gt;, Source &lt;chr&gt;, File &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   Sheet &lt;chr&gt;, Molecule &lt;chr&gt;, Species &lt;chr&gt;, Organ &lt;chr&gt;, Compartment &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   `Study Id` &lt;chr&gt;, Gender &lt;chr&gt;, Dose &lt;chr&gt;, Route &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   `Patient Id` &lt;chr&gt;, group &lt;chr&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   `Patient Id` &lt;chr&gt;, group &lt;fct&gt;</span></span></span></code></pre></div>
 <p>This function returns a <a href="https://r4ds.had.co.nz/tibbles.html#tibbles-vs.-data.frame" class="external-link">tibble
 data frame</a>. If you wish to modify how it is printed, you can have a
 look at the available options <a href="https://pillar.r-lib.org/reference/pillar_options.html" class="external-link">here</a>.
@@ -367,7 +367,7 @@ In fact, let’s change a few options and print the data frame again.</p>
 <span><span class="va">myDataCombined</span><span class="op">$</span><span class="fu">toDataFrame</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 504 × 27</span></span></span>
 <span><span class="co">#&gt;    IndividualId xValues name             yValues xDimension xUnit</span></span>
-<span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            0       0 Aciclovir Plasma    0    Time       min  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            0       1 Aciclovir Plasma    3.25 Time       min  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            0       2 Aciclovir Plasma    9.10 Time       min  </span></span>
@@ -403,7 +403,7 @@ In fact, let’s change a few options and print the data frame again.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>         </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span> <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>         </span></span>
 <span><span class="co">#&gt;    `Study Id` Gender Dose  Route `Patient Id` group        </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>        </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>           Aciclovir PVB</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>           Aciclovir PVB</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>           Aciclovir PVB</span></span>
@@ -432,7 +432,7 @@ plotting functions will take care of this internally.&lt;/p&gt;"><sup>1</sup></a
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 504 × 27</span></span></span>
 <span><span class="co">#&gt;    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit</span></span>
-<span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            0       0 Aciclovir Pla…      0  Time       s     Concentra… µg/l </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            0      60 Aciclovir Pla…    733. Time       s     Concentra… µg/l </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            0     120 Aciclovir Pla…   <span style="text-decoration: underline;">2</span>050. Time       s     Concentra… µg/l </span></span>
@@ -448,7 +448,7 @@ plotting functions will take care of this internally.&lt;/p&gt;"><sup>1</sup></a
 <span><span class="co">#&gt; <span style="color: #949494;">#   yErrorType &lt;chr&gt;, yErrorUnit &lt;chr&gt;, lloq &lt;dbl&gt;, Source &lt;chr&gt;, File &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   Sheet &lt;chr&gt;, Molecule &lt;chr&gt;, Species &lt;chr&gt;, Organ &lt;chr&gt;, Compartment &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   `Study Id` &lt;chr&gt;, Gender &lt;chr&gt;, Dose &lt;chr&gt;, Route &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   `Patient Id` &lt;chr&gt;, group &lt;chr&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   `Patient Id` &lt;chr&gt;, group &lt;fct&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="further-functionalities">Further functionalities<a class="anchor" aria-label="anchor" href="#further-functionalities"></a>

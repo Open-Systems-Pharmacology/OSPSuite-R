@@ -66,7 +66,7 @@ df
 ospsuite:::.addMissingGroupings(df)
 #> # A tibble: 5 × 3
 #>   group                              name                               dataType
-#>   <chr>                              <chr>                              <chr>   
+#>   <fct>                              <chr>                              <chr>   
 #> 1 Stevens 2012 solid total           Organism|Lumen|Stomach|Metformin|… simulat…
 #> 2 Stevens 2012 solid total           Stevens_2012_placebo.Placebo_total observed
 #> 3 Stevens_2012_placebo.Sita_dist     Stevens_2012_placebo.Sita_dist     observed
