@@ -75,15 +75,28 @@
 #'
 #' @keywords internal
 .addMissingGroupings <- function(data) {
-  data <- dplyr::mutate(
-    data,
-    group = dplyr::case_when(
-      # If grouping is missing, then use dataset name as its own grouping.
-      is.na(group) ~ name,
-      # Otherwise, no change.
-      TRUE ~ group
-    )
-  )
+  # Datasets which haven't been assigned to any group will be plotted as a group
+  # on its own. That is, the `group` column entries for them will be their names.
+  #
+  # Both `name` and `group` may be factors (as exported by
+  # `DataCombined$toDataFrame()`). The column is coerced to character to fill
+  # the missing entries and then re-encoded as a factor whose levels preserve
+  # the order in which entries first appear (existing groups first, then any
+  # name-based labels introduced to fill the gaps). This keeps legend ordering
+  # stable and consistent with `name` downstream (notably in `{tlf}`-based
+  # observed-vs-predicted plots, where `group` and `name` can otherwise diverge).
+  groupChr <- as.character(data$group)
+  nameChr <- as.character(data$name)
+
+  missingGroup <- is.na(groupChr)
+  groupChr[missingGroup] <- nameChr[missingGroup]
+
+  groupLevels <- unique(c(groupChr[!missingGroup], nameChr[missingGroup]))
+  if (length(groupLevels) == 0L) {
+    groupLevels <- unique(groupChr)
+  }
+
+  data$group <- factor(groupChr, levels = groupLevels)
 
   return(data)
 }

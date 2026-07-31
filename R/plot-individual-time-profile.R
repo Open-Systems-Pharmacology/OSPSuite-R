@@ -100,12 +100,17 @@ plotIndividualTimeProfile <- function(
     obsData <- NULL
   } else {
     obsData <- .computeBoundsFromErrorType(obsData)
+    # Drop unused factor levels in `name` and `group` columns 
+    # to avoid empty data crashing legend
+    obsData <- droplevels(obsData)
   }
 
   simData <- as.data.frame(dplyr::filter(combinedData, dataType == "simulated"))
 
   if (nrow(simData) == 0) {
     simData <- NULL
+  } else {
+    simData <- droplevels(simData)
   }
 
   # Extract aggregated simulated data (relevant only for the population plot)
@@ -170,7 +175,7 @@ plotIndividualTimeProfile <- function(
   )
 
   tlf::setDefaultErrorbarCapSize(defaultPlotConfiguration$errorbarsCapSize)
-
+  
   profilePlot <- tlf::plotTimeProfile(
     data = simData,
     dataMapping = simulatedDataMapping,
