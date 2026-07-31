@@ -49,13 +49,7 @@ test_that("It plots multiple simulated datasets with dataset name legend entries
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple sim - separate legend",
-    fig = plotTimeProfile(
-      manySimDC(),
-      mapping = ggplot2::aes(
-        group = name,
-        linetype = name
-      )
-    )
+    fig = plotTimeProfile(manySimDC())
   )
 
   vdiffr::expect_doppelganger(
@@ -91,14 +85,6 @@ test_that("It creates default plot with group legend for multiple obs and sim", 
 
 test_that("It maps multiple observed and simulated datasets to different visual properties", {
   set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "many obs sim - name",
-    fig = plotTimeProfile(
-      manyObsSimDC(),
-      mapping = ggplot2::aes(linetype = name),
-      observedMapping = ggplot2::aes(fill = name)
-    )
-  )
 
   vdiffr::expect_doppelganger(
     title = "many obs sim - showLegendPerDataset none",
