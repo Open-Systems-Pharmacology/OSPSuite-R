@@ -323,7 +323,7 @@ test_that("with no grouping specified, group column in data frame is `NA`", {
   myCombDat$addDataSets(dataSet[[1]])
   df <- myCombDat$toDataFrame()
 
-  expect_equal(rep(NA_character_, length(df$group)), df$group)
+  expect_equal(as.factor(rep(NA_character_, length(df$group))), df$group)
 })
 
 
