@@ -433,16 +433,22 @@ items <- rSharp::toList(netCollection)
 
 ```r
 # 1. Clone repository
-# 2. Run development setup
-source("tools/setup_dev.R")
-setup_dev()
+# 2. Sync your library to the pinned dependency set in renv.lock
+renv::restore()
 
-# 3. Install dependencies
-remotes::install_deps(dependencies = TRUE)
-
-# 4. Load package for development
+# 3. Load package for development
 devtools::load_all()
 ```
+
+`renv::restore()` must come first: `devtools::load_all()` runs a dependency check
+against the active library and errors out if the dev dependencies are missing.
+Never run `Rscript --vanilla` — it skips `.Rprofile`, so `renv/activate.R` never
+runs and you silently fall back to the global library with an unpinned `rSharp`.
+
+Branches pin different `rSharp` builds and ship different `inst/lib` binaries, so
+switching branches in place requires an R session restart (rSharp locks the loaded
+DLLs) followed by `renv::restore()`. See `AGENTS.md` for the per-branch worktree
+setup that avoids this.
 
 ### Building and Checking
 
@@ -474,8 +480,8 @@ devtools::install()
 **Solution**: Set locale to `en_US.UTF-8` (see README "Known issues")
 
 ### 3. Platform Differences
-**Issue**: DLL naming differs between Windows and Linux  
-**Solution**: Configure scripts handle this automatically; use `setup_dev()` for development
+**Issue**: The native libraries in `inst/lib` are platform-specific  
+**Solution**: All three platforms' binaries ship side by side under their native extensions (`.dll`, `.so`, `.dylib`) and `.initPackage()` loads the ones that match the running platform; no renaming step is needed. macOS is arm64-only.
 
 ### 4. Workspace Saving
 **Issue**: .NET objects cannot be saved/restored in R workspace  
