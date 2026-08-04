@@ -704,7 +704,8 @@ plotQuantileQuantilePlot <- function(
     )
   }
 
-  residualsComputedInternally <- predictedIsNeeded & !('predicted' %in% names(plotData))
+  residualsComputedInternally <- predictedIsNeeded &
+    !('predicted' %in% names(plotData))
 
   if (residualsComputedInternally) {
     plotData <- .convertUnitsForPlot(
@@ -782,7 +783,11 @@ plotQuantileQuantilePlot <- function(
   }
 
   isLinearScale <- any(scaling %in% c("linear", "lin", "identity"))
-  if (residualsComputedInternally && isLinearScale && "residualValues" %in% names(plotData)) {
+  if (
+    residualsComputedInternally &&
+      isLinearScale &&
+      "residualValues" %in% names(plotData)
+  ) {
     attr(plotData$residualValues, "label") <- paste0(
       ospsuite.plots::constructLabelWithUnit("residuals", plotData$yUnit[1]),
       "\npredicted - observed"

@@ -150,7 +150,11 @@ Simulation <- R6::R6Class(
       # Not using validateIsOfType() here: it inspects the calling frame to build
       # its message, which fails when called directly from an R6 active binding.
       if (!is.null(value) && !isOfType(value, "Population")) {
-        stop(messages$errorWrongType("population", class(value)[1], "Population"))
+        stop(messages$errorWrongType(
+          "population",
+          class(value)[1],
+          "Population"
+        ))
       }
       self$set("IndividualValuesCache", value)
       # Aging data is only meaningful together with the population it belongs to.

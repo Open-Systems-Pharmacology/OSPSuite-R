@@ -218,7 +218,7 @@ createMoBiModule <- function(name, buildingBlocks = NULL) {
 #' @param bbType Type of Building Block to retrieve. One of the following: "SpatialStructure", "Molecules", "Reactions", "Passive Transports", "Observers", "EventGroups".
 #' @returns A `BuildingBlock` object, or `NULL` if no BB of the specified type is present in the module.
 #' @noRd
-.getBBFromModule = function(
+.getBBFromModule <- function(
   module,
   bbType
 ) {
