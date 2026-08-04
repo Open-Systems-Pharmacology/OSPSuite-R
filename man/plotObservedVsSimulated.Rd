@@ -30,34 +30,6 @@ can be interpreted as the \code{1}-fold range.}
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \examples{
-\dontrun{
-# simulated data
-simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-sim <- loadSimulation(simFilePath)
-simResults <- runSimulations(sim)[[1]]
-outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
-
-# observed data
-obsData <- lapply(
-  c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
-  function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
-)
-names(obsData) <- lapply(obsData, function(x) x$name)
-
-
-# Create a new instance of `DataCombined` class
-myDataCombined <- DataCombined$new()
-
-# Add simulated results
-myDataCombined$addSimulationResults(
-  simulationResults = simResults,
-  quantitiesOrPaths = outputPath,
-  groups = "Aciclovir PVB"
-)
-
-# Add observed data set
-myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
-
 # Create a new instance of `DefaultPlotConfiguration` class
 myPlotConfiguration <- DefaultPlotConfiguration$new()
 myPlotConfiguration$title <- "My Plot Title"
@@ -65,8 +37,8 @@ myPlotConfiguration$subtitle <- "My Plot Subtitle"
 myPlotConfiguration$caption <- "My Sources"
 
 # plot
-plotObservedVsSimulated(myDataCombined, myPlotConfiguration)
-}
+plotObservedVsSimulated(dataCombinedAciclovir, myPlotConfiguration)
+
 }
 \seealso{
 Other plotting:

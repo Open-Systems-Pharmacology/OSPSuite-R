@@ -16,34 +16,6 @@
 #' @family plotting
 #'
 #' @examples
-#' \dontrun{
-#' # simulated data
-#' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-#' sim <- loadSimulation(simFilePath)
-#' simResults <- runSimulations(sim)[[1]]
-#' outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
-#'
-#' # observed data
-#' obsData <- lapply(
-#'   c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
-#'   function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
-#' )
-#' names(obsData) <- lapply(obsData, function(x) x$name)
-#'
-#'
-#' # Create a new instance of `DataCombined` class
-#' myDataCombined <- DataCombined$new()
-#'
-#' # Add simulated results
-#' myDataCombined$addSimulationResults(
-#'   simulationResults = simResults,
-#'   quantitiesOrPaths = outputPath,
-#'   groups = "Aciclovir PVB"
-#' )
-#'
-#' # Add observed data set
-#' myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
-#'
 #' # Create a new instance of `DefaultPlotConfiguration` class
 #' myPlotConfiguration <- DefaultPlotConfiguration$new()
 #' myPlotConfiguration$title <- "My Plot Title"
@@ -51,8 +23,7 @@
 #' myPlotConfiguration$caption <- "My Sources"
 #'
 #' # plot
-#' plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
-#' }
+#' plotIndividualTimeProfile(dataCombinedAciclovir, myPlotConfiguration)
 #'
 #' @export
 plotIndividualTimeProfile <- function(
@@ -129,12 +100,17 @@ plotIndividualTimeProfile <- function(
     obsData <- NULL
   } else {
     obsData <- .computeBoundsFromErrorType(obsData)
+    # Drop unused factor levels in `name` and `group` columns 
+    # to avoid empty data crashing legend
+    obsData <- droplevels(obsData)
   }
 
   simData <- as.data.frame(dplyr::filter(combinedData, dataType == "simulated"))
 
   if (nrow(simData) == 0) {
     simData <- NULL
+  } else {
+    simData <- droplevels(simData)
   }
 
   # Extract aggregated simulated data (relevant only for the population plot)
@@ -199,7 +175,7 @@ plotIndividualTimeProfile <- function(
   )
 
   tlf::setDefaultErrorbarCapSize(defaultPlotConfiguration$errorbarsCapSize)
-
+  
   profilePlot <- tlf::plotTimeProfile(
     data = simData,
     dataMapping = simulatedDataMapping,

@@ -8,7 +8,10 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+# Load the shared runtime gate; see vignettes/_setup.R.
+source("_setup.R")
 knitr::opts_chunk$set(
+  eval = .ospRuntimeAvailable,
   collapse = TRUE,
   warning = FALSE,
   message = FALSE,
@@ -209,7 +212,7 @@ By default, `showLegendPerDataset = "all"`, which differentiates both observed (
 
 You can customize this behavior using the `showLegendPerDataset` parameter:
 
-```{r timeprofile-legend-per-dataset, eval=TRUE}
+```{r timeprofile-legend-per-dataset, eval=.ospRuntimeAvailable}
 # Show all individual dataset names (both observed and simulated) - default
 plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "all")
 
@@ -350,9 +353,9 @@ plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
 
 The `residualScale` parameter controls how residuals are calculated and displayed (this same parameter is used in `plotResidualsAsHistogram` and `plotQuantileQuantilePlot`):
 
-- `"log"` (default) - Logarithmic residuals: `log(observed/predicted)`
-- `"linear"` - Linear residuals: `observed - predicted`
-- `"ratio"` - Ratio: `observed/predicted`
+- `"log"` (default) - Logarithmic residuals: `log(predicted / observed)`
+- `"linear"` - Linear residuals: `predicted - observed`
+- `"ratio"` - Ratio: `observed / predicted`
 
 ```{r resvsobs-scale}
 # Use linear residuals

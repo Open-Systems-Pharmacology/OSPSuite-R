@@ -12,6 +12,7 @@ jobs:
   update-renv-nightly:
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/update-renv-lockfile.yaml@main
     with:
+      extra-repositories: https://open-systems-pharmacology.r-universe.dev
       app-id: ${{ vars.VERSION_BUMPER_APPID }}
     secrets:
       private-key: ${{ secrets.VERSION_BUMPER_SECRET }}

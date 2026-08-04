@@ -84,13 +84,19 @@ oneObsSimDC <- function() .oneObsSimDC$clone(deep = TRUE)
 .manyObsSimDC <- DataCombined$new()
 .manyObsSimDC$addDataSets(
   c(obsData$`Vergin 1995.Iv`, obsData$`Laskin 1982.Group C`),
-  groups = "Aciclovir observed"
+  groups = "Aciclovir PVB"
 )
 .manyObsSimDC$addSimulationResults(
   simulationResults = simResults,
   # Excluding the fraction excreted output
-  quantitiesOrPaths = outputPaths[1:2],
+  quantitiesOrPaths = outputPaths[1],
   groups = "Aciclovir PVB"
+)
+.manyObsSimDC$addSimulationResults(
+  simulationResults = simResults,
+  # Excluding the fraction excreted output
+  quantitiesOrPaths = outputPaths[2],
+  groups = "Aciclovir Muscle"
 )
 manyObsSimDC <- function() .manyObsSimDC$clone(deep = TRUE)
 

@@ -17,11 +17,23 @@ If no original PK-Sim project or snapshot are available, the user should use the
 
 - A `Simulation` object now has a `population` field: assign a `Population` with `simulation$population <- myPopulation` to make it a population simulation, and read it back with `simulation$population`. Assigning `NULL` switches the simulation back to an individual simulation. The read-only `simulation$isPopulation` field reports whether a simulation will be run for a population. This is an alternative to passing `population` to `runSimulations()` (which continues to work unchanged) and makes it possible to run several population simulations in a single `runSimulations()` call. See `vignette("create-run-population")` (#1987).
 - Added `loadSimulationsFromSnapshot()` to load simulations stored in a snapshot file as `Simulation` objects, optionally filtering by simulation name (#1929). Requesting a name that is not in the snapshot raises an error; pass `ignoreIfNotFound = TRUE` to return `NULL` for missing names instead. See `vignette("snapshots")` for an overview of the snapshot helpers.
+- `DataCombined$toDataFrame()` now returns the `name` and `group` columns as factors whose levels follow the order in which datasets (and groups) were added. As a result, plots built from `DataCombined` objects (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, etc.) now display legend entries in the order `DataSet` and `SimulationResults` objects were added, rather than in alphabetical order. This also keeps `name`- and `group`-based legends consistent in observed-vs-predicted plots, where the two variables may otherwise diverge (#1968).
+
+# ospsuite 12.4.4
+
+## Minor improvements and bug fixes
+
+- `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()` now include the data unit in the y-axis label for `residualScale = "linear"` (e.g. `"residuals [µmol/l]"`). For `"log"` and `"ratio"` scales the residuals are dimensionless and no unit is shown. An empty-string unit (dimensionless data such as fractions) no longer produces empty brackets `[]` in the label.
+
+- `ospsuite` now installs and loads even when its native libraries or the .NET runtime cannot be initialised (for example on build machines that lack a compatible `libxml2` or the .NET runtime), instead of failing at load time. The reason is reported when the package is attached and raised with an actionable message on the first call into the .NET API. Vignette code that requires the runtime is only executed when it is available. Together this allows the package to be built, checked, and resolved as a dependency in environments without a working runtime.
+
 - `library(ospsuite)` no longer changes the global `ggplot2` theme and geom defaults: the `{ospsuite.plots}`-based plotting functions (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, `plotQuantileQuantilePlot()`) now style each plot individually, and the styling of unrelated plots in the session is left untouched. As a consequence, the appearance of the deprecated `{tlf}`-based plotting functions may change slightly, since they no longer inherit the global theme (#1968).
 
 - Added `isSupportedUnit()` and `validateIsNamedList()` helper functions to the exported API.
 
+- Added `dataCombinedAciclovir`, a pre-built `DataCombined` object combining simulated and observed aciclovir data, exported for use in examples, vignettes, and tests.
 - `loadDataSetsFromExcel()` now treats an empty `sheets` vector (`character(0)`) the same as `sheets = NULL`, falling back to the configuration/all-sheets logic instead of overriding with no sheets.
+- `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()` now produce a stable legend entry order when `showLegendPerDataset = TRUE`; previously the order of the dataset-name legend entries could vary between sessions.
 
 - `convertSnapshot()` is soft-deprecated in favor of two dedicated functions: `loadProjectFromSnapshot()` (snapshot `.json` -> project) and `exportProjectToSnapshot()` (project -> snapshot `.json`). `convertSnapshot()` still works but issues a deprecation warning and will be removed in a future release. Only PK-Sim projects (`.pksim5`) are supported for now; MoBi support is planned.
 
