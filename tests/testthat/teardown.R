@@ -5,5 +5,3 @@ options(
   lifecycle_verbosity = getOption("ospsuite.tests.prev_lifecycle_verbosity"),
   ospsuite.tests.prev_lifecycle_verbosity = NULL
 )
-
-options(ospsuite.plots.watermarkEnabled = NULL)

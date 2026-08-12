@@ -114,9 +114,9 @@ residuals as the difference between observed and predicted values.
 
 The \code{residualScale} parameter controls how residuals are displayed:
 \itemize{
-\item \code{linear}: Absolute residuals (Observed - Predicted). Values centered around
+\item \code{linear}: Absolute residuals (Predicted - Observed). Values centered around
 zero indicate good model fit. Useful for normally distributed errors.
-\item \code{log}: Log-transformed residuals, calculated as log(Observed / Predicted).
+\item \code{log}: Log-transformed residuals, calculated as log(Predicted / Observed).
 Values centered around zero indicate good fit. Preferred for log-normally
 distributed data or when errors are proportional to magnitude.
 \item \code{ratio}: Ratio of observed to predicted (Observed / Predicted). Values
@@ -126,10 +126,9 @@ prediction error.
 }
 }
 \examples{
-\dontrun{
 # Generate a residuals vs observed plot for the provided data
 plotResidualsVsCovariate(
-  myDataCombined,
+  dataCombinedAciclovir,
   xUnit = ospUnits$Time$h,
   yUnit = ospUnits$`Concentration [mass]`$`µg/l`,
   xAxis = "time",
@@ -137,14 +136,14 @@ plotResidualsVsCovariate(
 )
 
 # Generate a residuals vs predicted plot
-plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
+plotResidualsVsCovariate(dataCombinedAciclovir, xAxis = "predicted")
 
 # Generate a residuals vs time plot
-plotResidualsVsCovariate(myDataCombined, xAxis = "time")
+plotResidualsVsCovariate(dataCombinedAciclovir, xAxis = "time")
 
 # Show individual dataset names in legend
-plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "observed")
-}
+plotResidualsVsCovariate(dataCombinedAciclovir, showLegendPerDataset = "observed")
+
 }
 \seealso{
 Other plot functions based on ospsuite.plots:

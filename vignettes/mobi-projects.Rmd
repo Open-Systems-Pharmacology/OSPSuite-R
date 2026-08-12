@@ -8,7 +8,12 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+# Load the shared runtime gate; see vignettes/_setup.R.
+source("_setup.R")
+knitr::opts_chunk$set(
+  eval = .ospRuntimeAvailable,
+  echo = TRUE
+)
 ```
 
 ## Working with MoBi projects

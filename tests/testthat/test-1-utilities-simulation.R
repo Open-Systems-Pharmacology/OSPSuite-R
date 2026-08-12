@@ -168,8 +168,16 @@ test_that("It runs a population simulation when a population is assigned to the 
 })
 
 test_that("It runs several population simulations in one call when each carries a population", {
-  sim1 <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
-  sim2 <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  sim1 <- loadTestSimulation(
+    "simple",
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
+  sim2 <- loadTestSimulation(
+    "simple",
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
   sim1$population <- population
   sim2$population <- population
 
@@ -199,7 +207,10 @@ test_that("The population argument overrides an assigned population for the run 
 
   sim$population <- assignedPopulation
 
-  results <- runSimulations(simulations = sim, population = overridePopulation)[[1]]
+  results <- runSimulations(
+    simulations = sim,
+    population = overridePopulation
+  )[[1]]
   # the override population is used for this run
   expect_equal(results$count, overridePopulation$count)
   # the originally assigned population is restored afterwards

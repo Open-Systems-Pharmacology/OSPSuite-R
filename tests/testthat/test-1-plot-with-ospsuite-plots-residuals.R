@@ -67,7 +67,6 @@ myCombDat$setGroups(
 )
 
 test_that("It creates default plots as expected", {
-  set.seed(123)
   vdiffr::expect_doppelganger(
     title = "defaults vs Time",
     fig = plotResidualsVsCovariate(
@@ -76,8 +75,6 @@ test_that("It creates default plots as expected", {
       xAxis = "time"
     )
   )
-
-  set.seed(123)
   vdiffr::expect_doppelganger(
     title = "defaults vs Observed",
     fig = suppressWarnings(plotResidualsVsCovariate(
@@ -85,8 +82,6 @@ test_that("It creates default plots as expected", {
       residualScale = "log"
     ))
   )
-
-  set.seed(123)
   vdiffr::expect_doppelganger(
     title = "defaults vs Predicted",
     fig = suppressWarnings(plotResidualsVsCovariate(
@@ -95,8 +90,6 @@ test_that("It creates default plots as expected", {
       xAxis = "predicted"
     ))
   )
-
-  set.seed(123)
   vdiffr::expect_doppelganger(
     title = "defaults as Histograms",
     fig = plotResidualsAsHistogram(
@@ -105,8 +98,6 @@ test_that("It creates default plots as expected", {
       distribution = 'none'
     )
   )
-
-  set.seed(123)
   vdiffr::expect_doppelganger(
     title = "Histograms with parameters",
     fig = plotResidualsAsHistogram(
@@ -117,8 +108,6 @@ test_that("It creates default plots as expected", {
       geomHistAttributes = list(position = 'stack')
     )
   )
-
-  set.seed(123)
   vdiffr::expect_doppelganger(
     title = "defaults as QQ-Plot",
     fig = plotQuantileQuantilePlot(myCombDat, residualScale = "linear") +
@@ -181,8 +170,6 @@ test_that("Different symbols for data sets within one group", {
   obsData2$xUnit <- "min"
   obsData2$yDimension <- ospDimensions$`Concentration (molar)`
   myDC$addDataSets(obsData2, groups = "myGroup")
-
-  set.seed(123)
   vdiffr::expect_doppelganger(
     title = "multiple data sets one group",
     fig = plotResidualsVsCovariate(
@@ -194,8 +181,6 @@ test_that("Different symbols for data sets within one group", {
 })
 
 test_that("works with data.frame input", {
-  set.seed(123)
-
   vdiffr::expect_doppelganger(
     title = "dataFrame Input with unit conversion",
     fig = plotResidualsVsCovariate(
@@ -269,8 +254,6 @@ test_that("showLegendPerDataset adds shape mapping for observed datasets", {
       "Stevens_2012"
     )
   )
-
-  set.seed(123)
   vdiffr::expect_doppelganger(
     title = "showLegendPerDataset observed - residuals",
     fig = plotResidualsVsCovariate(
@@ -279,8 +262,6 @@ test_that("showLegendPerDataset adds shape mapping for observed datasets", {
       showLegendPerDataset = "observed"
     )
   )
-
-  set.seed(123)
   vdiffr::expect_doppelganger(
     title = "showLegendPerDataset none - residuals",
     fig = plotResidualsVsCovariate(
@@ -324,7 +305,6 @@ test_that("User mapping overrides showLegendPerDataset in residuals", {
   )
 
   # User mapping overrides showLegendPerDataset
-  set.seed(123)
   vdiffr::expect_doppelganger(
     title = "showLegendPerDataset overwritten by name for residuals",
     fig = plotResidualsVsCovariate(
@@ -333,5 +313,78 @@ test_that("User mapping overrides showLegendPerDataset in residuals", {
       showLegendPerDataset = "observed",
       mapping = ggplot2::aes(groupby = name)
     )
+  )
+})
+
+# y-axis unit label ----
+
+test_that("y-axis label shows unit in linear scale and omits it in log or ratio scale", {
+  obsData <- DataSet$new(name = "Observed")
+  obsData$setValues(
+    xValues = c(0, 1, 2, 3, 4),
+    yValues = c(0.5, 3.0, 6.5, 5.0, 2.5)
+  )
+  obsData$xUnit <- "min"
+  obsData$yDimension <- ospDimensions$`Concentration (molar)`
+
+  dcConc <- DataCombined$new()
+  dcConc$addSimulationResults(aciclovirSimData, groups = "aciclovir")
+  dcConc$addDataSets(obsData, groups = "aciclovir")
+  resultLinear <- plotResidualsVsCovariate(
+    dcConc,
+    residualScale = "linear",
+    yUnit = "µmol/l"
+  )
+  resultLog <- plotResidualsVsCovariate(
+    dcConc,
+    residualScale = "log"
+  )
+  resultRatio <- plotResidualsVsCovariate(
+    dcConc,
+    residualScale = "ratio"
+  )
+
+  # unit bracketed in y-axis label for linear scale
+  expect_identical(
+    resultLinear$labels$y,
+    "residuals [µmol/l]\npredicted - observed"
+  )
+  # log residuals are dimensionless — no unit brackets in y-axis label
+  expect_identical(
+    resultLog$labels$y,
+    "residuals\nlog(predicted) - log(observed)"
+  )
+  # log residuals are dimensionless — no unit brackets in y-axis label
+  expect_identical(
+    resultRatio$labels$y,
+    "residuals\nobserved / predicted"
+  )
+
+  vdiffr::expect_doppelganger(
+    title = "residuals y-label linear with unit",
+    fig = resultLinear
+  )
+  vdiffr::expect_doppelganger(
+    title = "residuals y-label log no unit",
+    fig = resultLog
+  )
+  vdiffr::expect_doppelganger(
+    title = "residuals y-label ratio no unit",
+    fig = resultRatio
+  )
+})
+
+test_that("y-axis label shows no unit brackets for fraction dimension (empty unit)", {
+  resultFraction <- plotResidualsVsCovariate(
+    myCombDat,
+    residualScale = "linear",
+    yUnit = ""
+  )
+
+  # empty-string unit must not produce "[]" in the label
+  expect_false(grepl("[]", resultFraction$labels$y, fixed = TRUE))
+  vdiffr::expect_doppelganger(
+    title = "residuals y-label linear fraction no brackets",
+    fig = resultFraction
   )
 })

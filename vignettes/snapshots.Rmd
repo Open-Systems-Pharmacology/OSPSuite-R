@@ -8,7 +8,12 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+# Load the shared runtime gate; see vignettes/_setup.R.
+source("_setup.R")
+knitr::opts_chunk$set(
+  eval = .ospRuntimeAvailable,
+  echo = TRUE
+)
 ```
 
 A *snapshot* is a JSON representation of a PK-Sim or MoBi project. Snapshots are

@@ -149,7 +149,7 @@ test_that("data frame column and dataset names are as expected when only `DataSe
     ))
   )
 
-  expect_equal(unique(df$name), names(dataSet)[[1]])
+  expect_equal(as.character(unique(df$name)), names(dataSet)[[1]])
 })
 
 
@@ -234,7 +234,10 @@ test_that("data frame column names and datset names are as expected when only `S
       "molWeight"
     ))
   )
-  expect_equal(sort(unique(df$name)), sort(simResults$allQuantityPaths))
+  expect_equal(
+    sort(as.character(unique(df$name))),
+    sort(simResults$allQuantityPaths)
+  )
   expect_equal(
     sort(as.character(na.omit(unique(df$name)))),
     sort(c(
@@ -253,6 +256,43 @@ test_that("data frame molecular weight column values are as expected", {
   df <- myCombDat$toDataFrame()
 
   expect_equal(unique(df$molWeight), c(408.8730, 129.1636))
+})
+
+test_that("`name` is a factor preserving dataset insertion order", {
+  # `name` must be a factor so that downstream ggplot2 legends follow the
+  # order in which datasets were added, rather than alphabetical order.
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[3]])
+  myCombDat$addDataSets(dataSet[[1]])
+  myCombDat$addDataSets(dataSet[[2]])
+
+  df <- myCombDat$toDataFrame()
+
+  expect_s3_class(df$name, "factor")
+  # Levels must follow insertion order, which differs from alphabetical order.
+  expect_equal(
+    levels(df$name),
+    names(dataSet)[c(3, 1, 2)]
+  )
+  # `self$names` (insertion order) and the factor levels must coincide.
+  expect_equal(levels(df$name), myCombDat$names)
+})
+
+test_that("`group` is a factor preserving group introduction order", {
+  # `group` must be a factor whose levels follow the order in which each group
+  # is first introduced, so `group` and `name` legends stay consistent in plots
+  # (notably in observed-vs-predicted plots where the two variables may differ).
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]], groups = "second")
+  myCombDat$addDataSets(dataSet[[2]], groups = "first")
+  myCombDat$addDataSets(dataSet[[3]], groups = "second")
+
+  df <- myCombDat$toDataFrame()
+
+  expect_s3_class(df$group, "factor")
+  # Levels follow first-appearance order among the added datasets, which here
+  # differs from alphabetical order ("first" < "second").
+  expect_equal(levels(df$group), c("second", "first"))
 })
 
 # Performance tests are only run on machines
@@ -283,7 +323,7 @@ test_that("with no grouping specified, group column in data frame is `NA`", {
   myCombDat$addDataSets(dataSet[[1]])
   df <- myCombDat$toDataFrame()
 
-  expect_equal(rep(NA_character_, length(df$group)), df$group)
+  expect_equal(as.factor(rep(NA_character_, length(df$group))), df$group)
 })
 
 
@@ -693,7 +733,7 @@ test_that("data order with or without `names` argument should be same", {
   expect_equal(df1$yValues, df2$yValues)
 
   expect_equal(
-    sort(unique(df1$name)),
+    sort(as.character(unique(df1$name))),
     sort(c(
       "Stevens_2012_placebo.Placebo_proximal",
       "Stevens_2012_placebo.Placebo_total",
@@ -702,7 +742,7 @@ test_that("data order with or without `names` argument should be same", {
   )
 
   expect_equal(
-    sort(unique(df2$name)),
+    sort(as.character(unique(df2$name))),
     sort(c("Stevens_2012_placebo.Placebo_proximal", "x", "y"))
   )
 })
@@ -1245,16 +1285,26 @@ test_that("sequential update when first and second datasets have same names and 
   # but groupings should be different
   expect_equal(
     unique(df1$group),
-    c("total", "proximal", "distal", NA_character_)
+    factor(
+      c("total", "proximal", "distal", NA_character_),
+      levels = c("total", "proximal", "distal")
+    )
   )
 
   expect_equal(
     unique(df2$group),
-    c(
-      "Dapagliflozin - emptying",
-      "Dapagliflozin - retention",
-      NA_character_,
-      "distal"
+    factor(
+      c(
+        "Dapagliflozin - emptying",
+        "Dapagliflozin - retention",
+        NA_character_,
+        "distal"
+      ),
+      levels = c(
+        "Dapagliflozin - emptying",
+        "Dapagliflozin - retention",
+        "distal"
+      )
     )
   )
 

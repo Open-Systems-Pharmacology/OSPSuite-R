@@ -99,21 +99,21 @@
 #' @export
 #' @family plot functions based on ospsuite.plots
 #'
-#' @examples \dontrun{
+#' @examples
 #' # Generate a time profile plot for the provided data
-#' plotTimeProfile(myDataCombined,
+#' plotTimeProfile(dataCombinedAciclovir,
 #'   xUnit = ospUnits$Time$h,
 #'   yUnit = ospUnits$`Concentration [mass]`$`mg/l`)
 #'
 #' # Show individual dataset names for observed data only
-#' plotTimeProfile(manyObsDC, showLegendPerDataset = "observed")
+#' plotTimeProfile(dataCombinedAciclovir, showLegendPerDataset = "observed")
 #'
 #' # Show individual dataset names for simulated data only
-#' plotTimeProfile(manySimDC, showLegendPerDataset = "simulated")
+#' plotTimeProfile(dataCombinedAciclovir, showLegendPerDataset = "simulated")
 #'
 #' # Show individual dataset names for both observed and simulated
-#' plotTimeProfile(manyObsSimDC, showLegendPerDataset = "all")
-#' }
+#' plotTimeProfile(dataCombinedAciclovir, showLegendPerDataset = "all")
+#'
 plotTimeProfile <- function(
   plotData, # nolint
   metaData = NULL,
@@ -251,16 +251,16 @@ plotTimeProfile <- function(
 #'
 #' @family plot functions based on ospsuite.plots
 #'
-#' @examples \dontrun{
-#' # Generate a predicted vs observed plot for the provided data
-#' plotPredictedVsObserved(myDataCombined)
+#' @examples
+#' # Generate a predicted vs observed plot
+#' plotPredictedVsObserved(dataCombinedAciclovir)
 #'
 #' # Generate an observed vs predicted plot (swap axes)
-#' plotPredictedVsObserved(myDataCombined, predictedAxis = "x")
+#' plotPredictedVsObserved(dataCombinedAciclovir, predictedAxis = "x")
 #'
 #' # Show individual dataset names in legend
-#' plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "observed")
-#' }
+#' plotPredictedVsObserved(dataCombinedAciclovir, showLegendPerDataset = "observed")
+#'
 plotPredictedVsObserved <- function(
   plotData, # nolint
   metaData = NULL,
@@ -354,9 +354,9 @@ plotPredictedVsObserved <- function(
 #' ## Residual Scales
 #'
 #' The `residualScale` parameter controls how residuals are displayed:
-#' - `linear`: Absolute residuals (Observed - Predicted). Values centered around
+#' - `linear`: Absolute residuals (Predicted - Observed). Values centered around
 #' zero indicate good model fit. Useful for normally distributed errors.
-#' - `log`: Log-transformed residuals, calculated as log(Observed / Predicted).
+#' - `log`: Log-transformed residuals, calculated as log(Predicted / Observed).
 #' Values centered around zero indicate good fit. Preferred for log-normally
 #' distributed data or when errors are proportional to magnitude.
 #' - `ratio`: Ratio of observed to predicted (Observed / Predicted). Values
@@ -395,10 +395,9 @@ plotPredictedVsObserved <- function(
 #' @family plot functions based on ospsuite.plots
 #'
 #' @examples
-#' \dontrun{
 #' # Generate a residuals vs observed plot for the provided data
 #' plotResidualsVsCovariate(
-#'   myDataCombined,
+#'   dataCombinedAciclovir,
 #'   xUnit = ospUnits$Time$h,
 #'   yUnit = ospUnits$`Concentration [mass]`$`µg/l`,
 #'   xAxis = "time",
@@ -406,14 +405,14 @@ plotPredictedVsObserved <- function(
 #' )
 #'
 #' # Generate a residuals vs predicted plot
-#' plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
+#' plotResidualsVsCovariate(dataCombinedAciclovir, xAxis = "predicted")
 #'
 #' # Generate a residuals vs time plot
-#' plotResidualsVsCovariate(myDataCombined, xAxis = "time")
+#' plotResidualsVsCovariate(dataCombinedAciclovir, xAxis = "time")
 #'
 #' # Show individual dataset names in legend
-#' plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "observed")
-#' }
+#' plotResidualsVsCovariate(dataCombinedAciclovir, showLegendPerDataset = "observed")
+#'
 plotResidualsVsCovariate <- function(
   plotData,
   metaData = NULL,
@@ -514,13 +513,13 @@ plotResidualsVsCovariate <- function(
 #'
 #' @family plot functions based on ospsuite.plots
 #'
-#' @examples \dontrun{
+#' @examples
 #' # Generate a histogram of residuals with default settings
-#' plotResidualsAsHistogram(myDataCombined)
+#' plotResidualsAsHistogram(dataCombinedAciclovir)
 #'
 #' # Generate a histogram with linear scale
-#' plotResidualsAsHistogram(myDataCombined, residualScale = "linear")
-#' }
+#' plotResidualsAsHistogram(dataCombinedAciclovir, residualScale = "linear")
+#'
 plotResidualsAsHistogram <- function(
   plotData,
   metaData = NULL,
@@ -592,13 +591,13 @@ plotResidualsAsHistogram <- function(
 #'
 #' @family plot functions based on ospsuite.plots
 #'
-#' @examples \dontrun{
+#' @examples
 #' # Generate a Q-Q plot with default settings
-#' plotQuantileQuantilePlot(myDataCombined)
+#' plotQuantileQuantilePlot(dataCombinedAciclovir)
 #'
 #' # Generate a Q-Q plot with linear scale
-#' plotQuantileQuantilePlot(myDataCombined, residualScale = "linear")
-#' }
+#' plotQuantileQuantilePlot(dataCombinedAciclovir, residualScale = "linear")
+#'
 plotQuantileQuantilePlot <- function(
   plotData,
   metaData = NULL,
@@ -705,7 +704,10 @@ plotQuantileQuantilePlot <- function(
     )
   }
 
-  if (predictedIsNeeded & !('predicted' %in% names(plotData))) {
+  residualsComputedInternally <- predictedIsNeeded &
+    !('predicted' %in% names(plotData))
+
+  if (residualsComputedInternally) {
     plotData <- .convertUnitsForPlot(
       plotData,
       maxAllowedYDimensions = 1,
@@ -780,6 +782,17 @@ plotQuantileQuantilePlot <- function(
     return(NULL)
   }
 
+  isLinearScale <- any(scaling %in% c("linear", "lin", "identity"))
+  if (
+    residualsComputedInternally &&
+      isLinearScale &&
+      "residualValues" %in% names(plotData)
+  ) {
+    attr(plotData$residualValues, "label") <- paste0(
+      ospsuite.plots::constructLabelWithUnit("residuals", plotData$yUnit[1]),
+      "\npredicted - observed"
+    )
+  }
   return(plotData)
 }
 

@@ -18,34 +18,6 @@
 #' @family plotting
 #'
 #' @examples
-#' \dontrun{
-#' # simulated data
-#' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-#' sim <- loadSimulation(simFilePath)
-#' simResults <- runSimulations(sim)[[1]]
-#' outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
-#'
-#' # observed data
-#' obsData <- lapply(
-#'   c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
-#'   function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
-#' )
-#' names(obsData) <- lapply(obsData, function(x) x$name)
-#'
-#'
-#' # Create a new instance of `DataCombined` class
-#' myDataCombined <- DataCombined$new()
-#'
-#' # Add simulated results
-#' myDataCombined$addSimulationResults(
-#'   simulationResults = simResults,
-#'   quantitiesOrPaths = outputPath,
-#'   groups = "Aciclovir PVB"
-#' )
-#'
-#' # Add observed data set
-#' myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
-#'
 #' # Create a new instance of `DefaultPlotConfiguration` class
 #' myPlotConfiguration <- DefaultPlotConfiguration$new()
 #' myPlotConfiguration$title <- "My Plot Title"
@@ -53,8 +25,8 @@
 #' myPlotConfiguration$caption <- "My Sources"
 #'
 #' # plot
-#' plotObservedVsSimulated(myDataCombined, myPlotConfiguration)
-#' }
+#' plotObservedVsSimulated(dataCombinedAciclovir, myPlotConfiguration)
+#'
 #' @export
 plotObservedVsSimulated <- function(
   dataCombined,
@@ -192,15 +164,15 @@ plotObservedVsSimulated <- function(
   # in a group (indicated by color), we have to override the default shape legend
   # and assign a manual shape to each legend entry
   # The shapes follow the settings in the user-provided plot configuration
-  overrideShapeAssignment <- pairedData %>%
-    dplyr::select(name, group) %>%
-    dplyr::distinct() %>%
-    dplyr::arrange(name) %>%
+  overrideShapeAssignment <- pairedData |>
+    dplyr::select(name, group) |>
+    dplyr::distinct() |>
+    dplyr::arrange(name) |>
     dplyr::mutate(
       shapeAssn = unlist(tlf::Shapes[obsVsPredPlotConfiguration$points$shape[
-        1:nrow(.)
+        seq_len(dplyr::n())
       ]])
-    ) %>%
+    ) |>
     dplyr::filter(!duplicated(group))
 
   # LLOQ is not mapped by default

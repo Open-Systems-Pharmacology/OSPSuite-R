@@ -104,16 +104,15 @@ This function visualizes the relationship between predicted and observed
 values, allowing for easy identification of discrepancies.
 }
 \examples{
-\dontrun{
-# Generate a predicted vs observed plot for the provided data
-plotPredictedVsObserved(myDataCombined)
+# Generate a predicted vs observed plot
+plotPredictedVsObserved(dataCombinedAciclovir)
 
 # Generate an observed vs predicted plot (swap axes)
-plotPredictedVsObserved(myDataCombined, predictedAxis = "x")
+plotPredictedVsObserved(dataCombinedAciclovir, predictedAxis = "x")
 
 # Show individual dataset names in legend
-plotPredictedVsObserved(myDataCombined, showLegendPerDataset = "observed")
-}
+plotPredictedVsObserved(dataCombinedAciclovir, showLegendPerDataset = "observed")
+
 }
 \seealso{
 Other plot functions based on ospsuite.plots:

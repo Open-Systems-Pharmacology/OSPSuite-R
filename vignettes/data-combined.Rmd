@@ -8,7 +8,10 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+# Load the shared runtime gate; see vignettes/_setup.R.
+source("_setup.R")
 knitr::opts_chunk$set(
+  eval = .ospRuntimeAvailable,
   collapse = TRUE,
   warning = FALSE,
   message = FALSE,
@@ -83,6 +86,12 @@ myDataCombined$addDataSets(
   obsData$`Vergin 1995.Iv`,
   groups = "Aciclovir PVB"
 )
+```
+
+The package exports `dataCombinedAciclovir` — a `DataCombined` object equivalent to the example built above — which can be used directly to illustrate and test how `DataCombined` objects work:
+
+```{r}
+dataCombinedAciclovir
 ```
 
 Every data, be it simulated results or from `DataSet`, must have a unique name 

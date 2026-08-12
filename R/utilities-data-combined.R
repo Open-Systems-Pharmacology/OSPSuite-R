@@ -287,34 +287,7 @@ addResidualColumn <- function(
 #' @family data-combined
 #'
 #' @examples
-#' # simulated data
-#' simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
-#' sim <- loadSimulation(simFilePath)
-#' simResults <- runSimulations(sim)[[1]]
-#' outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
-#'
-#' # observed data
-#' obsData <- lapply(
-#'   c("ObsDataAciclovir_1.pkml", "ObsDataAciclovir_2.pkml", "ObsDataAciclovir_3.pkml"),
-#'   function(x) loadDataSetFromPKML(system.file("extdata", x, package = "ospsuite"))
-#' )
-#' names(obsData) <- lapply(obsData, function(x) x$name)
-#'
-#'
-#' # Create a new instance of `DataCombined` class
-#' myDataCombined <- DataCombined$new()
-#'
-#' # Add simulated results
-#' myDataCombined$addSimulationResults(
-#'   simulationResults = simResults,
-#'   quantitiesOrPaths = outputPath,
-#'   groups = "Aciclovir PVB"
-#' )
-#'
-#' # Add observed data set
-#' myDataCombined$addDataSets(obsData$`Vergin 1995.Iv`, groups = "Aciclovir PVB")
-#'
-#' calculateResiduals(myDataCombined, scaling = "linear")
+#' calculateResiduals(dataCombinedAciclovir, scaling = "linear")
 #' @export
 calculateResiduals <- function(
   dataCombined,
@@ -345,10 +318,10 @@ calculateResiduals <- function(
   # grouping level and combine the resulting data frames in a row-wise manner.
   #
   # Both of these routines will be carried out by `dplyr::group_modify()`.
-  pairedData <- combinedData %>%
-    dplyr::group_by(group) %>%
-    dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) %>%
-    dplyr::ungroup() %>%
+  pairedData <- combinedData |>
+    dplyr::group_by(group) |>
+    dplyr::group_modify(.f = ~ .extractResidualsToTibble(.x, scaling)) |>
+    dplyr::ungroup() |>
     dplyr::relocate(group, name, nameSimulated)
 
   return(pairedData)
@@ -510,9 +483,9 @@ calculateResiduals <- function(
 
   # Remove groups (and the datasets therein) with only one type (either only
   # observed or only simulated) of dataset.
-  data <- data %>%
-    dplyr::group_by(group) %>%
-    dplyr::filter(length(unique(dataType)) > 1L) %>%
+  data <- data |>
+    dplyr::group_by(group) |>
+    dplyr::filter(length(unique(dataType)) > 1L) |>
     dplyr::ungroup()
 
   # Compare to find which datasets were removed
