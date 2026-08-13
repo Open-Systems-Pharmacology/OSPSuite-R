@@ -47,7 +47,8 @@
       "NeedsCompilation": "yes",
       "Author": "Brian Ripley [aut, cre, cph], Bill Venables [aut, cph], Douglas M. Bates [ctb], Kurt Hornik [trl] (partial port ca 1998), Albrecht Gebhardt [trl] (partial port ca 1998), David Firth [ctb] (support functions for polr)",
       "Maintainer": "Brian Ripley <Brian.Ripley@R-project.org>",
-      "Repository": "CRAN"
+      "Repository": "PPM",
+      "Encoding": "UTF-8"
     },
     "Matrix": {
       "Package": "Matrix",
@@ -2740,7 +2741,7 @@
     },
     "rSharp": {
       "Package": "rSharp",
-      "Version": "1.2.1.9001",
+      "Version": "1.2.2.9002",
       "Source": "GitHub",
       "Type": "Package",
       "Title": "Accessing .NET from R",
@@ -2766,17 +2767,17 @@
       ],
       "License": "file LICENSE",
       "SystemRequirements": "dotnet10",
-      "RoxygenNote": "7.3.3",
       "VignetteBuilder": "knitr",
       "Config/testthat/edition": "3",
+      "Config/roxygen2/version": "8.0.0",
       "Author": "Open-Systems-Pharmacology Community [cph], esqLABS GmbH [fnd], Pavel Balazki [aut, cre], Juri Solodenko [aut] (ORCID: <https://orcid.org/0000-0001-6922-588X>), Michael Sevestre [aut], Robert McIntosh [aut], Felix Mil [aut], Jean-Michel Perraud [aut], Ian Peter Du [ctb]",
       "Maintainer": "Pavel Balazki <pavel.balazki@gmail.com>",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "rSharp",
       "RemoteRef": "V13",
-      "RemoteSha": "f798918997b836099e3335ee2c81126d9a3e4ee1"
+      "RemoteSha": "346b37b707a5c69b9a47bf76aa4134a3b8d91198",
+      "RemoteHost": "api.github.com"
     },
     "rappdirs": {
       "Package": "rappdirs",

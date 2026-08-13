@@ -26,7 +26,7 @@
 #'
 #' # plot
 #' plotObservedVsSimulated(dataCombinedAciclovir, myPlotConfiguration)
-#' 
+#'
 #' @export
 plotObservedVsSimulated <- function(
   dataCombined,

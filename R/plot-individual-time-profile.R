@@ -100,7 +100,7 @@ plotIndividualTimeProfile <- function(
     obsData <- NULL
   } else {
     obsData <- .computeBoundsFromErrorType(obsData)
-    # Drop unused factor levels in `name` and `group` columns 
+    # Drop unused factor levels in `name` and `group` columns
     # to avoid empty data crashing legend
     obsData <- droplevels(obsData)
   }
