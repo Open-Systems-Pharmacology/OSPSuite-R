@@ -175,7 +175,7 @@ plotIndividualTimeProfile <- function(
   )
 
   tlf::setDefaultErrorbarCapSize(defaultPlotConfiguration$errorbarsCapSize)
-  
+
   profilePlot <- tlf::plotTimeProfile(
     data = simData,
     dataMapping = simulatedDataMapping,
