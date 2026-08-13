@@ -207,14 +207,18 @@ import(tidyr)
 import(tlf)
 import(xml2)
 importFrom(R6,R6Class)
-importFrom(ospsuite.utils,enum)
-importFrom(ospsuite.utils,enumGetKey)
-importFrom(ospsuite.utils,enumGetValue)
-importFrom(ospsuite.utils,enumHasKey)
-importFrom(ospsuite.utils,enumKeys)
-importFrom(ospsuite.utils,enumPut)
-importFrom(ospsuite.utils,enumRemove)
-importFrom(ospsuite.utils,enumValues)
-importFrom(tlf,PlotGridConfiguration)
-importFrom(tlf,plotGrid)
+importFrom(ospsuite.utils,
+  enum,
+  enumGetKey,
+  enumGetValue,
+  enumHasKey,
+  enumKeys,
+  enumPut,
+  enumRemove,
+  enumValues
+)
+importFrom(tlf,
+  PlotGridConfiguration,
+  plotGrid
+)
 importFrom(utils,tail)
