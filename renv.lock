@@ -2741,7 +2741,7 @@
     },
     "rSharp": {
       "Package": "rSharp",
-      "Version": "1.2.2.9002",
+      "Version": "1.2.2.9004",
       "Source": "GitHub",
       "Type": "Package",
       "Title": "Accessing .NET from R",
@@ -2775,8 +2775,8 @@
       "RemoteType": "github",
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "rSharp",
-      "RemoteRef": "V13",
-      "RemoteSha": "346b37b707a5c69b9a47bf76aa4134a3b8d91198",
+      "RemoteRef": "main",
+      "RemoteSha": "804e5d12f3c9623f18e96be69f06ad9eebba8247",
       "RemoteHost": "api.github.com"
     },
     "rappdirs": {
