@@ -1306,7 +1306,8 @@ test_that("loadBuildingBlockFromPKML errors when the file's BB does not match th
     loadBuildingBlockFromPKML(
       filePath = tmp,
       type = BuildingBlockTypes$`Parameter Values`
-    )
+    ),
+    regexp = "Failed to load a 'Parameter Values' building block"
   )
 })
 

@@ -1234,7 +1234,7 @@ saveParameterValuesToPKML <- function(
 #' }
 loadBuildingBlockFromPKML <- function(filePath, type = NULL) {
   if (!file.exists(filePath)) {
-    stop(paste0("File does not exist: ", filePath))
+    stop(messages$errorFileDoesNotExist(filePath))
   }
   validateIsFileExtension(filePath, "pkml")
   validateEnumValue(type, enum = BuildingBlockTypes, nullAllowed = TRUE)
@@ -1242,7 +1242,16 @@ loadBuildingBlockFromPKML <- function(filePath, type = NULL) {
   expandedPath <- path.expand(filePath)
 
   if (!is.null(type)) {
-    bbNet <- .loadBBNetWithType(expandedPath, type)
+    bbNet <- tryCatch(
+      .loadBBNetWithType(expandedPath, type),
+      error = function(e) {
+        stop(messages$errorBBLoadFromPKMLFailed(
+          filePath,
+          type,
+          conditionMessage(e)
+        ))
+      }
+    )
     return(.wrapLoadedBB(bbNet, type))
   }
 
