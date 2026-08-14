@@ -1,7 +1,6 @@
-# OSPSuite-R (v13) — agent & contributor guide
+# OSPSuite-R — agent & contributor guide
 
-Guidance for working on the **v13** line of this repository with coding agents
-(Claude Code, Copilot, CodeRabbit, …). Tool-neutral; `CLAUDE.md` points here.
+Guidance for working on this repository with coding agents.
 
 ## What this package is
 
@@ -14,17 +13,18 @@ loaded at runtime by rSharp when the package initializes.
 
 The R functions are thin wrappers over .NET. When you need to understand what a
 method *actually does* — or why it throws — read the .NET source in the upstream
-repositories, on the branch this line builds against:
+repositories. Their default `develop` branches track the current line; the exact
+shipped versions are pinned in `shared/DependencyManager/src/DependencyManager.csproj`:
 
-- **OSPSuite.Core** — https://github.com/Open-Systems-Pharmacology/OSPSuite.Core/tree/V13
+- **OSPSuite.Core** — https://github.com/Open-Systems-Pharmacology/OSPSuite.Core/
   (core domain/import/simulation logic, e.g. `ExcelDataSourceFile`, `DataImporter`).
-- **MoBi** — https://github.com/Open-Systems-Pharmacology/MoBi/tree/v13
+- **MoBi** — https://github.com/Open-Systems-Pharmacology/MoBi/
   (`MoBi.R` is an entry assembly the R package initializes).
-- **PK-Sim** — https://github.com/Open-Systems-Pharmacology/PK-Sim/tree/V13
+- **PK-Sim** — https://github.com/Open-Systems-Pharmacology/PK-Sim/
   (`PKSim.R` is an entry assembly the R package initializes).
 
-Fetch raw files directly, e.g.
-`https://raw.githubusercontent.com/Open-Systems-Pharmacology/OSPSuite.Core/V13/src/...`.
+Fetch raw files directly (the URL needs a ref after the repo name), e.g.
+`https://raw.githubusercontent.com/Open-Systems-Pharmacology/OSPSuite.Core/develop/src/...`.
 
 ## How `inst/lib` is populated (DependencyManager + allow-list)
 
@@ -42,12 +42,9 @@ branch it was dispatched on.
 NPOI needs `Enums.NET` at runtime to parse sheets with a sort/filter, but it was not
 on the allow-list, so `loadDataSetsFromExcel()` failed until `Enums.NET` was added.)
 
-There is a reusable `.github/workflows/build-libraries.yaml` that *can* rebuild the
-solution and commit the regenerated `inst/lib`, but it is a `workflow_call` workflow
-that **no workflow on this branch invokes**, so it does not run automatically. In
-practice: **build the DependencyManager locally and commit the updated `inst/lib`
-yourself** (both the `.csproj` change and the resulting DLLs).
-
+Neither path runs automatically — after an allow-list change, regenerate and commit
+`inst/lib` yourself (both the `.csproj` change and the resulting DLLs), or dispatch
+the workflow and merge its PR.
 
 ## renv, branch switching, and worktrees
 
@@ -60,13 +57,11 @@ The package uses **renv**; the pinned dependency set (including `rSharp`) is in
   `--vanilla` so renv activates and the project library is used.
 
 - **Switching branches is not free.** Different branches pin **different rSharp
-  builds** and ship **different `inst/lib/` .NET binaries**. Two consequences:
-  1. You must run **`renv::restore()`** after switching to get the matching rSharp.
-     (renv keys its cache on content hash, so it resolves the correct build even
-     when two branches share the same rSharp version string.)
-  2. rSharp **loads the native DLLs into the running R process and locks them**, so
-     you must **restart the R session before switching**, otherwise `renv::restore()`
-     cannot overwrite the locked `inst/lib` / rSharp DLLs.
+  builds** and ship **different `inst/lib/` .NET binaries**, so run
+  **`renv::restore()`** after switching to get the matching rSharp. And because
+  rSharp **loads the native DLLs into the running R process and locks them**, you
+  must **restart the R session before switching**, otherwise `renv::restore()`
+  cannot overwrite the locked `inst/lib` / rSharp DLLs.
 
 - **`devtools::load_all()` runs a dependency check against the active library**, so
   dev dependencies must be present (`renv::restore()`d) first, or it errors before it
@@ -78,8 +73,8 @@ The package uses **renv**; the pinned dependency set (including `rSharp`) is in
   renv **cache** safely. This avoids the restore/restart thrash entirely:
 
   ```bash
-  git worktree add ../OSPSuite-R-v13 v13
   git worktree add ../OSPSuite-R-<branch> <branch>
+  # e.g. for the v12 maintenance line:  git worktree add ../OSPSuite-R-v12 v12
   # then run renv::restore() once in each
   ```
 
