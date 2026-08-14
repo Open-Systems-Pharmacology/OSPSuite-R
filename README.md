@@ -22,7 +22,7 @@ Pharmacology Software tools PK-Sim and MoBi.
 - [Development](#development)
 - [Code of conduct](#code-of-conduct)
 - [Contribution](#contribution)
-- [Licence](#licence)
+- [License](#license)
 
 # Documentation
 
@@ -30,8 +30,6 @@ For complete documentation, see the [online
 documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/).
 
 ## Essential Guides
-
-**Essential guides:**
 
 - [Get
   Started](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html) -
@@ -76,9 +74,8 @@ documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/).
 
 # Installation
 
-The **ospsuite** package requires R version 4.x.x and supports
-[Windows](#on-windows) and [Linux (Ubuntu)](#on-linux) operating
-systems.
+The **ospsuite** package requires R version 4.4 or later and supports
+Windows, Linux (Ubuntu), and macOS (Apple Silicon) operating systems.
 
 `ospsuite` is not available on CRAN, and neither are the OSP packages it
 depends on. Both are published on the OSP R-universe, so the recommended
@@ -130,7 +127,7 @@ pak::pak("Open-Systems-Pharmacology/OSPSuite-R")
   `Settings > Language > Administrative language settings > Current language for non-Unicode programs`
   to `English (United States)` and reboot.
 
-- On Linux, set the environment variable `LC_ALL` to `~/.bashrc` before
+- On Linux, set the environment variable `LC_ALL` in `~/.bashrc` before
   starting R:
 
   `export LC_ALL=en_US.UTF-8`
@@ -166,19 +163,22 @@ DependencyManager project. To update the binaries to a new version:
 2.  Update the `Version` attribute in the `PackageReference` elements to
     the desired version numbers.
 3.  Commit and push the changes to a branch.
-4.  The GitHub Actions workflow defined in
-    `.github/workflows/build-libraries.yaml` automatically:
+4.  Manually dispatch the **Build Libraries** workflow
+    (`.github/workflows/build-libraries.yaml`, via the Actions tab) on
+    that branch. The workflow:
     - Builds the DependencyManager project, which downloads the
       specified NuGet packages
     - Extracts the required binary files and dependencies
     - Copies them to the `inst/lib/` directory
-    - Commits the updated binaries to the branch
+    - Commits the updated binaries to a new branch and opens a pull
+      request targeting the branch the workflow was dispatched on
 
-No manual build steps are required. The workflow handles the entire
-process automatically when changes to the `.csproj` file are pushed.
+Alternatively, build the DependencyManager solution locally and commit
+the regenerated `inst/lib/` together with the `.csproj` change (see
+`AGENTS.md`).
 
-**Note:** If the `DependencyManager.csproj` file is not modified, the
-build-libraries workflow step is automatically skipped.
+**Note:** The workflow is not triggered by pushes — it only runs when
+dispatched manually.
 
 ## Versioning
 

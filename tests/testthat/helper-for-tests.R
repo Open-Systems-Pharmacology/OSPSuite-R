@@ -26,7 +26,7 @@ loadTestSimulation <- function(
   addToCache = TRUE
 ) {
   simFile <- getSimulationFilePath(simulationName)
-  sim <- loadSimulation(
+  loadSimulation(
     simFile,
     loadFromCache = loadFromCache,
     addToCache = addToCache
