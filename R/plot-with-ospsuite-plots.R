@@ -1275,7 +1275,7 @@ plotQuantileQuantilePlot <- function(
   if (any(names(metaData) %in% "y2")) {
     y2UnitValue <- metaData[["y2"]][["unit"]]
     mapping <- structure(
-      c(mapping, eval(bquote(ggplot2::aes(y2axis = yUnit == .(y2UnitValue))))),
+      c(mapping, ggplot2::aes(y2axis = yUnit == !!y2UnitValue)),
       class = "uneval"
     )
   }
