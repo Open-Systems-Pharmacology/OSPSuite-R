@@ -28,7 +28,7 @@ OSPSuite-R/
 ├── man/                    # Generated documentation (roxygen2)
 ├── vignettes/             # Package vignettes (~18 .Rmd files)
 ├── inst/                   # Installed files (DLLs, example data)
-├── BinaryFiles/           # Platform-specific .NET binaries
+├── BinaryFiles            # Text manifest of shipped DLLs (R CMD check executable-check exclusions)
 └── .github/               # GitHub workflows and configurations
 ```
 
