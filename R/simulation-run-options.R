@@ -53,7 +53,9 @@ SimulationRunOptions <- R6::R6Class(
     }
   ),
   active = list(
-    #' @field numberOfCores (Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
+    #' @field numberOfCores (Maximal) number of cores to be used. Work is distributed across cores both when
+    #' several simulations are passed to `runSimulations()` in one call and when simulating a population
+    #' (where individuals are split across cores). It has no effect on a single individual simulation.
     #' Default is `getOSPSuiteSetting("numberOfCores")`.
     numberOfCores = function(value) {
       private$.wrapProperty("NumberOfCoresToUse", value, asInteger = TRUE)

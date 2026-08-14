@@ -96,8 +96,9 @@ print(resultsLoaded)
 
 ## Running multiple individual simulations and retrieving the results
 
-In some cases, the user might want to run multiple simulations in parallel. This can be achieved easily by simply passing a list of simulations to the `runSimulations()` function. However, only individual simulations (i.e., the `population` argument must remain empty) 
-are supported.
+In some cases, the user might want to run multiple simulations in parallel. This can be achieved easily by simply passing a list of simulations to the `runSimulations()` function. Both individual and population
+simulations can be mixed in the same call; to include a population simulation, assign its population beforehand with `simulation$population <- myPopulation`. The `population` argument of `runSimulations()` is a
+convenience for the single-simulation case and must remain empty when passing a list.
 
 By default, the simulations will be executed in parallel by using up to all cores available on the machine minus 1. So if there are 8 cores and the user simulates 4 simulations, 
 4 cores will be used. On the other hand, if the user simulates 10 simulations with only 8 cores available, 7 will be used and then the first 3 available.

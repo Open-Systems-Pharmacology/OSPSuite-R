@@ -13,7 +13,9 @@ Options to be passed to the simulation engine
 \section{Active bindings}{
   \if{html}{\out{<div class="r6-active-bindings">}}
   \describe{
-    \item{\code{numberOfCores}}{(Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
+    \item{\code{numberOfCores}}{(Maximal) number of cores to be used. Work is distributed across cores both when
+several simulations are passed to \code{runSimulations()} in one call and when simulating a population
+(where individuals are split across cores). It has no effect on a single individual simulation.
 Default is \code{getOSPSuiteSetting("numberOfCores")}.}
 
     \item{\code{showProgress}}{Specifies whether a progress bar should be shown during population simulations. If \code{TRUE}, a progress bar is shown in the console,
