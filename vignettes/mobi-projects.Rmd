@@ -34,7 +34,7 @@ myProject <- loadMoBiProject(projectPath)
 
 We can browse the contents of the project, e.g., get the list of simulations in the project:
 
-```{r getSimulationNames, execute = FALSE}
+```{r getSimulationNames}
 simulationsInProject <- myProject$simulationNames
 
 ospsuite.utils::ospPrintItems(simulationsInProject, title = "Simulations")
@@ -42,7 +42,7 @@ ospsuite.utils::ospPrintItems(simulationsInProject, title = "Simulations")
 
 get the list of parameter identifications:
 
-```{r getPInNames, execute = FALSE}
+```{r getPInNames}
 PIs <- myProject$parameterIdentificationNames
 
 ospsuite.utils::ospPrintItems(
@@ -147,7 +147,7 @@ head(expProfilesDf$initialConditions)
 
 ## Loading building blocks from pkml
 
-A single building block exported to a `.pkml` file can be re-loaded with `loadBuildingBlockFromPKML()`. The function works for every type listed in `BuildingBlockTypes` (Spatial Structure, Molecules, Reactions, Passive Transports, Observers, Event Groups, Initial Conditions, Parameter Values, Expression Profile, Individual). Pair it with the `save*ToPKML()` helpers (`saveInitialConditionsToPKML()`, `saveParameterValuesToPKML()`, `saveIndividualToPKML()`, `saveExpressionProfileToPKML()`) to round-trip a building block in and out of a file.
+A single building block exported to a `.pkml` file can be re-loaded with `loadBuildingBlockFromPKML()`. The function works for every type listed in `BuildingBlockTypes` (`SpatialStructure`, `Molecules`, `Reactions`, `Passive Transports`, `Observers`, `EventGroups`, `Initial Conditions`, `Parameter Values`, `Expression Profile`, `Individual`). Keys containing spaces must be wrapped in backticks when accessed with `$`, e.g. ``BuildingBlockTypes$`Initial Conditions` ``. Pair it with the `save*ToPKML()` helpers (`saveInitialConditionsToPKML()`, `saveParameterValuesToPKML()`, `saveIndividualToPKML()`, `saveExpressionProfileToPKML()`) to round-trip a building block in and out of a file.
 
 The `type` argument is optional. When supplied, an error is raised if the file does not contain exactly one building block of that type. When omitted, the type is detected from the file content; if detection fails, an error asks the caller to specify `type` explicitly.
 
@@ -213,7 +213,7 @@ print(customModule$parameterValuesBBnames)
 
 A new module can be assembled directly from R with `createMoBiModule()`. The function creates an empty module by default; building blocks can either be passed at creation time via the `buildingBlocks` argument or added later via `MoBiModule$addBuildingBlocks()`. Building blocks are removed individually via `MoBiModule$removeBuildingBlock()`.
 
-Single-type building blocks (Molecules, Reactions, Spatial Structure, Passive Transports, Observers, Event Groups) can appear at most once per module. Adding a second building block of the same single type — either at creation or via `addBuildingBlocks()` — raises an error. Initial Conditions and Parameter Values building blocks may appear multiple times.
+Single-type building blocks (`Molecules`, `Reactions`, `SpatialStructure`, `Passive Transports`, `Observers`, `EventGroups`) can appear at most once per module. Adding a second building block of the same single type — either at creation or via `addBuildingBlocks()` — raises an error. Initial Conditions and Parameter Values building blocks may appear multiple times.
 
 ```{r createMoBiModule}
 # Empty module
@@ -244,8 +244,8 @@ myModule <- createMoBiModule(
 ```
 
 `MoBiModule$removeBuildingBlock(name, type)` removes a building block by its
-name and type. For single-type building blocks (Molecules, Reactions, Spatial
-Structure, Passive Transports, Observers, Event Groups) the `name` is verified
+name and type. For single-type building blocks (`Molecules`, `Reactions`, `SpatialStructure`,
+`Passive Transports`, `Observers`, `EventGroups`) the `name` is verified
 against the lone BB's `Name` property; for Initial Conditions and Parameter
 Values, `name` selects the BB within the type. Removing Expression Profile or
 Individual via this method is not supported (neither is module-level).
@@ -381,12 +381,12 @@ Following functionalities are available for the Parameter Values (PV) BBs:
 
 -   `setParameterValuesInBB()`: Allows adding new entries or changing the values of existing entries in the PV BB.
 -   `deleteParameterValuesFromBB()`: Allows deleting entries from the PV BB.
--   `addLocalMoleculeParametersToParameterValuesBB()`: Extending a PV BB by entries for local parameters of specified molecules in all physical containers of a spatial structure. This function does not add parameters whose values are defined by a formula", e.g., the "Relative expression" parameters for proteins.
+-   `addLocalMoleculeParametersToParameterValuesBB()`: Extending a PV BB by entries for local parameters of specified molecules in all physical containers of a spatial structure. This function does not add parameters whose values are defined by a formula, e.g., the "Relative expression" parameters for proteins.
 -   `addProteinExpressionToParameterValuesBB()`: Extending a PV BB by parameters defining expression of protein molecules in selected organs.
 
 Furthermore, for building blocks of type "Parameter Values", "Initial Conditions", "Expression Profiles", and "Individual", there are functions to export them to a PKML (`.pkml`) file.
 
-So in the first step we load the extension module "Thyroid" from a pkml file:
+So in the first step we load the extension module (named `Thyroid_Generic`) from the `Thyroid.pkml` file:
 
 ```{r loadThyroidModule}
 thyroidModule <- loadModuleFromPKML(system.file(
@@ -399,9 +399,9 @@ thyroidModule <- loadModuleFromPKML(system.file(
 Then we extend the initial conditions BB of the loaded module by molecules defined in other modules of our project:
 
 ```{r extendICBB}
-# Get the IC BB from the Thyroid module. The module has only one IC BB.
+# Get the IC BB from the loaded `Thyroid_Generic` module. It has only one IC BB.
 icBB <- thyroidModule$getInitialConditionsBBs()[[1]]
-# Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"
+# Extend the IC BB of the module "Thyroid_Generic" with molecules from base module "Thyroid_QST"
 newPaths <- extendInitialConditionsBB(
   initialConditionsBuildingBlock = icBB,
   spatialStructureModule = thyroidModule,
