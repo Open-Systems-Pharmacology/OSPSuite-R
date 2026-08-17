@@ -147,7 +147,7 @@ head(expProfilesDf$initialConditions)
 
 ## Loading building blocks from pkml
 
-A single building block exported to a `.pkml` file can be re-loaded with `loadBuildingBlockFromPKML()`. The function works for every type listed in `BuildingBlockTypes` (`SpatialStructure`, `Molecules`, `Reactions`, `Passive Transports`, `Observers`, `EventGroups`, `Initial Conditions`, `Parameter Values`, `Expression Profile`, `Individual`). Keys containing spaces must be wrapped in backticks when accessed with `$`, e.g. ``BuildingBlockTypes$`Initial Conditions` ``. Pair it with the `save*ToPKML()` helpers (`saveInitialConditionsToPKML()`, `saveParameterValuesToPKML()`, `saveIndividualToPKML()`, `saveExpressionProfileToPKML()`) to round-trip a building block in and out of a file.
+A single building block exported to a `.pkml` file can be re-loaded with `loadBuildingBlockFromPKML()`. The function works for every type listed in `BuildingBlockTypes` (`SpatialStructure`, `Molecules`, `Reactions`, `Passive Transports`, `Observers`, `EventGroups`, `Initial Conditions`, `Parameter Values`, `Expression Profile`, `Individual`). Pair it with the `save*ToPKML()` helpers (`saveInitialConditionsToPKML()`, `saveParameterValuesToPKML()`, `saveIndividualToPKML()`, `saveExpressionProfileToPKML()`) to round-trip a building block in and out of a file.
 
 The `type` argument is optional. When supplied, an error is raised if the file does not contain exactly one building block of that type. When omitted, the type is detected from the file content; if detection fails, an error asks the caller to specify `type` explicitly.
 

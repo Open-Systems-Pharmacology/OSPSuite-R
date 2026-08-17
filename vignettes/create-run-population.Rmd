@@ -113,8 +113,6 @@ print(populationResults)
 Instead of passing the population to `runSimulations()` every time, you can **assign a population directly to a simulation**. Once a population is assigned, the simulation *is* a population simulation, and running it with `runSimulations(simulation)` (without the `population` argument) runs it for the whole population:
 
 ```{r assignPopulation}
-# Load a fresh, non-cached instance: `loadSimulation()` caches simulations by
-# file path by default, and we are about to modify this one.
 sim <- loadSimulation(simFilePath, loadFromCache = FALSE, addToCache = FALSE)
 
 # Assign the population to the simulation
@@ -127,13 +125,6 @@ sim$isPopulation
 simulationResults <- runSimulations(sim)[[1]]
 print(simulationResults)
 ```
-
-Note the `loadFromCache = FALSE, addToCache = FALSE` above: by default,
-`loadSimulation()` stores each loaded simulation in a session-wide cache keyed
-by file path. Assigning a population to a *cached* simulation would mean that
-any later `loadSimulation(simFilePath, loadFromCache = TRUE)` silently returns
-a population simulation. Load a private instance when you intend to modify the
-simulation.
 
 You can read the assigned population back from the simulation at any time with `sim$population`.
 
