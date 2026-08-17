@@ -22,6 +22,11 @@ convenient exchange format for projects. Read more about OSP snapshots in the [d
 simulations from a snapshot, run simulations stored in a snapshot, and convert
 between the snapshot and project formats.
 
+> **Note**
+>
+> The helpers described in this vignette support **PK-Sim snapshots only**;
+> MoBi snapshots are not yet supported.
+
 ```{r library, message=FALSE}
 library(ospsuite)
 
@@ -110,8 +115,8 @@ The export formats are controlled independently:
 * `exportJSON` (default `FALSE`) — results as JSON.
 * `exportXML` (default `FALSE`) — simulations as XML.
 
-Set `RunForAllOutputs = TRUE` to compute all model outputs instead of only the
-output selections defined in the snapshot.
+Set `RunForAllOutputs = TRUE` (default: `FALSE`) to compute all model outputs
+instead of only the output selections defined in the snapshot.
 
 You can also point the function at a directory and it will process every snapshot
 in it:
