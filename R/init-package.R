@@ -13,19 +13,6 @@
     file.path(libDir, name)
   }
 
-  if (!file.exists(libPathFor("System.Data.SQLite.dll"))) {
-    cli::cli_warn(
-      message = c(
-        "x" = "Required library {.file System.Data.SQLite.dll} not found in {.file {libDir}}.",
-        " " = "Some functionalities may not work properly and some tests will fail.",
-        "i" = "If you are in a development environment, make sure to run:",
-        " " = "  {.run source('tools/setup_dev.R')}",
-        " " = "  {.run setup_dev()}",
-        " " = "before using {.run devtools::load_all()} or {.run devtools::test()}"
-      )
-    )
-  }
-
   # Windows needs the lib directory on PATH for the native DLLs to resolve. This
   # is inexpensive and side-effect free, so it happens regardless of whether the
   # runtime can be initialised below.
@@ -56,9 +43,18 @@
       apiConfig$dimensionFilePath <- libPathFor("OSPSuite.Dimensions.xml")
       apiConfig$pkParametersFilePath <- libPathFor("OSPSuite.PKParameters.xml")
 
-      rSharp::callStatic("OSPSuite.R.Api", "InitializeOnce", apiConfig)
+      # Load MoBi.R
+      mobiR <- system.file(
+        "lib",
+        "MoBi.R.dll",
+        package = ospsuiteEnv$packageName
+      )
+
+      rSharp::loadAssembly(mobiR)
+      rSharp::callStatic("MoBi.R.Api, MoBi.R", "InitializeOnce", apiConfig)
 
       .initializeDimensionAndUnitLists()
+      .loadEnums()
 
       ospsuiteEnv$initialized <- TRUE
       NULL
@@ -95,4 +91,75 @@
     }
   }
   invisible()
+}
+
+
+#' Load enums from .NET
+#' This function must be called after initializing the package.
+#' @noRd
+.loadEnums <- function() {
+  # MergeBehavior enum
+
+  # -1 because the indexing in .NET starts at 0
+  mergeBehaviorNetEnum <- seq_along(enum(rSharp::getEnumNames(
+    "OSPSuite.Core.Domain.MergeBehavior"
+  ))) -
+    1
+  names(mergeBehaviorNetEnum) <- enum(rSharp::getEnumNames(
+    "OSPSuite.Core.Domain.MergeBehavior"
+  ))
+  # Enum with the merge behaviors for modules available in MoBi
+  MergeBehavior <<- enum(mergeBehaviorNetEnum)
+
+  # MoleculeType: curated subset of the underlying QuantityType flag values,
+  # with user-facing names mapped to the integer flag value.
+  MoleculeType <<- .loadMoleculeTypeEnum()
+}
+
+#' Build the `MoleculeType` enum by reading flag values from the underlying
+#' `OSPSuite.Core.Domain.QuantityType` enum and keeping only molecule-relevant
+#' members.
+#' @keywords internal
+.loadMoleculeTypeEnum <- function() {
+  quantityType <- rSharp::getType("OSPSuite.Core.Domain.QuantityType")
+  netValues <- rSharp::callStatic(
+    "System.Enum, System.Runtime",
+    "GetValues",
+    quantityType
+  )
+  flagByName <- list()
+  for (netValue in netValues) {
+    name <- netValue$call("ToString")
+    flagByName[[name]] <- as.integer(rSharp::callStatic(
+      "System.Convert, System.Runtime",
+      "ToInt32",
+      netValue
+    ))
+  }
+  # Mapping of user-facing names to internal flag names. `Binding Partner` is
+  # the public label for the internal `OtherProtein` flag.
+  curatedNames <- c(
+    "Drug" = "Drug",
+    "Metabolite" = "Metabolite",
+    "Enzyme" = "Enzyme",
+    "Transporter" = "Transporter",
+    "Binding Partner" = "OtherProtein",
+    "Complex" = "Complex",
+    "Protein" = "Protein"
+  )
+  curated <- vapply(
+    curatedNames,
+    function(netKey) {
+      if (is.null(flagByName[[netKey]])) {
+        stop(sprintf(
+          "QuantityType flag '%s' was not found in the engine enum.",
+          netKey
+        ))
+      }
+      flagByName[[netKey]]
+    },
+    integer(1)
+  )
+  names(curated) <- names(curatedNames)
+  enum(curated)
 }

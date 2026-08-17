@@ -40,6 +40,16 @@ test_that("It can set the  solver parameters from the simulation", {
   expect_equal(sim$solver$h0, 1e-6)
 })
 
+test_that("SolverSettings - checkForNegativeValues", {
+  expect_true(solver$checkForNegativeValues)
+
+  solver$checkForNegativeValues <- FALSE
+  expect_false(solver$checkForNegativeValues)
+
+  solver$checkForNegativeValues <- TRUE
+  expect_true(solver$checkForNegativeValues)
+})
+
 # SolverSettings$print
 
 test_that("It can print solver settings", {

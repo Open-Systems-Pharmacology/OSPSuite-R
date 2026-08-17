@@ -1,7 +1,7 @@
 Type: Package
 Package: ospsuite
 Title: R package to manipulate OSPSuite Models
-Version: 12.4.4.9004
+Version: 13.0.0.9001
 Authors@R:
     c(person("Open-Systems-Pharmacology Community", role = c("cph", "fnd")),
       person("Michael", "Sevestre", role = c("aut", "cre"), email = "michael@design2code.ca"),
@@ -54,9 +54,13 @@ VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Collate:
+    'MoBiModule.R'
+    'MoBiProject.R'
+    'SimulationConfiguration.R'
     'aging-data.R'
     'api-config.R'
     'application.R'
+    'building-block.R'
     'cache.R'
     'container.R'
     'data-column.R'
@@ -72,12 +76,14 @@ Collate:
     'formula.R'
     'get-net-task.R'
     'globals.R'
+    'individual-building-block.R'
     'individual-characteristics.R'
     'init-package.R'
     'interval.R'
     'messages.R'
     'molecule-ontogeny.R'
     'molecule.R'
+    'molecules-building-block.R'
     'object-base.R'
     'utilities.R'
     'ospsuite-env.R'
@@ -117,6 +123,7 @@ Collate:
     'table-formula.R'
     'tasks-env.R'
     'user-defined-pk-parameter.R'
+    'utilities-building-block.R'
     'utilities-container.R'
     'utilities-data-combined.R'
     'utilities-data-importer-configuration.R'
@@ -126,6 +133,10 @@ Collate:
     'utilities-entity.R'
     'utilities-file.R'
     'utilities-individual.R'
+    'utilities-mobi-expression-profile.R'
+    'utilities-mobi-individual.R'
+    'utilities-mobi-module.R'
+    'utilities-mobi-project.R'
     'utilities-molecule.R'
     'utilities-output-schema.R'
     'utilities-output-selections.R'
@@ -138,6 +149,7 @@ Collate:
     'utilities-population.R'
     'utilities-quantity.R'
     'utilities-sensitivity-analysis.R'
+    'utilities-simulation-configuration.R'
     'utilities-simulation-results.R'
     'utilities-simulation.R'
     'utilities-snapshots.R'
@@ -145,5 +157,7 @@ Collate:
     'value-point.R'
     'zzz.R'
     'zzz_deprecated.R'
+Remotes:
+    Open-Systems-Pharmacology/rSharp
 Additional_repositories: https://open-systems-pharmacology.r-universe.dev
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0

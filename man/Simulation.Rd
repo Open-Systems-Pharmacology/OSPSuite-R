@@ -26,6 +26,26 @@ An OSPSuite simulation
     \item{\code{sourceFile}}{Path to the file the simulation was loaded from (read-only)}
 
     \item{\code{name}}{Name of the simulation}
+
+    \item{\code{configuration}}{An object of the type \code{SimulationConfiguration},
+describing the modules used for the simulation, selected Parameter Values (PV) and Initial Conditions (IC).}
+
+    \item{\code{isPopulation}}{\code{TRUE} if a population is currently assigned to the
+simulation, meaning it will be run as a population simulation; \code{FALSE}
+if it will be run for a single individual. To change this, assign a
+population (or \code{NULL}) to the \code{population} field. (read-only)}
+
+    \item{\code{population}}{The \code{Population} assigned to the simulation, or \code{NULL}
+if the simulation is run for a single individual.
+
+Assigning a \code{Population} turns the simulation into a population
+simulation, so that a subsequent \code{runSimulations(simulation)} runs it for
+the whole population. Assigning \code{NULL} removes the population and switches
+the simulation back to an individual simulation.
+
+Any aging data previously set on the simulation is cleared whenever the
+population is (re)assigned or removed, since aging data only applies to
+the population it was generated for.}
   }
   \if{html}{\out{</div>}}
 }
@@ -38,6 +58,7 @@ An OSPSuite simulation
     \item \href{#method-Simulation-allStationaryMoleculeNames}{\code{Simulation$allStationaryMoleculeNames()}}
     \item \href{#method-Simulation-allFloatingMoleculeNames}{\code{Simulation$allFloatingMoleculeNames()}}
     \item \href{#method-Simulation-molWeightFor}{\code{Simulation$molWeightFor()}}
+    \item \href{#method-Simulation-calculationMethodFor}{\code{Simulation$calculationMethodFor()}}
     \item \href{#method-Simulation-allApplicationsFor}{\code{Simulation$allApplicationsFor()}}
     \item \href{#method-Simulation-print}{\code{Simulation$print()}}
   }
@@ -151,6 +172,28 @@ This is typically a molecule that is being explicitly simulated such as Compound
 }
 
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Simulation-calculationMethodFor"></a>}}
+\if{latex}{\out{\hypertarget{method-Simulation-calculationMethodFor}{}}}
+\subsection{\code{Simulation$calculationMethodFor()}}{
+  Returns the calculation method name used for the given molecule and
+category, or \code{NULL} if no override is set.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{Simulation$calculationMethodFor(moleculeName, category)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{moleculeName}}{Name of the molecule.}
+      \item{\code{category}}{One of the \code{CalculationMethodCategories} enum values
+(e.g. \code{CalculationMethodCategories$PartitionCoefficient}).}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Simulation-allApplicationsFor"></a>}}
 \if{latex}{\out{\hypertarget{method-Simulation-allApplicationsFor}{}}}
 \subsection{\code{Simulation$allApplicationsFor()}}{
@@ -176,12 +219,14 @@ This is typically a molecule that is being explicitly simulated such as Compound
   Print the object to the console
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{Simulation$print(...)}
+    \preformatted{Simulation$print(printClassProperties = FALSE, ...)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
     \if{html}{\out{<div class="arguments">}}
     \describe{
+      \item{\code{printClassProperties}}{Logical, whether to print class properties (default: \code{FALSE}). If \code{TRUE}, calls first the \code{print} method of the parent class.
+Useful for debugging.}
       \item{\code{...}}{Rest arguments.}
     }
     \if{html}{\out{</div>}}

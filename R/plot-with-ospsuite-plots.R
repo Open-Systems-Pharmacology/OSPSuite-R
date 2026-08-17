@@ -704,7 +704,8 @@ plotQuantileQuantilePlot <- function(
     )
   }
 
-  residualsComputedInternally <- predictedIsNeeded & !('predicted' %in% names(plotData))
+  residualsComputedInternally <- predictedIsNeeded &
+    !('predicted' %in% names(plotData))
 
   if (residualsComputedInternally) {
     plotData <- .convertUnitsForPlot(
@@ -782,7 +783,11 @@ plotQuantileQuantilePlot <- function(
   }
 
   isLinearScale <- any(scaling %in% c("linear", "lin", "identity"))
-  if (residualsComputedInternally && isLinearScale && "residualValues" %in% names(plotData)) {
+  if (
+    residualsComputedInternally &&
+      isLinearScale &&
+      "residualValues" %in% names(plotData)
+  ) {
     attr(plotData$residualValues, "label") <- paste0(
       ospsuite.plots::constructLabelWithUnit("residuals", plotData$yUnit[1]),
       "\npredicted - observed"
@@ -1270,7 +1275,7 @@ plotQuantileQuantilePlot <- function(
   if (any(names(metaData) %in% "y2")) {
     y2UnitValue <- metaData[["y2"]][["unit"]]
     mapping <- structure(
-      c(mapping, eval(bquote(ggplot2::aes(y2axis = yUnit == .(y2UnitValue))))),
+      c(mapping, ggplot2::aes(y2axis = yUnit == !!y2UnitValue)),
       class = "uneval"
     )
   }

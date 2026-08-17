@@ -3,7 +3,7 @@ ospsuiteEnv$loadedSimulationsCache$reset()
 sim <- loadTestSimulation(
   "simple",
   loadFromCache = FALSE,
-  addToCache = TRUE
+  addToCache = FALSE
 )
 cache <- ospsuiteEnv$loadedSimulationsCache
 

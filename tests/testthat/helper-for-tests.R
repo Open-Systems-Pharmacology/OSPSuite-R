@@ -9,6 +9,10 @@ getTestDataFilePath <- function(fileName) {
   file.path(dataPath, fileName, fsep = .Platform$file.sep)
 }
 
+globalTestMoBiProject <- loadMoBiProject(
+  filePath = getTestDataFilePath("MoBiProject/Test_Project.mbp3")
+)
+
 getSimulationFilePath <- function(simulationName) {
   getTestDataFilePath(paste0(simulationName, ".pkml"))
 }
@@ -22,7 +26,7 @@ loadTestSimulation <- function(
   addToCache = TRUE
 ) {
   simFile <- getSimulationFilePath(simulationName)
-  sim <- loadSimulation(
+  loadSimulation(
     simFile,
     loadFromCache = loadFromCache,
     addToCache = addToCache

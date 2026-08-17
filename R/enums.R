@@ -1,3 +1,37 @@
+#' Types of building blocks supported.
+#'
+#' @export
+BuildingBlockTypes <- enum(c(
+  "SpatialStructure",
+  "Molecules",
+  "Reactions",
+  "Passive Transports",
+  "Observers",
+  "EventGroups",
+  "Initial Conditions",
+  "Parameter Values",
+  "Expression Profile",
+  "Individual"
+))
+
+#' Categories of molecule calculation methods that can be overridden on a
+#' per-molecule basis in a simulation configuration.
+#'
+#' @export
+CalculationMethodCategories <- enum(c(
+  PartitionCoefficient = "DistributionCellular",
+  CellularPermeability = "DiffusionIntCell"
+))
+
+#' Available methods for calculation of cellular permeabilities.
+#'
+#' @export
+CellularPermeabilityMethods <- enum(c(
+  "PK-Sim Standard" = "Cellular permeability - PK-Sim Standard",
+  "Charge dependent Schmitt" = "Cellular permeability - Charge dependent Schmitt",
+  "Charge dependent Schmitt normalized to PK-Sim" = "Cellular permeability - Charge dependent Schmitt normalized to PK-Sim"
+))
+
 #' How should comparison of entities be performed
 #'
 #' @export
@@ -24,6 +58,31 @@ DataErrorType <- enum(c(
   "GeometricStdDev"
 ))
 
+#' @title Expression Profile Categories
+#' @description Allowed categories for expression profiles
+#' @export
+ExpressionProfileCategories <- enum(list(
+  "Metabolizing Enzyme",
+  "Transport Protein",
+  "Protein Binding Partner"
+))
+
+#' @title Molecule Types
+#' @description Allowed types for molecules in a `Molecules` building block.
+#' Values are `Drug`, `Metabolite`, `Enzyme`, `Transporter`, `Binding Partner`,
+#' `Complex`, and the umbrella `Protein` (= `Enzyme` + `Transporter` +
+#' `Binding Partner`). Used to filter molecule names via
+#' `MoleculesBuildingBlock$allMoleculeNamesOfType()`.
+#' @export
+MoleculeType <- NULL
+
+#' @title Merge Behaviors
+#' @description Merge behaviors available for modules in MoBi. Loaded at
+#' package init from `OSPSuite.Core.Domain.MergeBehavior`. Used by
+#' `MoBiModule$mergeBehavior`.
+#' @export
+MergeBehavior <- NULL
+
 #' Default genders  defined in PK-Sim
 #'
 #'
@@ -49,6 +108,15 @@ HumanPopulation <- enum(c(
   "WhiteAmerican_NHANES_1997"
 ))
 
+#' Available disease states
+#'
+#' @export
+IndividualDiseaseStates <- enum(c(
+  "None",
+  "Renal impairment",
+  "Hepatic impairment"
+))
+
 #' Standard molecule parameter names typically available in an endogenous molecule (enzyme, transporter etc...) coming from PK-Sim
 #'
 #'
@@ -59,6 +127,17 @@ MoleculeParameter <- enum(c(
   THalfIntestine = "t1/2 (intestine)",
   OntogenyFactor = "Ontogeny factor",
   OntogenyFactorGI = "Ontogeny factor GI"
+))
+
+#' Available methods for calculation of partition coefficients.
+#'
+#' @export
+PartitionCoefficientMethods <- enum(c(
+  "PK-Sim Standard" = "Cellular partition coefficient method - PK-Sim Standard",
+  "Rodgers and Rowland" = "Cellular partition coefficient method - Rodgers and Rowland",
+  "Schmitt" = "Cellular partition coefficient method - Schmitt",
+  "Poulin and Theil" = "Cellular partition coefficient method - Poulin and Theil",
+  "Berezhkovskiy" = "Cellular partition coefficient method - Berezhkovskiy"
 ))
 
 #' Default species defined in PK-Sim
