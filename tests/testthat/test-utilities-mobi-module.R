@@ -174,3 +174,18 @@ test_that("createMoBiModule errors when a single-type BB is passed twice", {
     regexp = "BuildingBlock 'MoleculeBuildingBlock' for 'M2' was already added to module"
   )
 })
+
+test_that("createMoBiModule does not detach building blocks from their source module", {
+  projectPath <- system.file("extdata", "TH_QST_Platform.mbp3", package = "ospsuite")
+  project <- loadMoBiProject(projectPath)
+  sourceModule <- project$getModules("Thyroid_QST")[[1]]
+  moleculesBB <- sourceModule$getMoleculesBB()
+  expect_false(is.null(moleculesBB))
+
+  newModule <- createMoBiModule("ReuseTest", buildingBlocks = list(moleculesBB))
+
+  # The new module holds the BB...
+  expect_false(is.null(newModule$getMoleculesBB()))
+  # ...and the source module must still hold it too (no re-parenting).
+  expect_false(is.null(sourceModule$getMoleculesBB()))
+})
