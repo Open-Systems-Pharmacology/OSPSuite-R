@@ -668,3 +668,20 @@ test_that("createSimulationConfiguration() creates a configuration from modules"
     list("ExtModule_3IC_3PV" = "PV3", "ExtModule_noIC_noPV" = NULL)
   )
 })
+
+test_that("createSimulation errors when the initial conditions BB is deselected", {
+  simulation <- loadSimulation(
+    system.file("extdata", "Aciclovir.pkml", package = "ospsuite"),
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
+  simConfig <- simulation$configuration
+  simConfig$selectedInitialConditions <- list("Vergin 1995 IV" = NULL)
+
+  expect_error(
+    createSimulation(
+      simulationConfiguration = simConfig,
+      simulationName = "MySim"
+    )
+  )
+})
