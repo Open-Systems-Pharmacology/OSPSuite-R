@@ -13,14 +13,12 @@ Options to be passed to the simulation engine
 
 - `numberOfCores`:
 
-  (Maximal) number of cores to be used. This is only relevant when
-  simulating a population simulation. Default is
-  `getOSPSuiteSetting("numberOfCores")`.
-
-- `checkForNegativeValues`:
-
-  Specifies whether negative values check is on or off. Default is
-  `TRUE`
+  (Maximal) number of cores to be used. Work is distributed across cores
+  both when several simulations are passed to
+  [`runSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulations.md)
+  in one call and when simulating a population (where individuals are
+  split across cores). It has no effect on a single individual
+  simulation. Default is `getOSPSuiteSetting("numberOfCores")`.
 
 - `showProgress`:
 
@@ -78,7 +76,7 @@ Initialize a new instance of the class
 
 - `checkForNegativeValues`:
 
-  Should the solver check for negative values. Default is `TRUE`
+  **\[deprecated\]** Use `sim$solver$checkForNegativeValues` instead.
 
 - `showProgress`:
 

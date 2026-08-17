@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.4.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,10 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -28,6 +31,7 @@
     <li><a class="dropdown-item" href="../articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
     <li><a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a></li>
     <li><a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a></li>
+    <li><a class="dropdown-item" href="../articles/snapshots.html">Working with snapshots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Figure creation</h6></li>
     <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
@@ -115,7 +119,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># looking at a reference to `.NET` simulation object</span></span></span>
 <span class="r-in"><span><span class="va">sim</span><span class="op">$</span><span class="va">pointer</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;pointer: 0x565406c8abd0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;pointer: 0x5623dbac6920&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># create a new instance of `DotNetWrapper` class using this reference</span></span></span>
 <span class="r-in"><span><span class="va">DotNetWrapper</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">sim</span><span class="op">)</span></span></span>
@@ -129,11 +133,14 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `add_Changed()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `add_PropertyChanged()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `AddAnalysis()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `AddUsedObservedData()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `AddUsedObservedData()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `All()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `CalculationMethodFor()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `Equals()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_AgingData()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Analyses()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_BodyWeight()`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_BuildConfiguration()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Charts()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_ComesFromPKSim()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_CompoundNames()`</span>
@@ -147,7 +154,9 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_HasUpToDateResults()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Icon()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Id()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_IndividualValuesCache()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_IsLoaded()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_IsPopulation()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Model()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Name()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_OutputMappings()`</span>
@@ -155,6 +164,7 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Reactions()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_ResultsDataRepository()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_Settings()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `get_UsedObservedData()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `GetHashCode()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `GetType()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `MolWeightFor()`</span>
@@ -164,6 +174,7 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `RemoveAnalysis()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `RemoveOutputMappings()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `RemoveUsedObservedData()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_AgingData()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Configuration()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Creation()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Description()`</span>
@@ -171,6 +182,7 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_HasChanged()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Icon()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Id()`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_IndividualValuesCache()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_IsLoaded()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Model()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `set_Name()`</span>
@@ -182,9 +194,9 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • `UsesObservedData()`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Available Properties </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">AgingData</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Analyses</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">BodyWeight</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">BuildConfiguration</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Charts</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">ComesFromPKSim</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">CompoundNames</span></span>
@@ -198,7 +210,9 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">HasUpToDateResults</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Icon</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Id</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">IndividualValuesCache</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">IsLoaded</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">IsPopulation</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Model</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Name</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">OutputMappings</span></span>
@@ -206,6 +220,7 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Reactions</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">ResultsDataRepository</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">Settings</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   • <span style="color: #00BB00;">UsedObservedData</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -214,7 +229,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, <a href="https://github.com/Felixmil" class="external-link">Felix MIL</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

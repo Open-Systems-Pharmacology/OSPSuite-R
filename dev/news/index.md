@@ -2,8 +2,85 @@
 
 ## ospsuite (development version)
 
+### Major changes
+
+- Added MoBi project support: load `.mbp3` projects, query modules,
+  individuals, expression profiles, and simulations, and assemble
+  simulations from project building blocks. New classes `MoBiProject`,
+  `MoBiModule`, `SimulationConfiguration`, `MoleculesBuildingBlock`, and
+  `IndividualBuildingBlock`, plus helpers for creating and saving
+  Initial Conditions, Parameter Values, Individual, and Expression
+  Profile building blocks. The main entry points are
+  [`loadMoBiProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadMoBiProject.md)
+  to load a project,
+  [`loadModuleFromPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadModuleFromPKML.md)
+  and
+  [`loadBuildingBlockFromPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadBuildingBlockFromPKML.md)
+  to load modules and building blocks from `.pkml` files, and
+  [`createSimulationConfiguration()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulationConfiguration.md)
+  followed by
+  [`createSimulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulation.md)
+  to assemble a simulation from building blocks. New enums
+  `BuildingBlockTypes`, `MoleculeType`, `IndividualDiseaseStates`,
+  `MergeBehavior`, `PartitionCoefficientMethods`,
+  `CellularPermeabilityMethods`, `ExpressionProfileCategories`, and
+  `CalculationMethodCategories` support working with these objects. See
+  [`vignette("mobi-projects")`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/mobi-projects.md)
+  for an end-to-end walkthrough.
+
+### Breaking changes
+
+- **.NET 10 runtime is now required** (previously .NET 8). The bundled
+  assemblies in `inst/lib` target `net10.0`; on older runtimes the
+  package fails to load with
+  `System.Reflection.ReflectionTypeLoadException`. See the rSharp
+  prerequisites links in the README for installation instructions on
+  Windows and Linux.
+- [`createIndividual()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividual.md)
+  and
+  [`createPopulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createPopulation.md)
+  will not work with models developed prior to version 13. The reason is
+  that in v13, the absorption model has been refined, adding new
+  parameters. To be able to use creation of individuals or populations
+  with earlier models, the user has to re-create the models from
+  snapshot with the latest PK-Sim version. If no original PK-Sim project
+  or snapshot are available, the user should use the latest version 12
+  of the R package.
+- `SimulationRunOptions$checkForNegativeValues` field has been removed,
+  as well as the `checkForNegativeValues` argument of
+  `SimulationRunOptions$new()`. The property is now on `SolverSettings`
+  and accessible via `simulation$solver$checkForNegativeValues`. Passing
+  `checkForNegativeValues` to `SimulationRunOptions$new()` now fails
+  with an `unused argument` error
+  ([\#2010](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2010)).
+
 ### Minor improvements and bug fixes
 
+- A `Simulation` object now has a `population` field: assign a
+  `Population` with `simulation$population <- myPopulation` to make it a
+  population simulation, and read it back with `simulation$population`.
+  Assigning `NULL` switches the simulation back to an individual
+  simulation. The read-only `simulation$isPopulation` field reports
+  whether a simulation will be run for a population. This is an
+  alternative to passing `population` to
+  [`runSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulations.md)
+  (which continues to work unchanged) and makes it possible to run
+  several population simulations in a single
+  [`runSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulations.md)
+  call. See
+  [`vignette("create-run-population")`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/create-run-population.md)
+  ([\#1987](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1987)).
+- Added
+  [`loadSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadSimulationsFromSnapshot.md)
+  to load simulations stored in a PK-Sim snapshot file as `Simulation`
+  objects, optionally filtering by simulation name
+  ([\#1929](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1929)).
+  Requesting a name that is not in the snapshot raises an error; pass
+  `ignoreIfNotFound = TRUE` to return `NULL` for missing names instead.
+  See
+  [`vignette("snapshots")`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/snapshots.md)
+  for an overview of the snapshot helpers. Note: MoBi snapshots are not
+  yet supported.
 - `DataCombined$toDataFrame()` now returns the `name` and `group`
   columns as factors whose levels follow the order in which datasets
   (and groups) were added. As a result, plots built from `DataCombined`
@@ -16,7 +93,7 @@
   order. This also keeps `name`- and `group`-based legends consistent in
   observed-vs-predicted plots, where the two variables may otherwise
   diverge
-  ([\#1968](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1968)).
+  ([\#1241](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1241)).
 
 ## ospsuite 12.4.4
 
@@ -293,6 +370,14 @@
 
 - Added support for macOS (both Intel and Apple Silicon architectures).
   ([\#1621](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1621))
+
+### Deprecations
+
+- `checkForNegativeValues` parameter in `SimulationRunOptions$new()` is
+  deprecated. Use `sim$solver$checkForNegativeValues` instead. The
+  parameter is still accepted but will issue a deprecation warning. The
+  property has moved from `SimulationRunOptions` to `SolverSettings` to
+  align with .NET binaries changes.
 
 ### Minor improvements and bug fixes
 

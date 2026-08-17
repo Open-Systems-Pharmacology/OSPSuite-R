@@ -47,22 +47,20 @@ individuals](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/c
 
 ``` r
 
-library(ospsuite)
-
 # If no unit is specified, the default units are used. For "height" it is "dm", for "weight" it is "kg", for "age" it is "year(s)".
 populationCharacteristics <- createPopulationCharacteristics(
-  species             = Species$Human,
-  population          = HumanPopulation$Asian_Tanaka_1996,
+  species = Species$Human,
+  population = HumanPopulation$Asian_Tanaka_1996,
   numberOfIndividuals = 50,
   proportionOfFemales = 50,
-  weightMin           = 30,
-  weightMax           = 98,
-  weightUnit          = "kg",
-  heightMin           = NULL,
-  heightMax           = NULL,
-  ageMin              = 0,
-  ageMax              = 80,
-  ageUnit             = "year(s)"
+  weightMin = 30,
+  weightMax = 98,
+  weightUnit = "kg",
+  heightMin = NULL,
+  heightMax = NULL,
+  ageMin = 0,
+  ageMax = 80,
+  ageUnit = "year(s)"
 )
 print(populationCharacteristics)
 #> <PopulationCharacteristics>
@@ -77,7 +75,9 @@ print(populationCharacteristics)
 #>   • BMI: ]-Inf..+Inf[
 
 # Create population from population characteristics
-result <- createPopulation(populationCharacteristics = populationCharacteristics)
+result <- createPopulation(
+  populationCharacteristics = populationCharacteristics
+)
 myPopulation <- result$population
 print(myPopulation)
 #> <Population>
@@ -93,14 +93,15 @@ method:
 
 ``` r
 
-library(ospsuite)
-
 # Load simulation
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Run population simulation
-simulationResults <- runSimulations(simulations = sim, population = myPopulation)[[1]]
+simulationResults <- runSimulations(
+  simulations = sim,
+  population = myPopulation
+)[[1]]
 print(simulationResults)
 #> <SimulationResults>
 #>   • Number of individuals: 50
@@ -128,7 +129,6 @@ simRunOptions <- SimulationRunOptions$new()
 print(simRunOptions)
 #> <SimulationRunOptions>
 #>   • numberOfCores: 3
-#>   • checkForNegativeValues: TRUE
 #>   • showProgress: FALSE
 
 # Change the maximal number of cores to use and show a progress bar during simulation
@@ -136,7 +136,11 @@ simRunOptions$numberOfCores <- 3
 simRunOptions$showProgress <- TRUE
 
 # Run population simulation with custom options
-populationResults <- runSimulations(simulations = sim, population = myPopulation, simulationRunOptions = simRunOptions)[[1]]
+populationResults <- runSimulations(
+  simulations = sim,
+  population = myPopulation,
+  simulationRunOptions = simRunOptions
+)[[1]]
 print(populationResults)
 #> <SimulationResults>
 #>   • Number of individuals: 50
@@ -144,6 +148,96 @@ print(populationResults)
 #>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
 #>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
 ```
+
+### Assigning a population to a simulation
+
+Instead of passing the population to
+[`runSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulations.md)
+every time, you can **assign a population directly to a simulation**.
+Once a population is assigned, the simulation *is* a population
+simulation, and running it with `runSimulations(simulation)` (without
+the `population` argument) runs it for the whole population:
+
+``` r
+
+sim <- loadSimulation(simFilePath)
+
+# Assign the population to the simulation
+sim$population <- myPopulation
+
+# `isPopulation` tells you how the simulation will be run
+sim$isPopulation
+#> [1] TRUE
+
+# Run it as a population simulation - no `population` argument needed
+simulationResults <- runSimulations(sim)[[1]]
+print(simulationResults)
+#> <SimulationResults>
+#>   • Number of individuals: 50
+#> For paths:
+#>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
+```
+
+You can read the assigned population back from the simulation at any
+time with `sim$population`.
+
+To turn the simulation back into an ordinary individual simulation,
+assign `NULL` to remove the population:
+
+``` r
+
+# Switch back to an individual simulation
+sim$population <- NULL
+sim$isPopulation
+#> [1] FALSE
+```
+
+This is simply an **alternative** to the `population` argument shown
+above - both approaches are fully supported. Assigning the population to
+the simulation is useful when you want to **run several population
+simulations in a single call**: assign a population to each simulation
+and pass them all to
+[`runSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulations.md)
+together. (The `population` argument, by contrast, only works with a
+single simulation.)
+
+``` r
+
+# Load two separate simulations (here from the same file, for illustration)
+sim1 <- loadSimulation(simFilePath, loadFromCache = FALSE, addToCache = FALSE)
+sim2 <- loadSimulation(simFilePath, loadFromCache = FALSE, addToCache = FALSE)
+
+# Each simulation carries its own population
+sim1$population <- myPopulation
+sim2$population <- myPopulation
+
+# Both population simulations are run in one call
+results <- runSimulations(list(sim1, sim2))
+
+# `results` is a named list with one `SimulationResults` object per simulation
+print(results)
+#> $litNuC8LikKQ62tVGp6V7w
+#> <SimulationResults>
+#>   • Number of individuals: 50
+#> For paths:
+#>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
+#> 
+#> $`iZxttbUCBUKP4GUF3-K3YQ`
+#> <SimulationResults>
+#>   • Number of individuals: 50
+#> For paths:
+#>   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)
+#>   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound
+```
+
+Note that the `population` argument of
+[`runSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulations.md)
+and a population assigned to the simulation can be combined: if you pass
+a `population` argument for a simulation that already has a population
+assigned, the argument takes precedence **for that run only**, and the
+simulation’s assigned population is left untouched afterwards.
 
 Simulated time-value pairs for a specific output from the
 `SimulationResults`-object returned by the `runSimulation` method can be
@@ -184,7 +278,10 @@ resultsPath <- populationResults$allQuantityPaths[[1]]
 print(resultsPath)
 #> [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 
-resultsData <- getOutputValues(populationResults, quantitiesOrPaths = resultsPath)
+resultsData <- getOutputValues(
+  populationResults,
+  quantitiesOrPaths = resultsPath
+)
 
 resultsTime <- resultsData$data$Time
 resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`
@@ -207,7 +304,11 @@ print(resultsPath)
 #> [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
 
 # Get only the results for individuals with IDs 1 and 2
-resultsData <- getOutputValues(populationResults, quantitiesOrPaths = resultsPath, individualIds = c(1, 2))
+resultsData <- getOutputValues(
+  populationResults,
+  quantitiesOrPaths = resultsPath,
+  individualIds = c(1, 2)
+)
 
 resultsTime <- resultsData$data$Time
 resultsValues <- resultsData$data$`Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)`

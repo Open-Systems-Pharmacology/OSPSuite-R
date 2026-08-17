@@ -13,7 +13,7 @@ PK-Sim and MoBi.
 - [Development](#development)
 - [Code of conduct](#code-of-conduct)
 - [Contribution](#contribution)
-- [Licence](#licence)
+- [License](#license)
 
 # Documentation
 
@@ -21,8 +21,6 @@ For complete documentation, see the [online
 documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/).
 
 ## Essential Guides
-
-**Essential guides:**
 
 - [Get
   Started](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html) -
@@ -67,9 +65,8 @@ documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/).
 
 # Installation
 
-The **ospsuite** package requires R version 4.x.x and supports
-[Windows](#on-windows) and [Linux (Ubuntu)](#on-linux) operating
-systems.
+The **ospsuite** package requires R version 4.4 or later and supports
+Windows, Linux (Ubuntu), and macOS (Apple Silicon) operating systems.
 
 `ospsuite` is not available on CRAN, and neither are the OSP packages it
 depends on. Both are published on the OSP R-universe, so the recommended
@@ -80,7 +77,7 @@ installation below resolves the whole stack in one call.
 The [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
 package requires
 [rSharp](https://github.com/Open-Systems-Pharmacology/rsharp/) and its
-external dependencies (Visual C++ Redistributable and .NET 8). Install
+external dependencies (Visual C++ Redistributable and .NET 10). Install
 these dependencies using the following instructions:
 
 - [For
@@ -125,7 +122,7 @@ pak::pak("Open-Systems-Pharmacology/OSPSuite-R")
   `Settings > Language > Administrative language settings > Current language for non-Unicode programs`
   to `English (United States)` and reboot.
 
-- On Linux, set the environment variable `LC_ALL` to `~/.bashrc` before
+- On Linux, set the environment variable `LC_ALL` in `~/.bashrc` before
   starting R:
 
   `export LC_ALL=en_US.UTF-8`
@@ -144,45 +141,42 @@ cannot be re-used.
 
 # Development
 
-## Development Setup
-
-When developing the
-[ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
-package, you need to prepare platform-specific library files before
-using `devtools::load_all()`. The package uses configure scripts during
-installation to rename platform-specific DLLs, but
-`devtools::load_all()` bypasses this process.
-
-**Run the development setup script:**
-
-``` r
-
-source("tools/setup_dev.R")
-setup_dev()
-```
-
-**When to run `setup_dev()`:** - After cloning the repository for the
-first time - After switching to a different branch - After pulling
-changes that might affect library files
-
-The script automatically detects your operating system and renames the
-appropriate DLL: - **Windows**: Renames
-`System.Data.SQLite.windows_linux.dll` → `System.Data.SQLite.dll` -
-**Linux**: Renames `System.Data.SQLite.windows_linux.dll` →
-`System.Data.SQLite.dll` - **macOS**: Renames
-`System.Data.SQLite.mac.dll` → `System.Data.SQLite.dll`
-
 ## Embedded binaries
 
 The [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
-package requires shared libraries to access PK-Sim functionality. To
-obtain the latest libraries (**.dll** on Windows or **.so** on Linux),
-run the `update_core_files.R` script included with this package.
+package requires shared libraries (binary files) to access PK-Sim and
+MoBi functionalities.
 
-Because
+**Note**: Because
 [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
 contains binary files, it is classified as a binary package and cannot
 be submitted to CRAN.
+
+### Updating embedded binaries
+
+The embedded binaries are built from NuGet packages specified in the
+DependencyManager project. To update the binaries to a new version:
+
+1.  Open `shared/DependencyManager/src/DependencyManager.csproj`.
+2.  Update the `Version` attribute in the `PackageReference` elements to
+    the desired version numbers.
+3.  Commit and push the changes to a branch.
+4.  Manually dispatch the **Build Libraries** workflow
+    (`.github/workflows/build-libraries.yaml`, via the Actions tab) on
+    that branch. The workflow:
+    - Builds the DependencyManager project, which downloads the
+      specified NuGet packages
+    - Extracts the required binary files and dependencies
+    - Copies them to the `inst/lib/` directory
+    - Commits the updated binaries to a new branch and opens a pull
+      request targeting the branch the workflow was dispatched on
+
+Alternatively, build the DependencyManager solution locally and commit
+the regenerated `inst/lib/` together with the `.csproj` change (see
+`AGENTS.md`).
+
+**Note:** The workflow is not triggered by pushes — it only runs when
+dispatched manually.
 
 ## Versioning
 

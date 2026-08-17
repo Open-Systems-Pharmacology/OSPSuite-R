@@ -59,7 +59,7 @@ sim <- loadSimulation(system.file("extdata", "simple.pkml", package = "ospsuite"
 
 # looking at a reference to `.NET` simulation object
 sim$pointer
-#> <pointer: 0x565406c8abd0>
+#> <pointer: 0x5623dbac6920>
 
 # create a new instance of `DotNetWrapper` class using this reference
 DotNetWrapper$new(sim)
@@ -73,11 +73,14 @@ DotNetWrapper$new(sim)
 #>   • `add_Changed()`
 #>   • `add_PropertyChanged()`
 #>   • `AddAnalysis()`
+#>   • `AddUsedObservedData()`
+#>   • `AddUsedObservedData()`
 #>   • `All()`
+#>   • `CalculationMethodFor()`
 #>   • `Equals()`
+#>   • `get_AgingData()`
 #>   • `get_Analyses()`
 #>   • `get_BodyWeight()`
-#>   • `get_BuildConfiguration()`
 #>   • `get_Charts()`
 #>   • `get_ComesFromPKSim()`
 #>   • `get_CompoundNames()`
@@ -91,7 +94,9 @@ DotNetWrapper$new(sim)
 #>   • `get_HasUpToDateResults()`
 #>   • `get_Icon()`
 #>   • `get_Id()`
+#>   • `get_IndividualValuesCache()`
 #>   • `get_IsLoaded()`
+#>   • `get_IsPopulation()`
 #>   • `get_Model()`
 #>   • `get_Name()`
 #>   • `get_OutputMappings()`
@@ -99,6 +104,7 @@ DotNetWrapper$new(sim)
 #>   • `get_Reactions()`
 #>   • `get_ResultsDataRepository()`
 #>   • `get_Settings()`
+#>   • `get_UsedObservedData()`
 #>   • `GetHashCode()`
 #>   • `GetType()`
 #>   • `MolWeightFor()`
@@ -108,6 +114,7 @@ DotNetWrapper$new(sim)
 #>   • `RemoveAnalysis()`
 #>   • `RemoveOutputMappings()`
 #>   • `RemoveUsedObservedData()`
+#>   • `set_AgingData()`
 #>   • `set_Configuration()`
 #>   • `set_Creation()`
 #>   • `set_Description()`
@@ -115,6 +122,7 @@ DotNetWrapper$new(sim)
 #>   • `set_HasChanged()`
 #>   • `set_Icon()`
 #>   • `set_Id()`
+#>   • `set_IndividualValuesCache()`
 #>   • `set_IsLoaded()`
 #>   • `set_Model()`
 #>   • `set_Name()`
@@ -126,9 +134,9 @@ DotNetWrapper$new(sim)
 #>   • `UsesObservedData()`
 #> 
 #> ── Available Properties 
+#>   • AgingData
 #>   • Analyses
 #>   • BodyWeight
-#>   • BuildConfiguration
 #>   • Charts
 #>   • ComesFromPKSim
 #>   • CompoundNames
@@ -142,7 +150,9 @@ DotNetWrapper$new(sim)
 #>   • HasUpToDateResults
 #>   • Icon
 #>   • Id
+#>   • IndividualValuesCache
 #>   • IsLoaded
+#>   • IsPopulation
 #>   • Model
 #>   • Name
 #>   • OutputMappings
@@ -150,4 +160,5 @@ DotNetWrapper$new(sim)
 #>   • Reactions
 #>   • ResultsDataRepository
 #>   • Settings
+#>   • UsedObservedData
 ```

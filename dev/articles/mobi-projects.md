@@ -8,16 +8,6 @@ First, load a MoBi project:
 
 # Load the ospsuite package
 library(ospsuite)
-```
-
-    ## The option 'ospsuite.plots.watermarkEnabled' is not set.
-    ## To enable watermarks, add the following to your .Rprofile:
-    ##   options(ospsuite.plots.watermarkEnabled = TRUE)
-    ## To disable watermarks, add:
-    ##   options(ospsuite.plots.watermarkEnabled = FALSE)
-    ## You can edit your .Rprofile with usethis::edit_r_profile()
-
-``` r
 
 projectPath <- system.file(
   "extdata",

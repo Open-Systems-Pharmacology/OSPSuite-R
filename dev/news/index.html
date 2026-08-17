@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.4.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,10 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -28,6 +31,7 @@
     <li><a class="dropdown-item" href="../articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
     <li><a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a></li>
     <li><a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a></li>
+    <li><a class="dropdown-item" href="../articles/snapshots.html">Working with snapshots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Figure creation</h6></li>
     <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
@@ -60,9 +64,24 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="ospsuite-development-version">ospsuite (development version)<a class="anchor" aria-label="anchor" href="#ospsuite-development-version"></a></h2>
 <div class="section level3">
-<h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
+<h3 id="major-changes-development-version">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-development-version"></a></h3>
+<ul><li>Added MoBi project support: load <code>.mbp3</code> projects, query modules, individuals, expression profiles, and simulations, and assemble simulations from project building blocks. New classes <code>MoBiProject</code>, <code>MoBiModule</code>, <code>SimulationConfiguration</code>, <code>MoleculesBuildingBlock</code>, and <code>IndividualBuildingBlock</code>, plus helpers for creating and saving Initial Conditions, Parameter Values, Individual, and Expression Profile building blocks. The main entry points are <code><a href="../reference/loadMoBiProject.html">loadMoBiProject()</a></code> to load a project, <code><a href="../reference/loadModuleFromPKML.html">loadModuleFromPKML()</a></code> and <code><a href="../reference/loadBuildingBlockFromPKML.html">loadBuildingBlockFromPKML()</a></code> to load modules and building blocks from <code>.pkml</code> files, and <code><a href="../reference/createSimulationConfiguration.html">createSimulationConfiguration()</a></code> followed by <code><a href="../reference/createSimulation.html">createSimulation()</a></code> to assemble a simulation from building blocks. New enums <code>BuildingBlockTypes</code>, <code>MoleculeType</code>, <code>IndividualDiseaseStates</code>, <code>MergeBehavior</code>, <code>PartitionCoefficientMethods</code>, <code>CellularPermeabilityMethods</code>, <code>ExpressionProfileCategories</code>, and <code>CalculationMethodCategories</code> support working with these objects. See <code><a href="../articles/mobi-projects.html">vignette("mobi-projects")</a></code> for an end-to-end walkthrough.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
 <ul><li>
-<code>DataCombined$toDataFrame()</code> now returns the <code>name</code> and <code>group</code> columns as factors whose levels follow the order in which datasets (and groups) were added. As a result, plots built from <code>DataCombined</code> objects (<code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code>, <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code>, <code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>, etc.) now display legend entries in the order <code>DataSet</code> and <code>SimulationResults</code> objects were added, rather than in alphabetical order. This also keeps <code>name</code>- and <code>group</code>-based legends consistent in observed-vs-predicted plots, where the two variables may otherwise diverge (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1968" class="external-link">#1968</a>).</li>
+<strong>.NET 10 runtime is now required</strong> (previously .NET 8). The bundled assemblies in <code>inst/lib</code> target <code>net10.0</code>; on older runtimes the package fails to load with <code>System.Reflection.ReflectionTypeLoadException</code>. See the rSharp prerequisites links in the README for installation instructions on Windows and Linux.</li>
+<li>
+<code><a href="../reference/createIndividual.html">createIndividual()</a></code> and <code><a href="../reference/createPopulation.html">createPopulation()</a></code> will not work with models developed prior to version 13. The reason is that in v13, the absorption model has been refined, adding new parameters. To be able to use creation of individuals or populations with earlier models, the user has to re-create the models from snapshot with the latest PK-Sim version. If no original PK-Sim project or snapshot are available, the user should use the latest version 12 of the R package.</li>
+<li>
+<code>SimulationRunOptions$checkForNegativeValues</code> field has been removed, as well as the <code>checkForNegativeValues</code> argument of <code>SimulationRunOptions$new()</code>. The property is now on <code>SolverSettings</code> and accessible via <code>simulation$solver$checkForNegativeValues</code>. Passing <code>checkForNegativeValues</code> to <code>SimulationRunOptions$new()</code> now fails with an <code>unused argument</code> error (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/2010" class="external-link">#2010</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
+<ul><li>A <code>Simulation</code> object now has a <code>population</code> field: assign a <code>Population</code> with <code>simulation$population &lt;- myPopulation</code> to make it a population simulation, and read it back with <code>simulation$population</code>. Assigning <code>NULL</code> switches the simulation back to an individual simulation. The read-only <code>simulation$isPopulation</code> field reports whether a simulation will be run for a population. This is an alternative to passing <code>population</code> to <code><a href="../reference/runSimulations.html">runSimulations()</a></code> (which continues to work unchanged) and makes it possible to run several population simulations in a single <code><a href="../reference/runSimulations.html">runSimulations()</a></code> call. See <code><a href="../articles/create-run-population.html">vignette("create-run-population")</a></code> (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1987" class="external-link">#1987</a>).</li>
+<li>Added <code><a href="../reference/loadSimulationsFromSnapshot.html">loadSimulationsFromSnapshot()</a></code> to load simulations stored in a PK-Sim snapshot file as <code>Simulation</code> objects, optionally filtering by simulation name (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1929" class="external-link">#1929</a>). Requesting a name that is not in the snapshot raises an error; pass <code>ignoreIfNotFound = TRUE</code> to return <code>NULL</code> for missing names instead. See <code><a href="../articles/snapshots.html">vignette("snapshots")</a></code> for an overview of the snapshot helpers. Note: MoBi snapshots are not yet supported.</li>
+<li>
+<code>DataCombined$toDataFrame()</code> now returns the <code>name</code> and <code>group</code> columns as factors whose levels follow the order in which datasets (and groups) were added. As a result, plots built from <code>DataCombined</code> objects (<code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code>, <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code>, <code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>, etc.) now display legend entries in the order <code>DataSet</code> and <code>SimulationResults</code> objects were added, rather than in alphabetical order. This also keeps <code>name</code>- and <code>group</code>-based legends consistent in observed-vs-predicted plots, where the two variables may otherwise diverge (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1241" class="external-link">#1241</a>).</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -154,6 +173,11 @@
 <div class="section level3">
 <h3 id="major-changes-12-4-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-12-4-0"></a></h3>
 <ul><li>Added support for macOS (both Intel and Apple Silicon architectures). (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1621" class="external-link">#1621</a>)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="deprecations-12-4-0">Deprecations<a class="anchor" aria-label="anchor" href="#deprecations-12-4-0"></a></h3>
+<ul><li>
+<code>checkForNegativeValues</code> parameter in <code>SimulationRunOptions$new()</code> is deprecated. Use <code>sim$solver$checkForNegativeValues</code> instead. The parameter is still accepted but will issue a deprecation warning. The property has moved from <code>SimulationRunOptions</code> to <code>SolverSettings</code> to align with .NET binaries changes.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-12-4-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-12-4-0"></a></h3>
@@ -373,7 +397,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, <a href="https://github.com/Felixmil" class="external-link">Felix MIL</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

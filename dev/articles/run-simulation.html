@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.4.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,10 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -44,6 +47,7 @@
     <li><a class="dropdown-item" href="../articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
     <li><a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a></li>
     <li><a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a></li>
+    <li><a class="dropdown-item" href="../articles/snapshots.html">Working with snapshots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Figure creation</h6></li>
     <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
@@ -198,9 +202,13 @@ results<a class="anchor" aria-label="anchor" href="#running-multiple-individual-
 </h2>
 <p>In some cases, the user might want to run multiple simulations in
 parallel. This can be achieved easily by simply passing a list of
-simulations to the <code><a href="../reference/runSimulations.html">runSimulations()</a></code> function. However, only
-individual simulations (i.e., the <code>population</code> argument must
-remain empty) are supported.</p>
+simulations to the <code><a href="../reference/runSimulations.html">runSimulations()</a></code> function. Both
+individual and population simulations can be mixed in the same call; to
+include a population simulation, assign its population beforehand with
+<code>simulation$population &lt;- myPopulation</code>. The
+<code>population</code> argument of <code><a href="../reference/runSimulations.html">runSimulations()</a></code> is a
+convenience for the single-simulation case and must remain empty when
+passing a list.</p>
 <p>By default, the simulations will be executed in parallel by using up
 to all cores available on the machine minus 1. So if there are 8 cores
 and the user simulates 4 simulations, 4 cores will be used. On the other
@@ -226,11 +234,11 @@ correct results for the specific simulation</p>
 <code class="sourceCode R"><span><span class="co"># Get the id of the second simulation</span></span>
 <span><span class="va">id</span> <span class="op">&lt;-</span> <span class="va">sim2</span><span class="op">$</span><span class="va">id</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Nr9r8sD6_EK_0Z-4ZjHKcQ"</span></span>
+<span><span class="co">#&gt; [1] "90oWZvIDwEywoLHl-2Oskw"</span></span>
 <span><span class="co"># get the corresponding result</span></span>
 <span><span class="va">sim2Results</span> <span class="op">&lt;-</span> <span class="va">simulationResults</span><span class="op">[[</span><span class="va">id</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">sim2Results</span><span class="op">$</span><span class="va">simulation</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Nr9r8sD6_EK_0Z-4ZjHKcQ"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "90oWZvIDwEywoLHl-2Oskw"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="adding-new-outputs">Adding new outputs<a class="anchor" aria-label="anchor" href="#adding-new-outputs"></a>
@@ -312,20 +320,11 @@ functions <code><a href="../reference/clearOutputIntervals.html">clearOutputInte
 <code class="sourceCode R"><span><span class="co"># Remove all output intervals - simulation not possible!</span></span>
 <span><span class="fu"><a href="../reference/clearOutputIntervals.html">clearOutputIntervals</a></span><span class="op">(</span>simulation <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `do.call()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Type:    OSPSuite.Utility.Exceptions.OSPSuiteException</span></span>
-<span><span class="co">#&gt; Message: Time points output schema is empty</span></span>
-<span><span class="co">#&gt; Method:  Void EvaluateCppCallResult(Boolean, System.String)</span></span>
-<span><span class="co">#&gt; Stack trace:</span></span>
-<span><span class="co">#&gt;    at OSPSuite.SimModel.PInvokeHelper.EvaluateCppCallResult(Boolean success, String errorMessage)</span></span>
-<span><span class="co">#&gt;    at OSPSuite.SimModel.Simulation.evaluateCppCallResult(Boolean success, String errorMessage)</span></span>
-<span><span class="co">#&gt;    at OSPSuite.SimModel.Simulation.RunSimulation()</span></span>
-<span><span class="co">#&gt;    at OSPSuite.Core.Domain.Services.SimModelManager.simulate()</span></span>
-<span><span class="co">#&gt;    at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)</span></span>
-<span><span class="co">#&gt; --- End of stack trace from previous location ---</span></span>
-<span><span class="co">#&gt;    at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)</span></span>
-<span><span class="co">#&gt;    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task&amp; currentTaskSlot, Thread threadPoolThread)</span></span>
-<span><span class="co">#&gt; --- End of stack trace fr</span></span>
+<span><span class="co">#&gt; Warning in .getConcurrentSimulationRunnerResults(results = results,</span></span>
+<span><span class="co">#&gt; resultsIdSimulationIdMap = resultsIdSimulationIdMap, : One or more errors</span></span>
+<span><span class="co">#&gt; occurred. (Time points output schema is empty)</span></span>
+<span><span class="co">#&gt; $FRFZrW2cvk6_IQaR0sJ5cQ</span></span>
+<span><span class="co">#&gt; NULL</span></span>
 <span></span>
 <span><span class="co"># Add an interval</span></span>
 <span><span class="fu"><a href="../reference/addOutputInterval.html">addOutputInterval</a></span><span class="op">(</span></span>
@@ -405,7 +404,8 @@ of a <code>Simulation</code> object.</p>
 <span><span class="co">#&gt;   • hMax: 60</span></span>
 <span><span class="co">#&gt;   • mxStep: 100000</span></span>
 <span><span class="co">#&gt;   • relTol: 1e-05</span></span>
-<span><span class="co">#&gt;   • absTol: 1e-10</span></span></code></pre></div>
+<span><span class="co">#&gt;   • absTol: 1e-10</span></span>
+<span><span class="co">#&gt;   • checkForNegativeValues: TRUE</span></span></code></pre></div>
 <p>In some cases, a simulation may fail to run successfully due to
 numerical instability or convergence issues. One common approach to
 resolve such issues is to reduce the solver tolerances, which makes the
@@ -456,7 +456,7 @@ documentation on ODE Solver Properties</a>.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, <a href="https://github.com/Felixmil" class="external-link">Felix MIL</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

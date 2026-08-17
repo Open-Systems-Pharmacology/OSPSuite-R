@@ -1,8 +1,15 @@
 # Articles
 
-### Primary functions
+### Working with projects
 
-Details about primary functions
+Details about primary functions that work on projects
+
+- [Working with MoBi
+  projects](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/mobi-projects.md):
+
+### Working with simulations
+
+Details about primary functions that work on simulations
 
 - [Loading a simulation and accessing
   entities](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/load-get.md):
@@ -18,6 +25,8 @@ Details about primary functions
   individuals](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/create-individual.md):
 - [Population
   simulations](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/create-run-population.md):
+- [Working with
+  snapshots](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/snapshots.md):
 
 ### Figure creation
 

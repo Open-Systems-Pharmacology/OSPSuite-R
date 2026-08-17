@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.4.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,10 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="articles/run-simulation.html">Running a simulation</a></li>
@@ -28,6 +31,7 @@
     <li><a class="dropdown-item" href="articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
     <li><a class="dropdown-item" href="articles/create-individual.html">Creating individuals</a></li>
     <li><a class="dropdown-item" href="articles/create-run-population.html">Population simulations</a></li>
+    <li><a class="dropdown-item" href="articles/snapshots.html">Working with snapshots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Figure creation</h6></li>
     <li><a class="dropdown-item" href="articles/observed-data.html">Observed data</a></li>
@@ -59,41 +63,39 @@
 
 <div id="ospsuite-r--agent--contributor-guide" class="section level1">
 
-<p>Guidance for working in this repository with coding agents (Claude Code, Copilot, CodeRabbit, …). Tool-neutral; <code>CLAUDE.md</code> points here.</p>
+<p>Guidance for working on this repository with coding agents.</p>
 <div class="section level2">
 <h2 id="what-this-package-is">What this package is<a class="anchor" aria-label="anchor" href="#what-this-package-is"></a></h2>
 <p><code>ospsuite</code> is an R wrapper around the OSP Suite <strong>.NET Core</strong> libraries. R talks to .NET through the <strong><code>rSharp</code></strong> package. The .NET binaries the package needs are committed into <strong><code>inst/lib/</code></strong> (OSPSuite.Core.dll, NPOI, SQLite, etc.) and are loaded at runtime by rSharp when the package initializes.</p>
 </div>
 <div class="section level2">
 <h2 id="where-the-net-implementation-lives-look-here-not-just-in-r">Where the .NET implementation lives (look here, not just in R)<a class="anchor" aria-label="anchor" href="#where-the-net-implementation-lives-look-here-not-just-in-r"></a></h2>
-<p>The R functions are thin wrappers over .NET. When you need to understand what a method <em>actually does</em> — or why it throws — read the .NET source in the upstream repositories, on the <strong><code>develop</code></strong> branch (the branch this line of the R package builds against):</p>
+<p>The R functions are thin wrappers over .NET. When you need to understand what a method <em>actually does</em> — or why it throws — read the .NET source in the upstream repositories. Their default <code>develop</code> branches track the current line; the exact shipped versions are pinned in <code>shared/DependencyManager/src/DependencyManager.csproj</code>:</p>
 <ul><li>
-<strong>OSPSuite.Core</strong> — <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.Core" class="external-link uri">https://github.com/Open-Systems-Pharmacology/OSPSuite.Core</a> (core domain/import/simulation logic, e.g. <code>ExcelDataSourceFile</code>, <code>DataImporter</code>).</li>
+<strong>OSPSuite.Core</strong> — <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.Core/" class="external-link uri">https://github.com/Open-Systems-Pharmacology/OSPSuite.Core/</a> (core domain/import/simulation logic, e.g. <code>ExcelDataSourceFile</code>, <code>DataImporter</code>).</li>
 <li>
-<strong>MoBi</strong> — <a href="https://github.com/Open-Systems-Pharmacology/MoBi" class="external-link uri">https://github.com/Open-Systems-Pharmacology/MoBi</a>
-</li>
+<strong>MoBi</strong> — <a href="https://github.com/Open-Systems-Pharmacology/MoBi/" class="external-link uri">https://github.com/Open-Systems-Pharmacology/MoBi/</a> (<code>MoBi.R</code> is an entry assembly the R package initializes).</li>
 <li>
-<strong>PK-Sim</strong> — <a href="https://github.com/Open-Systems-Pharmacology/PK-Sim" class="external-link uri">https://github.com/Open-Systems-Pharmacology/PK-Sim</a> (<code>PKSim.R</code> is the entry assembly the R package initializes).</li>
-</ul><p>Fetch raw files directly, e.g. <code>https://raw.githubusercontent.com/Open-Systems-Pharmacology/OSPSuite.Core/develop/src/...</code>.</p>
+<strong>PK-Sim</strong> — <a href="https://github.com/Open-Systems-Pharmacology/PK-Sim/" class="external-link uri">https://github.com/Open-Systems-Pharmacology/PK-Sim/</a> (<code>PKSim.R</code> is an entry assembly the R package initializes).</li>
+</ul><p>Fetch raw files directly (the URL needs a ref after the repo name), e.g. <code>https://raw.githubusercontent.com/Open-Systems-Pharmacology/OSPSuite.Core/develop/src/...</code>.</p>
 </div>
 <div class="section level2">
-<h2 id="how-instlib-is-populated">How <code>inst/lib</code> is populated<a class="anchor" aria-label="anchor" href="#how-instlib-is-populated"></a></h2>
-<p>The <code>.NET</code> binaries in <code>inst/lib/</code> are generated, not hand-maintained. <code>.github/scripts/update_core_files.R</code> (run by the <strong>Update Core Files</strong> workflow) downloads and unzips the DLL set from the PK-Sim build artifacts into <code>inst/lib</code>.</p>
+<h2 id="how-instlib-is-populated-dependencymanager--allow-list">How <code>inst/lib</code> is populated (DependencyManager + allow-list)<a class="anchor" aria-label="anchor" href="#how-instlib-is-populated-dependencymanager--allow-list"></a></h2>
+<p>The <code>.NET</code> binaries in <code>inst/lib/</code> are generated, not hand-maintained.</p>
+<p><code>shared/DependencyManager/</code> is a .NET project whose <code>.csproj</code> references the pinned NuGet packages (<code>MoBi.R</code>, <code>PKSim.R</code>, <code>OSPSuite.*</code>) and copies their DLLs into <code>inst/lib/</code>. To regenerate them, build the DependencyManager locally and commit the result, or run the <strong>Build Libraries</strong> workflow (<code>build-libraries.yaml</code>), which is a manual <code>workflow_dispatch</code>: it rebuilds <code>inst/lib</code> and opens a PR targeting the branch it was dispatched on.</p>
+<p><strong>To ship a new DLL, add its name (without extension) to <code>@(AllowedAssembly)</code></strong> in <code>DependencyManager.csproj</code>. (This is exactly how a missing transitive dependency bites: NPOI needs <code>Enums.NET</code> at runtime to parse sheets with a sort/filter, but it was not on the allow-list, so <code><a href="reference/loadDataSetsFromExcel.html">loadDataSetsFromExcel()</a></code> failed until <code>Enums.NET</code> was added.)</p>
+<p>Neither path runs automatically — after an allow-list change, regenerate and commit <code>inst/lib</code> yourself (both the <code>.csproj</code> change and the resulting DLLs), or dispatch the workflow and merge its PR.</p>
 </div>
 <div class="section level2">
 <h2 id="renv-branch-switching-and-worktrees">renv, branch switching, and worktrees<a class="anchor" aria-label="anchor" href="#renv-branch-switching-and-worktrees"></a></h2>
 <p>The package uses <strong>renv</strong>; the pinned dependency set (including <code>rSharp</code>) is in <code>renv.lock</code>. Run <code><a href="https://rstudio.github.io/renv/reference/restore.html" class="external-link">renv::restore()</a></code> to sync your library to the lockfile.</p>
 <ul><li><p><strong>Never run <code>Rscript --vanilla</code>.</strong> <code>--vanilla</code> skips <code>.Rprofile</code>, so <code>renv/activate.R</code> never runs and you silently fall back to the <em>global</em> user library (wrong / unpinned packages, including the wrong rSharp). Run without <code>--vanilla</code> so renv activates and the project library is used.</p></li>
-<li>
-<p><strong>Switching branches is not free.</strong> Different branches pin <strong>different rSharp builds</strong> and ship <strong>different <code>inst/lib/</code> .NET binaries</strong>. Two consequences:</p>
-<ol style="list-style-type: decimal"><li>You must run <strong><code><a href="https://rstudio.github.io/renv/reference/restore.html" class="external-link">renv::restore()</a></code></strong> after switching to get the matching rSharp. (renv keys its cache on content hash, so it resolves the correct build even when two branches share the same rSharp version string.)</li>
-<li>rSharp <strong>loads the native DLLs into the running R process and locks them</strong>, so you must <strong>restart the R session before switching</strong>, otherwise <code><a href="https://rstudio.github.io/renv/reference/restore.html" class="external-link">renv::restore()</a></code> cannot overwrite the locked <code>inst/lib</code> / rSharp DLLs.</li>
-</ol></li>
+<li><p><strong>Switching branches is not free.</strong> Different branches pin <strong>different rSharp builds</strong> and ship <strong>different <code>inst/lib/</code> .NET binaries</strong>, so run <strong><code><a href="https://rstudio.github.io/renv/reference/restore.html" class="external-link">renv::restore()</a></code></strong> after switching to get the matching rSharp. And because rSharp <strong>loads the native DLLs into the running R process and locks them</strong>, you must <strong>restart the R session before switching</strong>, otherwise <code><a href="https://rstudio.github.io/renv/reference/restore.html" class="external-link">renv::restore()</a></code> cannot overwrite the locked <code>inst/lib</code> / rSharp DLLs.</p></li>
 <li><p><strong><code>devtools::load_all()</code> runs a dependency check against the active library</strong>, so dev dependencies must be present (<code><a href="https://rstudio.github.io/renv/reference/restore.html" class="external-link">renv::restore()</a></code>d) first, or it errors before it can load the package.</p></li>
 <li>
 <p><strong>One option: a separate git worktree per branch</strong> when you work on more than one at a time. Each worktree has its own <code>inst/lib/</code> (no DLL-lock conflicts) and its own renv <strong>project library</strong> (keyed by project-path hash), while sharing the global renv <strong>cache</strong> safely. This avoids the restore/restart thrash entirely:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">git</span> worktree add ../OSPSuite-R-main main</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">git</span> worktree add ../OSPSuite-R-<span class="op">&lt;</span>branch<span class="op">&gt;</span> <span class="op">&lt;</span>branch<span class="op">&gt;</span></span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">git</span> worktree add ../OSPSuite-R-<span class="op">&lt;</span>branch<span class="op">&gt;</span> <span class="op">&lt;</span>branch<span class="op">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co"># e.g. for the v12 maintenance line:  git worktree add ../OSPSuite-R-v12 v12</span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># then run renv::restore() once in each</span></span></code></pre></div>
 </li>
 </ul></div>
@@ -114,7 +116,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, <a href="https://github.com/Felixmil" class="external-link">Felix MIL</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

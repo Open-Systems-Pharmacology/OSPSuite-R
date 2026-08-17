@@ -49,8 +49,8 @@ myPlotConfiguration$caption <- "My Sources"
 
 # plot
 plotResidualsVsTime(
-dataCombinedAciclovir, 
-scaling = "lin", 
+dataCombinedAciclovir,
+scaling = "lin",
 defaultPlotConfiguration = myPlotConfiguration
 )
 #> Warning: `plotResidualsVsTime()` was deprecated in ospsuite 12.4.2.

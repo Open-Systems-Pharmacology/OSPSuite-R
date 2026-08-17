@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">12.4.4.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,10 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -28,6 +31,7 @@
     <li><a class="dropdown-item" href="../articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
     <li><a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a></li>
     <li><a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a></li>
+    <li><a class="dropdown-item" href="../articles/snapshots.html">Working with snapshots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Figure creation</h6></li>
     <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
@@ -97,6 +101,30 @@
 <dd><p>Name of the simulation</p></dd>
 
 
+    <dt><code>configuration</code></dt>
+<dd><p>An object of the type <code>SimulationConfiguration</code>,
+describing the modules used for the simulation, selected Parameter Values (PV) and Initial Conditions (IC).</p></dd>
+
+
+    <dt><code>isPopulation</code></dt>
+<dd><p><code>TRUE</code> if a population is currently assigned to the
+simulation, meaning it will be run as a population simulation; <code>FALSE</code>
+if it will be run for a single individual. To change this, assign a
+population (or <code>NULL</code>) to the <code>population</code> field. (read-only)</p></dd>
+
+
+    <dt><code>population</code></dt>
+<dd><p>The <code>Population</code> assigned to the simulation, or <code>NULL</code>
+if the simulation is run for a single individual.</p>
+<p>Assigning a <code>Population</code> turns the simulation into a population
+simulation, so that a subsequent <code>runSimulations(simulation)</code> runs it for
+the whole population. Assigning <code>NULL</code> removes the population and switches
+the simulation back to an individual simulation.</p>
+<p>Any aging data previously set on the simulation is cleared whenever the
+population is (re)assigned or removed, since aging data only applies to
+the population it was generated for.</p></dd>
+
+
 </dl><p></p></div>
     </div>
     <div class="section level2">
@@ -110,6 +138,7 @@
 <li><p><a href="#method-Simulation-allStationaryMoleculeNames"><code>Simulation$allStationaryMoleculeNames()</code></a></p></li>
 <li><p><a href="#method-Simulation-allFloatingMoleculeNames"><code>Simulation$allFloatingMoleculeNames()</code></a></p></li>
 <li><p><a href="#method-Simulation-molWeightFor"><code>Simulation$molWeightFor()</code></a></p></li>
+<li><p><a href="#method-Simulation-calculationMethodFor"><code>Simulation$calculationMethodFor()</code></a></p></li>
 <li><p><a href="#method-Simulation-allApplicationsFor"><code>Simulation$allApplicationsFor()</code></a></p></li>
 <li><p><a href="#method-Simulation-print"><code>Simulation$print()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printClass"><code>rSharp::NetObject$.printClass()</code></a></span></li>
@@ -200,13 +229,34 @@ This is typically a molecule that is being explicitly simulated such as Compound
 
 </div>
 
+<p></p><hr><a id="method-Simulation-calculationMethodFor"></a><div class="section">
+<h3 id="simulation-calculationmethodfor-"><code>Simulation$calculationMethodFor()</code><a class="anchor" aria-label="anchor" href="#simulation-calculationmethodfor-"></a></h3>
+<p>Returns the calculation method name used for the given molecule and
+category, or <code>NULL</code> if no override is set.</p><div class="section">
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Simulation</span><span class="op">$</span><span class="fu">calculationMethodFor</span><span class="op">(</span><span class="va">moleculeName</span>, <span class="va">category</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>moleculeName</code></dt>
+<dd><p>Name of the molecule.</p></dd>
+
+      <dt><code>category</code></dt>
+<dd><p>One of the <code>CalculationMethodCategories</code> enum values
+(e.g. <code>CalculationMethodCategories$PartitionCoefficient</code>).</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div>
+
 <p></p><hr><a id="method-Simulation-allApplicationsFor"></a><div class="section">
 <h3 id="simulation-allapplicationsfor-"><code>Simulation$allApplicationsFor()</code><a class="anchor" aria-label="anchor" href="#simulation-allapplicationsfor-"></a></h3>
 <p>Returns the applications ordered by start time associated to the quantity with path <code>quantityPath</code> or an empty list if not found</p><div class="section">
-<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Simulation</span><span class="op">$</span><span class="fu">allApplicationsFor</span><span class="op">(</span><span class="va">quantityPath</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
-<h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
+<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>quantityPath</code></dt>
 <dd><p>Path of quantity used to retrieve the applications (e.g. applications resulting in this quantity being applied)</p></dd>
 
@@ -219,11 +269,15 @@ This is typically a molecule that is being explicitly simulated such as Compound
 <p></p><hr><a id="method-Simulation-print"></a><div class="section">
 <h3 id="simulation-print-"><code>Simulation$print()</code><a class="anchor" aria-label="anchor" href="#simulation-print-"></a></h3>
 <p>Print the object to the console</p><div class="section">
-<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Simulation</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Simulation</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span>printClassProperties <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
-<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>...</code></dt>
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>printClassProperties</code></dt>
+<dd><p>Logical, whether to print class properties (default: <code>FALSE</code>). If <code>TRUE</code>, calls first the <code>print</code> method of the parent class.
+Useful for debugging.</p></dd>
+
+      <dt><code>...</code></dt>
 <dd><p>Rest arguments.</p></dd>
 
 
@@ -240,7 +294,7 @@ This is typically a molecule that is being explicitly simulated such as Compound
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, <a href="https://github.com/Felixmil" class="external-link">Felix MIL</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

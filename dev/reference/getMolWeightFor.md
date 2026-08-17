@@ -1,8 +1,7 @@
 # Retrieve molecular weight for a quantity's molecule
 
 Returns the molecular weight of the molecule for a given quantity. If no
-unit is provided, the value is returned in the base unit
-(`kg/\u00b5mol`).
+unit is provided, the value is returned in the base unit (`kg/µmol`).
 
 ## Usage
 
@@ -18,8 +17,7 @@ getMolWeightFor(quantity, unit = NULL, stopIfNotFound = FALSE)
 
 - unit:
 
-  Optional. Target unit for the molecular weight. Defaults to
-  `kg/\u00b5mol`.
+  Optional. Target unit for the molecular weight. Defaults to `kg/µmol`.
 
 - stopIfNotFound:
 

@@ -41,6 +41,33 @@ An OSPSuite simulation
 
   Name of the simulation
 
+- `configuration`:
+
+  An object of the type `SimulationConfiguration`, describing the
+  modules used for the simulation, selected Parameter Values (PV) and
+  Initial Conditions (IC).
+
+- `isPopulation`:
+
+  `TRUE` if a population is currently assigned to the simulation,
+  meaning it will be run as a population simulation; `FALSE` if it will
+  be run for a single individual. To change this, assign a population
+  (or `NULL`) to the `population` field. (read-only)
+
+- `population`:
+
+  The `Population` assigned to the simulation, or `NULL` if the
+  simulation is run for a single individual.
+
+  Assigning a `Population` turns the simulation into a population
+  simulation, so that a subsequent `runSimulations(simulation)` runs it
+  for the whole population. Assigning `NULL` removes the population and
+  switches the simulation back to an individual simulation.
+
+  Any aging data previously set on the simulation is cleared whenever
+  the population is (re)assigned or removed, since aging data only
+  applies to the population it was generated for.
+
 ## Methods
 
 ### Public methods
@@ -56,6 +83,8 @@ An OSPSuite simulation
 - [`Simulation$allFloatingMoleculeNames()`](#method-Simulation-allFloatingMoleculeNames)
 
 - [`Simulation$molWeightFor()`](#method-Simulation-molWeightFor)
+
+- [`Simulation$calculationMethodFor()`](#method-Simulation-calculationMethodFor)
 
 - [`Simulation$allApplicationsFor()`](#method-Simulation-allApplicationsFor)
 
@@ -167,6 +196,28 @@ with given path or NA if not found
 
 ------------------------------------------------------------------------
 
+### `Simulation$calculationMethodFor()`
+
+Returns the calculation method name used for the given molecule and
+category, or `NULL` if no override is set.
+
+#### Usage
+
+    Simulation$calculationMethodFor(moleculeName, category)
+
+#### Arguments
+
+- `moleculeName`:
+
+  Name of the molecule.
+
+- `category`:
+
+  One of the `CalculationMethodCategories` enum values (e.g.
+  `CalculationMethodCategories$PartitionCoefficient`).
+
+------------------------------------------------------------------------
+
 ### `Simulation$allApplicationsFor()`
 
 Returns the applications ordered by start time associated to the
@@ -191,9 +242,15 @@ Print the object to the console
 
 #### Usage
 
-    Simulation$print(...)
+    Simulation$print(printClassProperties = FALSE, ...)
 
 #### Arguments
+
+- `printClassProperties`:
+
+  Logical, whether to print class properties (default: `FALSE`). If
+  `TRUE`, calls first the `print` method of the parent class. Useful for
+  debugging.
 
 - `...`:
 

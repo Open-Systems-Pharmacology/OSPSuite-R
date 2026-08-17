@@ -120,8 +120,13 @@ In some cases, the user might want to run multiple simulations in
 parallel. This can be achieved easily by simply passing a list of
 simulations to the
 [`runSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulations.md)
-function. However, only individual simulations (i.e., the `population`
-argument must remain empty) are supported.
+function. Both individual and population simulations can be mixed in the
+same call; to include a population simulation, assign its population
+beforehand with `simulation$population <- myPopulation`. The
+`population` argument of
+[`runSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulations.md)
+is a convenience for the single-simulation case and must remain empty
+when passing a list.
 
 By default, the simulations will be executed in parallel by using up to
 all cores available on the machine minus 1. So if there are 8 cores and
@@ -154,11 +159,11 @@ for the specific simulation
 # Get the id of the second simulation
 id <- sim2$id
 print(id)
-#> [1] "Nr9r8sD6_EK_0Z-4ZjHKcQ"
+#> [1] "90oWZvIDwEywoLHl-2Oskw"
 # get the corresponding result
 sim2Results <- simulationResults[[id]]
 print(sim2Results$simulation$id)
-#> [1] "Nr9r8sD6_EK_0Z-4ZjHKcQ"
+#> [1] "90oWZvIDwEywoLHl-2Oskw"
 ```
 
 ## Adding new outputs
@@ -252,20 +257,11 @@ and
 # Remove all output intervals - simulation not possible!
 clearOutputIntervals(simulation = sim)
 runSimulations(simulations = sim)
-#> Error in `do.call()`:
-#> ! Type:    OSPSuite.Utility.Exceptions.OSPSuiteException
-#> Message: Time points output schema is empty
-#> Method:  Void EvaluateCppCallResult(Boolean, System.String)
-#> Stack trace:
-#>    at OSPSuite.SimModel.PInvokeHelper.EvaluateCppCallResult(Boolean success, String errorMessage)
-#>    at OSPSuite.SimModel.Simulation.evaluateCppCallResult(Boolean success, String errorMessage)
-#>    at OSPSuite.SimModel.Simulation.RunSimulation()
-#>    at OSPSuite.Core.Domain.Services.SimModelManager.simulate()
-#>    at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
-#> --- End of stack trace from previous location ---
-#>    at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
-#>    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
-#> --- End of stack trace fr
+#> Warning in .getConcurrentSimulationRunnerResults(results = results,
+#> resultsIdSimulationIdMap = resultsIdSimulationIdMap, : One or more errors
+#> occurred. (Time points output schema is empty)
+#> $FRFZrW2cvk6_IQaR0sJ5cQ
+#> NULL
 
 # Add an interval
 addOutputInterval(
@@ -348,6 +344,7 @@ print(sim$solver)
 #>   • mxStep: 100000
 #>   • relTol: 1e-05
 #>   • absTol: 1e-10
+#>   • checkForNegativeValues: TRUE
 ```
 
 In some cases, a simulation may fail to run successfully due to

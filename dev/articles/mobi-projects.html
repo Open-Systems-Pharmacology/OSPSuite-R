@@ -47,6 +47,7 @@
     <li><a class="dropdown-item" href="../articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
     <li><a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a></li>
     <li><a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a></li>
+    <li><a class="dropdown-item" href="../articles/snapshots.html">Working with snapshots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Figure creation</h6></li>
     <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
@@ -84,7 +85,7 @@
       <h1>Working with MoBi projects</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/v13/vignettes/mobi-projects.Rmd" class="external-link"><code>vignettes/mobi-projects.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/open-systems-pharmacology/ospsuite-r/blob/main/vignettes/mobi-projects.Rmd" class="external-link"><code>vignettes/mobi-projects.Rmd</code></a></small>
       <div class="d-none name"><code>mobi-projects.Rmd</code></div>
     </div>
 
@@ -96,15 +97,9 @@
 <p>First, load a MoBi project:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load the ospsuite package</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## The option 'ospsuite.plots.watermarkEnabled' is not set.</span></span>
-<span><span class="co">## To enable watermarks, add the following to your .Rprofile:</span></span>
-<span><span class="co">##   options(ospsuite.plots.watermarkEnabled = TRUE)</span></span>
-<span><span class="co">## To disable watermarks, add:</span></span>
-<span><span class="co">##   options(ospsuite.plots.watermarkEnabled = FALSE)</span></span>
-<span><span class="co">## You can edit your .Rprofile with usethis::edit_r_profile()</span></span></code></pre>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">projectPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">projectPath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
 <span>  <span class="st">"extdata"</span>,</span>
 <span>  <span class="st">"TH_QST_Platform.mbp3"</span>,</span>
 <span>  package <span class="op">=</span> <span class="st">"ospsuite"</span></span>
@@ -112,7 +107,7 @@
 <span><span class="va">myProject</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadMoBiProject.html">loadMoBiProject</a></span><span class="op">(</span><span class="va">projectPath</span><span class="op">)</span></span></code></pre></div>
 <p>We can browse the contents of the project, e.g., get the list of
 simulations in the project:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulationsInProject</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="va">simulationNames</span></span>
 <span></span>
 <span><span class="fu">ospsuite.utils</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/ospPrintItems.html" class="external-link">ospPrintItems</a></span><span class="op">(</span><span class="va">simulationsInProject</span>, title <span class="op">=</span> <span class="st">"Simulations"</span><span class="op">)</span></span></code></pre></div>
@@ -120,7 +115,7 @@ simulations in the project:</p>
 <span><span class="co">##   • Thyroid_QST_Human</span></span>
 <span><span class="co">##   • Thyroid_QST_Phenobarbital</span></span></code></pre>
 <p>get the list of parameter identifications:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">PIs</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="va">parameterIdentificationNames</span></span>
 <span></span>
 <span><span class="fu">ospsuite.utils</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/ospPrintItems.html" class="external-link">ospPrintItems</a></span><span class="op">(</span></span>
@@ -131,7 +126,7 @@ simulations in the project:</p>
 <span><span class="co">##   • Parameter Identification 1</span></span></code></pre>
 <p>get observed data from the project as <code>DataSet</code>
 objects:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obsData</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getObservedData</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">obsData</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -152,7 +147,7 @@ objects:</p>
 <span><span class="co">## [15] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_179 mg/kg/day_po_Fig.2"</span></span></code></pre>
 <p>get the names of individuals and expression profiles from the
 project:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">individualsInProject</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="va">individualNames</span></span>
 <span><span class="va">expProfilesInProject</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="va">expressionProfilesNames</span></span>
 <span></span>
@@ -160,7 +155,7 @@ project:</p>
 <pre><code><span><span class="co">## <span style="font-weight: bold;">Individuals names</span>:</span></span>
 <span><span class="co">##   • Human</span></span>
 <span><span class="co">##   • Rat</span></span></code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ospsuite.utils</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/ospPrintItems.html" class="external-link">ospPrintItems</a></span><span class="op">(</span></span>
 <span>  <span class="va">expProfilesInProject</span>,</span>
 <span>  title <span class="op">=</span> <span class="st">"Expression profiles names"</span></span>
@@ -173,7 +168,7 @@ project:</p>
 <span><span class="co">##   • UGT1A1|Rat|Healthy</span></span>
 <span><span class="co">##   • PB-LiverBindingPartner|Human|Healthy</span></span></code></pre>
 <p>get the names of the modules in the project:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modulesInProject</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="va">moduleNames</span></span>
 <span></span>
 <span><span class="fu">ospsuite.utils</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/ospPrintItems.html" class="external-link">ospPrintItems</a></span><span class="op">(</span><span class="va">modulesInProject</span>, title <span class="op">=</span> <span class="st">"Modules"</span><span class="op">)</span></span></code></pre></div>
@@ -193,7 +188,7 @@ project:</p>
 <code>getModules</code>.</p>
 <p>For modules, it is possible to retrieve the initial conditions and
 parameter values building blocks:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the module "Thyroid" from the project</span></span>
 <span><span class="va">module</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getModules</span><span class="op">(</span><span class="st">"Thyroid"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">module</span><span class="op">)</span></span></code></pre></div>
@@ -206,7 +201,7 @@ parameter values building blocks:</p>
 <span><span class="co">##   • Rat</span></span>
 <span><span class="co">## <span style="font-weight: bold;">Initial Conditions Building Blocks</span>:</span></span>
 <span><span class="co">##   • Human</span></span></code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">icBBs</span> <span class="op">&lt;-</span> <span class="va">module</span><span class="op">$</span><span class="fu">getInitialConditionsBBs</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Get all parameter values BBs</span></span>
@@ -218,22 +213,22 @@ either <code>"Extend"</code> (default) or <code>"Overwrite"</code>.
 Details on the merge behavior and how it affects the combination of
 modules can be found in the <a href="https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/modularization-concept#creating-simulations-from-modules-and-combination-rules" class="external-link">MoBi
 documentation</a>.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Inspect the current merge behavior</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">module</span><span class="op">$</span><span class="va">mergeBehavior</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Extend"</span></span></code></pre>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Change the merge behavior to "Overwrite"</span></span>
 <span><span class="va">module</span><span class="op">$</span><span class="va">mergeBehavior</span> <span class="op">&lt;-</span> <span class="st">"Overwrite"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">module</span><span class="op">$</span><span class="va">mergeBehavior</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Overwrite"</span></span></code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Reset back to the default</span></span>
 <span><span class="va">module</span><span class="op">$</span><span class="va">mergeBehavior</span> <span class="op">&lt;-</span> <span class="st">"Extend"</span></span></code></pre></div>
 <p>You can easily convert the retrieved initial conditions, parameter
 values, individuals, and expression profiles to data frames for further
 processing:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">icBBDf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/initialConditionsBBToDataFrame.html">initialConditionsBBToDataFrame</a></span><span class="op">(</span><span class="va">icBBs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co"># Print the first few rows of the data frame</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">icBBDf</span><span class="op">)</span></span></code></pre></div>
@@ -251,7 +246,7 @@ processing:</p>
 <span><span class="co">## 4               FALSE</span></span>
 <span><span class="co">## 5               FALSE</span></span>
 <span><span class="co">## 6               FALSE</span></span></code></pre>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pvBBDf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/parameterValuesBBToDataFrame.html">parameterValuesBBToDataFrame</a></span><span class="op">(</span><span class="va">pvBBs</span><span class="op">[[</span><span class="st">"Rat"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co"># Print the first few rows of the data frame</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pvBBDf</span><span class="op">)</span></span></code></pre></div>
@@ -269,7 +264,7 @@ processing:</p>
 <span><span class="co">## 4             </span></span>
 <span><span class="co">## 5             </span></span>
 <span><span class="co">## 6</span></span></code></pre>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">individual</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getIndividual</span><span class="op">(</span><span class="st">"Human"</span><span class="op">)</span></span>
 <span><span class="va">individualDf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/individualsBBToDataFrame.html">individualsBBToDataFrame</a></span><span class="op">(</span><span class="va">individual</span><span class="op">)</span></span>
 <span><span class="co"># Print the individual data frame</span></span>
@@ -294,16 +289,16 @@ fields: <code>species</code>, <code>population</code>,
 <code>gender</code>, <code>age</code>, <code>gestationalAge</code>,
 <code>height</code>, and <code>weight</code>. Printing the building
 block also lists these values under an “Origin data” section.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">individual</span><span class="op">$</span><span class="va">species</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Human"</span></span></code></pre>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">individual</span><span class="op">$</span><span class="va">population</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "European (ICRP, 2002)"</span></span></code></pre>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">individual</span><span class="op">$</span><span class="va">weight</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "73.0000 kg"</span></span></code></pre>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">individual</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #0000BB;">&lt;IndividualBuildingBlock&gt;</span></span></span>
 <span><span class="co">##   • Name: Human</span></span>
@@ -318,7 +313,7 @@ block also lists these values under an “Origin data” section.</p>
 <span><span class="co">##   • Gestational age: 2087.1429 week(s)</span></span>
 <span><span class="co">##   • Height: 176.0000 cm</span></span>
 <span><span class="co">##   • Weight: 73.0000 kg</span></span></code></pre>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">expProfiles</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getExpressionProfiles</span><span class="op">(</span><span class="st">"UDPGT1|Human|Healthy"</span><span class="op">)</span></span>
 <span><span class="va">expProfilesDf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/expressionProfileBBToDataFrame.html">expressionProfileBBToDataFrame</a></span><span class="op">(</span><span class="va">expProfiles</span><span class="op">)</span></span>
 <span><span class="co"># Print the first few rows of the data frame</span></span>
@@ -337,7 +332,7 @@ block also lists these values under an “Origin data” section.</p>
 <span><span class="co">## 4             </span></span>
 <span><span class="co">## 5             </span></span>
 <span><span class="co">## 6</span></span></code></pre>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">expProfilesDf</span><span class="op">$</span><span class="va">initialConditions</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                      Container Path Molecule Name Is Present Value Unit</span></span>
 <span><span class="co">## 1       Organism|VenousBlood|Plasma        UDPGT1       TRUE   NaN µmol</span></span>
@@ -377,7 +372,7 @@ explicitly.</p>
 <code>type = NULL</code>, each candidate type is tried in turn until one
 matches, which adds overhead for every type tried before the match. Pass
 <code>type</code> explicitly when known.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get a Parameter Values BB from the project and save it to a temp pkml file</span></span>
 <span><span class="va">module</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getModules</span><span class="op">(</span><span class="st">"Thyroid"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">pvBB</span> <span class="op">&lt;-</span> <span class="va">module</span><span class="op">$</span><span class="fu">getParameterValuesBBs</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="st">"Rat"</span><span class="op">]</span><span class="op">]</span></span>
@@ -394,7 +389,7 @@ matches, which adds overhead for every type tried before the match. Pass
 <pre><code><span><span class="co">## <span style="color: #0000BB;">&lt;BuildingBlock&gt;</span></span></span>
 <span><span class="co">##   • Name: Rat</span></span>
 <span><span class="co">##   • Type: Parameter Values</span></span></code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Or let the function detect the type</span></span>
 <span><span class="va">autoLoadedBB</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadBuildingBlockFromPKML.html">loadBuildingBlockFromPKML</a></span><span class="op">(</span>filePath <span class="op">=</span> <span class="va">tmpFile</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">autoLoadedBB</span><span class="op">)</span></span></code></pre></div>
@@ -412,7 +407,7 @@ also be created from scratch and populated programmatically. Both
 <code><a href="../reference/createParameterValuesBuildingBlock.html">createParameterValuesBuildingBlock()</a></code> accept an optional
 <code>name</code>; the returned building block is empty and ready to
 receive entries.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">icBB</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createInitialConditionsBuildingBlock.html">createInitialConditionsBuildingBlock</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"My ICs"</span><span class="op">)</span></span>
 <span><span class="va">pvBB</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createParameterValuesBuildingBlock.html">createParameterValuesBuildingBlock</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"My PVs"</span><span class="op">)</span></span>
 <span></span>
@@ -432,7 +427,7 @@ receive entries.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The freshly created building blocks can be passed directly to
 <code><a href="../reference/createMoBiModule.html">createMoBiModule()</a></code>:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">customModule</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMoBiModule.html">createMoBiModule</a></span><span class="op">(</span></span>
 <span>  name <span class="op">=</span> <span class="st">"CustomModule"</span>,</span>
 <span>  buildingBlocks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">icBB</span>, <span class="va">pvBB</span><span class="op">)</span></span>
@@ -440,7 +435,7 @@ receive entries.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">customModule</span><span class="op">$</span><span class="va">initialConditionsBBnames</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "My ICs"</span></span></code></pre>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">customModule</span><span class="op">$</span><span class="va">parameterValuesBBnames</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "My PVs"</span></span></code></pre>
 </div>
@@ -459,7 +454,7 @@ module. Adding a second building block of the same single type — either
 at creation or via <code>addBuildingBlocks()</code> — raises an error.
 Initial Conditions and Parameter Values building blocks may appear
 multiple times.</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Empty module</span></span>
 <span><span class="va">myModule</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMoBiModule.html">createMoBiModule</a></span><span class="op">(</span><span class="st">"MyCustomModule"</span><span class="op">)</span></span>
 <span></span>
@@ -482,7 +477,7 @@ multiple times.</p>
 <span><span class="co">## <span style="font-weight: bold;">Initial Conditions Building Blocks</span>:</span></span></code></pre>
 <p>A module can also be created with its building blocks in one
 call:</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pvBB</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getModules</span><span class="op">(</span><span class="st">"Thyroid"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">getParameterValuesBBs</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="st">"Rat"</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">icBB</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getModules</span><span class="op">(</span><span class="st">"Thyroid"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">getInitialConditionsBBs</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">moleculesBB</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getModules</span><span class="op">(</span><span class="st">"Thyroid_QST"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">getMoleculesBB</span><span class="op">(</span><span class="op">)</span></span>
@@ -498,7 +493,7 @@ Event Groups) the <code>name</code> is verified against the lone BB’s
 <code>name</code> selects the BB within the type. Removing Expression
 Profile or Individual via this method is not supported (neither is
 module-level).</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Remove the Molecules BB attached above (its name is the source BB's name)</span></span>
 <span><span class="va">myModule</span><span class="op">$</span><span class="fu">removeBuildingBlock</span><span class="op">(</span></span>
 <span>  name <span class="op">=</span> <span class="va">moleculesBB</span><span class="op">$</span><span class="va">name</span>,</span>
@@ -532,7 +527,7 @@ simulation configuration can then be altered afterwards.</p>
 <p><u>NOTE:</u> Only simulations created with OSPS version &gt;=12 have
 simulation configurations.</p>
 <p>Get a configuration of a simulation loaded from a pkml file:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
 <span>  <span class="st">"extdata"</span>,</span>
 <span>  <span class="st">"Aciclovir.pkml"</span>,</span>
@@ -560,7 +555,7 @@ simulation configurations.</p>
 <span><span class="co">## <span style="font-weight: bold;">Cellular permeability method overrides</span>:</span></span>
 <span><span class="co">##   • Aciclovir: PK-Sim Standard</span></span></code></pre>
 <p>Get a configuration of a simulation from a MoBi project:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulation</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getSimulation</span><span class="op">(</span><span class="st">"Thyroid_QST_Human"</span><span class="op">)</span></span>
 <span><span class="va">configuration</span> <span class="op">&lt;-</span> <span class="va">simulation</span><span class="op">$</span><span class="va">configuration</span></span>
 <span></span>
@@ -631,7 +626,7 @@ the rat species from the modules “Thyroid_QST”, “Rat physiology”,
 “UDPGT1|Human|Healthy”, “DIO1|Human|Healthy”, “DIO3|Human|Healthy”,
 “UDPGT2|Human|Healthy”, and specify the parameter values building block
 “Rat” from the module “Thyroid”:</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simConfiguration</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">createSimulationConfiguration</span><span class="op">(</span></span>
 <span>  modulesNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"Thyroid_QST"</span>,</span>
@@ -664,7 +659,7 @@ as pkml files. In the following example, we will create a simulation
 configuration using the modules from the project as in the example
 before, but the extension module “Thyroid” will be loaded from a pkml
 file, and a new individual will be created.</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># # Get modules from the project</span></span>
 <span><span class="va">modules</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getModules</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># Get the expression profiles from the project</span></span>
@@ -724,7 +719,7 @@ molecules.</li>
 molecule by name (e.g., <code>"Drug"</code>, <code>"Enzyme"</code>,
 <code>"Transporter"</code>, <code>"Binding Partner"</code>).</li>
 </ul>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">moleculesBB</span> <span class="op">&lt;-</span> <span class="va">modules</span><span class="op">[[</span><span class="st">"Thyroid_QST"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">getMoleculesBB</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">moleculesBB</span><span class="op">$</span><span class="fu">allMoleculeNames</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">moleculesBB</span><span class="op">$</span><span class="fu">allMoleculeNamesOfType</span><span class="op">(</span><span class="va">MoleculeType</span><span class="op">$</span><span class="va">Protein</span><span class="op">)</span></span>
@@ -769,7 +764,7 @@ Conditions”, “Expression Profiles”, and “Individual”, there are
 functions to export them to a PKML (<code>.pkml</code>) file.</p>
 <p>So in the first step we load the extension module “Thyroid” from a
 pkml file:</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">thyroidModule</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadModuleFromPKML.html">loadModuleFromPKML</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
 <span>  <span class="st">"extdata"</span>,</span>
 <span>  <span class="st">"Thyroid.pkml"</span>,</span>
@@ -777,7 +772,7 @@ pkml file:</p>
 <span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Then we extend the initial conditions BB of the loaded module by
 molecules defined in other modules of our project:</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the IC BB from the Thyroid module. The module has only one IC BB.</span></span>
 <span><span class="va">icBB</span> <span class="op">&lt;-</span> <span class="va">thyroidModule</span><span class="op">$</span><span class="fu">getInitialConditionsBBs</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co"># Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"</span></span>
@@ -830,7 +825,7 @@ without a supplied profile. The profile category is derived from
 <code>Transport Protein</code>, <code>Binding Partner</code> -&gt;
 <code>Protein Binding Partner</code>.</li>
 </ul>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the PV BB from the Thyroid module</span></span>
 <span><span class="va">pvBB</span> <span class="op">&lt;-</span> <span class="va">thyroidModule</span><span class="op">$</span><span class="fu">getParameterValuesBBs</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="st">"Human"</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co"># Add protein expression to the PV BB</span></span>
@@ -860,7 +855,7 @@ without a supplied profile. The profile category is derived from
 every protein defined in the molecules module, using auto-created
 <code>"Human"</code> default profiles for any molecule without a
 supplied reference profile:</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">addedPaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addProteinExpressionToParameterValuesBB.html">addProteinExpressionToParameterValuesBB</a></span><span class="op">(</span></span>
 <span>  parameterValuesBuildingBlock <span class="op">=</span> <span class="va">pvBB</span>,</span>
 <span>  spatialStructureModule <span class="op">=</span> <span class="va">thyroidModule</span>,</span>
@@ -869,7 +864,7 @@ supplied reference profile:</p>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">addedPaths</span><span class="op">)</span></span></code></pre></div>
 <p>and overwrite the value of “Relative expression”:</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/setParameterValuesInBB.html">setParameterValuesInBB</a></span><span class="op">(</span></span>
 <span>  parameterValuesBuildingBlock <span class="op">=</span> <span class="va">pvBB</span>,</span>
 <span>  quantityPaths <span class="op">=</span> <span class="st">"Organism|Thyroid|Intracellular|DIO1|Relative expression"</span>,</span>
@@ -879,7 +874,7 @@ supplied reference profile:</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Finally, we can create a simulation configuration from the modules
 and the individual we created:</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulationConfigurationHuman</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulationConfiguration.html">createSimulationConfiguration</a></span><span class="op">(</span></span>
 <span>  modules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="va">modules</span><span class="op">[[</span><span class="st">"Thyroid_QST"</span><span class="op">]</span><span class="op">]</span>,</span>
@@ -945,7 +940,7 @@ and the individual we created:</p>
 <p>The simulation configuration can be used to create a simulation. The
 simulation can then be saved to a pkml file, or used for further
 analysis.</p>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulation</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getSimulation</span><span class="op">(</span><span class="st">"Thyroid_QST_Human"</span><span class="op">)</span></span>
 <span><span class="va">configuration</span> <span class="op">&lt;-</span> <span class="va">simulation</span><span class="op">$</span><span class="va">configuration</span></span>
 <span></span>
@@ -964,7 +959,7 @@ all issues. If the simulation is created successfully but with
 non-critical issues, these are collected as warnings and can be
 displayed by setting <code>showWarnings = TRUE</code>. The following
 example demonstrates an error case:</p>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
 <span>    <span class="st">"extdata"</span>,</span>
@@ -1002,7 +997,7 @@ process rate parameters in the simulation or not by setting the argument
 <code>createAllProcessRateParameters</code> in the function
 <code><a href="../reference/createSimulation.html">createSimulation()</a></code>. These parameters can be used for model
 debugging and analysis.</p>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">configuration</span><span class="op">$</span><span class="fu">setPartitionCoefficientMethods</span><span class="op">(</span></span>
 <span>  <span class="st">"T3"</span>,</span>
 <span>  <span class="va">PartitionCoefficientMethods</span><span class="op">$</span><span class="va">Berezhkovskiy</span></span>
@@ -1035,11 +1030,11 @@ debugging and analysis.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, <a href="https://github.com/Felixmil" class="external-link">Felix MIL</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
