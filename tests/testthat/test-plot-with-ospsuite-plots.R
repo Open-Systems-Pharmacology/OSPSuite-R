@@ -967,7 +967,17 @@ test_that("It builds quantile-based population legend prefix", {
 
   expect_equal(
     result,
-    "median and [5th-95th] percentiles for"
+    "Median and [5th-95th] percentiles for"
+  )
+
+  result <- .buildPopulationLegendPrefix(
+    aggregation = DataAggregationMethods$quantiles,
+    quantiles = c(0.025, 0.5, 0.975)
+  )
+
+  expect_equal(
+    result,
+    "Median and [2.5th-97.5th] percentiles for"
   )
 })
 
@@ -978,7 +988,15 @@ test_that("It builds arithmetic population legend prefix", {
     nsd = 2
   )
 
-  expect_equal(result, "mean ± 2*SD for")
+  expect_equal(result, "Mean ± 2*SD for")
+
+  result <- .buildPopulationLegendPrefix(
+    aggregation = DataAggregationMethods$arithmetic,
+    quantiles = NULL,
+    nsd = 1
+  )
+
+  expect_equal(result, "Mean ± SD for")
 })
 
 test_that("It builds geometric population legend prefix", {
@@ -988,7 +1006,15 @@ test_that("It builds geometric population legend prefix", {
     nsd = 1.5
   )
 
-  expect_equal(result, "mean ×/÷ 1.5*SD for")
+  expect_equal(result, "Mean ×/÷ 1.5*SD for")
+
+  result <- .buildPopulationLegendPrefix(
+    aggregation = DataAggregationMethods$geometric,
+    quantiles = NULL,
+    nsd = 1
+  )
+
+  expect_equal(result, "Mean ×/÷ SD for")
 })
 
 test_that("It prefixes simulated names after population aggregation", {
@@ -1014,7 +1040,7 @@ test_that("It prefixes simulated names after population aggregation", {
   expect_true(
     all(
       grepl(
-        "^median and \\[5th-95th\\] percentiles for Sim1$",
+        "^Median and \\[5th-95th\\] percentiles for Sim1$",
         result$name
       )
     )
