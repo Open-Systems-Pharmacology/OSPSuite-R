@@ -145,7 +145,8 @@ sim2 <- loadSimulation(simFilePath, loadFromCache = FALSE, addToCache = FALSE)
 
 # Assign a population to each simulation. The population is stored by
 # reference: here both simulations share the same `myPopulation` object, so
-# modifying it later (e.g. with `setParameterValues()`) would affect both.
+# modifying it later (e.g. with the `Population` class method
+# `myPopulation$setParameterValues()`) would affect both.
 # Assign distinct `Population` objects if the simulations should differ.
 sim1$population <- myPopulation
 sim2$population <- myPopulation
