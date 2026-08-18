@@ -25,7 +25,7 @@ runSimulationsFromSnapshot <- function(
   exportXML = FALSE
 ) {
   ospsuite.utils::validateIsLogical(
-    object = c(exportCSV, exportPKML, exportXML, RunForAllOutputs)
+    object = c(exportCSV, exportPKML, exportJSON, exportXML, RunForAllOutputs)
   )
   ospsuite.utils::validateIsCharacter(object = c(..., output))
 

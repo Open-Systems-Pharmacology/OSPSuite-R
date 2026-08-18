@@ -29,6 +29,7 @@ articles:
     desc: Details about primary functions that work on projects
     contents:
     - mobi-projects
+    - snapshots
 
   - title: Working with simulations
     navbar: Working with simulations
@@ -41,7 +42,6 @@ articles:
     - sensitivity-analysis
     - create-individual
     - create-run-population
-    - snapshots
 
   - title: Figure creation
     navbar: Figure creation
