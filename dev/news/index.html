@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,6 +22,7 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
     <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><a class="dropdown-item" href="../articles/snapshots.html">Working with snapshots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
@@ -31,7 +32,6 @@
     <li><a class="dropdown-item" href="../articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
     <li><a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a></li>
     <li><a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a></li>
-    <li><a class="dropdown-item" href="../articles/snapshots.html">Working with snapshots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Figure creation</h6></li>
     <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
@@ -82,6 +82,8 @@
 <li>Added <code><a href="../reference/loadSimulationsFromSnapshot.html">loadSimulationsFromSnapshot()</a></code> to load simulations stored in a PK-Sim snapshot file as <code>Simulation</code> objects, optionally filtering by simulation name (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1929" class="external-link">#1929</a>). Requesting a name that is not in the snapshot raises an error; pass <code>ignoreIfNotFound = TRUE</code> to return <code>NULL</code> for missing names instead. See <code><a href="../articles/snapshots.html">vignette("snapshots")</a></code> for an overview of the snapshot helpers. Note: MoBi snapshots are not yet supported.</li>
 <li>
 <code>DataCombined$toDataFrame()</code> now returns the <code>name</code> and <code>group</code> columns as factors whose levels follow the order in which datasets (and groups) were added. As a result, plots built from <code>DataCombined</code> objects (<code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code>, <code><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved()</a></code>, <code><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate()</a></code>, etc.) now display legend entries in the order <code>DataSet</code> and <code>SimulationResults</code> objects were added, rather than in alphabetical order. This also keeps <code>name</code>- and <code>group</code>-based legends consistent in observed-vs-predicted plots, where the two variables may otherwise diverge (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/1241" class="external-link">#1241</a>).</li>
+<li>
+<code><a href="../reference/runSimulationsFromSnapshot.html">runSimulationsFromSnapshot()</a></code> now validates the <code>exportJSON</code> argument like the other export flags. Previously a non-logical value (e.g. <code>exportJSON = "TRUE"</code>) was silently treated as <code>FALSE</code> and no JSON was exported.</li>
 </ul></div>
 </div>
     <div class="section level2">

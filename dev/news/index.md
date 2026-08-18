@@ -94,6 +94,10 @@
   observed-vs-predicted plots, where the two variables may otherwise
   diverge
   ([\#1241](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1241)).
+- [`runSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulationsFromSnapshot.md)
+  now validates the `exportJSON` argument like the other export flags.
+  Previously a non-logical value (e.g. `exportJSON = "TRUE"`) was
+  silently treated as `FALSE` and no JSON was exported.
 
 ## ospsuite 12.4.4
 

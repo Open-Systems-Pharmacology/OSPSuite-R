@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,7 @@
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
     <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><a class="dropdown-item" href="../articles/snapshots.html">Working with snapshots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
@@ -47,7 +48,6 @@
     <li><a class="dropdown-item" href="../articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
     <li><a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a></li>
     <li><a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a></li>
-    <li><a class="dropdown-item" href="../articles/snapshots.html">Working with snapshots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Figure creation</h6></li>
     <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
@@ -234,7 +234,7 @@ simulation</strong>. Once a population is assigned, the simulation
 <code>runSimulations(simulation)</code> (without the
 <code>population</code> argument) runs it for the whole population:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span>, loadFromCache <span class="op">=</span> <span class="cn">FALSE</span>, addToCache <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Assign the population to the simulation</span></span>
 <span><span class="va">sim</span><span class="op">$</span><span class="va">population</span> <span class="op">&lt;-</span> <span class="va">myPopulation</span></span>
@@ -261,34 +261,41 @@ assign <code>NULL</code> to remove the population:</p>
 <span><span class="va">sim</span><span class="op">$</span><span class="va">isPopulation</span></span>
 <span><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
 <p>This is simply an <strong>alternative</strong> to the
-<code>population</code> argument shown above - both approaches are fully
-supported. Assigning the population to the simulation is useful when you
-want to <strong>run several population simulations in a single
-call</strong>: assign a population to each simulation and pass them all
-to <code><a href="../reference/runSimulations.html">runSimulations()</a></code> together. (The <code>population</code>
-argument, by contrast, only works with a single simulation.)</p>
+<code>population</code> argument shown above, with one important
+difference: <strong>aging data can only be supplied via the
+<code>agingData</code> argument of
+<code><a href="../reference/runSimulations.html">runSimulations()</a></code></strong>. There is no aging-data field on
+the simulation, and assigning a population (or <code>NULL</code>) to
+<code>sim$population</code> <em>clears</em> any aging data previously
+set on the simulation, because aging data is only meaningful together
+with the population it was generated for. For aging population
+simulations, use the <code>population</code>/<code>agingData</code>
+arguments of <code><a href="../reference/runSimulations.html">runSimulations()</a></code>. Assigning the population to
+the simulation is useful when you want to <strong>run several population
+simulations in a single call</strong>: assign a population to each
+simulation and pass them all to <code><a href="../reference/runSimulations.html">runSimulations()</a></code> together.
+(The <code>population</code> argument, by contrast, only works with a
+single simulation.)</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load two separate simulations (here from the same file, for illustration)</span></span>
 <span><span class="va">sim1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span>, loadFromCache <span class="op">=</span> <span class="cn">FALSE</span>, addToCache <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">sim2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span>, loadFromCache <span class="op">=</span> <span class="cn">FALSE</span>, addToCache <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Each simulation carries its own population</span></span>
+<span><span class="co"># Assign a population to each simulation. The population is stored by</span></span>
+<span><span class="co"># reference: here both simulations share the same `myPopulation` object, so</span></span>
+<span><span class="co"># modifying it later (e.g. with the `Population` class method</span></span>
+<span><span class="co"># `myPopulation$setParameterValues()`) would affect both.</span></span>
+<span><span class="co"># Assign distinct `Population` objects if the simulations should differ.</span></span>
 <span><span class="va">sim1</span><span class="op">$</span><span class="va">population</span> <span class="op">&lt;-</span> <span class="va">myPopulation</span></span>
 <span><span class="va">sim2</span><span class="op">$</span><span class="va">population</span> <span class="op">&lt;-</span> <span class="va">myPopulation</span></span>
 <span></span>
-<span><span class="co"># Both population simulations are run in one call</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">sim1</span>, <span class="va">sim2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Both population simulations are run in one call. Naming the input list gives</span></span>
+<span><span class="co"># the result list readable names; with an unnamed list, results are keyed by</span></span>
+<span><span class="co"># the simulations' auto-generated ids instead.</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>firstSim <span class="op">=</span> <span class="va">sim1</span>, secondSim <span class="op">=</span> <span class="va">sim2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># `results` is a named list with one `SimulationResults` object per simulation</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $litNuC8LikKQ62tVGp6V7w</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SimulationResults&gt;</span></span></span>
-<span><span class="co">#&gt;   • Number of individuals: 50</span></span>
-<span><span class="co">#&gt; <span style="font-weight: bold;">For paths</span>:</span></span>
-<span><span class="co">#&gt;   • Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)</span></span>
-<span><span class="co">#&gt;   • Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`iZxttbUCBUKP4GUF3-K3YQ`</span></span>
+<span><span class="va">results</span><span class="op">$</span><span class="va">firstSim</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;SimulationResults&gt;</span></span></span>
 <span><span class="co">#&gt;   • Number of individuals: 50</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">For paths</span>:</span></span>

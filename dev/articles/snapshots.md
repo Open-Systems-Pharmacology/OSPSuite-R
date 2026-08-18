@@ -10,6 +10,11 @@ exposes helpers to load simulations from a snapshot, run simulations
 stored in a snapshot, and convert between the snapshot and project
 formats.
 
+> **Note**
+>
+> The helpers described in this vignette support **PK-Sim snapshots
+> only**; MoBi snapshots are not yet supported.
+
 ``` r
 
 library(ospsuite)
@@ -140,8 +145,8 @@ The export formats are controlled independently:
 - `exportJSON` (default `FALSE`) — results as JSON.
 - `exportXML` (default `FALSE`) — simulations as XML.
 
-Set `RunForAllOutputs = TRUE` to compute all model outputs instead of
-only the output selections defined in the snapshot.
+Set `RunForAllOutputs = TRUE` (default: `FALSE`) to compute all model
+outputs instead of only the output selections defined in the snapshot.
 
 You can also point the function at a directory and it will process every
 snapshot in it:
@@ -197,7 +202,7 @@ projectFile <- list.files(projectDir, pattern = "\\.pksim5$", full.names = TRUE)
 projectFile
 ```
 
-    ## [1] "/tmp/Rtmp3NdsCw/project/test_snapshot.pksim5"
+    ## [1] "/tmp/RtmpTwfFtP/project/test_snapshot.pksim5"
 
 Set `runSimulations = TRUE` to also run the simulations during this
 conversion.

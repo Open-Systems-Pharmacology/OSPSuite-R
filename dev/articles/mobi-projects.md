@@ -348,9 +348,10 @@ head(expProfilesDf$initialConditions)
 A single building block exported to a `.pkml` file can be re-loaded with
 [`loadBuildingBlockFromPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadBuildingBlockFromPKML.md).
 The function works for every type listed in `BuildingBlockTypes`
-(Spatial Structure, Molecules, Reactions, Passive Transports, Observers,
-Event Groups, Initial Conditions, Parameter Values, Expression Profile,
-Individual). Pair it with the `save*ToPKML()` helpers
+(`SpatialStructure`, `Molecules`, `Reactions`, `Passive Transports`,
+`Observers`, `EventGroups`, `Initial Conditions`, `Parameter Values`,
+`Expression Profile`, `Individual`). Pair it with the `save*ToPKML()`
+helpers
 ([`saveInitialConditionsToPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/saveInitialConditionsToPKML.md),
 [`saveParameterValuesToPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/saveParameterValuesToPKML.md),
 [`saveIndividualToPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/saveIndividualToPKML.md),
@@ -461,12 +462,12 @@ either be passed at creation time via the `buildingBlocks` argument or
 added later via `MoBiModule$addBuildingBlocks()`. Building blocks are
 removed individually via `MoBiModule$removeBuildingBlock()`.
 
-Single-type building blocks (Molecules, Reactions, Spatial Structure,
-Passive Transports, Observers, Event Groups) can appear at most once per
-module. Adding a second building block of the same single type — either
-at creation or via `addBuildingBlocks()` — raises an error. Initial
-Conditions and Parameter Values building blocks may appear multiple
-times.
+Single-type building blocks (`Molecules`, `Reactions`,
+`SpatialStructure`, `Passive Transports`, `Observers`, `EventGroups`)
+can appear at most once per module. Adding a second building block of
+the same single type — either at creation or via `addBuildingBlocks()` —
+raises an error. Initial Conditions and Parameter Values building blocks
+may appear multiple times.
 
 ``` r
 
@@ -507,12 +508,12 @@ myModule <- createMoBiModule(
 ```
 
 `MoBiModule$removeBuildingBlock(name, type)` removes a building block by
-its name and type. For single-type building blocks (Molecules,
-Reactions, Spatial Structure, Passive Transports, Observers, Event
-Groups) the `name` is verified against the lone BB’s `Name` property;
-for Initial Conditions and Parameter Values, `name` selects the BB
-within the type. Removing Expression Profile or Individual via this
-method is not supported (neither is module-level).
+its name and type. For single-type building blocks (`Molecules`,
+`Reactions`, `SpatialStructure`, `Passive Transports`, `Observers`,
+`EventGroups`) the `name` is verified against the lone BB’s `Name`
+property; for Initial Conditions and Parameter Values, `name` selects
+the BB within the type. Removing Expression Profile or Individual via
+this method is not supported (neither is module-level).
 
 ``` r
 
@@ -781,7 +782,7 @@ BBs:
   Extending a PV BB by entries for local parameters of specified
   molecules in all physical containers of a spatial structure. This
   function does not add parameters whose values are defined by a
-  formula”, e.g., the “Relative expression” parameters for proteins.
+  formula, e.g., the “Relative expression” parameters for proteins.
 - [`addProteinExpressionToParameterValuesBB()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addProteinExpressionToParameterValuesBB.md):
   Extending a PV BB by parameters defining expression of protein
   molecules in selected organs.
@@ -790,8 +791,8 @@ Furthermore, for building blocks of type “Parameter Values”, “Initial
 Conditions”, “Expression Profiles”, and “Individual”, there are
 functions to export them to a PKML (`.pkml`) file.
 
-So in the first step we load the extension module “Thyroid” from a pkml
-file:
+So in the first step we load the extension module (named
+`Thyroid_Generic`) from the `Thyroid.pkml` file:
 
 ``` r
 
@@ -807,9 +808,9 @@ molecules defined in other modules of our project:
 
 ``` r
 
-# Get the IC BB from the Thyroid module. The module has only one IC BB.
+# Get the IC BB from the loaded `Thyroid_Generic` module. It has only one IC BB.
 icBB <- thyroidModule$getInitialConditionsBBs()[[1]]
-# Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"
+# Extend the IC BB of the module "Thyroid_Generic" with molecules from base module "Thyroid_QST"
 newPaths <- extendInitialConditionsBB(
   initialConditionsBuildingBlock = icBB,
   spatialStructureModule = thyroidModule,

@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,7 @@
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
     <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><a class="dropdown-item" href="../articles/snapshots.html">Working with snapshots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
@@ -47,7 +48,6 @@
     <li><a class="dropdown-item" href="../articles/sensitivity-analysis.html">Sensitivity analysis</a></li>
     <li><a class="dropdown-item" href="../articles/create-individual.html">Creating individuals</a></li>
     <li><a class="dropdown-item" href="../articles/create-run-population.html">Population simulations</a></li>
-    <li><a class="dropdown-item" href="../articles/snapshots.html">Working with snapshots</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Figure creation</h6></li>
     <li><a class="dropdown-item" href="../articles/observed-data.html">Observed data</a></li>
@@ -354,10 +354,13 @@ block also lists these values under an “Origin data” section.</p>
 </h2>
 <p>A single building block exported to a <code>.pkml</code> file can be
 re-loaded with <code><a href="../reference/loadBuildingBlockFromPKML.html">loadBuildingBlockFromPKML()</a></code>. The function
-works for every type listed in <code>BuildingBlockTypes</code> (Spatial
-Structure, Molecules, Reactions, Passive Transports, Observers, Event
-Groups, Initial Conditions, Parameter Values, Expression Profile,
-Individual). Pair it with the <code>save*ToPKML()</code> helpers
+works for every type listed in <code>BuildingBlockTypes</code>
+(<code>SpatialStructure</code>, <code>Molecules</code>,
+<code>Reactions</code>, <code>Passive Transports</code>,
+<code>Observers</code>, <code>EventGroups</code>,
+<code>Initial Conditions</code>, <code>Parameter Values</code>,
+<code>Expression Profile</code>, <code>Individual</code>). Pair it with
+the <code>save*ToPKML()</code> helpers
 (<code><a href="../reference/saveInitialConditionsToPKML.html">saveInitialConditionsToPKML()</a></code>,
 <code><a href="../reference/saveParameterValuesToPKML.html">saveParameterValuesToPKML()</a></code>,
 <code><a href="../reference/saveIndividualToPKML.html">saveIndividualToPKML()</a></code>,
@@ -448,12 +451,14 @@ default; building blocks can either be passed at creation time via the
 <code>buildingBlocks</code> argument or added later via
 <code>MoBiModule$addBuildingBlocks()</code>. Building blocks are removed
 individually via <code>MoBiModule$removeBuildingBlock()</code>.</p>
-<p>Single-type building blocks (Molecules, Reactions, Spatial Structure,
-Passive Transports, Observers, Event Groups) can appear at most once per
-module. Adding a second building block of the same single type — either
-at creation or via <code>addBuildingBlocks()</code> — raises an error.
-Initial Conditions and Parameter Values building blocks may appear
-multiple times.</p>
+<p>Single-type building blocks (<code>Molecules</code>,
+<code>Reactions</code>, <code>SpatialStructure</code>,
+<code>Passive Transports</code>, <code>Observers</code>,
+<code>EventGroups</code>) can appear at most once per module. Adding a
+second building block of the same single type — either at creation or
+via <code>addBuildingBlocks()</code> — raises an error. Initial
+Conditions and Parameter Values building blocks may appear multiple
+times.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Empty module</span></span>
 <span><span class="va">myModule</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMoBiModule.html">createMoBiModule</a></span><span class="op">(</span><span class="st">"MyCustomModule"</span><span class="op">)</span></span>
@@ -487,12 +492,13 @@ call:</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p><code>MoBiModule$removeBuildingBlock(name, type)</code> removes a
 building block by its name and type. For single-type building blocks
-(Molecules, Reactions, Spatial Structure, Passive Transports, Observers,
-Event Groups) the <code>name</code> is verified against the lone BB’s
-<code>Name</code> property; for Initial Conditions and Parameter Values,
-<code>name</code> selects the BB within the type. Removing Expression
-Profile or Individual via this method is not supported (neither is
-module-level).</p>
+(<code>Molecules</code>, <code>Reactions</code>,
+<code>SpatialStructure</code>, <code>Passive Transports</code>,
+<code>Observers</code>, <code>EventGroups</code>) the <code>name</code>
+is verified against the lone BB’s <code>Name</code> property; for
+Initial Conditions and Parameter Values, <code>name</code> selects the
+BB within the type. Removing Expression Profile or Individual via this
+method is not supported (neither is module-level).</p>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Remove the Molecules BB attached above (its name is the source BB's name)</span></span>
 <span><span class="va">myModule</span><span class="op">$</span><span class="fu">removeBuildingBlock</span><span class="op">(</span></span>
@@ -752,7 +758,7 @@ from the PV BB.</li>
 <code><a href="../reference/addLocalMoleculeParametersToParameterValuesBB.html">addLocalMoleculeParametersToParameterValuesBB()</a></code>:
 Extending a PV BB by entries for local parameters of specified molecules
 in all physical containers of a spatial structure. This function does
-not add parameters whose values are defined by a formula”, e.g., the
+not add parameters whose values are defined by a formula, e.g., the
 “Relative expression” parameters for proteins.</li>
 <li>
 <code><a href="../reference/addProteinExpressionToParameterValuesBB.html">addProteinExpressionToParameterValuesBB()</a></code>: Extending a
@@ -762,8 +768,9 @@ organs.</li>
 <p>Furthermore, for building blocks of type “Parameter Values”, “Initial
 Conditions”, “Expression Profiles”, and “Individual”, there are
 functions to export them to a PKML (<code>.pkml</code>) file.</p>
-<p>So in the first step we load the extension module “Thyroid” from a
-pkml file:</p>
+<p>So in the first step we load the extension module (named
+<code>Thyroid_Generic</code>) from the <code>Thyroid.pkml</code>
+file:</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">thyroidModule</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadModuleFromPKML.html">loadModuleFromPKML</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
 <span>  <span class="st">"extdata"</span>,</span>
@@ -773,9 +780,9 @@ pkml file:</p>
 <p>Then we extend the initial conditions BB of the loaded module by
 molecules defined in other modules of our project:</p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Get the IC BB from the Thyroid module. The module has only one IC BB.</span></span>
+<code class="sourceCode R"><span><span class="co"># Get the IC BB from the loaded `Thyroid_Generic` module. It has only one IC BB.</span></span>
 <span><span class="va">icBB</span> <span class="op">&lt;-</span> <span class="va">thyroidModule</span><span class="op">$</span><span class="fu">getInitialConditionsBBs</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co"># Extend the IC BB of the module "Thyroid" with molecules from base module "Thyroid_QST"</span></span>
+<span><span class="co"># Extend the IC BB of the module "Thyroid_Generic" with molecules from base module "Thyroid_QST"</span></span>
 <span><span class="va">newPaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extendInitialConditionsBB.html">extendInitialConditionsBB</a></span><span class="op">(</span></span>
 <span>  initialConditionsBuildingBlock <span class="op">=</span> <span class="va">icBB</span>,</span>
 <span>  spatialStructureModule <span class="op">=</span> <span class="va">thyroidModule</span>,</span>
