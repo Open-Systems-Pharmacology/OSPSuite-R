@@ -10,6 +10,69 @@
   plotObject + ggplot2::theme(legend.title = ggplot2::element_blank())
 }
 
+#' Build legend prefix for aggregated population time profiles
+#'
+#' @param aggregation Aggregation mode for simulated population data.
+#' @param quantiles Numeric vector of length 3 used for quantile aggregation.
+#' @param nsd Number of standard deviations used by mean-based aggregations.
+#'
+#' @return A character scalar to prepend to simulated dataset legend entries.
+#' @keywords internal
+#' @noRd
+.buildPopulationLegendPrefix <- function(aggregation, quantiles, nsd) {
+  if (is.null(aggregation)) {
+    return("")
+  }
+
+  if (aggregation == DataAggregationMethods$quantiles) {
+    quantiles <- sort(quantiles)
+    txtQuantiles <- .formatQuantiles(quantiles)
+
+    return(paste0(
+      txtQuantiles[2],
+      " and [",
+      txtQuantiles[1],
+      "-",
+      txtQuantiles[3],
+      "] percentiles for"
+    ))
+  }
+
+  sdLabel <- "SD"
+  if (nsd != 1) {
+    sdLabel <- paste0(format(nsd, digits = 3), "*SD")
+  }
+  if (aggregation == DataAggregationMethods$arithmetic) {
+    return(paste("Mean \u00B1", sdLabel, "for"))
+  }
+  if (aggregation == DataAggregationMethods$geometric) {
+    return(paste("Mean \u00D7/\u00F7", sdLabel, "for"))
+  }
+
+  return("")
+}
+
+#' Format quantiles for legend display
+#'
+#' @keywords internal
+#' @noRd
+.formatQuantiles <- function(x) {
+  naIndex <- is.na(x)
+  x[naIndex] <- 1
+  suffixMatrix <- utils::stack(lapply(
+    scales::ordinal_english(),
+    grep,
+    x = 100 * x,
+    perl = TRUE
+  ))
+  suffixValues <- suffixMatrix$ind[!duplicated(suffixMatrix$values)]
+  txtQuantiles <- paste0(100 * x, suffixValues)
+  txtQuantiles[naIndex] <- NA
+  # 50th as Median
+  txtQuantiles <- gsub(pattern = "50th", replacement = "Median", txtQuantiles)
+  return(txtQuantiles)
+}
+
 #' @title Create Time Profile Plot
 #'
 #' @description Creates a time profile plot for given data.
@@ -1508,7 +1571,7 @@ plotQuantileQuantilePlot <- function(
 #' @noRd
 .aggregateSimulatedData <- function(plotData, aggregation, quantiles, nsd = 1) {
   # initialize variables used in data.table syntax
-  IndividualId <- dataType <- NULL # nolint
+  IndividualId <- dataType <- name <- NULL # nolint
 
   checkmate::assertChoice(
     aggregation,
@@ -1537,6 +1600,12 @@ plotQuantileQuantilePlot <- function(
     ) {
       # Extract aggregated simulated data (relevant only for the population plot)
       if (!is.null(aggregation)) {
+        legendPrefix <- .buildPopulationLegendPrefix(
+          aggregation = aggregation,
+          quantiles = quantiles,
+          nsd = nsd
+        )
+
         aggregationFunction <- switch(
           aggregation,
           "quantiles" = function(x) {
@@ -1601,6 +1670,10 @@ plotQuantileQuantilePlot <- function(
           dataToAdd,
           by = c("group", "name")
         )
+
+        if (!identical(legendPrefix, "")) {
+          simAggregatedData[, name := paste(legendPrefix, name)]
+        }
 
         plotData <- rbind(
           plotData[dataType == "observed"],
