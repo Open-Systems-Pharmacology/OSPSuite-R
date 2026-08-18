@@ -56,6 +56,7 @@
 #'
 #' @keywords internal
 #' @noRd
+#' @importFrom scales ordinal_english
 .formatQuantiles <- function(x) {
   naIndex <- is.na(x)
   x[naIndex] <- 1
