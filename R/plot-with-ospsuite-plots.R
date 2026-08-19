@@ -19,7 +19,7 @@
 #' @return A character scalar to prepend to simulated dataset legend entries.
 #' @keywords internal
 #' @noRd
-.buildPopulationLegendPrefix <- function(aggregation, quantiles, nsd) {
+.buildPopulationLegendPrefix <- function(aggregation, quantiles, nsd = 1) {
   if (is.null(aggregation)) {
     return("")
   }
