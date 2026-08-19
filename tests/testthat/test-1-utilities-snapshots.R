@@ -53,6 +53,7 @@ test_that("runSimulationsFromSnapshot arguments are checked", {
   temp_dir <- withr::local_tempdir()
 
   expect_error(runSimulationsFromSnapshot(path, exportCSV = "path/to/my.csv"))
+  expect_error(runSimulationsFromSnapshot(path, exportJSON = "TRUE"))
   expect_error(runSimulationsFromSnapshot(path, output = 1))
 
   # provide wrong input/output paths
