@@ -70,7 +70,7 @@
   txtQuantiles <- paste0(100 * x, suffixValues)
   txtQuantiles[naIndex] <- NA
   # 50th as Median
-  txtQuantiles <- gsub(pattern = "50th", replacement = "Median", txtQuantiles)
+  txtQuantiles <- gsub(pattern = "^50th$", replacement = "Median", txtQuantiles)
   return(txtQuantiles)
 }
 
