@@ -955,3 +955,94 @@ test_that("It supports nsd = 2 for wider intervals", {
   expect_true(result2sd$yMin < result1sd$yMin)
   expect_true(result2sd$yMax > result1sd$yMax)
 })
+
+# .buildPopulationLegendPrefix ----------------
+
+test_that("It builds quantile-based population legend prefix", {
+  result <- .buildPopulationLegendPrefix(
+    aggregation = DataAggregationMethods$quantiles,
+    quantiles = c(0.05, 0.5, 0.95),
+    nsd = 1
+  )
+
+  expect_equal(
+    result,
+    "Median and [5th-95th] percentiles for"
+  )
+
+  result <- .buildPopulationLegendPrefix(
+    aggregation = DataAggregationMethods$quantiles,
+    quantiles = c(0.025, 0.5, 0.975)
+  )
+
+  expect_equal(
+    result,
+    "Median and [2.5th-97.5th] percentiles for"
+  )
+})
+
+test_that("It builds arithmetic population legend prefix", {
+  result <- .buildPopulationLegendPrefix(
+    aggregation = DataAggregationMethods$arithmetic,
+    quantiles = NULL,
+    nsd = 2
+  )
+
+  expect_equal(result, "Mean ± 2*SD for")
+
+  result <- .buildPopulationLegendPrefix(
+    aggregation = DataAggregationMethods$arithmetic,
+    quantiles = NULL,
+    nsd = 1
+  )
+
+  expect_equal(result, "Mean ± SD for")
+})
+
+test_that("It builds geometric population legend prefix", {
+  result <- .buildPopulationLegendPrefix(
+    aggregation = DataAggregationMethods$geometric,
+    quantiles = NULL,
+    nsd = 1.5
+  )
+
+  expect_equal(result, "Mean ×/÷ 1.5*SD for")
+
+  result <- .buildPopulationLegendPrefix(
+    aggregation = DataAggregationMethods$geometric,
+    quantiles = NULL,
+    nsd = 1
+  )
+
+  expect_equal(result, "Mean ×/÷ SD for")
+})
+
+test_that("It prefixes simulated names after population aggregation", {
+  set.seed(123)
+  plotData <- data.table(
+    xValues = rep(1, 10),
+    yValues = rnorm(10, 10, 2),
+    group = rep("A", 10),
+    name = rep("Sim1", 10),
+    dataType = rep("simulated", 10),
+    IndividualId = 1:10,
+    xUnit = "h",
+    yUnit = "mg/l"
+  )
+
+  result <- .aggregateSimulatedData(
+    plotData,
+    aggregation = "quantiles",
+    quantiles = c(0.05, 0.5, 0.95),
+    nsd = 1
+  )
+
+  expect_true(
+    all(
+      grepl(
+        "^Median and \\[5th-95th\\] percentiles for Sim1$",
+        result$name
+      )
+    )
+  )
+})

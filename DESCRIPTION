@@ -38,7 +38,8 @@ Imports:
     cli,
     rSharp,
     checkmate,
-    R6
+    R6,
+    scales
 Suggests:
     knitr,
     rmarkdown,

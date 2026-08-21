@@ -217,6 +217,7 @@ importFrom(ospsuite.utils,
   enumRemove,
   enumValues
 )
+importFrom(scales,ordinal_english)
 importFrom(tlf,
   PlotGridConfiguration,
   plotGrid
