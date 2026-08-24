@@ -2,7 +2,7 @@
 
 # Silence lifecycle deprecation warnings during the test run so they don't
 # pollute output. Tests that specifically assert deprecation warnings
-# re-enable verbosity locally (see test-1-deprecation-tlf-functions.R).
+# re-enable verbosity locally.
 # Stash the previous value so teardown can restore it instead of clearing it.
 options(
   ospsuite.tests.prev_lifecycle_verbosity = getOption("lifecycle_verbosity")
