@@ -576,7 +576,7 @@ ospUnits <- NULL
     (any(colnames(data) == "yErrorValues")) &&
       !(any(colnames(data) == "yErrorUnit"))
   ) {
-    data <- dplyr::mutate(data, yErrorUnit = yTargetUnit)
+    data <- dplyr::mutate(data, yErrorUnit = yUnit)
   }
 
   # unit conversions --------------------------
