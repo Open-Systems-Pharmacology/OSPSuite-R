@@ -17,9 +17,10 @@ calculation.  Accepted values are \code{"lin"} / \code{"linear"} for linear resi
 to simulated (observed / simulated).}
 
 \item{xUnit, yUnit}{Target units for \code{xValues} and \code{yValues}, respectively. If
-not specified (\code{NULL}), the first existing unit in the respective
-columns will be selected as the common unit. For available dimensions
-and units, see \code{ospsuite::ospDimensions} and \code{ospsuite::ospUnits}.}
+not specified (\code{NULL}), the most frequently occurring unit in the
+respective column is used, with observed-data units preferred over
+simulated when both are present. For available dimensions and units, see
+\code{ospsuite::ospDimensions} and \code{ospsuite::ospUnits}.}
 }
 \value{
 A tibble (data frame) containing paired observed-simulated data with calculated

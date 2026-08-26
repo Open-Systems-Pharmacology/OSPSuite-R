@@ -544,8 +544,14 @@ ospUnits <- NULL
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
 #' @keywords internal
 .unitConverter <- function(data, xUnit, yUnit) {
-  # No validation of inputs for this non-exported function.
-  # All validation will take place in the `DataCombined` class itself.
+  validateIsOfType(data, "data.frame", nullAllowed = FALSE)
+  # isSupportedUnit() calls validateIsString() internally, rejecting NULL/non-string
+  if (!isSupportedUnit(xUnit)) {
+    stop(messages$errorUnitNotSupported(xUnit, "unknown"))
+  }
+  if (!isSupportedUnit(yUnit)) {
+    stop(messages$errorUnitNotSupported(yUnit, "unknown"))
+  }
 
   # target units --------------------------
   # Rename `x/yUnit`` as `x/yTargetUnit` to prevent issues with 

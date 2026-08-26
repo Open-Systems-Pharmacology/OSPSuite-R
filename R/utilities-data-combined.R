@@ -21,10 +21,10 @@
 #'
 #' @param dataCombined A single instance of `DataCombined` class.
 #' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
-#'   not specified (`NULL`), first of the existing units in the respective
-#'   columns (`xUnit` and `yUnit`) will be selected as the common unit. For
-#'   available dimensions and units, see `ospsuite::ospDimensions` and
-#'   `ospsuite::ospUnits`, respectively.
+#'   not specified (`NULL`), the most frequently occurring unit in the
+#'   respective column is used, with observed-data units preferred over
+#'   simulated when both are present. For available dimensions and units, see
+#'   `ospsuite::ospDimensions` and `ospsuite::ospUnits`, respectively.
 #'
 #' @return
 #'
@@ -259,9 +259,10 @@ addResidualColumn <- function(
 #'   (log(simulated) - log(observed)), or `"ratio"` for the ratio of observed
 #'   to simulated (observed / simulated).
 #' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
-#'   not specified (`NULL`), the first existing unit in the respective
-#'   columns will be selected as the common unit. For available dimensions
-#'   and units, see `ospsuite::ospDimensions` and `ospsuite::ospUnits`.
+#'   not specified (`NULL`), the most frequently occurring unit in the
+#'   respective column is used, with observed-data units preferred over
+#'   simulated when both are present. For available dimensions and units, see
+#'   `ospsuite::ospDimensions` and `ospsuite::ospUnits`.
 #'
 #' @return
 #' A tibble (data frame) containing paired observed-simulated data with calculated
