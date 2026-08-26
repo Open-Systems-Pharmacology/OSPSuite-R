@@ -547,18 +547,6 @@ ospUnits <- NULL
   # No validation of inputs for this non-exported function.
   # All validation will take place in the `DataCombined` class itself.
 
-  # early return --------------------------
-
-  # *DO NOT* use short-circuiting `&&` logical operator here.
-  if (
-    length(unique(data$xUnit)) == 1L &
-      data$xUnit[[1L]] == xUnit &
-      length(unique(data$yUnit)) == 1L &
-      data$yUnit[[1L]] == yUnit
-  ) {
-    return(data)
-  }
-
   # target units --------------------------
   # Rename `x/yUnit`` as `x/yTargetUnit` to prevent issues with 
   # data.table column names being the same name as variables
@@ -588,7 +576,7 @@ ospUnits <- NULL
     (any(colnames(data) == "yErrorValues")) &&
       !(any(colnames(data) == "yErrorUnit"))
   ) {
-    data <- dplyr::mutate(data, yErrorUnit = yUnit)
+    data <- dplyr::mutate(data, yErrorUnit = yTargetUnit)
   }
 
   # unit conversions --------------------------
@@ -715,77 +703,6 @@ ospUnits <- NULL
 #' @keywords internal
 .removeEmptyDataFrame <- function(x) {
   purrr::keep(x, function(data) nrow(data) > 0L)
-}
-
-
-#' @keywords internal
-#' @noRd
-.xUnitConverter <- function(xData, xTargetUnit) {
-  xData$xValues <- toUnit(
-    quantityOrDimension = xData$xDimension[[1]],
-    values = xData$xValues,
-    targetUnit = xTargetUnit,
-    sourceUnit = xData$xUnit[[1]]
-  )
-
-  xData$xUnit <- xTargetUnit
-
-  return(xData)
-}
-
-#' @keywords internal
-#' @noRd
-.yUnitConverter <- function(yData, yTargetUnit) {
-  yData$yValues <- toUnit(
-    quantityOrDimension = yData$yDimension[[1]],
-    values = yData$yValues,
-    targetUnit = yTargetUnit,
-    sourceUnit = yData$yUnit[[1]],
-    molWeight = yData$molWeight[[1]],
-    molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
-  )
-
-  if (any(colnames(yData) == "lloq")) {
-    yData$lloq <- toUnit(
-      quantityOrDimension = yData$yDimension[[1]],
-      values = yData$lloq,
-      targetUnit = yTargetUnit,
-      sourceUnit = yData$yUnit[[1]],
-      molWeight = yData$molWeight[[1]],
-      molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
-    )
-  }
-
-  yData$yUnit <- yTargetUnit
-
-  return(yData)
-}
-
-#' @keywords internal
-#' @noRd
-.yErrorUnitConverter <- function(yData, yTargetUnit) {
-  # If error type is geometric, conversion of `yValues` to different units
-  # should not trigger conversion of error values (and units)
-  if (
-    any(colnames(yData) == "yErrorType") &&
-      !is.na(unique(yData$yErrorType)) &&
-      unique(yData$yErrorType) == DataErrorType$GeometricStdDev
-  ) {
-    return(yData)
-  }
-
-  yData$yErrorValues <- toUnit(
-    quantityOrDimension = yData$yDimension[[1]],
-    values = yData$yErrorValues,
-    targetUnit = yTargetUnit,
-    sourceUnit = yData$yErrorUnit[[1]],
-    molWeight = yData$molWeight[[1]],
-    molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
-  )
-
-  yData$yErrorUnit <- yTargetUnit
-
-  return(yData)
 }
 
 
