@@ -221,5 +221,7 @@ ospsuite.plots::exportPlot(
 Or use `ggplot2::ggsave()` directly:
 
 ```{r save-ggsave, eval = FALSE}
+plotObject <- plotTimeProfile(myDataCombined)
+
 ggplot2::ggsave("timeprofile.png", plotObject, width = 8, height = 6, dpi = 300)
 ```
