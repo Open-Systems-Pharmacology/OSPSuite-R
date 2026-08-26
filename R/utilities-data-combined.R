@@ -78,8 +78,11 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
   # Extract combined data frame
   combinedData <- dataCombined$toDataFrame()
 
+  xTargetUnit <- xUnit %||% .extractMostFrequentUnit(combinedData, "xUnit")
+  yTargetUnit <- yUnit %||% .extractMostFrequentUnit(combinedData, "yUnit")
+
   # Getting all units on the same scale
-  combinedData <- .unitConverter(combinedData, xUnit, yUnit)
+  combinedData <- .unitConverter(combinedData, xTargetUnit, yTargetUnit)
 
   return(combinedData)
 }
@@ -312,7 +315,9 @@ calculateResiduals <- function(
   }
 
   # Getting all datasets to have the same units.
-  combinedData <- .unitConverter(combinedData, xUnit, yUnit)
+  xTargetUnit <- xUnit %||% .extractMostFrequentUnit(combinedData, "xUnit")
+  yTargetUnit <- yUnit %||% .extractMostFrequentUnit(combinedData, "yUnit")
+  combinedData <- .unitConverter(combinedData, xTargetUnit, yTargetUnit)
 
   # Create observed versus simulated paired data using interpolation for each
   # grouping level and combine the resulting data frames in a row-wise manner.

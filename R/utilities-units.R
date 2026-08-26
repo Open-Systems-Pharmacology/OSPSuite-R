@@ -511,7 +511,10 @@ ospUnits <- NULL
 #' Convert a data frame to common units
 #'
 #' @param data A data frame (or a tibble) from `DataCombined$toDataFrame()`.
-#' @inheritParams convertUnits
+#' @param xUnit Target unit for `xValues`. Use `.extractMostFrequentUnit(data, "xUnit")`
+#'   to select the most frequent unit from the data.
+#' @param yUnit Target unit for `yValues`. Use `.extractMostFrequentUnit(data, "yUnit")`
+#'   to select the most frequent unit from the data.
 #'
 #' @seealso toUnit
 #'
@@ -531,45 +534,36 @@ ospUnits <- NULL
 #'   molWeight = c(10, 10, 20, 20, 20, 10)
 #' ))
 #'
-#' # default conversion
-#' ospsuite:::.unitConverter(df)
+#' # pick target units from data, then convert
+#' ospsuite:::.unitConverter(df,
+#'   xUnit = ospsuite:::.extractMostFrequentUnit(df, "xUnit"),
+#'   yUnit = ospsuite:::.extractMostFrequentUnit(df, "yUnit")
+#' )
 #'
-#' # customizing conversion with specified unit(s)
-#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
-#' ospsuite:::.unitConverter(df, yUnit = ospUnits$Mass$kg)
+#' # explicit units
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
 #' @keywords internal
-.unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
+.unitConverter <- function(data, xUnit, yUnit) {
   # No validation of inputs for this non-exported function.
   # All validation will take place in the `DataCombined` class itself.
 
   # early return --------------------------
 
-  # Return early if there are only unique units present in the provided data and
-  # `xUnit` and `yUnit` arguments are `NULL`. This helps avoid expensive and
-  # redundant computations.
-  #
   # *DO NOT* use short-circuiting `&&` logical operator here.
   if (
     length(unique(data$xUnit)) == 1L &
-      is.null(xUnit) &
+      data$xUnit[[1L]] == xUnit &
       length(unique(data$yUnit)) == 1L &
-      is.null(yUnit)
+      data$yUnit[[1L]] == yUnit
   ) {
     return(data)
   }
 
   # target units --------------------------
-
-  # The observed and simulated data should have the same units for
-  # visual/graphical comparison.
-  #
-  # Therefore, if target units are not specified by the user, we need to choose
-  # one ourselves. The most frequent units will be selected: one for X-axis, and
-  # one for Y-axis. If multiple units are tied in terms of their frequency, the
-  # first will be selected.
-  xTargetUnit <- xUnit %||% .extractMostFrequentUnit(data, unitColumn = "xUnit")
-  yTargetUnit <- yUnit %||% .extractMostFrequentUnit(data, unitColumn = "yUnit")
+  # Rename `x/yUnit`` as `x/yTargetUnit` to prevent issues with 
+  # data.table column names being the same name as variables
+  xTargetUnit <- xUnit
+  yTargetUnit <- yUnit
 
   # Strategy --------------------------
 
@@ -602,7 +596,7 @@ ospUnits <- NULL
   # Convert to data.table for efficient in-place grouped operations.
   # `as.data.table()` creates a copy when the input is a tibble/data.frame,
   # so the caller's object is never modified by reference.
-  data <- as.data.table(data)
+  data <- data.table::as.data.table(data)
 
   # xUnit: convert xValues in-place, grouped by (xDimension, xUnit)
   data[,
