@@ -57,23 +57,11 @@ messages$printMultipleEntries <- function(header, entries) {
   message(cliFormat("{.emph {header}}:", paste("-", entries, collapse = "\n")))
 }
 
-messages$linearScaleWithFoldDistance <- function() {
-  cliFormat(
-    "Linear scale is inappropriate when {.field foldDistance} argument is specified."
-  )
-}
-
 messages$errorLoadingUnitsForDimension <- function(dimensions) {
   header <- cliFormat(
     "Could not load {.field units} for {length(dimensions)} {.field dimension{?s}}"
   )
   messages$printMultipleEntries(header, dimensions)
-}
-
-messages$plottingWithEmptyDataCombined <- function() {
-  cliFormat(
-    "No plot can be created because the entered {.field DataCombined} object does not contain any datasets."
-  )
 }
 
 messages$residualsCanNotBeComputed <- function() {
@@ -123,16 +111,6 @@ messages$simBatchStartValueNaN <- function(entityPaths) {
   cliFormat(
     "Start values of the entities with paths {.val {entityPaths}} is {.val NaN}!",
     "Cannot add such run values set"
-  )
-}
-
-messages$plotObservedVsSimulatedWrongFoldDistance <- function(
-  parameterName,
-  foldDistances
-) {
-  cliFormat(
-    "Parameter {.val {parameterName}} should be {.strong >1}!",
-    "Following values have been passed: {.val {foldDistances}}."
   )
 }
 

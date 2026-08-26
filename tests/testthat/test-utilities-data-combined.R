@@ -148,7 +148,7 @@ test_that("calculateResiduals handles single-point observed and simulated datase
     dataTypes = c("observed", "simulated")
   )
 
-  residuals <- calculateResiduals(myDC, scaling = tlf::Scaling$lin)
+  residuals <- calculateResiduals(myDC, scaling = "lin")
 
   expect_equal(as.vector(residuals$residualValues), 0, tolerance = 1e-5)
 })
