@@ -982,3 +982,77 @@ test_that("It ignores molecules that are not present in the simulation when over
     CellularPermeabilityMethods$`Charge dependent Schmitt`
   )
 })
+
+#### Creating multiple simulations ####
+# A configuration whose simulation cannot be created: the Aciclovir configuration
+# with its initial conditions selection dropped, as in the `createSimulation`
+# error test above.
+failingSimulationConfiguration <- function() {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "Aciclovir.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = TRUE
+  )
+  simConfig <- simulation$configuration
+  simConfig$selectedInitialConditions <- list("Vergin 1995 IV" = NULL)
+
+  return(simConfig)
+}
+
+test_that("createSimulations creates one simulation per configuration and keeps names and order", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  config <- sim$configuration
+
+  newSims <- createSimulations(list(
+    SimA = config,
+    SimB = config,
+    SimC = config
+  ))
+
+  expect_named(newSims, c("SimA", "SimB", "SimC"))
+  expect_equal(
+    vapply(newSims, function(newSim) newSim$name, FUN.VALUE = character(1)),
+    c(SimA = "SimA", SimB = "SimB", SimC = "SimC")
+  )
+})
+
+test_that("createSimulations reports a configuration that cannot be created and creates the others", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  config <- sim$configuration
+  failingConfig <- failingSimulationConfiguration()
+
+  expect_warning(
+    newSims <- createSimulations(list(Good = config, Bad = failingConfig)),
+    "Cannot create the simulation 'Bad'"
+  )
+
+  expect_named(newSims, c("Good", "Bad"))
+  expect_equal(newSims$Good$name, "Good")
+  expect_null(newSims$Bad)
+})
+
+test_that("createSimulations throws when a configuration cannot be created and stopIfFails is TRUE", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  config <- sim$configuration
+  failingConfig <- failingSimulationConfiguration()
+
+  expect_error(
+    createSimulations(
+      list(Good = config, Bad = failingConfig),
+      stopIfFails = TRUE
+    ),
+    "Cannot create the simulation 'Bad'"
+  )
+})
+
+test_that("createSimulations requires a named list of simulation configurations with unique names", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  config <- sim$configuration
+
+  expect_error(createSimulations(list(config)), "must be a named list")
+  expect_error(createSimulations(list(SimA = config, SimA = config)))
+  expect_error(createSimulations(list(SimA = sim)))
+})

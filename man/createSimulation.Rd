@@ -26,3 +26,6 @@ A \code{Simulation} object
 \description{
 Create a new simulation from a simulation configuration
 }
+\seealso{
+\code{\link[=createSimulations]{createSimulations()}} to create several simulations in one call.
+}

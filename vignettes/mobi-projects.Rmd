@@ -495,6 +495,21 @@ simulation <- createSimulation(
 )
 ```
 
+### Creating several simulations at once
+
+`createSimulations()` creates one simulation per entry of a named list of simulation configurations, the names of the list becoming the names of the created simulations. All simulations are created in a single call into the MoBi engine, which builds them in parallel.
+
+```{r createSeveralSimulations}
+simulations <- createSimulations(list(
+  Thyroid_QST_Human_copy_1 = configuration,
+  Thyroid_QST_Human_copy_2 = configuration
+))
+
+names(simulations)
+```
+
+A configuration that cannot be created does not fail the whole batch: a warning is shown and the entry of that simulation in the returned list is `NULL`. Pass `stopIfFails = TRUE` to raise an error instead.
+
 ### Warnings and errors during simulation creation
 
 `createSimulation()` validates the simulation configuration and reports any issues encountered during the creation process. If the simulation cannot be created (e.g., due to invalid or inconsistent configuration), an error is thrown with a description of all issues. If the simulation is created successfully but with non-critical issues, these are collected as warnings and can be displayed by setting `showWarnings = TRUE`. The following example demonstrates an error case:

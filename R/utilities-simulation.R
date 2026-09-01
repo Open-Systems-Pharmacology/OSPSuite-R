@@ -6,6 +6,7 @@
 #' @param showWarnings If `TRUE`, warnings generated during simulation creation will be shown as R warnings. Default is `FALSE`.
 #'
 #' @returns A `Simulation` object
+#' @seealso [createSimulations()] to create several simulations in one call.
 #' @export
 createSimulation <- function(
   simulationName,
@@ -16,11 +17,144 @@ createSimulation <- function(
   validateIsString(simulationName)
   validateIsOfType(simulationConfiguration, "SimulationConfiguration")
   validateIsLogical(c(createAllProcessRateParameters, showWarnings))
+
+  createSimulationResult <- .createSimulationsFromRequests(list(
+    .createSimulationRequest(
+      simulationName = simulationName,
+      simulationConfiguration = simulationConfiguration,
+      createAllProcessRateParameters = createAllProcessRateParameters
+    )
+  ))[[1]]
+
+  # get the simulation
+  sim <- createSimulationResult$get("Simulation")
+  # get warnings
+  warnings <- createSimulationResult$get("Warnings")
+
+  if (showWarnings && length(warnings) > 0) {
+    warning(paste(
+      "The following warnings were generated during simulation creation:\n",
+      paste(warnings, collapse = "\n")
+    ))
+  }
+  # get errors
+  errors <- createSimulationResult$get("Errors")
+  # If simulation could not be created, throw an error with all error messages
+  if (is.null(sim)) {
+    stop(paste(
+      "Cannot create simulation. The following errors were generated during simulation creation:\n",
+      paste(errors, collapse = "\n")
+    ))
+  }
+
+  return(Simulation$new(sim))
+}
+
+#' Create several simulations from simulation configurations
+#'
+#' @description
+#' Creates one simulation per entry of `simulationConfigurations`. All
+#' simulations are created in a single call into the MoBi engine, which builds
+#' them in parallel.
+#'
+#' @param simulationConfigurations A named list of `SimulationConfiguration`
+#'   objects. The names are used as the names of the created simulations and
+#'   must be unique.
+#' @inheritParams createSimulation
+#' @param stopIfFails If `TRUE`, an error is thrown as soon as one simulation
+#'   could not be created. If `FALSE` (default), a warning is shown for every
+#'   simulation that could not be created and its entry in the returned list is
+#'   `NULL`.
+#'
+#' @returns A named list of `Simulation` objects, one per entry of
+#'   `simulationConfigurations` and in the same order. The entry of a simulation
+#'   that could not be created is `NULL`.
+#' @seealso [createSimulation()] to create a single simulation.
+#' @export
+createSimulations <- function(
+  simulationConfigurations,
+  createAllProcessRateParameters = FALSE,
+  showWarnings = FALSE,
+  stopIfFails = FALSE
+) {
+  validateIsNamedList(simulationConfigurations, "simulationConfigurations")
+  validateIsOfType(simulationConfigurations, "SimulationConfiguration")
+  validateIsLogical(c(
+    createAllProcessRateParameters,
+    showWarnings,
+    stopIfFails
+  ))
+  simulationNames <- names(simulationConfigurations)
+  ospsuite.utils::validateHasOnlyDistinctValues(simulationNames)
+
+  createSimulationResults <- .createSimulationsFromRequests(lapply(
+    simulationNames,
+    function(simulationName) {
+      .createSimulationRequest(
+        simulationName = simulationName,
+        simulationConfiguration = simulationConfigurations[[simulationName]],
+        createAllProcessRateParameters = createAllProcessRateParameters
+      )
+    }
+  ))
+
+  simulations <- vector("list", length(createSimulationResults))
+  names(simulations) <- simulationNames
+
+  for (idx in seq_along(createSimulationResults)) {
+    simulationName <- simulationNames[[idx]]
+    createSimulationResult <- createSimulationResults[[idx]]
+
+    warnings <- createSimulationResult$get("Warnings")
+    if (showWarnings && length(warnings) > 0) {
+      warning(paste(
+        sprintf(
+          "The following warnings were generated during creation of the simulation '%s':\n",
+          simulationName
+        ),
+        paste(warnings, collapse = "\n")
+      ))
+    }
+
+    sim <- createSimulationResult$get("Simulation")
+    if (is.null(sim)) {
+      errorMessage <- paste(
+        sprintf(
+          "Cannot create the simulation '%s'. The following errors were generated during simulation creation:\n",
+          simulationName
+        ),
+        paste(createSimulationResult$get("Errors"), collapse = "\n")
+      )
+      if (stopIfFails) {
+        stop(errorMessage)
+      }
+      warning(errorMessage)
+      next()
+    }
+    simulations[[idx]] <- Simulation$new(sim)
+  }
+
+  return(simulations)
+}
+
+#' Build the .NET `MoBi.R.Domain.SimulationRequest` describing one simulation
+#'
+#' @inheritParams createSimulation
+#' @returns The .NET `SimulationRequest` object.
+#' @keywords internal
+#' @noRd
+.createSimulationRequest <- function(
+  simulationName,
+  simulationConfiguration,
+  createAllProcessRateParameters
+) {
   # Get simulation task
   simulationTask <- .getMoBiTaskFromCache("SimulationTask")
 
   # Create new simulation request
   simRequest <- rSharp::newObjectFromName("MoBi.R.Domain.SimulationRequest")
+  # The name of the simulation is carried by the request itself
+  simRequest$set("SimulationName", simulationName)
   # Create module configurations from modules and add them to the simulation request
   for (module in simulationConfiguration$modules) {
     # If NULL, send a blank string. Sending NULL causes issues on .NET side because the expected type is string, and NULL is recognized as an object
@@ -76,35 +210,30 @@ createSimulation <- function(
     )
   }
 
-  # Try to create a simulation from the simulation request
-  createSimulationResult <- simulationTask$call(
-    "CreateSimulationAndValidateFrom",
-    simulationName,
-    simRequest
+  return(simRequest)
+}
+
+#' Create simulations from `SimulationRequest` objects
+#'
+#' `CreateSimulationsAndValidateFrom(params SimulationRequest[] requests)`
+#' expects the requests spread as individual positional arguments so that each
+#' is marshalled as an element of the `params` array, the same way
+#' `.runSimulations()` calls `RunSimulations`.
+#'
+#' @param requests A list of .NET `SimulationRequest` objects.
+#' @returns A list of .NET `SimulationCreationResult` objects, one per request
+#'   and in the request order.
+#' @keywords internal
+#' @noRd
+.createSimulationsFromRequests <- function(requests) {
+  simulationTask <- .getMoBiTaskFromCache("SimulationTask")
+
+  args <- c(
+    list("CreateSimulationsAndValidateFrom"),
+    unname(requests)
   )
 
-  # get the simulation
-  sim <- createSimulationResult$get("Simulation")
-  # get warnings
-  warnings <- createSimulationResult$get("Warnings")
-
-  if (showWarnings && length(warnings) > 0) {
-    warning(paste(
-      "The following warnings were generated during simulation creation:\n",
-      paste(warnings, collapse = "\n")
-    ))
-  }
-  # get errors
-  errors <- createSimulationResult$get("Errors")
-  # If simulation could not be created, throw an error with all error messages
-  if (is.null(sim)) {
-    stop(paste(
-      "Cannot create simulation. The following errors were generated during simulation creation:\n",
-      paste(errors, collapse = "\n")
-    ))
-  }
-
-  return(Simulation$new(sim))
+  return(do.call(simulationTask$call, args))
 }
 
 #' @title Load a simulation from a pkml file
