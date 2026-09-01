@@ -10,14 +10,13 @@
     Code
       expect_equal(results$count, 1)
 
-# createSimulation shows warnings when showWarnings is TRUE
+# createSimulations shows warnings when showWarnings is TRUE
 
     Code
-      newSimulation <- createSimulation(simulationConfiguration = simConfig,
-        simulationName = "MySim", showWarnings = TRUE)
+      newSimulation <- createSimulations(list(MySim = simConfig), showWarnings = TRUE)
     Condition
-      Warning in `createSimulation()`:
-      The following warnings were generated during simulation creation:
+      Warning in `createSimulations()`:
+      The following warnings were generated during creation of the simulation 'MySim':
         Container 'MySim|Organism|Bone|Endosome|CYP3A4' was not found. Parameter 'Initial concentration' will be ignored.
        Container 'MySim|Organism|Brain|Endosome|CYP3A4' was not found. Parameter 'Initial concentration' will be ignored.
        Container 'MySim|Organism|Fat|Endosome|CYP3A4' was not found. Parameter 'Initial concentration' will be ignored.
@@ -79,19 +78,17 @@
       Initial condition defined for molecule 'CYP3A4' in a container 'Organism|Skin|Endosome' that cannot be resolved
       Initial condition defined for molecule 'CYP3A4' in a container 'Organism|Spleen|Endosome' that cannot be resolved
 
-# createSimulation throws an error when simulation cannot be created
+# createSimulations reports the errors generated during simulation creation
 
     Code
-      newSimulation <- createSimulation(simulationConfiguration = simConfig,
-        simulationName = "MySim")
+      newSimulation <- createSimulations(list(MySim = simConfig), stopIfFails = TRUE)
     Condition
-      Error in `createSimulation()`:
-      ! Cannot create simulation. The following errors were generated during simulation creation:
+      Error in `createSimulations()`:
+      ! Cannot create the simulation 'MySim'. The following errors were generated during simulation creation:
        Cannot create application 'Intravenous_Transport': molecule 'Aciclovir' not available in the target container 'Plasma'
 
-# createSimulation shows warnings when simulation creation issues warnings
+# createSimulations does not show creation warnings by default
 
     Code
-      newSimulation <- createSimulation(simulationConfiguration = simConfig,
-        simulationName = "MySim")
+      newSimulation <- createSimulations(list(MySim = simConfig))
 

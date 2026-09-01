@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities-simulation.R
 \name{createSimulations}
 \alias{createSimulations}
-\title{Create several simulations from simulation configurations}
+\title{Create simulations from simulation configurations}
 \usage{
 createSimulations(
   simulationConfigurations,
@@ -34,7 +34,4 @@ that could not be created is \code{NULL}.
 Creates one simulation per entry of \code{simulationConfigurations}. All
 simulations are created in a single call into the MoBi engine, which builds
 them in parallel.
-}
-\seealso{
-\code{\link[=createSimulation]{createSimulation()}} to create a single simulation.
 }

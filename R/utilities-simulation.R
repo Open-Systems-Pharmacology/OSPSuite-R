@@ -1,56 +1,4 @@
-#' Create a new simulation from a simulation configuration
-#'
-#' @param simulationName Name of the simulation.
-#' @param simulationConfiguration An instance of `SimulationConfiguration` that defines the simulation.
-#' @param createAllProcessRateParameters If `TRUE`, process rate parameters will be created for all reactions and transport processes.
-#' @param showWarnings If `TRUE`, warnings generated during simulation creation will be shown as R warnings. Default is `FALSE`.
-#'
-#' @returns A `Simulation` object
-#' @seealso [createSimulations()] to create several simulations in one call.
-#' @export
-createSimulation <- function(
-  simulationName,
-  simulationConfiguration,
-  createAllProcessRateParameters = FALSE,
-  showWarnings = FALSE
-) {
-  validateIsString(simulationName)
-  validateIsOfType(simulationConfiguration, "SimulationConfiguration")
-  validateIsLogical(c(createAllProcessRateParameters, showWarnings))
-
-  createSimulationResult <- .createSimulationsFromRequests(list(
-    .createSimulationRequest(
-      simulationName = simulationName,
-      simulationConfiguration = simulationConfiguration,
-      createAllProcessRateParameters = createAllProcessRateParameters
-    )
-  ))[[1]]
-
-  # get the simulation
-  sim <- createSimulationResult$get("Simulation")
-  # get warnings
-  warnings <- createSimulationResult$get("Warnings")
-
-  if (showWarnings && length(warnings) > 0) {
-    warning(paste(
-      "The following warnings were generated during simulation creation:\n",
-      paste(warnings, collapse = "\n")
-    ))
-  }
-  # get errors
-  errors <- createSimulationResult$get("Errors")
-  # If simulation could not be created, throw an error with all error messages
-  if (is.null(sim)) {
-    stop(paste(
-      "Cannot create simulation. The following errors were generated during simulation creation:\n",
-      paste(errors, collapse = "\n")
-    ))
-  }
-
-  return(Simulation$new(sim))
-}
-
-#' Create several simulations from simulation configurations
+#' Create simulations from simulation configurations
 #'
 #' @description
 #' Creates one simulation per entry of `simulationConfigurations`. All
@@ -60,7 +8,8 @@ createSimulation <- function(
 #' @param simulationConfigurations A named list of `SimulationConfiguration`
 #'   objects. The names are used as the names of the created simulations and
 #'   must be unique.
-#' @inheritParams createSimulation
+#' @param createAllProcessRateParameters If `TRUE`, process rate parameters will be created for all reactions and transport processes.
+#' @param showWarnings If `TRUE`, warnings generated during simulation creation will be shown as R warnings. Default is `FALSE`.
 #' @param stopIfFails If `TRUE`, an error is thrown as soon as one simulation
 #'   could not be created. If `FALSE` (default), a warning is shown for every
 #'   simulation that could not be created and its entry in the returned list is
@@ -69,7 +18,6 @@ createSimulation <- function(
 #' @returns A named list of `Simulation` objects, one per entry of
 #'   `simulationConfigurations` and in the same order. The entry of a simulation
 #'   that could not be created is `NULL`.
-#' @seealso [createSimulation()] to create a single simulation.
 #' @export
 createSimulations <- function(
   simulationConfigurations,
@@ -139,7 +87,9 @@ createSimulations <- function(
 
 #' Build the .NET `MoBi.R.Domain.SimulationRequest` describing one simulation
 #'
-#' @inheritParams createSimulation
+#' @param simulationName Name of the simulation.
+#' @param simulationConfiguration An instance of `SimulationConfiguration` that defines the simulation.
+#' @param createAllProcessRateParameters If `TRUE`, process rate parameters will be created for all reactions and transport processes.
 #' @returns The .NET `SimulationRequest` object.
 #' @keywords internal
 #' @noRd
