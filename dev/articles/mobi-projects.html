@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9005</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -944,29 +944,45 @@ and the individual we created:</p>
 <div class="section level2">
 <h2 id="creating-simulations">Creating simulations<a class="anchor" aria-label="anchor" href="#creating-simulations"></a>
 </h2>
-<p>The simulation configuration can be used to create a simulation. The
-simulation can then be saved to a pkml file, or used for further
+<p>The simulation configurations can be used to create simulations. The
+simulations can then be saved to pkml files, or used for further
 analysis.</p>
+<p><code><a href="../reference/createSimulations.html">createSimulations()</a></code> creates one simulation per entry of
+a named list of simulation configurations, the names of the list
+becoming the names of the created simulations. All simulations are
+created in a single call into the MoBi engine, which builds them in
+parallel. To create a single simulation, pass a list with one entry:</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulation</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="fu">getSimulation</span><span class="op">(</span><span class="st">"Thyroid_QST_Human"</span><span class="op">)</span></span>
 <span><span class="va">configuration</span> <span class="op">&lt;-</span> <span class="va">simulation</span><span class="op">$</span><span class="va">configuration</span></span>
 <span></span>
-<span><span class="va">simulation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulation.html">createSimulation</a></span><span class="op">(</span></span>
-<span>  simulationName <span class="op">=</span> <span class="st">"Thyroid_QST_Human_copy"</span>,</span>
-<span>  <span class="va">configuration</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">simulation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulations.html">createSimulations</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Thyroid_QST_Human_copy <span class="op">=</span> <span class="va">configuration</span><span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">$</span><span class="va">Thyroid_QST_Human_copy</span></span></code></pre></div>
+<p>The same configuration can be used for several entries:</p>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">simulations</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulations.html">createSimulations</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  Thyroid_QST_Human_copy_1 <span class="op">=</span> <span class="va">configuration</span>,</span>
+<span>  Thyroid_QST_Human_copy_2 <span class="op">=</span> <span class="va">configuration</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">simulations</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Thyroid_QST_Human_copy_1" "Thyroid_QST_Human_copy_2"</span></span></code></pre>
 <div class="section level3">
 <h3 id="warnings-and-errors-during-simulation-creation">Warnings and errors during simulation creation<a class="anchor" aria-label="anchor" href="#warnings-and-errors-during-simulation-creation"></a>
 </h3>
-<p><code><a href="../reference/createSimulation.html">createSimulation()</a></code> validates the simulation
-configuration and reports any issues encountered during the creation
-process. If the simulation cannot be created (e.g., due to invalid or
-inconsistent configuration), an error is thrown with a description of
-all issues. If the simulation is created successfully but with
-non-critical issues, these are collected as warnings and can be
-displayed by setting <code>showWarnings = TRUE</code>. The following
-example demonstrates an error case:</p>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<p><code><a href="../reference/createSimulations.html">createSimulations()</a></code> validates the simulation
+configurations and reports any issues encountered during the creation
+process. A configuration that cannot be created (e.g., due to invalid or
+inconsistent configuration) does not fail the whole batch: a warning
+with a description of all issues is shown and the entry of that
+simulation in the returned list is <code>NULL</code>. Pass
+<code>stopIfFails = TRUE</code> to raise an error instead. If a
+simulation is created successfully but with non-critical issues, these
+are collected as warnings and can be displayed by setting
+<code>showWarnings = TRUE</code>. The following example demonstrates a
+failing configuration with <code>stopIfFails = TRUE</code>:</p>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simulation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
 <span>    <span class="st">"extdata"</span>,</span>
@@ -980,13 +996,12 @@ example demonstrates an error case:</p>
 <span><span class="co"># Introduce an error in the configuration</span></span>
 <span><span class="va">simConfig</span><span class="op">$</span><span class="va">selectedInitialConditions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Vergin 1995 IV"</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">newSimulation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulation.html">createSimulation</a></span><span class="op">(</span></span>
-<span>  simulationConfiguration <span class="op">=</span> <span class="va">simConfig</span>,</span>
-<span>  simulationName <span class="op">=</span> <span class="st">"MySim"</span>,</span>
-<span>  showWarnings <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="va">newSimulations</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulations.html">createSimulations</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>MySim <span class="op">=</span> <span class="va">simConfig</span><span class="op">)</span>,</span>
+<span>  stopIfFails <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `createSimulation()`:</span></span></span>
-<span><span class="co">## <span style="color: #BBBB00;">!</span> Cannot create simulation. The following errors were generated during simulation creation:</span></span>
+<pre><code><span><span class="co">## <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `createSimulations()`:</span></span></span>
+<span><span class="co">## <span style="color: #BBBB00;">!</span> Cannot create the simulation 'MySim'. The following errors were generated during simulation creation:</span></span>
 <span><span class="co">##  Cannot create application 'Intravenous_Transport': molecule 'Aciclovir' not available in the target container 'Plasma'</span></span></code></pre>
 </div>
 <div class="section level3">
@@ -1000,11 +1015,11 @@ and <code>CellularPermeabilityMethods</code>. Methods are set per
 molecule using the <code>setPartitionCoefficientMethods()</code> and
 <code>setCellularPermeabilityMethods()</code> methods of the simulation
 configuration. Additionally, the user can select whether to create all
-process rate parameters in the simulation or not by setting the argument
-<code>createAllProcessRateParameters</code> in the function
-<code><a href="../reference/createSimulation.html">createSimulation()</a></code>. These parameters can be used for model
+process rate parameters in the simulations or not by setting the
+argument <code>createAllProcessRateParameters</code> in the function
+<code><a href="../reference/createSimulations.html">createSimulations()</a></code>. These parameters can be used for model
 debugging and analysis.</p>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">configuration</span><span class="op">$</span><span class="fu">setPartitionCoefficientMethods</span><span class="op">(</span></span>
 <span>  <span class="st">"T3"</span>,</span>
 <span>  <span class="va">PartitionCoefficientMethods</span><span class="op">$</span><span class="va">Berezhkovskiy</span></span>
@@ -1023,11 +1038,10 @@ debugging and analysis.</p>
 <span>  <span class="va">CellularPermeabilityMethods</span><span class="op">$</span><span class="va">`Charge dependent Schmitt normalized to PK-Sim`</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">sim1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulation.html">createSimulation</a></span><span class="op">(</span></span>
-<span>  simulationName <span class="op">=</span> <span class="st">"Thyroid_QST_human"</span>,</span>
-<span>  <span class="va">configuration</span>,</span>
+<span><span class="va">sim1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createSimulations.html">createSimulations</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Thyroid_QST_human <span class="op">=</span> <span class="va">configuration</span><span class="op">)</span>,</span>
 <span>  createAllProcessRateParameters <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span><span class="op">$</span><span class="va">Thyroid_QST_human</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

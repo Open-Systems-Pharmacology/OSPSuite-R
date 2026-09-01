@@ -307,9 +307,6 @@
 - [`createPopulationCharacteristics()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createPopulationCharacteristics.md)
   : Creates the population characteristics used to create a population
 
-- [`createSimulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulation.md)
-  : Create a new simulation from a simulation configuration
-
 - [`createSimulationBatch()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulationBatch.md)
   :
 
@@ -318,6 +315,9 @@
 
 - [`createSimulationConfiguration()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulationConfiguration.md)
   : Create a simulation configuration from modules.
+
+- [`createSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulations.md)
+  : Create simulations from simulation configurations
 
 - [`dataCombinedAciclovir`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataCombinedAciclovir.md)
   : dataCombinedAciclovir

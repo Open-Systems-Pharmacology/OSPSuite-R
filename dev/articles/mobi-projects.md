@@ -986,31 +986,54 @@ print(simulationConfigurationHuman)
 
 ## Creating simulations
 
-The simulation configuration can be used to create a simulation. The
-simulation can then be saved to a pkml file, or used for further
+The simulation configurations can be used to create simulations. The
+simulations can then be saved to pkml files, or used for further
 analysis.
+
+[`createSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulations.md)
+creates one simulation per entry of a named list of simulation
+configurations, the names of the list becoming the names of the created
+simulations. All simulations are created in a single call into the MoBi
+engine, which builds them in parallel. To create a single simulation,
+pass a list with one entry:
 
 ``` r
 
 simulation <- myProject$getSimulation("Thyroid_QST_Human")
 configuration <- simulation$configuration
 
-simulation <- createSimulation(
-  simulationName = "Thyroid_QST_Human_copy",
-  configuration
-)
+simulation <- createSimulations(
+  list(Thyroid_QST_Human_copy = configuration)
+)$Thyroid_QST_Human_copy
 ```
+
+The same configuration can be used for several entries:
+
+``` r
+
+simulations <- createSimulations(list(
+  Thyroid_QST_Human_copy_1 = configuration,
+  Thyroid_QST_Human_copy_2 = configuration
+))
+
+names(simulations)
+```
+
+    ## [1] "Thyroid_QST_Human_copy_1" "Thyroid_QST_Human_copy_2"
 
 ### Warnings and errors during simulation creation
 
-[`createSimulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulation.md)
-validates the simulation configuration and reports any issues
-encountered during the creation process. If the simulation cannot be
-created (e.g., due to invalid or inconsistent configuration), an error
-is thrown with a description of all issues. If the simulation is created
-successfully but with non-critical issues, these are collected as
-warnings and can be displayed by setting `showWarnings = TRUE`. The
-following example demonstrates an error case:
+[`createSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulations.md)
+validates the simulation configurations and reports any issues
+encountered during the creation process. A configuration that cannot be
+created (e.g., due to invalid or inconsistent configuration) does not
+fail the whole batch: a warning with a description of all issues is
+shown and the entry of that simulation in the returned list is `NULL`.
+Pass `stopIfFails = TRUE` to raise an error instead. If a simulation is
+created successfully but with non-critical issues, these are collected
+as warnings and can be displayed by setting `showWarnings = TRUE`. The
+following example demonstrates a failing configuration with
+`stopIfFails = TRUE`:
 
 ``` r
 
@@ -1027,15 +1050,14 @@ simConfig <- simulation$configuration
 # Introduce an error in the configuration
 simConfig$selectedInitialConditions <- list("Vergin 1995 IV" = NULL)
 
-newSimulation <- createSimulation(
-  simulationConfiguration = simConfig,
-  simulationName = "MySim",
-  showWarnings = TRUE
+newSimulations <- createSimulations(
+  list(MySim = simConfig),
+  stopIfFails = TRUE
 )
 ```
 
-    ## Error in `createSimulation()`:
-    ## ! Cannot create simulation. The following errors were generated during simulation creation:
+    ## Error in `createSimulations()`:
+    ## ! Cannot create the simulation 'MySim'. The following errors were generated during simulation creation:
     ##  Cannot create application 'Intravenous_Transport': molecule 'Aciclovir' not available in the target container 'Plasma'
 
 ### Setting calculation methods and creating process rate parameters
@@ -1047,9 +1069,9 @@ are listed in the enums `PartitionCoefficientMethods` and
 `setPartitionCoefficientMethods()` and
 `setCellularPermeabilityMethods()` methods of the simulation
 configuration. Additionally, the user can select whether to create all
-process rate parameters in the simulation or not by setting the argument
-`createAllProcessRateParameters` in the function
-[`createSimulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulation.md).
+process rate parameters in the simulations or not by setting the
+argument `createAllProcessRateParameters` in the function
+[`createSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulations.md).
 These parameters can be used for model debugging and analysis.
 
 ``` r
@@ -1072,9 +1094,8 @@ configuration$setCellularPermeabilityMethods(
   CellularPermeabilityMethods$`Charge dependent Schmitt normalized to PK-Sim`
 )
 
-sim1 <- createSimulation(
-  simulationName = "Thyroid_QST_human",
-  configuration,
+sim1 <- createSimulations(
+  list(Thyroid_QST_human = configuration),
   createAllProcessRateParameters = TRUE
-)
+)$Thyroid_QST_human
 ```

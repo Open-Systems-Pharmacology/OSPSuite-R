@@ -19,8 +19,8 @@
   to load modules and building blocks from `.pkml` files, and
   [`createSimulationConfiguration()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulationConfiguration.md)
   followed by
-  [`createSimulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulation.md)
-  to assemble a simulation from building blocks. New enums
+  [`createSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulations.md)
+  to assemble simulations from building blocks. New enums
   `BuildingBlockTypes`, `MoleculeType`, `IndividualDiseaseStates`,
   `MergeBehavior`, `PartitionCoefficientMethods`,
   `CellularPermeabilityMethods`, `ExpressionProfileCategories`, and
@@ -70,6 +70,14 @@
   call. See
   [`vignette("create-run-population")`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/create-run-population.md)
   ([\#1987](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1987)).
+- Added
+  [`createSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createSimulations.md)
+  to create one or several simulations from a named list of
+  `SimulationConfiguration` objects in a single call, which builds them
+  in parallel. A configuration that cannot be created is reported as a
+  warning and its entry in the returned list is `NULL`; pass
+  `stopIfFails = TRUE` to raise an error instead
+  ([\#2024](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2024)).
 - Added
   [`loadSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadSimulationsFromSnapshot.md)
   to load simulations stored in a PK-Sim snapshot file as `Simulation`
