@@ -22,7 +22,7 @@ must be unique.}
 
 \item{stopIfFails}{If \code{TRUE}, an error is thrown as soon as one simulation
 could not be created. If \code{FALSE} (default), a warning is shown for every
-simulation that could not be created and its entry in the returned list is
+simulation that could not be created, and its entry in the returned list is
 \code{NULL}.}
 }
 \value{
@@ -32,6 +32,5 @@ that could not be created is \code{NULL}.
 }
 \description{
 Creates one simulation per entry of \code{simulationConfigurations}. All
-simulations are created in a single call into the MoBi engine, which builds
-them in parallel.
+simulations are created in parallel.
 }

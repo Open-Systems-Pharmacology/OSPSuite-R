@@ -2,8 +2,7 @@
 #'
 #' @description
 #' Creates one simulation per entry of `simulationConfigurations`. All
-#' simulations are created in a single call into the MoBi engine, which builds
-#' them in parallel.
+#' simulations are created in parallel.
 #'
 #' @param simulationConfigurations A named list of `SimulationConfiguration`
 #'   objects. The names are used as the names of the created simulations and
@@ -12,7 +11,7 @@
 #' @param showWarnings If `TRUE`, warnings generated during simulation creation will be shown as R warnings. Default is `FALSE`.
 #' @param stopIfFails If `TRUE`, an error is thrown as soon as one simulation
 #'   could not be created. If `FALSE` (default), a warning is shown for every
-#'   simulation that could not be created and its entry in the returned list is
+#'   simulation that could not be created, and its entry in the returned list is
 #'   `NULL`.
 #'
 #' @returns A named list of `Simulation` objects, one per entry of
