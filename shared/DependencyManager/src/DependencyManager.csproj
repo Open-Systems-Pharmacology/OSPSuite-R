@@ -8,8 +8,8 @@
   </PropertyGroup>
 
    <ItemGroup>
-      <PackageReference Include="MoBi.R" Version="13.0.170" />
-      <PackageReference Include="PKSim.R" Version="13.0.149" GeneratePathProperty="true" />
+      <PackageReference Include="MoBi.R" Version="13.0.173" />
+      <PackageReference Include="PKSim.R" Version="13.0.150" GeneratePathProperty="true" />
       <PackageReference Include="OSPSuite.FuncParser" Version="5.0.0.3" />
       <PackageReference Include="OSPSuite.SimModel" Version="5.0.0.80" />
       <PackageReference Include="OSPSuite.SimModelSolver_CVODES" Version="5.0.0.53" />
