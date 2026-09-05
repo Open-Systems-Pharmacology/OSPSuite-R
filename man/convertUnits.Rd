@@ -10,10 +10,10 @@ convertUnits(dataCombined, xUnit = NULL, yUnit = NULL)
 \item{dataCombined}{A single instance of \code{DataCombined} class.}
 
 \item{xUnit, yUnit}{Target units for \code{xValues} and \code{yValues}, respectively. If
-not specified (\code{NULL}), first of the existing units in the respective
-columns (\code{xUnit} and \code{yUnit}) will be selected as the common unit. For
-available dimensions and units, see \code{ospsuite::ospDimensions} and
-\code{ospsuite::ospUnits}, respectively.}
+not specified (\code{NULL}), the most frequently occurring unit in the
+respective column is used, with observed-data units preferred over
+simulated when both are present. For available dimensions and units, see
+\code{ospsuite::ospDimensions} and \code{ospsuite::ospUnits}, respectively.}
 }
 \value{
 A data frame with measurement columns transformed to have common units.
