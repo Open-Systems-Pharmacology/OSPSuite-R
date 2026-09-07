@@ -663,21 +663,37 @@ loadSimulationsFromSnapshot <- function(
 #'
 #' @return A temporary directory with all files copied to it
 .gatherFiles <- function(...) {
+  files <- unlist(lapply(c(...), function(element) {
+    # a folder contributes every file it holds, at any depth
+    if (dir.exists(element)) {
+      return(list.files(element, full.names = TRUE, recursive = TRUE))
+    }
+    if (file.exists(element)) {
+      return(element)
+    }
+    character(0)
+  }))
+
+  # Every file lands directly in one folder, so two inputs sharing a name would
+  # collapse into one and the second would be processed in place of the first.
+  # Names are compared case-insensitively so the same inputs are accepted or
+  # rejected on every file system.
+  names <- tolower(basename(files))
+  duplicates <- unique(names[duplicated(names)])
+  if (length(duplicates) > 0L) {
+    cli::cli_abort(
+      message = c(
+        "x" = "Some input files share a name and would overwrite each other: {.file {basename(files)[names %in% duplicates]}}.",
+        "i" = "Rename one of them, or process them in separate calls."
+      )
+    )
+  }
+
   temp_dir <- tempfile()
   dir.create(temp_dir)
-  for (element in c(...)) {
-    # if the element is a folder, list all files in it and copy them to the temp directory
-    if (dir.exists(element)) {
-      files <- list.files(element, full.names = TRUE, recursive = TRUE)
-      for (file in files) {
-        file.copy(from = file, to = temp_dir)
-      }
-      next
-    } else if (file.exists(element)) {
-      # if the element is a file, copy it to the temp directory
-      file.copy(from = element, to = temp_dir)
-      next
-    }
+  if (length(files) > 0L) {
+    file.copy(from = files, to = temp_dir)
   }
-  return(temp_dir)
+
+  temp_dir
 }

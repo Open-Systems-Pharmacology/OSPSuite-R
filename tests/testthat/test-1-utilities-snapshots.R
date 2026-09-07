@@ -150,6 +150,43 @@ test_that("projectToSnapshot converts a mixed batch of projects", {
   )
 })
 
+test_that(".gatherFiles rejects inputs that share a name", {
+  # Everything is gathered into one flat folder, so two `model.json` files from
+  # different directories would collapse into one.
+  dir_a <- withr::local_tempdir()
+  dir_b <- withr::local_tempdir()
+  writeLines("{}", file.path(dir_a, "model.json"))
+  writeLines("{}", file.path(dir_b, "model.json"))
+
+  expect_error(
+    .gatherFiles(
+      file.path(dir_a, "model.json"),
+      file.path(dir_b, "model.json")
+    ),
+    regexp = "share a name"
+  )
+  expect_error(.gatherFiles(dir_a, dir_b), regexp = "share a name")
+})
+
+test_that("snapshotToProject rejects snapshots that share a name", {
+  dir_a <- withr::local_tempdir()
+  dir_b <- withr::local_tempdir()
+  snapshot <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
+  file.copy(snapshot, file.path(dir_a, "model.json"))
+  file.copy(snapshot, file.path(dir_b, "model.json"))
+
+  temp_dir <- withr::local_tempdir()
+  expect_error(
+    snapshotToProject(
+      file.path(dir_a, "model.json"),
+      file.path(dir_b, "model.json"),
+      output = temp_dir
+    ),
+    regexp = "share a name"
+  )
+  expect_length(list.files(temp_dir), 0)
+})
+
 test_that("projectToSnapshot rejects inputs converting to the same file", {
   # Snapshots are named after the input, so `model.pksim5` and `model.mbp3`
   # would both be written as `model.json`.
