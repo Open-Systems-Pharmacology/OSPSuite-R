@@ -64,29 +64,116 @@ test_that("runSimulationsFromSnapshot arguments are checked", {
   ))
 })
 
-test_that("loadProjectFromSnapshot converts a snapshot to a project", {
+test_that("snapshotToProject converts a snapshot to a project", {
   path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
   temp_dir <- withr::local_tempdir()
-  loadProjectFromSnapshot(path, output = temp_dir)
+  snapshotToProject(path, output = temp_dir)
 
   expect_length(list.files(temp_dir, pattern = ".pksim5"), 1)
 })
 
-test_that("exportProjectToSnapshot converts a project to a snapshot", {
+test_that("projectToSnapshot converts a project to a snapshot", {
   path <- testProjectPath()
   temp_dir <- withr::local_tempdir()
-  exportProjectToSnapshot(path, output = temp_dir)
+  projectToSnapshot(path, output = temp_dir)
 
   expect_length(list.files(temp_dir, pattern = ".json"), 1)
 })
 
-test_that("loadProjectFromSnapshot runSimulations argument is supported", {
+test_that("snapshotToProject runSimulations argument is supported", {
   path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
   temp_dir <- withr::local_tempdir()
   expect_no_error({
-    loadProjectFromSnapshot(path, output = temp_dir, runSimulations = TRUE)
-    loadProjectFromSnapshot(path, output = temp_dir, runSimulations = FALSE)
+    snapshotToProject(path, output = temp_dir, runSimulations = TRUE)
+    snapshotToProject(path, output = temp_dir, runSimulations = FALSE)
   })
+})
+
+test_that("projectToSnapshot converts a MoBi project to a snapshot", {
+  path <- getTestDataFilePath("MoBiProject/Test_Project.mbp3")
+  temp_dir <- withr::local_tempdir()
+  projectToSnapshot(path, output = temp_dir)
+
+  expect_length(list.files(temp_dir, pattern = "\\.json$"), 1)
+})
+
+test_that("snapshotToProject converts a MoBi snapshot back to a project", {
+  snapshot_dir <- withr::local_tempdir()
+  projectToSnapshot(
+    getTestDataFilePath("MoBiProject/Test_Project.mbp3"),
+    output = snapshot_dir
+  )
+  snapshot <- list.files(snapshot_dir, pattern = "\\.json$", full.names = TRUE)
+
+  temp_dir <- withr::local_tempdir()
+  snapshotToProject(snapshot, output = temp_dir)
+
+  expect_length(list.files(temp_dir, pattern = "\\.mbp3$"), 1)
+})
+
+test_that("the application writing a snapshot is detected", {
+  snapshot_dir <- withr::local_tempdir()
+  projectToSnapshot(
+    getTestDataFilePath("MoBiProject/Test_Project.mbp3"),
+    output = snapshot_dir
+  )
+  moBiSnapshot <- list.files(
+    snapshot_dir,
+    pattern = "\\.json$",
+    full.names = TRUE
+  )
+  pkSimSnapshot <- system.file(
+    "extdata",
+    "test_snapshot.json",
+    package = "ospsuite"
+  )
+
+  expect_equal(.snapshotApplicationFromSnapshot(moBiSnapshot), "MoBi")
+  expect_equal(.snapshotApplicationFromSnapshot(pkSimSnapshot), "PK-Sim")
+  expect_equal(
+    .snapshotApplicationFromProject(c("a.mbp3", "b.pksim5", "c.MBP3")),
+    c("MoBi", "PK-Sim", "MoBi")
+  )
+})
+
+test_that("projectToSnapshot converts a mixed batch of projects", {
+  temp_dir <- withr::local_tempdir()
+  projectToSnapshot(
+    getTestDataFilePath("MoBiProject/Test_Project.mbp3"),
+    testProjectPath(),
+    output = temp_dir
+  )
+
+  expect_setequal(
+    list.files(temp_dir, pattern = "\\.json$"),
+    c("Test_Project.json", "test_snapshot.json")
+  )
+})
+
+test_that("the application argument overrides the detected one", {
+  path <- getTestDataFilePath("MoBiProject/Test_Project.mbp3")
+  temp_dir <- withr::local_tempdir()
+  projectToSnapshot(path, output = temp_dir, application = "MoBi")
+
+  expect_length(list.files(temp_dir, pattern = "\\.json$"), 1)
+  expect_error(
+    projectToSnapshot(path, output = temp_dir, application = "Excel"),
+    regexp = "application"
+  )
+})
+
+test_that("the conversion functions reject inputs holding no relevant file", {
+  temp_dir <- withr::local_tempdir()
+  empty_dir <- withr::local_tempdir()
+
+  expect_error(
+    snapshotToProject(empty_dir, output = temp_dir),
+    regexp = "No snapshot files"
+  )
+  expect_error(
+    projectToSnapshot(empty_dir, output = temp_dir),
+    regexp = "No project files"
+  )
 })
 
 test_that("convertSnapshot is deprecated but still delegates", {

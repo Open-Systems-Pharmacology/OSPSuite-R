@@ -24,8 +24,9 @@ between the snapshot and project formats.
 
 > **Note**
 >
-> The helpers described in this vignette support **PK-Sim snapshots only**;
-> MoBi snapshots are not yet supported.
+> `runSimulationsFromSnapshot()` and `loadSimulationsFromSnapshot()` support
+> **PK-Sim snapshots only**. `snapshotToProject()` and `projectToSnapshot()`
+> support both PK-Sim and MoBi.
 
 ```{r library, message=FALSE}
 library(ospsuite)
@@ -131,17 +132,18 @@ runSimulationsFromSnapshot(snapshotDir, output = outputDir)
 
 ## Converting between snapshot and project formats
 
-Snapshots and PK-Sim project files (`.pksim5`) can be converted into each other.
-Use `loadProjectFromSnapshot()` to build a project from a snapshot, and
-`exportProjectToSnapshot()` to write a project back out as a snapshot.
+Snapshots and project files can be converted into each other. Use
+`snapshotToProject()` to build a project from a snapshot, and
+`projectToSnapshot()` to write a project back out as a snapshot. Both PK-Sim
+(`.pksim5`) and MoBi (`.mbp3`) projects are supported.
 
 Convert a snapshot to a PK-Sim project:
 
-```{r loadProjectFromSnapshot}
+```{r snapshotToProject}
 projectDir <- file.path(tempdir(), "project")
 dir.create(projectDir, showWarnings = FALSE)
 
-loadProjectFromSnapshot(snapshotPath, output = projectDir)
+snapshotToProject(snapshotPath, output = projectDir)
 
 projectFile <- list.files(projectDir, pattern = "\\.pksim5$", full.names = TRUE)
 projectFile
@@ -151,11 +153,11 @@ Set `runSimulations = TRUE` to also run the simulations during this conversion.
 
 And convert a project back to a snapshot:
 
-```{r exportProjectToSnapshot}
+```{r projectToSnapshot}
 snapshotOut <- file.path(tempdir(), "snapshot")
 dir.create(snapshotOut, showWarnings = FALSE)
 
-exportProjectToSnapshot(projectFile, output = snapshotOut)
+projectToSnapshot(projectFile, output = snapshotOut)
 
 list.files(snapshotOut)
 ```
@@ -163,7 +165,27 @@ list.files(snapshotOut)
 As with `runSimulationsFromSnapshot()`, both functions accept several files or
 directories at once.
 
+### MoBi projects
+
+MoBi projects work the same way. The application is detected from the file
+extension when converting a project, and from the snapshot itself when
+converting a snapshot, so no extra argument is needed:
+
+```{r moBiSnapshot}
+moBiProject <- system.file("extdata", "TH_QST_Platform.mbp3", package = "ospsuite")
+
+moBiSnapshotDir <- file.path(tempdir(), "mobi-snapshot")
+dir.create(moBiSnapshotDir, showWarnings = FALSE)
+
+projectToSnapshot(moBiProject, output = moBiSnapshotDir)
+
+list.files(moBiSnapshotDir)
+```
+
+Pass `application = "PK-Sim"` or `application = "MoBi"` to override the
+detection. A single call may mix both: each application converts its own files.
+
 > **Note**
 >
-> `convertSnapshot()` is deprecated in favour of `loadProjectFromSnapshot()` and
-> `exportProjectToSnapshot()`.
+> `convertSnapshot()` is deprecated in favour of `snapshotToProject()` and
+> `projectToSnapshot()`.
