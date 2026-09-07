@@ -346,10 +346,17 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
   vapply(
     files,
     function(file) {
-      # ponytail: sniff the head of the file instead of parsing the whole
-      # snapshot. Parse the JSON if a writer ever moves `ApplicationName` down.
-      head <- readChar(file, nchars = 4096L, useBytes = TRUE)
-      if (grepl('"ApplicationName"\\s*:\\s*"MoBi"', head)) "MoBi" else "PK-Sim"
+      # Scan the whole file rather than a prefix: MoBi writes `ApplicationName`
+      # next to `Version` at the top today, but a snapshot that carried it
+      # further down would otherwise be handed to the PK-Sim core silently.
+      # A full JSON parser would answer the same question at the cost of a new
+      # dependency and of materialising a multi-megabyte snapshot as R objects.
+      contents <- readChar(file, nchars = file.size(file), useBytes = TRUE)
+      if (grepl('"ApplicationName"\\s*:\\s*"MoBi"', contents)) {
+        "MoBi"
+      } else {
+        "PK-Sim"
+      }
     },
     FUN.VALUE = character(1),
     USE.NAMES = FALSE
@@ -388,6 +395,22 @@ convertSnapshot <- function(..., format, output = ".", runSimulations = FALSE) {
   if (length(files) == 0L) {
     cli::cli_abort(
       message = c("x" = "No {what} found in the input paths.")
+    )
+  }
+
+  # Converted files are named after the input, so two inputs sharing a name
+  # (`model.pksim5` and `model.mbp3`) would write the same output file, the
+  # second silently overwriting the first. Names are compared case-insensitively
+  # so the same batch is accepted or rejected on every file system.
+  stems <- tolower(sub("\\.[^.]*$", "", basename(files)))
+  collisions <- unique(stems[duplicated(stems)])
+  if (length(collisions) > 0L) {
+    colliding <- basename(files)[stems %in% collisions]
+    cli::cli_abort(
+      message = c(
+        "x" = "Some input files would be converted to the same output file: {.file {colliding}}.",
+        "i" = "Rename one of them, or convert them in separate calls."
+      )
     )
   }
 

@@ -150,6 +150,31 @@ test_that("projectToSnapshot converts a mixed batch of projects", {
   )
 })
 
+test_that("projectToSnapshot rejects inputs converting to the same file", {
+  # Snapshots are named after the input, so `model.pksim5` and `model.mbp3`
+  # would both be written as `model.json`.
+  input_dir <- withr::local_tempdir()
+  file.copy(
+    getTestDataFilePath("MoBiProject/Test_Project.mbp3"),
+    file.path(input_dir, "model.mbp3")
+  )
+  file.copy(
+    testProjectPath(),
+    file.path(input_dir, "model.pksim5")
+  )
+
+  temp_dir <- withr::local_tempdir()
+  expect_error(
+    projectToSnapshot(
+      file.path(input_dir, "model.mbp3"),
+      file.path(input_dir, "model.pksim5"),
+      output = temp_dir
+    ),
+    regexp = "same output file"
+  )
+  expect_length(list.files(temp_dir), 0)
+})
+
 test_that("the application argument overrides the detected one", {
   path <- getTestDataFilePath("MoBiProject/Test_Project.mbp3")
   temp_dir <- withr::local_tempdir()
