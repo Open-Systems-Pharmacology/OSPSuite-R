@@ -46,6 +46,10 @@ Neither path runs automatically — after an allow-list change, regenerate and c
 `inst/lib` yourself (both the `.csproj` change and the resulting DLLs), or dispatch
 the workflow and merge its PR.
 
+After a suite update, the generated example files in `inst/extdata/` may also need
+to be rebuilt against the new binaries. The scripts and the procedure are in
+[`data-raw/`](data-raw/README.md).
+
 ## renv, branch switching, and worktrees
 
 The package uses **renv**; the pinned dependency set (including `rSharp`) is in
