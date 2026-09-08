@@ -98,6 +98,11 @@ Same route as `ind_and_pop_snapshot.json`: snapshot to PK-Sim project, then back
 to snapshot. The simulations in this snapshot have `"HasResults": false`, so
 `runSimulations` stays at its default and they are not run.
 
+This snapshot is also the only stored form of that PK-Sim project. No `.pksim5`
+file is kept in the repository; the tests that need one create it from this
+snapshot with `loadProjectFromSnapshot()`, through `testProjectPath()` in
+`tests/testthat/helper-for-tests.R`.
+
 ### `PKAnalyses.csv`
 
 The script runs the simulation from `Aciclovir.pkml`, calculates the PK

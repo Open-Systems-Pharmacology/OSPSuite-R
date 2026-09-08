@@ -73,7 +73,7 @@ test_that("loadProjectFromSnapshot converts a snapshot to a project", {
 })
 
 test_that("exportProjectToSnapshot converts a project to a snapshot", {
-  path <- getTestDataFilePath("test_project.pksim5")
+  path <- testProjectPath()
   temp_dir <- withr::local_tempdir()
   exportProjectToSnapshot(path, output = temp_dir)
 
@@ -103,7 +103,7 @@ test_that("convertSnapshot is deprecated but still delegates", {
   )
   expect_length(list.files(temp_dir, pattern = ".pksim5"), 1)
 
-  path <- getTestDataFilePath("test_project.pksim5")
+  path <- testProjectPath()
   temp_dir <- withr::local_tempdir()
   expect_warning(
     convertSnapshot(path, output = temp_dir, format = "snapshot"),
