@@ -77,6 +77,11 @@ snapshot route. Until the bug is fixed, two things follow:
   PK-Sim user interface instead: load `data-raw/Aciclovir_snapshot.json` as a
   project, then export the single simulation to `inst/extdata/Aciclovir.pkml`.
 
+The two routes give simulations that differ in one respect: a simulation
+exported from PK-Sim carries no calculation method overrides, while one that is
+opened in MoBi, configured again and saved does. Pick the route that matches
+what the example is meant to show.
+
 ### `ind_and_pop_snapshot.json`
 
 The script converts the snapshot to a PK-Sim project with the current libraries,
