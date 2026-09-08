@@ -87,7 +87,7 @@ The user can change initial values of parameters and molecules with the methods 
 
 ```{r changeDose}
 # Get the parameter Dose
-doseParamPath <- "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"
+doseParamPath <- "Events|IV 250mg 10min|No formulation|Application_1|ProtocolSchemaItem|Dose"
 doseParam <- getParameter(doseParamPath, sim)
 print(doseParam)
 
@@ -100,7 +100,7 @@ print(doseParam)
 Another way to change parameter values is to scale them. The scaling is always performed relative to the current value:
 
 ```{r scaleParameter}
-doseParamPath <- "Applications|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"
+doseParamPath <- "Events|IV 250mg 10min|No formulation|Application_1|ProtocolSchemaItem|Dose"
 doseParam <- getParameter(doseParamPath, sim)
 print(doseParam)
 
