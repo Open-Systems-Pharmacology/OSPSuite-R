@@ -49,5 +49,9 @@ simulations <- loadSimulationsFromSnapshot(snapshotPath)
 message("Simulations: ", paste(names(simulations), collapse = ", "))
 message(
   "Snapshot version: ",
-  sub('.*"Version": ([0-9]+).*', "\\1", grep('"Version"', readLines(snapshotPath, warn = FALSE), value = TRUE)[[1]])
+  sub(
+    '.*"Version": ([0-9]+).*',
+    "\\1",
+    grep('"Version"', readLines(snapshotPath, warn = FALSE), value = TRUE)[[1]]
+  )
 )

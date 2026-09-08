@@ -26,20 +26,40 @@ formatVersion <- function(filePath) {
   head <- readLines(filePath, warn = FALSE, n = 3)
   match <- regmatches(head, regexpr('version="[0-9]+"', head))
   match <- unlist(match)
-  if (length(match) == 0) NA_character_ else sub('version="([0-9]+)"', "\\1", match[[1]])
+  if (length(match) == 0) {
+    NA_character_
+  } else {
+    sub('version="([0-9]+)"', "\\1", match[[1]])
+  }
 }
 
 for (filePath in simulationFiles) {
   before <- formatVersion(filePath)
-  simulation <- loadSimulation(filePath, loadFromCache = FALSE, addToCache = FALSE)
+  simulation <- loadSimulation(
+    filePath,
+    loadFromCache = FALSE,
+    addToCache = FALSE
+  )
   saveSimulation(simulation, filePath)
-  message(basename(filePath), ": format version ", before, " -> ", formatVersion(filePath))
+  message(
+    basename(filePath),
+    ": format version ",
+    before,
+    " -> ",
+    formatVersion(filePath)
+  )
 }
 
 for (filePath in dataSetFiles) {
   before <- formatVersion(filePath)
   saveDataSetToPKML(loadDataSetFromPKML(filePath), filePath)
-  message(basename(filePath), ": format version ", before, " -> ", formatVersion(filePath))
+  message(
+    basename(filePath),
+    ": format version ",
+    before,
+    " -> ",
+    formatVersion(filePath)
+  )
 }
 
 # Keep the second copy of the simple simulation in step with the first.

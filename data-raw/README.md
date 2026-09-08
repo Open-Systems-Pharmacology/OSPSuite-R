@@ -140,8 +140,6 @@ they test:
 - `tests/data/simple_v11.pkml` carries an older format on purpose.
   `tests/testthat/test-simulation.R` asserts the error that a simulation from an
   earlier version of the suite raises.
-- `tests/data/test_project.pksim5` is an older PK-Sim project, which also
-  exercises the converter that PK-Sim runs when it opens one.
 - `tests/data/pop_5_spared_id.csv` has gaps in its `IndividualId` column, and a
   fresh export renumbers them.
 - `tests/data/junk.csv` is malformed by design.

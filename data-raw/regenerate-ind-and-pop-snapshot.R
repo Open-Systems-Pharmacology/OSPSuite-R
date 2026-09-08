@@ -19,7 +19,11 @@ dir.create(snapshotDir, recursive = TRUE)
 # 1. Snapshot to project. runSimulations = TRUE is required: the committed
 # snapshot has "HasResults": true, which only a project with results carries back
 # into the export.
-loadProjectFromSnapshot(snapshotPath, output = projectDir, runSimulations = TRUE)
+loadProjectFromSnapshot(
+  snapshotPath,
+  output = projectDir,
+  runSimulations = TRUE
+)
 
 projectFiles <- list.files(projectDir, full.names = TRUE)
 message("Project: ", paste(basename(projectFiles), collapse = ", "))

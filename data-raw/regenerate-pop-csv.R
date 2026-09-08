@@ -29,7 +29,10 @@ populationCharacteristics <- createPopulationCharacteristics(
 )
 
 created <- createPopulation(populationCharacteristics)
-exportPopulationToCSV(created$population, normalizePath(csvPath, mustWork = FALSE))
+exportPopulationToCSV(
+  created$population,
+  normalizePath(csvPath, mustWork = FALSE)
+)
 message("Wrote: ", csvPath, " (seed ", created$seed, ")")
 
 # Report what came out. The tests in tests/testthat/test-population.R depend on
@@ -40,4 +43,7 @@ df <- populationToDataFrame(population)
 message("Individuals: ", population$count)
 message("Columns: ", ncol(df))
 message("Covariates: ", paste(population$allCovariateNames, collapse = ", "))
-message("Gender values: ", paste(population$getCovariateValues("Gender"), collapse = ", "))
+message(
+  "Gender values: ",
+  paste(population$getCovariateValues("Gender"), collapse = ", ")
+)
