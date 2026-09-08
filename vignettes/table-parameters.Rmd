@@ -14,7 +14,6 @@ knitr::opts_chunk$set(
   eval = .ospRuntimeAvailable,
   collapse = TRUE,
   comment = "#>",
-  error = TRUE,
   fig.showtext = TRUE
 )
 ```
@@ -24,8 +23,8 @@ Parameters defined by a **table formula** have special syntax for retrieving and
 ```{r getTableFormulaValue}
 library(ospsuite)
 
-# Load a simulation
-simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+# Load a simulation that contains a table parameter
+simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Get the parameter defined by a table.
@@ -62,11 +61,11 @@ The method `valueAt()` of the `TableFormula` returns the value of `y` for the gi
 # Get the parameter defined by a table
 tableParam <- getParameter("Organism|TableParameter", sim)
 
-# Value at x = 60 is stored in the table
-tableParam$formula$valueAt(60)
+# Value at x = 30 is stored in the table
+tableParam$formula$valueAt(30)
 
-# Value at x = 90 is not in the table
-tableParam$formula$valueAt(90)
+# Value at x = 20 is not in the table
+tableParam$formula$valueAt(20)
 ```
 
 ## Changing table parameter values
@@ -82,7 +81,7 @@ setParameterValues(tableParam, 10)
 tableParam
 ```
 
-To change the values of the table, a set of methods of the `TableFormula` is available. The method `addPoints()` adds a set of x-y values to the existing table. If trying to add a point with the x-value already present in the table, an error is thrown:
+To change the values of the table, a set of methods of the `TableFormula` is available. The method `addPoints()` adds a set of x-y values to the existing table. If trying to add a point with an x-value that is already present in the table and a different y-value, an error is thrown:
 
 ```{r addPoints, error = TRUE, purl = FALSE}
 tableParam <- getParameter("Organism|TableParameter", sim)
@@ -93,7 +92,7 @@ tableParam$formula$addPoints(c(1, 2, 3), c(5, 6, 7))
 tableParam
 
 # Try to add points with existing x-values
-tableParam$formula$addPoints(0, 1)
+tableParam$formula$addPoints(0, 9)
 ```
 
 To remove a point from the table, use the method `removePoint()`. It remove a point if the x value is present in the table and has the provided y.
@@ -101,11 +100,11 @@ To remove a point from the table, use the method `removePoint()`. It remove a po
 ```{r removePoint}
 tableParam
 
-# Remove the point (0, 0)
-tableParam$formula$removePoint(0, 0)
+# Remove the point (0, 1)
+tableParam$formula$removePoint(0, 1)
 tableParam
 
-# Try to remove the point (1, 1). Note that the value for x = 1 is x = 5 in the original table,
+# Try to remove the point (1, 1). Note that the value for x = 1 is y = 5 in the original table,
 # and no point is removed.
 tableParam$formula$removePoint(1, 1)
 tableParam

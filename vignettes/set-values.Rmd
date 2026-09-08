@@ -14,7 +14,6 @@ knitr::opts_chunk$set(
   eval = .ospRuntimeAvailable,
   collapse = TRUE,
   comment = "#>",
-  error = TRUE,
   fig.showtext = TRUE
 )
 ```
@@ -63,8 +62,13 @@ liverIntVolume$formulaString
   **Table formula**: The value of the parameter is given by a table with x-y value pairs. X values usually refer to the simulation time. See [Table parameters](table-parameters.html) for additional information on how to retrieve or change the table values.
 
 ```{r getTableFormulaValue}
+# The Aciclovir simulation has no table parameter. Load a second simulation that
+# contains one.
+tableSimFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
+tableSim <- loadSimulation(tableSimFilePath)
+
 # Get the parameter defined by a table.
-tableParam <- getParameter("Organism|TableParameter", sim)
+tableParam <- getParameter("Organism|TableParameter", tableSim)
 print(tableParam)
 ```
 
@@ -72,7 +76,7 @@ Additionally, some parameters are modeled as *state variables*. In this case, th
 
 ```{r getStateVariableValue}
 # Get the parameter defined by a state variable.
-stateVariableParam <- getParameter("Organism|StateVariable_Parameter", sim)
+stateVariableParam <- getParameter("Organism|Lumen|Stomach|Liquid", sim)
 print(stateVariableParam)
 
 # `value` refers to the initial value of the parameter
@@ -146,7 +150,7 @@ Changing the value of a state variable parameter will only change its initial va
 
 ```{r setStateVariableValue, error = TRUE, purl = FALSE}
 # Get the parameter defined by a state variable.
-stateVariableParam <- getParameter("Organism|StateVariable_Parameter", sim)
+stateVariableParam <- getParameter("Organism|Lumen|Stomach|Liquid", sim)
 print(stateVariableParam)
 
 # Setting its value only changes the initial value
