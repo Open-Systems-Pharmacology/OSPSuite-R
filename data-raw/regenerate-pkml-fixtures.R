@@ -63,9 +63,13 @@ for (filePath in dataSetFiles) {
 }
 
 # Keep the second copy of the simple simulation in step with the first.
-invisible(file.copy(
-  file.path("tests", "data", "simple.pkml"),
-  file.path("inst", "extdata", "simple.pkml"),
-  overwrite = TRUE
-))
+if (
+  !file.copy(
+    file.path("tests", "data", "simple.pkml"),
+    file.path("inst", "extdata", "simple.pkml"),
+    overwrite = TRUE
+  )
+) {
+  stop("Could not copy tests/data/simple.pkml to inst/extdata/simple.pkml")
+}
 message("Copied tests/data/simple.pkml to inst/extdata/simple.pkml")

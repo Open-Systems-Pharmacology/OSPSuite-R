@@ -31,6 +31,15 @@ isProject <- grepl('"ApplicationName": "PK-Sim"', jsons, fixed = TRUE)
 if (sum(isProject) == 1) {
   writeLines(jsons[isProject][[1]], snapshotFile, useBytes = TRUE)
   message("Extracted snapshot from the PKML: ", snapshotFile)
+} else if (sum(isProject) > 1) {
+  stop(
+    pkmlPath,
+    " carries ",
+    sum(isProject),
+    " project snapshots. Which one describes the simulation is unclear, so ",
+    snapshotFile,
+    " is left untouched."
+  )
 } else if (file.exists(snapshotFile)) {
   message(
     "The PKML carries no project snapshot (",

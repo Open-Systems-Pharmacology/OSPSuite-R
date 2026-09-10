@@ -104,13 +104,14 @@ tableParam
 tableParam$formula$removePoint(0, 1)
 tableParam
 
-# Try to remove the point (1, 1). Note that the value for x = 1 is y = 5 in the original table,
+# Try to remove the point (1, 1). Note that the y value for x = 1 is 5 in the table,
 # and no point is removed.
 tableParam$formula$removePoint(1, 1)
 tableParam
 
-# Try to remove a non-existing point (0, 1). No point is removed.
-tableParam$formula$removePoint(1, 1)
+# Try to remove the point (0, 1) again. It is no longer in the table, and no
+# point is removed.
+tableParam$formula$removePoint(0, 1)
 tableParam
 ```
 

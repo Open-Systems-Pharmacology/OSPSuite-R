@@ -42,7 +42,9 @@ if (!file.exists(exported)) {
 }
 
 # 3. Replace the example file.
-invisible(file.copy(exported, snapshotPath, overwrite = TRUE))
+if (!file.copy(exported, snapshotPath, overwrite = TRUE)) {
+  stop("Could not copy ", exported, " to ", snapshotPath)
+}
 message("Wrote: ", snapshotPath)
 
 # 4. Report what came out: two simulations, one of them a population of 6 with
