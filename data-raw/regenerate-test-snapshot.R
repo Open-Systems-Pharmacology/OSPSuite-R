@@ -18,7 +18,7 @@ dir.create(snapshotDir, recursive = TRUE)
 
 # 1. Snapshot to project. The simulations in this snapshot have
 # "HasResults": false, so they are not run.
-loadProjectFromSnapshot(
+snapshotToProject(
   snapshotPath,
   output = projectDir,
   runSimulations = FALSE
@@ -28,7 +28,7 @@ projectFiles <- list.files(projectDir, full.names = TRUE)
 message("Project: ", paste(basename(projectFiles), collapse = ", "))
 
 # 2. Project back to snapshot. The output keeps the base name of the project file.
-exportProjectToSnapshot(projectFiles, output = snapshotDir)
+projectToSnapshot(projectFiles, output = snapshotDir)
 
 exported <- file.path(snapshotDir, basename(snapshotPath))
 if (!file.exists(exported)) {
