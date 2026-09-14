@@ -106,6 +106,14 @@
   now validates the `exportJSON` argument like the other export flags.
   Previously a non-logical value (e.g. `exportJSON = "TRUE"`) was
   silently treated as `FALSE` and no JSON was exported.
+- Simulations returned by
+  [`loadSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadSimulationsFromSnapshot.md)
+  now carry their individual and module snapshots, so
+  [`saveSimulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/saveSimulation.md)
+  writes a `.pkml` that can be converted back into a MoBi module.
+  Previously these snapshots were empty because only PK-Sim’s desktop
+  export filled them
+  ([\#2029](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2029)).
 
 ## ospsuite 12.4.4
 
