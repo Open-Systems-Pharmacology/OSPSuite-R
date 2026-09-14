@@ -1,662 +1,2181 @@
 {
-   "Name": "Atazanavir-IndAndPop",
-   "Version": 81,
-   "ExpressionProfiles": [
-      {
-         "Type": "Enzyme",
-         "Species": "Human",
-         "Molecule": "CYP3A4",
-         "Category": "Acosta2007",
-         "Parameters": [
-            {
-               "Path": "CYP3A4|Reference concentration",
-               "Value": 4.32,
-               "Unit": "\u00b5mol/l",
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "CYP3A4|t1/2 (intestine)",
-               "Value": 1380.0,
-               "Unit": "min",
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "CYP3A4|t1/2 (liver)",
-               "Value": 22.0,
-               "Unit": "h",
-               "ValueOrigin": {
-                  "Source": "Unknown"
-               }
-            },
-            {
-               "Path": "Organism|Brain|Intracellular|CYP3A4|Relative expression",
-               "Value": 0.0041682898325,
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Organism|Gonads|Intracellular|CYP3A4|Relative expression",
-               "Value": 0.00078691079081,
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Organism|Kidney|Intracellular|CYP3A4|Relative expression",
-               "Value": 0.0053603428126,
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Organism|Liver|Pericentral|Intracellular|CYP3A4|Relative expression",
-               "Value": 1.0,
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Organism|Liver|Periportal|Intracellular|CYP3A4|Relative expression",
-               "Value": 1.0,
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Organism|Lung|Intracellular|CYP3A4|Relative expression",
-               "Value": 0.00042695753798,
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Organism|SmallIntestine|Intracellular|CYP3A4|Relative expression",
-               "Value": 0.0727697702,
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|CYP3A4|Relative expression",
-               "Value": 0.0727697702,
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|CYP3A4|Relative expression",
-               "Value": 0.0727697702,
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|CYP3A4|Relative expression",
-               "Value": 0.0727697702,
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|CYP3A4|Relative expression",
-               "Value": 0.0727697702,
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|CYP3A4|Relative expression",
-               "Value": 0.0727697702,
-               "ValueOrigin": {}
-            }
-         ],
-         "Localization": "Intracellular, BloodCellsIntracellular, VascEndosome",
-         "Ontogeny": {
-            "Name": "CYP3A4"
-         }
+  "Name": "ind_and_pop_snapshot",
+  "Version": 81,
+  "ApplicationName": "PK-Sim",
+  "ExpressionProfiles": [
+    {
+      "Type": "Enzyme",
+      "Species": "Human",
+      "Molecule": "CYP3A4",
+      "Category": "Acosta2007",
+      "Parameters": [
+        {
+          "Path": "CYP3A4|Reference concentration",
+          "Value": 4.32,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|t1/2 (intestine)",
+          "Value": 1380.0,
+          "Unit": "min",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|t1/2 (liver)",
+          "Value": 22.0,
+          "Unit": "h",
+          "ValueOrigin": {
+            "Source": "Unknown"
+          }
+        },
+        {
+          "Path": "Organism|Brain|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0041682898325,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Gonads|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.00078691079081,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Kidney|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0053603428126,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Pericentral|Intracellular|CYP3A4|Relative expression",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Periportal|Intracellular|CYP3A4|Relative expression",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lung|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.00042695753798,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0727697702,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0727697702,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0727697702,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0727697702,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0727697702,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0727697702,
+          "ValueOrigin": {}
+        }
+      ],
+      "Localization": "Intracellular, BloodCellsIntracellular, VascEndosome",
+      "Ontogeny": {
+        "Name": "CYP3A4"
       }
-   ],
-   "Individuals": [
-      {
-         "Name": "Acosta2007",
-         "Seed": 8908561,
-         "OriginData": {
+    }
+  ],
+  "Individuals": [
+    {
+      "Name": "Acosta2007",
+      "Seed": 8908561,
+      "OriginData": {
+        "CalculationMethods": [
+          "SurfaceAreaPlsInt_VAR1",
+          "Body surface area - Mosteller"
+        ],
+        "Species": "Human",
+        "Population": "WhiteAmerican_NHANES_1997",
+        "Gender": "MALE",
+        "Age": {
+          "Value": 34.0,
+          "Unit": "year(s)"
+        },
+        "Weight": {
+          "Value": 78.0,
+          "Unit": "kg"
+        }
+      },
+      "ExpressionProfiles": [
+        "CYP3A4|Human|Acosta2007"
+      ]
+    }
+  ],
+  "Populations": [
+    {
+      "Name": "Acosta_Pop",
+      "Seed": 1234,
+      "Settings": {
+        "NumberOfIndividuals": 6,
+        "ProportionOfFemales": 0,
+        "Age": {
+          "Min": 5.0,
+          "Max": 15.0,
+          "Unit": "year(s)"
+        },
+        "Individual": {
+          "Name": "Acosta2007",
+          "Seed": 8908561,
+          "OriginData": {
             "CalculationMethods": [
-               "SurfaceAreaPlsInt_VAR1",
-               "Body surface area - Mosteller"
+              "SurfaceAreaPlsInt_VAR1",
+              "Body surface area - Mosteller"
             ],
             "Species": "Human",
             "Population": "WhiteAmerican_NHANES_1997",
             "Gender": "MALE",
             "Age": {
-               "Value": 34.0,
-               "Unit": "year(s)"
+              "Value": 34.0,
+              "Unit": "year(s)"
             },
             "Weight": {
-               "Value": 78.0,
-               "Unit": "kg"
+              "Value": 78.0,
+              "Unit": "kg"
             }
-         },
-         "ExpressionProfiles": [
+          },
+          "ExpressionProfiles": [
             "CYP3A4|Human|Acosta2007"
-         ]
+          ]
+        }
       }
-   ],
-   "Compounds": [
-      {
-         "Name": "Alfentanil",
-         "IsSmallMolecule": true,
-         "PlasmaProteinBindingPartner": "Glycoprotein",
-         "Lipophilicity": [
+    }
+  ],
+  "Compounds": [
+    {
+      "Name": "Alfentanil",
+      "IsSmallMolecule": true,
+      "PlasmaProteinBindingPartner": "Glycoprotein",
+      "Lipophilicity": [
+        {
+          "Name": "Fit",
+          "Parameters": [
             {
-               "Name": "Fit",
-               "Parameters": [
-                  {
-                     "Name": "Lipophilicity",
-                     "Value": 1.8463211883,
-                     "Unit": "Log Units",
-                     "ValueOrigin": {
-                        "Source": "ParameterIdentification",
-                        "Method": "ParameterIdentification",
-                        "Description": "Value updated from 'Parameter Identification 4' on 2019-09-06 11:28"
-                     }
-                  }
-               ]
+              "Name": "Lipophilicity",
+              "Value": 1.8463211883,
+              "Unit": "Log Units",
+              "ValueOrigin": {
+                "Source": "ParameterIdentification",
+                "Method": "ParameterIdentification",
+                "Description": "Value updated from 'Parameter Identification 4' on 2019-09-06 11:28"
+              }
             }
-         ],
-         "FractionUnbound": [
+          ]
+        }
+      ],
+      "FractionUnbound": [
+        {
+          "Name": "Healthy",
+          "Species": "Human",
+          "Parameters": [
             {
-               "Name": "Healthy",
-               "Species": "Human",
-               "Parameters": [
-                  {
-                     "Name": "Fraction unbound (plasma, reference value)",
-                     "Value": 0.1,
-                     "ValueOrigin": {
-                        "Source": "ParameterIdentification",
-                        "Method": "ParameterIdentification",
-                        "Description": "Value updated from 'Parameter Identification 4' on 2019-09-06 11:28"
-                     }
-                  }
-               ]
+              "Name": "Fraction unbound (plasma, reference value)",
+              "Value": 0.1,
+              "ValueOrigin": {
+                "Source": "ParameterIdentification",
+                "Method": "ParameterIdentification",
+                "Description": "Value updated from 'Parameter Identification 4' on 2019-09-06 11:28"
+              }
             }
-         ],
-         "Solubility": [
+          ]
+        }
+      ],
+      "Solubility": [
+        {
+          "Name": "Baneyx 2014",
+          "Parameters": [
             {
-               "Name": "Baneyx 2014",
-               "Parameters": [
-                  {
-                     "Name": "Solubility at reference pH",
-                     "Value": 992.0,
-                     "Unit": "mg/l",
-                     "ValueOrigin": {
-                        "Source": "Publication",
-                        "Description": "Hanke 2018"
-                     }
-                  },
-                  {
-                     "Name": "Reference pH",
-                     "Value": 6.5,
-                     "ValueOrigin": {
-                        "Source": "Publication",
-                        "Description": "Hanke 2018"
-                     }
-                  }
-               ]
-            }
-         ],
-         "IntestinalPermeability": [
-            {
-               "Name": "Optimized",
-               "Parameters": [
-                  {
-                     "Name": "Specific intestinal permeability (transcellular)",
-                     "Value": 0.00057373577138,
-                     "Unit": "cm/min",
-                     "ValueOrigin": {
-                        "Source": "ParameterIdentification",
-                        "Method": "ParameterIdentification",
-                        "Description": "Value updated from 'Parameter Identification 4' on 2019-09-06 11:28"
-                     }
-                  }
-               ]
-            }
-         ],
-         "Permeability": [
-            {
-               "Name": "Optimized",
-               "Parameters": [
-                  {
-                     "Name": "Permeability",
-                     "Value": 0.0068752756625,
-                     "Unit": "cm/min",
-                     "ValueOrigin": {
-                        "Source": "ParameterIdentification",
-                        "Method": "ParameterIdentification",
-                        "Description": "Value updated from 'Parameter Identification 4' on 2019-09-06 11:28"
-                     }
-                  }
-               ]
-            }
-         ],
-         "PkaTypes": [
-            {
-               "Type": "Base",
-               "Pka": 6.5,
-               "ValueOrigin": {
-                  "Source": "Publication",
-                  "Description": "Hanke 2018"
-               }
-            }
-         ],
-         "Processes": [
-            {
-               "InternalName": "MetabolizationIntrinsic_FirstOrder",
-               "DataSource": "1st order CL",
-               "Species": "Human",
-               "Molecule": "CYP3A4",
-               "Parameters": [
-                  {
-                     "Name": "Intrinsic clearance",
-                     "Value": 0.5272297928,
-                     "Unit": "l/min",
-                     "ValueOrigin": {
-                        "Source": "ParameterIdentification",
-                        "Method": "ParameterIdentification",
-                        "Description": "Value updated from 'Parameter Identification 4' on 2019-09-06 11:28"
-                     }
-                  }
-               ]
+              "Name": "Solubility at reference pH",
+              "Value": 992.0,
+              "Unit": "mg/l",
+              "ValueOrigin": {
+                "Source": "Publication",
+                "Description": "Hanke 2018"
+              }
             },
             {
-               "InternalName": "GlomerularFiltration",
-               "DataSource": "GFR",
-               "Species": "Human",
-               "Parameters": [
-                  {
-                     "Name": "GFR fraction",
-                     "Value": 0.06,
-                     "ValueOrigin": {
-                        "Source": "Publication",
-                        "Description": "Hanke 2018"
-                     }
-                  }
-               ]
+              "Name": "Reference pH",
+              "Value": 6.5,
+              "ValueOrigin": {
+                "Source": "Publication",
+                "Description": "Hanke 2018"
+              }
             }
-         ],
-         "CalculationMethods": [
+          ]
+        }
+      ],
+      "IntestinalPermeability": [
+        {
+          "Name": "Optimized",
+          "Parameters": [
+            {
+              "Name": "Specific intestinal permeability (transcellular)",
+              "Value": 0.00057373577138,
+              "Unit": "cm/min",
+              "ValueOrigin": {
+                "Source": "ParameterIdentification",
+                "Method": "ParameterIdentification",
+                "Description": "Value updated from 'Parameter Identification 4' on 2019-09-06 11:28"
+              }
+            }
+          ]
+        }
+      ],
+      "Permeability": [
+        {
+          "Name": "Optimized",
+          "Parameters": [
+            {
+              "Name": "Permeability",
+              "Value": 0.0068752756625,
+              "Unit": "cm/min",
+              "ValueOrigin": {
+                "Source": "ParameterIdentification",
+                "Method": "ParameterIdentification",
+                "Description": "Value updated from 'Parameter Identification 4' on 2019-09-06 11:28"
+              }
+            }
+          ]
+        }
+      ],
+      "PkaTypes": [
+        {
+          "Type": "Base",
+          "Pka": 6.5,
+          "ValueOrigin": {
+            "Source": "Publication",
+            "Description": "Hanke 2018"
+          }
+        }
+      ],
+      "Processes": [
+        {
+          "InternalName": "MetabolizationIntrinsic_FirstOrder",
+          "DataSource": "1st order CL",
+          "Species": "Human",
+          "Molecule": "CYP3A4",
+          "Parameters": [
+            {
+              "Name": "Intrinsic clearance",
+              "Value": 0.5272297928,
+              "Unit": "l/min",
+              "ValueOrigin": {
+                "Source": "ParameterIdentification",
+                "Method": "ParameterIdentification",
+                "Description": "Value updated from 'Parameter Identification 4' on 2019-09-06 11:28"
+              }
+            }
+          ]
+        },
+        {
+          "InternalName": "GlomerularFiltration",
+          "DataSource": "GFR",
+          "Species": "Human",
+          "Parameters": [
+            {
+              "Name": "GFR fraction",
+              "Value": 0.06,
+              "ValueOrigin": {
+                "Source": "Publication",
+                "Description": "Hanke 2018"
+              }
+            }
+          ]
+        }
+      ],
+      "CalculationMethods": [
+        "Cellular partition coefficient method - Rodgers and Rowland",
+        "Cellular permeability - PK-Sim Standard"
+      ],
+      "Parameters": [
+        {
+          "Name": "Molecular weight",
+          "Value": 416.52,
+          "Unit": "g/mol",
+          "ValueOrigin": {
+            "Source": "Publication",
+            "Description": "Drugbank"
+          }
+        }
+      ]
+    }
+  ],
+  "Formulations": [
+    {
+      "Name": "Coumadin (Warfarin, Weibull release function)",
+      "FormulationType": "Formulation_Tablet_Weibull",
+      "Parameters": [
+        {
+          "Name": "Dissolution time (50% dissolved)",
+          "Value": 7.9,
+          "Unit": "min",
+          "ValueOrigin": {}
+        },
+        {
+          "Name": "Lag time",
+          "Value": 0.0,
+          "Unit": "min",
+          "ValueOrigin": {}
+        },
+        {
+          "Name": "Dissolution shape",
+          "Value": 0.92,
+          "ValueOrigin": {}
+        },
+        {
+          "Name": "Use as suspension",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        }
+      ],
+      "Description": "Version 1.1"
+    }
+  ],
+  "Protocols": [
+    {
+      "Name": "Rifampicin, po, 600 mg, 7 d",
+      "ApplicationType": "Oral",
+      "DosingInterval": "DI_24",
+      "Parameters": [
+        {
+          "Name": "Start time",
+          "Value": 0.0,
+          "Unit": "h",
+          "ValueOrigin": {}
+        },
+        {
+          "Name": "InputDose",
+          "Value": 600.0,
+          "Unit": "mg",
+          "ValueOrigin": {}
+        },
+        {
+          "Name": "Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Name": "End time",
+          "Value": 168.0,
+          "Unit": "h",
+          "ValueOrigin": {
+            "Source": "Unknown"
+          }
+        }
+      ],
+      "Description": "Version 1.1"
+    }
+  ],
+  "Simulations": [
+    {
+      "Name": "test",
+      "Model": "4Comp",
+      "Solver": {},
+      "OutputSchema": [
+        {
+          "Parameters": [
+            {
+              "Name": "Start time",
+              "Value": 0.0,
+              "Unit": "h",
+              "ValueOrigin": {}
+            },
+            {
+              "Name": "End time",
+              "Value": 2.0,
+              "Unit": "h",
+              "ValueOrigin": {}
+            },
+            {
+              "Name": "Resolution",
+              "Value": 20.0,
+              "Unit": "pts/h",
+              "ValueOrigin": {}
+            }
+          ]
+        },
+        {
+          "Parameters": [
+            {
+              "Name": "Start time",
+              "Value": 2.0,
+              "Unit": "h",
+              "ValueOrigin": {}
+            },
+            {
+              "Name": "End time",
+              "Value": 192.0,
+              "Unit": "h",
+              "ValueOrigin": {}
+            },
+            {
+              "Name": "Resolution",
+              "Value": 4.0,
+              "Unit": "pts/h",
+              "ValueOrigin": {}
+            }
+          ]
+        }
+      ],
+      "Parameters": [
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_1|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_2|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_3|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_4|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_5|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_6|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_7|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        }
+      ],
+      "Individual": "Acosta2007",
+      "Compounds": [
+        {
+          "Name": "Alfentanil",
+          "CalculationMethods": [
             "Cellular partition coefficient method - Rodgers and Rowland",
             "Cellular permeability - PK-Sim Standard"
-         ],
-         "Parameters": [
+          ],
+          "Alternatives": [
             {
-               "Name": "Molecular weight",
-               "Value": 416.52,
-               "Unit": "g/mol",
-               "ValueOrigin": {
-                  "Source": "Publication",
-                  "Description": "Drugbank"
-               }
+              "AlternativeName": "Optimized",
+              "GroupName": "COMPOUND_PERMEABILITY"
+            },
+            {
+              "AlternativeName": "Optimized",
+              "GroupName": "COMPOUND_INTESTINAL_PERMEABILITY"
             }
-         ]
-      }
-   ],
-   "Formulations": [
-      {
-         "Name": "Coumadin (Warfarin, Weibull release function)",
-         "FormulationType": "Formulation_Tablet_Weibull",
-         "Parameters": [
+          ],
+          "Processes": [
             {
-               "Name": "Dissolution time (50% dissolved)",
-               "Value": 7.9,
-               "Unit": "min",
-               "ValueOrigin": {}
+              "Name": "CYP3A4-1st order CL",
+              "MoleculeName": "CYP3A4"
             },
             {
-               "Name": "Lag time",
-               "Value": 0.0,
-               "Unit": "min",
-               "ValueOrigin": {}
-            },
-            {
-               "Name": "Dissolution shape",
-               "Value": 0.92,
-               "ValueOrigin": {}
-            },
-            {
-               "Name": "Use as suspension",
-               "Value": 0.0,
-               "ValueOrigin": {}
+              "Name": "Glomerular Filtration-GFR",
+              "SystemicProcessType": "GFR"
             }
-         ],
-         "Description": "Version 1.1"
-      }
-   ],
-   "Protocols": [
-      {
-         "Name": "Rifampicin, po, 600 mg, 7 d",
-         "ApplicationType": "Oral",
-         "DosingInterval": "DI_24",
-         "Parameters": [
+          ],
+          "Protocol": {
+            "Name": "Rifampicin, po, 600 mg, 7 d",
+            "Formulations": [
+              {
+                "Name": "Coumadin (Warfarin, Weibull release function)",
+                "Key": "Formulation"
+              }
+            ]
+          }
+        }
+      ],
+      "HasResults": true
+    },
+    {
+      "Name": "Population Simulation - IV",
+      "Model": "4Comp",
+      "AllowAging": true,
+      "Solver": {},
+      "OutputSchema": [
+        {
+          "Parameters": [
             {
-               "Name": "Start time",
-               "Value": 0.0,
-               "Unit": "h",
-               "ValueOrigin": {}
+              "Name": "Start time",
+              "Value": 0.0,
+              "Unit": "h",
+              "ValueOrigin": {}
             },
             {
-               "Name": "InputDose",
-               "Value": 600.0,
-               "Unit": "mg",
-               "ValueOrigin": {}
+              "Name": "End time",
+              "Value": 2.0,
+              "Unit": "h",
+              "ValueOrigin": {}
             },
             {
-               "Name": "End time",
-               "Value": 168.0,
-               "Unit": "h",
-               "ValueOrigin": {
-                  "Source": "Unknown"
-               }
-            },
-            {
-               "Name": "Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
+              "Name": "Resolution",
+              "Value": 20.0,
+              "Unit": "pts/h",
+              "ValueOrigin": {}
             }
-         ],
-         "Description": "Version 1.1"
-      }
-   ],
-   "Simulations": [
-      {
-         "Name": "test",
-         "Model": "4Comp",
-         "Solver": {},
-         "OutputSchema": [
+          ]
+        },
+        {
+          "Parameters": [
             {
-               "Parameters": [
-                  {
-                     "Name": "Start time",
-                     "Value": 0.0,
-                     "Unit": "h",
-                     "ValueOrigin": {}
-                  },
-                  {
-                     "Name": "End time",
-                     "Value": 2.0,
-                     "Unit": "h",
-                     "ValueOrigin": {}
-                  },
-                  {
-                     "Name": "Resolution",
-                     "Value": 20.0,
-                     "Unit": "pts/h",
-                     "ValueOrigin": {}
-                  }
-               ]
+              "Name": "Start time",
+              "Value": 2.0,
+              "Unit": "h",
+              "ValueOrigin": {}
             },
             {
-               "Parameters": [
-                  {
-                     "Name": "Start time",
-                     "Value": 2.0,
-                     "Unit": "h",
-                     "ValueOrigin": {}
-                  },
-                  {
-                     "Name": "End time",
-                     "Value": 192.0,
-                     "Unit": "h",
-                     "ValueOrigin": {}
-                  },
-                  {
-                     "Name": "Resolution",
-                     "Value": 4.0,
-                     "Unit": "pts/h",
-                     "ValueOrigin": {}
-                  }
-               ]
+              "Name": "End time",
+              "Value": 192.0,
+              "Unit": "h",
+              "ValueOrigin": {}
+            },
+            {
+              "Name": "Resolution",
+              "Value": 4.0,
+              "Unit": "pts/h",
+              "ValueOrigin": {}
             }
-         ],
-         "Parameters": [
+          ]
+        }
+      ],
+      "Parameters": [
+        {
+          "Path": "CYP3A4|Disease factor",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|Fraction expressed in blood cells",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|Fraction expressed in blood cells membrane",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|Fraction expressed in endosomes",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|Fraction expressed on plasma-side membrane of vascular endothelium",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|Fraction expressed on tissue-side membrane of vascular endothelium",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|Ontogeny factor",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|Ontogeny factor GI table",
+          "Value": 0.0011,
+          "ValueOrigin": {},
+          "TableFormula": {
+            "Name": "Ontogeny for CYP3A4 - Duodenum",
+            "XName": "Post menstrual age",
+            "XDimension": "Age in years",
+            "XUnit": "year(s)",
+            "YName": "Ontogeny for CYP3A4 - Duodenum",
+            "YDimension": "Dimensionless",
+            "UseDerivedValues": false,
+            "Points": [
+              {
+                "X": 0.01,
+                "Y": 0.0011,
+                "RestartSolver": false
+              },
+              {
+                "X": 0.03,
+                "Y": 0.0086,
+                "RestartSolver": false
+              },
+              {
+                "X": 0.53,
+                "Y": 0.23,
+                "RestartSolver": false
+              },
+              {
+                "X": 0.59,
+                "Y": 0.25,
+                "RestartSolver": false
+              },
+              {
+                "X": 0.77,
+                "Y": 0.32,
+                "RestartSolver": false
+              },
+              {
+                "X": 1.08,
+                "Y": 0.41,
+                "RestartSolver": false
+              },
+              {
+                "X": 1.44,
+                "Y": 0.5,
+                "RestartSolver": false
+              },
+              {
+                "X": 1.92,
+                "Y": 0.59,
+                "RestartSolver": false
+              },
+              {
+                "X": 2.41,
+                "Y": 0.66,
+                "RestartSolver": false
+              },
+              {
+                "X": 3.13,
+                "Y": 0.73,
+                "RestartSolver": false
+              },
+              {
+                "X": 3.97,
+                "Y": 0.78,
+                "RestartSolver": false
+              },
+              {
+                "X": 5.17,
+                "Y": 0.83,
+                "RestartSolver": false
+              },
+              {
+                "X": 6.87,
+                "Y": 0.87,
+                "RestartSolver": false
+              },
+              {
+                "X": 9.29,
+                "Y": 0.91,
+                "RestartSolver": false
+              },
+              {
+                "X": 13.18,
+                "Y": 0.94,
+                "RestartSolver": false
+              },
+              {
+                "X": 17.8,
+                "Y": 0.96,
+                "RestartSolver": false
+              },
+              {
+                "X": 25.51,
+                "Y": 0.97,
+                "RestartSolver": false
+              },
+              {
+                "X": 38.25,
+                "Y": 0.98,
+                "RestartSolver": false
+              },
+              {
+                "X": 60.21,
+                "Y": 0.99,
+                "RestartSolver": false
+              },
+              {
+                "X": 101.04,
+                "Y": 1.0,
+                "RestartSolver": false
+              }
+            ]
+          }
+        },
+        {
+          "Path": "CYP3A4|Ontogeny factor table",
+          "Value": 0.001,
+          "ValueOrigin": {},
+          "TableFormula": {
+            "Name": "Ontogeny for CYP3A4 - Liver",
+            "XName": "Post menstrual age",
+            "XDimension": "Age in years",
+            "XUnit": "year(s)",
+            "YName": "Ontogeny for CYP3A4 - Liver",
+            "YDimension": "Dimensionless",
+            "UseDerivedValues": false,
+            "Points": [
+              {
+                "X": 0.18,
+                "Y": 0.001,
+                "RestartSolver": false
+              },
+              {
+                "X": 0.37,
+                "Y": 0.011,
+                "RestartSolver": false
+              },
+              {
+                "X": 0.5,
+                "Y": 0.03,
+                "RestartSolver": false
+              },
+              {
+                "X": 0.63,
+                "Y": 0.064,
+                "RestartSolver": false
+              },
+              {
+                "X": 0.77,
+                "Y": 0.12,
+                "RestartSolver": false
+              },
+              {
+                "X": 0.92,
+                "Y": 0.2,
+                "RestartSolver": false
+              },
+              {
+                "X": 1.39,
+                "Y": 0.49,
+                "RestartSolver": false
+              },
+              {
+                "X": 1.55,
+                "Y": 0.58,
+                "RestartSolver": false
+              },
+              {
+                "X": 1.73,
+                "Y": 0.67,
+                "RestartSolver": false
+              },
+              {
+                "X": 1.91,
+                "Y": 0.74,
+                "RestartSolver": false
+              },
+              {
+                "X": 2.08,
+                "Y": 0.79,
+                "RestartSolver": false
+              },
+              {
+                "X": 2.26,
+                "Y": 0.83,
+                "RestartSolver": false
+              },
+              {
+                "X": 2.5,
+                "Y": 0.87,
+                "RestartSolver": false
+              },
+              {
+                "X": 2.84,
+                "Y": 0.91,
+                "RestartSolver": false
+              },
+              {
+                "X": 3.19,
+                "Y": 0.94,
+                "RestartSolver": false
+              },
+              {
+                "X": 3.81,
+                "Y": 0.97,
+                "RestartSolver": false
+              },
+              {
+                "X": 4.69,
+                "Y": 0.98,
+                "RestartSolver": false
+              },
+              {
+                "X": 6.48,
+                "Y": 0.99,
+                "RestartSolver": false
+              },
+              {
+                "X": 11.17,
+                "Y": 1.0,
+                "RestartSolver": false
+              }
+            ]
+          }
+        },
+        {
+          "Path": "CYP3A4|Reference concentration",
+          "Value": 4.32,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|Relative expression in blood cells",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|Relative expression in plasma",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|Relative expression in vascular endothelium",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|t1/2 (intestine)",
+          "Value": 1380.0,
+          "Unit": "min",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|t1/2 (liver)",
+          "Value": 22.0,
+          "Unit": "h",
+          "ValueOrigin": {
+            "Source": "Unknown"
+          }
+        },
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_1|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_2|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_3|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_4|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_5|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_6|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_7|ProtocolSchemaItem|Volume of water/body weight",
+          "Value": 3.5,
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|ArterialBlood|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|ArterialBlood|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Bone|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Bone|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Bone|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Bone|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Bone|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Bone|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Bone|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Brain|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Brain|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Brain|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Brain|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Brain|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0188161046,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Brain|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0041682898325,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Brain|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Fat|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Fat|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Fat|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Fat|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Fat|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Fat|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Fat|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Gonads|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Gonads|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Gonads|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Gonads|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Gonads|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0038806559547,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Gonads|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.00078691079081,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Gonads|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Heart|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Heart|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Heart|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Heart|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Heart|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Heart|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Heart|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Kidney|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Kidney|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Kidney|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Kidney|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Kidney|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0406257561,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Kidney|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0053603428126,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Kidney|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Caecum|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Caecum|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Caecum|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Caecum|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Caecum|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Caecum|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Caecum|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonAscendens|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonAscendens|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonAscendens|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonAscendens|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonDescendens|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonDescendens|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonDescendens|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonDescendens|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonSigmoid|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonSigmoid|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonSigmoid|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonSigmoid|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonTransversum|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonTransversum|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonTransversum|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|ColonTransversum|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Rectum|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Rectum|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Rectum|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Rectum|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Rectum|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Rectum|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Mucosa|Rectum|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|LargeIntestine|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Pericentral|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Pericentral|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Pericentral|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Pericentral|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Pericentral|Intracellular|CYP3A4|Initial concentration",
+          "Value": 6.4767616192,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Pericentral|Intracellular|CYP3A4|Relative expression",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Pericentral|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Periportal|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Periportal|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Periportal|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Periportal|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Periportal|Intracellular|CYP3A4|Initial concentration",
+          "Value": 6.4767616192,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Periportal|Intracellular|CYP3A4|Relative expression",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Liver|Periportal|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|Caecum|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|Caecum|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|ColonAscendens|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|ColonAscendens|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|ColonDescendens|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|ColonDescendens|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|ColonSigmoid|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|ColonSigmoid|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|ColonTransversum|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|ColonTransversum|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|Duodenum|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|Duodenum|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|LowerIleum|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|LowerIleum|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|LowerJejunum|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|LowerJejunum|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|Rectum|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|Rectum|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|Stomach|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|Stomach|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|UpperIleum|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|UpperIleum|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|UpperJejunum|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lumen|UpperJejunum|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lung|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lung|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lung|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lung|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lung|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0079502438107,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lung|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.00042695753798,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Lung|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Muscle|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Muscle|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Muscle|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Muscle|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Muscle|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Muscle|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Muscle|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Pancreas|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Pancreas|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Pancreas|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Pancreas|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Pancreas|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Pancreas|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Pancreas|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|PortalVein|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|PortalVein|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Skin|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Skin|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Skin|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Skin|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Skin|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Skin|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Skin|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.3564233642,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0727697702,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|Duodenum|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|Duodenum|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|Duodenum|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.6985897939,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|Duodenum|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0727697702,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|Duodenum|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerIleum|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerIleum|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.5715734678,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerIleum|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0727697702,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerIleum|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerJejunum|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerJejunum|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.5715734678,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerJejunum|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0727697702,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|LowerJejunum|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperIleum|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperIleum|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.5613667987,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperIleum|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0727697702,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperIleum|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperJejunum|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperJejunum|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.6045488601,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperJejunum|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0727697702,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Mucosa|UpperJejunum|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|SmallIntestine|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Spleen|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Spleen|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Spleen|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Spleen|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Spleen|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Spleen|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Spleen|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Stomach|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Stomach|Interstitial|CYP3A4|Fraction expressed interstitial",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Stomach|Interstitial|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Stomach|Intracellular|CYP3A4|Fraction expressed intracellular",
+          "Value": 1.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Stomach|Intracellular|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Stomach|Intracellular|CYP3A4|Relative expression",
+          "Value": 0.0,
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|Stomach|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|VenousBlood|BloodCells|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Organism|VenousBlood|Plasma|CYP3A4|Initial concentration",
+          "Value": 0.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        }
+      ],
+      "Population": "Acosta_Pop",
+      "Compounds": [
+        {
+          "Name": "Alfentanil",
+          "CalculationMethods": [
+            "Cellular partition coefficient method - Rodgers and Rowland",
+            "Cellular permeability - PK-Sim Standard"
+          ],
+          "Alternatives": [
             {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_1|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
+              "AlternativeName": "Optimized",
+              "GroupName": "COMPOUND_PERMEABILITY"
             },
             {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_2|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_3|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_4|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_5|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_6|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_7|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
+              "AlternativeName": "Optimized",
+              "GroupName": "COMPOUND_INTESTINAL_PERMEABILITY"
             }
-         ],
-         "Individual": "Acosta2007",
-         "Compounds": [
+          ],
+          "Processes": [
             {
-               "Name": "Alfentanil",
-               "CalculationMethods": [
-                  "Cellular partition coefficient method - Rodgers and Rowland",
-                  "Cellular permeability - PK-Sim Standard"
-               ],
-               "Alternatives": [
-                  {
-                     "AlternativeName": "Optimized",
-                     "GroupName": "COMPOUND_PERMEABILITY"
-                  },
-                  {
-                     "AlternativeName": "Optimized",
-                     "GroupName": "COMPOUND_INTESTINAL_PERMEABILITY"
-                  }
-               ],
-               "Processes": [
-                  {
-                     "Name": "CYP3A4-1st order CL",
-                     "MoleculeName": "CYP3A4"
-                  },
-                  {
-                     "Name": "Glomerular Filtration-GFR",
-                     "SystemicProcessType": "GFR"
-                  }
-               ],
-               "Protocol": {
-                  "Name": "Rifampicin, po, 600 mg, 7 d",
-                  "Formulations": [
-                     {
-                        "Name": "Coumadin (Warfarin, Weibull release function)",
-                        "Key": "Formulation"
-                     }
-                  ]
-               }
+              "Name": "CYP3A4-1st order CL",
+              "MoleculeName": "CYP3A4"
+            },
+            {
+              "Name": "Glomerular Filtration-GFR",
+              "SystemicProcessType": "GFR"
             }
-         ],
-         "HasResults": false
-      },
-      {
-         "Name": "Population Simulation - IV",
-         "Model": "4Comp",
-         "Solver": {},
-         "OutputSchema": [
-            {
-               "Parameters": [
-                  {
-                     "Name": "Start time",
-                     "Value": 0.0,
-                     "Unit": "h",
-                     "ValueOrigin": {}
-                  },
-                  {
-                     "Name": "End time",
-                     "Value": 2.0,
-                     "Unit": "h",
-                     "ValueOrigin": {}
-                  },
-                  {
-                     "Name": "Resolution",
-                     "Value": 20.0,
-                     "Unit": "pts/h",
-                     "ValueOrigin": {}
-                  }
-               ]
-            },
-            {
-               "Parameters": [
-                  {
-                     "Name": "Start time",
-                     "Value": 2.0,
-                     "Unit": "h",
-                     "ValueOrigin": {}
-                  },
-                  {
-                     "Name": "End time",
-                     "Value": 192.0,
-                     "Unit": "h",
-                     "ValueOrigin": {}
-                  },
-                  {
-                     "Name": "Resolution",
-                     "Value": 4.0,
-                     "Unit": "pts/h",
-                     "ValueOrigin": {}
-                  }
-               ]
-            }
-         ],
-         "Parameters": [
-            {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_1|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_2|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_3|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_4|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_5|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_6|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
-            },
-            {
-               "Path": "Events|Rifampicin, po, 600 mg, 7 d|Coumadin (Warfarin, Weibull release function)|Application_7|ProtocolSchemaItem|Volume of water/body weight",
-               "Value": 3.5,
-               "Unit": "ml/kg",
-               "ValueOrigin": {}
-            }
-         ],
-         "Compounds": [
-            {
-               "Name": "Alfentanil",
-               "CalculationMethods": [
-                  "Cellular partition coefficient method - Rodgers and Rowland",
-                  "Cellular permeability - PK-Sim Standard"
-               ],
-               "Alternatives": [
-                  {
-                     "AlternativeName": "Optimized",
-                     "GroupName": "COMPOUND_PERMEABILITY"
-                  },
-                  {
-                     "AlternativeName": "Optimized",
-                     "GroupName": "COMPOUND_INTESTINAL_PERMEABILITY"
-                  }
-               ],
-               "Processes": [
-                  {
-                     "Name": "CYP3A4-1st order CL",
-                     "MoleculeName": "CYP3A4"
-                  },
-                  {
-                     "Name": "Glomerular Filtration-GFR",
-                     "SystemicProcessType": "GFR"
-                  }
-               ],
-               "Protocol": {
-                  "Name": "Rifampicin, po, 600 mg, 7 d",
-                  "Formulations": [
-                     {
-                        "Name": "Coumadin (Warfarin, Weibull release function)",
-                        "Key": "Formulation"
-                     }
-                  ]
-               }
-            }
-         ],
-         "HasResults": false,
-         "Population": "Acosta_Pop",
-         "AllowAging": true
-      }
-   ],
-   "Populations": [
-      {
-         "Name": "Acosta_Pop",
-         "Seed": 1234,
-         "Settings": {
-            "NumberOfIndividuals": 6,
-            "ProportionOfFemales": 0,
-            "Age": {
-               "Min": 5.0,
-               "Max": 15.0,
-               "Unit": "year(s)"
-            },
-            "Individual": {
-               "Name": "Acosta2007",
-               "Seed": 8908561,
-               "OriginData": {
-                  "CalculationMethods": [
-                     "SurfaceAreaPlsInt_VAR1",
-                     "Body surface area - Mosteller"
-                  ],
-                  "Species": "Human",
-                  "Population": "WhiteAmerican_NHANES_1997",
-                  "Gender": "MALE",
-                  "Age": {
-                     "Value": 34.0,
-                     "Unit": "year(s)"
-                  },
-                  "Weight": {
-                     "Value": 78.0,
-                     "Unit": "kg"
-                  }
-               },
-               "ExpressionProfiles": [
-                  "CYP3A4|Human|Acosta2007"
-               ]
-            }
-         }
-      }
-   ]
+          ],
+          "Protocol": {
+            "Name": "Rifampicin, po, 600 mg, 7 d",
+            "Formulations": [
+              {
+                "Name": "Coumadin (Warfarin, Weibull release function)",
+                "Key": "Formulation"
+              }
+            ]
+          }
+        }
+      ],
+      "HasResults": true
+    }
+  ]
 }

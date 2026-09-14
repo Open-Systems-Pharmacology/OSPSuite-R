@@ -7,7 +7,6 @@
 ^doc$
 ^docs$
 ^_pkgdown\.yml$
-^data-raw$
 ^pkgdown$
 ^man-roxygen/.
 ^BinaryFiles$
