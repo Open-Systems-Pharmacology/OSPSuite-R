@@ -28,8 +28,8 @@ ospsuite.utils::ospPrintItems(simulationsInProject, title = "Simulations")
 ```
 
     ## Simulations:
-    ##   • Thyroid_QST_Human
     ##   • Thyroid_QST_Phenobarbital
+    ##   • Thyroid_QST_Human
 
 get the list of parameter identifications:
 
@@ -60,15 +60,15 @@ print(names(obsData))
     ##  [3] "Liu 1995_Total T3__Rat__VenousBlood_Plasma_91 mg/kg/day_po_Fig.5A" 
     ##  [4] "Liu 1995_Total T3__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.5A"
     ##  [5] "Liu 1995_Total T3__Rat__VenousBlood_Plasma_179 mg/kg/day_po_Fig.5A"
-    ##  [6] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.6"  
-    ##  [7] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_46 mg/kg/day_po_Fig.6" 
-    ##  [8] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_91 mg/kg/day_po_Fig.6" 
-    ##  [9] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.6"
+    ##  [6] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.2"   
+    ##  [7] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_46 mg/kg/day_po_Fig.2"  
+    ##  [8] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_91 mg/kg/day_po_Fig.2"  
+    ##  [9] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.2" 
     ## [10] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_179 mg/kg/day_po_Fig.6"
-    ## [11] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.2"   
-    ## [12] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_46 mg/kg/day_po_Fig.2"  
-    ## [13] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_91 mg/kg/day_po_Fig.2"  
-    ## [14] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.2" 
+    ## [11] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.6"
+    ## [12] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_91 mg/kg/day_po_Fig.6" 
+    ## [13] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_46 mg/kg/day_po_Fig.6" 
+    ## [14] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.6"  
     ## [15] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_179 mg/kg/day_po_Fig.2"
 
 get the names of individuals and expression profiles from the project:
@@ -82,8 +82,8 @@ ospsuite.utils::ospPrintItems(individualsInProject, title = "Individuals names")
 ```
 
     ## Individuals names:
-    ##   • Human
     ##   • Rat
+    ##   • Human
 
 ``` r
 
@@ -94,12 +94,11 @@ ospsuite.utils::ospPrintItems(
 ```
 
     ## Expression profiles names:
-    ##   • UDPGT1|Human|Healthy
-    ##   • DIO1|Human|Healthy
-    ##   • DIO3|Human|Healthy
     ##   • UDPGT2|Human|Healthy
-    ##   • UGT1A1|Rat|Healthy
+    ##   • UDPGT1|Human|Healthy
+    ##   • DIO3|Human|Healthy
     ##   • PB-LiverBindingPartner|Human|Healthy
+    ##   • DIO1|Human|Healthy
 
 get the names of the modules in the project:
 
@@ -115,10 +114,10 @@ ospsuite.utils::ospPrintItems(modulesInProject, title = "Modules")
     ##   • TH_activeTransports
     ##   • Pituitary
     ##   • Phenobarbital_Extension
-    ##   • Phenobarbital_PBPK
     ##   • Endogenous_TH
     ##   • TH_plasma_binding
     ##   • Thyroid
+    ##   • Phenobarbital_PBPK
     ##   • Rat physiology
 
 and retrieve the respective objects by their names using the methods
@@ -296,7 +295,7 @@ print(individual)
     ##   • Population: European (ICRP, 2002)
     ##   • Gender: Male
     ##   • Age: 30.0000 year(s)
-    ##   • Gestational age: 2087.1429 week(s)
+    ##   • Gestational age: 40.0000 week(s)
     ##   • Height: 176.0000 cm
     ##   • Weight: 73.0000 kg
 
@@ -633,10 +632,10 @@ print(configuration)
     ## Individual:
     ##   • Human
     ## Expression profiles:
-    ##   • UDPGT1|Human|Healthy
-    ##   • DIO1|Human|Healthy
-    ##   • DIO3|Human|Healthy
     ##   • UDPGT2|Human|Healthy
+    ##   • DIO3|Human|Healthy
+    ##   • DIO1|Human|Healthy
+    ##   • UDPGT1|Human|Healthy
 
 ### Simulation configuration and simulation settings
 
@@ -979,10 +978,10 @@ print(simulationConfigurationHuman)
     ## Individual:
     ##   • Human
     ## Expression profiles:
-    ##   • UDPGT1|Human|Healthy
-    ##   • DIO1|Human|Healthy
-    ##   • DIO3|Human|Healthy
     ##   • UDPGT2|Human|Healthy
+    ##   • UDPGT1|Human|Healthy
+    ##   • DIO3|Human|Healthy
+    ##   • DIO1|Human|Healthy
 
 ## Creating simulations
 

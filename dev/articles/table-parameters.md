@@ -9,17 +9,30 @@ value pair. X values usually refer to the simulation time.
 
 library(ospsuite)
 
-# Load a simulation
-simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+# Load a simulation that contains a table parameter
+simFilePath <- system.file("extdata", "simple.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 
 # Get the parameter defined by a table.
 tableParam <- getParameter("Organism|TableParameter", sim)
-#> Error in `.getEntity()`:
-#> ! `tryCatch()`: no entity exists for path "Organism|TableParameter" located under container <Vergin 1995 IV>!
 print(tableParam)
-#> Error:
-#> ! object 'tableParam' not found
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|TableParameter
+#>   • Value: 1.00 [1/min]
+#> 
+#> ── Formula ──
+#> 
+#>   • isTable: TRUE
+#>   • XDimension: Time
+#>   • UseDerivedValues: FALSE
+#> 
+#> ── Table values ────────────────────────────────────────────────────────────────
+#>   x= 0, y= 1, restartSolver= FALSE
+#>   x= 10, y= 2, restartSolver= FALSE
+#>   x= 30, y= 3, restartSolver= FALSE
+#>   x= 40, y= 4, restartSolver= FALSE
+#>   • Value overrides formula: FALSE
 ```
 
 Direct access to the value points is possible through the `TableFormula`
@@ -30,36 +43,72 @@ conveniently retrieved using the `lapply` method:
 
 # Get the parameter defined by a table
 tableParam <- getParameter("Organism|TableParameter", sim)
-#> Error in `.getEntity()`:
-#> ! `tryCatch()`: no entity exists for path "Organism|TableParameter" located under container <Vergin 1995 IV>!
 print(tableParam)
-#> Error:
-#> ! object 'tableParam' not found
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|TableParameter
+#>   • Value: 1.00 [1/min]
+#> 
+#> ── Formula ──
+#> 
+#>   • isTable: TRUE
+#>   • XDimension: Time
+#>   • UseDerivedValues: FALSE
+#> 
+#> ── Table values ────────────────────────────────────────────────────────────────
+#>   x= 0, y= 1, restartSolver= FALSE
+#>   x= 10, y= 2, restartSolver= FALSE
+#>   x= 30, y= 3, restartSolver= FALSE
+#>   x= 40, y= 4, restartSolver= FALSE
+#>   • Value overrides formula: FALSE
 
 # Get all value points
 tableParam$formula$allPoints
-#> Error:
-#> ! object 'tableParam' not found
+#> [[1]]
+#>   x= 0, y= 1, restartSolver= FALSE
+#> 
+#> [[2]]
+#>   x= 10, y= 2, restartSolver= FALSE
+#> 
+#> [[3]]
+#>   x= 30, y= 3, restartSolver= FALSE
+#> 
+#> [[4]]
+#>   x= 40, y= 4, restartSolver= FALSE
 
 # Get all x-values
 xValues <- lapply(tableParam$formula$allPoints, function(point) {
   point$x
 })
-#> Error:
-#> ! object 'tableParam' not found
 print(xValues)
-#> Error:
-#> ! object 'xValues' not found
+#> [[1]]
+#> [1] 0
+#> 
+#> [[2]]
+#> [1] 10
+#> 
+#> [[3]]
+#> [1] 30
+#> 
+#> [[4]]
+#> [1] 40
 
 # Get all y-values
 yValues <- lapply(tableParam$formula$allPoints, function(point) {
   point$y
 })
-#> Error:
-#> ! object 'tableParam' not found
 print(yValues)
-#> Error:
-#> ! object 'yValues' not found
+#> [[1]]
+#> [1] 1
+#> 
+#> [[2]]
+#> [1] 2
+#> 
+#> [[3]]
+#> [1] 3
+#> 
+#> [[4]]
+#> [1] 4
 ```
 
 The method `valueAt()` of the `TableFormula` returns the value of `y`
@@ -70,18 +119,14 @@ linearly interpolated between the two closest `x` values.
 
 # Get the parameter defined by a table
 tableParam <- getParameter("Organism|TableParameter", sim)
-#> Error in `.getEntity()`:
-#> ! `tryCatch()`: no entity exists for path "Organism|TableParameter" located under container <Vergin 1995 IV>!
 
-# Value at x = 60 is stored in the table
-tableParam$formula$valueAt(60)
-#> Error:
-#> ! object 'tableParam' not found
+# Value at x = 30 is stored in the table
+tableParam$formula$valueAt(30)
+#> [1] 3
 
-# Value at x = 90 is not in the table
-tableParam$formula$valueAt(90)
-#> Error:
-#> ! object 'tableParam' not found
+# Value at x = 20 is not in the table
+tableParam$formula$valueAt(20)
+#> [1] 2.5
 ```
 
 ## Changing table parameter values
@@ -94,47 +139,110 @@ constant.
 
 # Get the parameter defined by a table.
 tableParam <- getParameter("Organism|TableParameter", sim)
-#> Error in `.getEntity()`:
-#> ! `tryCatch()`: no entity exists for path "Organism|TableParameter" located under container <Vergin 1995 IV>!
 tableParam
-#> Error:
-#> ! object 'tableParam' not found
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|TableParameter
+#>   • Value: 1.00 [1/min]
+#> 
+#> ── Formula ──
+#> 
+#>   • isTable: TRUE
+#>   • XDimension: Time
+#>   • UseDerivedValues: FALSE
+#> 
+#> ── Table values ────────────────────────────────────────────────────────────────
+#>   x= 0, y= 1, restartSolver= FALSE
+#>   x= 10, y= 2, restartSolver= FALSE
+#>   x= 30, y= 3, restartSolver= FALSE
+#>   x= 40, y= 4, restartSolver= FALSE
+#>   • Value overrides formula: FALSE
 
 # Set value to a constant. tableParam$isFixedValue is now TRUE
 setParameterValues(tableParam, 10)
-#> Error:
-#> ! object 'tableParam' not found
 tableParam
-#> Error:
-#> ! object 'tableParam' not found
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|TableParameter
+#>   • Value: 10.00 [1/min]
+#> 
+#> ── Formula ──
+#> 
+#>   • isTable: TRUE
+#>   • XDimension: Time
+#>   • UseDerivedValues: FALSE
+#> 
+#> ── Table values ────────────────────────────────────────────────────────────────
+#>   x= 0, y= 1, restartSolver= FALSE
+#>   x= 10, y= 2, restartSolver= FALSE
+#>   x= 30, y= 3, restartSolver= FALSE
+#>   x= 40, y= 4, restartSolver= FALSE
+#>   • Value overrides formula: TRUE
 ```
 
 To change the values of the table, a set of methods of the
 `TableFormula` is available. The method `addPoints()` adds a set of x-y
-values to the existing table. If trying to add a point with the x-value
-already present in the table, an error is thrown:
+values to the existing table. If trying to add a point with an x-value
+that is already present in the table and a different y-value, an error
+is thrown:
 
 ``` r
 
 tableParam <- getParameter("Organism|TableParameter", sim)
-#> Error in `.getEntity()`:
-#> ! `tryCatch()`: no entity exists for path "Organism|TableParameter" located under container <Vergin 1995 IV>!
 tableParam
-#> Error:
-#> ! object 'tableParam' not found
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|TableParameter
+#>   • Value: 10.00 [1/min]
+#> 
+#> ── Formula ──
+#> 
+#>   • isTable: TRUE
+#>   • XDimension: Time
+#>   • UseDerivedValues: FALSE
+#> 
+#> ── Table values ────────────────────────────────────────────────────────────────
+#>   x= 0, y= 1, restartSolver= FALSE
+#>   x= 10, y= 2, restartSolver= FALSE
+#>   x= 30, y= 3, restartSolver= FALSE
+#>   x= 40, y= 4, restartSolver= FALSE
+#>   • Value overrides formula: TRUE
 
 # Add new points
 tableParam$formula$addPoints(c(1, 2, 3), c(5, 6, 7))
-#> Error:
-#> ! object 'tableParam' not found
 tableParam
-#> Error:
-#> ! object 'tableParam' not found
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|TableParameter
+#>   • Value: 10.00 [1/min]
+#> 
+#> ── Formula ──
+#> 
+#>   • isTable: TRUE
+#>   • XDimension: Time
+#>   • UseDerivedValues: FALSE
+#> 
+#> ── Table values ────────────────────────────────────────────────────────────────
+#>   x= 0, y= 1, restartSolver= FALSE
+#>   x= 1, y= 5, restartSolver= FALSE
+#>   x= 2, y= 6, restartSolver= FALSE
+#>   x= 3, y= 7, restartSolver= FALSE
+#>   x= 10, y= 2, restartSolver= FALSE
+#>   x= 30, y= 3, restartSolver= FALSE
+#>   x= 40, y= 4, restartSolver= FALSE
+#>   • Value overrides formula: TRUE
 
 # Try to add points with existing x-values
-tableParam$formula$addPoints(0, 1)
-#> Error:
-#> ! object 'tableParam' not found
+tableParam$formula$addPoints(0, 9)
+#> Error in `do.call()`:
+#> ! Type:    OSPSuite.Core.Domain.ValuePointAlreadyExistsForPointException
+#> Message: A point for x=0 was already added with y=1
+#> Method:  Int32 AddPoint(OSPSuite.Core.Domain.Formulas.ValuePoint)
+#> Stack trace:
+#>    at OSPSuite.Core.Domain.Formulas.TableFormula.AddPoint(ValuePoint point)
+#>    at OSPSuite.Core.Domain.Formulas.TableFormula.AddPoint(Double x, Double y)
+#>    at InvokeStub_TableFormula.AddPoint(Object, Span`1)
+#>    at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
 ```
 
 To remove a point from the table, use the method `removePoint()`. It
@@ -144,33 +252,97 @@ provided y.
 ``` r
 
 tableParam
-#> Error:
-#> ! object 'tableParam' not found
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|TableParameter
+#>   • Value: 10.00 [1/min]
+#> 
+#> ── Formula ──
+#> 
+#>   • isTable: TRUE
+#>   • XDimension: Time
+#>   • UseDerivedValues: FALSE
+#> 
+#> ── Table values ────────────────────────────────────────────────────────────────
+#>   x= 0, y= 1, restartSolver= FALSE
+#>   x= 1, y= 5, restartSolver= FALSE
+#>   x= 2, y= 6, restartSolver= FALSE
+#>   x= 3, y= 7, restartSolver= FALSE
+#>   x= 10, y= 2, restartSolver= FALSE
+#>   x= 30, y= 3, restartSolver= FALSE
+#>   x= 40, y= 4, restartSolver= FALSE
+#>   • Value overrides formula: TRUE
 
-# Remove the point (0, 0)
-tableParam$formula$removePoint(0, 0)
-#> Error:
-#> ! object 'tableParam' not found
+# Remove the point (0, 1)
+tableParam$formula$removePoint(0, 1)
 tableParam
-#> Error:
-#> ! object 'tableParam' not found
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|TableParameter
+#>   • Value: 10.00 [1/min]
+#> 
+#> ── Formula ──
+#> 
+#>   • isTable: TRUE
+#>   • XDimension: Time
+#>   • UseDerivedValues: FALSE
+#> 
+#> ── Table values ────────────────────────────────────────────────────────────────
+#>   x= 1, y= 5, restartSolver= FALSE
+#>   x= 2, y= 6, restartSolver= FALSE
+#>   x= 3, y= 7, restartSolver= FALSE
+#>   x= 10, y= 2, restartSolver= FALSE
+#>   x= 30, y= 3, restartSolver= FALSE
+#>   x= 40, y= 4, restartSolver= FALSE
+#>   • Value overrides formula: TRUE
 
-# Try to remove the point (1, 1). Note that the value for x = 1 is x = 5 in the original table,
+# Try to remove the point (1, 1). Note that the y value for x = 1 is 5 in the table,
 # and no point is removed.
 tableParam$formula$removePoint(1, 1)
-#> Error:
-#> ! object 'tableParam' not found
 tableParam
-#> Error:
-#> ! object 'tableParam' not found
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|TableParameter
+#>   • Value: 10.00 [1/min]
+#> 
+#> ── Formula ──
+#> 
+#>   • isTable: TRUE
+#>   • XDimension: Time
+#>   • UseDerivedValues: FALSE
+#> 
+#> ── Table values ────────────────────────────────────────────────────────────────
+#>   x= 1, y= 5, restartSolver= FALSE
+#>   x= 2, y= 6, restartSolver= FALSE
+#>   x= 3, y= 7, restartSolver= FALSE
+#>   x= 10, y= 2, restartSolver= FALSE
+#>   x= 30, y= 3, restartSolver= FALSE
+#>   x= 40, y= 4, restartSolver= FALSE
+#>   • Value overrides formula: TRUE
 
-# Try to remove a non-existing point (0, 1). No point is removed.
-tableParam$formula$removePoint(1, 1)
-#> Error:
-#> ! object 'tableParam' not found
+# Try to remove the point (0, 1) again. It is no longer in the table, and no
+# point is removed.
+tableParam$formula$removePoint(0, 1)
 tableParam
-#> Error:
-#> ! object 'tableParam' not found
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|TableParameter
+#>   • Value: 10.00 [1/min]
+#> 
+#> ── Formula ──
+#> 
+#>   • isTable: TRUE
+#>   • XDimension: Time
+#>   • UseDerivedValues: FALSE
+#> 
+#> ── Table values ────────────────────────────────────────────────────────────────
+#>   x= 1, y= 5, restartSolver= FALSE
+#>   x= 2, y= 6, restartSolver= FALSE
+#>   x= 3, y= 7, restartSolver= FALSE
+#>   x= 10, y= 2, restartSolver= FALSE
+#>   x= 30, y= 3, restartSolver= FALSE
+#>   x= 40, y= 4, restartSolver= FALSE
+#>   • Value overrides formula: TRUE
 ```
 
 The `clearPoints()` method removes all points from the table, while
@@ -180,20 +352,59 @@ new points:
 ``` r
 
 tableParam
-#> Error:
-#> ! object 'tableParam' not found
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|TableParameter
+#>   • Value: 10.00 [1/min]
+#> 
+#> ── Formula ──
+#> 
+#>   • isTable: TRUE
+#>   • XDimension: Time
+#>   • UseDerivedValues: FALSE
+#> 
+#> ── Table values ────────────────────────────────────────────────────────────────
+#>   x= 1, y= 5, restartSolver= FALSE
+#>   x= 2, y= 6, restartSolver= FALSE
+#>   x= 3, y= 7, restartSolver= FALSE
+#>   x= 10, y= 2, restartSolver= FALSE
+#>   x= 30, y= 3, restartSolver= FALSE
+#>   x= 40, y= 4, restartSolver= FALSE
+#>   • Value overrides formula: TRUE
 
 tableParam$formula$setPoints(c(1, 2, 3, 4), c(5, 6, 7, 8))
-#> Error:
-#> ! object 'tableParam' not found
 tableParam
-#> Error:
-#> ! object 'tableParam' not found
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|TableParameter
+#>   • Value: 10.00 [1/min]
+#> 
+#> ── Formula ──
+#> 
+#>   • isTable: TRUE
+#>   • XDimension: Time
+#>   • UseDerivedValues: FALSE
+#> 
+#> ── Table values ────────────────────────────────────────────────────────────────
+#>   x= 1, y= 5, restartSolver= FALSE
+#>   x= 2, y= 6, restartSolver= FALSE
+#>   x= 3, y= 7, restartSolver= FALSE
+#>   x= 4, y= 8, restartSolver= FALSE
+#>   • Value overrides formula: TRUE
 
 tableParam$formula$clearPoints()
-#> Error:
-#> ! object 'tableParam' not found
 tableParam
-#> Error:
-#> ! object 'tableParam' not found
+#> <Parameter>
+#>   • Quantity Type: Parameter
+#>   • Path: Organism|TableParameter
+#>   • Value: 10.00 [1/min]
+#> 
+#> ── Formula ──
+#> 
+#>   • isTable: TRUE
+#>   • XDimension: Time
+#>   • UseDerivedValues: FALSE
+#> 
+#> ── Table values ────────────────────────────────────────────────────────────────
+#>   • Value overrides formula: TRUE
 ```

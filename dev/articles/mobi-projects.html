@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9008</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,8 +112,8 @@ simulations in the project:</p>
 <span></span>
 <span><span class="fu">ospsuite.utils</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/ospPrintItems.html" class="external-link">ospPrintItems</a></span><span class="op">(</span><span class="va">simulationsInProject</span>, title <span class="op">=</span> <span class="st">"Simulations"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="font-weight: bold;">Simulations</span>:</span></span>
-<span><span class="co">##   • Thyroid_QST_Human</span></span>
-<span><span class="co">##   • Thyroid_QST_Phenobarbital</span></span></code></pre>
+<span><span class="co">##   • Thyroid_QST_Phenobarbital</span></span>
+<span><span class="co">##   • Thyroid_QST_Human</span></span></code></pre>
 <p>get the list of parameter identifications:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">PIs</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="va">parameterIdentificationNames</span></span>
@@ -135,15 +135,15 @@ objects:</p>
 <span><span class="co">##  [3] "Liu 1995_Total T3__Rat__VenousBlood_Plasma_91 mg/kg/day_po_Fig.5A" </span></span>
 <span><span class="co">##  [4] "Liu 1995_Total T3__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.5A"</span></span>
 <span><span class="co">##  [5] "Liu 1995_Total T3__Rat__VenousBlood_Plasma_179 mg/kg/day_po_Fig.5A"</span></span>
-<span><span class="co">##  [6] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.6"  </span></span>
-<span><span class="co">##  [7] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_46 mg/kg/day_po_Fig.6" </span></span>
-<span><span class="co">##  [8] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_91 mg/kg/day_po_Fig.6" </span></span>
-<span><span class="co">##  [9] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.6"</span></span>
+<span><span class="co">##  [6] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.2"   </span></span>
+<span><span class="co">##  [7] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_46 mg/kg/day_po_Fig.2"  </span></span>
+<span><span class="co">##  [8] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_91 mg/kg/day_po_Fig.2"  </span></span>
+<span><span class="co">##  [9] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.2" </span></span>
 <span><span class="co">## [10] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_179 mg/kg/day_po_Fig.6"</span></span>
-<span><span class="co">## [11] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.2"   </span></span>
-<span><span class="co">## [12] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_46 mg/kg/day_po_Fig.2"  </span></span>
-<span><span class="co">## [13] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_91 mg/kg/day_po_Fig.2"  </span></span>
-<span><span class="co">## [14] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.2" </span></span>
+<span><span class="co">## [11] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_133 mg/kg/day_po_Fig.6"</span></span>
+<span><span class="co">## [12] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_91 mg/kg/day_po_Fig.6" </span></span>
+<span><span class="co">## [13] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_46 mg/kg/day_po_Fig.6" </span></span>
+<span><span class="co">## [14] "Liu 1995_Total TSH__Rat__VenousBlood_Plasma_0 mg/kg/day_po_Fig.6"  </span></span>
 <span><span class="co">## [15] "Liu 1995_Total T4__Rat__VenousBlood_Plasma_179 mg/kg/day_po_Fig.2"</span></span></code></pre>
 <p>get the names of individuals and expression profiles from the
 project:</p>
@@ -153,20 +153,19 @@ project:</p>
 <span></span>
 <span><span class="fu">ospsuite.utils</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/ospPrintItems.html" class="external-link">ospPrintItems</a></span><span class="op">(</span><span class="va">individualsInProject</span>, title <span class="op">=</span> <span class="st">"Individuals names"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="font-weight: bold;">Individuals names</span>:</span></span>
-<span><span class="co">##   • Human</span></span>
-<span><span class="co">##   • Rat</span></span></code></pre>
+<span><span class="co">##   • Rat</span></span>
+<span><span class="co">##   • Human</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ospsuite.utils</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/ospPrintItems.html" class="external-link">ospPrintItems</a></span><span class="op">(</span></span>
 <span>  <span class="va">expProfilesInProject</span>,</span>
 <span>  title <span class="op">=</span> <span class="st">"Expression profiles names"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="font-weight: bold;">Expression profiles names</span>:</span></span>
-<span><span class="co">##   • UDPGT1|Human|Healthy</span></span>
-<span><span class="co">##   • DIO1|Human|Healthy</span></span>
-<span><span class="co">##   • DIO3|Human|Healthy</span></span>
 <span><span class="co">##   • UDPGT2|Human|Healthy</span></span>
-<span><span class="co">##   • UGT1A1|Rat|Healthy</span></span>
-<span><span class="co">##   • PB-LiverBindingPartner|Human|Healthy</span></span></code></pre>
+<span><span class="co">##   • UDPGT1|Human|Healthy</span></span>
+<span><span class="co">##   • DIO3|Human|Healthy</span></span>
+<span><span class="co">##   • PB-LiverBindingPartner|Human|Healthy</span></span>
+<span><span class="co">##   • DIO1|Human|Healthy</span></span></code></pre>
 <p>get the names of the modules in the project:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modulesInProject</span> <span class="op">&lt;-</span> <span class="va">myProject</span><span class="op">$</span><span class="va">moduleNames</span></span>
@@ -177,10 +176,10 @@ project:</p>
 <span><span class="co">##   • TH_activeTransports</span></span>
 <span><span class="co">##   • Pituitary</span></span>
 <span><span class="co">##   • Phenobarbital_Extension</span></span>
-<span><span class="co">##   • Phenobarbital_PBPK</span></span>
 <span><span class="co">##   • Endogenous_TH</span></span>
 <span><span class="co">##   • TH_plasma_binding</span></span>
 <span><span class="co">##   • Thyroid</span></span>
+<span><span class="co">##   • Phenobarbital_PBPK</span></span>
 <span><span class="co">##   • Rat physiology</span></span></code></pre>
 <p>and retrieve the respective objects by their names using the methods
 <code>getSimulation</code>, <code>getObservedData</code>,
@@ -310,7 +309,7 @@ block also lists these values under an “Origin data” section.</p>
 <span><span class="co">##   • Population: European (ICRP, 2002)</span></span>
 <span><span class="co">##   • Gender: Male</span></span>
 <span><span class="co">##   • Age: 30.0000 year(s)</span></span>
-<span><span class="co">##   • Gestational age: 2087.1429 week(s)</span></span>
+<span><span class="co">##   • Gestational age: 40.0000 week(s)</span></span>
 <span><span class="co">##   • Height: 176.0000 cm</span></span>
 <span><span class="co">##   • Weight: 73.0000 kg</span></span></code></pre>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
@@ -604,10 +603,10 @@ simulation configurations.</p>
 <span><span class="co">## <span style="font-weight: bold;">Individual</span>:</span></span>
 <span><span class="co">##   • Human</span></span>
 <span><span class="co">## <span style="font-weight: bold;">Expression profiles</span>:</span></span>
-<span><span class="co">##   • UDPGT1|Human|Healthy</span></span>
-<span><span class="co">##   • DIO1|Human|Healthy</span></span>
+<span><span class="co">##   • UDPGT2|Human|Healthy</span></span>
 <span><span class="co">##   • DIO3|Human|Healthy</span></span>
-<span><span class="co">##   • UDPGT2|Human|Healthy</span></span></code></pre>
+<span><span class="co">##   • DIO1|Human|Healthy</span></span>
+<span><span class="co">##   • UDPGT1|Human|Healthy</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="simulation-configuration-and-simulation-settings">Simulation configuration and simulation settings<a class="anchor" aria-label="anchor" href="#simulation-configuration-and-simulation-settings"></a>
@@ -935,10 +934,10 @@ and the individual we created:</p>
 <span><span class="co">## <span style="font-weight: bold;">Individual</span>:</span></span>
 <span><span class="co">##   • Human</span></span>
 <span><span class="co">## <span style="font-weight: bold;">Expression profiles</span>:</span></span>
+<span><span class="co">##   • UDPGT2|Human|Healthy</span></span>
 <span><span class="co">##   • UDPGT1|Human|Healthy</span></span>
-<span><span class="co">##   • DIO1|Human|Healthy</span></span>
 <span><span class="co">##   • DIO3|Human|Healthy</span></span>
-<span><span class="co">##   • UDPGT2|Human|Healthy</span></span></code></pre>
+<span><span class="co">##   • DIO1|Human|Healthy</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">

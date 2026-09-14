@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9008</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,28 +144,22 @@ is calculated for each dose of interest.</p>
 <span><span class="va">simFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Aciclovir.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span><span class="op">)</span></span>
 <span><span class="va">doseParameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getAllParametersMatching.html">getAllParametersMatching</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/toPathString.html">toPathString</a></span><span class="op">(</span><span class="st">"Applications"</span>, <span class="st">"**"</span>, <span class="st">"Dose"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/toPathString.html">toPathString</a></span><span class="op">(</span><span class="st">"Events"</span>, <span class="st">"**"</span>, <span class="st">"Dose"</span><span class="op">)</span>,</span>
 <span>  <span class="va">sim</span></span>
 <span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># run for dose 100mg</span></span>
 <span><span class="va">doseParameter</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/toBaseUnit.html">toBaseUnit</a></span><span class="op">(</span><span class="va">doseParameter</span>, <span class="fl">100</span>, <span class="st">"mg"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validateIsOfType()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `tryCatch()`: argument <span style="color: #0000BB;">"quantityOrDimension"</span> is of type <span style="color: #0000BB;">&lt;NULL&gt;</span>, but expected <span style="color: #0000BB;">&lt;Quantity/character&gt;</span>!</span></span>
 <span><span class="va">result100</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># run for dose 200mg</span></span>
 <span><span class="va">doseParameter</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/toBaseUnit.html">toBaseUnit</a></span><span class="op">(</span><span class="va">doseParameter</span>, <span class="fl">200</span>, <span class="st">"mg"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validateIsOfType()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `tryCatch()`: argument <span style="color: #0000BB;">"quantityOrDimension"</span> is of type <span style="color: #0000BB;">&lt;NULL&gt;</span>, but expected <span style="color: #0000BB;">&lt;Quantity/character&gt;</span>!</span></span>
 <span><span class="va">result200</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># ...</span></span>
 <span></span>
 <span><span class="co"># run for dose 500mg</span></span>
 <span><span class="va">doseParameter</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/toBaseUnit.html">toBaseUnit</a></span><span class="op">(</span><span class="va">doseParameter</span>, <span class="fl">500</span>, <span class="st">"mg"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validateIsOfType()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `tryCatch()`: argument <span style="color: #0000BB;">"quantityOrDimension"</span> is of type <span style="color: #0000BB;">&lt;NULL&gt;</span>, but expected <span style="color: #0000BB;">&lt;Quantity/character&gt;</span>!</span></span>
 <span><span class="va">result500</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span>simulations <span class="op">=</span> <span class="va">sim</span><span class="op">)</span></span></code></pre></div>
 <p>This implementation is fairly easy to understand, but has potentially
 one big performance bottleneck. Each simulation run is performed
@@ -189,7 +183,7 @@ parallel).</p>
 <span><span class="va">loadSimulationWithDose</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">doseInMg</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadSimulation.html">loadSimulation</a></span><span class="op">(</span><span class="va">simFilePath</span>, loadFromCache <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span>  <span class="va">doseParameter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getAllParametersMatching.html">getAllParametersMatching</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="../reference/toPathString.html">toPathString</a></span><span class="op">(</span><span class="st">"Applications"</span>, <span class="st">"**"</span>, <span class="st">"Dose"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/toPathString.html">toPathString</a></span><span class="op">(</span><span class="st">"Events"</span>, <span class="st">"**"</span>, <span class="st">"Dose"</span><span class="op">)</span>,</span>
 <span>    <span class="va">sim</span></span>
 <span>  <span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span>  <span class="va">doseParameter</span><span class="op">$</span><span class="va">value</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/toBaseUnit.html">toBaseUnit</a></span><span class="op">(</span><span class="va">doseParameter</span>, <span class="va">doseInMg</span>, <span class="st">"mg"</span><span class="op">)</span></span>
@@ -198,28 +192,16 @@ parallel).</p>
 <span></span>
 <span><span class="co"># Creates 5 instances of a simulation (This is very fast for typical simulations)</span></span>
 <span><span class="va">sim100</span> <span class="op">&lt;-</span> <span class="fu">loadSimulationWithDose</span><span class="op">(</span>doseInMg <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validateIsOfType()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `tryCatch()`: argument <span style="color: #0000BB;">"quantityOrDimension"</span> is of type <span style="color: #0000BB;">&lt;NULL&gt;</span>, but expected <span style="color: #0000BB;">&lt;Quantity/character&gt;</span>!</span></span>
 <span><span class="va">sim200</span> <span class="op">&lt;-</span> <span class="fu">loadSimulationWithDose</span><span class="op">(</span>doseInMg <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validateIsOfType()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `tryCatch()`: argument <span style="color: #0000BB;">"quantityOrDimension"</span> is of type <span style="color: #0000BB;">&lt;NULL&gt;</span>, but expected <span style="color: #0000BB;">&lt;Quantity/character&gt;</span>!</span></span>
 <span><span class="va">sim300</span> <span class="op">&lt;-</span> <span class="fu">loadSimulationWithDose</span><span class="op">(</span>doseInMg <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validateIsOfType()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `tryCatch()`: argument <span style="color: #0000BB;">"quantityOrDimension"</span> is of type <span style="color: #0000BB;">&lt;NULL&gt;</span>, but expected <span style="color: #0000BB;">&lt;Quantity/character&gt;</span>!</span></span>
 <span><span class="va">sim400</span> <span class="op">&lt;-</span> <span class="fu">loadSimulationWithDose</span><span class="op">(</span>doseInMg <span class="op">=</span> <span class="fl">400</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validateIsOfType()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `tryCatch()`: argument <span style="color: #0000BB;">"quantityOrDimension"</span> is of type <span style="color: #0000BB;">&lt;NULL&gt;</span>, but expected <span style="color: #0000BB;">&lt;Quantity/character&gt;</span>!</span></span>
 <span><span class="va">sim500</span> <span class="op">&lt;-</span> <span class="fu">loadSimulationWithDose</span><span class="op">(</span>doseInMg <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validateIsOfType()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `tryCatch()`: argument <span style="color: #0000BB;">"quantityOrDimension"</span> is of type <span style="color: #0000BB;">&lt;NULL&gt;</span>, but expected <span style="color: #0000BB;">&lt;Quantity/character&gt;</span>!</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Runs the simulation in parallel</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulations.html">runSimulations</a></span><span class="op">(</span></span>
 <span>  simulations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">sim100</span>, <span class="va">sim200</span>, <span class="va">sim300</span>, <span class="va">sim400</span>, <span class="va">sim500</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> object 'sim100' not found</span></span>
 <span></span>
 <span><span class="co"># Results in now a list of SimulationResults</span></span></code></pre></div>
 <p>This implementation is also fairly straight forward. We load the
@@ -287,21 +269,21 @@ performance.</p>
 <code class="sourceCode R"><span><span class="co"># now setting some parameter run values (the size of the array should match</span></span>
 <span><span class="co"># the number of parameters to vary for each batch</span></span>
 <span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "b11431ef-d551-472c-9a1f-d1494e74f65d"</span></span>
+<span><span class="co">#&gt; [1] "e838181d-00a5-4725-b531-4b2f04e16299"</span></span>
 <span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "31e35c7c-2d53-428c-a215-2e0617a6bb40"</span></span>
+<span><span class="co">#&gt; [1] "dfba2343-c7a2-41ce-aa0c-a332b9cdc123"</span></span>
 <span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "ed4b7ce2-64cf-41ff-bab3-a35deb4ff4f8"</span></span>
+<span><span class="co">#&gt; [1] "1d01cabe-e6ff-46a5-ac18-f6277a0738c4"</span></span>
 <span></span>
 <span><span class="co"># We only have one parameter to vary for simBatch2, therefore only one value to set</span></span>
 <span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">150</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "08a47078-bc54-4373-a43e-021247d73fe2"</span></span>
+<span><span class="co">#&gt; [1] "600885bf-3d4e-4767-b4b4-d93d3dead2db"</span></span>
 <span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "91a1c0ac-f5f0-4609-97df-91b338ff7a33"</span></span>
+<span><span class="co">#&gt; [1] "0d0cc862-0662-4206-b8ee-3b4e7b2848cc"</span></span>
 <span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2452e6fe-c37b-48d2-9830-b80726b417bb"</span></span>
+<span><span class="co">#&gt; [1] "102196e2-ccba-457e-a039-002dcc1f620a"</span></span>
 <span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">400</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "3480200a-9484-45eb-84e7-1a5ab18c7739"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "f6532e6f-24f6-4491-9773-c85b8ec1e9cf"</span></span></code></pre></div>
 <p>So far, we created 2 simulation batches, one with 3 parameter sets
 and the other one with 4. That means that 3 runs will be enqueued for
 simBatch1 and 4 will be enqueued for simBatch2. Each run gets a unique
@@ -314,13 +296,13 @@ simulated set of parameters.</p>
 <span><span class="co"># The resulting output is a named list, where the names are the ids of the enqueued runs.</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runSimulationBatches.html">runSimulationBatches</a></span><span class="op">(</span><span class="va">simulationBatches</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "dd7324d4-c7e7-4093-b90f-a277843f5817.b11431ef-d551-472c-9a1f-d1494e74f65d"</span></span>
-<span><span class="co">#&gt; [2] "dd7324d4-c7e7-4093-b90f-a277843f5817.31e35c7c-2d53-428c-a215-2e0617a6bb40"</span></span>
-<span><span class="co">#&gt; [3] "dd7324d4-c7e7-4093-b90f-a277843f5817.ed4b7ce2-64cf-41ff-bab3-a35deb4ff4f8"</span></span>
-<span><span class="co">#&gt; [4] "f8f095a8-a1b2-4b6b-982c-24f599c700a9.08a47078-bc54-4373-a43e-021247d73fe2"</span></span>
-<span><span class="co">#&gt; [5] "f8f095a8-a1b2-4b6b-982c-24f599c700a9.91a1c0ac-f5f0-4609-97df-91b338ff7a33"</span></span>
-<span><span class="co">#&gt; [6] "f8f095a8-a1b2-4b6b-982c-24f599c700a9.2452e6fe-c37b-48d2-9830-b80726b417bb"</span></span>
-<span><span class="co">#&gt; [7] "f8f095a8-a1b2-4b6b-982c-24f599c700a9.3480200a-9484-45eb-84e7-1a5ab18c7739"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "79cec942-c3f7-4984-8089-af6eaba22df0.e838181d-00a5-4725-b531-4b2f04e16299"</span></span>
+<span><span class="co">#&gt; [2] "79cec942-c3f7-4984-8089-af6eaba22df0.dfba2343-c7a2-41ce-aa0c-a332b9cdc123"</span></span>
+<span><span class="co">#&gt; [3] "79cec942-c3f7-4984-8089-af6eaba22df0.1d01cabe-e6ff-46a5-ac18-f6277a0738c4"</span></span>
+<span><span class="co">#&gt; [4] "9b862664-05e9-4508-bb39-699f73613c20.600885bf-3d4e-4767-b4b4-d93d3dead2db"</span></span>
+<span><span class="co">#&gt; [5] "9b862664-05e9-4508-bb39-699f73613c20.0d0cc862-0662-4206-b8ee-3b4e7b2848cc"</span></span>
+<span><span class="co">#&gt; [6] "9b862664-05e9-4508-bb39-699f73613c20.102196e2-ccba-457e-a039-002dcc1f620a"</span></span>
+<span><span class="co">#&gt; [7] "9b862664-05e9-4508-bb39-699f73613c20.f6532e6f-24f6-4491-9773-c85b8ec1e9cf"</span></span></code></pre></div>
 <p>The enqueued run values are cleared after calling
 <code><a href="../reference/runSimulationBatches.html">runSimulationBatches()</a></code>, so executing the run again would
 result in an empty results list. We can now set more values to the
@@ -330,13 +312,13 @@ are automatically cleared when <code><a href="../reference/runSimulationBatches.
 called.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2a05040e-cf4b-4df3-963f-5a66dc19a987"</span></span>
+<span><span class="co">#&gt; [1] "0caa119a-b957-4d5a-8ebf-208669651752"</span></span>
 <span><span class="va">simBatch1</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">40</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "30de61fe-4e2b-4f61-99b8-4c34a36ee1a7"</span></span>
+<span><span class="co">#&gt; [1] "1848e0db-d6bb-4fef-be34-efa40ab044d6"</span></span>
 <span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "8c051230-9e27-48ea-aaa5-54b23740aa96"</span></span>
+<span><span class="co">#&gt; [1] "cae7ae1f-d335-4c6d-9b18-a244bffd15b0"</span></span>
 <span><span class="va">simBatch2</span><span class="op">$</span><span class="fu">addRunValues</span><span class="op">(</span>parameterValues <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "23d05eb7-62ba-4fcb-a312-6dc58547a618"</span></span>
+<span><span class="co">#&gt; [1] "e61c352a-061f-47f5-bbd9-e2fa3df01a58"</span></span>
 <span></span>
 <span><span class="co"># this run will be much faster as the simulation won't be initialized again.</span></span>
 <span><span class="co"># Only the new value will be set as specified when adding new run values with addRunValues</span></span>
