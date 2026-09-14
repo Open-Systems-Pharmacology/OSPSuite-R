@@ -247,6 +247,22 @@ test_that("a simulation loaded from a snapshot can be run", {
   expect_true(isOfType(results, "SimulationResults"))
 })
 
+test_that("a simulation loaded from a snapshot keeps its snapshots when saved", {
+  simulation <- loadSimulationsFromSnapshot(snapshotFile)[[1]]
+  pkmlFile <- withr::local_tempfile(fileext = ".pkml")
+
+  saveSimulation(simulation, pkmlFile)
+
+  snapshotNodes <- xml2::xml_find_all(xml2::read_xml(pkmlFile), "//Snapshot")
+
+  expect_setequal(
+    xml2::xml_name(xml2::xml_parent(snapshotNodes)),
+    c("Individual", "Module")
+  )
+  # Each snapshot is base64-encoded JSON; before the fix these were all empty.
+  expect_true(all(nzchar(xml2::xml_text(snapshotNodes))))
+})
+
 test_that("loadSimulationsFromSnapshot validates its arguments", {
   expect_error(
     loadSimulationsFromSnapshot(snapshotFile, simulationNames = 1),
