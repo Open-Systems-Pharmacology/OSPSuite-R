@@ -379,7 +379,11 @@ offset and scale factor values.</p><ul><li><p>For X and Y variables:
 <p>The returned data frame follows the order in which datasets were added
 to the object. The <code>name</code> column is returned as a factor whose levels
 preserve this insertion order, so that downstream plots display legend
-entries in the order datasets were added (and not alphabetically).</p><div class="section">
+entries in the order datasets were added (and not alphabetically).</p>
+<p>Calling this method repeatedly on an unchanged object is cheap: the
+data frame is computed once and then reused. Adding data, changing
+groups, changing data types, or changing data transformations makes the
+next call compute it again.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataCombined</span><span class="op">$</span><span class="fu">toDataFrame</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div><p></p><div class="section">
@@ -387,6 +391,9 @@ entries in the order datasets were added (and not alphabetically).</p><div class
 <p>In the returned tibble data frame, the following columns will always be present:</p>
 <p>name - group - dataType - xValues - xDimension - xUnit - yValues -
 yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
+<p>Each call returns a fresh copy of the data frame. You can change it in
+any way you like without affecting the <code>DataCombined</code> object or the
+result of any other call.</p>
 </div>
 
 </div>

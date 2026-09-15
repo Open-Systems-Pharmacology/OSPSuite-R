@@ -341,6 +341,11 @@ to the object. The `name` column is returned as a factor whose levels
 preserve this insertion order, so that downstream plots display legend
 entries in the order datasets were added (and not alphabetically).
 
+Calling this method repeatedly on an unchanged object is cheap: the data
+frame is computed once and then reused. Adding data, changing groups,
+changing data types, or changing data transformations makes the next
+call compute it again.
+
 #### Usage
 
     DataCombined$toDataFrame()
@@ -352,6 +357,10 @@ present:
 
 name - group - dataType - xValues - xDimension - xUnit - yValues -
 yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+
+Each call returns a fresh copy of the data frame. You can change it in
+any way you like without affecting the `DataCombined` object or the
+result of any other call.
 
 ------------------------------------------------------------------------
 
