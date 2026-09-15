@@ -4,9 +4,9 @@
 
 `convertSnapshot()` is deprecated and will be removed in a future
 release. Use
-[`loadProjectFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadProjectFromSnapshot.md)
+[`snapshotToProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/snapshotToProject.md)
 to convert a snapshot to a project, and
-[`exportProjectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportProjectToSnapshot.md)
+[`projectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/projectToSnapshot.md)
 to convert a project to a snapshot.
 
 ## Usage

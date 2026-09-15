@@ -102,6 +102,31 @@
   observed-vs-predicted plots, where the two variables may otherwise
   diverge
   ([\#1241](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1241)).
+- New functions
+  [`projectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/projectToSnapshot.md)
+  and
+  [`snapshotToProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/snapshotToProject.md)
+  convert between OSP project files and snapshots.
+  [`projectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/projectToSnapshot.md)
+  takes PK-Sim (`.pksim5`) and MoBi (`.mbp3`) project files and writes
+  snapshot files (`.json`);
+  [`snapshotToProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/snapshotToProject.md)
+  takes PK-Sim and MoBi snapshot files (`.json`) and writes the matching
+  project file (`.pksim5` or `.mbp3`). The application is detected from
+  the file extension when converting a project and from the snapshot
+  itself when converting a snapshot; the `application` argument
+  overrides the detection, and a single call may mix files from both
+  applications. Inputs that would be converted to the same output file,
+  such as `model.pksim5` and `model.mbp3`, are rejected, as are inputs
+  that share a file name, such as `snapshots/a/model.json` and
+  `snapshots/b/model.json`
+  ([\#1973](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1973),
+  [\#1974](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1974)).
+- [`runSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulationsFromSnapshot.md)
+  now raises an error when two input files share a name, for example
+  `snapshots/a/model.json` and `snapshots/b/model.json`. All inputs are
+  gathered into a single folder first, so previously the second file
+  replaced the first and was silently processed in its place.
 - [`runSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulationsFromSnapshot.md)
   now validates the `exportJSON` argument like the other export flags.
   Previously a non-logical value (e.g. `exportJSON = "TRUE"`) was
@@ -180,14 +205,13 @@
 
 - [`convertSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/convertSnapshot.md)
   is soft-deprecated in favor of two dedicated functions:
-  [`loadProjectFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadProjectFromSnapshot.md)
+  [`snapshotToProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/snapshotToProject.md)
   (snapshot `.json` -\> project) and
-  [`exportProjectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportProjectToSnapshot.md)
+  [`projectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/projectToSnapshot.md)
   (project -\> snapshot `.json`).
   [`convertSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/convertSnapshot.md)
   still works but issues a deprecation warning and will be removed in a
-  future release. Only PK-Sim projects (`.pksim5`) are supported for
-  now; MoBi support is planned.
+  future release.
 
 ## ospsuite 12.4.3
 

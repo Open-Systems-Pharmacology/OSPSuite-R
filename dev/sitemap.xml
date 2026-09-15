@@ -187,7 +187,6 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportIndividualSimulations.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportPKAnalysesToCSV.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportPopulationToCSV.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportProjectToSnapshot.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportResultsToCSV.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportSensitivityAnalysisResultsToCSV.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportSteadyStateToXLS.html</loc></url>
@@ -240,7 +239,6 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadMoBiProject.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadModuleFromPKML.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadPopulation.html</loc></url>
-<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadProjectFromSnapshot.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadSimulation.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadSimulationsFromSnapshot.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/messages.html</loc></url>
@@ -264,6 +262,7 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/populationFromDataFrame.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/populationToDataFrame.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/potentialVariableParameterPathsFor.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/projectToSnapshot.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/reexports.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/removeAllUserDefinedPKParameters.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/removeSimulationFromCache.html</loc></url>
@@ -293,6 +292,7 @@
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setParameterValuesInIndividualBB.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/setQuantityValuesByPath.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/simulationResultsToDataFrame.html</loc></url>
+<url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/snapshotToProject.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/splitPopulationFile.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/toBaseUnit.html</loc></url>
 <url><loc>https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/toDisplayUnit.html</loc></url>

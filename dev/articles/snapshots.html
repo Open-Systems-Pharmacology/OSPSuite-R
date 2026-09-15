@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9010</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.0.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,8 +100,10 @@ snapshot, run simulations stored in a snapshot, and convert between the
 snapshot and project formats.</p>
 <blockquote>
 <p><strong>Note</strong></p>
-<p>The helpers described in this vignette support <strong>PK-Sim
-snapshots only</strong>; MoBi snapshots are not yet supported.</p>
+<p><code><a href="../reference/runSimulationsFromSnapshot.html">runSimulationsFromSnapshot()</a></code> and
+<code><a href="../reference/loadSimulationsFromSnapshot.html">loadSimulationsFromSnapshot()</a></code> support <strong>PK-Sim
+snapshots only</strong>. <code><a href="../reference/snapshotToProject.html">snapshotToProject()</a></code> and
+<code><a href="../reference/projectToSnapshot.html">projectToSnapshot()</a></code> support both PK-Sim and MoBi.</p>
 </blockquote>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a></span><span class="op">)</span></span>
@@ -228,24 +230,24 @@ every snapshot in it:</p>
 <div class="section level2">
 <h2 id="converting-between-snapshot-and-project-formats">Converting between snapshot and project formats<a class="anchor" aria-label="anchor" href="#converting-between-snapshot-and-project-formats"></a>
 </h2>
-<p>Snapshots and PK-Sim project files (<code>.pksim5</code>) can be
-converted into each other. Use <code><a href="../reference/loadProjectFromSnapshot.html">loadProjectFromSnapshot()</a></code> to
-build a project from a snapshot, and
-<code><a href="../reference/exportProjectToSnapshot.html">exportProjectToSnapshot()</a></code> to write a project back out as a
-snapshot.</p>
+<p>Snapshots and project files can be converted into each other. Use
+<code><a href="../reference/snapshotToProject.html">snapshotToProject()</a></code> to build a project from a snapshot, and
+<code><a href="../reference/projectToSnapshot.html">projectToSnapshot()</a></code> to write a project back out as a
+snapshot. Both PK-Sim (<code>.pksim5</code>) and MoBi
+(<code>.mbp3</code>) projects are supported.</p>
 <p>Convert a snapshot to a PK-Sim project:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">projectDir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"project"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">projectDir</span>, showWarnings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/loadProjectFromSnapshot.html">loadProjectFromSnapshot</a></span><span class="op">(</span><span class="va">snapshotPath</span>, output <span class="op">=</span> <span class="va">projectDir</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Converting 1 file to project format</span></span></code></pre>
+<span><span class="fu"><a href="../reference/snapshotToProject.html">snapshotToProject</a></span><span class="op">(</span><span class="va">snapshotPath</span>, output <span class="op">=</span> <span class="va">projectDir</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Converting 1 PK-Sim file to project format</span></span></code></pre>
 <pre><code><span><span class="co">## <span style="color: #00BB00;">✔</span> Conversion completed</span></span></code></pre>
 <pre><code><span><span class="co">## </span></span></code></pre>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">projectFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">projectDir</span>, pattern <span class="op">=</span> <span class="st">"\\.pksim5$"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">projectFile</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/tmp/RtmpTWrmfn/project/test_snapshot.pksim5"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "/tmp/RtmpD7bFz9/project/test_snapshot.pksim5"</span></span></code></pre>
 <p>Set <code>runSimulations = TRUE</code> to also run the simulations
 during this conversion.</p>
 <p>And convert a project back to a snapshot:</p>
@@ -253,8 +255,8 @@ during this conversion.</p>
 <code class="sourceCode R"><span><span class="va">snapshotOut</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"snapshot"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">snapshotOut</span>, showWarnings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/exportProjectToSnapshot.html">exportProjectToSnapshot</a></span><span class="op">(</span><span class="va">projectFile</span>, output <span class="op">=</span> <span class="va">snapshotOut</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Converting 1 file to snapshot format</span></span></code></pre>
+<span><span class="fu"><a href="../reference/projectToSnapshot.html">projectToSnapshot</a></span><span class="op">(</span><span class="va">projectFile</span>, output <span class="op">=</span> <span class="va">snapshotOut</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Converting 1 PK-Sim file to snapshot format</span></span></code></pre>
 <pre><code><span><span class="co">## <span style="color: #00BB00;">✔</span> Conversion completed</span></span></code></pre>
 <pre><code><span><span class="co">## </span></span></code></pre>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
@@ -262,12 +264,35 @@ during this conversion.</p>
 <pre><code><span><span class="co">## [1] "test_snapshot.json"</span></span></code></pre>
 <p>As with <code><a href="../reference/runSimulationsFromSnapshot.html">runSimulationsFromSnapshot()</a></code>, both functions
 accept several files or directories at once.</p>
+<div class="section level3">
+<h3 id="mobi-projects">MoBi projects<a class="anchor" aria-label="anchor" href="#mobi-projects"></a>
+</h3>
+<p>MoBi projects work the same way. The application is detected from the
+file extension when converting a project, and from the snapshot itself
+when converting a snapshot, so no extra argument is needed:</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">moBiProject</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"TH_QST_Platform.mbp3"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">moBiSnapshotDir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"mobi-snapshot"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">moBiSnapshotDir</span>, showWarnings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/projectToSnapshot.html">projectToSnapshot</a></span><span class="op">(</span><span class="va">moBiProject</span>, output <span class="op">=</span> <span class="va">moBiSnapshotDir</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Converting 1 MoBi file to snapshot format</span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #00BB00;">✔</span> Conversion completed</span></span></code></pre>
+<pre><code><span><span class="co">## </span></span></code></pre>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">moBiSnapshotDir</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "TH_QST_Platform.json"</span></span></code></pre>
+<p>Pass <code>application = "PK-Sim"</code> or
+<code>application = "MoBi"</code> to override the detection. A single
+call may mix both: each application converts its own files.</p>
 <blockquote>
 <p><strong>Note</strong></p>
 <p><code><a href="../reference/convertSnapshot.html">convertSnapshot()</a></code> is deprecated in favour of
-<code><a href="../reference/loadProjectFromSnapshot.html">loadProjectFromSnapshot()</a></code> and
-<code><a href="../reference/exportProjectToSnapshot.html">exportProjectToSnapshot()</a></code>.</p>
+<code><a href="../reference/snapshotToProject.html">snapshotToProject()</a></code> and
+<code><a href="../reference/projectToSnapshot.html">projectToSnapshot()</a></code>.</p>
 </blockquote>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

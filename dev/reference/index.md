@@ -403,9 +403,6 @@
 - [`exportPopulationToCSV()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportPopulationToCSV.md)
   : Saves the population to csv file
 
-- [`exportProjectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportProjectToSnapshot.md)
-  : Export a project to a snapshot
-
 - [`exportResultsToCSV()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportResultsToCSV.md)
   : Saves the simulation results to csv file
 
@@ -588,9 +585,6 @@
 - [`loadPopulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadPopulation.md)
   : Loads a population from a csv file and returns the population.
 
-- [`loadProjectFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadProjectFromSnapshot.md)
-  : Load a project from a snapshot
-
 - [`loadSimulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadSimulation.md)
   : Load a simulation from a pkml file
 
@@ -675,6 +669,9 @@
   : Returns an array of parameter path with one entry for each parameter
   that is used in the simulation and can potentially be used for
   sensitivity analysis
+
+- [`projectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/projectToSnapshot.md)
+  : Convert project files to snapshots
 
 - [`removeAllUserDefinedPKParameters()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/removeAllUserDefinedPKParameters.md)
   : Removes all User-Defined PK-Parameters that may have been added to
@@ -764,6 +761,9 @@
   :
 
   Converts a `SimulationResults` objects to a data.frame
+
+- [`snapshotToProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/snapshotToProject.md)
+  : Convert snapshots to project files
 
 - [`splitPopulationFile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/splitPopulationFile.md)
   :

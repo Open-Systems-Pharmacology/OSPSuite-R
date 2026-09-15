@@ -12,8 +12,14 @@ formats.
 
 > **Note**
 >
-> The helpers described in this vignette support **PK-Sim snapshots
-> only**; MoBi snapshots are not yet supported.
+> [`runSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulationsFromSnapshot.md)
+> and
+> [`loadSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadSimulationsFromSnapshot.md)
+> support **PK-Sim snapshots only**.
+> [`snapshotToProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/snapshotToProject.md)
+> and
+> [`projectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/projectToSnapshot.md)
+> support both PK-Sim and MoBi.
 
 ``` r
 
@@ -173,12 +179,12 @@ runSimulationsFromSnapshot(snapshotDir, output = outputDir)
 
 ## Converting between snapshot and project formats
 
-Snapshots and PK-Sim project files (`.pksim5`) can be converted into
-each other. Use
-[`loadProjectFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadProjectFromSnapshot.md)
+Snapshots and project files can be converted into each other. Use
+[`snapshotToProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/snapshotToProject.md)
 to build a project from a snapshot, and
-[`exportProjectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportProjectToSnapshot.md)
-to write a project back out as a snapshot.
+[`projectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/projectToSnapshot.md)
+to write a project back out as a snapshot. Both PK-Sim (`.pksim5`) and
+MoBi (`.mbp3`) projects are supported.
 
 Convert a snapshot to a PK-Sim project:
 
@@ -187,10 +193,10 @@ Convert a snapshot to a PK-Sim project:
 projectDir <- file.path(tempdir(), "project")
 dir.create(projectDir, showWarnings = FALSE)
 
-loadProjectFromSnapshot(snapshotPath, output = projectDir)
+snapshotToProject(snapshotPath, output = projectDir)
 ```
 
-    ## ℹ Converting 1 file to project format
+    ## ℹ Converting 1 PK-Sim file to project format
 
     ## ✔ Conversion completed
 
@@ -202,7 +208,7 @@ projectFile <- list.files(projectDir, pattern = "\\.pksim5$", full.names = TRUE)
 projectFile
 ```
 
-    ## [1] "/tmp/RtmpTWrmfn/project/test_snapshot.pksim5"
+    ## [1] "/tmp/RtmpD7bFz9/project/test_snapshot.pksim5"
 
 Set `runSimulations = TRUE` to also run the simulations during this
 conversion.
@@ -214,10 +220,10 @@ And convert a project back to a snapshot:
 snapshotOut <- file.path(tempdir(), "snapshot")
 dir.create(snapshotOut, showWarnings = FALSE)
 
-exportProjectToSnapshot(projectFile, output = snapshotOut)
+projectToSnapshot(projectFile, output = snapshotOut)
 ```
 
-    ## ℹ Converting 1 file to snapshot format
+    ## ℹ Converting 1 PK-Sim file to snapshot format
 
     ## ✔ Conversion completed
 
@@ -234,10 +240,43 @@ As with
 [`runSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/runSimulationsFromSnapshot.md),
 both functions accept several files or directories at once.
 
+### MoBi projects
+
+MoBi projects work the same way. The application is detected from the
+file extension when converting a project, and from the snapshot itself
+when converting a snapshot, so no extra argument is needed:
+
+``` r
+
+moBiProject <- system.file("extdata", "TH_QST_Platform.mbp3", package = "ospsuite")
+
+moBiSnapshotDir <- file.path(tempdir(), "mobi-snapshot")
+dir.create(moBiSnapshotDir, showWarnings = FALSE)
+
+projectToSnapshot(moBiProject, output = moBiSnapshotDir)
+```
+
+    ## ℹ Converting 1 MoBi file to snapshot format
+
+    ## ✔ Conversion completed
+
+    ## 
+
+``` r
+
+list.files(moBiSnapshotDir)
+```
+
+    ## [1] "TH_QST_Platform.json"
+
+Pass `application = "PK-Sim"` or `application = "MoBi"` to override the
+detection. A single call may mix both: each application converts its own
+files.
+
 > **Note**
 >
 > [`convertSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/convertSnapshot.md)
 > is deprecated in favour of
-> [`loadProjectFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadProjectFromSnapshot.md)
+> [`snapshotToProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/snapshotToProject.md)
 > and
-> [`exportProjectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/exportProjectToSnapshot.md).
+> [`projectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/projectToSnapshot.md).
