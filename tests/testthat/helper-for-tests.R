@@ -28,7 +28,7 @@ testProjectPath <- local({
     if (is.null(cached)) {
       outputDir <- file.path(tempdir(), "test-project")
       dir.create(outputDir, showWarnings = FALSE)
-      loadProjectFromSnapshot(
+      snapshotToProject(
         system.file("extdata", "test_snapshot.json", package = "ospsuite"),
         output = outputDir
       )

@@ -100,7 +100,7 @@ to snapshot. The simulations in this snapshot have `"HasResults": false`, so
 
 This snapshot is also the only stored form of that PK-Sim project. No `.pksim5`
 file is kept in the repository; the tests that need one create it from this
-snapshot with `loadProjectFromSnapshot()`, through `testProjectPath()` in
+snapshot with `snapshotToProject()`, through `testProjectPath()` in
 `tests/testthat/helper-for-tests.R`.
 
 ### `PKAnalyses.csv`
