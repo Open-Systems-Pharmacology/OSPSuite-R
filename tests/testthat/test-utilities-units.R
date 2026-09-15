@@ -285,13 +285,13 @@ dfEarly <- dplyr::tibble(
   molWeight = 10
 )
 
-test_that("returns early if there are only unique units and arguments are `NULL`", {
-  expect_equal(dfEarly, .unitConverter(dfEarly))
+test_that("returns early if there are only unique units", {
+  expect_equal(dfEarly, .unitConverter(dfEarly, xUnit = "min", yUnit = "%"))
 })
 
 # default conversion -------------------
 
-dfConvert <- .unitConverter(df)
+dfConvert <- .unitConverter(df, xUnit = "min", yUnit = "%")
 
 test_that("defaults for .unitConverter update xValues column as expected", {
   expect_equal(dfConvert$xValues, df$xValues)
@@ -322,7 +322,7 @@ test_that("defaults for .unitConverter don't introduce yUnitError column if not 
 
 # only `xUnit` -------------------
 
-dfXConvert <- .unitConverter(df, xUnit = ospUnits$Time$h)
+dfXConvert <- .unitConverter(df, xUnit = ospUnits$Time$h, yUnit = "%")
 
 test_that(".unitConverter converts xValues column as expected", {
   expect_equal(dfXConvert$xValues, df$xValues / 60) # 1 hour = 60 minutes
@@ -334,7 +334,7 @@ test_that(".unitConverter updates xUnit column as expected", {
 
 # only `yUnit` -------------------
 
-dfYConvert <- .unitConverter(df, yUnit = ospUnits$Fraction$`%`)
+dfYConvert <- .unitConverter(df, xUnit = "min", yUnit = ospUnits$Fraction$`%`)
 
 test_that(".unitConverter converts yValues as expected", {
   expect_equal(dfYConvert$yValues[1], df$yValues[1] * 100)
@@ -378,7 +378,7 @@ dfMW <- dplyr::tibble(
   random = "bla" # only for testing that the function doesn't remove other columns
 )
 
-dfMWConvert <- .unitConverter(dfMW, yUnit = ospUnits$Mass$g)
+dfMWConvert <- .unitConverter(dfMW, xUnit = "min", yUnit = ospUnits$Mass$g)
 
 test_that(".unitConverter updates yValues with molecular weight when dimension is amount", {
   expect_equal(
@@ -411,8 +411,8 @@ test_that(".unitConverter doesn't change dimensions under any circumstances", {
 
 # error units -------------------
 
-dfErrorConvert <- .unitConverter(dfError)
-dfYErrorConvert <- .unitConverter(dfError, yUnit = ospUnits$Fraction$`%`)
+dfErrorConvert <- .unitConverter(dfError, xUnit = "min", yUnit = "%")
+dfYErrorConvert <- .unitConverter(dfError, xUnit = "min", yUnit = ospUnits$Fraction$`%`)
 
 test_that(".unitConverter changes error units as well - defaults", {
   expect_equal(unique(dfErrorConvert$yErrorUnit), "%")
@@ -436,7 +436,7 @@ test_that("Correct conversion for yValues having the same unit but different MW"
     ),
     molWeight = c(10, 10, 20)
   )
-  dfConvert <- .unitConverter(df, yUnit = "g")
+  dfConvert <- .unitConverter(df, xUnit = "min", yUnit = "g")
 
   expect_equal(dfConvert$yValues, c(10, 10, 20))
 })
@@ -456,7 +456,7 @@ dfNA <- dplyr::tibble(
   molWeight = c(NA, NA, NA, 129.1636, 129.1636, 129.1636)
 )
 
-dfNAConvert <- .unitConverter(dfNA)
+dfNAConvert <- .unitConverter(dfNA, xUnit = "min", yUnit = "")
 dfNAXYConvert <- .unitConverter(dfNA, xUnit = "h", yUnit = "")
 
 test_that("the order of rows is not changed", {
@@ -545,7 +545,7 @@ dfMolWeightNA <- dplyr::tibble(
 
 test_that("if molWeight is missing, an error is signaled if dimensions require them", {
   expect_error(
-    .unitConverter(dfMolWeightNA, yUnit = "mol"),
+    .unitConverter(dfMolWeightNA, xUnit = "min", yUnit = "mol"),
     "Molecular Weight not available."
   )
 })
@@ -566,12 +566,12 @@ dfErrorUnitMissing <- dplyr::tibble(
 
 test_that("if yErrorUnit is missing, error values are converted correctly", {
   expect_equal(
-    .unitConverter(dfErrorUnitMissing)$yErrorValues,
+    .unitConverter(dfErrorUnitMissing, xUnit = "min", yUnit = "%")$yErrorValues,
     dfErrorUnitMissing$yErrorValues
   )
 
   expect_equal(
-    .unitConverter(dfErrorUnitMissing, yUnit = "")$yErrorValues,
+    .unitConverter(dfErrorUnitMissing, xUnit = "min", yUnit = "")$yErrorValues,
     dfErrorUnitMissing$yErrorValues / 100
   )
 })
@@ -591,7 +591,7 @@ dfLloq <- dplyr::tibble(
   random = "bla" # test that function doesn't remove additional columns
 )
 
-dfMWConvert <- .unitConverter(dfLloq, yUnit = ospUnits$Mass$g)
+dfMWConvert <- .unitConverter(dfLloq, xUnit = "min", yUnit = ospUnits$Mass$g)
 
 test_that("it can convert lloq columns", {
   expect_equal(dfMWConvert$lloq, rep(10, 3))
@@ -615,7 +615,8 @@ dfWeek <- dplyr::tibble(
 
 dfWeekConvert <- .unitConverter(
   dfWeek,
-  xUnit = ospUnits$Time$`week(s)`
+  xUnit = ospUnits$Time$`week(s)`,
+  yUnit = "%"
 )
 
 test_that("it can convert time to weeks", {
@@ -661,7 +662,7 @@ dfGeomError <- dplyr::tibble(
   molWeight = 225.21
 )
 
-dfGeomErrorConvert <- .unitConverter(dfGeomError, yUnit = "µmol/l")
+dfGeomErrorConvert <- .unitConverter(dfGeomError, xUnit = "h", yUnit = "µmol/l")
 
 test_that("It shouldn't convert geometric error values or units, only `yValues`", {
   expect_equal(
@@ -711,6 +712,7 @@ dfMixedError <- dplyr::tibble(
 
 dfMixedErrorConvert <- .unitConverter(
   dfMixedError,
+  xUnit = "min",
   yUnit = ospUnits$Fraction$`%`
 )
 
@@ -744,7 +746,7 @@ dfConc <- dplyr::tibble(
   molWeight = 10
 )
 
-dfConcConvert <- .unitConverter(dfConc)
+dfConcConvert <- .unitConverter(dfConc, xUnit = "h", yUnit = "mg/l")
 
 test_that("it retains multiple concentration dimensions", {
   expect_equal(unique(dfConcConvert$yDimension), concDims)

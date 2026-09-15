@@ -38,7 +38,7 @@ df <- dplyr::tibble(
   molWeight = c(10, 10, 20, 20, 10, 10)
 )
 
-df <- ospsuite:::.unitConverter(df)
+df <- ospsuite:::.unitConverter(df, xUnit = "min", yUnit = "mol/ml")
 
 ospsuite:::.createAxesLabels(df, tlf::TimeProfilePlotConfiguration$new())
 
