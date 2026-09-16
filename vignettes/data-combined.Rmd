@@ -58,7 +58,7 @@ names(obsData) <- lapply(obsData, function(x) x$name)
 Typically, `DataCombined` is used to create figures using the `plotXXX()` functions. 
 The different plot types are described in [Visualizations with `DataCombined`](data-combined-plotting.html). 
 To visualize the different functionalities of `DataCombined` in this document, 
-we will use the `plotIndividualTimeProfile()` function.
+we will use the `plotTimeProfile()` function.
 
 ## Creating `DataCombined` object
 
@@ -139,7 +139,7 @@ myDataCombined$addDataSets(
   obsData$`Vergin 1995.Iv`
 )
 
-plotIndividualTimeProfile(dataCombined = myDataCombined)
+plotTimeProfile(plotData = myDataCombined)
 ```
 
 If you do not specify `groups` when you add datasets, and wish to update 
@@ -153,7 +153,7 @@ myDataCombined$setGroups(
   groups = c("Aciclovir PVB", "Aciclovir PVB")
 )
 
-plotIndividualTimeProfile(dataCombined = myDataCombined)
+plotTimeProfile(plotData = myDataCombined)
 ```
 
 At any point, you can check the current names and groupings with the following active field:
@@ -195,7 +195,7 @@ myDataCombinedTranformations$addDataSets(
   obsData$`Vergin 1995.Iv`
 )
 
-plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
+plotTimeProfile(plotData = myDataCombinedTranformations)
 ```
 
 However, we might want to use this data set with a simulation where aciclovir is 
@@ -212,7 +212,7 @@ myDataCombinedTranformations$setDataTransformations(
   xOffsets = 24
 )
 
-plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
+plotTimeProfile(plotData = myDataCombinedTranformations)
 ```
 
 In the next step, we want to *normalize* observed concentrations to a dose. We 
@@ -225,7 +225,7 @@ myDataCombinedTranformations$setDataTransformations(
   yScaleFactors = 1 / 250
 )
 
-plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
+plotTimeProfile(plotData = myDataCombinedTranformations)
 ```
 Finally, offsetting the observation values might be useful when working with measurements 
 of endogenous substrates, such as the hormone glucagon, and want to correct for the 
@@ -319,7 +319,7 @@ absolute values of the residuals:
 
 ```{r}
 # Linear residuals
-totalError <- sum(abs(calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues))
+totalError <- sum(abs(calculateResiduals(myDataCombined, scaling = "lin")$residualValues))
 
 print(totalError)
 ```

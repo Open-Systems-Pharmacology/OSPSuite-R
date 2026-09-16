@@ -340,8 +340,7 @@ After mastering the basics, explore these advanced topics:
 ### Data Integration:
 - **[Working with observed data](observed-data.html)** - Import experimental data
 - **[DataCombined workflows](data-combined.html)** - Combine simulations with observations
-- **[Plotting](plotting-with-ospsuite-plots.html)** - Built-in plotting functions for quick visualization
-- **[DEPRECATED - Visualizations with DataCombined](data-combined-plotting.html)** - Advanced plotting with DataCombined objects. The functions described in this article are deprecated and will be removed in future versions. Please use the functions described in the article [Plotting with ospsuite.plots](plotting-with-ospsuite-plots.html) instead, which provide more features and better performance.
+- **[Plotting with ospsuite.plots](plotting-with-ospsuite-plots.html)** - Built-in plotting functions based on `{ospsuite.plots}` for quick, publication-ready visualization of `DataCombined` objects
 
 ### Advanced Topics:
 - **[Efficient calculations](efficient-calculations.html)** - Performance optimization

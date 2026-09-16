@@ -165,7 +165,8 @@ addResidualColumn <- function(
   obsVals <- pairedData[[observed]]
   predVals <- pairedData[[predicted]]
 
-  # identity is needed as long as tlf based plot functions are part of the package
+  # `identity` is kept as an alias of `linear` for backward compatibility with
+  # scripts written for the removed `{tlf}`-based plot functions
   if (scaling %in% c("linear", "lin", "identity")) {
     residualVals <- predVals - obsVals
     label <- "residuals\npredicted - observed"
