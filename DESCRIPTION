@@ -1,7 +1,7 @@
 Type: Package
 Package: ospsuite
 Title: R package to manipulate OSPSuite Models
-Version: 12.4.4.9004
+Version: 12.4.5
 Authors@R:
     c(person("Open-Systems-Pharmacology Community", role = c("cph", "fnd")),
       person("Michael", "Sevestre", role = c("aut", "cre"), email = "michael@design2code.ca"),
@@ -36,7 +36,7 @@ Imports:
     openxlsx,
     lifecycle,
     cli,
-    rSharp,
+    rSharp (<= 1.2.3),
     checkmate,
     R6
 Suggests:
@@ -145,5 +145,7 @@ Collate:
     'value-point.R'
     'zzz.R'
     'zzz_deprecated.R'
+Remotes:
+    rSharp=Open-Systems-Pharmacology/rSharp@v1.2.3
 Additional_repositories: https://open-systems-pharmacology.r-universe.dev
 Config/roxygen2/version: 8.0.0
