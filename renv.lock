@@ -2740,7 +2740,7 @@
     },
     "rSharp": {
       "Package": "rSharp",
-      "Version": "1.2.2",
+      "Version": "1.2.3",
       "Source": "Repository",
       "Type": "Package",
       "Title": "Accessing .NET from R",
@@ -2769,14 +2769,15 @@
       "VignetteBuilder": "knitr",
       "Config/testthat/edition": "3",
       "Config/roxygen2/version": "8.0.0",
+      "Config/pak/sysreqs": "dotnet-runtime-8.0",
       "Repository": "https://open-systems-pharmacology.r-universe.dev",
       "NeedsCompilation": "no",
       "Author": "Open-Systems-Pharmacology Community [cph], esqLABS GmbH [fnd], Pavel Balazki [aut, cre], Juri Solodenko [aut] (ORCID: <https://orcid.org/0000-0001-6922-588X>), Michael Sevestre [aut], Robert McIntosh [aut], Felix Mil [aut], Jean-Michel Perraud [aut], Ian Peter Du [ctb]",
       "Maintainer": "Pavel Balazki <pavel.balazki@gmail.com>",
       "RemoteType": "repository",
       "RemoteUrl": "https://github.com/Open-Systems-Pharmacology/rSharp",
-      "RemoteRef": "v1.2.2",
-      "RemoteSha": "3a8686e70c700437b451a01216ad4fb2990e432c"
+      "RemoteRef": "v1.2.3",
+      "RemoteSha": "5784b63dbbe49c0ddbda1825217967ebf95cc5c9"
     },
     "rappdirs": {
       "Package": "rappdirs",
@@ -3307,7 +3308,8 @@
       "NeedsCompilation": "yes",
       "Author": "Terry M Therneau [aut, cre], Thomas Lumley [ctb, trl] (original S->R port and R maintainer until 2009), Atkinson Elizabeth [ctb], Crowson Cynthia [ctb]",
       "Maintainer": "Terry M Therneau <terry.therneau@proton.me>",
-      "Repository": "CRAN"
+      "Repository": "PPM",
+      "Encoding": "UTF-8"
     },
     "sysfonts": {
       "Package": "sysfonts",
