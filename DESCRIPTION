@@ -145,7 +145,5 @@ Collate:
     'value-point.R'
     'zzz.R'
     'zzz_deprecated.R'
-Remotes:
-    rSharp=Open-Systems-Pharmacology/rSharp@v1.2.3
 Additional_repositories: https://open-systems-pharmacology.r-universe.dev
 Config/roxygen2/version: 8.0.0
