@@ -1,6 +1,8 @@
-# ospsuite (development version)
+# ospsuite 12.4.5
 
 ## Minor improvements and bug fixes
+
+- `{ospsuite}` 12.4.x now requires `{rSharp}` 1.2.3 or older, which runs on .NET 8. Newer `{rSharp}` versions use .NET 10, with which `loadSimulation()` and the other functions that read or write observed data in `.pkml` files fail. If `library(ospsuite)` reports that a newer `{rSharp}` is installed, run `pak::pak("Open-Systems-Pharmacology/rSharp@v1.2.3")` or upgrade to `{ospsuite}` 13.
 
 - `DataCombined$toDataFrame()` now returns the `name` and `group` columns as factors whose levels follow the order in which datasets (and groups) were added. As a result, plots built from `DataCombined` objects (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, etc.) now display legend entries in the order `DataSet` and `SimulationResults` objects were added, rather than in alphabetical order. This also keeps `name`- and `group`-based legends consistent in observed-vs-predicted plots, where the two variables may otherwise diverge (#1968).
 

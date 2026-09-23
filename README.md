@@ -87,13 +87,20 @@ installation below resolves the whole stack in one call.
 ## Pre-requisites
 
 The `{ospsuite}` package requires `{rSharp}` and its external
-dependencies (Visual C++ Redistributable and .NET 8). Install these
-dependencies using the following instructions:
+dependencies (Visual C++ Redistributable and .NET 8).
+
+`{ospsuite}` 12.4.x works only with [`{rSharp}`
+1.2.3](https://github.com/Open-Systems-Pharmacology/rSharp/releases/tag/v1.2.3)
+or older, together with .NET 8. Newer versions of `{rSharp}` use .NET 10
+and cannot load simulations that contain observed data with this version
+of `{ospsuite}`.
+
+Install these dependencies using the following instructions:
 
 - [For
-  Windows](https://github.com/Open-Systems-Pharmacology/rSharp?tab=readme-ov-file#prerequisites)
+  Windows](https://github.com/Open-Systems-Pharmacology/rSharp/tree/v1.2.3?tab=readme-ov-file#prerequisites)
 - [For
-  Linux](https://github.com/Open-Systems-Pharmacology/rSharp?tab=readme-ov-file#ubuntu)
+  Linux](https://github.com/Open-Systems-Pharmacology/rSharp/tree/v1.2.3?tab=readme-ov-file#ubuntu)
 
 ## From the OSP R-universe (recommended)
 
@@ -123,6 +130,18 @@ pak::pak("Open-Systems-Pharmacology/OSPSuite-R")
 ```
 
 # Known issues
+
+## Loading `ospsuite` fails with “namespace ‘rSharp’ … is being loaded, but \<= 1.2.3 is required”
+
+A newer `{rSharp}` is installed. `{ospsuite}` 12.4.x needs `{rSharp}`
+1.2.3 and .NET 8. Install that version and restart R:
+
+``` r
+pak::pak("Open-Systems-Pharmacology/rSharp@v1.2.3")
+```
+
+Alternatively, upgrade to `{ospsuite}` 13, which works with the newer
+`{rSharp}`.
 
 ## Loading `ospsuite` might fail if the system locale is not set to English
 
