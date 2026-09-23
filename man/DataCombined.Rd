@@ -341,6 +341,11 @@ The returned data frame follows the order in which datasets were added
 to the object. The \code{name} column is returned as a factor whose levels
 preserve this insertion order, so that downstream plots display legend
 entries in the order datasets were added (and not alphabetically).
+
+Calling this method repeatedly on an unchanged object is cheap: the
+data frame is computed once and then reused. Adding data, changing
+groups, changing data types, or changing data transformations makes the
+next call compute it again.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{DataCombined$toDataFrame()}
@@ -351,6 +356,10 @@ entries in the order datasets were added (and not alphabetically).
 
 name - group - dataType - xValues - xDimension - xUnit - yValues -
 yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+
+Each call returns a fresh copy of the data frame. You can change it in
+any way you like without affecting the \code{DataCombined} object or the
+result of any other call.
   }
 }
 

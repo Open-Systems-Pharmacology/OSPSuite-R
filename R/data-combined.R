@@ -92,6 +92,9 @@ DataCombined <- R6::R6Class(
       groups = NULL,
       silent = FALSE
     ) {
+      # Changing stored data invalidates the cached `toDataFrame()` result
+      private$.invalidateDataFrameCache()
+
       # Validate vector arguments' type and length
       validateIsOfType(dataSets, "DataSet", FALSE)
       numberOfDatasets <- objectCount(dataSets)
@@ -151,6 +154,9 @@ DataCombined <- R6::R6Class(
       groups = NULL,
       silent = FALSE
     ) {
+      # Changing stored data invalidates the cached `toDataFrame()` result
+      private$.invalidateDataFrameCache()
+
       # Validate vector arguments' type and length
       validateIsOfType(simulationResults, "SimulationResults", FALSE)
 
@@ -232,6 +238,9 @@ DataCombined <- R6::R6Class(
     #'
     #' @return `DataCombined` object with grouped datasets.
     setGroups = function(names, groups) {
+      # Changing stored data invalidates the cached `toDataFrame()` result
+      private$.invalidateDataFrameCache()
+
       # Return early if no datasets are present
       if (is.null(private$.dataCombined)) {
         stop(messages$noDatasetsToGroup())
@@ -268,6 +277,9 @@ DataCombined <- R6::R6Class(
     #'
     #' @return `DataCombined` object with modified dataTypes datasets.
     setDataTypes = function(names, dataTypes) {
+      # Changing stored data invalidates the cached `toDataFrame()` result
+      private$.invalidateDataFrameCache()
+
       # Sanitize vector arguments of `character` type
       names <- .cleanVectorArgs(names, type = "character")
       dataTypes <- .cleanVectorArgs(dataTypes, type = "character")
@@ -304,6 +316,9 @@ DataCombined <- R6::R6Class(
     #'
     #' @return `DataCombined` object with updated group assignments.
     removeGroupAssignment = function(names) {
+      # Changing stored data invalidates the cached `toDataFrame()` result
+      private$.invalidateDataFrameCache()
+
       for (idx in seq_along(names)) {
         private$.groupMap[[names[[idx]]]] <- NULL
       }
@@ -348,6 +363,9 @@ DataCombined <- R6::R6Class(
       yScaleFactors = 1,
       reset = FALSE
     ) {
+      # Changing stored data invalidates the cached `toDataFrame()` result
+      private$.invalidateDataFrameCache()
+
       missingArgs <- list(
         xOffsets = missing(xOffsets),
         yOffsets = missing(yOffsets),
@@ -441,12 +459,21 @@ DataCombined <- R6::R6Class(
     #' preserve this insertion order, so that downstream plots display legend
     #' entries in the order datasets were added (and not alphabetically).
     #'
+    #' Calling this method repeatedly on an unchanged object is cheap: the
+    #' data frame is computed once and then reused. Adding data, changing
+    #' groups, changing data types, or changing data transformations makes the
+    #' next call compute it again.
+    #'
     #' @return
     #'
     #' In the returned tibble data frame, the following columns will always be present:
     #'
     #' name - group - dataType - xValues - xDimension - xUnit - yValues -
     #' yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+    #'
+    #' Each call returns a fresh copy of the data frame. You can change it in
+    #' any way you like without affecting the `DataCombined` object or the
+    #' result of any other call.
     #'
     #' @note
     #'
@@ -456,28 +483,16 @@ DataCombined <- R6::R6Class(
       if (is.null(private$.dataCombined)) {
         return(NULL)
       }
-      # Add `group` column. Cannot use `mutate` because it would
-      # require `rowwise` which kills the performance
-      # Fist add empty column
-      private$.dataCombined$group <- NA_character_
-      for (name in self$names) {
-        private$.dataCombined[
-          private$.dataCombined$name == name,
-        ]$group <- private$.groupMap[[name]] %||% NA_character_
+
+      if (is.null(private$.dataFrameCache)) {
+        private$.dataFrameCache <- private$.computeDataFrame()
       }
 
-      # Apply data transformations
-      data <- private$.dataTransform(private$.dataCombined)
-
-      # Use `self$names` to preserve insertion order in ggplot2 legends
-      data$name <- factor(data$name, levels = self$names)
-      # Use same approach for groups to preserve consistent legend order
-      # when `group` is different from `name`
-      groupLevels <- unique(data$group)
-      groupLevels <- groupLevels[!is.na(groupLevels)]
-      data$group <- factor(data$group, levels = groupLevels)
-
-      return(data)
+      # Never hand out the cached data frame itself: callers (e.g. the plotting
+      # code) turn the result into a `data.table` and modify it by reference,
+      # which would corrupt the cache for every later call. `data.table::copy()`
+      # is a deep copy, so the caller and the cache share no column vectors.
+      return(data.table::copy(private$.dataFrameCache))
     },
 
     #' @description
@@ -577,6 +592,46 @@ DataCombined <- R6::R6Class(
   # private methods -----------------------------------
 
   private = list(
+    # Compute the combined data frame from the current state of the object.
+    # Called only by `toDataFrame()`, whose cache holds the result.
+    .computeDataFrame = function() {
+      # The `group` column is derived here and never written back into
+      # `private$.dataCombined`, which holds the raw combined data only.
+      data <- private$.dataCombined
+
+      # A single vectorized lookup keyed by `name`, instead of one filtered
+      # assignment over the whole frame per dataset name. Names without an
+      # entry in the group map (and names mapped to `NULL`) yield `NA`.
+      groupLookup <- vapply(
+        private$.groupMap,
+        function(group) {
+          if (is.null(group)) NA_character_ else as.character(group)[[1]]
+        },
+        FUN.VALUE = character(1)
+      )
+      data$group <- unname(groupLookup[data$name])
+
+      # Apply data transformations
+      data <- private$.dataTransform(data)
+
+      # Use `self$names` to preserve insertion order in ggplot2 legends
+      data$name <- factor(data$name, levels = self$names)
+      # Use same approach for groups to preserve consistent legend order
+      # when `group` is different from `name`
+      groupLevels <- unique(data$group)
+      groupLevels <- groupLevels[!is.na(groupLevels)]
+      data$group <- factor(data$group, levels = groupLevels)
+
+      return(data)
+    },
+
+    # Drop the cached `toDataFrame()` result. Safe to call when nothing is
+    # cached.
+    .invalidateDataFrameCache = function() {
+      private$.dataFrameCache <- NULL
+      invisible(NULL)
+    },
+
     # Extract data frame from `DataSet` object(s)
     .dataSetToDataFrame = function(dataSets, names = NULL) {
       # `dataSetToTibble()` function can extract a tibble data frame from a
@@ -733,7 +788,13 @@ DataCombined <- R6::R6Class(
     },
 
     # private fields ----------------------------------------
+    # Raw combined data of all added datasets. It carries no `group` column;
+    # that column is derived in `.computeDataFrame()`.
     .dataCombined = NULL,
+    # Cached result of `toDataFrame()`. `NULL` means "not computed yet"; it is
+    # dropped by every public method that changes the state the data frame is
+    # computed from.
+    .dataFrameCache = NULL,
     # Mapping of data set name to a group
     .groupMap = list(),
     .dataType = list(),

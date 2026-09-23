@@ -1,0 +1,610 @@
+{
+  "Name": "Vergin 1995 IV",
+  "Version": 81,
+  "ApplicationName": "PK-Sim",
+  "ExpressionProfiles": [
+    {
+      "Type": "Enzyme",
+      "Species": "Human",
+      "Molecule": "CYP3A4",
+      "Category": "Healthy",
+      "Parameters": [
+        {
+          "Path": "CYP3A4|Reference concentration",
+          "Value": 4.32,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|t1/2 (intestine)",
+          "Value": 1380.0,
+          "Unit": "min",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "CYP3A4|t1/2 (liver)",
+          "Value": 2220.0,
+          "Unit": "min",
+          "ValueOrigin": {}
+        }
+      ],
+      "Localization": "Intracellular",
+      "Ontogeny": {
+        "Name": "CYP3A4"
+      }
+    }
+  ],
+  "Individuals": [
+    {
+      "Name": "Vergin_1995_IV",
+      "Seed": 26633348,
+      "OriginData": {
+        "CalculationMethods": [
+          "SurfaceAreaPlsInt_VAR1",
+          "Body surface area - Mosteller"
+        ],
+        "Species": "Human",
+        "Population": "European_ICRP_2002",
+        "Gender": "MALE",
+        "Age": {
+          "Value": 25.7,
+          "Unit": "year(s)"
+        },
+        "Weight": {
+          "Value": 67.731,
+          "Unit": "kg"
+        },
+        "Height": {
+          "Value": 170.0,
+          "Unit": "cm"
+        }
+      },
+      "ExpressionProfiles": [
+        "CYP3A4|Human|Healthy"
+      ]
+    }
+  ],
+  "Compounds": [
+    {
+      "Name": "Aciclovir",
+      "IsSmallMolecule": true,
+      "PlasmaProteinBindingPartner": "Albumin",
+      "Lipophilicity": [
+        {
+          "Name": "Measurement",
+          "Parameters": [
+            {
+              "Name": "Lipophilicity",
+              "Value": -0.097,
+              "Unit": "Log Units",
+              "ValueOrigin": {}
+            }
+          ]
+        }
+      ],
+      "FractionUnbound": [
+        {
+          "Name": "Human",
+          "Species": "Human",
+          "Parameters": [
+            {
+              "Name": "Fraction unbound (plasma, reference value)",
+              "Value": 0.85,
+              "ValueOrigin": {}
+            }
+          ]
+        },
+        {
+          "Name": "Rat",
+          "IsDefault": false,
+          "Species": "Rat",
+          "Parameters": [
+            {
+              "Name": "Fraction unbound (plasma, reference value)",
+              "Value": 0.87,
+              "ValueOrigin": {}
+            }
+          ]
+        },
+        {
+          "Name": "Dog",
+          "IsDefault": false,
+          "Species": "Dog",
+          "Parameters": [
+            {
+              "Name": "Fraction unbound (plasma, reference value)",
+              "Value": 0.7,
+              "ValueOrigin": {}
+            }
+          ]
+        }
+      ],
+      "Solubility": [
+        {
+          "Name": "Measurement",
+          "Parameters": [
+            {
+              "Name": "Solubility at reference pH",
+              "Value": 33990.0,
+              "Unit": "mg/l",
+              "ValueOrigin": {}
+            },
+            {
+              "Name": "Reference pH",
+              "Value": 7.0,
+              "ValueOrigin": {}
+            }
+          ]
+        }
+      ],
+      "PkaTypes": [
+        {
+          "Type": "Acid",
+          "Pka": 9.2
+        },
+        {
+          "Type": "Base",
+          "Pka": 2.2
+        }
+      ],
+      "Processes": [
+        {
+          "InternalName": "GlomerularFiltration",
+          "DataSource": "GFR",
+          "Species": "Human",
+          "Parameters": [
+            {
+              "Name": "GFR fraction",
+              "Value": 1.0,
+              "ValueOrigin": {}
+            }
+          ]
+        },
+        {
+          "InternalName": "TubularSecretion_FirstOrder",
+          "DataSource": "TS",
+          "Species": "Human",
+          "Parameters": [
+            {
+              "Name": "Tubular secretion",
+              "Value": 0.412,
+              "Unit": "l/min",
+              "ValueOrigin": {}
+            }
+          ]
+        },
+        {
+          "InternalName": "LiverClearance",
+          "DataSource": "Test",
+          "Species": "Human",
+          "Parameters": [
+            {
+              "Name": "Fraction unbound (experiment)",
+              "Value": 0.85,
+              "ValueOrigin": {}
+            },
+            {
+              "Name": "Lipophilicity (experiment)",
+              "Value": -0.097,
+              "Unit": "Log Units",
+              "ValueOrigin": {}
+            },
+            {
+              "Name": "Plasma clearance",
+              "Value": 0.0,
+              "Unit": "ml/min/kg",
+              "ValueOrigin": {}
+            }
+          ]
+        }
+      ],
+      "CalculationMethods": [
+        "Cellular partition coefficient method - PK-Sim Standard",
+        "Cellular permeability - PK-Sim Standard"
+      ],
+      "Parameters": [
+        {
+          "Name": "Molecular weight",
+          "Value": 225.21,
+          "Unit": "g/mol",
+          "ValueOrigin": {}
+        }
+      ],
+      "Description": "Version 1.1"
+    }
+  ],
+  "Protocols": [
+    {
+      "Name": "IV 250mg 10min",
+      "ApplicationType": "Intravenous",
+      "DosingInterval": "Single",
+      "Parameters": [
+        {
+          "Name": "Start time",
+          "Value": 0.0,
+          "Unit": "h",
+          "ValueOrigin": {}
+        },
+        {
+          "Name": "InputDose",
+          "Value": 250.0,
+          "Unit": "mg",
+          "ValueOrigin": {}
+        },
+        {
+          "Name": "Infusion time",
+          "Value": 10.0,
+          "Unit": "min",
+          "ValueOrigin": {}
+        }
+      ]
+    }
+  ],
+  "Simulations": [
+    {
+      "Name": "Vergin 1995 IV",
+      "Model": "4Comp",
+      "ObservedData": [
+        "Vergin 1995.Iv"
+      ],
+      "Solver": {},
+      "OutputSchema": [
+        {
+          "Parameters": [
+            {
+              "Name": "Start time",
+              "Value": 0.0,
+              "Unit": "h",
+              "ValueOrigin": {}
+            },
+            {
+              "Name": "End time",
+              "Value": 0.25,
+              "Unit": "h",
+              "ValueOrigin": {
+                "Source": "Unknown"
+              }
+            },
+            {
+              "Name": "Resolution",
+              "Value": 60.0,
+              "Unit": "pts/h",
+              "ValueOrigin": {
+                "Source": "Unknown"
+              }
+            }
+          ]
+        },
+        {
+          "Parameters": [
+            {
+              "Name": "Start time",
+              "Value": 0.25,
+              "Unit": "h",
+              "ValueOrigin": {
+                "Source": "Unknown"
+              }
+            },
+            {
+              "Name": "End time",
+              "Value": 24.0,
+              "Unit": "h",
+              "ValueOrigin": {}
+            },
+            {
+              "Name": "Resolution",
+              "Value": 20.0,
+              "Unit": "pts/h",
+              "ValueOrigin": {
+                "Source": "Unknown"
+              }
+            }
+          ]
+        },
+        {
+          "Parameters": [
+            {
+              "Name": "Start time",
+              "Value": 2.0,
+              "Unit": "h",
+              "ValueOrigin": {
+                "Source": "Unknown"
+              }
+            },
+            {
+              "Name": "End time",
+              "Value": 24.0,
+              "Unit": "h",
+              "ValueOrigin": {}
+            },
+            {
+              "Name": "Resolution",
+              "Value": 4.0,
+              "Unit": "pts/h",
+              "ValueOrigin": {}
+            }
+          ]
+        }
+      ],
+      "Parameters": [
+        {
+          "Path": "Events|IV 250mg 10min|No formulation|Application_1|ProtocolSchemaItem|Infusion time",
+          "Value": 10.0,
+          "Unit": "min",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Undefined Liver|Reference concentration",
+          "Value": 1.0,
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Undefined Liver|t1/2 (intestine)",
+          "Value": 1380.0,
+          "Unit": "min",
+          "ValueOrigin": {}
+        },
+        {
+          "Path": "Undefined Liver|t1/2 (liver)",
+          "Value": 2160.0,
+          "Unit": "min",
+          "ValueOrigin": {}
+        }
+      ],
+      "OutputSelections": [
+        "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)",
+        "Organism|VenousBlood|Plasma|Aciclovir|Plasma Unbound"
+      ],
+      "Individual": "Vergin_1995_IV",
+      "Compounds": [
+        {
+          "Name": "Aciclovir",
+          "CalculationMethods": [
+            "Cellular partition coefficient method - PK-Sim Standard",
+            "Cellular permeability - PK-Sim Standard"
+          ],
+          "Alternatives": [
+            {
+              "AlternativeName": "Human",
+              "GroupName": "COMPOUND_FRACTION_UNBOUND"
+            }
+          ],
+          "Processes": [
+            {
+              "Name": "Total Hepatic Clearance-Test",
+              "SystemicProcessType": "Hepatic"
+            },
+            {
+              "Name": "Renal Clearances-TS",
+              "SystemicProcessType": "Renal"
+            },
+            {
+              "Name": "Glomerular Filtration-GFR",
+              "SystemicProcessType": "GFR"
+            }
+          ],
+          "Protocol": {
+            "Name": "IV 250mg 10min"
+          }
+        }
+      ],
+      "HasResults": true,
+      "IndividualAnalyses": [
+        {
+          "Axes": [
+            {
+              "Unit": "h",
+              "Dimension": "Time",
+              "Type": "X",
+              "GridLines": false,
+              "Visible": true,
+              "DefaultColor": "#FFFFFF",
+              "DefaultLineStyle": "None",
+              "Scaling": "Linear",
+              "NumberMode": "Normal"
+            },
+            {
+              "Unit": "µmol/l",
+              "Dimension": "Concentration (molar)",
+              "Type": "Y",
+              "GridLines": false,
+              "Visible": true,
+              "DefaultColor": "#FFFFFF",
+              "DefaultLineStyle": "Solid",
+              "Scaling": "Log",
+              "NumberMode": "Normal"
+            }
+          ],
+          "Curves": [
+            {
+              "Name": "Vergin 1995.Iv-Aciclovir-Peripheral Venous Blood-Plasma-conc ",
+              "X": "Vergin 1995.Iv|time ",
+              "Y": "Vergin 1995.Iv|ObservedData|Peripheral Venous Blood|Plasma|Aciclovir|conc ",
+              "CurveOptions": {
+                "Color": "#0000FF",
+                "LegendIndex": 2,
+                "LineStyle": "None",
+                "Symbol": "Circle"
+              }
+            }
+          ],
+          "Name": "Time Profile Analysis",
+          "FontAndSize": {
+            "Fonts": {
+              "AxisSize": 10,
+              "LegendSize": 8,
+              "TitleSize": 16,
+              "DescriptionSize": 12,
+              "OriginSize": 8,
+              "FontFamilyName": "Microsoft Sans Serif",
+              "WatermarkSize": 32
+            }
+          },
+          "Settings": {
+            "SideMarginsEnabled": true,
+            "LegendPosition": "RightInside",
+            "BackColor": "#00FFFFFF",
+            "DiagramBackColor": "#FFFFFF"
+          },
+          "OriginText": "Vergin 1995 IV\nVergin 1995 IV\n2026-04-01 19:06"
+        }
+      ]
+    }
+  ],
+  "ObservedData": [
+    {
+      "Name": "Vergin 1995.Iv",
+      "ExtendedProperties": [
+        {
+          "Name": "Source",
+          "Value": "X:\\Orga\\BTS-TD\\ET\\TP CSB\\Projects\\Internal Projects\\MagenDarm\\TestSubstanzen\\Acyclovir\\Rohdaten_Acyclovir.xls.Vergin 1995 250 mg iv",
+          "Type": "String"
+        },
+        {
+          "Name": "File",
+          "Value": "Rohdaten_Acyclovir",
+          "Type": "String"
+        },
+        {
+          "Name": "Sheet",
+          "Value": "Vergin 1995 250 mg iv",
+          "Type": "String"
+        },
+        {
+          "Name": "Molecule",
+          "Value": "Aciclovir",
+          "Type": "String"
+        },
+        {
+          "Name": "Species",
+          "Value": "Human",
+          "Type": "String"
+        },
+        {
+          "Name": "Organ",
+          "Value": "Peripheral Venous Blood",
+          "Type": "String"
+        },
+        {
+          "Name": "Compartment",
+          "Value": "Plasma",
+          "Type": "String"
+        },
+        {
+          "Name": "Study Id",
+          "Value": "Vergin 1995",
+          "Type": "String"
+        },
+        {
+          "Name": "Gender",
+          "Value": "Undefined",
+          "Type": "String"
+        },
+        {
+          "Name": "Dose",
+          "Value": "250 mg",
+          "Type": "String"
+        },
+        {
+          "Name": "Route",
+          "Value": "IV",
+          "Type": "String"
+        },
+        {
+          "Name": "Patient Id",
+          "Value": "Iv",
+          "Type": "String"
+        }
+      ],
+      "Columns": [
+        {
+          "Name": "conc ",
+          "RelatedColumns": [
+            {
+              "Name": "SD",
+              "QuantityInfo": {
+                "Path": "Vergin 1995.Iv|ObservedData|Peripheral Venous Blood|Plasma|Aciclovir|SD"
+              },
+              "DataInfo": {
+                "Origin": "ObservationAuxiliary",
+                "AuxiliaryType": "ArithmeticStdDev",
+                "MolWeight": 225.21
+              },
+              "Values": [
+                1.495098,
+                0.85784304,
+                0.637255,
+                0.514706,
+                0.392156,
+                0.269608,
+                0.22058831,
+                0.1470588,
+                0.0980392,
+                0.0490196,
+                0.0735294,
+                0.07352938,
+                0.0735294
+              ],
+              "Dimension": "Concentration (mass)",
+              "Unit": "mg/l"
+            }
+          ],
+          "QuantityInfo": {
+            "Path": "Vergin 1995.Iv|ObservedData|Peripheral Venous Blood|Plasma|Aciclovir|conc "
+          },
+          "DataInfo": {
+            "Origin": "Observation",
+            "AuxiliaryType": "Undefined",
+            "MolWeight": 225.21
+          },
+          "Values": [
+            7.8921566,
+            4.5098042,
+            3.186274,
+            2.4754899,
+            1.691177,
+            1.323529,
+            0.9068627,
+            0.6862745,
+            0.36764708,
+            0.1960784,
+            0.122549,
+            0.098039225,
+            0.07352941
+          ],
+          "Dimension": "Concentration (mass)",
+          "Unit": "mg/l"
+        }
+      ],
+      "BaseGrid": {
+        "Name": "time ",
+        "QuantityInfo": {
+          "Path": "Vergin 1995.Iv|time ",
+          "Type": "Time"
+        },
+        "DataInfo": {
+          "Origin": "BaseGrid",
+          "AuxiliaryType": "Undefined"
+        },
+        "Values": [
+          0.2236025,
+          0.48447198,
+          0.7453416,
+          0.96894413,
+          1.4534161,
+          1.975155,
+          2.981366,
+          3.9875782,
+          6.0,
+          9.018634,
+          12.0,
+          15.01863,
+          24.0
+        ],
+        "Dimension": "Time",
+        "Unit": "h"
+      }
+    }
+  ]
+}
