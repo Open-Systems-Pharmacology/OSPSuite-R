@@ -36,7 +36,7 @@ Imports:
     openxlsx,
     lifecycle,
     cli,
-    rSharp,
+    rSharp (>= 2.0.0),
     checkmate,
     R6,
     scales

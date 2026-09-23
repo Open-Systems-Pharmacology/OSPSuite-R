@@ -1,17 +1,18 @@
 # ospsuite 13.0.1
 
-## Major changes
-
-- Added MoBi project support: load `.mbp3` projects, query modules, individuals, expression profiles, and simulations, and assemble simulations from project building blocks. New classes `MoBiProject`, `MoBiModule`, `SimulationConfiguration`, `MoleculesBuildingBlock`, and `IndividualBuildingBlock`, plus helpers for creating and saving Initial Conditions, Parameter Values, Individual, and Expression Profile building blocks. The main entry points are `loadMoBiProject()` to load a project, `loadModuleFromPKML()` and `loadBuildingBlockFromPKML()` to load modules and building blocks from `.pkml` files, and `createSimulationConfiguration()` followed by `createSimulations()` to assemble simulations from building blocks. New enums `BuildingBlockTypes`, `MoleculeType`, `IndividualDiseaseStates`, `MergeBehavior`, `PartitionCoefficientMethods`, `CellularPermeabilityMethods`, `ExpressionProfileCategories`, and `CalculationMethodCategories` support working with these objects. See `vignette("mobi-projects")` for an end-to-end walkthrough.
-
 ## Breaking changes
 
 - **.NET 10 runtime is now required** (previously .NET 8). The bundled assemblies in `inst/lib` target `net10.0`; on older runtimes the package fails to load with `System.Reflection.ReflectionTypeLoadException`. See the rSharp prerequisites links in the README for installation instructions on Windows and Linux.
+- **rSharp 2.0.0 or later is now required.** Update it before installing ospsuite, for example with `pak::pak("Open-Systems-Pharmacology/rSharp")`.
 - `createIndividual()` and `createPopulation()` will not work with models developed prior to version 13.
 The reason is that in v13, the absorption model has been refined, adding new parameters.
 To be able to use creation of individuals or populations with earlier models, the user has to re-create the models from snapshot with the latest PK-Sim version.
 If no original PK-Sim project or snapshot are available, the user should use the latest version 12 of the R package.
 - `SimulationRunOptions$checkForNegativeValues` field has been removed, as well as the `checkForNegativeValues` argument of `SimulationRunOptions$new()`. The property is now on `SolverSettings` and accessible via `simulation$solver$checkForNegativeValues`. Passing `checkForNegativeValues` to `SimulationRunOptions$new()` now fails with an `unused argument` error (#2010).
+
+## Major changes
+
+- Added MoBi project support: load `.mbp3` projects, query modules, individuals, expression profiles, and simulations, and assemble simulations from project building blocks. New classes `MoBiProject`, `MoBiModule`, `SimulationConfiguration`, `MoleculesBuildingBlock`, and `IndividualBuildingBlock`, plus helpers for creating and saving Initial Conditions, Parameter Values, Individual, and Expression Profile building blocks. The main entry points are `loadMoBiProject()` to load a project, `loadModuleFromPKML()` and `loadBuildingBlockFromPKML()` to load modules and building blocks from `.pkml` files, and `createSimulationConfiguration()` followed by `createSimulations()` to assemble simulations from building blocks. New enums `BuildingBlockTypes`, `MoleculeType`, `IndividualDiseaseStates`, `MergeBehavior`, `PartitionCoefficientMethods`, `CellularPermeabilityMethods`, `ExpressionProfileCategories`, and `CalculationMethodCategories` support working with these objects. See `vignette("mobi-projects")` for an end-to-end walkthrough.
 
 ## Minor improvements and bug fixes
 
@@ -392,3 +393,14 @@ Version compatible with the OSPSuite V10.
 
 - Version compatible with the OSPSuite V9.
 - Initial Release
+
+
+<!-- Section Template
+
+## Breaking changes
+
+## Major changes
+
+## Minor improvements and bug fixes
+
+-->
