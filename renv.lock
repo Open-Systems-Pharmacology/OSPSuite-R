@@ -2739,8 +2739,8 @@
     },
     "rSharp": {
       "Package": "rSharp",
-      "Version": "1.2.2.9005",
-      "Source": "GitHub",
+      "Version": "2.0.0",
+      "Source": "Repository",
       "Type": "Package",
       "Title": "Accessing .NET from R",
       "Authors@R": "c( person(given = \"Open-Systems-Pharmacology Community\", role = \"cph\"), person(\"esqLABS GmbH\", role = \"fnd\"), person(given = \"Pavel\", family = \"Balazki\", role = c(\"aut\", \"cre\"), email = \"pavel.balazki@gmail.com\"), person(given = \"Juri\", family = \"Solodenko\", role = \"aut\", comment = c(ORCID = \"0000-0001-6922-588X\")), person(given = \"Michael\", family = \"Sevestre\", role = \"aut\", email = \"michael@design2code.ca\"), person(given = \"Robert\", family = \"McIntosh\", role = \"aut\"), person(given = \"Felix\", family = \"Mil\", role = \"aut\"), person(given = \"Jean-Michel\",  family = \"Perraud\",  email =\"jean-michel.perraud@csiro.au\",  role = \"aut\"), person(given = \"Ian Peter\", family = \"Du\", role = \"ctb\") )",
@@ -2768,14 +2768,15 @@
       "VignetteBuilder": "knitr",
       "Config/testthat/edition": "3",
       "Config/roxygen2/version": "8.0.0",
+      "Config/pak/sysreqs": "dotnet-runtime-10.0",
+      "Repository": "https://open-systems-pharmacology.r-universe.dev",
+      "NeedsCompilation": "no",
       "Author": "Open-Systems-Pharmacology Community [cph], esqLABS GmbH [fnd], Pavel Balazki [aut, cre], Juri Solodenko [aut] (ORCID: <https://orcid.org/0000-0001-6922-588X>), Michael Sevestre [aut], Robert McIntosh [aut], Felix Mil [aut], Jean-Michel Perraud [aut], Ian Peter Du [ctb]",
       "Maintainer": "Pavel Balazki <pavel.balazki@gmail.com>",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "Open-Systems-Pharmacology",
-      "RemoteRepo": "rsharp",
-      "RemoteRef": "main",
-      "RemoteSha": "ecd336c22a316a7d49ce5ab4a11146454ac5aaa5"
+      "RemoteType": "repository",
+      "RemoteUrl": "https://github.com/Open-Systems-Pharmacology/rSharp",
+      "RemoteRef": "v2.0.0",
+      "RemoteSha": "e744347e030af8bb2bc4a53b39aa7520a8aceb45"
     },
     "rappdirs": {
       "Package": "rappdirs",
