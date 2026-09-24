@@ -1,28 +1,36 @@
-# ospsuite (development version)
-
-## Major changes
-
-- Added MoBi project support: load `.mbp3` projects, query modules, individuals, expression profiles, and simulations, and assemble simulations from project building blocks. New classes `MoBiProject`, `MoBiModule`, `SimulationConfiguration`, `MoleculesBuildingBlock`, and `IndividualBuildingBlock`, plus helpers for creating and saving Initial Conditions, Parameter Values, Individual, and Expression Profile building blocks. The main entry points are `loadMoBiProject()` to load a project, `loadModuleFromPKML()` and `loadBuildingBlockFromPKML()` to load modules and building blocks from `.pkml` files, and `createSimulationConfiguration()` followed by `createSimulations()` to assemble simulations from building blocks. New enums `BuildingBlockTypes`, `MoleculeType`, `IndividualDiseaseStates`, `MergeBehavior`, `PartitionCoefficientMethods`, `CellularPermeabilityMethods`, `ExpressionProfileCategories`, and `CalculationMethodCategories` support working with these objects. See `vignette("mobi-projects")` for an end-to-end walkthrough.
+# ospsuite 13.0.1
 
 ## Breaking changes
 
 - **.NET 10 runtime is now required** (previously .NET 8). The bundled assemblies in `inst/lib` target `net10.0`; on older runtimes the package fails to load with `System.Reflection.ReflectionTypeLoadException`. See the rSharp prerequisites links in the README for installation instructions on Windows and Linux.
+- **rSharp 2.0.0 or later is now required.** Update it before installing ospsuite, for example with `pak::pak("Open-Systems-Pharmacology/rSharp")`.
 - `createIndividual()` and `createPopulation()` will not work with models developed prior to version 13.
 The reason is that in v13, the absorption model has been refined, adding new parameters.
 To be able to use creation of individuals or populations with earlier models, the user has to re-create the models from snapshot with the latest PK-Sim version.
 If no original PK-Sim project or snapshot are available, the user should use the latest version 12 of the R package.
 - `SimulationRunOptions$checkForNegativeValues` field has been removed, as well as the `checkForNegativeValues` argument of `SimulationRunOptions$new()`. The property is now on `SolverSettings` and accessible via `simulation$solver$checkForNegativeValues`. Passing `checkForNegativeValues` to `SimulationRunOptions$new()` now fails with an `unused argument` error (#2010).
 
+## Major changes
+
+- Added MoBi project support: load `.mbp3` projects, query modules, individuals, expression profiles, and simulations, and assemble simulations from project building blocks. New classes `MoBiProject`, `MoBiModule`, `SimulationConfiguration`, `MoleculesBuildingBlock`, and `IndividualBuildingBlock`, plus helpers for creating and saving Initial Conditions, Parameter Values, Individual, and Expression Profile building blocks. The main entry points are `loadMoBiProject()` to load a project, `loadModuleFromPKML()` and `loadBuildingBlockFromPKML()` to load modules and building blocks from `.pkml` files, and `createSimulationConfiguration()` followed by `createSimulations()` to assemble simulations from building blocks. New enums `BuildingBlockTypes`, `MoleculeType`, `IndividualDiseaseStates`, `MergeBehavior`, `PartitionCoefficientMethods`, `CellularPermeabilityMethods`, `ExpressionProfileCategories`, and `CalculationMethodCategories` support working with these objects. See `vignette("mobi-projects")` for an end-to-end walkthrough.
+
 ## Minor improvements and bug fixes
 
 - A `Simulation` object now has a `population` field: assign a `Population` with `simulation$population <- myPopulation` to make it a population simulation, and read it back with `simulation$population`. Assigning `NULL` switches the simulation back to an individual simulation. The read-only `simulation$isPopulation` field reports whether a simulation will be run for a population. This is an alternative to passing `population` to `runSimulations()` (which continues to work unchanged) and makes it possible to run several population simulations in a single `runSimulations()` call. See `vignette("create-run-population")` (#1987).
 - Added `createSimulations()` to create one or several simulations from a named list of `SimulationConfiguration` objects in a single call, which builds them in parallel. A configuration that cannot be created is reported as a warning and its entry in the returned list is `NULL`; pass `stopIfFails = TRUE` to raise an error instead (#2024).
 - Added `loadSimulationsFromSnapshot()` to load simulations stored in a PK-Sim snapshot file as `Simulation` objects, optionally filtering by simulation name (#1929). Requesting a name that is not in the snapshot raises an error; pass `ignoreIfNotFound = TRUE` to return `NULL` for missing names instead. See `vignette("snapshots")` for an overview of the snapshot helpers. Note: MoBi snapshots are not yet supported.
-- `DataCombined$toDataFrame()` now returns the `name` and `group` columns as factors whose levels follow the order in which datasets (and groups) were added. As a result, plots built from `DataCombined` objects (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, etc.) now display legend entries in the order `DataSet` and `SimulationResults` objects were added, rather than in alphabetical order. This also keeps `name`- and `group`-based legends consistent in observed-vs-predicted plots, where the two variables may otherwise diverge (#1241).
 - New functions `projectToSnapshot()` and `snapshotToProject()` convert between OSP project files and snapshots. `projectToSnapshot()` takes PK-Sim (`.pksim5`) and MoBi (`.mbp3`) project files and writes snapshot files (`.json`); `snapshotToProject()` takes PK-Sim and MoBi snapshot files (`.json`) and writes the matching project file (`.pksim5` or `.mbp3`). The application is detected from the file extension when converting a project and from the snapshot itself when converting a snapshot; the `application` argument overrides the detection, and a single call may mix files from both applications. Inputs that would be converted to the same output file, such as `model.pksim5` and `model.mbp3`, are rejected, as are inputs that share a file name, such as `snapshots/a/model.json` and `snapshots/b/model.json` (#1973, #1974).
 - `runSimulationsFromSnapshot()` now raises an error when two input files share a name, for example `snapshots/a/model.json` and `snapshots/b/model.json`. All inputs are gathered into a single folder first, so previously the second file replaced the first and was silently processed in its place.
 - `runSimulationsFromSnapshot()` now validates the `exportJSON` argument like the other export flags. Previously a non-logical value (e.g. `exportJSON = "TRUE"`) was silently treated as `FALSE` and no JSON was exported.
 - Simulations returned by `loadSimulationsFromSnapshot()` now carry their individual and module snapshots, so `saveSimulation()` writes a `.pkml` that can be converted back into a MoBi module. Previously these snapshots were empty because only PK-Sim's desktop export filled them (#2029).
+
+# ospsuite 12.4.5
+
+## Minor improvements and bug fixes
+
+- `{ospsuite}` 12.4.x now requires `{rSharp}` 1.2.3 or older, which runs on .NET 8. Newer `{rSharp}` versions use .NET 10, with which `loadSimulation()` and the other functions that read or write observed data in `.pkml` files fail. If `library(ospsuite)` reports that a newer `{rSharp}` is installed, run `pak::pak("Open-Systems-Pharmacology/rSharp@v1.2.3")` or upgrade to `{ospsuite}` 13.
+
+- `DataCombined$toDataFrame()` now returns the `name` and `group` columns as factors whose levels follow the order in which datasets (and groups) were added. As a result, plots built from `DataCombined` objects (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, etc.) now display legend entries in the order `DataSet` and `SimulationResults` objects were added, rather than in alphabetical order. This also keeps `name`- and `group`-based legends consistent in observed-vs-predicted plots, where the two variables may otherwise diverge (#1241).
 
 # ospsuite 12.4.4
 
@@ -392,3 +400,14 @@ Version compatible with the OSPSuite V10.
 
 - Version compatible with the OSPSuite V9.
 - Initial Release
+
+
+<!-- Section Template
+
+## Breaking changes
+
+## Major changes
+
+## Minor improvements and bug fixes
+
+-->
