@@ -20,8 +20,8 @@
 #'
 #' # plot
 #' plotResidualsVsTime(
-#' dataCombinedAciclovir, 
-#' scaling = "lin", 
+#' dataCombinedAciclovir,
+#' scaling = "lin",
 #' defaultPlotConfiguration = myPlotConfiguration
 #' )
 #'

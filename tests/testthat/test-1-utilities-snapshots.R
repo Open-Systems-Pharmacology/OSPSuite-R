@@ -1,28 +1,5 @@
-test_that("User is stopped when trying to run simulations from snapshot as it is not supported on Mac", {
-  testthat::skip_on_os("windows")
-  testthat::skip_on_os("linux")
-
-  path <- getTestDataFilePath("test_snapshot.json")
-
-  temp_dir <- withr::local_tempdir()
-
-  expect_error(
-    runSimulationsFromSnapshot(
-      path,
-      output = temp_dir,
-      exportCSV = TRUE,
-      exportPKML = TRUE,
-      exportJSON = TRUE,
-      exportXML = TRUE
-    ),
-    "runSimulationsFromSnapshot is currently not supported on macOS."
-  )
-})
-
-testthat::skip_on_os("mac")
-
 test_that("Run simulation from snapshot works", {
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
 
   temp_dir <- withr::local_tempdir()
 
@@ -41,7 +18,7 @@ test_that("Run simulation from snapshot works", {
 })
 
 test_that("RunForAllOutputs argument works", {
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
 
   temp_dir1 <- withr::local_tempdir()
 
@@ -71,11 +48,12 @@ test_that("RunForAllOutputs argument works", {
 })
 
 test_that("runSimulationsFromSnapshot arguments are checked", {
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
 
   temp_dir <- withr::local_tempdir()
 
   expect_error(runSimulationsFromSnapshot(path, exportCSV = "path/to/my.csv"))
+  expect_error(runSimulationsFromSnapshot(path, exportJSON = "TRUE"))
   expect_error(runSimulationsFromSnapshot(path, output = 1))
 
   # provide wrong input/output paths
@@ -86,29 +64,178 @@ test_that("runSimulationsFromSnapshot arguments are checked", {
   ))
 })
 
-test_that("loadProjectFromSnapshot converts a snapshot to a project", {
-  path <- getTestDataFilePath("test_snapshot.json")
+test_that("snapshotToProject converts a snapshot to a project", {
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
   temp_dir <- withr::local_tempdir()
-  loadProjectFromSnapshot(path, output = temp_dir)
+  snapshotToProject(path, output = temp_dir)
 
   expect_length(list.files(temp_dir, pattern = ".pksim5"), 1)
 })
 
-test_that("exportProjectToSnapshot converts a project to a snapshot", {
-  path <- getTestDataFilePath("test_project.pksim5")
+test_that("projectToSnapshot converts a project to a snapshot", {
+  path <- testProjectPath()
   temp_dir <- withr::local_tempdir()
-  exportProjectToSnapshot(path, output = temp_dir)
+  projectToSnapshot(path, output = temp_dir)
 
   expect_length(list.files(temp_dir, pattern = ".json"), 1)
 })
 
-test_that("loadProjectFromSnapshot runSimulations argument is supported", {
-  path <- getTestDataFilePath("test_snapshot.json")
+test_that("snapshotToProject runSimulations argument is supported", {
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
   temp_dir <- withr::local_tempdir()
   expect_no_error({
-    loadProjectFromSnapshot(path, output = temp_dir, runSimulations = TRUE)
-    loadProjectFromSnapshot(path, output = temp_dir, runSimulations = FALSE)
+    snapshotToProject(path, output = temp_dir, runSimulations = TRUE)
+    snapshotToProject(path, output = temp_dir, runSimulations = FALSE)
   })
+})
+
+test_that("projectToSnapshot converts a MoBi project to a snapshot", {
+  path <- getTestDataFilePath("MoBiProject/Test_Project.mbp3")
+  temp_dir <- withr::local_tempdir()
+  projectToSnapshot(path, output = temp_dir)
+
+  expect_length(list.files(temp_dir, pattern = "\\.json$"), 1)
+})
+
+test_that("snapshotToProject converts a MoBi snapshot back to a project", {
+  snapshot_dir <- withr::local_tempdir()
+  projectToSnapshot(
+    getTestDataFilePath("MoBiProject/Test_Project.mbp3"),
+    output = snapshot_dir
+  )
+  snapshot <- list.files(snapshot_dir, pattern = "\\.json$", full.names = TRUE)
+
+  temp_dir <- withr::local_tempdir()
+  snapshotToProject(snapshot, output = temp_dir)
+
+  expect_length(list.files(temp_dir, pattern = "\\.mbp3$"), 1)
+})
+
+test_that("the application writing a snapshot is detected", {
+  snapshot_dir <- withr::local_tempdir()
+  projectToSnapshot(
+    getTestDataFilePath("MoBiProject/Test_Project.mbp3"),
+    output = snapshot_dir
+  )
+  moBiSnapshot <- list.files(
+    snapshot_dir,
+    pattern = "\\.json$",
+    full.names = TRUE
+  )
+  pkSimSnapshot <- system.file(
+    "extdata",
+    "test_snapshot.json",
+    package = "ospsuite"
+  )
+
+  expect_equal(.snapshotApplicationFromSnapshot(moBiSnapshot), "MoBi")
+  expect_equal(.snapshotApplicationFromSnapshot(pkSimSnapshot), "PK-Sim")
+  expect_equal(
+    .snapshotApplicationFromProject(c("a.mbp3", "b.pksim5", "c.MBP3")),
+    c("MoBi", "PK-Sim", "MoBi")
+  )
+})
+
+test_that("projectToSnapshot converts a mixed batch of projects", {
+  temp_dir <- withr::local_tempdir()
+  projectToSnapshot(
+    getTestDataFilePath("MoBiProject/Test_Project.mbp3"),
+    testProjectPath(),
+    output = temp_dir
+  )
+
+  expect_setequal(
+    list.files(temp_dir, pattern = "\\.json$"),
+    c("Test_Project.json", "test_snapshot.json")
+  )
+})
+
+test_that(".gatherFiles rejects inputs that share a name", {
+  # Everything is gathered into one flat folder, so two `model.json` files from
+  # different directories would collapse into one.
+  dir_a <- withr::local_tempdir()
+  dir_b <- withr::local_tempdir()
+  writeLines("{}", file.path(dir_a, "model.json"))
+  writeLines("{}", file.path(dir_b, "model.json"))
+
+  expect_error(
+    .gatherFiles(
+      file.path(dir_a, "model.json"),
+      file.path(dir_b, "model.json")
+    ),
+    regexp = "share a name"
+  )
+  expect_error(.gatherFiles(dir_a, dir_b), regexp = "share a name")
+})
+
+test_that("snapshotToProject rejects snapshots that share a name", {
+  dir_a <- withr::local_tempdir()
+  dir_b <- withr::local_tempdir()
+  snapshot <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
+  file.copy(snapshot, file.path(dir_a, "model.json"))
+  file.copy(snapshot, file.path(dir_b, "model.json"))
+
+  temp_dir <- withr::local_tempdir()
+  expect_error(
+    snapshotToProject(
+      file.path(dir_a, "model.json"),
+      file.path(dir_b, "model.json"),
+      output = temp_dir
+    ),
+    regexp = "share a name"
+  )
+  expect_length(list.files(temp_dir), 0)
+})
+
+test_that("projectToSnapshot rejects inputs converting to the same file", {
+  # Snapshots are named after the input, so `model.pksim5` and `model.mbp3`
+  # would both be written as `model.json`.
+  input_dir <- withr::local_tempdir()
+  file.copy(
+    getTestDataFilePath("MoBiProject/Test_Project.mbp3"),
+    file.path(input_dir, "model.mbp3")
+  )
+  file.copy(
+    testProjectPath(),
+    file.path(input_dir, "model.pksim5")
+  )
+
+  temp_dir <- withr::local_tempdir()
+  expect_error(
+    projectToSnapshot(
+      file.path(input_dir, "model.mbp3"),
+      file.path(input_dir, "model.pksim5"),
+      output = temp_dir
+    ),
+    regexp = "same output file"
+  )
+  expect_length(list.files(temp_dir), 0)
+})
+
+test_that("the application argument overrides the detected one", {
+  path <- getTestDataFilePath("MoBiProject/Test_Project.mbp3")
+  temp_dir <- withr::local_tempdir()
+  projectToSnapshot(path, output = temp_dir, application = "MoBi")
+
+  expect_length(list.files(temp_dir, pattern = "\\.json$"), 1)
+  expect_error(
+    projectToSnapshot(path, output = temp_dir, application = "Excel"),
+    regexp = "application"
+  )
+})
+
+test_that("the conversion functions reject inputs holding no relevant file", {
+  temp_dir <- withr::local_tempdir()
+  empty_dir <- withr::local_tempdir()
+
+  expect_error(
+    snapshotToProject(empty_dir, output = temp_dir),
+    regexp = "No snapshot files"
+  )
+  expect_error(
+    projectToSnapshot(empty_dir, output = temp_dir),
+    regexp = "No project files"
+  )
 })
 
 test_that("convertSnapshot is deprecated but still delegates", {
@@ -116,7 +243,7 @@ test_that("convertSnapshot is deprecated but still delegates", {
   # deprecation warning is emitted and can be captured here.
   withr::local_options(lifecycle_verbosity = "warning")
 
-  path <- getTestDataFilePath("test_snapshot.json")
+  path <- system.file("extdata", "test_snapshot.json", package = "ospsuite")
   temp_dir <- withr::local_tempdir()
 
   expect_warning(
@@ -125,7 +252,7 @@ test_that("convertSnapshot is deprecated but still delegates", {
   )
   expect_length(list.files(temp_dir, pattern = ".pksim5"), 1)
 
-  path <- getTestDataFilePath("test_project.pksim5")
+  path <- testProjectPath()
   temp_dir <- withr::local_tempdir()
   expect_warning(
     convertSnapshot(path, output = temp_dir, format = "snapshot"),
@@ -182,4 +309,165 @@ test_that("gather files handles files and directories", {
 
   new_temp_dir <- .gatherFiles(file, sub_dir)
   expect_true(length(list.files(new_temp_dir, pattern = ".json")) == 3)
+})
+
+###### Load simulations from snapshot
+# Tests for `loadSimulationsFromSnapshot()`, the R wrapper around the SnapshotTask
+# `LoadSimulationsFromSnapshot` API. It returns the simulations stored in a
+# snapshot file as `Simulation` objects, or - when simulation names are supplied -
+# only the matching simulations (case-sensitive match).
+
+snapshotFile <- system.file(
+  "extdata",
+  "test_snapshot.json",
+  package = "ospsuite"
+)
+
+test_that("loadSimulationsFromSnapshot returns every simulation in the snapshot", {
+  simulations <- loadSimulationsFromSnapshot(snapshotFile)
+
+  expect_length(simulations, 2)
+  expect_true(isOfType(simulations, Simulation))
+})
+
+test_that("loadSimulationsFromSnapshot returns a list named by simulation name", {
+  simulations <- loadSimulationsFromSnapshot(snapshotFile)
+
+  expect_named(simulations)
+  expect_equal(
+    names(simulations),
+    vapply(simulations, function(sim) sim$name, character(1), USE.NAMES = FALSE)
+  )
+})
+
+test_that("loadSimulationsFromSnapshot returns only simulations whose name matches", {
+  simName <- "Simulation - IV + Weibull - Default tolerance"
+
+  simulations <- loadSimulationsFromSnapshot(
+    snapshotFile,
+    simulationNames = simName
+  )
+
+  expect_length(simulations, 1)
+  expect_equal(simulations[[1]]$name, simName)
+})
+
+test_that("loadSimulationsFromSnapshot errors for a non-existing name", {
+  expect_error(
+    loadSimulationsFromSnapshot(
+      snapshotFile,
+      simulationNames = "ThisSimulationDoesNotExist"
+    ),
+    regexp = "not found in the snapshot"
+  )
+})
+
+test_that("loadSimulationsFromSnapshot errors when only some names are found", {
+  existingName <- "Simulation - IV + Weibull - Default tolerance"
+  expect_error(
+    loadSimulationsFromSnapshot(
+      snapshotFile,
+      simulationNames = c(existingName, "ThisSimulationDoesNotExist")
+    ),
+    regexp = "ThisSimulationDoesNotExist"
+  )
+})
+
+test_that("loadSimulationsFromSnapshot returns NULL for missing names when ignoreIfNotFound = TRUE", {
+  existingName <- "Simulation - IV + Weibull - Default tolerance"
+  requested <- c(existingName, "ThisSimulationDoesNotExist")
+
+  simulations <- loadSimulationsFromSnapshot(
+    snapshotFile,
+    simulationNames = requested,
+    ignoreIfNotFound = TRUE
+  )
+
+  expect_length(simulations, 2)
+  expect_named(simulations, requested)
+  expect_true(isOfType(simulations[[1]], Simulation))
+  expect_null(simulations[[2]])
+})
+
+test_that("a simulation loaded from a snapshot can be run", {
+  simulation <- loadSimulationsFromSnapshot(snapshotFile)[[1]]
+
+  results <- runSimulations(simulation)[[1]]
+  expect_true(isOfType(results, "SimulationResults"))
+})
+
+test_that("a simulation loaded from a snapshot keeps its snapshots when saved", {
+  simulation <- loadSimulationsFromSnapshot(snapshotFile)[[1]]
+  pkmlFile <- withr::local_tempfile(fileext = ".pkml")
+
+  saveSimulation(simulation, pkmlFile)
+
+  snapshotNodes <- xml2::xml_find_all(xml2::read_xml(pkmlFile), "//Snapshot")
+
+  expect_setequal(
+    xml2::xml_name(xml2::xml_parent(snapshotNodes)),
+    c("Individual", "Module")
+  )
+  # Each snapshot is base64-encoded JSON; before the fix these were all empty.
+  expect_true(all(nzchar(xml2::xml_text(snapshotNodes))))
+})
+
+test_that("loadSimulationsFromSnapshot validates its arguments", {
+  expect_error(
+    loadSimulationsFromSnapshot(snapshotFile, simulationNames = 1),
+    regexp = "expected <character>"
+  )
+  expect_error(
+    loadSimulationsFromSnapshot("does_not_exist.json"),
+    regexp = "does not exist"
+  )
+})
+
+# End-to-end "seam" test (OSPSuite-R#1981): a population snapshot ->
+# loadSimulationsFromSnapshot -> runSimulations on a mixed list ->
+# population results (Count > 1) with aging applied. This exercises the full
+# cross-repo chain (PK-Sim snapshot converter + OSPSuite.Core RunSimulations).
+test_that("a population snapshot loads and runs through runSimulations (cross-repo seam)", {
+  snapshotFile <- system.file(
+    "extdata",
+    "ind_and_pop_snapshot.json",
+    package = "ospsuite"
+  )
+
+  simulations <- loadSimulationsFromSnapshot(snapshotFile)
+  expect_length(simulations, 2)
+
+  # population vs individual is distinguished by the IsPopulation flag on the .NET object
+  populationSim <- Filter(function(s) s$get("IsPopulation"), simulations)[[1]]
+  individualSim <- Filter(function(s) !s$get("IsPopulation"), simulations)[[1]]
+
+  # the snapshot converter carried the population and aging data onto the underlying .NET object,
+  # readable via rSharp $get() (there is no R6 accessor)
+  expect_equal(populationSim$get("IndividualValuesCache")$get("Count"), 6)
+  expect_false(is.null(populationSim$get("AgingData")))
+  expect_true(is.null(individualSim$get("IndividualValuesCache")))
+
+  # the snapshot does not define output selections, so add an output to each simulation
+  for (simulation in simulations) {
+    addOutputs(
+      getAllQuantitiesMatching(
+        "Organism|PeripheralVenousBlood|*|Plasma (Peripheral Venous Blood)",
+        simulation
+      ),
+      simulation
+    )
+  }
+
+  results <- runSimulations(simulations)
+  expect_length(results, 2)
+
+  # loadSimulationsFromSnapshot returns a list named by simulation name, which
+  # runSimulations reuses for the result list
+  populationResults <- results[[populationSim$name]]
+  individualResults <- results[[individualSim$name]]
+
+  expect_true(isOfType(populationResults, "SimulationResults"))
+  # Count > 1 proves it ran as a population (with aging applied)
+  expect_equal(populationResults$count, 6)
+  expect_equal(individualResults$count, 1)
 })

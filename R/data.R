@@ -1,5 +1,5 @@
 #' @title dataCombinedAciclovir
-#' @description 
+#' @description
 #' Example `DataCombined` object for Aciclovir created from the code chunk below
 #' and that is re-used throughout the package examples and documentation
 #'

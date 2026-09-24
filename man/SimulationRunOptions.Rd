@@ -13,10 +13,10 @@ Options to be passed to the simulation engine
 \section{Active bindings}{
   \if{html}{\out{<div class="r6-active-bindings">}}
   \describe{
-    \item{\code{numberOfCores}}{(Maximal) number of cores to be used. This is only relevant when simulating a population simulation.
+    \item{\code{numberOfCores}}{(Maximal) number of cores to be used. Work is distributed across cores both when
+several simulations are passed to \code{runSimulations()} in one call and when simulating a population
+(where individuals are split across cores). It has no effect on a single individual simulation.
 Default is \code{getOSPSuiteSetting("numberOfCores")}.}
-
-    \item{\code{checkForNegativeValues}}{Specifies whether negative values check is on or off. Default is \code{TRUE}}
 
     \item{\code{showProgress}}{Specifies whether a progress bar should be shown during population simulations. If \code{TRUE}, a progress bar is shown in the console,
 indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
@@ -66,7 +66,7 @@ Default is \code{getOSPSuiteSetting("showProgress")}}
     \if{html}{\out{<div class="arguments">}}
     \describe{
       \item{\code{numberOfCores}}{Number of cores to use for the simulation. Default value is \code{getOSPSuiteSetting("numberOfCores")}}
-      \item{\code{checkForNegativeValues}}{Should the solver check for negative values. Default is \code{TRUE}}
+      \item{\code{checkForNegativeValues}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{sim$solver$checkForNegativeValues} instead.}
       \item{\code{showProgress}}{Should a progress bar be displayed during population simulations. If \code{TRUE}, a progress bar is shown in the console,
 indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
 of a single simulation. This option only applies to population simulations and has no effect on individual simulations.

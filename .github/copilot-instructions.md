@@ -7,9 +7,9 @@
 The `{ospsuite}` R package provides functionality for loading, manipulating, and simulating pharmacokinetic/pharmacodynamic (PK/PD) models created in the Open Systems Pharmacology Software tools (PK-Sim and MoBi). This is a binary R package that wraps .NET libraries through the `{rSharp}` package.
 
 **Key characteristics:**
-- **Language**: R (version 4.1+)
+- **Language**: R (version 4.4+)
 - **Architecture**: R6 class-based object-oriented design wrapping .NET objects
-- **Platforms**: Windows and Linux (Ubuntu)
+- **Platforms**: Windows, Linux (Ubuntu), and macOS (arm64)
 - **Testing**: testthat (edition 3)
 - **Documentation**: roxygen2 with markdown support
 - **Dependencies**: Includes binary .NET DLLs, uses rSharp for .NET interoperability
@@ -18,17 +18,17 @@ The `{ospsuite}` R package provides functionality for loading, manipulating, and
 
 ```
 OSPSuite-R/
-├── R/                      # R source code (~89 files)
-│   ├── *-base.R           # Base classes (ObjectBase, DotNetWrapper, etc.)
+├── R/                      # R source code (~100 files)
+│   ├── object-base.R      # Base wrapper classes (also dot-net-wrapper.R)
 │   ├── *.R                # R6 class definitions and functions
 │   ├── utilities-*.R      # Helper utilities for various operations
 │   └── zzz.R              # Package initialization hooks
 ├── tests/
 │   └── testthat/          # Unit tests (~87 test files)
 ├── man/                    # Generated documentation (roxygen2)
-├── vignettes/             # Package vignettes (~15 .Rmd files)
+├── vignettes/             # Package vignettes (~18 .Rmd files)
 ├── inst/                   # Installed files (DLLs, example data)
-├── BinaryFiles/           # Platform-specific .NET binaries
+├── BinaryFiles            # Text manifest of shipped DLLs (R CMD check executable-check exclusions)
 └── .github/               # GitHub workflows and configurations
 ```
 
@@ -39,9 +39,9 @@ OSPSuite-R/
 The package extensively uses R6 classes to wrap .NET objects:
 
 1. **Base hierarchy**:
-   - `NetObject` - Base class for all .NET object wrappers
-   - `DotNetWrapper` - Extends NetObject with common wrapper methods
-   - `ObjectBase` - Extends DotNetWrapper for OSPSuite.Core objects
+   - `NetObject` - Base class for all .NET object wrappers (defined in `{rSharp}`, not in this package)
+   - `DotNetWrapper` - Extends NetObject with common wrapper methods (`R/dot-net-wrapper.R`)
+   - `ObjectBase` - Extends DotNetWrapper for OSPSuite.Core objects (`R/object-base.R`)
 
 2. **Domain classes**: Most classes inherit from `ObjectBase` or `DotNetWrapper`:
    - `Simulation`, `Container`, `Parameter`, `Quantity`, `Molecule`
@@ -51,7 +51,7 @@ The package extensively uses R6 classes to wrap .NET objects:
 3. **Key patterns**:
    - Use `R6::R6Class()` with `cloneable = FALSE` for .NET-backed objects
    - Active bindings for properties (read-only and read-write)
-   - `self$ref` or `self$pointer` to access underlying .NET object
+   - `self$pointer` to access the underlying .NET object reference
    - `rSharp::` functions for .NET interoperability
 
 ### Example R6 Class Structure
@@ -352,7 +352,8 @@ expect_warning(deprecatedFunction(), "deprecated")
 
 # Test object types
 expect_s3_class(result, "data.frame")
-expect_r6_class(sim, "Simulation")
+expect_s3_class(sim, "Simulation") # R6 objects carry their class as S3 class
+expect_true(isOfType(sim, "Simulation")) # alternative via ospsuite.utils
 
 # Test values
 expect_equal(value, expected, tolerance = 1e-6)
@@ -369,7 +370,8 @@ expect_false(condition2)
 
 ### Branching Strategy
 
-- `main`: Stable release branch
+- `main`: Development branch, carries the current major version line (v13); releases are tagged from it
+- `v12`: Maintenance branch for the v12 line
 - Feature branches: `feature/description` or `copilot/description`
 - Pull requests required for all changes
 
@@ -392,7 +394,7 @@ expect_false(condition2)
 ### Version Management
 
 - Follows semantic versioning (major.minor.patch)
-- Development versions use `.9000` suffix (e.g., `12.3.2.9006`)
+- Development versions use `.9000` suffix (e.g., `13.0.0.9001`)
 - Version automatically bumped on merge to main
 
 ## rSharp Package
@@ -413,17 +415,20 @@ value <- netObject$get("PropertyName")
 # Set .NET property
 netObject$set("PropertyName", newValue)
 
-# Get .NET type
-typeObj <- rSharp::getType("Namespace.ClassName")
+# Create a .NET object
+obj <- rSharp::newObjectFromName("Namespace.ClassName", arg1)
 
-# Enumerate .NET collection
-items <- rSharp::toList(netCollection)
+# Get a static property
+value <- rSharp::getStatic("Namespace.ClassName", "PropertyName")
+
+# Get .NET type / enum names
+typeObj <- rSharp::getType("Namespace.ClassName")
+names <- rSharp::getEnumNames("Namespace.EnumName")
 ```
 
 ### .NET-R Type Conversions
 
 - .NET `null` → R `NULL`
-- .NET collections → R lists (via `rSharp::toList()`)
 - .NET arrays → R vectors
 - .NET objects → Wrapped in R6 classes
 
@@ -433,16 +438,22 @@ items <- rSharp::toList(netCollection)
 
 ```r
 # 1. Clone repository
-# 2. Run development setup
-source("tools/setup_dev.R")
-setup_dev()
+# 2. Sync your library to the pinned dependency set in renv.lock
+renv::restore()
 
-# 3. Install dependencies
-remotes::install_deps(dependencies = TRUE)
-
-# 4. Load package for development
+# 3. Load package for development
 devtools::load_all()
 ```
+
+`renv::restore()` must come first: `devtools::load_all()` runs a dependency check
+against the active library and errors out if the dev dependencies are missing.
+Never run `Rscript --vanilla` — it skips `.Rprofile`, so `renv/activate.R` never
+runs and you silently fall back to the global library with an unpinned `rSharp`.
+
+Branches pin different `rSharp` builds and ship different `inst/lib` binaries, so
+switching branches in place requires an R session restart (rSharp locks the loaded
+DLLs) followed by `renv::restore()`. See `AGENTS.md` for the per-branch worktree
+setup that avoids this.
 
 ### Building and Checking
 
@@ -463,14 +474,6 @@ devtools::build_vignettes()
 devtools::install()
 ```
 
-### Updating Core Binary Files
-
-```r
-# Update .NET DLLs from OSPSuite.Core
-source(".github/scripts/update_core_files.R")
-# Follow instructions in script
-```
-
 ## Common Pitfalls and Solutions
 
 ### 1. .NET Object Lifetime
@@ -482,8 +485,8 @@ source(".github/scripts/update_core_files.R")
 **Solution**: Set locale to `en_US.UTF-8` (see README "Known issues")
 
 ### 3. Platform Differences
-**Issue**: DLL naming differs between Windows and Linux  
-**Solution**: Configure scripts handle this automatically; use `setup_dev()` for development
+**Issue**: The native libraries in `inst/lib` are platform-specific  
+**Solution**: All three platforms' binaries ship side by side under their native extensions (`.dll`, `.so`, `.dylib`) and `.initPackage()` loads the ones that match the running platform; no renaming step is needed. macOS is arm64-only.
 
 ### 4. Workspace Saving
 **Issue**: .NET objects cannot be saved/restored in R workspace  

@@ -1572,3 +1572,129 @@ test_that("It can print data combined", {
 
   expect_snapshot(print(dataCombined))
 })
+
+# caching of the combined data frame ---------------------------------
+
+test_that("repeated calls on an unchanged object return the same data frame", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet, groups = "obs")
+  myCombDat$addSimulationResults(simResults)
+
+  expect_equal(myCombDat$toDataFrame(), myCombDat$toDataFrame())
+})
+
+test_that("the returned data frame can be modified by reference", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+  expected <- myCombDat$toDataFrame()
+
+  # the plotting code turns the returned data frame into a `data.table` and
+  # then writes into it. Assigning to selected rows (as the unit conversion
+  # does group by group) writes into the column vector itself.
+  byReference <- myCombDat$toDataFrame()
+  data.table::setDT(byReference)
+  byReference[, yValues := yValues * 1000]
+  byReference[1L, xValues := -1]
+
+  expect_false(isTRUE(all.equal(byReference$yValues, expected$yValues)))
+  expect_false(isTRUE(all.equal(byReference$xValues, expected$xValues)))
+  expect_equal(myCombDat$toDataFrame(), expected)
+})
+
+test_that("`convertUnits()` does not change what the object returns afterwards", {
+  myCombDat <- oneObsSimDC()
+  expected <- myCombDat$toDataFrame()
+
+  converted <- convertUnits(myCombDat, yUnit = "mg/l", xUnit = "day(s)")
+
+  expect_false(isTRUE(all.equal(converted$xValues, expected$xValues)))
+  expect_equal(myCombDat$toDataFrame(), expected)
+})
+
+test_that("plotting the same object twice plots the same data", {
+  myCombDat <- oneObsSimDC()
+
+  firstPlot <- plotTimeProfile(myCombDat, yUnit = "mg/l", xUnit = "day(s)")
+  secondPlot <- plotTimeProfile(myCombDat, yUnit = "mg/l", xUnit = "day(s)")
+
+  expect_equal(firstPlot$data, secondPlot$data)
+})
+
+test_that("adding data is reflected in the next call", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+  rowsWithOneDataSet <- nrow(myCombDat$toDataFrame())
+
+  myCombDat$addDataSets(dataSet[[2]])
+  rowsWithTwoDataSets <- nrow(myCombDat$toDataFrame())
+  expect_gt(rowsWithTwoDataSets, rowsWithOneDataSet)
+
+  myCombDat$addSimulationResults(simResults)
+  expect_gt(nrow(myCombDat$toDataFrame()), rowsWithTwoDataSets)
+})
+
+test_that("changing group assignments is reflected in the next call", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]], groups = "groupA")
+  expect_equal(levels(myCombDat$toDataFrame()$group), "groupA")
+
+  myCombDat$setGroups(dataSet[[1]]$name, "groupB")
+  expect_equal(levels(myCombDat$toDataFrame()$group), "groupB")
+
+  myCombDat$removeGroupAssignment(dataSet[[1]]$name)
+  expect_true(all(is.na(myCombDat$toDataFrame()$group)))
+})
+
+test_that("changing data types is reflected in the next call", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+  expect_equal(unique(myCombDat$toDataFrame()$dataType), "observed")
+
+  myCombDat$setDataTypes(dataSet[[1]]$name, "simulated")
+  expect_equal(unique(myCombDat$toDataFrame()$dataType), "simulated")
+})
+
+test_that("changing data transformations is reflected in the next call", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+  untransformed <- myCombDat$toDataFrame()
+
+  myCombDat$setDataTransformations(yScaleFactors = 2)
+
+  expect_equal(myCombDat$toDataFrame()$yValues, untransformed$yValues * 2)
+})
+
+test_that("datasets without a group assignment get `NA` in the `group` column", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]], groups = "groupA")
+  myCombDat$addDataSets(dataSet[[2]])
+  df <- myCombDat$toDataFrame()
+
+  expect_equal(
+    unique(as.character(df$group[df$name == dataSet[[1]]$name])),
+    "groupA"
+  )
+  expect_true(all(is.na(df$group[df$name == dataSet[[2]]$name])))
+})
+
+test_that("the internal combined data frame carries no `group` column", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]], groups = "groupA")
+  invisible(myCombDat$toDataFrame())
+
+  expect_false(
+    "group" %in% names(myCombDat$.__enclos_env__$private$.dataCombined)
+  )
+})
+
+test_that("changing a clone does not change the data frame of the original", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]], groups = "groupA")
+  expected <- myCombDat$toDataFrame()
+
+  myCombDatClone <- myCombDat$clone(deep = TRUE)
+  myCombDatClone$setGroups(dataSet[[1]]$name, "groupB")
+
+  expect_equal(levels(myCombDatClone$toDataFrame()$group), "groupB")
+  expect_equal(myCombDat$toDataFrame(), expected)
+})

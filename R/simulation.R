@@ -75,6 +75,93 @@ Simulation <- R6::R6Class(
         }
         self$set("Name", value)
       }
+    },
+    #' @field configuration An object of the type `SimulationConfiguration`,
+    #' describing the modules used for the simulation, selected Parameter Values (PV) and Initial Conditions (IC).
+    configuration = function(value) {
+      # OSP Version number that is required for this feature
+      supportedVersion <- 12
+      if (missing(value)) {
+        # Convert to numeric as the returned value is a string
+        simVersion <- as.numeric(self$get("Creation")$get("Version"))
+        if (simVersion < supportedVersion) {
+          stop(messages$errorFeatureNotSupportedBySimulation(
+            "SimulationConfiguration",
+            simVersion,
+            supportedVersion
+          ))
+        }
+        netObj <- self$get("Configuration")
+        config <- .createSimulationConfigurationFromNetObject(netObj)
+
+        # Get calculation method overrides for molecules and apply them to the config.
+        moleculeNames <- unique(c(
+          self$allFloatingMoleculeNames(),
+          self$allStationaryMoleculeNames()
+        ))
+        for (moleculeName in moleculeNames) {
+          pcMethod <- self$calculationMethodFor(
+            moleculeName,
+            CalculationMethodCategories$PartitionCoefficient
+          )
+          if (!is.null(pcMethod)) {
+            config$setPartitionCoefficientMethods(moleculeName, pcMethod)
+          }
+          cpMethod <- self$calculationMethodFor(
+            moleculeName,
+            CalculationMethodCategories$CellularPermeability
+          )
+          if (!is.null(cpMethod)) {
+            config$setCellularPermeabilityMethods(moleculeName, cpMethod)
+          }
+        }
+
+        return(config)
+      } else {
+        private$.throwPropertyIsReadonly("configuration")
+      }
+    },
+    #' @field isPopulation `TRUE` if a population is currently assigned to the
+    #' simulation, meaning it will be run as a population simulation; `FALSE`
+    #' if it will be run for a single individual. To change this, assign a
+    #' population (or `NULL`) to the `population` field. (read-only)
+    isPopulation = function(value) {
+      private$.readOnlyProperty("isPopulation", value, self$get("IsPopulation"))
+    },
+    #' @field population The `Population` assigned to the simulation, or `NULL`
+    #' if the simulation is run for a single individual.
+    #'
+    #' Assigning a `Population` turns the simulation into a population
+    #' simulation, so that a subsequent `runSimulations(simulation)` runs it for
+    #' the whole population. Assigning `NULL` removes the population and switches
+    #' the simulation back to an individual simulation.
+    #'
+    #' Any aging data previously set on the simulation is cleared whenever the
+    #' population is (re)assigned or removed, since aging data only applies to
+    #' the population it was generated for.
+    population = function(value) {
+      if (missing(value)) {
+        netPopulation <- self$get("IndividualValuesCache")
+        if (is.null(netPopulation)) {
+          return(NULL)
+        }
+        return(Population$new(netPopulation))
+      }
+      # Not using validateIsOfType() here: it inspects the calling frame to build
+      # its message, which fails when called directly from an R6 active binding.
+      if (!is.null(value) && !isOfType(value, "Population")) {
+        stop(messages$errorWrongType(
+          "population",
+          class(value)[1],
+          "Population"
+        ))
+      }
+      self$set("IndividualValuesCache", value)
+      # Aging data is only meaningful together with the population it belongs to.
+      # Drop it on any (re)assignment so stale aging data cannot be silently
+      # applied to a different population or to an individual simulation.
+      self$set("AgingData", NULL)
+      invisible(self)
     }
   ),
   public = list(
@@ -86,8 +173,13 @@ Simulation <- R6::R6Class(
     initialize = function(netObject, sourceFile = NULL) {
       super$initialize(netObject)
       private$.sourceFile <- sourceFile
-      private$.buildConfiguration <- self$get("BuildConfiguration")
       private$.settings <- SimulationSettings$new(self$get("Settings"))
+
+      netTask <- .getCoreTaskFromCache("SimulationTask")
+      private$.buildConfiguration <- netTask$call(
+        "CreateSimulationBuilderFor",
+        netObject
+      )
     },
     #' @description
     #' Returns the name of all endogenous stationary molecules defined in the simulation. (e.g. with the flag IsStationary = TRUE)
@@ -124,6 +216,26 @@ Simulation <- R6::R6Class(
       mw %||% NA_real_
     },
     #' @description
+    #' Returns the calculation method name used for the given molecule and
+    #' category, or `NULL` if no override is set.
+    #' @param moleculeName Name of the molecule.
+    #' @param category One of the `CalculationMethodCategories` enum values
+    #' (e.g. `CalculationMethodCategories$PartitionCoefficient`).
+    calculationMethodFor = function(moleculeName, category) {
+      validateIsString(moleculeName)
+      validateEnumValue(category, CalculationMethodCategories)
+      supportedVersion <- 12
+      simVersion <- as.numeric(self$get("Creation")$get("Version"))
+      if (simVersion < supportedVersion) {
+        stop(messages$errorFeatureNotSupportedBySimulation(
+          "calculationMethodFor",
+          simVersion,
+          supportedVersion
+        ))
+      }
+      self$call("CalculationMethodFor", moleculeName, category)
+    },
+    #' @description
     #' Returns the applications ordered by start time associated to the quantity with path `quantityPath` or an empty list if not found
     #' @param quantityPath Path of quantity used to retrieve the applications (e.g. applications resulting in this quantity being applied)
     allApplicationsFor = function(quantityPath) {
@@ -138,8 +250,13 @@ Simulation <- R6::R6Class(
     },
     #' @description
     #' Print the object to the console
+    #' @param printClassProperties Logical, whether to print class properties (default: `FALSE`). If `TRUE`, calls first the `print` method of the parent class.
+    #' Useful for debugging.
     #' @param ... Rest arguments.
-    print = function(...) {
+    print = function(printClassProperties = FALSE, ...) {
+      if (printClassProperties) {
+        super$print(...)
+      }
       ospsuite.utils::ospPrintClass(self)
       ospsuite.utils::ospPrintItems(list(
         "Name" = self$name,
