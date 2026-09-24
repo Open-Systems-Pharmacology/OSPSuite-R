@@ -6,9 +6,9 @@ An OSPSuite simulation
 
 [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md)
 -\>
-[`ospsuite::DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/DotNetWrapper.md)
+[`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/DotNetWrapper.md)
 -\>
-[`ospsuite::ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/ObjectBase.md)
+[`ObjectBase`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/ObjectBase.md)
 -\> `Simulation`
 
 ## Active bindings
@@ -41,11 +41,38 @@ An OSPSuite simulation
 
   Name of the simulation
 
+- `configuration`:
+
+  An object of the type `SimulationConfiguration`, describing the
+  modules used for the simulation, selected Parameter Values (PV) and
+  Initial Conditions (IC).
+
+- `isPopulation`:
+
+  `TRUE` if a population is currently assigned to the simulation,
+  meaning it will be run as a population simulation; `FALSE` if it will
+  be run for a single individual. To change this, assign a population
+  (or `NULL`) to the `population` field. (read-only)
+
+- `population`:
+
+  The `Population` assigned to the simulation, or `NULL` if the
+  simulation is run for a single individual.
+
+  Assigning a `Population` turns the simulation into a population
+  simulation, so that a subsequent `runSimulations(simulation)` runs it
+  for the whole population. Assigning `NULL` removes the population and
+  switches the simulation back to an individual simulation.
+
+  Any aging data previously set on the simulation is cleared whenever
+  the population is (re)assigned or removed, since aging data only
+  applies to the population it was generated for.
+
 ## Methods
 
 ### Public methods
 
-- [`Simulation$new()`](#method-Simulation-new)
+- [`Simulation$new()`](#method-Simulation-initialize)
 
 - [`Simulation$allEndogenousStationaryMoleculeNames()`](#method-Simulation-allEndogenousStationaryMoleculeNames)
 
@@ -56,6 +83,8 @@ An OSPSuite simulation
 - [`Simulation$allFloatingMoleculeNames()`](#method-Simulation-allFloatingMoleculeNames)
 
 - [`Simulation$molWeightFor()`](#method-Simulation-molWeightFor)
+
+- [`Simulation$calculationMethodFor()`](#method-Simulation-calculationMethodFor)
 
 - [`Simulation$allApplicationsFor()`](#method-Simulation-allApplicationsFor)
 
@@ -78,7 +107,7 @@ Inherited methods
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `Simulation$new()`
 
 Initialize a new instance of the class
 
@@ -102,7 +131,7 @@ A new `Simulation` object.
 
 ------------------------------------------------------------------------
 
-### Method `allEndogenousStationaryMoleculeNames()`
+### `Simulation$allEndogenousStationaryMoleculeNames()`
 
 Returns the name of all endogenous stationary molecules defined in the
 simulation. (e.g. with the flag IsStationary = TRUE) This is a typically
@@ -115,7 +144,7 @@ Transporter, FcRn etc.
 
 ------------------------------------------------------------------------
 
-### Method `allXenobioticFloatingMoleculeNames()`
+### `Simulation$allXenobioticFloatingMoleculeNames()`
 
 Returns the name of all xenobiotic floating molecules defined in the
 simulation. (e.g. with the flag IsStationary = FALSE) This is typically
@@ -128,7 +157,7 @@ Inhibitor, DrugComplex.
 
 ------------------------------------------------------------------------
 
-### Method `allStationaryMoleculeNames()`
+### `Simulation$allStationaryMoleculeNames()`
 
 Returns the name of all stationary molecules defined in the simulation.
 (e.g. with the flag IsStationary = TRUE)
@@ -139,7 +168,7 @@ Returns the name of all stationary molecules defined in the simulation.
 
 ------------------------------------------------------------------------
 
-### Method `allFloatingMoleculeNames()`
+### `Simulation$allFloatingMoleculeNames()`
 
 Returns the name of all floating molecules defined in the simulation.
 (e.g. with the flag IsStationary = FALSE)
@@ -150,7 +179,7 @@ Returns the name of all floating molecules defined in the simulation.
 
 ------------------------------------------------------------------------
 
-### Method `molWeightFor()`
+### `Simulation$molWeightFor()`
 
 Returns the mol weight value (in core unit) associated to the quantity
 with given path or NA if not found
@@ -167,7 +196,29 @@ with given path or NA if not found
 
 ------------------------------------------------------------------------
 
-### Method `allApplicationsFor()`
+### `Simulation$calculationMethodFor()`
+
+Returns the calculation method name used for the given molecule and
+category, or `NULL` if no override is set.
+
+#### Usage
+
+    Simulation$calculationMethodFor(moleculeName, category)
+
+#### Arguments
+
+- `moleculeName`:
+
+  Name of the molecule.
+
+- `category`:
+
+  One of the `CalculationMethodCategories` enum values (e.g.
+  `CalculationMethodCategories$PartitionCoefficient`).
+
+------------------------------------------------------------------------
+
+### `Simulation$allApplicationsFor()`
 
 Returns the applications ordered by start time associated to the
 quantity with path `quantityPath` or an empty list if not found
@@ -185,15 +236,21 @@ quantity with path `quantityPath` or an empty list if not found
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
+### `Simulation$print()`
 
 Print the object to the console
 
 #### Usage
 
-    Simulation$print(...)
+    Simulation$print(printClassProperties = FALSE, ...)
 
 #### Arguments
+
+- `printClassProperties`:
+
+  Logical, whether to print class properties (default: `FALSE`). If
+  `TRUE`, calls first the `print` method of the parent class. Useful for
+  debugging.
 
 - `...`:
 

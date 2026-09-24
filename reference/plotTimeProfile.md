@@ -203,7 +203,7 @@ plotTimeProfile(
   `geomErrorbarAttributes`
 
   :   A `list` with arguments which are passed on to the call
-      [`ggplot2::geom_errorbar`](https://ggplot2.tidyverse.org/reference/geom_linerange.html)
+      `geom_errorbar_osp`
 
   `geomLLOQAttributes`
 
@@ -262,19 +262,21 @@ Other plot functions based on ospsuite.plots:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 # Generate a time profile plot for the provided data
-plotTimeProfile(myDataCombined,
+plotTimeProfile(dataCombinedAciclovir,
   xUnit = ospUnits$Time$h,
   yUnit = ospUnits$`Concentration [mass]`$`mg/l`)
 
+
 # Show individual dataset names for observed data only
-plotTimeProfile(manyObsDC, showLegendPerDataset = "observed")
+plotTimeProfile(dataCombinedAciclovir, showLegendPerDataset = "observed")
+
 
 # Show individual dataset names for simulated data only
-plotTimeProfile(manySimDC, showLegendPerDataset = "simulated")
+plotTimeProfile(dataCombinedAciclovir, showLegendPerDataset = "simulated")
+
 
 # Show individual dataset names for both observed and simulated
-plotTimeProfile(manyObsSimDC, showLegendPerDataset = "all")
-} # }
+plotTimeProfile(dataCombinedAciclovir, showLegendPerDataset = "all")
+
 ```

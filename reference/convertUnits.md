@@ -94,7 +94,7 @@ convertUnits(
 )
 #> # A tibble: 504 × 27
 #>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit
-#>           <int>   <dbl> <chr>            <dbl> <chr>      <chr> <chr>      <chr>
+#>           <int>   <dbl> <fct>            <dbl> <chr>      <chr> <chr>      <chr>
 #>  1            0       0 Organism|Peri…      0  Time       s     Concentra… µg/l 
 #>  2            0      60 Organism|Peri…    733. Time       s     Concentra… µg/l 
 #>  3            0     120 Organism|Peri…   2050. Time       s     Concentra… µg/l 
@@ -110,5 +110,5 @@ convertUnits(
 #> #   yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>, Source <chr>, File <chr>,
 #> #   Sheet <chr>, Molecule <chr>, Species <chr>, Organ <chr>, Compartment <chr>,
 #> #   `Study Id` <chr>, Gender <chr>, Dose <chr>, Route <chr>,
-#> #   `Patient Id` <chr>, group <chr>
+#> #   `Patient Id` <chr>, group <fct>
 ```

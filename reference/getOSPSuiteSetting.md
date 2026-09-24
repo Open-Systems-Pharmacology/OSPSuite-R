@@ -23,7 +23,7 @@ exist, an error is thrown.
 
 ``` r
 getOSPSuiteSetting("suiteVersion")
-#> [1] "12"
+#> [1] "13"
 getOSPSuiteSetting("sensitivityAnalysisConfig")$totalSensitivityThreshold
 #> [1] 0.9
 ```

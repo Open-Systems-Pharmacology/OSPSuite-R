@@ -13,7 +13,7 @@ PK-Sim and MoBi.
 - [Development](#development)
 - [Code of conduct](#code-of-conduct)
 - [Contribution](#contribution)
-- [Licence](#licence)
+- [License](#license)
 
 # Documentation
 
@@ -21,8 +21,6 @@ For complete documentation, see the [online
 documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/).
 
 ## Essential Guides
-
-**Essential guides:**
 
 - [Get
   Started](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/ospsuite.html) -
@@ -67,20 +65,19 @@ documentation](https://www.open-systems-pharmacology.org/OSPSuite-R/).
 
 # Installation
 
-The **ospsuite** package requires R version 4.x.x and supports
-[Windows](#on-windows) and [Linux (Ubuntu)](#on-linux) operating
-systems.
+The **ospsuite** package requires R version 4.4 or later and supports
+Windows, Linux (Ubuntu), and macOS (Apple Silicon) operating systems.
 
-`ospsuite` is not available on CRAN and depends on packages from the OSP
-ecosystem that are not available on CRAN. Follow the instructions below
-to install the package and all required dependencies.
+`ospsuite` is not available on CRAN, and neither are the OSP packages it
+depends on. Both are published on the OSP R-universe, so the recommended
+installation below resolves the whole stack in one call.
 
 ## Pre-requisites
 
 The [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
 package requires
 [rSharp](https://github.com/Open-Systems-Pharmacology/rsharp/) and its
-external dependencies (Visual C++ Redistributable and .NET 8). Install
+external dependencies (Visual C++ Redistributable and .NET 10). Install
 these dependencies using the following instructions:
 
 - [For
@@ -88,101 +85,33 @@ these dependencies using the following instructions:
 - [For
   Linux](https://github.com/Open-Systems-Pharmacology/rSharp?tab=readme-ov-file#ubuntu)
 
-## From GitHub (recommended)
+## From the OSP R-universe (recommended)
 
-Install the latest released version from GitHub using the
-[remotes](https://remotes.r-lib.org) package. This installation method
-downloads and installs all required dependencies.
+Install the released version from the [OSP
+R-universe](https://open-systems-pharmacology.r-universe.dev):
 
 ``` r
 
-install.packages("remotes")
-remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R@*release")
+install.packages(
+  "ospsuite",
+  repos = c(OSP = "https://open-systems-pharmacology.r-universe.dev", getOption("repos"))
+)
 ```
 
-To install the latest development version:
+## Development version
+
+To install the unreleased development version from GitHub, use
+[pak](https://pak.r-lib.org):
 
 ``` r
 
-install.packages("remotes")
-remotes::install_github("Open-Systems-Pharmacology/OSPSuite-R")
-```
+# install.packages("pak")
+options(repos = c(
+  OSP = "https://open-systems-pharmacology.r-universe.dev",
+  getOption("repos")
+))
 
-## From package archive files (Deprecated)
-
-Install manually from pre-built archive files available in the
-[releases](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
-
-#### Install CRAN dependencies
-
-Installing from archive files requires manual installation of CRAN
-dependencies first.
-
-``` r
-
-# Install dependencies (e.g. R6) which are on CRAN
-install.packages("cli")
-install.packages("crayon")
-install.packages("data.table")
-install.packages("dplyr")
-install.packages("ggplot2")
-install.packages("ggtext")
-install.packages("glue")
-install.packages("jsonlite")
-install.packages("lifecycle")
-install.packages("logger")
-install.packages("openxlsx")
-install.packages("patchwork")
-install.packages("purrr")
-install.packages("R6")
-install.packages("readr")
-install.packages("rlang")
-install.packages("showtext")
-install.packages("stringi")
-install.packages("stringr")
-install.packages("tidyr")
-install.packages("xml2")
-```
-
-#### Install non-CRAN dependencies
-
-Pre-built packages are available as binary files (*.zip for Windows,*
-.tar.gz for Linux) Download the OSPSuite-R binary archive from the
-[releases
-page](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/releases).
-Download and install these additional non-CRAN dependencies:
-
-- [`{rSharp}`](https://github.com/Open-Systems-Pharmacology/rSharp/releases/latest)
-- [`{ospuite.utils}`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/releases/latest)
-- [`{tlf}`](https://github.com/Open-Systems-Pharmacology/TLF-Library/releases/latest)
-
-In [RStudio IDE](https://www.rstudio.com/), use the *Install* option in
-the *Packages* pane and select *Install from -\> Package Archive File*
-to install packages from binary files.
-
-**Note**: CRAN dependencies for
-[rSharp](https://github.com/Open-Systems-Pharmacology/rsharp/),
-`{ospuite.utils}`, and
-[tlf](https://github.com/open-systems-pharmacology/tlf-library) were
-installed in the previous step.
-
-``` r
-
-# Install rSharp from local file 
-# Replace pathTo_rSharp.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
-install.packages(pathTo_rSharp.zip, repos = NULL)
-
-# Install ospsuite.utils from local file
-# Replace pathTo_ospsuite.utils.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
-install.packages(pathTo_ospsuite.utils.zip, repos = NULL)
-
-# Install tlf from local file
-# Replace pathTo_tlf.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
-install.packages(pathTo_tlf.zip, repos = NULL)
-
-# Install ospsuite from local file
-# Replace pathToOSPSuite.zip with the actual path to the .zip file (or to the .tar.gz file on Linux)
-install.packages(pathTo_OSPSuite.zip, repos = NULL)
+pak::pak("Open-Systems-Pharmacology/OSPSuite-R")
 ```
 
 # Known issues
@@ -193,7 +122,7 @@ install.packages(pathTo_OSPSuite.zip, repos = NULL)
   `Settings > Language > Administrative language settings > Current language for non-Unicode programs`
   to `English (United States)` and reboot.
 
-- On Linux, set the environment variable `LC_ALL` to `~/.bashrc` before
+- On Linux, set the environment variable `LC_ALL` in `~/.bashrc` before
   starting R:
 
   `export LC_ALL=en_US.UTF-8`
@@ -212,45 +141,42 @@ cannot be re-used.
 
 # Development
 
-## Development Setup
-
-When developing the
-[ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
-package, you need to prepare platform-specific library files before
-using `devtools::load_all()`. The package uses configure scripts during
-installation to rename platform-specific DLLs, but
-`devtools::load_all()` bypasses this process.
-
-**Run the development setup script:**
-
-``` r
-
-source("tools/setup_dev.R")
-setup_dev()
-```
-
-**When to run `setup_dev()`:** - After cloning the repository for the
-first time - After switching to a different branch - After pulling
-changes that might affect library files
-
-The script automatically detects your operating system and renames the
-appropriate DLL: - **Windows**: Renames
-`System.Data.SQLite.windows_linux.dll` → `System.Data.SQLite.dll` -
-**Linux**: Renames `System.Data.SQLite.windows_linux.dll` →
-`System.Data.SQLite.dll` - **macOS**: Renames
-`System.Data.SQLite.mac.dll` → `System.Data.SQLite.dll`
-
 ## Embedded binaries
 
 The [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
-package requires shared libraries to access PK-Sim functionality. To
-obtain the latest libraries (**.dll** on Windows or **.so** on Linux),
-run the `update_core_files.R` script included with this package.
+package requires shared libraries (binary files) to access PK-Sim and
+MoBi functionalities.
 
-Because
+**Note**: Because
 [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
 contains binary files, it is classified as a binary package and cannot
 be submitted to CRAN.
+
+### Updating embedded binaries
+
+The embedded binaries are built from NuGet packages specified in the
+DependencyManager project. To update the binaries to a new version:
+
+1.  Open `shared/DependencyManager/src/DependencyManager.csproj`.
+2.  Update the `Version` attribute in the `PackageReference` elements to
+    the desired version numbers.
+3.  Commit and push the changes to a branch.
+4.  Manually dispatch the **Build Libraries** workflow
+    (`.github/workflows/build-libraries.yaml`, via the Actions tab) on
+    that branch. The workflow:
+    - Builds the DependencyManager project, which downloads the
+      specified NuGet packages
+    - Extracts the required binary files and dependencies
+    - Copies them to the `inst/lib/` directory
+    - Commits the updated binaries to a new branch and opens a pull
+      request targeting the branch the workflow was dispatched on
+
+Alternatively, build the DependencyManager solution locally and commit
+the regenerated `inst/lib/` together with the `.csproj` change (see
+`AGENTS.md`).
+
+**Note:** The workflow is not triggered by pushes — it only runs when
+dispatched manually.
 
 ## Versioning
 
@@ -259,7 +185,7 @@ collaboration
 guide](https://dev.open-systems-pharmacology.org/r-development-resources/collaboration_guide#releasing-versions).
 
 For development versions, [this GitHub
-action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/main-workflow.yaml#L11-L17)
+action](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/.github/workflows/merge-to-main.yaml)
 automatically increments the `.9000` version suffix when pull requests
 are merged.
 

@@ -13,7 +13,7 @@ This function visualizes the residuals against time, observed, or predicted
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">12.4.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">13.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,7 +26,11 @@ This function visualizes the residuals against time, observed, or predicted
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Primary functions</h6></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with MoBi and PK-Sim projects</h6></li>
+    <li><a class="dropdown-item" href="../articles/mobi-projects.html">Working with MoBi projects</a></li>
+    <li><a class="dropdown-item" href="../articles/snapshots.html">Working with snapshots</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Working with simulations</h6></li>
     <li><a class="dropdown-item" href="../articles/load-get.html">Loading a simulation and accessing entities</a></li>
     <li><a class="dropdown-item" href="../articles/set-values.html">Changing parameter and molecule start values</a></li>
     <li><a class="dropdown-item" href="../articles/run-simulation.html">Running a simulation</a></li>
@@ -156,7 +160,7 @@ shapes (using the <code>name</code> column).</p></li>
 <dd><p>A <code>list</code> with arguments which are passed on to the call <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">ggplot2::geom_point</a></code></p></dd>
 
     <dt><code>geomErrorbarAttributes</code></dt>
-<dd><p>A <code>list</code> with arguments which are passed on to the call <code><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">ggplot2::geom_errorbar</a></code></p></dd>
+<dd><p>A <code>list</code> with arguments which are passed on to the call <code>geom_errorbar_osp</code></p></dd>
 
     <dt><code>geomComparisonLineAttributes</code></dt>
 <dd><p>A <code>list</code> of arguments passed to <code>ggplot2::hline</code> or <code>ggplot2::abline</code> to display comparison lines.</p></dd>
@@ -215,9 +219,9 @@ residuals as the difference between observed and predicted values.</p>
 <h3 id="residual-scales">Residual Scales<a class="anchor" aria-label="anchor" href="#residual-scales"></a></h3>
 
 
-<p>The <code>residualScale</code> parameter controls how residuals are displayed:</p><ul><li><p><code>linear</code>: Absolute residuals (Observed - Predicted). Values centered around
+<p>The <code>residualScale</code> parameter controls how residuals are displayed:</p><ul><li><p><code>linear</code>: Absolute residuals (Predicted - Observed). Values centered around
 zero indicate good model fit. Useful for normally distributed errors.</p></li>
-<li><p><code>log</code>: Log-transformed residuals, calculated as log(Observed / Predicted).
+<li><p><code>log</code>: Log-transformed residuals, calculated as log(Predicted / Observed).
 Values centered around zero indicate good fit. Preferred for log-normally
 distributed data or when errors are proportional to magnitude.</p></li>
 <li><p><code>ratio</code>: Ratio of observed to predicted (Observed / Predicted). Values
@@ -237,25 +241,28 @@ prediction error.</p></li>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># Generate a residuals vs observed plot for the provided data</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Generate a residuals vs observed plot for the provided data</span></span></span>
 <span class="r-in"><span><span class="fu">plotResidualsVsCovariate</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">myDataCombined</span>,</span></span>
+<span class="r-in"><span>  <span class="va">dataCombinedAciclovir</span>,</span></span>
 <span class="r-in"><span>  xUnit <span class="op">=</span> <span class="va">ospUnits</span><span class="op">$</span><span class="va">Time</span><span class="op">$</span><span class="va">h</span>,</span></span>
 <span class="r-in"><span>  yUnit <span class="op">=</span> <span class="va">ospUnits</span><span class="op">$</span><span class="va">`Concentration [mass]`</span><span class="op">$</span><span class="va">`µg/l`</span>,</span></span>
 <span class="r-in"><span>  xAxis <span class="op">=</span> <span class="st">"time"</span>,</span></span>
 <span class="r-in"><span>  residualScale <span class="op">=</span> <span class="st">'linear'</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plotResidualsVsCovariate-1.png" alt="" width="960" height="593"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate a residuals vs predicted plot</span></span></span>
-<span class="r-in"><span><span class="fu">plotResidualsVsCovariate</span><span class="op">(</span><span class="va">myDataCombined</span>, xAxis <span class="op">=</span> <span class="st">"predicted"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plotResidualsVsCovariate</span><span class="op">(</span><span class="va">dataCombinedAciclovir</span>, xAxis <span class="op">=</span> <span class="st">"predicted"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plotResidualsVsCovariate-2.png" alt="" width="960" height="593"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate a residuals vs time plot</span></span></span>
-<span class="r-in"><span><span class="fu">plotResidualsVsCovariate</span><span class="op">(</span><span class="va">myDataCombined</span>, xAxis <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plotResidualsVsCovariate</span><span class="op">(</span><span class="va">dataCombinedAciclovir</span>, xAxis <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plotResidualsVsCovariate-3.png" alt="" width="960" height="593"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Show individual dataset names in legend</span></span></span>
-<span class="r-in"><span><span class="fu">plotResidualsVsCovariate</span><span class="op">(</span><span class="va">myDataCombined</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"observed"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="fu">plotResidualsVsCovariate</span><span class="op">(</span><span class="va">dataCombinedAciclovir</span>, showLegendPerDataset <span class="op">=</span> <span class="st">"observed"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plotResidualsVsCovariate-4.png" alt="" width="960" height="593"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -263,11 +270,11 @@ prediction error.</p></li>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, Felix MIL.</p>
+  <p>Developed by <a href="https://www.open-systems-pharmacology.org/" class="external-link"><img src="https://avatars.githubusercontent.com/u/25098323?s=33" alt="Open System Pharmacology Logo">Open Systems Pharmacology</a>, <a href="https://github.com/msevestre" class="external-link">Michael Sevestre</a>, <a href="https://github.com/PavelBal" class="external-link">Pavel Balazki</a>, <a href="https://github.com/Yuri05" class="external-link">Juri Solodenko</a>, <a href="https://indrajeetpatil.github.io/" class="external-link">Indrajeet Patil</a>, <a href="https://github.com/Felixmil" class="external-link">Felix MIL</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

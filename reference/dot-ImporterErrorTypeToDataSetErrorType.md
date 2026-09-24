@@ -8,7 +8,3 @@ DataSet to the values supported in the importer configuration
 ``` r
 .ImporterErrorTypeToDataSetErrorType
 ```
-
-## Format
-
-An object of class `list` of length 2.

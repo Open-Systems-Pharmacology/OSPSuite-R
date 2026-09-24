@@ -157,11 +157,11 @@ Other plot functions based on ospsuite.plots:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 # Generate a histogram of residuals with default settings
-plotResidualsAsHistogram(myDataCombined)
+plotResidualsAsHistogram(dataCombinedAciclovir)
+
 
 # Generate a histogram with linear scale
-plotResidualsAsHistogram(myDataCombined, residualScale = "linear")
-} # }
+plotResidualsAsHistogram(dataCombinedAciclovir, residualScale = "linear")
+
 ```

@@ -7,7 +7,3 @@ Default species defined in PK-Sim
 ``` r
 Species
 ```
-
-## Format
-
-An object of class `list` of length 8.

@@ -39,7 +39,7 @@ runSimulationsFromSnapshot(
 
 - exportPKML:
 
-  logical, whether to export the results as pkml (default = FALSE)
+  logical, whether to export the simulations as pkml (default = FALSE)
 
 - exportJSON:
 
@@ -48,7 +48,7 @@ runSimulationsFromSnapshot(
 
 - exportXML:
 
-  logical, whether to export the results as xml (default = FALSE)
+  logical, whether to export the simulations as xml (default = FALSE)
 
 ## Examples
 

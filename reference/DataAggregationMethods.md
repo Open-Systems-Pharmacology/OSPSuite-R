@@ -7,7 +7,3 @@ Names of aggregation available for plotPopulationTimeProfile()
 ``` r
 DataAggregationMethods
 ```
-
-## Format
-
-An object of class `list` of length 3.

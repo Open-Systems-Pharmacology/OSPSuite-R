@@ -76,6 +76,24 @@ myDataCombined$addDataSets(
 )
 ```
 
+The package exports `dataCombinedAciclovir` — a `DataCombined` object
+equivalent to the example built above — which can be used directly to
+illustrate and test how `DataCombined` objects work:
+
+``` r
+
+dataCombinedAciclovir
+#> <DataCombined>
+#> 
+#> ── Datasets and groupings: ─────────────────────────────────────────────────────
+#> 
+#> # A tibble: 2 × 3
+#>   name                                                            group dataType
+#>   <chr>                                                           <chr> <chr>   
+#> 1 Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Ve… Acic… simulat…
+#> 2 Vergin 1995.Iv                                                  Acic… observed
+```
+
 Every data, be it simulated results or from `DataSet`, must have a
 unique name within `DataCombined`. If not specified by user, the path of
 simulated results or the `$name` property of the `DataSet` are used as
@@ -134,7 +152,7 @@ myDataCombined$addDataSets(
 plotIndividualTimeProfile(dataCombined = myDataCombined)
 ```
 
-![](data-combined_files/figure-html/unnamed-chunk-6-1.png)
+![](data-combined_files/figure-html/unnamed-chunk-7-1.png)
 
 If you do not specify `groups` when you add datasets, and wish to update
 groupings later, you can use the `$setGroups()` method. All data within
@@ -151,7 +169,7 @@ myDataCombined$setGroups(
 plotIndividualTimeProfile(dataCombined = myDataCombined)
 ```
 
-![](data-combined_files/figure-html/unnamed-chunk-7-1.png)
+![](data-combined_files/figure-html/unnamed-chunk-8-1.png)
 
 At any point, you can check the current names and groupings with the
 following active field:
@@ -217,7 +235,7 @@ myDataCombinedTranformations$addDataSets(
 plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
 ```
 
-![](data-combined_files/figure-html/unnamed-chunk-10-1.png)
+![](data-combined_files/figure-html/unnamed-chunk-11-1.png)
 
 However, we might want to use this data set with a simulation where
 aciclovir is administered 24 hours after simulation begin. To be able to
@@ -239,7 +257,7 @@ myDataCombinedTranformations$setDataTransformations(
 plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
 ```
 
-![](data-combined_files/figure-html/unnamed-chunk-11-1.png)
+![](data-combined_files/figure-html/unnamed-chunk-12-1.png)
 
 In the next step, we want to *normalize* observed concentrations to a
 dose. We can easily achieve this with the scale factor. In the next
@@ -256,7 +274,7 @@ myDataCombinedTranformations$setDataTransformations(
 plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
 ```
 
-![](data-combined_files/figure-html/unnamed-chunk-12-1.png) Finally,
+![](data-combined_files/figure-html/unnamed-chunk-13-1.png) Finally,
 offsetting the observation values might be useful when working with
 measurements of endogenous substrates, such as the hormone glucagon, and
 want to correct for the individual specific baseline levels of the
@@ -276,7 +294,7 @@ simulated datasets and combines them.
 myDataCombined$toDataFrame()
 #> # A tibble: 504 × 27
 #>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit
-#>           <int>   <dbl> <chr>            <dbl> <chr>      <chr> <chr>      <chr>
+#>           <int>   <dbl> <fct>            <dbl> <chr>      <chr> <chr>      <chr>
 #>  1            0       0 Aciclovir Pla…    0    Time       min   Concentra… µmol…
 #>  2            0       1 Aciclovir Pla…    3.25 Time       min   Concentra… µmol…
 #>  3            0       2 Aciclovir Pla…    9.10 Time       min   Concentra… µmol…
@@ -292,7 +310,7 @@ myDataCombined$toDataFrame()
 #> #   yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>, Source <chr>, File <chr>,
 #> #   Sheet <chr>, Molecule <chr>, Species <chr>, Organ <chr>, Compartment <chr>,
 #> #   `Study Id` <chr>, Gender <chr>, Dose <chr>, Route <chr>,
-#> #   `Patient Id` <chr>, group <chr>
+#> #   `Patient Id` <chr>, group <fct>
 ```
 
 This function returns a [tibble data
@@ -314,7 +332,7 @@ myDataCombined$toDataFrame()
 
     #> # A tibble: 504 × 27
     #>    IndividualId xValues name             yValues xDimension xUnit
-    #>           <int>   <dbl> <chr>              <dbl> <chr>      <chr>
+    #>           <int>   <dbl> <fct>              <dbl> <chr>      <chr>
     #>  1            0       0 Aciclovir Plasma    0    Time       min  
     #>  2            0       1 Aciclovir Plasma    3.25 Time       min  
     #>  3            0       2 Aciclovir Plasma    9.10 Time       min  
@@ -350,7 +368,7 @@ myDataCombined$toDataFrame()
     #>  9 NA            NA NA     NA    NA    NA       NA      NA    NA         
     #> 10 NA            NA NA     NA    NA    NA       NA      NA    NA         
     #>    `Study Id` Gender Dose  Route `Patient Id` group        
-    #>    <chr>      <chr>  <chr> <chr> <chr>        <chr>        
+    #>    <chr>      <chr>  <chr> <chr> <chr>        <fct>        
     #>  1 NA         NA     NA    NA    NA           Aciclovir PVB
     #>  2 NA         NA     NA    NA    NA           Aciclovir PVB
     #>  3 NA         NA     NA    NA    NA           Aciclovir PVB
@@ -382,7 +400,7 @@ convertUnits(
 )
 #> # A tibble: 504 × 27
 #>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit
-#>           <int>   <dbl> <chr>            <dbl> <chr>      <chr> <chr>      <chr>
+#>           <int>   <dbl> <fct>            <dbl> <chr>      <chr> <chr>      <chr>
 #>  1            0       0 Aciclovir Pla…      0  Time       s     Concentra… µg/l 
 #>  2            0      60 Aciclovir Pla…    733. Time       s     Concentra… µg/l 
 #>  3            0     120 Aciclovir Pla…   2050. Time       s     Concentra… µg/l 
@@ -398,7 +416,7 @@ convertUnits(
 #> #   yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>, Source <chr>, File <chr>,
 #> #   Sheet <chr>, Molecule <chr>, Species <chr>, Organ <chr>, Compartment <chr>,
 #> #   `Study Id` <chr>, Gender <chr>, Dose <chr>, Route <chr>,
-#> #   `Patient Id` <chr>, group <chr>
+#> #   `Patient Id` <chr>, group <fct>
 ```
 
 ## Further functionalities

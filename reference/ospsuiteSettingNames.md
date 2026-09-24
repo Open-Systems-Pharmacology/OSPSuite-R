@@ -8,7 +8,3 @@ Names of the settings stored in ospsuiteEnv. Can be used with
 ``` r
 ospsuiteSettingNames
 ```
-
-## Format
-
-An object of class `list` of length 11.

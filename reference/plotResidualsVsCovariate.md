@@ -118,7 +118,7 @@ plotResidualsVsCovariate(
   `geomErrorbarAttributes`
 
   :   A `list` with arguments which are passed on to the call
-      [`ggplot2::geom_errorbar`](https://ggplot2.tidyverse.org/reference/geom_linerange.html)
+      `geom_errorbar_osp`
 
   `geomComparisonLineAttributes`
 
@@ -197,12 +197,12 @@ and predicted values.
 
 The `residualScale` parameter controls how residuals are displayed:
 
-- `linear`: Absolute residuals (Observed - Predicted). Values centered
+- `linear`: Absolute residuals (Predicted - Observed). Values centered
   around zero indicate good model fit. Useful for normally distributed
   errors.
 
-- `log`: Log-transformed residuals, calculated as log(Observed /
-  Predicted). Values centered around zero indicate good fit. Preferred
+- `log`: Log-transformed residuals, calculated as log(Predicted /
+  Observed). Values centered around zero indicate good fit. Preferred
   for log-normally distributed data or when errors are proportional to
   magnitude.
 
@@ -221,23 +221,25 @@ Other plot functions based on ospsuite.plots:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 # Generate a residuals vs observed plot for the provided data
 plotResidualsVsCovariate(
-  myDataCombined,
+  dataCombinedAciclovir,
   xUnit = ospUnits$Time$h,
   yUnit = ospUnits$`Concentration [mass]`$`µg/l`,
   xAxis = "time",
   residualScale = 'linear'
 )
 
+
 # Generate a residuals vs predicted plot
-plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
+plotResidualsVsCovariate(dataCombinedAciclovir, xAxis = "predicted")
+
 
 # Generate a residuals vs time plot
-plotResidualsVsCovariate(myDataCombined, xAxis = "time")
+plotResidualsVsCovariate(dataCombinedAciclovir, xAxis = "time")
+
 
 # Show individual dataset names in legend
-plotResidualsVsCovariate(myDataCombined, showLegendPerDataset = "observed")
-} # }
+plotResidualsVsCovariate(dataCombinedAciclovir, showLegendPerDataset = "observed")
+
 ```

@@ -38,7 +38,6 @@ explanations follow in subsequent sections.
 
 # Load the ospsuite package
 library(ospsuite)
-ospsuite.plots::setDefaults()
 options(ospsuite.plots.watermarkEnabled = FALSE)
 
 # Load the built-in example simulation
@@ -105,7 +104,8 @@ getAllParametersMatching("**|Dose*", sim)
 #> [[1]]
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
+#>   • Path: Events|IV 250mg 10min|No
+#>   formulation|Application_1|ProtocolSchemaItem|Dose
 #>   • Value: 2.50e-04 [kg]
 #> 
 #> ── Formula ──
@@ -115,8 +115,8 @@ getAllParametersMatching("**|Dose*", sim)
 #> [[2]]
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Events|IV 250mg
-#>   10min|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea
+#>   • Path: Events|IV 250mg 10min|No
+#>   formulation|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea
 #>   • Value: 0.00e+00 [kg/dm²]
 #> 
 #> ── Formula ──
@@ -126,8 +126,8 @@ getAllParametersMatching("**|Dose*", sim)
 #> [[3]]
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Events|IV 250mg
-#>   10min|Application_1|ProtocolSchemaItem|DosePerBodyWeight
+#>   • Path: Events|IV 250mg 10min|No
+#>   formulation|Application_1|ProtocolSchemaItem|DosePerBodyWeight
 #>   • Value: 0.00e+00 [kg/kg]
 #> 
 #> ── Formula ──
@@ -136,9 +136,9 @@ getAllParametersMatching("**|Dose*", sim)
 
 # Or search for specific terms
 grep("Dose", getAllParameterPathsIn(container = sim), value = TRUE)
-#> [1] "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose"                  
-#> [2] "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea"
-#> [3] "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|DosePerBodyWeight"
+#> [1] "Events|IV 250mg 10min|No formulation|Application_1|ProtocolSchemaItem|Dose"                  
+#> [2] "Events|IV 250mg 10min|No formulation|Application_1|ProtocolSchemaItem|DosePerBodySurfaceArea"
+#> [3] "Events|IV 250mg 10min|No formulation|Application_1|ProtocolSchemaItem|DosePerBodyWeight"
 ```
 
 **Note:** Parameter paths in ospsuite match those displayed in PK-Sim or
@@ -154,13 +154,14 @@ Retrieve and modify parameter values:
 
 # Get a specific parameter
 dose <- getParameter(
-  path = "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
+  path = "Events|IV 250mg 10min|No formulation|Application_1|ProtocolSchemaItem|Dose",
   sim
 )
 print(dose)
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
+#>   • Path: Events|IV 250mg 10min|No
+#>   formulation|Application_1|ProtocolSchemaItem|Dose
 #>   • Value: 2.50e-04 [kg]
 #> 
 #> ── Formula ──
@@ -172,7 +173,8 @@ setParameterValues(dose, 0.004) # New dose: 4 mg/kg
 print(dose)
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
+#>   • Path: Events|IV 250mg 10min|No
+#>   formulation|Application_1|ProtocolSchemaItem|Dose
 #>   • Value: 4.00e-03 [kg]
 #> 
 #> ── Formula ──
@@ -184,7 +186,8 @@ scaleParameterValues(dose, factor = 2) # Double the dose
 print(dose)
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
+#>   • Path: Events|IV 250mg 10min|No
+#>   formulation|Application_1|ProtocolSchemaItem|Dose
 #>   • Value: 8.00e-03 [kg]
 #> 
 #> ── Formula ──
@@ -196,7 +199,8 @@ dose$reset()
 print(dose)
 #> <Parameter>
 #>   • Quantity Type: Parameter
-#>   • Path: Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose
+#>   • Path: Events|IV 250mg 10min|No
+#>   formulation|Application_1|ProtocolSchemaItem|Dose
 #>   • Value: 2.50e-04 [kg]
 #> 
 #> ── Formula ──
@@ -209,7 +213,6 @@ print(dose)
 Adjust simulation outputs and solver settings:
 
 ``` r
-
 
 # Originally, the simulation outputs plasma concentrations
 sim$outputSelections
@@ -239,7 +242,7 @@ addOutputInterval(
   startTime = 1440, # 1 day
   endTime = 3000, # ~2 days
   resolution = 10, # Every 10 minutes
-  intervalName = "highRes"
+  intervalName = "HighRes"
 )
 
 # Check current output schema
@@ -264,7 +267,7 @@ print(sim$outputSchema)
 #>   • End time: 1440.00 [min]
 #>   • Resolution: 0.07 [pts/min]
 #> <Interval>
-#>   • Name: highRes
+#>   • Name: HighRes
 #>   • Start time: 1440.00 [min]
 #>   • End time: 3000.00 [min]
 #>   • Resolution: 10.00 [pts/min]
@@ -317,14 +320,14 @@ df_results <- myDataCombined$toDataFrame()
 head(df_results)
 #> # A tibble: 6 × 12
 #>   IndividualId xValues name  yValues xDimension xUnit yDimension yUnit molWeight
-#>          <int>   <dbl> <chr>   <dbl> <chr>      <chr> <chr>      <chr>     <dbl>
+#>          <int>   <dbl> <fct>   <dbl> <chr>      <chr> <chr>      <chr>     <dbl>
 #> 1            0       0 Orga…    0    Time       min   Concentra… µmol…      225.
 #> 2            0       1 Orga…    3.25 Time       min   Concentra… µmol…      225.
 #> 3            0       2 Orga…    9.10 Time       min   Concentra… µmol…      225.
 #> 4            0       3 Orga…   15.0  Time       min   Concentra… µmol…      225.
 #> 5            0       4 Orga…   20.7  Time       min   Concentra… µmol…      225.
 #> 6            0       5 Orga…   26.2  Time       min   Concentra… µmol…      225.
-#> # ℹ 3 more variables: dataType <chr>, yErrorValues <dbl>, group <chr>
+#> # ℹ 3 more variables: dataType <chr>, yErrorValues <dbl>, group <fct>
 
 # Create publication-ready plots
 plotTimeProfile(myDataCombined)
@@ -371,7 +374,7 @@ sim <- loadSimulation(simFilePath)
 
 # 2. Modify parameters (e.g., change dose)
 dose <- getParameter(
-  path = "Events|IV 250mg 10min|Application_1|ProtocolSchemaItem|Dose",
+  path = "Events|IV 250mg 10min|No formulation|Application_1|ProtocolSchemaItem|Dose",
   sim
 )
 setParameterValues(dose, 0.006) # 6 mg/kg dose

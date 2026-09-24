@@ -38,7 +38,8 @@ loadDataSetsFromExcel(
 
 - sheets:
 
-  Character vector of sheet names to load, or `NULL` (default). If
+  Character vector of sheet names to load, or `NULL` (default). An empty
+  character vector (`character(0)`) is treated the same as `NULL`. If
   `NULL` and `importAllSheets` is `FALSE`, the sheets defined in the
   `importerConfiguration` will be used. If the configuration has no
   sheets defined and `sheets` is `NULL` and `importAllSheets` is

@@ -133,11 +133,11 @@ Other plot functions based on ospsuite.plots:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 # Generate a Q-Q plot with default settings
-plotQuantileQuantilePlot(myDataCombined)
+plotQuantileQuantilePlot(dataCombinedAciclovir)
+
 
 # Generate a Q-Q plot with linear scale
-plotQuantileQuantilePlot(myDataCombined, residualScale = "linear")
-} # }
+plotQuantileQuantilePlot(dataCombinedAciclovir, residualScale = "linear")
+
 ```

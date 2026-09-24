@@ -33,10 +33,10 @@ repository](https://github.com/Open-Systems-Pharmacology/OSPSuite.Plots)
 
 ## Initial Setup
 
-Before creating plots with `ospsuite.plots`, it’s important to
-initialize the plotting environment properly. When `ospsuite` is loaded,
-[`ospsuite.plots::setDefaults()`](https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/setDefaults.html)
-is called automatically. You must also configure the watermark option:
+The plotting functions style each plot individually, so no global setup
+is required and loading `ospsuite` leaves your `ggplot2` theme and geom
+defaults untouched. The only optional setting is the watermark, which
+must be configured before creating plots:
 
 ``` r
 
@@ -44,22 +44,6 @@ library(ospsuite)
 
 # Enable or disable watermark for plots
 options(ospsuite.plots.watermarkEnabled = TRUE)
-```
-
-The `setDefaults()` function initializes various plotting defaults that
-ensure consistent appearance across all plots, and is called
-automatically on package load. The watermark option controls whether a
-watermark is added to your plots and must be set before creating plots.
-
-The settings that were in place before `setDefaults()` was called are
-stored in `ospsuiteEnv$ggplotDefaults`. You can restore them at any time
-using
-[`getOSPSuiteSetting()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/getOSPSuiteSetting.md),
-which provides access to any named setting stored in `ospsuiteEnv`:
-
-``` r
-
-ospsuite.plots::resetDefaults(getOSPSuiteSetting("ggplotDefaults"))
 ```
 
 Refer to the
@@ -453,9 +437,9 @@ The `residualScale` parameter controls how residuals are calculated and
 displayed (this same parameter is used in `plotResidualsAsHistogram` and
 `plotQuantileQuantilePlot`):
 
-- `"log"` (default) - Logarithmic residuals: `log(observed/predicted)`
-- `"linear"` - Linear residuals: `observed - predicted`
-- `"ratio"` - Ratio: `observed/predicted`
+- `"log"` (default) - Logarithmic residuals: `log(predicted / observed)`
+- `"linear"` - Linear residuals: `predicted - observed`
+- `"ratio"` - Ratio: `observed / predicted`
 
 ``` r
 
@@ -668,6 +652,52 @@ p <- p +
 
 print(p)
 ```
+
+### Legend title
+
+By default these plotting functions blank the legend title, since the
+grouping is usually self-explanatory. To show a legend title again, add
+a `theme(legend.title = ...)` layer:
+
+``` r
+
+# Re-enable the (default ggplot2) legend title
+p <- plotTimeProfile(myDataCombined) +
+  ggplot2::theme(legend.title = ggplot2::element_text())
+
+print(p)
+```
+
+### Legend position
+
+By default the legend is placed to the right of the panel (the `ggplot2`
+default). Adjust its location to suit your needs with a
+[`theme()`](https://ggplot2.tidyverse.org/reference/theme.html) layer:
+
+``` r
+
+library(ggplot2)
+
+p <- plotTimeProfile(myDataCombined)
+
+# Move the legend below the plot
+p + theme(legend.position = "bottom")
+
+# Remove the legend entirely
+p + theme(legend.position = "none")
+
+# Place the legend inside the panel, anchored to its top-right corner
+p + theme(
+  legend.position = "inside",
+  legend.position.inside = c(0.95, 0.95),
+  legend.justification.inside = c("right", "top")
+)
+```
+
+The `"inside"` placement together with `legend.position.inside` /
+`legend.justification.inside` requires `ggplot2 >= 3.5`. In older
+versions use the numeric form `legend.position = c(0.95, 0.95)` and
+`legend.justification = c("right", "top")` instead.
 
 ## Saving Plots
 

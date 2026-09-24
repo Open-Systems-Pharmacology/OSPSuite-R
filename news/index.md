@@ -1,5 +1,243 @@
 # Changelog
 
+## ospsuite 13.0.1
+
+### Breaking changes
+
+- **.NET 10 runtime is now required** (previously .NET 8). The bundled
+  assemblies in `inst/lib` target `net10.0`; on older runtimes the
+  package fails to load with
+  `System.Reflection.ReflectionTypeLoadException`. See the rSharp
+  prerequisites links in the README for installation instructions on
+  Windows and Linux.
+- **rSharp 2.0.0 or later is now required.** Update it before installing
+  ospsuite, for example with
+  `pak::pak("Open-Systems-Pharmacology/rSharp")`.
+- [`createIndividual()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/createIndividual.md)
+  and
+  [`createPopulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/createPopulation.md)
+  will not work with models developed prior to version 13. The reason is
+  that in v13, the absorption model has been refined, adding new
+  parameters. To be able to use creation of individuals or populations
+  with earlier models, the user has to re-create the models from
+  snapshot with the latest PK-Sim version. If no original PK-Sim project
+  or snapshot are available, the user should use the latest version 12
+  of the R package.
+- `SimulationRunOptions$checkForNegativeValues` field has been removed,
+  as well as the `checkForNegativeValues` argument of
+  `SimulationRunOptions$new()`. The property is now on `SolverSettings`
+  and accessible via `simulation$solver$checkForNegativeValues`. Passing
+  `checkForNegativeValues` to `SimulationRunOptions$new()` now fails
+  with an `unused argument` error
+  ([\#2010](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2010)).
+
+### Major changes
+
+- Added MoBi project support: load `.mbp3` projects, query modules,
+  individuals, expression profiles, and simulations, and assemble
+  simulations from project building blocks. New classes `MoBiProject`,
+  `MoBiModule`, `SimulationConfiguration`, `MoleculesBuildingBlock`, and
+  `IndividualBuildingBlock`, plus helpers for creating and saving
+  Initial Conditions, Parameter Values, Individual, and Expression
+  Profile building blocks. The main entry points are
+  [`loadMoBiProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/loadMoBiProject.md)
+  to load a project,
+  [`loadModuleFromPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/loadModuleFromPKML.md)
+  and
+  [`loadBuildingBlockFromPKML()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/loadBuildingBlockFromPKML.md)
+  to load modules and building blocks from `.pkml` files, and
+  [`createSimulationConfiguration()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/createSimulationConfiguration.md)
+  followed by
+  [`createSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/createSimulations.md)
+  to assemble simulations from building blocks. New enums
+  `BuildingBlockTypes`, `MoleculeType`, `IndividualDiseaseStates`,
+  `MergeBehavior`, `PartitionCoefficientMethods`,
+  `CellularPermeabilityMethods`, `ExpressionProfileCategories`, and
+  `CalculationMethodCategories` support working with these objects. See
+  [`vignette("mobi-projects")`](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/mobi-projects.md)
+  for an end-to-end walkthrough.
+
+### Minor improvements and bug fixes
+
+- A `Simulation` object now has a `population` field: assign a
+  `Population` with `simulation$population <- myPopulation` to make it a
+  population simulation, and read it back with `simulation$population`.
+  Assigning `NULL` switches the simulation back to an individual
+  simulation. The read-only `simulation$isPopulation` field reports
+  whether a simulation will be run for a population. This is an
+  alternative to passing `population` to
+  [`runSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/runSimulations.md)
+  (which continues to work unchanged) and makes it possible to run
+  several population simulations in a single
+  [`runSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/runSimulations.md)
+  call. See
+  [`vignette("create-run-population")`](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/create-run-population.md)
+  ([\#1987](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1987)).
+- Added
+  [`createSimulations()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/createSimulations.md)
+  to create one or several simulations from a named list of
+  `SimulationConfiguration` objects in a single call, which builds them
+  in parallel. A configuration that cannot be created is reported as a
+  warning and its entry in the returned list is `NULL`; pass
+  `stopIfFails = TRUE` to raise an error instead
+  ([\#2024](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2024)).
+- Added
+  [`loadSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/loadSimulationsFromSnapshot.md)
+  to load simulations stored in a PK-Sim snapshot file as `Simulation`
+  objects, optionally filtering by simulation name
+  ([\#1929](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1929)).
+  Requesting a name that is not in the snapshot raises an error; pass
+  `ignoreIfNotFound = TRUE` to return `NULL` for missing names instead.
+  See
+  [`vignette("snapshots")`](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/snapshots.md)
+  for an overview of the snapshot helpers. Note: MoBi snapshots are not
+  yet supported.
+- New functions
+  [`projectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/projectToSnapshot.md)
+  and
+  [`snapshotToProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/snapshotToProject.md)
+  convert between OSP project files and snapshots.
+  [`projectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/projectToSnapshot.md)
+  takes PK-Sim (`.pksim5`) and MoBi (`.mbp3`) project files and writes
+  snapshot files (`.json`);
+  [`snapshotToProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/snapshotToProject.md)
+  takes PK-Sim and MoBi snapshot files (`.json`) and writes the matching
+  project file (`.pksim5` or `.mbp3`). The application is detected from
+  the file extension when converting a project and from the snapshot
+  itself when converting a snapshot; the `application` argument
+  overrides the detection, and a single call may mix files from both
+  applications. Inputs that would be converted to the same output file,
+  such as `model.pksim5` and `model.mbp3`, are rejected, as are inputs
+  that share a file name, such as `snapshots/a/model.json` and
+  `snapshots/b/model.json`
+  ([\#1973](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1973),
+  [\#1974](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1974)).
+- [`runSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/runSimulationsFromSnapshot.md)
+  now raises an error when two input files share a name, for example
+  `snapshots/a/model.json` and `snapshots/b/model.json`. All inputs are
+  gathered into a single folder first, so previously the second file
+  replaced the first and was silently processed in its place.
+- [`runSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/runSimulationsFromSnapshot.md)
+  now validates the `exportJSON` argument like the other export flags.
+  Previously a non-logical value (e.g. `exportJSON = "TRUE"`) was
+  silently treated as `FALSE` and no JSON was exported.
+- Simulations returned by
+  [`loadSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/loadSimulationsFromSnapshot.md)
+  now carry their individual and module snapshots, so
+  [`saveSimulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/saveSimulation.md)
+  writes a `.pkml` that can be converted back into a MoBi module.
+  Previously these snapshots were empty because only PK-Sim’s desktop
+  export filled them
+  ([\#2029](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2029)).
+
+## ospsuite 12.4.5
+
+### Minor improvements and bug fixes
+
+- [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
+  12.4.x now requires
+  [rSharp](https://github.com/Open-Systems-Pharmacology/rsharp/) 1.2.3
+  or older, which runs on .NET 8. Newer
+  [rSharp](https://github.com/Open-Systems-Pharmacology/rsharp/)
+  versions use .NET 10, with which
+  [`loadSimulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/loadSimulation.md)
+  and the other functions that read or write observed data in `.pkml`
+  files fail. If
+  [`library(ospsuite)`](https://github.com/open-systems-pharmacology/ospsuite-r)
+  reports that a newer
+  [rSharp](https://github.com/Open-Systems-Pharmacology/rsharp/) is
+  installed, run `pak::pak("Open-Systems-Pharmacology/rSharp@v1.2.3")`
+  or upgrade to
+  [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
+  13.
+
+- `DataCombined$toDataFrame()` now returns the `name` and `group`
+  columns as factors whose levels follow the order in which datasets
+  (and groups) were added. As a result, plots built from `DataCombined`
+  objects
+  ([`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotTimeProfile.md),
+  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotPredictedVsObserved.md),
+  [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsCovariate.md),
+  etc.) now display legend entries in the order `DataSet` and
+  `SimulationResults` objects were added, rather than in alphabetical
+  order. This also keeps `name`- and `group`-based legends consistent in
+  observed-vs-predicted plots, where the two variables may otherwise
+  diverge
+  ([\#1241](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1241)).
+
+## ospsuite 12.4.4
+
+### Minor improvements and bug fixes
+
+- [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsCovariate.md),
+  [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsAsHistogram.md),
+  and
+  [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotQuantileQuantilePlot.md)
+  now include the data unit in the y-axis label for
+  `residualScale = "linear"` (e.g. `"residuals [µmol/l]"`). For `"log"`
+  and `"ratio"` scales the residuals are dimensionless and no unit is
+  shown. An empty-string unit (dimensionless data such as fractions) no
+  longer produces empty brackets `[]` in the label.
+
+- `ospsuite` now installs and loads even when its native libraries or
+  the .NET runtime cannot be initialised (for example on build machines
+  that lack a compatible `libxml2` or the .NET runtime), instead of
+  failing at load time. The reason is reported when the package is
+  attached and raised with an actionable message on the first call into
+  the .NET API. Vignette code that requires the runtime is only executed
+  when it is available. Together this allows the package to be built,
+  checked, and resolved as a dependency in environments without a
+  working runtime.
+
+- [`library(ospsuite)`](https://github.com/open-systems-pharmacology/ospsuite-r)
+  no longer changes the global `ggplot2` theme and geom defaults: the
+  [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)-based
+  plotting functions
+  ([`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotTimeProfile.md),
+  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotPredictedVsObserved.md),
+  [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsVsCovariate.md),
+  [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotResidualsAsHistogram.md),
+  [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotQuantileQuantilePlot.md))
+  now style each plot individually, and the styling of unrelated plots
+  in the session is left untouched. As a consequence, the appearance of
+  the deprecated
+  [tlf](https://github.com/open-systems-pharmacology/tlf-library)-based
+  plotting functions may change slightly, since they no longer inherit
+  the global theme
+  ([\#1968](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1968)).
+
+- Added
+  [`isSupportedUnit()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/isSupportedUnit.md)
+  and
+  [`validateIsNamedList()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/validateIsNamedList.md)
+  helper functions to the exported API.
+
+- Added `dataCombinedAciclovir`, a pre-built `DataCombined` object
+  combining simulated and observed aciclovir data, exported for use in
+  examples, vignettes, and tests.
+
+- [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/loadDataSetsFromExcel.md)
+  now treats an empty `sheets` vector (`character(0)`) the same as
+  `sheets = NULL`, falling back to the configuration/all-sheets logic
+  instead of overriding with no sheets.
+
+- [`plotIndividualTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotIndividualTimeProfile.md)
+  and
+  [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotPopulationTimeProfile.md)
+  now produce a stable legend entry order when
+  `showLegendPerDataset = TRUE`; previously the order of the
+  dataset-name legend entries could vary between sessions.
+
+- [`convertSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/convertSnapshot.md)
+  is soft-deprecated in favor of two dedicated functions:
+  [`snapshotToProject()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/snapshotToProject.md)
+  (snapshot `.json` -\> project) and
+  [`projectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/projectToSnapshot.md)
+  (project -\> snapshot `.json`).
+  [`convertSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/convertSnapshot.md)
+  still works but issues a deprecation warning and will be removed in a
+  future release.
+
 ## ospsuite 12.4.3
 
 ### Major changes
@@ -201,6 +439,14 @@
 
 - Added support for macOS (both Intel and Apple Silicon architectures).
   ([\#1621](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1621))
+
+### Deprecations
+
+- `checkForNegativeValues` parameter in `SimulationRunOptions$new()` is
+  deprecated. Use `sim$solver$checkForNegativeValues` instead. The
+  parameter is still accepted but will issue a deprecation warning. The
+  property has moved from `SimulationRunOptions` to `SolverSettings` to
+  align with .NET binaries changes.
 
 ### Minor improvements and bug fixes
 
