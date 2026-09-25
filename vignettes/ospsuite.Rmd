@@ -14,7 +14,6 @@ knitr::opts_chunk$set(
   eval = .ospRuntimeAvailable,
   collapse = TRUE,
   comment = "#>",
-  fig.showtext = TRUE,
   message = FALSE,
   warning = FALSE
 )
