@@ -159,11 +159,11 @@ for the specific simulation
 # Get the id of the second simulation
 id <- sim2$id
 print(id)
-#> [1] "y1ZMFmgS4Eqv5gSsO1iLKg"
+#> [1] "P0SBENM7HU2MAz1M-U75GQ"
 # get the corresponding result
 sim2Results <- simulationResults[[id]]
 print(sim2Results$simulation$id)
-#> [1] "y1ZMFmgS4Eqv5gSsO1iLKg"
+#> [1] "P0SBENM7HU2MAz1M-U75GQ"
 ```
 
 ## Adding new outputs
@@ -260,7 +260,7 @@ runSimulations(simulations = sim)
 #> Warning in .getConcurrentSimulationRunnerResults(results = results, resultsIdSimulationIdMap = resultsIdSimulationIdMap, : One or more errors occurred. (Time points output schema is empty)
 #> -----------------------------------------------------
 #> Time points output schema is empty
-#> $aBXJE3AnW0iSZwtzd8m50A
+#> $`EsZoDoCkn0-6-rbvBlMUnQ`
 #> NULL
 
 # Add an interval
