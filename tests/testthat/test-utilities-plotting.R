@@ -25,7 +25,7 @@ test_that("It returns `NULL` when data frame is empty", {
 
 test_that("It replaces 'Concentration (molar)' and 'Concentration (mass)' by 'Concentration' in plot axis labels", {
   labels <- .createAxesLabels(
-    .unitConverter(df),
+    .unitConverter(df, xUnit = "min", yUnit = "mol/ml"),
     TimeProfilePlotConfiguration$new()
   )
 
@@ -59,7 +59,10 @@ test_that("It works correctly when multiple dimensions are present and max frequ
 
   df <- myCombDat$toDataFrame()
   labs <- .createAxesLabels(
-    .unitConverter(df),
+    .unitConverter(df,
+      xUnit = .extractMostFrequentUnit(df, "xUnit"),
+      yUnit = .extractMostFrequentUnit(df, "yUnit")
+    ),
     tlf::TimeProfilePlotConfiguration$new()
   )
 

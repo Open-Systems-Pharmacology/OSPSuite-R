@@ -511,7 +511,10 @@ ospUnits <- NULL
 #' Convert a data frame to common units
 #'
 #' @param data A data frame (or a tibble) from `DataCombined$toDataFrame()`.
-#' @inheritParams convertUnits
+#' @param xUnit Target unit for `xValues`. Use `.extractMostFrequentUnit(data, "xUnit")`
+#'   to select the most frequent unit from the data.
+#' @param yUnit Target unit for `yValues`. Use `.extractMostFrequentUnit(data, "yUnit")`
+#'   to select the most frequent unit from the data.
 #'
 #' @seealso toUnit
 #'
@@ -531,45 +534,30 @@ ospUnits <- NULL
 #'   molWeight = c(10, 10, 20, 20, 20, 10)
 #' ))
 #'
-#' # default conversion
-#' ospsuite:::.unitConverter(df)
+#' # pick target units from data, then convert
+#' ospsuite:::.unitConverter(df,
+#'   xUnit = ospsuite:::.extractMostFrequentUnit(df, "xUnit"),
+#'   yUnit = ospsuite:::.extractMostFrequentUnit(df, "yUnit")
+#' )
 #'
-#' # customizing conversion with specified unit(s)
-#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
-#' ospsuite:::.unitConverter(df, yUnit = ospUnits$Mass$kg)
+#' # explicit units
 #' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
 #' @keywords internal
-.unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
-  # No validation of inputs for this non-exported function.
-  # All validation will take place in the `DataCombined` class itself.
-
-  # early return --------------------------
-
-  # Return early if there are only unique units present in the provided data and
-  # `xUnit` and `yUnit` arguments are `NULL`. This helps avoid expensive and
-  # redundant computations.
-  #
-  # *DO NOT* use short-circuiting `&&` logical operator here.
-  if (
-    length(unique(data$xUnit)) == 1L &
-      is.null(xUnit) &
-      length(unique(data$yUnit)) == 1L &
-      is.null(yUnit)
-  ) {
-    return(data)
+.unitConverter <- function(data, xUnit, yUnit) {
+  validateIsOfType(data, "data.frame", nullAllowed = FALSE)
+  # isSupportedUnit() calls validateIsString() internally, rejecting NULL/non-string
+  if (!isSupportedUnit(xUnit)) {
+    stop(messages$errorUnitNotSupported(xUnit, "unknown"))
+  }
+  if (!isSupportedUnit(yUnit)) {
+    stop(messages$errorUnitNotSupported(yUnit, "unknown"))
   }
 
   # target units --------------------------
-
-  # The observed and simulated data should have the same units for
-  # visual/graphical comparison.
-  #
-  # Therefore, if target units are not specified by the user, we need to choose
-  # one ourselves. The most frequent units will be selected: one for X-axis, and
-  # one for Y-axis. If multiple units are tied in terms of their frequency, the
-  # first will be selected.
-  xTargetUnit <- xUnit %||% .extractMostFrequentUnit(data, unitColumn = "xUnit")
-  yTargetUnit <- yUnit %||% .extractMostFrequentUnit(data, unitColumn = "yUnit")
+  # Rename `x/yUnit`` as `x/yTargetUnit` to prevent issues with 
+  # data.table column names being the same name as variables
+  xTargetUnit <- xUnit
+  yTargetUnit <- yUnit
 
   # Strategy --------------------------
 
@@ -602,7 +590,7 @@ ospUnits <- NULL
   # Convert to data.table for efficient in-place grouped operations.
   # `as.data.table()` creates a copy when the input is a tibble/data.frame,
   # so the caller's object is never modified by reference.
-  data <- as.data.table(data)
+  data <- data.table::as.data.table(data)
 
   # xUnit: convert xValues in-place, grouped by (xDimension, xUnit)
   data[,
@@ -721,77 +709,6 @@ ospUnits <- NULL
 #' @keywords internal
 .removeEmptyDataFrame <- function(x) {
   purrr::keep(x, function(data) nrow(data) > 0L)
-}
-
-
-#' @keywords internal
-#' @noRd
-.xUnitConverter <- function(xData, xTargetUnit) {
-  xData$xValues <- toUnit(
-    quantityOrDimension = xData$xDimension[[1]],
-    values = xData$xValues,
-    targetUnit = xTargetUnit,
-    sourceUnit = xData$xUnit[[1]]
-  )
-
-  xData$xUnit <- xTargetUnit
-
-  return(xData)
-}
-
-#' @keywords internal
-#' @noRd
-.yUnitConverter <- function(yData, yTargetUnit) {
-  yData$yValues <- toUnit(
-    quantityOrDimension = yData$yDimension[[1]],
-    values = yData$yValues,
-    targetUnit = yTargetUnit,
-    sourceUnit = yData$yUnit[[1]],
-    molWeight = yData$molWeight[[1]],
-    molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
-  )
-
-  if (any(colnames(yData) == "lloq")) {
-    yData$lloq <- toUnit(
-      quantityOrDimension = yData$yDimension[[1]],
-      values = yData$lloq,
-      targetUnit = yTargetUnit,
-      sourceUnit = yData$yUnit[[1]],
-      molWeight = yData$molWeight[[1]],
-      molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
-    )
-  }
-
-  yData$yUnit <- yTargetUnit
-
-  return(yData)
-}
-
-#' @keywords internal
-#' @noRd
-.yErrorUnitConverter <- function(yData, yTargetUnit) {
-  # If error type is geometric, conversion of `yValues` to different units
-  # should not trigger conversion of error values (and units)
-  if (
-    any(colnames(yData) == "yErrorType") &&
-      !is.na(unique(yData$yErrorType)) &&
-      unique(yData$yErrorType) == DataErrorType$GeometricStdDev
-  ) {
-    return(yData)
-  }
-
-  yData$yErrorValues <- toUnit(
-    quantityOrDimension = yData$yDimension[[1]],
-    values = yData$yErrorValues,
-    targetUnit = yTargetUnit,
-    sourceUnit = yData$yErrorUnit[[1]],
-    molWeight = yData$molWeight[[1]],
-    molWeightUnit = ospUnits$`Molecular weight`$`g/mol`
-  )
-
-  yData$yErrorUnit <- yTargetUnit
-
-  return(yData)
 }
 
 

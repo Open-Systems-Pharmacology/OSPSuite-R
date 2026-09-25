@@ -4,16 +4,16 @@
 \alias{.unitConverter}
 \title{Convert a data frame to common units}
 \usage{
-.unitConverter(data, xUnit = NULL, yUnit = NULL)
+.unitConverter(data, xUnit, yUnit)
 }
 \arguments{
 \item{data}{A data frame (or a tibble) from \code{DataCombined$toDataFrame()}.}
 
-\item{xUnit, yUnit}{Target units for \code{xValues} and \code{yValues}, respectively. If
-not specified (\code{NULL}), first of the existing units in the respective
-columns (\code{xUnit} and \code{yUnit}) will be selected as the common unit. For
-available dimensions and units, see \code{ospsuite::ospDimensions} and
-\code{ospsuite::ospUnits}, respectively.}
+\item{xUnit}{Target unit for \code{xValues}. Use \code{.extractMostFrequentUnit(data, "xUnit")}
+to select the most frequent unit from the data.}
+
+\item{yUnit}{Target unit for \code{yValues}. Use \code{.extractMostFrequentUnit(data, "yUnit")}
+to select the most frequent unit from the data.}
 }
 \description{
 Convert a data frame to common units
@@ -34,12 +34,13 @@ Convert a data frame to common units
   molWeight = c(10, 10, 20, 20, 20, 10)
 ))
 
-# default conversion
-ospsuite:::.unitConverter(df)
+# pick target units from data, then convert
+ospsuite:::.unitConverter(df,
+  xUnit = ospsuite:::.extractMostFrequentUnit(df, "xUnit"),
+  yUnit = ospsuite:::.extractMostFrequentUnit(df, "yUnit")
+)
 
-# customizing conversion with specified unit(s)
-ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
-ospsuite:::.unitConverter(df, yUnit = ospUnits$Mass$kg)
+# explicit units
 ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
 }
 \seealso{
