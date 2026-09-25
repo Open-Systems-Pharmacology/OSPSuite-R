@@ -106,7 +106,7 @@ plotResidualsVsCovariate(myDataCombined, xAxis = "time")
 ```
 
 
-Residuals of log values can be visualized with the `scaling` argument (`"log"` by default, or `"linear"` / `"ratio"`).
+Residuals of log values can be visualized with the `residualScale` argument (`"log"` by default, or `"linear"` / `"ratio"`).
 
 ```{r}
 plotResidualsVsCovariate(
@@ -201,7 +201,7 @@ plotObject <- plotTimeProfile(myDataCombined)
 
 ospsuite.plots::exportPlot(
   plotObject = plotObject,
-  filePath   = "timeprofile.png",
+  filepath   = "timeprofile.png",
   width      = 8,
   height     = NULL, # auto-computed from content
   dpi        = 300
