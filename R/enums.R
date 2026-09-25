@@ -41,7 +41,7 @@ CompareBy <- enum(c(
   "path"
 ))
 
-#' Names of aggregation available for plotPopulationTimeProfile()
+#' Names of aggregation available for plotTimeProfile()
 #'
 #' @export
 DataAggregationMethods <- enum(c(

@@ -11,8 +11,6 @@
 \alias{enumRemove}
 \alias{enumValues}
 \alias{enumGetKey}
-\alias{plotGrid}
-\alias{PlotGridConfiguration}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -21,7 +19,5 @@ below to see their documentation.
 
 \describe{
   \item{ospsuite.utils}{\code{\link[ospsuite.utils:enum]{enum()}}, \code{\link[ospsuite.utils:enumGetKey]{enumGetKey()}}, \code{\link[ospsuite.utils:enumGetValue]{enumGetValue()}}, \code{\link[ospsuite.utils:enumHasKey]{enumHasKey()}}, \code{\link[ospsuite.utils:enumKeys]{enumKeys()}}, \code{\link[ospsuite.utils:enumPut]{enumPut()}}, \code{\link[ospsuite.utils:enumRemove]{enumRemove()}}, \code{\link[ospsuite.utils:enumValues]{enumValues()}}}
-
-  \item{tlf}{\code{\link[tlf:plotGrid]{plotGrid()}}, \code{\link[tlf:PlotGridConfiguration]{PlotGridConfiguration}}}
 }}
 
