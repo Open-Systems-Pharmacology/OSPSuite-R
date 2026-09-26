@@ -11,7 +11,6 @@ SimulationRunOptions <- R6::R6Class(
     #' @description
     #' Initialize a new instance of the class
     #' @param numberOfCores Number of cores to use for the simulation. Default value is `getOSPSuiteSetting("numberOfCores")`
-    #' @param checkForNegativeValues `r lifecycle::badge("deprecated")` Use `sim$solver$checkForNegativeValues` instead.
     #' @param showProgress Should a progress bar be displayed during population simulations. If `TRUE`, a progress bar is shown in the console,
     #'   indicating the number of already executed simulations from the total population size. The progress bar does not indicate the progress
     #'   of a single simulation. This option only applies to population simulations and has no effect on individual simulations.
@@ -19,20 +18,8 @@ SimulationRunOptions <- R6::R6Class(
     #' @return A new `SimulationRunOptions` object.
     initialize = function(
       numberOfCores = NULL,
-      checkForNegativeValues = NULL,
       showProgress = NULL
     ) {
-      if (!is.null(checkForNegativeValues)) {
-        lifecycle::deprecate_warn(
-          when = "13.0.0",
-          what = "ospsuite::SimulationRunOptions(checkForNegativeValues)",
-          with = I("simulation$solver$checkForNegativeValues"),
-          details = "This argument is maintained in SimulationRunOptions for backward compatibility but has no effect.",
-          always = TRUE,
-          env = rlang::caller_env(),
-          user_env = rlang::caller_env(2)
-        )
-      }
       netObject <- rSharp::newObjectFromName(
         "OSPSuite.R.Domain.SimulationRunOptions"
       )
