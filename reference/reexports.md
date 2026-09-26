@@ -13,8 +13,3 @@ to see their documentation.
   [`enumPut()`](https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/enumPut.html),
   [`enumRemove()`](https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/enumRemove.html),
   [`enumValues()`](https://www.open-systems-pharmacology.org/OSPSuite.RUtils/reference/enumValues.html)
-
-- tlf:
-
-  [`plotGrid()`](https://rdrr.io/pkg/tlf/man/plotGrid.html),
-  [`PlotGridConfiguration`](https://rdrr.io/pkg/tlf/man/PlotGridConfiguration.html)

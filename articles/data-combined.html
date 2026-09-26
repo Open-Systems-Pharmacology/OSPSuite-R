@@ -125,7 +125,7 @@ the <code>plotXXX()</code> functions. The different plot types are
 described in <a href="data-combined-plotting.html">Visualizations with
 <code>DataCombined</code></a>. To visualize the different
 functionalities of <code>DataCombined</code> in this document, we will
-use the <code><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile()</a></code> function.</p>
+use the <code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code> function.</p>
 </div>
 <div class="section level2">
 <h2 id="creating-datacombined-object">Creating <code>DataCombined</code> object<a class="anchor" aria-label="anchor" href="#creating-datacombined-object"></a>
@@ -220,7 +220,7 @@ a time profile:</p>
 <span>  <span class="va">obsData</span><span class="op">$</span><span class="va">`Vergin 1995.Iv`</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span>plotData <span class="op">=</span> <span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="100%"></p>
 <p>If you do not specify <code>groups</code> when you add datasets, and
 wish to update groupings later, you can use the
@@ -233,7 +233,7 @@ the same color.</p>
 <span>  groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Aciclovir PVB"</span>, <span class="st">"Aciclovir PVB"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span>plotData <span class="op">=</span> <span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="100%"></p>
 <p>At any point, you can check the current names and groupings with the
 following active field:</p>
@@ -292,7 +292,7 @@ administration.</p>
 <span>  <span class="va">obsData</span><span class="op">$</span><span class="va">`Vergin 1995.Iv`</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombinedTranformations</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span>plotData <span class="op">=</span> <span class="va">myDataCombinedTranformations</span><span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="100%"></p>
 <p>However, we might want to use this data set with a simulation where
 aciclovir is administered 24 hours after simulation begin. To be able to
@@ -309,7 +309,7 @@ given in the same unit as the data set values are.</p>
 <span>  xOffsets <span class="op">=</span> <span class="fl">24</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombinedTranformations</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span>plotData <span class="op">=</span> <span class="va">myDataCombinedTranformations</span><span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="100%"></p>
 <p>In the next step, we want to <em>normalize</em> observed
 concentrations to a dose. We can easily achieve this with the scale
@@ -321,7 +321,7 @@ by setting the <code>yScaleFactor</code> to 1/250:</p>
 <span>  yScaleFactors <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">250</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span>dataCombined <span class="op">=</span> <span class="va">myDataCombinedTranformations</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span>plotData <span class="op">=</span> <span class="va">myDataCombinedTranformations</span><span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="100%">
 Finally, offsetting the observation values might be useful when working
 with measurements of endogenous substrates, such as the hormone
@@ -505,7 +505,7 @@ is issued.</p>
 residuals:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Linear residuals</span></span>
-<span><span class="va">totalError</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">Scaling</a></span><span class="op">$</span><span class="va">lin</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">totalError</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="../reference/calculateResiduals.html">calculateResiduals</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="st">"lin"</span><span class="op">)</span><span class="op">$</span><span class="va">residualValues</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">totalError</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 6.05523</span></span></code></pre></div>

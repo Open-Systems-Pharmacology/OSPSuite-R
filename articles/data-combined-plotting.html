@@ -134,135 +134,162 @@ use to demonstrate different visualizations available.</p>
 time and help assess if the observed data (represented by symbols and
 error bars) match the simulated data (represented by lines).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level2">
-<h2 id="observed-versus-simulated-scatter-plot">Observed versus simulated scatter plot<a class="anchor" aria-label="anchor" href="#observed-versus-simulated-scatter-plot"></a>
+<h2 id="predicted-versus-observed-scatter-plot">Predicted versus observed scatter plot<a class="anchor" aria-label="anchor" href="#predicted-versus-observed-scatter-plot"></a>
 </h2>
-<p>Observed versus simulated plots allow to assess how far simulated
+<p>Predicted versus observed plots allow to assess how far simulated
 results are from observed values.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotObservedVsSimulated.html">plotObservedVsSimulated</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="100%"></p>
 <p>The identity line represents perfect correspondence of simulated
 values with the observed ones. By default, a “two-fold” range is marked
 by the dashed lines. The “x-fold” range is defined as values that are
 <code>x</code>-fold higher and <code>1/x</code>-fold lower than the
 observed ones. The user can specify multiple ranges by the
-<code>foldDistance</code> argument.</p>
+<code>comparisonLineVector</code> argument.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotObservedVsSimulated.html">plotObservedVsSimulated</a></span><span class="op">(</span><span class="va">myDataCombined</span>, foldDistance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.3</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved</a></span><span class="op">(</span></span>
+<span>  <span class="va">myDataCombined</span>,</span>
+<span>  comparisonLineVector <span class="op">=</span> <span class="fu">ospsuite.plots</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/getFoldDistanceList.html" class="external-link">getFoldDistanceList</a></span><span class="op">(</span>folds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.3</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level2">
-<h2 id="residuals-versus-time-or-vs-simulated-scatter-plot">Residuals versus time or vs simulated scatter plot<a class="anchor" aria-label="anchor" href="#residuals-versus-time-or-vs-simulated-scatter-plot"></a>
+<h2 id="residuals-versus-covariate-scatter-plots">Residuals versus covariate scatter plots<a class="anchor" aria-label="anchor" href="#residuals-versus-covariate-scatter-plots"></a>
 </h2>
 <p>Residual plots show if there is a systematic bias in simulated values
 either in high-concentration or low-concentration regions, or,
 alternatively, in early or late time periods.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotResidualsVsSimulated.html">plotResidualsVsSimulated</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate</a></span><span class="op">(</span><span class="va">myDataCombined</span>, xAxis <span class="op">=</span> <span class="st">"predicted"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="100%"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotResidualsVsTime.html">plotResidualsVsTime</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate</a></span><span class="op">(</span><span class="va">myDataCombined</span>, xAxis <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="100%"></p>
 <p>Residuals of log values can be visualized with the
-<code>scaling</code> argument.</p>
+<code>residualScale</code> argument (<code>"log"</code> by default, or
+<code>"linear"</code> / <code>"ratio"</code>).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotResidualsVsTime.html">plotResidualsVsTime</a></span><span class="op">(</span><span class="va">myDataCombined</span>, scaling <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate</a></span><span class="op">(</span></span>
+<span>  <span class="va">myDataCombined</span>, </span>
+<span>  xAxis <span class="op">=</span> <span class="st">"time"</span>, </span>
+<span>  residualScale <span class="op">=</span> <span class="st">"linear"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="customizing-plots">Customizing plots<a class="anchor" aria-label="anchor" href="#customizing-plots"></a>
 </h2>
-<p>The look and feel for plots can be customized using the
-<code>DefaultPlotConfiguration</code> class, which provides various
-class members that can be used to modify the <em>appearance</em> of the
-plot.</p>
+<p>All functions return <code>ggplot2</code> objects, so any standard
+<code>ggplot2</code> layer can be added directly.</p>
+<div class="section level3">
+<h3 id="units-and-axis-scaling">Units and axis scaling<a class="anchor" aria-label="anchor" href="#units-and-axis-scaling"></a>
+</h3>
+<p>Pass <code>xUnit</code> / <code>yUnit</code> to set the display
+units, and <code>yScale</code> to change the axis scale:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">myPlotConfiguration</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/DefaultPlotConfiguration.html">DefaultPlotConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Define x units</span></span>
-<span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">xUnit</span> <span class="op">&lt;-</span> <span class="va">ospUnits</span><span class="op">$</span><span class="va">Time</span><span class="op">$</span><span class="va">s</span></span>
-<span><span class="co"># Define y units</span></span>
-<span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">yUnit</span> <span class="op">&lt;-</span> <span class="va">ospUnits</span><span class="op">$</span><span class="va">`Concentration [mass]`</span><span class="op">$</span><span class="va">`µg/l`</span></span>
-<span><span class="co"># Change y axis scaling to logarithmic</span></span>
-<span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">yAxisScale</span> <span class="op">&lt;-</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/Scaling.html" class="external-link">Scaling</a></span><span class="op">$</span><span class="va">log</span></span>
-<span></span>
-<span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">title</span> <span class="op">&lt;-</span> <span class="st">"Example: Customizing a Plot"</span></span>
-<span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">subtitle</span> <span class="op">&lt;-</span> <span class="st">"Using DefaultPlotConfiguration class"</span></span>
-<span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">caption</span> <span class="op">&lt;-</span> <span class="st">"Source: Aciclovir data"</span></span>
-<span></span>
-<span><span class="va">myPlotConfiguration</span><span class="op">$</span><span class="va">legendPosition</span> <span class="op">&lt;-</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/LegendPositions.html" class="external-link">LegendPositions</a></span><span class="op">$</span><span class="va">outsideRight</span></span></code></pre></div>
-<p>This configuration class can be passed to all plotting functions:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span></span>
+<span>  <span class="va">myDataCombined</span>,</span>
+<span>  xUnit <span class="op">=</span> <span class="va">ospUnits</span><span class="op">$</span><span class="va">Time</span><span class="op">$</span><span class="va">s</span>,</span>
+<span>  yUnit <span class="op">=</span> <span class="va">ospUnits</span><span class="op">$</span><span class="va">`Concentration [mass]`</span><span class="op">$</span><span class="va">`µg/l`</span>,</span>
+<span>  yScale <span class="op">=</span> <span class="st">"log"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="100%"></p>
+</div>
+<div class="section level3">
+<h3 id="title-subtitle-and-caption">Title, subtitle, and caption<a class="anchor" aria-label="anchor" href="#title-subtitle-and-caption"></a>
+</h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span>, <span class="va">myPlotConfiguration</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Aciclovir — Individual Time Profile"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Simulated vs. Observed (Vergin 1995)"</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"Source: Aciclovir data set"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
-<div class="section level2">
-<h2 id="creating-multi-panel-plots">Creating multi-panel plots<a class="anchor" aria-label="anchor" href="#creating-multi-panel-plots"></a>
-</h2>
-<p>Each of the <code>plotXXX()</code> returns a <code>ggplot2</code>
-object. Lets create different plots from the same
-<code>DataCombined</code> and store them as variables.</p>
+<div class="section level3">
+<h3 id="legend-position">Legend position<a class="anchor" aria-label="anchor" href="#legend-position"></a>
+</h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">indivProfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span>, <span class="va">myPlotConfiguration</span><span class="op">)</span></span>
-<span><span class="va">obsVsSim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotObservedVsSimulated.html">plotObservedVsSimulated</a></span><span class="op">(</span><span class="va">myDataCombined</span>, <span class="va">myPlotConfiguration</span><span class="op">)</span></span>
-<span><span class="va">resVsSim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotResidualsVsSimulated.html">plotResidualsVsSimulated</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span>
-<span><span class="va">resVsTime</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotResidualsVsTime.html">plotResidualsVsTime</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span></code></pre></div>
-<p>These plots can be combined into a multi-panel figure using the
-<code>PlotGridConfiguration</code> and then used with
-<code><a href="https://rdrr.io/pkg/tlf/man/plotGrid.html" class="external-link">plotGrid()</a></code> function to create a figure.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="100%"></p>
+</div>
+<div class="section level3">
+<h3 id="further-theming">Further theming<a class="anchor" aria-label="anchor" href="#further-theming"></a>
+</h3>
+<p>Any <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> element can be overridden:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">plotGridConfiguration</span> <span class="op">&lt;-</span> <span class="va"><a href="https://rdrr.io/pkg/tlf/man/PlotGridConfiguration.html" class="external-link">PlotGridConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">plotGridConfiguration</span><span class="op">$</span><span class="va">tagLevels</span> <span class="op">&lt;-</span> <span class="st">"a"</span></span>
-<span><span class="va">plotGridConfiguration</span><span class="op">$</span><span class="va">title</span> <span class="op">&lt;-</span> <span class="st">"Multiple plots in one figure"</span></span>
-<span></span>
-<span><span class="va">plotGridConfiguration</span><span class="op">$</span><span class="fu">addPlots</span><span class="op">(</span>plots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">indivProfile</span>, <span class="va">obsVsSim</span>, <span class="va">resVsSim</span>, <span class="va">resVsTime</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/tlf/man/plotGrid.html" class="external-link">plotGrid</a></span><span class="op">(</span><span class="va">plotGridConfiguration</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span>    axis.title <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">13</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
+<span>    axis.text  <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="100%"></p>
-<p>The function will try to arrange the panels such that the number of
-rows equals to the number of colums. You can also specify the number of
-rows or columns through the <code>PlotGridConfiguration</code>:</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="creating-multi-panel-figures">Creating multi-panel figures<a class="anchor" aria-label="anchor" href="#creating-multi-panel-figures"></a>
+</h2>
+<p>Because each function returns a <code>ggplot2</code> object, panels
+can be assembled with the <code>patchwork</code> package:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">plotGridConfiguration</span><span class="op">$</span><span class="va">nColumns</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/tlf/man/plotGrid.html" class="external-link">plotGrid</a></span><span class="op">(</span><span class="va">plotGridConfiguration</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data-combined-plotting_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="100%"></p>
-<p>Check out the documentation of the <code>PlotGridConfiguration</code>
-class for the list of supported properties.</p>
+<span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>tag <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotPredictedVsObserved.html">plotPredictedVsObserved</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>tag <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span></span>
+<span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate</a></span><span class="op">(</span><span class="va">myDataCombined</span>, xAxis <span class="op">=</span> <span class="st">"predicted"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>tag <span class="op">=</span> <span class="st">"c"</span><span class="op">)</span></span>
+<span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotResidualsVsCovariate.html">plotResidualsVsCovariate</a></span><span class="op">(</span><span class="va">myDataCombined</span>, xAxis <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>tag <span class="op">=</span> <span class="st">"d"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="op">(</span><span class="va">p1</span> <span class="op">|</span> <span class="va">p2</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">p3</span> <span class="op">|</span> <span class="va">p4</span><span class="op">)</span></span></code></pre></div>
+<p><img src="data-combined-plotting_files/figure-html/multi-panel-1.png" class="r-plt" alt="" width="100%"></p>
+<p>Control the layout with <code><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">patchwork::plot_layout()</a></code>:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p1</span> <span class="op">/</span> <span class="va">p2</span> <span class="op">/</span> <span class="va">p3</span> <span class="op">/</span> <span class="va">p4</span></span></code></pre></div>
+<p><img src="data-combined-plotting_files/figure-html/multi-panel-1col-1.png" class="r-plt" alt="" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="saving-plots">Saving plots<a class="anchor" aria-label="anchor" href="#saving-plots"></a>
 </h2>
-<p>All plotting functions return <code>ggplot</code> objects that can be
-further modified.</p>
-<p>To save a plot to a file, use the <code>ExportConfiguration</code>
-object. You can edit various properties of the export, including the
-resolution, file format, or file name.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create new export configuration</span></span>
-<span><span class="va">exportConfiguration</span> <span class="op">&lt;-</span> <span class="fu">tlf</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tlf/man/ExportConfiguration.html" class="external-link">ExportConfiguration</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co"># Define the path to the folder where the file will be stored</span></span>
-<span><span class="va">exportConfiguration</span><span class="op">$</span><span class="va">path</span> <span class="op">&lt;-</span> <span class="st">"../OutputFigures"</span></span>
-<span><span class="co"># Define the name of the file</span></span>
-<span><span class="va">exportConfiguration</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"MultiPanelPlot"</span></span>
-<span><span class="co"># Resolution</span></span>
-<span><span class="va">exportConfiguration</span><span class="op">$</span><span class="va">dpi</span> <span class="op">&lt;-</span> <span class="fl">600</span></span>
+<p>Use <code><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/exportPlot.html" class="external-link">ospsuite.plots::exportPlot()</a></code> to save a plot to
+disk:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">plotObject</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Store the plot into a variable and export it to a file</span></span>
-<span><span class="va">plotObject</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotIndividualTimeProfile.html">plotIndividualTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span>
+<span><span class="fu">ospsuite.plots</span><span class="fu">::</span><span class="fu"><a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/exportPlot.html" class="external-link">exportPlot</a></span><span class="op">(</span></span>
+<span>  plotObject <span class="op">=</span> <span class="va">plotObject</span>,</span>
+<span>  filepath   <span class="op">=</span> <span class="st">"timeprofile.png"</span>,</span>
+<span>  width      <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>  height     <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># auto-computed from content</span></span>
+<span>  dpi        <span class="op">=</span> <span class="fl">300</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Or use <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggplot2::ggsave()</a></code> directly:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">plotObject</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotTimeProfile.html">plotTimeProfile</a></span><span class="op">(</span><span class="va">myDataCombined</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">exportConfiguration</span><span class="op">$</span><span class="fu">savePlot</span><span class="op">(</span><span class="va">plotObject</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave</a></span><span class="op">(</span></span>
+<span>  filename <span class="op">=</span> <span class="st">"timeprofile.png"</span>, </span>
+<span>  plot <span class="op">=</span> <span class="va">plotObject</span>, </span>
+<span>  width <span class="op">=</span> <span class="fl">8</span>, </span>
+<span>  height <span class="op">=</span> <span class="fl">6</span>, </span>
+<span>  dpi <span class="op">=</span> <span class="fl">300</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="implementation-details">Implementation details<a class="anchor" aria-label="anchor" href="#implementation-details"></a>
 </h2>
 <p>All plotting functions in <a href="https://github.com/open-systems-pharmacology/ospsuite-r" class="external-link">ospsuite</a> make use of the
-<a href="https://github.com/open-systems-pharmacology/tlf-library" class="external-link">tlf</a> library to prepare visualizations. To know more about
-this library, see its <a href="https://www.open-systems-pharmacology.org/TLF-Library/" class="external-link">website</a>.</p>
+<a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">ospsuite.plots</a> package to prepare visualizations. To know
+more about this library, see its <a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">website</a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

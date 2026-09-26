@@ -520,15 +520,11 @@ After mastering the basics, explore these advanced topics:
 - **[DataCombined
   workflows](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined.md)** -
   Combine simulations with observations
-- **[Plotting](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/plotting-with-ospsuite-plots.md)** -
-  Built-in plotting functions for quick visualization
-- **[DEPRECATED - Visualizations with
-  DataCombined](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.md)** -
-  Advanced plotting with DataCombined objects. The functions described
-  in this article are deprecated and will be removed in future versions.
-  Please use the functions described in the article [Plotting with
-  ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/plotting-with-ospsuite-plots.md)
-  instead, which provide more features and better performance.
+- **[Plotting with
+  ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/plotting-with-ospsuite-plots.md)** -
+  Built-in plotting functions based on
+  [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)
+  for quick, publication-ready visualization of `DataCombined` object
 
 ### Advanced Topics:
 

@@ -41,7 +41,7 @@ Typically, `DataCombined` is used to create figures using the
 `DataCombined`](https://www.open-systems-pharmacology.org/OSPSuite-R/articles/data-combined-plotting.md).
 To visualize the different functionalities of `DataCombined` in this
 document, we will use the
-[`plotIndividualTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotIndividualTimeProfile.md)
+[`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/reference/plotTimeProfile.md)
 function.
 
 ## Creating `DataCombined` object
@@ -149,7 +149,7 @@ myDataCombined$addDataSets(
   obsData$`Vergin 1995.Iv`
 )
 
-plotIndividualTimeProfile(dataCombined = myDataCombined)
+plotTimeProfile(plotData = myDataCombined)
 ```
 
 ![](data-combined_files/figure-html/unnamed-chunk-7-1.png)
@@ -166,7 +166,7 @@ myDataCombined$setGroups(
   groups = c("Aciclovir PVB", "Aciclovir PVB")
 )
 
-plotIndividualTimeProfile(dataCombined = myDataCombined)
+plotTimeProfile(plotData = myDataCombined)
 ```
 
 ![](data-combined_files/figure-html/unnamed-chunk-8-1.png)
@@ -232,7 +232,7 @@ myDataCombinedTranformations$addDataSets(
   obsData$`Vergin 1995.Iv`
 )
 
-plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
+plotTimeProfile(plotData = myDataCombinedTranformations)
 ```
 
 ![](data-combined_files/figure-html/unnamed-chunk-11-1.png)
@@ -254,7 +254,7 @@ myDataCombinedTranformations$setDataTransformations(
   xOffsets = 24
 )
 
-plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
+plotTimeProfile(plotData = myDataCombinedTranformations)
 ```
 
 ![](data-combined_files/figure-html/unnamed-chunk-12-1.png)
@@ -271,7 +271,7 @@ myDataCombinedTranformations$setDataTransformations(
   yScaleFactors = 1 / 250
 )
 
-plotIndividualTimeProfile(dataCombined = myDataCombinedTranformations)
+plotTimeProfile(plotData = myDataCombinedTranformations)
 ```
 
 ![](data-combined_files/figure-html/unnamed-chunk-13-1.png) Finally,
@@ -475,7 +475,7 @@ up the absolute values of the residuals:
 ``` r
 
 # Linear residuals
-totalError <- sum(abs(calculateResiduals(myDataCombined, scaling = tlf::Scaling$lin)$residualValues))
+totalError <- sum(abs(calculateResiduals(myDataCombined, scaling = "lin")$residualValues))
 
 print(totalError)
 #> [1] 6.05523
