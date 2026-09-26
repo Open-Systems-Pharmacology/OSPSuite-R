@@ -49,19 +49,19 @@ bars) match the simulated data (represented by lines).
 
 ``` r
 
-plotIndividualTimeProfile(myDataCombined)
+plotTimeProfile(myDataCombined)
 ```
 
 ![](data-combined-plotting_files/figure-html/unnamed-chunk-3-1.png)
 
-## Observed versus simulated scatter plot
+## Predicted versus observed scatter plot
 
-Observed versus simulated plots allow to assess how far simulated
+Predicted versus observed plots allow to assess how far simulated
 results are from observed values.
 
 ``` r
 
-plotObservedVsSimulated(myDataCombined)
+plotPredictedVsObserved(myDataCombined)
 ```
 
 ![](data-combined-plotting_files/figure-html/unnamed-chunk-4-1.png)
@@ -70,16 +70,19 @@ The identity line represents perfect correspondence of simulated values
 with the observed ones. By default, a “two-fold” range is marked by the
 dashed lines. The “x-fold” range is defined as values that are `x`-fold
 higher and `1/x`-fold lower than the observed ones. The user can specify
-multiple ranges by the `foldDistance` argument.
+multiple ranges by the `comparisonLineVector` argument.
 
 ``` r
 
-plotObservedVsSimulated(myDataCombined, foldDistance = c(1.3, 2))
+plotPredictedVsObserved(
+  myDataCombined,
+  comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(1.3, 2))
+)
 ```
 
 ![](data-combined-plotting_files/figure-html/unnamed-chunk-5-1.png)
 
-## Residuals versus time or vs simulated scatter plot
+## Residuals versus covariate scatter plots
 
 Residual plots show if there is a systematic bias in simulated values
 either in high-concentration or low-concentration regions, or,
@@ -87,132 +90,162 @@ alternatively, in early or late time periods.
 
 ``` r
 
-plotResidualsVsSimulated(myDataCombined)
+plotResidualsVsCovariate(myDataCombined, xAxis = "predicted")
 ```
 
 ![](data-combined-plotting_files/figure-html/unnamed-chunk-6-1.png)
 
 ``` r
 
-plotResidualsVsTime(myDataCombined)
+plotResidualsVsCovariate(myDataCombined, xAxis = "time")
 ```
 
 ![](data-combined-plotting_files/figure-html/unnamed-chunk-7-1.png)
 
-Residuals of log values can be visualized with the `scaling` argument.
+Residuals of log values can be visualized with the `residualScale`
+argument (`"log"` by default, or `"linear"` / `"ratio"`).
 
 ``` r
 
-plotResidualsVsTime(myDataCombined, scaling = "log")
+plotResidualsVsCovariate(
+  myDataCombined, 
+  xAxis = "time", 
+  residualScale = "linear"
+  )
 ```
 
 ![](data-combined-plotting_files/figure-html/unnamed-chunk-8-1.png)
 
 ## Customizing plots
 
-The look and feel for plots can be customized using the
-`DefaultPlotConfiguration` class, which provides various class members
-that can be used to modify the *appearance* of the plot.
+All functions return `ggplot2` objects, so any standard `ggplot2` layer
+can be added directly.
+
+### Units and axis scaling
+
+Pass `xUnit` / `yUnit` to set the display units, and `yScale` to change
+the axis scale:
 
 ``` r
 
-myPlotConfiguration <- DefaultPlotConfiguration$new()
-
-# Define x units
-myPlotConfiguration$xUnit <- ospUnits$Time$s
-# Define y units
-myPlotConfiguration$yUnit <- ospUnits$`Concentration [mass]`$`µg/l`
-# Change y axis scaling to logarithmic
-myPlotConfiguration$yAxisScale <- tlf::Scaling$log
-
-myPlotConfiguration$title <- "Example: Customizing a Plot"
-myPlotConfiguration$subtitle <- "Using DefaultPlotConfiguration class"
-myPlotConfiguration$caption <- "Source: Aciclovir data"
-
-myPlotConfiguration$legendPosition <- tlf::LegendPositions$outsideRight
+plotTimeProfile(
+  myDataCombined,
+  xUnit = ospUnits$Time$s,
+  yUnit = ospUnits$`Concentration [mass]`$`µg/l`,
+  yScale = "log"
+)
 ```
 
-This configuration class can be passed to all plotting functions:
+![](data-combined-plotting_files/figure-html/unnamed-chunk-9-1.png)
+
+### Title, subtitle, and caption
 
 ``` r
 
-plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
+plotTimeProfile(myDataCombined) +
+  ggplot2::labs(
+    title = "Aciclovir — Individual Time Profile",
+    subtitle = "Simulated vs. Observed (Vergin 1995)",
+    caption = "Source: Aciclovir data set"
+  )
 ```
 
 ![](data-combined-plotting_files/figure-html/unnamed-chunk-10-1.png)
 
-## Creating multi-panel plots
-
-Each of the `plotXXX()` returns a `ggplot2` object. Lets create
-different plots from the same `DataCombined` and store them as
-variables.
+### Legend position
 
 ``` r
 
-indivProfile <- plotIndividualTimeProfile(myDataCombined, myPlotConfiguration)
-obsVsSim <- plotObservedVsSimulated(myDataCombined, myPlotConfiguration)
-resVsSim <- plotResidualsVsSimulated(myDataCombined)
-resVsTime <- plotResidualsVsTime(myDataCombined)
+plotPredictedVsObserved(myDataCombined) +
+  ggplot2::theme(legend.position = "bottom")
 ```
 
-These plots can be combined into a multi-panel figure using the
-`PlotGridConfiguration` and then used with
-[`plotGrid()`](https://rdrr.io/pkg/tlf/man/plotGrid.html) function to
-create a figure.
+![](data-combined-plotting_files/figure-html/unnamed-chunk-11-1.png)
+
+### Further theming
+
+Any
+[`ggplot2::theme()`](https://ggplot2.tidyverse.org/reference/theme.html)
+element can be overridden:
 
 ``` r
 
-plotGridConfiguration <- PlotGridConfiguration$new()
-plotGridConfiguration$tagLevels <- "a"
-plotGridConfiguration$title <- "Multiple plots in one figure"
-
-plotGridConfiguration$addPlots(plots = list(indivProfile, obsVsSim, resVsSim, resVsTime))
-
-plotGrid(plotGridConfiguration)
+plotTimeProfile(myDataCombined) +
+  ggplot2::theme(
+    axis.title = ggplot2::element_text(size = 13, face = "bold"),
+    axis.text  = ggplot2::element_text(size = 11)
+  )
 ```
 
 ![](data-combined-plotting_files/figure-html/unnamed-chunk-12-1.png)
 
-The function will try to arrange the panels such that the number of rows
-equals to the number of colums. You can also specify the number of rows
-or columns through the `PlotGridConfiguration`:
+## Creating multi-panel figures
+
+Because each function returns a `ggplot2` object, panels can be
+assembled with the `patchwork` package:
 
 ``` r
 
-plotGridConfiguration$nColumns <- 1
+library(patchwork)
 
-plotGrid(plotGridConfiguration)
+p1 <- plotTimeProfile(myDataCombined) +
+  ggplot2::labs(tag = "a")
+p2 <- plotPredictedVsObserved(myDataCombined) +
+  ggplot2::labs(tag = "b")
+p3 <- plotResidualsVsCovariate(myDataCombined, xAxis = "predicted") +
+  ggplot2::labs(tag = "c")
+p4 <- plotResidualsVsCovariate(myDataCombined, xAxis = "time") +
+  ggplot2::labs(tag = "d")
+
+(p1 | p2) / (p3 | p4)
 ```
 
-![](data-combined-plotting_files/figure-html/unnamed-chunk-13-1.png)
+![](data-combined-plotting_files/figure-html/multi-panel-1.png)
 
-Check out the documentation of the `PlotGridConfiguration` class for the
-list of supported properties.
+Control the layout with
+[`patchwork::plot_layout()`](https://patchwork.data-imaginist.com/reference/plot_layout.html):
+
+``` r
+
+p1 / p2 / p3 / p4
+```
+
+![](data-combined-plotting_files/figure-html/multi-panel-1col-1.png)
 
 ## Saving plots
 
-All plotting functions return `ggplot` objects that can be further
-modified.
-
-To save a plot to a file, use the `ExportConfiguration` object. You can
-edit various properties of the export, including the resolution, file
-format, or file name.
+Use
+[`ospsuite.plots::exportPlot()`](https://www.open-systems-pharmacology.org/OSPSuite.Plots/reference/exportPlot.html)
+to save a plot to disk:
 
 ``` r
 
-# Create new export configuration
-exportConfiguration <- tlf::ExportConfiguration$new()
-# Define the path to the folder where the file will be stored
-exportConfiguration$path <- "../OutputFigures"
-# Define the name of the file
-exportConfiguration$name <- "MultiPanelPlot"
-# Resolution
-exportConfiguration$dpi <- 600
+plotObject <- plotTimeProfile(myDataCombined)
 
-# Store the plot into a variable and export it to a file
-plotObject <- plotIndividualTimeProfile(myDataCombined)
+ospsuite.plots::exportPlot(
+  plotObject = plotObject,
+  filepath   = "timeprofile.png",
+  width      = 8,
+  height     = NULL, # auto-computed from content
+  dpi        = 300
+)
+```
 
-exportConfiguration$savePlot(plotObject)
+Or use
+[`ggplot2::ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html)
+directly:
+
+``` r
+
+plotObject <- plotTimeProfile(myDataCombined)
+
+ggplot2::ggsave(
+  filename = "timeprofile.png", 
+  plot = plotObject, 
+  width = 8, 
+  height = 6, 
+  dpi = 300
+  )
 ```
 
 ## Implementation details
@@ -220,6 +253,7 @@ exportConfiguration$savePlot(plotObject)
 All plotting functions in
 [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r) make
 use of the
-[tlf](https://github.com/open-systems-pharmacology/tlf-library) library
-to prepare visualizations. To know more about this library, see its
-[website](https://www.open-systems-pharmacology.org/TLF-Library/).
+[ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)
+package to prepare visualizations. To know more about this library, see
+its
+[website](https://www.open-systems-pharmacology.org/OSPSuite.Plots/).

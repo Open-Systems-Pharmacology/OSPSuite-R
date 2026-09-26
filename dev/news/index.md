@@ -2,6 +2,62 @@
 
 ## ospsuite (development version)
 
+## ospsuite 13.0.1
+
+### Breaking changes
+
+- **.NET 10 runtime is now required** (previously .NET 8). The bundled
+  assemblies in `inst/lib` target `net10.0`; on older runtimes the
+  package fails to load with
+  `System.Reflection.ReflectionTypeLoadException`. See the rSharp
+  prerequisites links in the README for installation instructions on
+  Windows and Linux.
+- **rSharp 2.0.0 or later is now required.** Update it before installing
+  ospsuite, for example with
+  `pak::pak("Open-Systems-Pharmacology/rSharp")`.
+- [`createIndividual()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividual.md)
+  and
+  [`createPopulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createPopulation.md)
+  will not work with models developed prior to version 13. The reason is
+  that in v13, the absorption model has been refined, adding new
+  parameters. To be able to use creation of individuals or populations
+  with earlier models, the user has to re-create the models from
+  snapshot with the latest PK-Sim version. If no original PK-Sim project
+  or snapshot are available, the user should use the latest version 12
+  of the R package.
+- `SimulationRunOptions$checkForNegativeValues` field has been removed,
+  as well as the `checkForNegativeValues` argument of
+  `SimulationRunOptions$new()`. The property is now on `SolverSettings`
+  and accessible via `simulation$solver$checkForNegativeValues`. Passing
+  `checkForNegativeValues` to `SimulationRunOptions$new()` now fails
+  with an `unused argument` error
+  ([\#2010](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2010)).
+- The `{tlf}` package is no longer a dependency of `ospsuite` and has
+  been removed entirely. All `{tlf}`-based plotting functions have been
+  removed: `plotIndividualTimeProfile()`, `plotPopulationTimeProfile()`,
+  `plotObservedVsSimulated()`, `plotResidualsVsTime()`, and
+  `plotResidualsVsSimulated()`, along with the
+  `DefaultPlotConfiguration` class and the re-exported `plotGrid()` and
+  `PlotGridConfiguration`. Use the
+  [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)-based
+  equivalents instead:
+  [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md),
+  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md),
+  [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md),
+  [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsAsHistogram.md),
+  and
+  [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotQuantileQuantilePlot.md)
+  — see
+  [`vignette("plotting-with-ospsuite-plots")`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/plotting-with-ospsuite-plots.md),
+  which is now the primary plotting guide. The `scaling = "identity"`
+  alias of
+  [`addResidualColumn()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/addResidualColumn.md)
+  and
+  [`calculateResiduals()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/calculateResiduals.md)
+  is kept for backward compatibility with scripts that passed
+  `tlf::Scaling$identity`
+  ([\#1739](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1739)).
+
 ### Major changes
 
 - Added MoBi project support: load `.mbp3` projects, query modules,
@@ -27,32 +83,6 @@
   `CalculationMethodCategories` support working with these objects. See
   [`vignette("mobi-projects")`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/mobi-projects.md)
   for an end-to-end walkthrough.
-
-### Breaking changes
-
-- **.NET 10 runtime is now required** (previously .NET 8). The bundled
-  assemblies in `inst/lib` target `net10.0`; on older runtimes the
-  package fails to load with
-  `System.Reflection.ReflectionTypeLoadException`. See the rSharp
-  prerequisites links in the README for installation instructions on
-  Windows and Linux.
-- [`createIndividual()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividual.md)
-  and
-  [`createPopulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createPopulation.md)
-  will not work with models developed prior to version 13. The reason is
-  that in v13, the absorption model has been refined, adding new
-  parameters. To be able to use creation of individuals or populations
-  with earlier models, the user has to re-create the models from
-  snapshot with the latest PK-Sim version. If no original PK-Sim project
-  or snapshot are available, the user should use the latest version 12
-  of the R package.
-- `SimulationRunOptions$checkForNegativeValues` field has been removed,
-  as well as the `checkForNegativeValues` argument of
-  `SimulationRunOptions$new()`. The property is now on `SolverSettings`
-  and accessible via `simulation$solver$checkForNegativeValues`. Passing
-  `checkForNegativeValues` to `SimulationRunOptions$new()` now fails
-  with an `unused argument` error
-  ([\#2010](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2010)).
 
 ### Minor improvements and bug fixes
 
@@ -89,19 +119,6 @@
   [`vignette("snapshots")`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/articles/snapshots.md)
   for an overview of the snapshot helpers. Note: MoBi snapshots are not
   yet supported.
-- `DataCombined$toDataFrame()` now returns the `name` and `group`
-  columns as factors whose levels follow the order in which datasets
-  (and groups) were added. As a result, plots built from `DataCombined`
-  objects
-  ([`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md),
-  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md),
-  [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md),
-  etc.) now display legend entries in the order `DataSet` and
-  `SimulationResults` objects were added, rather than in alphabetical
-  order. This also keeps `name`- and `group`-based legends consistent in
-  observed-vs-predicted plots, where the two variables may otherwise
-  diverge
-  ([\#1241](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1241)).
 - New functions
   [`projectToSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/projectToSnapshot.md)
   and
@@ -140,6 +157,41 @@
   export filled them
   ([\#2029](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2029)).
 
+## ospsuite 12.4.5
+
+### Minor improvements and bug fixes
+
+- [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
+  12.4.x now requires
+  [rSharp](https://github.com/Open-Systems-Pharmacology/rsharp/) 1.2.3
+  or older, which runs on .NET 8. Newer
+  [rSharp](https://github.com/Open-Systems-Pharmacology/rsharp/)
+  versions use .NET 10, with which
+  [`loadSimulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadSimulation.md)
+  and the other functions that read or write observed data in `.pkml`
+  files fail. If
+  [`library(ospsuite)`](https://github.com/open-systems-pharmacology/ospsuite-r)
+  reports that a newer
+  [rSharp](https://github.com/Open-Systems-Pharmacology/rsharp/) is
+  installed, run `pak::pak("Open-Systems-Pharmacology/rSharp@v1.2.3")`
+  or upgrade to
+  [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r)
+  13.
+
+- `DataCombined$toDataFrame()` now returns the `name` and `group`
+  columns as factors whose levels follow the order in which datasets
+  (and groups) were added. As a result, plots built from `DataCombined`
+  objects
+  ([`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md),
+  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md),
+  [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md),
+  etc.) now display legend entries in the order `DataSet` and
+  `SimulationResults` objects were added, rather than in alphabetical
+  order. This also keeps `name`- and `group`-based legends consistent in
+  observed-vs-predicted plots, where the two variables may otherwise
+  diverge
+  ([\#1241](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1241)).
+
 ## ospsuite 12.4.4
 
 ### Minor improvements and bug fixes
@@ -175,10 +227,8 @@
   [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotQuantileQuantilePlot.md))
   now style each plot individually, and the styling of unrelated plots
   in the session is left untouched. As a consequence, the appearance of
-  the deprecated
-  [tlf](https://github.com/open-systems-pharmacology/tlf-library)-based
-  plotting functions may change slightly, since they no longer inherit
-  the global theme
+  the deprecated `{tlf}`-based plotting functions may change slightly,
+  since they no longer inherit the global theme
   ([\#1968](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1968)).
 
 - Added
@@ -196,10 +246,8 @@
   `sheets = NULL`, falling back to the configuration/all-sheets logic
   instead of overriding with no sheets.
 
-- [`plotIndividualTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotIndividualTimeProfile.md)
-  and
-  [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPopulationTimeProfile.md)
-  now produce a stable legend entry order when
+- `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()` now
+  produce a stable legend entry order when
   `showLegendPerDataset = TRUE`; previously the order of the
   dataset-name legend entries could vary between sessions.
 
@@ -274,16 +322,10 @@
   handle mixed error types and unit conversion directly, without
   requiring data preprocessing
   ([\#1652](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1652)).
-- The
-  [tlf](https://github.com/open-systems-pharmacology/tlf-library)-based
-  plotting functions
-  [`plotIndividualTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotIndividualTimeProfile.md),
-  [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPopulationTimeProfile.md),
-  [`plotObservedVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotObservedVsSimulated.md),
-  [`plotResidualsVsTime()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsTime.md),
-  and
-  [`plotResidualsVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsSimulated.md)
-  are now soft-deprecated in favor of the
+- The `{tlf}`-based plotting functions `plotIndividualTimeProfile()`,
+  `plotPopulationTimeProfile()`, `plotObservedVsSimulated()`,
+  `plotResidualsVsTime()`, and `plotResidualsVsSimulated()` are now
+  soft-deprecated in favor of the
   [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)-based
   equivalents and will be removed in version 14.0.
   ([\#1739](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1739))
@@ -479,11 +521,9 @@
 ### Minor improvements and bug fixes
 
 - Added `showLegendPerDataset` parameter to
-  [`plotIndividualTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotIndividualTimeProfile.md)
-  and
-  [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPopulationTimeProfile.md)
-  to optionally display separate legend entries for each dataset. This
-  is experimental.
+  `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()` to
+  optionally display separate legend entries for each dataset. This is
+  experimental.
 - Improved print outputs for all classes
 - Classes do not inherit from the deprecated `Printable` class from the
   [ospsuite.utils](https://github.com/open-systems-pharmacology/OSPSuite.RUtils)
@@ -569,28 +609,23 @@
   [`getSteadyState()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/getSteadyState.md)
   to an Excel file that can be imported in MoBi.
 - Lower limit of quantification (LLOQ) is plotted as dotted lines for
-  [`plotIndividualTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotIndividualTimeProfile.md)
-  and
-  [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPopulationTimeProfile.md).
-- [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPopulationTimeProfile.md)
-  provides two new aggregations methods: `arithmetic` and `geometric`
-  average and the ability to chose the number of standard deviations to
-  display around the mean through the `nsd` argument.
+  `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()`.
+- `plotPopulationTimeProfile()` provides two new aggregations methods:
+  `arithmetic` and `geometric` average and the ability to chose the
+  number of standard deviations to display around the mean through the
+  `nsd` argument.
 - Function
   [`calculateResiduals()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/calculateResiduals.md)
   uses natural logarithm ([`log()`](https://rdrr.io/r/base/Log.html))
   when calculating residuals with `scaling = "log"` as opposed to
   [`log10()`](https://rdrr.io/r/base/Log.html) as it was done before.
-  This also affects figures created by
-  [`plotObservedVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotObservedVsSimulated.md),
-  [`plotResidualsVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsSimulated.md),
-  and
-  [`plotResidualsVsTime()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsTime.md).
+  This also affects figures created by `plotObservedVsSimulated()`,
+  `plotResidualsVsSimulated()`, and `plotResidualsVsTime()`.
   ([\#1091](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1091),
   [\#1087](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1087)).
-- [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPopulationTimeProfile.md)
-  has a new `aggregation` argument that allow the user to choose between
-  quantiles, arithmetic and geometric aggregations of y.
+- `plotPopulationTimeProfile()` has a new `aggregation` argument that
+  allow the user to choose between quantiles, arithmetic and geometric
+  aggregations of y.
 
 ### Minor improvements and bug fixes
 
@@ -665,12 +700,11 @@
 
 - Adds new visualization functions:
 
-  - [`plotObservedVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotObservedVsSimulated.md)
-    for observed versus simulated data scatter plot.
-  - [`plotResidualsVsTime()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsTime.md)
-    for time versus residuals data scatter plot.
-  - [`plotResidualsVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsSimulated.md)
-    for simulated versus residuals data scatter plot.
+  - `plotObservedVsSimulated()` for observed versus simulated data
+    scatter plot.
+  - `plotResidualsVsTime()` for time versus residuals data scatter plot.
+  - `plotResidualsVsSimulated()` for simulated versus residuals data
+    scatter plot.
 
 - Adds new helper functions to work with `DataCombined` objects:
 
@@ -745,10 +779,8 @@
 
 - Adds new visualization functions:
 
-- [`plotIndividualTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotIndividualTimeProfile.md)
-  and
-  [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPopulationTimeProfile.md)
-  to create time-profile plots.
+- `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()` to
+  create time-profile plots.
 
 - Adds a new class `DefaultPlotConfiguration` to provide plot
   configurations for plotting functions.

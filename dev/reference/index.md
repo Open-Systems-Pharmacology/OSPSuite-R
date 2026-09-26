@@ -25,7 +25,7 @@
   : How should comparison of entities be performed
 
 - [`DataAggregationMethods`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DataAggregationMethods.md)
-  : Names of aggregation available for plotPopulationTimeProfile()
+  : Names of aggregation available for plotTimeProfile()
 
 - [`DataColumn`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DataColumn.md)
   : DataColumn
@@ -44,9 +44,6 @@
 
 - [`DataSet`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DataSet.md)
   : DataSet
-
-- [`DefaultPlotConfiguration`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DefaultPlotConfiguration.md)
-  : Plot configuration for OSP plots
 
 - [`DotNetWrapper`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/DotNetWrapper.md)
   :
@@ -624,16 +621,6 @@
   : Returns an instance of a PK-Parameter by name or NULL if the
   parameter by name is not found
 
-- [`plotIndividualTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotIndividualTimeProfile.md)
-  **\[deprecated\]** : Time-profile plot of individual data
-
-- [`plotObservedVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotObservedVsSimulated.md)
-  **\[deprecated\]** : Observed versus predicted/simulated scatter plot
-
-- [`plotPopulationTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPopulationTimeProfile.md)
-  **\[deprecated\]** : Time-values profile plot for population
-  simulations
-
 - [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md)
   : Plot Predicted vs Observed Values
 
@@ -645,12 +632,6 @@
 
 - [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md)
   : Plot Residuals vs Covariate
-
-- [`plotResidualsVsSimulated()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsSimulated.md)
-  **\[deprecated\]** : Residuals versus time scatter plot
-
-- [`plotResidualsVsTime()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsTime.md)
-  **\[deprecated\]** : Residuals versus time scatter plot
 
 - [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md)
   : Create Time Profile Plot
