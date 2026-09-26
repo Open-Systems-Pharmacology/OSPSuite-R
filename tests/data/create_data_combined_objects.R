@@ -109,17 +109,6 @@ manyObsSimDC <- function() .manyObsSimDC$clone(deep = TRUE)
 )
 oneObsGeometricDC <- function() .oneObsGeometricDC$clone(deep = TRUE)
 
-# custom default plot configuration (DPC) -------------------------------------
-
-.customDPC <- DefaultPlotConfiguration$new()
-.customDPC$title <- "My Plot Title"
-.customDPC$subtitle <- "My Plot Subtitle"
-.customDPC$caption <- "My Sources"
-.customDPC$legendPosition <- tlf::LegendPositions$outsideRight
-.customDPC$yAxisScale <- "log"
-.customDPC$yAxisLimits <- c(0.01, 1000)
-customDPC <- function() .customDPC$clone(deep = TRUE)
-
 # dataset with mixed dimensions and y-Units ---------------------------
 
 .manyObsSimDCWithFraction <- DataCombined$new()

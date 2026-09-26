@@ -9,6 +9,8 @@ The reason is that in v13, the absorption model has been refined, adding new par
 To be able to use creation of individuals or populations with earlier models, the user has to re-create the models from snapshot with the latest PK-Sim version.
 If no original PK-Sim project or snapshot are available, the user should use the latest version 12 of the R package.
 - `SimulationRunOptions$checkForNegativeValues` field has been removed, as well as the `checkForNegativeValues` argument of `SimulationRunOptions$new()`. The property is now on `SolverSettings` and accessible via `simulation$solver$checkForNegativeValues`. Passing `checkForNegativeValues` to `SimulationRunOptions$new()` now fails with an `unused argument` error (#2010).
+- The `{tlf}` package is no longer a dependency of `ospsuite` and has been removed entirely. All `{tlf}`-based plotting functions have been removed: `plotIndividualTimeProfile()`, `plotPopulationTimeProfile()`, `plotObservedVsSimulated()`, `plotResidualsVsTime()`, and `plotResidualsVsSimulated()`, along with the `DefaultPlotConfiguration` class and the re-exported `plotGrid()` and `PlotGridConfiguration`. Use the `{ospsuite.plots}`-based equivalents instead: `plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()` — see `vignette("plotting-with-ospsuite-plots")`, which is now the primary plotting guide. The `scaling = "identity"` alias of `addResidualColumn()` and `calculateResiduals()` is kept for backward compatibility with scripts that passed `tlf::Scaling$identity` (#1739).
+
 
 ## Major changes
 

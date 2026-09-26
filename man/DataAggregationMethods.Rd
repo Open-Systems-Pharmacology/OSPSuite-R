@@ -2,10 +2,10 @@
 % Please edit documentation in R/enums.R
 \name{DataAggregationMethods}
 \alias{DataAggregationMethods}
-\title{Names of aggregation available for plotPopulationTimeProfile()}
+\title{Names of aggregation available for plotTimeProfile()}
 \usage{
 DataAggregationMethods
 }
 \description{
-Names of aggregation available for plotPopulationTimeProfile()
+Names of aggregation available for plotTimeProfile()
 }
