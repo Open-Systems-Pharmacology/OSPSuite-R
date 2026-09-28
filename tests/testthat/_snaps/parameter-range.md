@@ -23,13 +23,13 @@
     Code
       ParameterRange$new(min = 10, max = 20, unit = "kg")$getPrintValue()
     Output
-      [1] "[10 kg..20 kg]"
+      [1] "[10.00 kg..20.00 kg]"
     Code
       ParameterRange$new(max = 20, unit = "kg")$getPrintValue()
     Output
-      [1] "]-Inf..20 kg]"
+      [1] "]-Inf..20.00 kg]"
     Code
       ParameterRange$new(min = 10, unit = "kg")$getPrintValue()
     Output
-      [1] "[10 kg..+Inf["
+      [1] "[10.00 kg..+Inf["
 
