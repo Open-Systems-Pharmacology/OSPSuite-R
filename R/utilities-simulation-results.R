@@ -256,6 +256,7 @@ importResultsFromCSV <- function(simulation, filePaths) {
 #' simulationValues, unit, dimension, TimeUnit.
 #'
 #' @export
+#' @import data.table
 simulationResultsToDataFrame <- function(
   simulationResults,
   quantitiesOrPaths = NULL,
@@ -276,7 +277,7 @@ simulationResultsToDataFrame <- function(
   # "simulationValues"
   simData <-
     data.table::melt(
-      as.data.table(simList$data),
+      data.table::as.data.table(simList$data),
       id.vars = c("IndividualId", "Time"),
       variable.name = "paths",
       value.name = "simulationValues",
