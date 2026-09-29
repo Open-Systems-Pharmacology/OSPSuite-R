@@ -63,7 +63,6 @@ Initialize a new instance of the class
 
     SimulationRunOptions$new(
       numberOfCores = NULL,
-      checkForNegativeValues = NULL,
       showProgress = NULL
     )
 
@@ -73,10 +72,6 @@ Initialize a new instance of the class
 
   Number of cores to use for the simulation. Default value is
   `getOSPSuiteSetting("numberOfCores")`
-
-- `checkForNegativeValues`:
-
-  **\[deprecated\]** Use `sim$solver$checkForNegativeValues` instead.
 
 - `showProgress`:
 
