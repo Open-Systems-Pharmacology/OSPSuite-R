@@ -1,5 +1,10 @@
 # ospsuite (development version)
 
+## Minor improvements and bug fixes
+
+- `DataCombined$setDataTransformations()` no longer multiplies geometric standard deviations (`DataErrorType$GeometricStdDev`) by the y scale factor. A geometric standard deviation is a dimensionless factor, so geometric error bars in plots and the error weights that `{ospsuite.parameteridentification}` takes from `yErrorValues` now stay correct after scaling. When a y offset other than `0` is applied, each geometric standard deviation (GSD) is adjusted to `GSD^(y / (y + yOffset))`, where `y` is the y value before the transformation. This approximates the spread of the shifted values on the log scale. Where the raw or the shifted value is not positive, the GSD is set to `NA` with a warning. See `vignette("data-combined")` for the limits of this approximation (#2046).
+- `DataCombined$setDataTransformations()` now transforms the LLOQ like the y values, `(lloq + yOffset) * yScaleFactor`. Previously the `lloq` column kept its raw value, so after a y offset or scale factor, LLOQ lines in plots were drawn at the wrong level and the `lloq` column in `toDataFrame()` and `calculateResiduals()` no longer matched the y values. With a negative y scale factor, the LLOQ is set to `NA` with a warning (#2046).
+
 # ospsuite 13.0.1
 
 ## Breaking changes

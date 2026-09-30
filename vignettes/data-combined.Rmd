@@ -174,8 +174,17 @@ The internal data frame in `DataCombined` will be transformed with the specified
 
   - For x values: `newXValue = (rawXValue + xOffset) * xScaleFactor`
   - For y values: `newYValue = (rawYValue + yOffset) * yScaleFactor`
-  - For arithmetic error: `newErrorValue = rawErrorValue * abs(yScaleFactor)`
-  - For geometric error: no transformation.
+  - For arithmetic error: `newErrorValue = rawErrorValue * abs(yScaleFactor)`. The offset does not change the error.
+  - For geometric error: no transformation by the scale factor, since the geometric standard deviation is a dimensionless factor. A y offset other than `0` changes the spread of the values on the log scale, so the error of each value is adjusted: `newErrorValue = rawErrorValue^(rawYValue / (rawYValue + yOffset))`. Where the raw or the shifted value is not positive, the error is set to `NA` with a warning.
+  - For the LLOQ: `newLLOQ = (rawLLOQ + yOffset) * yScaleFactor`, so that values below the LLOQ stay below it. With a negative y scale factor, the LLOQ would become an upper limit, so it is set to `NA` with a warning.
+
+The warnings appear when the data are retrieved with `$toDataFrame()` or plotted, not when `$setDataTransformations()` is called.
+
+The adjusted geometric error is an approximation, and you should keep its limits in mind:
+
+  - Values shifted by an offset are no longer strictly log-normally distributed, so describing them with a geometric standard deviation is itself an approximation.
+  - The approximation works well for positive offsets. For negative offsets, e.g. when a baseline is subtracted from measurements of an endogenous compound, it becomes less accurate the larger the geometric standard deviation is and the closer the shifted values come to zero.
+  - A log-normal distribution has no values at or below zero. If the shifted values are often close to or below zero, or the geometric standard deviation is large, provide these data with an arithmetic standard deviation instead of a geometric one.
 
 At any point, you can check the applied offsets and scale factors with the following active field:
 

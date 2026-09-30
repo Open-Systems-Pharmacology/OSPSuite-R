@@ -324,9 +324,35 @@ offset and scale factor values.
 \itemize{
 \item For X and Y variables:
 \code{newValue = (rawValue + offset) * scaleFactor}
-\item For error term:
-\code{newErrorValue = rawErrorValue * scaleFactor}
+\item For arithmetic error (\code{DataErrorType$ArithmeticStdDev}):
+\code{newErrorValue = rawErrorValue * abs(scaleFactor)}. The offset does
+not change the error.
+\item For geometric error (\code{DataErrorType$GeometricStdDev}): the error is a
+dimensionless factor and is not changed by the scale factor. A y
+offset other than \code{0} changes the spread of the values on the log
+scale, and the error is adjusted for each value as
+\code{newErrorValue = rawErrorValue^(rawValue / (rawValue + offset))},
+where \code{rawValue} is the y value before the transformation. Where the
+raw value or the shifted value is not positive, the error is set to
+\code{NA} with a warning.
+
+This adjustment is an approximation. Values shifted by an offset are
+no longer strictly log-normally distributed, and the approximation
+becomes less accurate for large geometric standard deviations,
+especially for negative offsets (e.g. baseline subtraction) that bring
+the values close to zero. If shifted values are often close to or
+below zero, or the geometric standard deviation is large, consider
+providing these data with an arithmetic standard deviation instead.
+\item For the lower limit of quantification (\code{lloq}):
+\code{newLLOQ = (rawLLOQ + offset) * scaleFactor}, so that a value below
+the LLOQ stays below the LLOQ after the transformation. A negative y
+scale factor would turn the LLOQ into an upper limit, so it is set to
+\code{NA} with a warning.
 }
+
+The transformations are applied when the data are retrieved with
+\code{toDataFrame()} or plotted, so the warnings appear then and not when
+\code{setDataTransformations()} is called.
   }
 }
 

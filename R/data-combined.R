@@ -353,8 +353,36 @@ DataCombined <- R6::R6Class(
     #' - For X and Y variables:
     #'   `newValue = (rawValue + offset) * scaleFactor`
     #'
-    #' - For error term:
-    #'   `newErrorValue = rawErrorValue * scaleFactor`
+    #' - For arithmetic error (`DataErrorType$ArithmeticStdDev`):
+    #'   `newErrorValue = rawErrorValue * abs(scaleFactor)`. The offset does
+    #'   not change the error.
+    #'
+    #' - For geometric error (`DataErrorType$GeometricStdDev`): the error is a
+    #'   dimensionless factor and is not changed by the scale factor. A y
+    #'   offset other than `0` changes the spread of the values on the log
+    #'   scale, and the error is adjusted for each value as
+    #'   `newErrorValue = rawErrorValue^(rawValue / (rawValue + offset))`,
+    #'   where `rawValue` is the y value before the transformation. Where the
+    #'   raw value or the shifted value is not positive, the error is set to
+    #'   `NA` with a warning.
+    #'
+    #'   This adjustment is an approximation. Values shifted by an offset are
+    #'   no longer strictly log-normally distributed, and the approximation
+    #'   becomes less accurate for large geometric standard deviations,
+    #'   especially for negative offsets (e.g. baseline subtraction) that bring
+    #'   the values close to zero. If shifted values are often close to or
+    #'   below zero, or the geometric standard deviation is large, consider
+    #'   providing these data with an arithmetic standard deviation instead.
+    #'
+    #' - For the lower limit of quantification (`lloq`):
+    #'   `newLLOQ = (rawLLOQ + offset) * scaleFactor`, so that a value below
+    #'   the LLOQ stays below the LLOQ after the transformation. A negative y
+    #'   scale factor would turn the LLOQ into an upper limit, so it is set to
+    #'   `NA` with a warning.
+    #'
+    #' The transformations are applied when the data are retrieved with
+    #' `toDataFrame()` or plotted, so the warnings appear then and not when
+    #' `setDataTransformations()` is called.
     setDataTransformations = function(
       forNames = NULL,
       xOffsets = 0,
@@ -762,28 +790,69 @@ DataCombined <- R6::R6Class(
         return(NULL)
       }
 
-      # Copy dataTransformations to not alter original object and turn into
-      # data.table object
-      dataTransformations <- data.table::setDT(data.table::copy(
-        self$dataTransformations
-      ))
-      # Copy data to not alter original object (private$.dataCombined) and
-      # transform into a data.table object
-      data <- data.table::setDT(data.table::copy(data))
-      # Update values by joining dataTransformations table (base on name column)
-      # and apply transformations.
-      data <-
-        data[
-          dataTransformations,
-          `:=`(
-            xValues = (xValues + xOffsets) * xScaleFactors,
-            yValues = (yValues + yOffsets) * yScaleFactors,
-            yErrorValues = yErrorValues * abs(yScaleFactors)
-          ),
-          on = .(name)
-        ] |>
-        # convert back to tibble
-        tibble::as_tibble()
+      # Look up the transformations of each row by its data set name
+      dataTransformations <- self$dataTransformations
+      rowTransformations <- dataTransformations[
+        match(data$name, dataTransformations$name),
+      ]
+      yOffsets <- rowTransformations$yOffsets
+      yScaleFactors <- rowTransformations$yScaleFactors
+
+      data <- tibble::as_tibble(data)
+      rawYValues <- data$yValues
+      data$xValues <- (data$xValues + rowTransformations$xOffsets) *
+        rowTransformations$xScaleFactors
+      data$yValues <- (rawYValues + yOffsets) * yScaleFactors
+
+      # Geometric error values are dimensionless factors, so a scale factor
+      # does not change them. An offset changes the spread on the log scale,
+      # approximated to first order by `GSD^(y / (y + offset))`. It is not
+      # defined for values that are not positive before or after the offset.
+      isGeometric <- rep(FALSE, nrow(data))
+      if ("yErrorType" %in% colnames(data)) {
+        isGeometric <- data$yErrorType %in% DataErrorType$GeometricStdDev
+      }
+      data$yErrorValues[!isGeometric] <- data$yErrorValues[!isGeometric] *
+        abs(yScaleFactors[!isGeometric])
+      geometricWithOffset <- which(isGeometric & yOffsets != 0)
+      if (length(geometricWithOffset) > 0L) {
+        y <- rawYValues[geometricWithOffset]
+        shiftedY <- y + yOffsets[geometricWithOffset]
+        errorValues <- data$yErrorValues[geometricWithOffset]
+        isDefined <- y > 0 & shiftedY > 0
+        notPositive <- which(!isDefined & !is.na(errorValues))
+        if (length(notPositive) > 0L) {
+          warning(
+            messages$warningGeometricErrorNotPositive(
+              unique(data$name[geometricWithOffset[notPositive]])
+            ),
+            call. = FALSE
+          )
+        }
+        data$yErrorValues[geometricWithOffset] <- ifelse(
+          isDefined,
+          errorValues^(y / shiftedY),
+          NA_real_
+        )
+      }
+
+      # The LLOQ is transformed like the y values, so that `yValues < lloq`
+      # stays valid. A negative scale factor turns it into an upper limit, so
+      # it is set to `NA`.
+      if ("lloq" %in% colnames(data)) {
+        data$lloq <- (data$lloq + yOffsets) * yScaleFactors
+        lloqWithNegativeFactor <- which(yScaleFactors < 0 & !is.na(data$lloq))
+        if (length(lloqWithNegativeFactor) > 0L) {
+          warning(
+            messages$warningLLOQWithNegativeScaleFactor(
+              unique(data$name[lloqWithNegativeFactor])
+            ),
+            call. = FALSE
+          )
+          data$lloq[lloqWithNegativeFactor] <- NA_real_
+        }
+      }
+
       return(data)
     },
 
