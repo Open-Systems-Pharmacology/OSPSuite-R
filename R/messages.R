@@ -128,6 +128,13 @@ messages$warningGeometricErrorNotPositive <- function(dataSetNames) {
   )
 }
 
+messages$warningGeometricErrorNegativeScaleFactor <- function(dataSetNames) {
+  cliFormat(
+    "Geometric error values set to NA for {length(dataSetNames)} data set{?s} with a negative value in {.field yScaleFactors}: {.val {dataSetNames}}.",
+    "A geometric standard deviation is only defined for positive values."
+  )
+}
+
 messages$warningLLOQWithNegativeScaleFactor <- function(dataSetNames) {
   cliFormat(
     "LLOQ set to NA for {length(dataSetNames)} data set{?s} with a negative value in {.field yScaleFactors}: {.val {dataSetNames}}.",

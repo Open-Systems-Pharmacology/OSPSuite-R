@@ -334,15 +334,18 @@ scale, and the error is adjusted for each value as
 \code{newErrorValue = rawErrorValue^(rawValue / (rawValue + offset))},
 where \code{rawValue} is the y value before the transformation. Where the
 raw value or the shifted value is not positive, the error is set to
-\code{NA} with a warning.
+\code{NA} with a warning. A negative y scale factor makes all values
+negative, so the error is then set to \code{NA} with a warning as well.
 
 This adjustment is an approximation. Values shifted by an offset are
-no longer strictly log-normally distributed, and the approximation
-becomes less accurate for large geometric standard deviations,
-especially for negative offsets (e.g. baseline subtraction) that bring
-the values close to zero. If shifted values are often close to or
-below zero, or the geometric standard deviation is large, consider
-providing these data with an arithmetic standard deviation instead.
+no longer strictly log-normally distributed, so their spread is not
+symmetric on the log scale, while the adjusted error gives error bars
+that are. The approximation becomes less accurate for large geometric
+standard deviations, especially for negative offsets (e.g. baseline
+subtraction) that bring the values close to zero. If shifted values
+are often close to or below zero, or the geometric standard deviation
+is large, consider providing these data with an arithmetic standard
+deviation instead.
 \item For the lower limit of quantification (\code{lloq}):
 \code{newLLOQ = (rawLLOQ + offset) * scaleFactor}, so that a value below
 the LLOQ stays below the LLOQ after the transformation. A negative y

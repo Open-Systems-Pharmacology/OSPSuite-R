@@ -1038,6 +1038,36 @@ test_that("negative y scale factors set the LLOQ to NA with a warning", {
   expect_equal(df$lloq[df$name == "geo"], c(1, 1))
 })
 
+test_that("negative y scale factors set geometric error values to NA with a warning", {
+  # without an offset, and with an offset that makes the value 0.6 negative,
+  # which must not add the warning about values that are not positive after
+  # applying `yOffsets`
+  for (yOffset in c(0, -1)) {
+    myCombDat <- .makeTransformDataCombined()
+    myCombDat$setDataTransformations(
+      forNames = "geo",
+      yOffsets = yOffset,
+      yScaleFactors = -1
+    )
+
+    expect_warning(
+      expect_warning(
+        expect_no_warning(
+          df <- myCombDat$toDataFrame(),
+          message = "yOffsets"
+        ),
+        messages$warningGeometricErrorNegativeScaleFactor("geo"),
+        fixed = TRUE
+      ),
+      messages$warningLLOQWithNegativeScaleFactor("geo"),
+      fixed = TRUE
+    )
+    expect_equal(df$yErrorValues[df$name == "geo"], c(NA_real_, NA_real_))
+    # data sets not listed in `forNames` are not transformed
+    expect_equal(df$yErrorValues[df$name == "arith"], c(1, 0.05))
+  }
+})
+
 test_that("transformations work for simulated data without LLOQ and error type", {
   myCombDat <- DataCombined$new()
   myCombDat$addSimulationResults(simResults)

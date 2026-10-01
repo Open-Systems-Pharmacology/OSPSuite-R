@@ -364,15 +364,18 @@ DataCombined <- R6::R6Class(
     #'   `newErrorValue = rawErrorValue^(rawValue / (rawValue + offset))`,
     #'   where `rawValue` is the y value before the transformation. Where the
     #'   raw value or the shifted value is not positive, the error is set to
-    #'   `NA` with a warning.
+    #'   `NA` with a warning. A negative y scale factor makes all values
+    #'   negative, so the error is then set to `NA` with a warning as well.
     #'
     #'   This adjustment is an approximation. Values shifted by an offset are
-    #'   no longer strictly log-normally distributed, and the approximation
-    #'   becomes less accurate for large geometric standard deviations,
-    #'   especially for negative offsets (e.g. baseline subtraction) that bring
-    #'   the values close to zero. If shifted values are often close to or
-    #'   below zero, or the geometric standard deviation is large, consider
-    #'   providing these data with an arithmetic standard deviation instead.
+    #'   no longer strictly log-normally distributed, so their spread is not
+    #'   symmetric on the log scale, while the adjusted error gives error bars
+    #'   that are. The approximation becomes less accurate for large geometric
+    #'   standard deviations, especially for negative offsets (e.g. baseline
+    #'   subtraction) that bring the values close to zero. If shifted values
+    #'   are often close to or below zero, or the geometric standard deviation
+    #'   is large, consider providing these data with an arithmetic standard
+    #'   deviation instead.
     #'
     #' - For the lower limit of quantification (`lloq`):
     #'   `newLLOQ = (rawLLOQ + offset) * scaleFactor`, so that a value below
@@ -814,7 +817,24 @@ DataCombined <- R6::R6Class(
       }
       data$yErrorValues[!isGeometric] <- data$yErrorValues[!isGeometric] *
         abs(yScaleFactors[!isGeometric])
-      geometricWithOffset <- which(isGeometric & yOffsets != 0)
+      # A negative scale factor makes all values negative, where a geometric
+      # error is not defined either
+      isNegativeFactor <- isGeometric & yScaleFactors < 0
+      geometricWithNegativeFactor <- which(
+        isNegativeFactor & !is.na(data$yErrorValues)
+      )
+      if (length(geometricWithNegativeFactor) > 0L) {
+        warning(
+          messages$warningGeometricErrorNegativeScaleFactor(
+            unique(data$name[geometricWithNegativeFactor])
+          ),
+          call. = FALSE
+        )
+      }
+      data$yErrorValues[isNegativeFactor] <- NA_real_
+      geometricWithOffset <- which(
+        isGeometric & yOffsets != 0 & !isNegativeFactor
+      )
       if (length(geometricWithOffset) > 0L) {
         y <- rawYValues[geometricWithOffset]
         shiftedY <- y + yOffsets[geometricWithOffset]
