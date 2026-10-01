@@ -364,8 +364,10 @@ DataCombined <- R6::R6Class(
     #'   `newErrorValue = rawErrorValue^(rawValue / (rawValue + offset))`,
     #'   where `rawValue` is the y value before the transformation. Where the
     #'   raw value or the shifted value is not positive, the error is set to
-    #'   `NA` with a warning. A negative y scale factor makes all values
-    #'   negative, so the error is then set to `NA` with a warning as well.
+    #'   `NA` with a warning. A negative y scale factor reverses the sign of
+    #'   the values. Positive shifted values become negative, and shifted
+    #'   values that are not positive have no defined geometric error anyway,
+    #'   so the error is set to `NA` with a warning.
     #'
     #'   This adjustment is an approximation. Values shifted by an offset are
     #'   no longer strictly log-normally distributed, so their spread is not
@@ -817,8 +819,9 @@ DataCombined <- R6::R6Class(
       }
       data$yErrorValues[!isGeometric] <- data$yErrorValues[!isGeometric] *
         abs(yScaleFactors[!isGeometric])
-      # A negative scale factor makes all values negative, where a geometric
-      # error is not defined either
+      # A negative scale factor reverses the sign of the values. Positive
+      # shifted values become negative, and shifted values that are not
+      # positive have no defined geometric error anyway
       isNegativeFactor <- isGeometric & yScaleFactors < 0
       geometricWithNegativeFactor <- which(
         isNegativeFactor & !is.na(data$yErrorValues)

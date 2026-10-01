@@ -334,8 +334,10 @@ scale, and the error is adjusted for each value as
 \code{newErrorValue = rawErrorValue^(rawValue / (rawValue + offset))},
 where \code{rawValue} is the y value before the transformation. Where the
 raw value or the shifted value is not positive, the error is set to
-\code{NA} with a warning. A negative y scale factor makes all values
-negative, so the error is then set to \code{NA} with a warning as well.
+\code{NA} with a warning. A negative y scale factor reverses the sign of
+the values. Positive shifted values become negative, and shifted
+values that are not positive have no defined geometric error anyway,
+so the error is set to \code{NA} with a warning.
 
 This adjustment is an approximation. Values shifted by an offset are
 no longer strictly log-normally distributed, so their spread is not
