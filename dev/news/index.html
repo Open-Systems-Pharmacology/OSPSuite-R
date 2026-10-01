@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +63,13 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="ospsuite-development-version">ospsuite (development version)<a class="anchor" aria-label="anchor" href="#ospsuite-development-version"></a></h2>
+<div class="section level3">
+<h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
+<ul><li>
+<code>DataCombined$setDataTransformations()</code> no longer multiplies geometric standard deviations (<code>DataErrorType$GeometricStdDev</code>) by the y scale factor. A geometric standard deviation is a dimensionless factor, so geometric error bars in plots and the error weights that <code>{ospsuite.parameteridentification}</code> takes from <code>yErrorValues</code> now stay correct after scaling. When a y offset other than <code>0</code> is applied, each geometric standard deviation (GSD) is adjusted to <code>GSD^(y / (y + yOffset))</code>, where <code>y</code> is the y value before the transformation. This approximates the spread of the shifted values on the log scale. Where the raw or the shifted value is not positive, the GSD is set to <code>NA</code> with a warning. With a negative y scale factor, the sign of the values is reversed, so the GSD is set to <code>NA</code> with a warning as well. See <code><a href="../articles/data-combined.html">vignette("data-combined")</a></code> for the limits of this approximation (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/2046" class="external-link">#2046</a>).</li>
+<li>
+<code>DataCombined$setDataTransformations()</code> now transforms the LLOQ like the y values, <code>(lloq + yOffset) * yScaleFactor</code>. Previously the <code>lloq</code> column kept its raw value, so after a y offset or scale factor, LLOQ lines in plots were drawn at the wrong level and the <code>lloq</code> column in <code>toDataFrame()</code> and <code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code> no longer matched the y values. With a negative y scale factor, the LLOQ is set to <code>NA</code> with a warning. An offset can make the LLOQ zero or negative. The value is kept, so values below the LLOQ stay below it, but a warning says that it cannot be shown on a log scale and that LLOQ-based censoring, e.g. in <code>{ospsuite.parameteridentification}</code>, is not defined for it. <code>toDataFrame()</code> returns the transformed LLOQ; the original LLOQ remains available as <code>DataSet$LLOQ</code> (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/2046" class="external-link">#2046</a>).</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="13.0.1" id="ospsuite-1301">ospsuite 13.0.1<a class="anchor" aria-label="anchor" href="#ospsuite-1301"></a></h2>

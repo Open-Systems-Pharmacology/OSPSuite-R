@@ -326,7 +326,43 @@ offset and scale factor values.
 
 - For X and Y variables: `newValue = (rawValue + offset) * scaleFactor`
 
-- For error term: `newErrorValue = rawErrorValue * scaleFactor`
+- For arithmetic error (`DataErrorType$ArithmeticStdDev`):
+  `newErrorValue = rawErrorValue * abs(scaleFactor)`. The offset does
+  not change the error.
+
+- For geometric error (`DataErrorType$GeometricStdDev`): the error is a
+  dimensionless factor and is not changed by the scale factor. A y
+  offset other than `0` changes the spread of the values on the log
+  scale, and the error is adjusted for each value as
+  `newErrorValue = rawErrorValue^(rawValue / (rawValue + offset))`,
+  where `rawValue` is the y value before the transformation. Where the
+  raw value or the shifted value is not positive, the error is set to
+  `NA` with a warning. A negative y scale factor reverses the sign of
+  the values. Positive shifted values become negative, and shifted
+  values that are not positive have no defined geometric error anyway,
+  so the error is set to `NA` with a warning.
+
+  This adjustment is an approximation. Values shifted by an offset are
+  no longer strictly log-normally distributed, so their spread is not
+  symmetric on the log scale, while the adjusted error gives error bars
+  that are. The approximation becomes less accurate for large geometric
+  standard deviations, especially for negative offsets (e.g. baseline
+  subtraction) that bring the values close to zero. If shifted values
+  are often close to or below zero, or the geometric standard deviation
+  is large, consider providing these data with an arithmetic standard
+  deviation instead.
+
+- For the lower limit of quantification (`lloq`):
+  `newLLOQ = (rawLLOQ + offset) * scaleFactor`, so that a value below
+  the LLOQ stays below the LLOQ after the transformation. A negative y
+  scale factor would turn the LLOQ into an upper limit, so it is set to
+  `NA` with a warning. An offset can make the LLOQ zero or negative. The
+  value is kept, with a warning, because it cannot be shown on a log
+  scale.
+
+The transformations are applied when the data are retrieved with
+`toDataFrame()` or plotted, so the warnings appear then and not when
+`setDataTransformations()` is called.
 
 ------------------------------------------------------------------------
 
@@ -345,6 +381,15 @@ Calling this method repeatedly on an unchanged object is cheap: the data
 frame is computed once and then reused. Adding data, changing groups,
 changing data types, or changing data transformations makes the next
 call compute it again.
+
+The returned values include the data transformations set with
+`$setDataTransformations()`. This applies to the x and y values, the
+error values and the `lloq` column. The LLOQ is transformed like the y
+values, `(lloq + yOffset) * yScaleFactor`, so that it can be compared
+with the transformed y values, and it is `NA` for a negative y scale
+factor. The original values, without any offset or scale factor, remain
+available in the `DataSet` and `SimulationResults` objects, e.g. the
+original LLOQ as `DataSet$LLOQ`.
 
 #### Usage
 
