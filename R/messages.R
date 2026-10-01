@@ -121,6 +121,34 @@ messages$DataFrameNameAlreadyUsed <- function(DataFrameName) {
   ))
 }
 
+messages$warningGeometricErrorNotPositive <- function(dataSetNames) {
+  cliFormat(
+    "Geometric error values set to NA for {length(dataSetNames)} data set{?s} with values that are not positive before or after applying {.field yOffsets}: {.val {dataSetNames}}.",
+    "A geometric standard deviation is only defined for positive values."
+  )
+}
+
+messages$warningGeometricErrorNegativeScaleFactor <- function(dataSetNames) {
+  cliFormat(
+    "Geometric error values set to NA for {length(dataSetNames)} data set{?s} with a negative value in {.field yScaleFactors}: {.val {dataSetNames}}.",
+    "A geometric standard deviation is only defined for positive values."
+  )
+}
+
+messages$warningLLOQNotPositive <- function(dataSetNames) {
+  cliFormat(
+    "LLOQ is not positive for {length(dataSetNames)} data set{?s} after applying {.field yOffsets}: {.val {dataSetNames}}.",
+    "The value is kept, but it cannot be shown on a log scale, and LLOQ-based censoring, e.g. in parameter identification, is not defined for it."
+  )
+}
+
+messages$warningLLOQWithNegativeScaleFactor <- function(dataSetNames) {
+  cliFormat(
+    "LLOQ set to NA for {length(dataSetNames)} data set{?s} with a negative value in {.field yScaleFactors}: {.val {dataSetNames}}.",
+    "A negative scale factor turns the lower limit of quantification into an upper limit."
+  )
+}
+
 messages$wrongUnitForQuantity <- function(quantityPath, unit, dimension) {
   cliFormat(paste(
     "Unit {.val {unit}} is {.strong not} valid for",

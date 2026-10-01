@@ -174,8 +174,27 @@ The internal data frame in `DataCombined` will be transformed with the specified
 
   - For x values: `newXValue = (rawXValue + xOffset) * xScaleFactor`
   - For y values: `newYValue = (rawYValue + yOffset) * yScaleFactor`
-  - For arithmetic error: `newErrorValue = rawErrorValue * abs(yScaleFactor)`
-  - For geometric error: no transformation.
+  - For arithmetic error: `newErrorValue = rawErrorValue * abs(yScaleFactor)`. The offset does not change the error.
+  - For geometric error: no transformation by the scale factor, since the geometric standard deviation is a dimensionless factor. A y offset other than `0` changes the spread of the values on the log scale, so the error of each value is adjusted: `newErrorValue = rawErrorValue^(rawYValue / (rawYValue + yOffset))`. Where the raw or the shifted value is not positive, the error is set to `NA` with a warning. A negative y scale factor reverses the sign of the values. Positive shifted values become negative, and shifted values that are not positive have no defined geometric error anyway, so the error is set to `NA` with a warning. For a geometric standard deviation, the offset also determines the adjusted error, so an offset given in the wrong unit leads to a wrong error, not only to wrongly shifted values. For example, for a value of 5 with a geometric standard deviation of 1.5 and `yScaleFactors = 0.5`, an offset of -2 gives 1.97, while -4 (the same shift given in the scaled unit) gives 7.59.
+  - For the LLOQ: `newLLOQ = (rawLLOQ + yOffset) * yScaleFactor`, so that values below the LLOQ stay below it. With a negative y scale factor, the LLOQ would become an upper limit, so it is set to `NA` with a warning. The transformed LLOQ describes the same quantification limit in the transformed values, so it can be zero or negative after an offset, which gives a warning. The original LLOQ of a data set, without offset or scale factor, remains available as `DataSet$LLOQ`.
+
+The warnings appear when the data are retrieved with `$toDataFrame()` or plotted, not when `$setDataTransformations()` is called.
+
+The adjusted geometric error is an approximation, and you should keep its limits in mind:
+
+  - Values shifted by an offset are no longer strictly log-normally distributed, so their spread is not symmetric on the log scale, and no single geometric standard deviation describes it exactly. The adjusted error still gives error bars that are symmetric on the log scale. For example, for a value of 1 with a geometric standard deviation of 2.5 and an offset of +2, the exact interval of the shifted values is [2.4, 4.5], i.e. ×1.25 below and ×1.5 above the shifted value 3, while the adjusted geometric standard deviation of 1.357 gives [2.21, 4.07]. For negative offsets, the asymmetry reverses and becomes larger.
+  - The approximation works well for positive offsets unless the geometric standard deviation is large. For negative offsets, e.g. when a baseline is subtracted from measurements of an endogenous compound, the approximation becomes less accurate the larger the geometric standard deviation is and the closer the shifted values come to zero.
+  - A log-normal distribution has no values at or below zero. If the shifted values are often close to or below zero, or the geometric standard deviation is large, provide these data with an arithmetic standard deviation instead of a geometric one.
+
+The following example shows the difference for an offset of -2, with an arithmetic standard deviation of 2, 1, and 0.5 or a geometric standard deviation of 1.5:
+
+| Raw y | Shifted y | Arithmetic SD after | Geometric SD after |
+|-------|-----------|---------------------|--------------------|
+| 10    | 8         | 2                   | 1.66               |
+| 5     | 3         | 1                   | 1.97               |
+| 1     | -1        | 0.5                 | `NA` with a warning |
+
+The arithmetic standard deviation stays exact and is defined for every value, including the negative one. The geometric standard deviation increases as the shifted values come closer to zero, and it is not defined once they are zero or negative.
 
 At any point, you can check the applied offsets and scale factors with the following active field:
 
@@ -226,15 +245,22 @@ myDataCombinedTranformations$setDataTransformations(
 
 plotTimeProfile(plotData = myDataCombinedTranformations)
 ```
-Finally, offsetting the observation values might be useful when working with measurements 
-of endogenous substrates, such as the hormone glucagon, and want to correct for the 
+Finally, offsetting the observation values might be useful when working with measurements
+of endogenous substrates, such as the hormone glucagon, and want to correct for the
 individual specific baseline levels of the hormone.
+The arithmetic standard deviation is not changed by the offset, because the offset is
+treated as a known, exact value. If the baseline is itself a measured value with its own
+uncertainty, that uncertainty is not added to the error. Account for it when you prepare
+the data, e.g. as `sqrt(SD^2 + SD_baseline^2)` for a baseline measured independently
+of the values.
 
 ## Extracting a combined data frame
 
 The data frame (also sometimes called as a table) data structure is central to R-based workflows, and, thus, we may wish to extract a data frame for datasets present in the object.
 
 Internally, `DataCombined` extracts data frames for observed and simulated datasets and combines them.
+
+The data frame contains the transformed values if data transformations are set (see the section on transformations above). This also applies to the `lloq` column. The original values, e.g. the LLOQ as `DataSet$LLOQ`, remain available in the `DataSet` and `SimulationResults` objects.
 
 ```{r}
 myDataCombined$toDataFrame()
