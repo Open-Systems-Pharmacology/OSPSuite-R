@@ -135,6 +135,13 @@ messages$warningGeometricErrorNegativeScaleFactor <- function(dataSetNames) {
   )
 }
 
+messages$warningLLOQNotPositive <- function(dataSetNames) {
+  cliFormat(
+    "LLOQ is not positive for {length(dataSetNames)} data set{?s} after applying {.field yOffsets}: {.val {dataSetNames}}.",
+    "The value is kept, but it cannot be shown on a log scale, and LLOQ-based censoring, e.g. in parameter identification, is not defined for it."
+  )
+}
+
 messages$warningLLOQWithNegativeScaleFactor <- function(dataSetNames) {
   cliFormat(
     "LLOQ set to NA for {length(dataSetNames)} data set{?s} with a negative value in {.field yScaleFactors}: {.val {dataSetNames}}.",

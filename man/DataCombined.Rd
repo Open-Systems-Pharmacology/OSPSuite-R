@@ -352,7 +352,9 @@ deviation instead.
 \code{newLLOQ = (rawLLOQ + offset) * scaleFactor}, so that a value below
 the LLOQ stays below the LLOQ after the transformation. A negative y
 scale factor would turn the LLOQ into an upper limit, so it is set to
-\code{NA} with a warning.
+\code{NA} with a warning. An offset can make the LLOQ zero or negative.
+The value is kept, with a warning, because it cannot be shown on a
+log scale.
 }
 
 The transformations are applied when the data are retrieved with
@@ -377,6 +379,15 @@ Calling this method repeatedly on an unchanged object is cheap: the
 data frame is computed once and then reused. Adding data, changing
 groups, changing data types, or changing data transformations makes the
 next call compute it again.
+
+The returned values include the data transformations set with
+\verb{$setDataTransformations()}. This applies to the x and y values, the
+error values and the \code{lloq} column. The LLOQ is transformed like the y
+values, \code{(lloq + yOffset) * yScaleFactor}, so that it can be compared
+with the transformed y values, and it is \code{NA} for a negative y scale
+factor. The original values, without any offset or scale factor,
+remain available in the \code{DataSet} and \code{SimulationResults} objects, e.g.
+the original LLOQ as \code{DataSet$LLOQ}.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
     \preformatted{DataCombined$toDataFrame()}

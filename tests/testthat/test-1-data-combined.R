@@ -990,9 +990,14 @@ test_that("geometric error values are NA with a warning where the y offset makes
   )
   myCombDat$setDataTransformations(yOffsets = -1)
 
+  # the offset also makes the LLOQ of 1 zero for all data sets
   expect_warning(
-    df <- myCombDat$toDataFrame(),
-    messages$warningGeometricErrorNotPositive("geo"),
+    expect_warning(
+      df <- myCombDat$toDataFrame(),
+      messages$warningGeometricErrorNotPositive("geo"),
+      fixed = TRUE
+    ),
+    messages$warningLLOQNotPositive(c("geo", "arith", "geoMissing")),
     fixed = TRUE
   )
   # the raw y value 0.6 becomes -0.4
@@ -1016,6 +1021,27 @@ test_that("LLOQ is transformed like the y values", {
   # data sets not listed in `forNames` are not transformed
   expect_equal(df$lloq[df$name == "geo"], c(1, 1))
   expect_equal(df$yErrorValues[df$name == "geo"], c(1.5, 1.5))
+})
+
+test_that("an LLOQ that is not positive after a y offset is kept with a warning", {
+  # baseline subtraction above the LLOQ of 1 gives an LLOQ of 0 or below
+  for (yOffset in c(-1, -2)) {
+    myCombDat <- .makeTransformDataCombined()
+    myCombDat$setDataTransformations(forNames = "arith", yOffsets = yOffset)
+
+    expect_warning(
+      df <- myCombDat$toDataFrame(),
+      messages$warningLLOQNotPositive("arith"),
+      fixed = TRUE
+    )
+    expect_equal(df$lloq[df$name == "arith"], rep(1 + yOffset, 2))
+  }
+
+  # an LLOQ that stays positive gives no warning
+  myCombDat <- .makeTransformDataCombined()
+  myCombDat$setDataTransformations(forNames = "arith", yOffsets = -0.5)
+  expect_no_warning(df <- myCombDat$toDataFrame())
+  expect_equal(df$lloq[df$name == "arith"], c(0.5, 0.5))
 })
 
 test_that("negative y scale factors set the LLOQ to NA with a warning", {

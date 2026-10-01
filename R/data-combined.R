@@ -383,7 +383,9 @@ DataCombined <- R6::R6Class(
     #'   `newLLOQ = (rawLLOQ + offset) * scaleFactor`, so that a value below
     #'   the LLOQ stays below the LLOQ after the transformation. A negative y
     #'   scale factor would turn the LLOQ into an upper limit, so it is set to
-    #'   `NA` with a warning.
+    #'   `NA` with a warning. An offset can make the LLOQ zero or negative.
+    #'   The value is kept, with a warning, because it cannot be shown on a
+    #'   log scale.
     #'
     #' The transformations are applied when the data are retrieved with
     #' `toDataFrame()` or plotted, so the warnings appear then and not when
@@ -496,6 +498,15 @@ DataCombined <- R6::R6Class(
     #' data frame is computed once and then reused. Adding data, changing
     #' groups, changing data types, or changing data transformations makes the
     #' next call compute it again.
+    #'
+    #' The returned values include the data transformations set with
+    #' `$setDataTransformations()`. This applies to the x and y values, the
+    #' error values and the `lloq` column. The LLOQ is transformed like the y
+    #' values, `(lloq + yOffset) * yScaleFactor`, so that it can be compared
+    #' with the transformed y values, and it is `NA` for a negative y scale
+    #' factor. The original values, without any offset or scale factor,
+    #' remain available in the `DataSet` and `SimulationResults` objects, e.g.
+    #' the original LLOQ as `DataSet$LLOQ`.
     #'
     #' @return
     #'
@@ -873,6 +884,20 @@ DataCombined <- R6::R6Class(
             call. = FALSE
           )
           data$lloq[lloqWithNegativeFactor] <- NA_real_
+        }
+        # An offset can make the LLOQ zero or negative. The value is kept, as
+        # it still separates the values below the LLOQ, but it cannot be shown
+        # on a log scale and LLOQ-based censoring is not defined for it.
+        lloqNotPositive <- which(
+          yOffsets != 0 & !is.na(data$lloq) & data$lloq <= 0
+        )
+        if (length(lloqNotPositive) > 0L) {
+          warning(
+            messages$warningLLOQNotPositive(
+              unique(data$name[lloqNotPositive])
+            ),
+            call. = FALSE
+          )
         }
       }
 
