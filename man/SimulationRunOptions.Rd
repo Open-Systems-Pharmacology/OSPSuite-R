@@ -55,10 +55,7 @@ Default is \code{getOSPSuiteSetting("showProgress")}}
   Initialize a new instance of the class
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{SimulationRunOptions$new(
-  numberOfCores = NULL,
-  showProgress = NULL
-)}
+    \preformatted{SimulationRunOptions$new(numberOfCores = NULL, showProgress = NULL)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
