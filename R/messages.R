@@ -278,6 +278,23 @@ messages$errorIndividualIdsNotFoundInPopulation <- function(missingIds) {
   )
 }
 
+messages$errorPKAnalysesQuantityPathsNotFound <- function(missingPaths) {
+  cliFormat(
+    "{length(missingPaths)} output{?s} {?is/are} not part of the PK-Analyses: {.val {missingPaths}}.",
+    "Use {.field allQuantityPaths} of the PK-Analyses to list the available output paths.",
+    if (any(grepl("*", missingPaths, fixed = TRUE))) {
+      "Wildcards ({.code *}) are not supported."
+    }
+  )
+}
+
+messages$errorPKAnalysesPKParametersNotFound <- function(missingPKParameters) {
+  cliFormat(
+    "{length(missingPKParameters)} PK parameter{?s} {?is/are} not part of the PK-Analyses: {.val {missingPKParameters}}.",
+    "Use {.field allPKParameterNames} of the PK-Analyses to list the available PK parameters."
+  )
+}
+
 ##### MoBiProject#####
 messages$modulesNotPresentInProject <- function(modules) {
   paste0(
