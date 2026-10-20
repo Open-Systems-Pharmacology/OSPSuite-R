@@ -106,12 +106,6 @@ pkAnalysesPopulation <- calculatePKAnalyses(
 )
 allPathsMultiple <- pkAnalysesMultipleOutputs$allQuantityPaths
 
-# Calls pkAnalysesToDataFrame() with filtering forced to .NET or to R
-pkAnalysesToDataFrameFilteredIn <- function(filterInNet, ...) {
-  local_mocked_bindings(.isFilterInNetFaster = function(...) filterInNet)
-  pkAnalysesToDataFrame(...)
-}
-
 test_that("It can convert valid pk-analysis results to data frame", {
   df <- pkAnalysesToDataFrame(pkAnalyses = pkAnalyses)
   expect_length(colnames(df), 5)
@@ -251,75 +245,59 @@ test_that("pkAnalysesToDataFrame ignores the readr default locale option", {
 test_that("pkAnalysesToDataFrame filters by quantity paths", {
   full <- pkAnalysesToDataFrame(pkAnalysesMultipleOutputs)
   paths <- allPathsMultiple[c(3, 1)]
-  for (filterInNet in c(TRUE, FALSE)) {
-    df <- pkAnalysesToDataFrameFilteredIn(
-      filterInNet,
-      pkAnalysesMultipleOutputs,
-      quantitiesOrPaths = paths
-    )
-    expectPKAnalysesColumns(df)
-    expect_equal(df, full[full$QuantityPath %in% paths, ], tolerance = 0)
-    expect_equal(unique(df$QuantityPath), allPathsMultiple[c(1, 3)])
-  }
+  df <- pkAnalysesToDataFrame(
+    pkAnalysesMultipleOutputs,
+    quantitiesOrPaths = paths
+  )
+  expectPKAnalysesColumns(df)
+  expect_equal(df, full[full$QuantityPath %in% paths, ], tolerance = 0)
+  expect_equal(unique(df$QuantityPath), allPathsMultiple[c(1, 3)])
 })
 
 test_that("pkAnalysesToDataFrame filters by quantity objects, also mixed with paths", {
   full <- pkAnalysesToDataFrame(pkAnalysesMultipleOutputs)
   quantity <- getQuantity(allPathsMultiple[[2]], simMultipleOutputs)
-  for (filterInNet in c(TRUE, FALSE)) {
-    df <- pkAnalysesToDataFrameFilteredIn(
-      filterInNet,
-      pkAnalysesMultipleOutputs,
-      quantitiesOrPaths = quantity
-    )
-    expectPKAnalysesColumns(df)
-    expect_equal(
-      df,
-      full[full$QuantityPath == allPathsMultiple[[2]], ],
-      tolerance = 0
-    )
+  df <- pkAnalysesToDataFrame(
+    pkAnalysesMultipleOutputs,
+    quantitiesOrPaths = quantity
+  )
+  expectPKAnalysesColumns(df)
+  expect_equal(
+    df,
+    full[full$QuantityPath == allPathsMultiple[[2]], ],
+    tolerance = 0
+  )
 
-    df <- pkAnalysesToDataFrameFilteredIn(
-      filterInNet,
-      pkAnalysesMultipleOutputs,
-      quantitiesOrPaths = list(quantity, allPathsMultiple[[4]])
-    )
-    expect_equal(unique(df$QuantityPath), allPathsMultiple[c(2, 4)])
-  }
+  df <- pkAnalysesToDataFrame(
+    pkAnalysesMultipleOutputs,
+    quantitiesOrPaths = list(quantity, allPathsMultiple[[4]])
+  )
+  expect_equal(unique(df$QuantityPath), allPathsMultiple[c(2, 4)])
 })
 
 test_that("pkAnalysesToDataFrame filters by PK parameters", {
   full <- pkAnalysesToDataFrame(pkAnalysesPopulation)
   pkParameters <- c("t_max", "C_max", "C_max")
-  for (filterInNet in c(TRUE, FALSE)) {
-    df <- pkAnalysesToDataFrameFilteredIn(
-      filterInNet,
-      pkAnalysesPopulation,
-      pkParameters = pkParameters
-    )
-    expectPKAnalysesColumns(df)
-    expect_equal(df, full[full$Parameter %in% pkParameters, ], tolerance = 0)
-  }
+  df <- pkAnalysesToDataFrame(pkAnalysesPopulation, pkParameters = pkParameters)
+  expectPKAnalysesColumns(df)
+  expect_equal(df, full[full$Parameter %in% pkParameters, ], tolerance = 0)
 })
 
 test_that("pkAnalysesToDataFrame combines both filters and ignores duplicates", {
   full <- pkAnalysesToDataFrame(pkAnalysesPopulation)
   paths <- allPathsMultiple[c(2, 4, 2)]
   pkParameters <- c("AUC_inf", "Thalf")
-  for (filterInNet in c(TRUE, FALSE)) {
-    df <- pkAnalysesToDataFrameFilteredIn(
-      filterInNet,
-      pkAnalysesPopulation,
-      quantitiesOrPaths = paths,
-      pkParameters = pkParameters
-    )
-    expect_equal(
-      df,
-      full[full$QuantityPath %in% paths & full$Parameter %in% pkParameters, ],
-      tolerance = 0
-    )
-    expect_equal(nrow(df), 2 * 2 * 5)
-  }
+  df <- pkAnalysesToDataFrame(
+    pkAnalysesPopulation,
+    quantitiesOrPaths = paths,
+    pkParameters = pkParameters
+  )
+  expect_equal(
+    df,
+    full[full$QuantityPath %in% paths & full$Parameter %in% pkParameters, ],
+    tolerance = 0
+  )
+  expect_equal(nrow(df), 2 * 2 * 5)
 })
 
 test_that("pkAnalysesToDataFrame returns all rows when the filters list everything", {
@@ -332,26 +310,22 @@ test_that("pkAnalysesToDataFrame returns all rows when the filters list everythi
 })
 
 test_that("pkAnalysesToDataFrame returns an empty data frame when the filters match nothing", {
-  for (filterInNet in c(TRUE, FALSE)) {
-    df <- pkAnalysesToDataFrameFilteredIn(
-      filterInNet,
-      pkAnalysesMultipleOutputs,
-      quantitiesOrPaths = character(0)
-    )
-    expectPKAnalysesColumns(df)
-    expect_equal(nrow(df), 0)
+  df <- pkAnalysesToDataFrame(
+    pkAnalysesMultipleOutputs,
+    quantitiesOrPaths = character(0)
+  )
+  expectPKAnalysesColumns(df)
+  expect_equal(nrow(df), 0)
 
-    df <- pkAnalysesToDataFrameFilteredIn(
-      filterInNet,
-      pkAnalysesMultipleOutputs,
-      pkParameters = character(0)
-    )
-    expectPKAnalysesColumns(df)
-    expect_equal(nrow(df), 0)
-  }
+  df <- pkAnalysesToDataFrame(
+    pkAnalysesMultipleOutputs,
+    pkParameters = character(0)
+  )
+  expectPKAnalysesColumns(df)
+  expect_equal(nrow(df), 0)
 })
 
-test_that("Both filter routes group the rows by output for PK-Analyses not grouped by output", {
+test_that("pkAnalysesToDataFrame groups the selected rows by output for PK-Analyses not grouped by output", {
   # Import a file sorted by PK parameter, so the outputs are interleaved
   executeWithTestFile(function(csvFile) {
     exportPKAnalysesToCSV(pkAnalysesMultipleOutputs, csvFile)
@@ -374,18 +348,8 @@ test_that("Both filter routes group the rows by output for PK-Analyses not group
       order(match(expected$QuantityPath, pkAnalysesSorted$allQuantityPaths)),
     ]
 
-    viaNet <- pkAnalysesToDataFrameFilteredIn(
-      TRUE,
-      pkAnalysesSorted,
-      quantitiesOrPaths = paths
-    )
-    viaR <- pkAnalysesToDataFrameFilteredIn(
-      FALSE,
-      pkAnalysesSorted,
-      quantitiesOrPaths = paths
-    )
-    expect_equal(viaNet, expected, tolerance = 0)
-    expect_equal(viaR, expected, tolerance = 0)
+    df <- pkAnalysesToDataFrame(pkAnalysesSorted, quantitiesOrPaths = paths)
+    expect_equal(df, expected, tolerance = 0)
   })
 })
 
@@ -399,16 +363,13 @@ test_that("pkAnalysesToDataFrame returns an empty data frame for a path and a PK
     writeLines(lines[!drop], csvFile, useBytes = TRUE)
     pkAnalysesPartial <- importPKAnalysesFromCSV(csvFile, simMultipleOutputs)
 
-    for (filterInNet in c(TRUE, FALSE)) {
-      df <- pkAnalysesToDataFrameFilteredIn(
-        filterInNet,
-        pkAnalysesPartial,
-        quantitiesOrPaths = allPathsMultiple[[2]],
-        pkParameters = "t_max"
-      )
-      expectPKAnalysesColumns(df)
-      expect_equal(nrow(df), 0)
-    }
+    df <- pkAnalysesToDataFrame(
+      pkAnalysesPartial,
+      quantitiesOrPaths = allPathsMultiple[[2]],
+      pkParameters = "t_max"
+    )
+    expectPKAnalysesColumns(df)
+    expect_equal(nrow(df), 0)
   })
 })
 
@@ -473,27 +434,15 @@ test_that("pkAnalysesToDataFrame does not change the pk-analyses when filtering"
   pkParametersBefore <- pkAnalysesPopulation$allPKParameterNames
   fullBefore <- pkAnalysesToDataFrame(pkAnalysesPopulation)
 
-  for (filterInNet in c(TRUE, FALSE)) {
-    pkAnalysesToDataFrameFilteredIn(
-      filterInNet,
-      pkAnalysesPopulation,
-      quantitiesOrPaths = pathsBefore[[1]],
-      pkParameters = "C_max"
-    )
-  }
+  pkAnalysesToDataFrame(
+    pkAnalysesPopulation,
+    quantitiesOrPaths = pathsBefore[[1]],
+    pkParameters = "C_max"
+  )
 
   expect_equal(pkAnalysesPopulation$allQuantityPaths, pathsBefore)
   expect_equal(pkAnalysesPopulation$allPKParameterNames, pkParametersBefore)
   expect_equal(pkAnalysesToDataFrame(pkAnalysesPopulation), fullBefore)
-})
-
-test_that("Filtering in .NET is chosen only when it saves converting many rows", {
-  # 500 individuals, 32 outputs x 14 PK parameters, one output selected
-  expect_true(.isFilterInNetFaster(14, 448, 500))
-  # Same population, all outputs but one selected
-  expect_false(.isFilterInNetFaster(434, 448, 500))
-  # One individual, 133 outputs x 14 PK parameters, C_max selected
-  expect_false(.isFilterInNetFaster(133, 1862, 1))
 })
 
 test_that("pkAnalysesToTibble passes the filters on", {

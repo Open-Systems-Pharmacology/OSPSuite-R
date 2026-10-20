@@ -126,14 +126,13 @@ pkAnalysesToDataFrame <- function(
   )
   validateIsCharacter(pkParameters, nullAllowed = TRUE)
 
+  netPKAnalyses <- pkAnalyses
   selection <- .selectPKAnalyses(
     pkAnalyses,
     quantitiesOrPaths = quantitiesOrPaths,
     pkParameters = pkParameters
   )
-
-  netPKAnalyses <- pkAnalyses
-  if (!is.null(selection) && selection$filterInNet) {
+  if (!is.null(selection)) {
     netPKAnalyses <- .filterPKAnalysesInNet(
       pkAnalyses,
       quantityPaths = selection$quantityPaths,
@@ -150,22 +149,8 @@ pkAnalysesToDataFrame <- function(
     netPKAnalyses,
     pkAnalyses$simulation
   )
-  pkAnalysesData <- .pkAnalysesCSVToDataFrame(csv)
 
-  if (!is.null(selection) && !selection$filterInNet) {
-    keep <- pkAnalysesData$QuantityPath %in%
-      selection$quantityPaths &
-      pkAnalysesData$Parameter %in% selection$pkParameters
-    keptRows <- which(keep)
-    # Group the rows by output in the order of `allQuantityPaths`, like the
-    # .NET route. `order()` is stable, so the order within an output is kept.
-    outputOrder <- order(
-      match(pkAnalysesData$QuantityPath[keptRows], selection$quantityPaths)
-    )
-    pkAnalysesData <- pkAnalysesData[keptRows[outputOrder], ]
-  }
-
-  return(pkAnalysesData)
+  return(.pkAnalysesCSVToDataFrame(csv))
 }
 
 #' @rdname pkAnalysesToDataFrame
@@ -193,9 +178,8 @@ pkAnalysesToTibble <- function(
 #' @param pkParameters Names of the PK parameters to keep, or `NULL` for all.
 #'
 #' @returns `NULL` when the selection covers all outputs and PK parameters.
-#'   Otherwise a list with `quantityPaths` and `pkParameters` (the selected
-#'   paths and names, never `NULL`) and `filterInNet` (whether filtering in
-#'   .NET is expected to be faster than filtering the data frame in R).
+#'   Otherwise a list with `quantityPaths` and `pkParameters`, the selected
+#'   paths and names in the order of `pkAnalyses` (never `NULL`).
 #' @noRd
 .selectPKAnalyses <- function(pkAnalyses, quantitiesOrPaths, pkParameters) {
   if (is.null(quantitiesOrPaths) && is.null(pkParameters)) {
@@ -232,70 +216,26 @@ pkAnalysesToTibble <- function(
     ]
   }
 
-  numberOfSelected <- length(quantityPaths) * length(selectedPKParameters)
-  numberOfAll <- length(allPaths) * length(allPKParameterNames)
-  if (numberOfSelected == numberOfAll) {
+  if (
+    length(quantityPaths) == length(allPaths) &&
+      length(selectedPKParameters) == length(allPKParameterNames)
+  ) {
     return(NULL)
   }
 
-  # Nothing selected: an empty .NET object gives the empty table fastest
-  if (numberOfSelected == 0) {
-    return(list(
-      quantityPaths = quantityPaths,
-      pkParameters = selectedPKParameters,
-      filterInNet = TRUE
-    ))
-  }
-
-  firstPKParameter <- pkAnalyses$call(
-    "PKParameterFor",
-    allPaths[[1]],
-    pkAnalyses$call("AllPKParameterNamesFor", allPaths[[1]])[[1]]
-  )
-  numberOfIndividuals <- firstPKParameter$get("Count")
-
   return(list(
     quantityPaths = quantityPaths,
-    pkParameters = selectedPKParameters,
-    filterInNet = .isFilterInNetFaster(
-      numberOfSelected = numberOfSelected,
-      numberOfAll = numberOfAll,
-      numberOfIndividuals = numberOfIndividuals
-    )
+    pkParameters = selectedPKParameters
   ))
 }
 
-#' Decide whether filtering PK-Analyses in .NET is faster than in R
-#'
-#' @details Filtering in .NET costs about 0.5 ms per selected PK parameter of
-#'   one output (two calls through rSharp). Converting and filtering in R costs
-#'   about 2.5 microseconds per row (one row per individual) that is converted in
-#'   vain.
-#'   Measured on Aciclovir with 1 to 500 individuals and 4 to 133 outputs.
-#'   Near the threshold, a wrong choice costs up to about 25%. This rule and
-#'   the R route can be removed once `PKAnalysesToCSV` can filter in a single
-#'   call (OSPSuite.Core issue #3022).
-#'
-#' @param numberOfSelected Number of selected output and PK parameter
-#'   combinations (upper bound).
-#' @param numberOfAll Number of all output and PK parameter combinations
-#'   (upper bound).
-#' @param numberOfIndividuals Number of values per combination.
-#'
-#' @returns `TRUE` if filtering in .NET is expected to be faster.
-#' @noRd
-.isFilterInNetFaster <- function(
-  numberOfSelected,
-  numberOfAll,
-  numberOfIndividuals
-) {
-  costPerSelectedInNet <- 0.5e-3
-  costPerRowInR <- 2.5e-6
-  numberOfSelected * costPerSelectedInNet <
-    (numberOfAll - numberOfSelected) * numberOfIndividuals * costPerRowInR
-}
-
 #' Build a .NET `PopulationSimulationPKAnalyses` with selected PK parameters
+#'
+#' @details Each selected PK parameter of one output takes two calls through
+#'   rSharp (about 0.5 ms). For selections that keep most PK parameters of many
+#'   outputs, converting everything and filtering in R would be faster. This is
+#'   accepted until `PKAnalysesToCSV` can filter in a single call
+#'   (OSPSuite.Core issue #3022).
 #'
 #' @param pkAnalyses A `SimulationPKAnalyses` object.
 #' @param quantityPaths Paths of the outputs to keep.
@@ -305,8 +245,7 @@ pkAnalysesToTibble <- function(
 #'   `QuantityPKParameter` objects of `pkAnalyses` (the same objects, not
 #'   copies). `pkAnalyses` is not modified. The objects are added output by
 #'   output in the order of `quantityPaths`, and within an output in the order
-#'   of `pkAnalyses`. The R route of `pkAnalysesToDataFrame()` orders its rows
-#'   the same way.
+#'   of `pkAnalyses`.
 #' @noRd
 .filterPKAnalysesInNet <- function(pkAnalyses, quantityPaths, pkParameters) {
   filteredPKAnalyses <- rSharp::newObjectFromName(
