@@ -237,6 +237,13 @@ sim$solver$absTol <- sim$solver$absTol * 1e-1
 simulationResults <- runSimulations(simulations = sim)[[1]]
 ```
 
+By default, the solver checks whether any variable of the simulation becomes negative and stops the simulation with an error if it does (exception are variables that have `Negative Values Allowed` set to `TRUE` in the Initial Conditions, see ["Initial Conditions Overview"](https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/initial-conditions-bb#initial-conditions-functionality-overview). Small negative values can result from numerical errors, for example when a molecule is depleted. If you know that the negative values in your model are numerical artifacts, you can switch off this check with `checkForNegativeValues`:
+
+```{r checkForNegativeValues}
+# Do not stop the simulation when a variable becomes negative
+sim$solver$checkForNegativeValues <- FALSE
+```
+
 Other solver settings that can be adjusted include:
 
 * `h0`: Initial time step size

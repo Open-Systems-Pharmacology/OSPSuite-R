@@ -986,7 +986,11 @@ test_that("geometric error values are NA with a warning where the y offset makes
   # the value that becomes negative has no error, so this data set must not
   # be named in the warning
   myCombDat$addDataSets(
-    .makeTransformDataSet("geoMissing", DataErrorType$GeometricStdDev, c(1.5, NA))
+    .makeTransformDataSet(
+      "geoMissing",
+      DataErrorType$GeometricStdDev,
+      c(1.5, NA)
+    )
   )
   myCombDat$setDataTransformations(yOffsets = -1)
 
