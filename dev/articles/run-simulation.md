@@ -159,11 +159,11 @@ for the specific simulation
 # Get the id of the second simulation
 id <- sim2$id
 print(id)
-#> [1] "4CJsRIEB8k-0sjtcSmb0UQ"
+#> [1] "WS9tgG5Bfkm-F_420ey3hQ"
 # get the corresponding result
 sim2Results <- simulationResults[[id]]
 print(sim2Results$simulation$id)
-#> [1] "4CJsRIEB8k-0sjtcSmb0UQ"
+#> [1] "WS9tgG5Bfkm-F_420ey3hQ"
 ```
 
 ## Adding new outputs
@@ -260,7 +260,7 @@ runSimulations(simulations = sim)
 #> Warning in .getConcurrentSimulationRunnerResults(results = results, resultsIdSimulationIdMap = resultsIdSimulationIdMap, : One or more errors occurred. (Time points output schema is empty)
 #> -----------------------------------------------------
 #> Time points output schema is empty
-#> $`2pmBF8N5gUGbdRBf_L7Ufw`
+#> $CKzSqrr9Yk2EW5NbOFowHg
 #> NULL
 
 # Add an interval
@@ -369,6 +369,22 @@ sim$solver$absTol <- sim$solver$absTol * 1e-1
 
 # After changing solver settings, re-run the simulation
 simulationResults <- runSimulations(simulations = sim)[[1]]
+```
+
+By default, the solver checks whether any variable of the simulation
+becomes negative and stops the simulation with an error if it does
+(exception are variables that have `Negative Values Allowed` set to
+`TRUE` in the Initial Conditions, see [“Initial Conditions
+Overview”](https://docs.open-systems-pharmacology.org/working-with-mobi/mobi-documentation/initial-conditions-bb#initial-conditions-functionality-overview).
+Small negative values can result from numerical errors, for example when
+a molecule is depleted. If you know that the negative values in your
+model are numerical artifacts, you can switch off this check with
+`checkForNegativeValues`:
+
+``` r
+
+# Do not stop the simulation when a variable becomes negative
+sim$solver$checkForNegativeValues <- FALSE
 ```
 
 Other solver settings that can be adjusted include:

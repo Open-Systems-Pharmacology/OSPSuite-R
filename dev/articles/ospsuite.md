@@ -436,8 +436,8 @@ Understanding these main classes improves workflow effectiveness:
 
 - **`Simulation`**: Your loaded PBPK model from the .pkml file
 - **`SimulationResults`**: Output from running simulations
-- **`SimulationRunOptions`**: Controls for how simulations run (cores,
-  error checking, progress bars)
+- **`SimulationRunOptions`**: Controls for how simulations run (number
+  of cores, progress bars)
 
 **Model Structure:**
 
@@ -461,7 +461,8 @@ Understanding these main classes improves workflow effectiveness:
 
 - **`OutputSchema`**: Defines when simulation results are saved
 - **`OutputSelections`**: Which quantities to include in results
-- **`SolverSettings`**: Numerical solver configuration
+- **`SolverSettings`**: Numerical solver configuration (tolerances,
+  check for negative values)
 
 ## General Workflow Summary
 

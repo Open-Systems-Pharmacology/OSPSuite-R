@@ -61,10 +61,7 @@ Initialize a new instance of the class
 
 #### Usage
 
-    SimulationRunOptions$new(
-      numberOfCores = NULL,
-      showProgress = NULL
-    )
+    SimulationRunOptions$new(numberOfCores = NULL, showProgress = NULL)
 
 #### Arguments
 
