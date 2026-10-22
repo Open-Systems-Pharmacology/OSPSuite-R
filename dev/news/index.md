@@ -4,6 +4,11 @@
 
 ### Minor improvements and bug fixes
 
+- `StandardOntogeny` now includes `CES1` and `ABCB1` (P-gp), so these
+  ontogenies can be selected via `MoleculeOntogeny` in
+  [`createIndividual()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividual.md)
+  /
+  [`createPopulation()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createPopulation.md).
 - `DataCombined$setDataTransformations()` no longer multiplies geometric
   standard deviations (`DataErrorType$GeometricStdDev`) by the y scale
   factor. A geometric standard deviation is a dimensionless factor, so

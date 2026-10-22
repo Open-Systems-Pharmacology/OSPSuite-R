@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9007</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -186,16 +186,22 @@ Generated parameter values can be conveniently applied using the
 <h2 id="adding-enzyme-ontogenies">Adding enzyme ontogenies<a class="anchor" aria-label="anchor" href="#adding-enzyme-ontogenies"></a>
 </h2>
 <p>The PK-Sim database includes ontogeny information for some proteins
-(see (PK-Sim Ontogeny Database)[<a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.Documentation/blob/master/PK-Sim%20Ontogeny%20Database%20Version%207.3.pdf" class="external-link uri">https://github.com/Open-Systems-Pharmacology/OSPSuite.Documentation/blob/master/PK-Sim%20Ontogeny%20Database%20Version%207.3.pdf</a>]).
-For a protein molecule present in the simulation, it is possible to add
-the ontogeny information on one of the predefined proteins. For example,
-it is possible to set the ontogeny of the protein <code>MyProtein</code>
-to the value of the ontogeny of a CYP3A4 enzyme for the specified
-individual. The list of supported ontogenies is stored in the
-<code>StandardOntogeny</code>-list.</p>
+(see the <a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.Documentation" class="external-link">PK-Sim
+Ontogeny Database documentation</a>). For a protein molecule present in
+the simulation, it is possible to add the ontogeny information on one of
+the predefined proteins. For example, it is possible to set the ontogeny
+of the protein <code>MyProtein</code> to the value of the ontogeny of a
+CYP3A4 enzyme for the specified individual. The list of supported
+ontogenies is stored in the <code>StandardOntogeny</code>-list.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># All supported ontogenies</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">StandardOntogeny</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $ABCB1</span></span>
+<span><span class="co">#&gt; [1] "ABCB1"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $CES1</span></span>
+<span><span class="co">#&gt; [1] "CES1"</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $CYP1A2</span></span>
 <span><span class="co">#&gt; [1] "CYP1A2"</span></span>
 <span><span class="co">#&gt; </span></span>
