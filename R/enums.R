@@ -171,6 +171,8 @@ StandardContainer <- enum(c(
 #'
 #' @export
 StandardOntogeny <- enum(c(
+  "ABCB1",
+  "CES1",
   "CYP1A2",
   "CYP2C18",
   "CYP2C19",
