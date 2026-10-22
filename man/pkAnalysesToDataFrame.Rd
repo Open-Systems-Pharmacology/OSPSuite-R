@@ -30,12 +30,9 @@ thrown. Names are case sensitive.}
 \value{
 A tibble with one row per individual, output, and PK parameter, and
 the columns \code{IndividualId}, \code{QuantityPath}, \code{Parameter}, \code{Value}, and
-\code{Unit}. Values that could not be calculated are \code{NA}. For PK-Analyses
-from \code{calculatePKAnalyses()}, a selection keeps the row order of the full
-result. For imported PK-Analyses, the selected rows are grouped by output
-in the order of \code{pkAnalyses$allQuantityPaths}, unless all outputs and PK
-parameters are selected. If no row matches the selection, the result has
-zero rows.
+\code{Unit}. Values that could not be calculated are \code{NA}. The selected rows
+keep the order of the full result. If no row matches the selection, the
+result has zero rows.
 }
 \description{
 Optionally, only some outputs and PK parameters are kept.

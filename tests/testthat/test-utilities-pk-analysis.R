@@ -243,19 +243,24 @@ test_that("pkAnalysesToDataFrame ignores the readr default locale option", {
 # pkAnalysesToDataFrame filters
 
 test_that("pkAnalysesToDataFrame filters by quantity paths", {
-  full <- pkAnalysesToDataFrame(pkAnalysesMultipleOutputs)
+  full <- pkAnalysesFromFile(pkAnalysesMultipleOutputs)
   paths <- allPathsMultiple[c(3, 1)]
   df <- pkAnalysesToDataFrame(
     pkAnalysesMultipleOutputs,
     quantitiesOrPaths = paths
   )
   expectPKAnalysesColumns(df)
-  expect_equal(df, full[full$QuantityPath %in% paths, ], tolerance = 0)
+  expect_equal(
+    df,
+    full[full$QuantityPath %in% paths, ],
+    ignore_attr = TRUE,
+    tolerance = 0
+  )
   expect_equal(unique(df$QuantityPath), allPathsMultiple[c(1, 3)])
 })
 
 test_that("pkAnalysesToDataFrame filters by quantity objects, also mixed with paths", {
-  full <- pkAnalysesToDataFrame(pkAnalysesMultipleOutputs)
+  full <- pkAnalysesFromFile(pkAnalysesMultipleOutputs)
   quantity <- getQuantity(allPathsMultiple[[2]], simMultipleOutputs)
   df <- pkAnalysesToDataFrame(
     pkAnalysesMultipleOutputs,
@@ -265,6 +270,7 @@ test_that("pkAnalysesToDataFrame filters by quantity objects, also mixed with pa
   expect_equal(
     df,
     full[full$QuantityPath == allPathsMultiple[[2]], ],
+    ignore_attr = TRUE,
     tolerance = 0
   )
 
@@ -276,15 +282,20 @@ test_that("pkAnalysesToDataFrame filters by quantity objects, also mixed with pa
 })
 
 test_that("pkAnalysesToDataFrame filters by PK parameters", {
-  full <- pkAnalysesToDataFrame(pkAnalysesPopulation)
+  full <- pkAnalysesFromFile(pkAnalysesPopulation)
   pkParameters <- c("t_max", "C_max", "C_max")
   df <- pkAnalysesToDataFrame(pkAnalysesPopulation, pkParameters = pkParameters)
   expectPKAnalysesColumns(df)
-  expect_equal(df, full[full$Parameter %in% pkParameters, ], tolerance = 0)
+  expect_equal(
+    df,
+    full[full$Parameter %in% pkParameters, ],
+    ignore_attr = TRUE,
+    tolerance = 0
+  )
 })
 
 test_that("pkAnalysesToDataFrame combines both filters and ignores duplicates", {
-  full <- pkAnalysesToDataFrame(pkAnalysesPopulation)
+  full <- pkAnalysesFromFile(pkAnalysesPopulation)
   paths <- allPathsMultiple[c(2, 4, 2)]
   pkParameters <- c("AUC_inf", "Thalf")
   df <- pkAnalysesToDataFrame(
@@ -295,6 +306,7 @@ test_that("pkAnalysesToDataFrame combines both filters and ignores duplicates", 
   expect_equal(
     df,
     full[full$QuantityPath %in% paths & full$Parameter %in% pkParameters, ],
+    ignore_attr = TRUE,
     tolerance = 0
   )
   expect_equal(nrow(df), 2 * 2 * 5)
@@ -306,7 +318,12 @@ test_that("pkAnalysesToDataFrame returns all rows when the filters list everythi
     quantitiesOrPaths = allPathsMultiple,
     pkParameters = pkAnalysesMultipleOutputs$allPKParameterNames
   )
-  expect_equal(df, pkAnalysesToDataFrame(pkAnalysesMultipleOutputs))
+  expect_equal(
+    df,
+    pkAnalysesFromFile(pkAnalysesMultipleOutputs),
+    ignore_attr = TRUE,
+    tolerance = 0
+  )
 })
 
 test_that("pkAnalysesToDataFrame returns an empty data frame when the filters match nothing", {
@@ -325,7 +342,7 @@ test_that("pkAnalysesToDataFrame returns an empty data frame when the filters ma
   expect_equal(nrow(df), 0)
 })
 
-test_that("pkAnalysesToDataFrame groups the selected rows by output for PK-Analyses not grouped by output", {
+test_that("pkAnalysesToDataFrame keeps the row order of PK-Analyses not grouped by output", {
   # Import a file sorted by PK parameter, so the outputs are interleaved
   executeWithTestFile(function(csvFile) {
     exportPKAnalysesToCSV(pkAnalysesMultipleOutputs, csvFile)
@@ -339,17 +356,18 @@ test_that("pkAnalysesToDataFrame groups the selected rows by output for PK-Analy
     )
     pkAnalysesSorted <- importPKAnalysesFromCSV(csvFile, simMultipleOutputs)
     paths <- pkAnalysesSorted$allQuantityPaths[c(2, 1)]
-    full <- pkAnalysesToDataFrame(pkAnalysesSorted)
+    full <- pkAnalysesFromFile(pkAnalysesSorted)
     # The unfiltered rows switch between outputs more often than once per output
     outputChanges <- length(rle(full$QuantityPath)$lengths) - 1
     expect_gt(outputChanges, length(pkAnalysesSorted$allQuantityPaths) - 1)
-    expected <- full[full$QuantityPath %in% paths, ]
-    expected <- expected[
-      order(match(expected$QuantityPath, pkAnalysesSorted$allQuantityPaths)),
-    ]
 
     df <- pkAnalysesToDataFrame(pkAnalysesSorted, quantitiesOrPaths = paths)
-    expect_equal(df, expected, tolerance = 0)
+    expect_equal(
+      df,
+      full[full$QuantityPath %in% paths, ],
+      ignore_attr = TRUE,
+      tolerance = 0
+    )
   })
 })
 

@@ -89,12 +89,9 @@ importPKAnalysesFromCSV <- function(filePath, simulation) {
 #'
 #' @return A tibble with one row per individual, output, and PK parameter, and
 #'   the columns `IndividualId`, `QuantityPath`, `Parameter`, `Value`, and
-#'   `Unit`. Values that could not be calculated are `NA`. For PK-Analyses
-#'   from `calculatePKAnalyses()`, a selection keeps the row order of the full
-#'   result. For imported PK-Analyses, the selected rows are grouped by output
-#'   in the order of `pkAnalyses$allQuantityPaths`, unless all outputs and PK
-#'   parameters are selected. If no row matches the selection, the result has
-#'   zero rows.
+#'   `Unit`. Values that could not be calculated are `NA`. The selected rows
+#'   keep the order of the full result. If no row matches the selection, the
+#'   result has zero rows.
 #'
 #' @examples
 #' simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
@@ -126,29 +123,26 @@ pkAnalysesToDataFrame <- function(
   )
   validateIsCharacter(pkParameters, nullAllowed = TRUE)
 
-  netPKAnalyses <- pkAnalyses
-  selection <- .selectPKAnalyses(
+  selection <- .createPKAnalysesSelection(
     pkAnalyses,
     quantitiesOrPaths = quantitiesOrPaths,
     pkParameters = pkParameters
   )
-  if (!is.null(selection)) {
-    netPKAnalyses <- .filterPKAnalysesInNet(
-      pkAnalyses,
-      quantityPaths = selection$quantityPaths,
-      pkParameters = selection$pkParameters
-    )
-  }
 
   pkAnalysisTask <- .getCoreTask("PKAnalysisTask")
   # The whole table is passed as one string (rSharp has no converter for a .NET
   # DataTable). A .NET string holds at most about 1e9 characters, about 14
   # million rows with the paths of Aciclovir; in practice memory runs out first
-  csv <- pkAnalysisTask$call(
-    "PKAnalysesToCSV",
-    netPKAnalyses,
-    pkAnalyses$simulation
-  )
+  csv <- if (is.null(selection)) {
+    pkAnalysisTask$call("PKAnalysesToCSV", pkAnalyses, pkAnalyses$simulation)
+  } else {
+    pkAnalysisTask$call(
+      "PKAnalysesToCSV",
+      pkAnalyses,
+      pkAnalyses$simulation,
+      selection
+    )
+  }
 
   return(.pkAnalysesCSVToDataFrame(csv))
 }
@@ -171,97 +165,56 @@ pkAnalysesToTibble <- function(
   return(dplyr::as_tibble(pkAnalysesData))
 }
 
-#' Validate the selection of outputs and PK parameters
+#' Create the .NET selection of outputs and PK parameters
 #'
 #' @param pkAnalyses A `SimulationPKAnalyses` object.
 #' @param quantitiesOrPaths Quantities or paths to keep, or `NULL` for all.
 #' @param pkParameters Names of the PK parameters to keep, or `NULL` for all.
 #'
-#' @returns `NULL` when the selection covers all outputs and PK parameters.
-#'   Otherwise a list with `quantityPaths` and `pkParameters`, the selected
-#'   paths and names in the order of `pkAnalyses` (never `NULL`).
+#' @details .NET keeps nothing for paths or names it does not know, so unknown
+#'   paths and names are rejected here with an error.
+#'
+#' @returns `NULL` when both arguments are `NULL`. Otherwise a .NET
+#'   `PKAnalysesSelection` holding the requested paths and names.
 #' @noRd
-.selectPKAnalyses <- function(pkAnalyses, quantitiesOrPaths, pkParameters) {
+.createPKAnalysesSelection <- function(
+  pkAnalyses,
+  quantitiesOrPaths,
+  pkParameters
+) {
   if (is.null(quantitiesOrPaths) && is.null(pkParameters)) {
     return(NULL)
   }
 
-  allPaths <- pkAnalyses$allQuantityPaths
-  allPKParameterNames <- pkAnalyses$allPKParameterNames
+  selection <- rSharp::newObjectFromName(
+    "OSPSuite.R.Domain.PKAnalysesSelection"
+  )
 
-  quantityPaths <- allPaths
   if (!is.null(quantitiesOrPaths)) {
-    requestedPaths <- .entitiesToPaths(c(quantitiesOrPaths))
-    missingPaths <- setdiff(requestedPaths, allPaths)
+    quantityPaths <- .entitiesToPaths(c(quantitiesOrPaths))
+    missingPaths <- setdiff(quantityPaths, pkAnalyses$allQuantityPaths)
     if (length(missingPaths) > 0) {
       stop(
         messages$errorPKAnalysesQuantityPathsNotFound(missingPaths),
         call. = FALSE
       )
     }
-    quantityPaths <- allPaths[allPaths %in% requestedPaths]
+    selection$call("AddQuantityPaths", quantityPaths)
   }
 
-  selectedPKParameters <- allPKParameterNames
   if (!is.null(pkParameters)) {
-    missingPKParameters <- setdiff(pkParameters, allPKParameterNames)
+    pkParameters <- unique(pkParameters)
+    missingPKParameters <- setdiff(pkParameters, pkAnalyses$allPKParameterNames)
     if (length(missingPKParameters) > 0) {
       stop(
         messages$errorPKAnalysesPKParametersNotFound(missingPKParameters),
         call. = FALSE
       )
     }
-    selectedPKParameters <- allPKParameterNames[
-      allPKParameterNames %in% pkParameters
-    ]
+    selection$call("AddPKParameterNames", pkParameters)
   }
 
-  if (
-    length(quantityPaths) == length(allPaths) &&
-      length(selectedPKParameters) == length(allPKParameterNames)
-  ) {
-    return(NULL)
-  }
-
-  return(list(
-    quantityPaths = quantityPaths,
-    pkParameters = selectedPKParameters
-  ))
-}
-
-#' Build a .NET `PopulationSimulationPKAnalyses` with selected PK parameters
-#'
-#' @details Each selected PK parameter of one output takes two calls through
-#'   rSharp (about 0.5 ms). For selections that keep most PK parameters of many
-#'   outputs, converting everything and filtering in R would be faster. This is
-#'   accepted until `PKAnalysesToCSV` can filter in a single call
-#'   (OSPSuite.Core issue #3022).
-#'
-#' @param pkAnalyses A `SimulationPKAnalyses` object.
-#' @param quantityPaths Paths of the outputs to keep.
-#' @param pkParameters Names of the PK parameters to keep.
-#'
-#' @returns A new .NET `PopulationSimulationPKAnalyses` holding the selected
-#'   `QuantityPKParameter` objects of `pkAnalyses` (the same objects, not
-#'   copies). `pkAnalyses` is not modified. The objects are added output by
-#'   output in the order of `quantityPaths`, and within an output in the order
-#'   of `pkAnalyses`.
-#' @noRd
-.filterPKAnalysesInNet <- function(pkAnalyses, quantityPaths, pkParameters) {
-  filteredPKAnalyses <- rSharp::newObjectFromName(
-    "OSPSuite.Core.Domain.PopulationSimulationPKAnalyses"
-  )
-  for (path in quantityPaths) {
-    names <- pkAnalyses$call("AllPKParameterNamesFor", path)
-    for (name in names[names %in% pkParameters]) {
-      filteredPKAnalyses$call(
-        "AddPKAnalysis",
-        pkAnalyses$call("PKParameterFor", path, name)
-      )
-    }
-  }
-
-  return(filteredPKAnalyses)
+  return(selection)
 }
 
 #' Parse the CSV text of PK-Analyses created by .NET
