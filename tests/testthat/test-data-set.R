@@ -426,3 +426,99 @@ test_that("it throws an error when a vector of LLOQ is provided", {
     regexp = messages$lloqOnlyScalar()
   )
 })
+
+# subjectCount
+
+test_that("subjectCount is NULL when not set", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expect_null(dataSet$subjectCount)
+})
+
+test_that("it can set subjectCount and stores it as meta data", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$subjectCount <- 12
+  expect_identical(dataSet$subjectCount, 12L)
+  expect_identical(dataSet$metaData[["subjectCount"]], "12")
+})
+
+test_that("it removes subjectCount when set to NULL or NA", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$subjectCount <- 12
+  dataSet$subjectCount <- NULL
+  expect_null(dataSet$subjectCount)
+  expect_null(dataSet$metaData[["subjectCount"]])
+
+  dataSet$subjectCount <- 12
+  dataSet$subjectCount <- NA
+  expect_null(dataSet$subjectCount)
+  expect_null(dataSet$metaData[["subjectCount"]])
+})
+
+test_that("it throws an error for a subjectCount that is not one positive whole number", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expect_snapshot(error = TRUE, dataSet$subjectCount <- 0)
+  expect_snapshot(error = TRUE, dataSet$subjectCount <- 2.5)
+  expect_snapshot(error = TRUE, dataSet$subjectCount <- c(12, 8))
+  expect_snapshot(error = TRUE, dataSet$subjectCount <- "12")
+  expect_snapshot(error = TRUE, dataSet$subjectCount <- Inf)
+  expect_snapshot(error = TRUE, dataSet$subjectCount <- -1)
+  expect_snapshot(error = TRUE, dataSet$subjectCount <- TRUE)
+  # The invalid values did not change the data set
+  expect_null(dataSet$subjectCount)
+})
+
+test_that("subjectCount accepts the smallest and the largest whole number", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$subjectCount <- 1
+  expect_identical(dataSet$subjectCount, 1L)
+  dataSet$subjectCount <- .Machine$integer.max
+  expect_identical(dataSet$subjectCount, .Machine$integer.max)
+  expect_error(
+    dataSet$subjectCount <- .Machine$integer.max + 1,
+    regexp = "must be one positive whole number"
+  )
+})
+
+test_that("addMetaData with the name subjectCount sets subjectCount", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$addMetaData("subjectCount", "24")
+  expect_identical(dataSet$subjectCount, 24L)
+  dataSet$addMetaData("subjectCount", 18)
+  expect_identical(dataSet$subjectCount, 18L)
+})
+
+test_that("addMetaData with the name subjectCount throws an error for an invalid value", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expect_snapshot(error = TRUE, dataSet$addMetaData("subjectCount", "n=24"))
+  expect_null(dataSet$metaData[["subjectCount"]])
+})
+
+test_that("subjectCount is NULL with a warning when the stored meta data entry is not a whole number", {
+  dataSet <- DataSet$new(name = dataSetName)
+  # Entry written without validation, e.g. by PK-Sim or by the Excel import
+  dataSet$dataRepository$addMetaData("subjectCount", "n=24")
+  expect_snapshot(subjectCount <- dataSet$subjectCount)
+  expect_null(subjectCount)
+})
+
+test_that("subjectCount is read from a numeric meta data entry", {
+  # Meta data loaded from a PKML file can be numeric instead of text
+  expect_identical(.subjectCountFromMetaData(6, dataSetName), 6L)
+})
+
+test_that("subjectCount is kept when saving the data set to PKML and loading it", {
+  dataSet <- DataSet$new(dataRepository = .loadDataRepositoryFromPKML(obsDataFile))
+  dataSet$subjectCount <- 15
+  filePath <- withr::local_tempfile(fileext = ".pkml")
+
+  saveDataSetToPKML(dataSet = dataSet, filePath = filePath)
+  loadedDataSet <- loadDataSetFromPKML(filePath)
+
+  expect_identical(loadedDataSet$subjectCount, 15L)
+})
+
+test_that("print shows subjectCount once, not again as meta data", {
+  dataSet <- DataSet$new(dataRepository = .loadDataRepositoryFromPKML(obsDataFile))
+  dataSet$subjectCount <- 15
+  expect_snapshot(print(dataSet))
+})

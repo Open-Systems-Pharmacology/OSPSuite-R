@@ -1,5 +1,11 @@
 # ospsuite (development version)
 
+## New features
+
+- `DataSet` has a new field `subjectCount` for the number of subjects from which aggregated observed data (mean values with a standard deviation or geometric standard deviation) are calculated. It accepts one positive whole number and is `NULL` when not set. The value is stored as the meta data entry `subjectCount`, so `saveDataSetToPKML()` and `loadDataSetFromPKML()` keep it, and `print()` shows it. `loadDataSetsFromExcel()` reads it from a column `subjectCount` of the Excel file when this column is added as a grouping column of the importer configuration (#2060).
+- `dataSetToDataFrame()` and `dataSetToTibble()` return a new column `subjectCount`, and `dataSetsFromDataFrame()` reads this column back into `DataSet$subjectCount`. The meta data entry `subjectCount` does not appear as an additional meta data column (#2060).
+- `DataCombined$toDataFrame()` and `calculateResiduals()` return a new column `subjectCount` with the number of subjects of each observed data set. It is `NA` for simulated data and for data sets without a number of subjects, and `DataCombined$setDataTransformations()` does not change it (#2060).
+
 ## Minor improvements and bug fixes
 
 - `StandardOntogeny` now includes `CES1` and `ABCB1` (P-gp), so these ontogenies can be selected via `MoleculeOntogeny` in `createIndividual()` / `createPopulation()`.

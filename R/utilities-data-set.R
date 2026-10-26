@@ -46,8 +46,10 @@ saveDataSetToPKML <- function(dataSet, filePath) {
 #'
 #' DataSet objects as data.frame with columns name, xValues, yValues,
 #' yErrorValues, xDimension, xUnit, yDimension, yUnit, yErrorType, yErrorUnit,
-#' molWeight, lloq, and a column for each meta data that is present in any
-#' `DataSet`.
+#' molWeight, lloq, subjectCount, and a column for each meta data that is
+#' present in any `DataSet`. The number of subjects (`DataSet$subjectCount`)
+#' is only in the `subjectCount` column, not in an additional meta data
+#' column.
 #'
 #' @export
 dataSetToDataFrame <- function(dataSets) {
@@ -67,14 +69,17 @@ dataSetToDataFrame <- function(dataSets) {
     yErrorUnit = .makeDataFrameColumn(dataSets, "yErrorUnit"),
     molWeight = .makeDataFrameColumn(dataSets, "molWeight"),
     lloq = .makeDataFrameColumn(dataSets, "LLOQ"),
+    subjectCount = .makeDataFrameColumn(dataSets, "subjectCount"),
     stringsAsFactors = FALSE
   )
 
-  # add one column for each metaData that is present in any DataSet
-  for (name in unique(unlist(
+  # add one column for each metaData that is present in any DataSet. The
+  # number of subjects is stored as meta data, but already has its own column.
+  metaDataNames <- unique(unlist(
     lapply(dataSets, \(x) names(x$metaData)),
     use.names = F
-  ))) {
+  ))
+  for (name in setdiff(metaDataNames, .subjectCountMetaDataName)) {
     obsData[[name]] <- .makeDataFrameColumn(
       dataSets,
       "metaData",
@@ -112,6 +117,8 @@ dataSetToDataFrame <- function(dataSets) {
           # If property is empty, return NA vector of xValues length
           if (property %in% c("yErrorType", "yErrorUnit")) {
             rep(NA_character_, length(dataSet$xValues))
+          } else if (property == "subjectCount") {
+            rep(NA_integer_, length(dataSet$xValues))
           } else {
             rep(NA_real_, length(dataSet$xValues))
           }
@@ -199,6 +206,13 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 #' Load data sets from excel
 #'
 #' @details Load observed data from an excel file using an importer configuration
+#'
+#' The values of all grouping columns of the configuration are added to the
+#' meta data of the loaded data sets. To read the number of subjects of
+#' aggregated data into `DataSet$subjectCount`, add a column `subjectCount`
+#' with one positive whole number per data set to the Excel file and add it as
+#' a grouping column, e.g. with
+#' `importerConfiguration$addGroupingColumn("subjectCount")`.
 #'
 #' @param xlsFilePath Path to the excel file with the data
 #' @param importerConfigurationOrPath An object of type `DataImporterConfiguration` that is valid
@@ -343,12 +357,14 @@ loadDataSetsFromExcel <- function(
 #' results in one `DataSet` object.
 #' Any columns beyond the standard columns (`name`, `xValues`, `yValues`,
 #' `yErrorValues`, `xDimension`, `xUnit`, `yDimension`, `yUnit`, `yErrorType`,
-#' `yErrorUnit`, `molWeight`, `lloq`) will be added as meta data.
+#' `yErrorUnit`, `molWeight`, `lloq`, `subjectCount`) will be added as meta
+#' data.
 #'
 #' @param data A `data.frame` with at minimum the columns `name`, `xValues`,
 #'   and `yValues`. Optional standard columns: `yErrorValues`, `xDimension`,
 #'   `xUnit`, `yDimension`, `yUnit`, `yErrorType`, `yErrorUnit`, `molWeight`,
-#'   `lloq`. Any additional columns are treated as meta data entries.
+#'   `lloq`, `subjectCount`. Any additional columns are treated as meta data
+#'   entries.
 #'
 #' @return A named list of `DataSet` objects, named by the `name` column.
 #' @export
@@ -381,7 +397,8 @@ dataSetsFromDataFrame <- function(data) {
     "yErrorType",
     "yErrorUnit",
     "molWeight",
-    "lloq"
+    "lloq",
+    "subjectCount"
   )
 
   # Columns that are treated as meta data
@@ -477,6 +494,13 @@ dataSetsFromDataFrame <- function(data) {
       if (!is.null(val)) ds$LLOQ <- val
     }
 
+    # Set number of subjects. `addMetaData()` also accepts text, e.g. from a
+    # column read from cells stored as text.
+    if ("subjectCount" %in% names(data)) {
+      val <- .getSingleNonNaValue("subjectCount")
+      if (!is.null(val)) ds$addMetaData(.subjectCountMetaDataName, val)
+    }
+
     # Add meta data from extra columns
     for (col in metaDataCols) {
       val <- .getSingleNonNaValue(col)
@@ -488,4 +512,51 @@ dataSetsFromDataFrame <- function(data) {
 
   names(dataSets) <- dataSetNames
   return(dataSets)
+}
+
+# Name of the meta data entry that stores `DataSet$subjectCount`
+.subjectCountMetaDataName <- "subjectCount"
+
+#' Check if a value is a valid number of subjects
+#'
+#' @param value Value to check.
+#'
+#' @return `TRUE` if `value` is one positive whole number, `FALSE` otherwise.
+#'
+#' @keywords internal
+#' @noRd
+.isValidSubjectCount <- function(value) {
+  is.numeric(value) &&
+    length(value) == 1 &&
+    is.finite(value) &&
+    value >= 1 &&
+    value <= .Machine$integer.max &&
+    value == round(value)
+}
+
+#' Convert the stored meta data entry to the number of subjects
+#'
+#' @param value Value of the meta data entry `subjectCount`, or `NULL` if the
+#'   data set has no such entry. Usually a string, but can be numeric for data
+#'   sets loaded from PKML.
+#' @param dataSetName Name of the data set, used in the warning.
+#'
+#' @return The number of subjects as integer, or `NULL` if `value` is `NULL`
+#'   or not a positive whole number. A warning is shown in the latter case.
+#'
+#' @keywords internal
+#' @noRd
+.subjectCountFromMetaData <- function(value, dataSetName) {
+  if (is.null(value)) {
+    return(NULL)
+  }
+  count <- suppressWarnings(as.numeric(value))
+  if (!.isValidSubjectCount(count)) {
+    warning(
+      messages$warningInvalidSubjectCount(dataSetName, value),
+      call. = FALSE
+    )
+    return(NULL)
+  }
+  as.integer(count)
 }

@@ -181,6 +181,38 @@ DataSet <- R6::R6Class(
       )
     },
 
+    #' @field subjectCount Number of subjects from which the y values and the
+    #' error values are calculated, e.g. for aggregated data reported as mean
+    #' and standard deviation. One positive whole number, or `NULL` if not
+    #' set. Set it to `NULL` or `NA` to remove it.
+    #' The value is stored as the meta data entry `subjectCount`, so it is
+    #' saved with the data set in a PKML file. When loading data from Excel
+    #' with [loadDataSetsFromExcel()], a column `subjectCount` added as a
+    #' grouping column of the importer configuration is read into this field.
+    #' If the stored entry is not a positive whole number, e.g. text entered
+    #' in PK-Sim or in the Excel file, a warning is shown and the value is
+    #' `NULL`.
+    subjectCount = function(value) {
+      if (missing(value)) {
+        return(.subjectCountFromMetaData(
+          self$metaData[[.subjectCountMetaDataName]],
+          self$name
+        ))
+      }
+
+      if (is.null(value) || (length(value) == 1 && is.na(value))) {
+        self$removeMetaData(.subjectCountMetaDataName)
+        return(invisible(self))
+      }
+      if (!.isValidSubjectCount(value)) {
+        stop(messages$errorInvalidSubjectCount(value))
+      }
+      private$.dataRepository$addMetaData(
+        .subjectCountMetaDataName,
+        format(value, scientific = FALSE)
+      )
+    },
+
     #' @field metaData Returns a named list of meta data defined for the data set.
     metaData = function(value) {
       if (missing(value)) {
@@ -218,10 +250,24 @@ DataSet <- R6::R6Class(
     #' @description
     #' Adds a new entry to meta data list or changes its value if the name is
     #' already present.
+    #' The entry `subjectCount` holds the number of subjects (see the field
+    #' `subjectCount`), so its value must be a positive whole number, given as
+    #' a number or as text.
     #'
     #' @param name Name of new meta data list entry
     #' @param value Value of new meta data list entry
     addMetaData = function(name, value) {
+      if (identical(name, .subjectCountMetaDataName)) {
+        count <- NA_real_
+        if (is.numeric(value) || is.character(value)) {
+          count <- suppressWarnings(as.numeric(value))
+        }
+        if (!.isValidSubjectCount(count)) {
+          stop(messages$errorInvalidSubjectCount(value))
+        }
+        self$subjectCount <- count
+        return(invisible(self))
+      }
       private$.dataRepository$addMetaData(name, value)
     },
 
@@ -289,11 +335,15 @@ DataSet <- R6::R6Class(
           "Error type" = self$yErrorType,
           "Error unit" = self$yErrorUnit,
           "Molecular weight" = self$molWeight,
-          "LLOQ" = self$LLOQ
+          "LLOQ" = self$LLOQ,
+          "Subject count" = self$subjectCount
         ),
         print_empty = TRUE
       )
-      ospsuite.utils::ospPrintItems(self$metaData, title = "Meta data")
+      # The number of subjects is printed above, not again as meta data
+      metaData <- self$metaData
+      metaData <- metaData[names(metaData) != .subjectCountMetaDataName]
+      ospsuite.utils::ospPrintItems(metaData, title = "Meta data")
     }
   ),
   private = list(
