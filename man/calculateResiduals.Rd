@@ -41,6 +41,8 @@ residuals. The following columns will be present:
 \item{yErrorType}{Type of error (e.g., "SD", "SE")}
 \item{yErrorUnit}{Unit of error values}
 \item{lloq}{Lower limit of quantification (if available)}
+\item{subjectCount}{Number of subjects of the observed dataset (\code{NA} if
+not set)}
 }
 
 Returns \code{NULL} with a warning if no pairable datasets are found.

@@ -397,7 +397,12 @@ the original LLOQ as \code{DataSet$LLOQ}.
     In the returned tibble data frame, the following columns will always be present:
 
 name - group - dataType - xValues - xDimension - xUnit - yValues -
-yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight -
+subjectCount
+
+The \code{subjectCount} column holds the number of subjects of an observed
+data set (\code{DataSet$subjectCount}). It is \code{NA} for simulated data and for
+data sets without a number of subjects.
 
 Each call returns a fresh copy of the data frame. You can change it in
 any way you like without affecting the \code{DataCombined} object or the
