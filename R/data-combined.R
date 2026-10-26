@@ -387,8 +387,6 @@ DataCombined <- R6::R6Class(
     #'   The value is kept, with a warning, because it cannot be shown on a
     #'   log scale.
     #'
-    #' - The number of subjects (`subjectCount`) is not changed.
-    #'
     #' The transformations are applied when the data are retrieved with
     #' `toDataFrame()` or plotted, so the warnings appear then and not when
     #' `setDataTransformations()` is called.

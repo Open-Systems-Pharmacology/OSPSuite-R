@@ -185,13 +185,6 @@ DataSet <- R6::R6Class(
     #' error values are calculated, e.g. for aggregated data reported as mean
     #' and standard deviation. One positive whole number, or `NULL` if not
     #' set. Set it to `NULL` or `NA` to remove it.
-    #' The value is stored as the meta data entry `subjectCount`, so it is
-    #' saved with the data set in a PKML file. When loading data from Excel
-    #' with [loadDataSetsFromExcel()], a column `subjectCount` added as a
-    #' grouping column of the importer configuration is read into this field.
-    #' If the stored entry is not a positive whole number, e.g. text entered
-    #' in PK-Sim or in the Excel file, a warning is shown and the value is
-    #' `NULL`.
     subjectCount = function(value) {
       if (missing(value)) {
         return(.subjectCountFromMetaData(
@@ -204,12 +197,18 @@ DataSet <- R6::R6Class(
         self$removeMetaData(.subjectCountMetaDataName)
         return(invisible(self))
       }
-      if (!.isValidSubjectCount(value)) {
+      # Text is accepted as well, e.g. from a meta data value or from a data
+      # frame column read from cells stored as text
+      count <- NA_real_
+      if (is.numeric(value) || is.character(value)) {
+        count <- suppressWarnings(as.numeric(value))
+      }
+      if (!.isValidSubjectCount(count)) {
         stop(messages$errorInvalidSubjectCount(value))
       }
       private$.dataRepository$addMetaData(
         .subjectCountMetaDataName,
-        format(value, scientific = FALSE)
+        format(count, scientific = FALSE)
       )
     },
 
@@ -250,22 +249,12 @@ DataSet <- R6::R6Class(
     #' @description
     #' Adds a new entry to meta data list or changes its value if the name is
     #' already present.
-    #' The entry `subjectCount` holds the number of subjects (see the field
-    #' `subjectCount`), so its value must be a positive whole number, given as
-    #' a number or as text.
     #'
     #' @param name Name of new meta data list entry
     #' @param value Value of new meta data list entry
     addMetaData = function(name, value) {
       if (identical(name, .subjectCountMetaDataName)) {
-        count <- NA_real_
-        if (is.numeric(value) || is.character(value)) {
-          count <- suppressWarnings(as.numeric(value))
-        }
-        if (!.isValidSubjectCount(count)) {
-          stop(messages$errorInvalidSubjectCount(value))
-        }
-        self$subjectCount <- count
+        self$subjectCount <- value
         return(invisible(self))
       }
       private$.dataRepository$addMetaData(name, value)

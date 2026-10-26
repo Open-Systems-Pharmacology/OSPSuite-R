@@ -834,19 +834,8 @@ test_that("dataSetsFromDataFrame throws an error for an invalid subjectCount", {
   )
 })
 
-# Fixture `CompiledDataSet_subjectCount.xlsx` is a copy of
-# `CompiledDataSet_oneSheet.xlsx` with an additional column `subjectCount`:
-# 12 for study ID01 and 8 for study ID02. To regenerate it, run from the repo
-# root:
-#
-#   src <- "tests/data/CompiledDataSet_oneSheet.xlsx"
-#   x <- openxlsx::read.xlsx(src, check.names = FALSE, sep.names = " ")
-#   wb <- openxlsx::loadWorkbook(src)
-#   openxlsx::writeData(wb, sheet = 1,
-#     x = data.frame(subjectCount = ifelse(x[["Study Id"]] == "ID01", 12, 8)),
-#     startCol = ncol(x) + 1)
-#   openxlsx::saveWorkbook(wb,
-#     "tests/data/CompiledDataSet_subjectCount.xlsx", overwrite = TRUE)
+# The column `subjectCount` of `CompiledDataSet_oneSheet.xlsx` is 12 for study
+# ID01 and 8 for study ID02. It is only read when added as a grouping column.
 
 test_that("loadDataSetsFromExcel reads subjectCount from a grouping column", {
   importerConfiguration <- loadDataImporterConfiguration(
@@ -855,7 +844,7 @@ test_that("loadDataSetsFromExcel reads subjectCount from a grouping column", {
   importerConfiguration$addGroupingColumn("subjectCount")
 
   dataSets <- loadDataSetsFromExcel(
-    xlsFilePath = getTestDataFilePath("CompiledDataSet_subjectCount.xlsx"),
+    xlsFilePath = getTestDataFilePath("CompiledDataSet_oneSheet.xlsx"),
     importerConfigurationOrPath = importerConfiguration
   )
 

@@ -49,10 +49,10 @@
 ---
 
     Code
-      dataSet$subjectCount <- "12"
+      dataSet$subjectCount <- "twelve"
     Condition
       Error:
-      ! subjectCount must be one positive whole number, not "12".
+      ! subjectCount must be one positive whole number, not "twelve".
 
 ---
 
@@ -83,7 +83,7 @@
     Code
       dataSet$addMetaData("subjectCount", "n=24")
     Condition
-      Error in `dataSet$addMetaData()`:
+      Error:
       ! subjectCount must be one positive whole number, not "n=24".
 
 # subjectCount is NULL with a warning when the stored meta data entry is not a whole number

@@ -382,8 +382,8 @@ calculateResiduals <- function(
       dplyr::matches("^y"),
       # lower limit of quantification
       "lloq",
-      # number of subjects, missing in plot data not created by `DataCombined`
-      dplyr::any_of("subjectCount")
+      # number of subjects
+      "subjectCount"
     )
 
     pairedData$nameSimulated <- simulatedName

@@ -459,7 +459,7 @@ test_that("it throws an error for a subjectCount that is not one positive whole 
   expect_snapshot(error = TRUE, dataSet$subjectCount <- 0)
   expect_snapshot(error = TRUE, dataSet$subjectCount <- 2.5)
   expect_snapshot(error = TRUE, dataSet$subjectCount <- c(12, 8))
-  expect_snapshot(error = TRUE, dataSet$subjectCount <- "12")
+  expect_snapshot(error = TRUE, dataSet$subjectCount <- "twelve")
   expect_snapshot(error = TRUE, dataSet$subjectCount <- Inf)
   expect_snapshot(error = TRUE, dataSet$subjectCount <- -1)
   expect_snapshot(error = TRUE, dataSet$subjectCount <- TRUE)
@@ -477,6 +477,12 @@ test_that("subjectCount accepts the smallest and the largest whole number", {
     dataSet$subjectCount <- .Machine$integer.max + 1,
     regexp = "must be one positive whole number"
   )
+})
+
+test_that("subjectCount accepts a whole number given as text", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$subjectCount <- "12"
+  expect_identical(dataSet$subjectCount, 12L)
 })
 
 test_that("addMetaData with the name subjectCount sets subjectCount", {
@@ -507,7 +513,9 @@ test_that("subjectCount is read from a numeric meta data entry", {
 })
 
 test_that("subjectCount is kept when saving the data set to PKML and loading it", {
-  dataSet <- DataSet$new(dataRepository = .loadDataRepositoryFromPKML(obsDataFile))
+  dataSet <- DataSet$new(
+    dataRepository = .loadDataRepositoryFromPKML(obsDataFile)
+  )
   dataSet$subjectCount <- 15
   filePath <- withr::local_tempfile(fileext = ".pkml")
 
@@ -518,7 +526,9 @@ test_that("subjectCount is kept when saving the data set to PKML and loading it"
 })
 
 test_that("print shows subjectCount once, not again as meta data", {
-  dataSet <- DataSet$new(dataRepository = .loadDataRepositoryFromPKML(obsDataFile))
+  dataSet <- DataSet$new(
+    dataRepository = .loadDataRepositoryFromPKML(obsDataFile)
+  )
   dataSet$subjectCount <- 15
   expect_snapshot(print(dataSet))
 })

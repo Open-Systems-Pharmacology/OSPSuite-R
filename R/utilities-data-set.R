@@ -47,9 +47,7 @@ saveDataSetToPKML <- function(dataSet, filePath) {
 #' DataSet objects as data.frame with columns name, xValues, yValues,
 #' yErrorValues, xDimension, xUnit, yDimension, yUnit, yErrorType, yErrorUnit,
 #' molWeight, lloq, subjectCount, and a column for each meta data that is
-#' present in any `DataSet`. The number of subjects (`DataSet$subjectCount`)
-#' is only in the `subjectCount` column, not in an additional meta data
-#' column.
+#' present in any `DataSet`.
 #'
 #' @export
 dataSetToDataFrame <- function(dataSets) {
@@ -494,11 +492,10 @@ dataSetsFromDataFrame <- function(data) {
       if (!is.null(val)) ds$LLOQ <- val
     }
 
-    # Set number of subjects. `addMetaData()` also accepts text, e.g. from a
-    # column read from cells stored as text.
+    # Set number of subjects
     if ("subjectCount" %in% names(data)) {
       val <- .getSingleNonNaValue("subjectCount")
-      if (!is.null(val)) ds$addMetaData(.subjectCountMetaDataName, val)
+      if (!is.null(val)) ds$subjectCount <- val
     }
 
     # Add meta data from extra columns
