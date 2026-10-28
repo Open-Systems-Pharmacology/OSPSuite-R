@@ -105,14 +105,6 @@
 # addMetaData with the name subjectCount needs text, like all other entries
 
     Code
-      dataSet$addMetaData("subjectCount", 18)
-    Condition
-      Error in `validateIsOfType()`:
-      ! `test()`: argument "value" is of type <numeric>, but expected <character>!
-
----
-
-    Code
       dataSet$addMetaData("subjectCount", NA_character_)
     Condition
       Error in `dataSet$addMetaData()`:

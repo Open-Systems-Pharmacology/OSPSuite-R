@@ -532,9 +532,15 @@ test_that("addMetaData with the name subjectCount sets subjectCount", {
 test_that("addMetaData with the name subjectCount needs text, like all other entries", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$subjectCount <- 12
-  expect_snapshot(error = TRUE, dataSet$addMetaData("subjectCount", 18))
+  expect_error(
+    dataSet$addMetaData("subjectCount", 18),
+    regexp = "is of type <numeric>, but expected <character>"
+  )
   # A missing value does not remove the entry
-  expect_snapshot(error = TRUE, dataSet$addMetaData("subjectCount", NA_character_))
+  expect_snapshot(
+    error = TRUE,
+    dataSet$addMetaData("subjectCount", NA_character_)
+  )
   expect_identical(dataSet$subjectCount, 12L)
 })
 
