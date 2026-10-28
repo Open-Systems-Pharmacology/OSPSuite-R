@@ -345,3 +345,21 @@ test_that("toDataFrame has a subjectCount column with NA when only simulated dat
     rep(NA_integer_, 4)
   )
 })
+
+test_that("calculateResiduals gives NA subjectCount for a DataCombined saved without this column", {
+  dataCombined <- DataCombined$new()
+  dataCombined$addSimulationResults(simData, groups = "myGroup")
+  dataCombined$addDataSets(obsData, groups = "myGroup")
+  # A `DataCombined` saved with an earlier version, e.g. with `saveRDS()`, has
+  # no `subjectCount` column in its stored data
+  private <- dataCombined$.__enclos_env__$private
+  private$.dataCombined$subjectCount <- NULL
+  private$.dataFrameCache <- NULL
+
+  residuals <- calculateResiduals(dataCombined, scaling = "lin")
+
+  expect_identical(
+    residuals$subjectCount,
+    rep(NA_integer_, nrow(residuals))
+  )
+})

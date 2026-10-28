@@ -339,6 +339,12 @@ calculateResiduals <- function(
 #'
 #' @keywords internal
 .extractResidualsToTibble <- function(data, scaling) {
+  # The number of subjects is missing in plot data not created by
+  # `DataCombined` and in `DataCombined` objects saved with an earlier version
+  if (!"subjectCount" %in% colnames(data)) {
+    data$subjectCount <- NA_integer_
+  }
+
   observedList <- split(dplyr::filter(data, dataType == "observed"), ~name)
   simulatedList <- split(dplyr::filter(data, dataType == "simulated"), ~name)
 

@@ -1176,15 +1176,11 @@ plotQuantileQuantilePlot <- function(
 #' @keywords internal
 #' @noRd
 .calculateResidualsForPlot <- function(plotData, scaling) {
-  lloq <- nameSimulated <- subjectCount <- NULL
+  lloq <- nameSimulated <- NULL
 
-  # functions called below needs columns lloq and subjectCount, which are
-  # missing in plot data not created by `DataCombined`
+  # functions called below needs column lloq
   if (!('lloq' %in% names(plotData))) {
     plotData[, lloq := NA]
-  }
-  if (!('subjectCount' %in% names(plotData))) {
-    plotData[, subjectCount := NA_integer_]
   }
 
   # Drop groups that have only observed or only simulated data — residuals
