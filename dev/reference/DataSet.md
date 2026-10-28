@@ -77,6 +77,13 @@ for y-values.
   Lower Limit Of Quantification. Value in yUnit associated with the
   yValues
 
+- `subjectCount`:
+
+  Number of subjects from which the y values and the error values are
+  calculated, e.g. for aggregated data reported as mean and standard
+  deviation. One positive whole number, or `NULL` if not set. Set it to
+  `NULL` or `NA` to remove it.
+
 - `metaData`:
 
   Returns a named list of meta data defined for the data set.

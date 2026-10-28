@@ -58,6 +58,7 @@ print(dataSet)
 #>   • Error unit: mg/l
 #>   • Molecular weight: NULL
 #>   • LLOQ: NULL
+#>   • Subject count: NULL
 #> Meta data:
 ```
 
@@ -96,6 +97,7 @@ print(dataSet)
 #>   • Error unit: µmol
 #>   • Molecular weight: NULL
 #>   • LLOQ: NULL
+#>   • Subject count: NULL
 #> Meta data:
 
 # Change the units of y values and error values - they are now different!
@@ -113,6 +115,7 @@ print(dataSet)
 #>   • Error unit: pmol
 #>   • Molecular weight: NULL
 #>   • LLOQ: NULL
+#>   • Subject count: NULL
 #> Meta data:
 ```
 
@@ -147,6 +150,7 @@ print(dataSet)
 #>   • Error unit: mol
 #>   • Molecular weight: NULL
 #>   • LLOQ: NULL
+#>   • Subject count: NULL
 #> Meta data:
 ```
 
@@ -174,6 +178,27 @@ print(dataSet$metaData)
 #> [1] "Muscle"
 ```
 
+Aggregated data, for example mean values with a standard deviation, are
+calculated from a certain number of subjects. This number is stored in
+the `subjectCount` field, so that it is available for later analyses,
+for example to calculate confidence intervals of the mean. It must be
+one positive whole number. The value is stored as the meta data entry
+`subjectCount`, so it is saved with the data set in a PKML file. To read
+it from an Excel file, add a column `subjectCount` to the file and add
+it as a grouping column of the importer configuration with
+`importerConfiguration$addGroupingColumn("subjectCount")`.
+
+``` r
+
+# The data set contains the mean values of 12 subjects
+dataSet$subjectCount <- 12
+dataSet$subjectCount
+#> [1] 12
+
+# Remove the number of subjects
+dataSet$subjectCount <- NULL
+```
+
 A `DataSet` or multiple `DataSet`s can be converted to `data.frame` (or
 `tibble`) to be processed in downstream analysis and visualization
 workflows:
@@ -191,7 +216,7 @@ dataSet2$setValues(
 myTibble <- dataSetToTibble(dataSets = c(dataSet, dataSet2))
 
 print(myTibble)
-#> # A tibble: 9 × 14
+#> # A tibble: 9 × 15
 #>   name            xValues yValues yErrorValues xDimension xUnit yDimension yUnit
 #>   <chr>             <dbl>   <dbl>        <dbl> <chr>      <chr> <chr>      <chr>
 #> 1 My data set           1   0         0.001000 Time       min   Amount     mol  
@@ -203,8 +228,8 @@ print(myTibble)
 #> 7 Second data set       3   5.00     NA        Time       h     Concentra… mg/l 
 #> 8 Second data set       4   8.00     NA        Time       h     Concentra… mg/l 
 #> 9 Second data set       5   0.100    NA        Time       h     Concentra… mg/l 
-#> # ℹ 6 more variables: yErrorType <chr>, yErrorUnit <chr>, molWeight <dbl>,
-#> #   lloq <dbl>, Molecule <chr>, Organ <chr>
+#> # ℹ 7 more variables: yErrorType <chr>, yErrorUnit <chr>, molWeight <dbl>,
+#> #   lloq <dbl>, subjectCount <int>, Molecule <chr>, Organ <chr>
 ```
 
 The inverse operation - creating `DataSet` objects from a `data.frame` -
@@ -236,11 +261,11 @@ print(df)
 #> 2 Aciclovir       2     1.2         0.10       Time     h Concentration (mass)
 #> 3 Aciclovir       3     0.8         0.08       Time     h Concentration (mass)
 #> 4 Aciclovir       4     0.3         0.03       Time     h Concentration (mass)
-#>   yUnit       yErrorType yErrorUnit molWeight lloq Organ
-#> 1  mg/l ArithmeticStdDev       mg/l        NA   NA Blood
-#> 2  mg/l ArithmeticStdDev       mg/l        NA   NA Blood
-#> 3  mg/l ArithmeticStdDev       mg/l        NA   NA Blood
-#> 4  mg/l ArithmeticStdDev       mg/l        NA   NA Blood
+#>   yUnit       yErrorType yErrorUnit molWeight lloq subjectCount Organ
+#> 1  mg/l ArithmeticStdDev       mg/l        NA   NA           NA Blood
+#> 2  mg/l ArithmeticStdDev       mg/l        NA   NA           NA Blood
+#> 3  mg/l ArithmeticStdDev       mg/l        NA   NA           NA Blood
+#> 4  mg/l ArithmeticStdDev       mg/l        NA   NA           NA Blood
 
 # Reconstruct DataSet objects from the data.frame
 dataSetsFromDf <- dataSetsFromDataFrame(df)
@@ -255,6 +280,7 @@ print(dataSetsFromDf[["Aciclovir"]])
 #>   • Error unit: mg/l
 #>   • Molecular weight: NULL
 #>   • LLOQ: NULL
+#>   • Subject count: NULL
 #> Meta data:
 #>   • Organ: Blood
 ```
@@ -292,6 +318,7 @@ print(dataSetsFromObserved[["Study A"]])
 #>   • Error unit: NULL
 #>   • Molecular weight: NULL
 #>   • LLOQ: NULL
+#>   • Subject count: NULL
 #> Meta data:
 #>   • Organ: Liver
 ```
@@ -326,6 +353,7 @@ print(dataSet)
 #>   • Error unit: mg/l
 #>   • Molecular weight: 225.21
 #>   • LLOQ: NULL
+#>   • Subject count: NULL
 #> Meta data:
 #>   • Source: X:\Orga\BTS-TD\ET\TP CSB\Projects\Internal
 #>   Projects\MagenDarm\TestSubstanzen\Acyclovir\Rohdaten_Acyclovir.xls.Vergin

@@ -401,7 +401,12 @@ In the returned tibble data frame, the following columns will always be
 present:
 
 name - group - dataType - xValues - xDimension - xUnit - yValues -
-yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit -
+molWeight - subjectCount
+
+The `subjectCount` column holds the number of subjects of an observed
+data set (`DataSet$subjectCount`). It is `NA` for simulated data and for
+data sets without a number of subjects.
 
 Each call returns a fresh copy of the data frame. You can change it in
 any way you like without affecting the `DataCombined` object or the
@@ -481,7 +486,7 @@ myDataCombined$dataTransformations
 
 # Accessing the combined data frame
 myDataCombined$toDataFrame()
-#> # A tibble: 504 × 27
+#> # A tibble: 504 × 28
 #>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit
 #>           <int>   <dbl> <fct>            <dbl> <chr>      <chr> <chr>      <chr>
 #>  1            0       0 Organism|Peri…    0    Time       min   Concentra… µmol…
@@ -495,9 +500,9 @@ myDataCombined$toDataFrame()
 #>  9            0       8 Organism|Peri…   41.1  Time       min   Concentra… µmol…
 #> 10            0       9 Organism|Peri…   45.5  Time       min   Concentra… µmol…
 #> # ℹ 494 more rows
-#> # ℹ 19 more variables: molWeight <dbl>, dataType <chr>, yErrorValues <dbl>,
-#> #   yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>, Source <chr>, File <chr>,
-#> #   Sheet <chr>, Molecule <chr>, Species <chr>, Organ <chr>, Compartment <chr>,
-#> #   `Study Id` <chr>, Gender <chr>, Dose <chr>, Route <chr>,
-#> #   `Patient Id` <chr>, group <fct>
+#> # ℹ 20 more variables: molWeight <dbl>, dataType <chr>, yErrorValues <dbl>,
+#> #   subjectCount <int>, yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>,
+#> #   Source <chr>, File <chr>, Sheet <chr>, Molecule <chr>, Species <chr>,
+#> #   Organ <chr>, Compartment <chr>, `Study Id` <chr>, Gender <chr>, Dose <chr>,
+#> #   Route <chr>, `Patient Id` <chr>, group <fct>
 ```

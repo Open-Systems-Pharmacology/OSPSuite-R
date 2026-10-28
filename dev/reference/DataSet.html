@@ -9,7 +9,7 @@ optional error for y-values."><meta name="robots" content="noindex"></head><body
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9009</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -140,6 +140,13 @@ Use <code>$setValues()</code> to change the values.</p></dd>
     <dt><code>LLOQ</code></dt>
 <dd><p>Lower Limit Of Quantification.
 Value in yUnit associated with the yValues</p></dd>
+
+
+    <dt><code>subjectCount</code></dt>
+<dd><p>Number of subjects from which the y values and the
+error values are calculated, e.g. for aggregated data reported as mean
+and standard deviation. One positive whole number, or <code>NULL</code> if not
+set. Set it to <code>NULL</code> or <code>NA</code> to remove it.</p></dd>
 
 
     <dt><code>metaData</code></dt>

@@ -2,6 +2,39 @@
 
 ## ospsuite (development version)
 
+### New features
+
+- `DataSet` has a new field `subjectCount` for the number of subjects
+  from which aggregated observed data (mean values with a standard
+  deviation or geometric standard deviation) are calculated. It accepts
+  one positive whole number and is `NULL` when not set.
+  [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
+  reads it from a column `subjectCount` of the Excel file when this
+  column is added as a grouping column of the importer configuration
+  ([\#2060](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2060)).
+- [`dataSetToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md)
+  and
+  [`dataSetToTibble()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md)
+  return a new column `subjectCount`, and
+  [`dataSetsFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetsFromDataFrame.md)
+  reads this column back into `DataSet$subjectCount`. The meta data
+  entry `subjectCount` does not appear as an additional meta data
+  column. The new column comes after `lloq`, so the meta data columns
+  move one position to the right.
+  [`rbind()`](https://rdrr.io/r/base/cbind.html) of these data frames
+  with data frames created by an earlier version fails because of the
+  new column; use
+  [`dplyr::bind_rows()`](https://dplyr.tidyverse.org/reference/bind_rows.html)
+  instead
+  ([\#2060](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2060)).
+- `DataCombined$toDataFrame()` and
+  [`calculateResiduals()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/calculateResiduals.md)
+  return a new column `subjectCount` with the number of subjects of each
+  observed data set. It is `NA` for simulated data and for data sets
+  without a number of subjects, and
+  `DataCombined$setDataTransformations()` does not change it
+  ([\#2060](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2060)).
+
 ### Minor improvements and bug fixes
 
 - `StandardOntogeny` now includes `CES1` and `ABCB1` (P-gp), so these

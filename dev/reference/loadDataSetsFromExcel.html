@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9009</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -115,6 +115,12 @@ will be loaded, overriding any sheets defined in the <code>importerConfiguration
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Load observed data from an excel file using an importer configuration</p>
+<p>The values of all grouping columns of the configuration are added to the
+meta data of the loaded data sets. To read the number of subjects of
+aggregated data into <code>DataSet$subjectCount</code>, add a column <code>subjectCount</code>
+with one positive whole number per data set to the Excel file and add it as
+a grouping column, e.g. with
+<code>importerConfiguration$addGroupingColumn("subjectCount")</code>.</p>
     </div>
 
     <div class="section level2">

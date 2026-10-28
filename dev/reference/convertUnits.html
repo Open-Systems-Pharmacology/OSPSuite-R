@@ -17,7 +17,7 @@ meaningfully compared."><meta name="robots" content="noindex"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9009</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,7 +107,8 @@ available dimensions and units, see <code><a href="ospDimensions.html">ospsuite:
     <p>A data frame with measurement columns transformed to have common units.</p>
 <p>In the returned tibble data frame, the following columns will always be present:</p>
 <p>name - group - dataType - xValues - xDimension - xUnit - yValues -
-yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight</p>
+yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight -
+subjectCount</p>
 <p>Importantly, the <code>xUnit</code> and <code>yUnit</code> columns will have unique entries.</p>
     </div>
     <div class="section level2">
@@ -158,7 +159,7 @@ unit conversion will fail.</p>
 <span class="r-in"><span>  xUnit <span class="op">=</span> <span class="va">ospUnits</span><span class="op">$</span><span class="va">Time</span><span class="op">$</span><span class="va">s</span>,</span></span>
 <span class="r-in"><span>  yUnit <span class="op">=</span> <span class="va">ospUnits</span><span class="op">$</span><span class="va">`Concentration [mass]`</span><span class="op">$</span><span class="va">`µg/l`</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 504 × 27</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 504 × 28</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>            0       0 Organism|Peri…      0  Time       s     Concentra… µg/l </span>
@@ -172,11 +173,11 @@ unit conversion will fail.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>            0     480 Organism|Peri…   <span style="text-decoration: underline;">9</span>249. Time       s     Concentra… µg/l </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>            0     540 Organism|Peri…  <span style="text-decoration: underline;">10</span>242. Time       s     Concentra… µg/l </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 494 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 19 more variables: molWeight &lt;dbl&gt;, dataType &lt;chr&gt;, yErrorValues &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   yErrorType &lt;chr&gt;, yErrorUnit &lt;chr&gt;, lloq &lt;dbl&gt;, Source &lt;chr&gt;, File &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Sheet &lt;chr&gt;, Molecule &lt;chr&gt;, Species &lt;chr&gt;, Organ &lt;chr&gt;, Compartment &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Study Id` &lt;chr&gt;, Gender &lt;chr&gt;, Dose &lt;chr&gt;, Route &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Patient Id` &lt;chr&gt;, group &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 20 more variables: molWeight &lt;dbl&gt;, dataType &lt;chr&gt;, yErrorValues &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   subjectCount &lt;int&gt;, yErrorType &lt;chr&gt;, yErrorUnit &lt;chr&gt;, lloq &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Source &lt;chr&gt;, File &lt;chr&gt;, Sheet &lt;chr&gt;, Molecule &lt;chr&gt;, Species &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Organ &lt;chr&gt;, Compartment &lt;chr&gt;, `Study Id` &lt;chr&gt;, Gender &lt;chr&gt;, Dose &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Route &lt;chr&gt;, `Patient Id` &lt;chr&gt;, group &lt;fct&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

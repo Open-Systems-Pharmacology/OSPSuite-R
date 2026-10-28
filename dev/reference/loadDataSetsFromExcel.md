@@ -57,6 +57,13 @@ A named set of `DataSet` objects. The naming is defined by the property
 
 Load observed data from an excel file using an importer configuration
 
+The values of all grouping columns of the configuration are added to the
+meta data of the loaded data sets. To read the number of subjects of
+aggregated data into `DataSet$subjectCount`, add a column `subjectCount`
+with one positive whole number per data set to the Excel file and add it
+as a grouping column, e.g. with
+`importerConfiguration$addGroupingColumn("subjectCount")`.
+
 ## Examples
 
 ``` r

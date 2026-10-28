@@ -27,8 +27,8 @@ dataSetToTibble(dataSets, names = NULL)
 
 DataSet objects as data.frame with columns name, xValues, yValues,
 yErrorValues, xDimension, xUnit, yDimension, yUnit, yErrorType,
-yErrorUnit, molWeight, lloq, and a column for each meta data that is
-present in any `DataSet`.
+yErrorUnit, molWeight, lloq, subjectCount, and a column for each meta
+data that is present in any `DataSet`.
 
 ## Examples
 

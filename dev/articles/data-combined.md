@@ -366,7 +366,7 @@ remain available in the `DataSet` and `SimulationResults` objects.
 ``` r
 
 myDataCombined$toDataFrame()
-#> # A tibble: 504 × 27
+#> # A tibble: 504 × 28
 #>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit
 #>           <int>   <dbl> <fct>            <dbl> <chr>      <chr> <chr>      <chr>
 #>  1            0       0 Aciclovir Pla…    0    Time       min   Concentra… µmol…
@@ -380,11 +380,11 @@ myDataCombined$toDataFrame()
 #>  9            0       8 Aciclovir Pla…   41.1  Time       min   Concentra… µmol…
 #> 10            0       9 Aciclovir Pla…   45.5  Time       min   Concentra… µmol…
 #> # ℹ 494 more rows
-#> # ℹ 19 more variables: molWeight <dbl>, dataType <chr>, yErrorValues <dbl>,
-#> #   yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>, Source <chr>, File <chr>,
-#> #   Sheet <chr>, Molecule <chr>, Species <chr>, Organ <chr>, Compartment <chr>,
-#> #   `Study Id` <chr>, Gender <chr>, Dose <chr>, Route <chr>,
-#> #   `Patient Id` <chr>, group <fct>
+#> # ℹ 20 more variables: molWeight <dbl>, dataType <chr>, yErrorValues <dbl>,
+#> #   subjectCount <int>, yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>,
+#> #   Source <chr>, File <chr>, Sheet <chr>, Molecule <chr>, Species <chr>,
+#> #   Organ <chr>, Compartment <chr>, `Study Id` <chr>, Gender <chr>, Dose <chr>,
+#> #   Route <chr>, `Patient Id` <chr>, group <fct>
 ```
 
 This function returns a [tibble data
@@ -404,7 +404,7 @@ options(
 myDataCombined$toDataFrame()
 ```
 
-    #> # A tibble: 504 × 27
+    #> # A tibble: 504 × 28
     #>    IndividualId xValues name             yValues xDimension xUnit
     #>           <int>   <dbl> <fct>              <dbl> <chr>      <chr>
     #>  1            0       0 Aciclovir Plasma    0    Time       min  
@@ -417,42 +417,42 @@ myDataCombined$toDataFrame()
     #>  8            0       7 Aciclovir Plasma   36.4  Time       min  
     #>  9            0       8 Aciclovir Plasma   41.1  Time       min  
     #> 10            0       9 Aciclovir Plasma   45.5  Time       min  
-    #>    yDimension            yUnit  molWeight dataType  yErrorValues yErrorType
-    #>    <chr>                 <chr>      <dbl> <chr>            <dbl> <chr>     
-    #>  1 Concentration (molar) µmol/l      225. simulated           NA NA        
-    #>  2 Concentration (molar) µmol/l      225. simulated           NA NA        
-    #>  3 Concentration (molar) µmol/l      225. simulated           NA NA        
-    #>  4 Concentration (molar) µmol/l      225. simulated           NA NA        
-    #>  5 Concentration (molar) µmol/l      225. simulated           NA NA        
-    #>  6 Concentration (molar) µmol/l      225. simulated           NA NA        
-    #>  7 Concentration (molar) µmol/l      225. simulated           NA NA        
-    #>  8 Concentration (molar) µmol/l      225. simulated           NA NA        
-    #>  9 Concentration (molar) µmol/l      225. simulated           NA NA        
-    #> 10 Concentration (molar) µmol/l      225. simulated           NA NA        
-    #>    yErrorUnit  lloq Source File  Sheet Molecule Species Organ Compartment
-    #>    <chr>      <dbl> <chr>  <chr> <chr> <chr>    <chr>   <chr> <chr>      
-    #>  1 NA            NA NA     NA    NA    NA       NA      NA    NA         
-    #>  2 NA            NA NA     NA    NA    NA       NA      NA    NA         
-    #>  3 NA            NA NA     NA    NA    NA       NA      NA    NA         
-    #>  4 NA            NA NA     NA    NA    NA       NA      NA    NA         
-    #>  5 NA            NA NA     NA    NA    NA       NA      NA    NA         
-    #>  6 NA            NA NA     NA    NA    NA       NA      NA    NA         
-    #>  7 NA            NA NA     NA    NA    NA       NA      NA    NA         
-    #>  8 NA            NA NA     NA    NA    NA       NA      NA    NA         
-    #>  9 NA            NA NA     NA    NA    NA       NA      NA    NA         
-    #> 10 NA            NA NA     NA    NA    NA       NA      NA    NA         
-    #>    `Study Id` Gender Dose  Route `Patient Id` group        
-    #>    <chr>      <chr>  <chr> <chr> <chr>        <fct>        
-    #>  1 NA         NA     NA    NA    NA           Aciclovir PVB
-    #>  2 NA         NA     NA    NA    NA           Aciclovir PVB
-    #>  3 NA         NA     NA    NA    NA           Aciclovir PVB
-    #>  4 NA         NA     NA    NA    NA           Aciclovir PVB
-    #>  5 NA         NA     NA    NA    NA           Aciclovir PVB
-    #>  6 NA         NA     NA    NA    NA           Aciclovir PVB
-    #>  7 NA         NA     NA    NA    NA           Aciclovir PVB
-    #>  8 NA         NA     NA    NA    NA           Aciclovir PVB
-    #>  9 NA         NA     NA    NA    NA           Aciclovir PVB
-    #> 10 NA         NA     NA    NA    NA           Aciclovir PVB
+    #>    yDimension            yUnit  molWeight dataType  yErrorValues subjectCount
+    #>    <chr>                 <chr>      <dbl> <chr>            <dbl>        <int>
+    #>  1 Concentration (molar) µmol/l      225. simulated           NA           NA
+    #>  2 Concentration (molar) µmol/l      225. simulated           NA           NA
+    #>  3 Concentration (molar) µmol/l      225. simulated           NA           NA
+    #>  4 Concentration (molar) µmol/l      225. simulated           NA           NA
+    #>  5 Concentration (molar) µmol/l      225. simulated           NA           NA
+    #>  6 Concentration (molar) µmol/l      225. simulated           NA           NA
+    #>  7 Concentration (molar) µmol/l      225. simulated           NA           NA
+    #>  8 Concentration (molar) µmol/l      225. simulated           NA           NA
+    #>  9 Concentration (molar) µmol/l      225. simulated           NA           NA
+    #> 10 Concentration (molar) µmol/l      225. simulated           NA           NA
+    #>    yErrorType yErrorUnit  lloq Source File  Sheet Molecule Species Organ
+    #>    <chr>      <chr>      <dbl> <chr>  <chr> <chr> <chr>    <chr>   <chr>
+    #>  1 NA         NA            NA NA     NA    NA    NA       NA      NA   
+    #>  2 NA         NA            NA NA     NA    NA    NA       NA      NA   
+    #>  3 NA         NA            NA NA     NA    NA    NA       NA      NA   
+    #>  4 NA         NA            NA NA     NA    NA    NA       NA      NA   
+    #>  5 NA         NA            NA NA     NA    NA    NA       NA      NA   
+    #>  6 NA         NA            NA NA     NA    NA    NA       NA      NA   
+    #>  7 NA         NA            NA NA     NA    NA    NA       NA      NA   
+    #>  8 NA         NA            NA NA     NA    NA    NA       NA      NA   
+    #>  9 NA         NA            NA NA     NA    NA    NA       NA      NA   
+    #> 10 NA         NA            NA NA     NA    NA    NA       NA      NA   
+    #>    Compartment `Study Id` Gender Dose  Route `Patient Id` group        
+    #>    <chr>       <chr>      <chr>  <chr> <chr> <chr>        <fct>        
+    #>  1 NA          NA         NA     NA    NA    NA           Aciclovir PVB
+    #>  2 NA          NA         NA     NA    NA    NA           Aciclovir PVB
+    #>  3 NA          NA         NA     NA    NA    NA           Aciclovir PVB
+    #>  4 NA          NA         NA     NA    NA    NA           Aciclovir PVB
+    #>  5 NA          NA         NA     NA    NA    NA           Aciclovir PVB
+    #>  6 NA          NA         NA     NA    NA    NA           Aciclovir PVB
+    #>  7 NA          NA         NA     NA    NA    NA           Aciclovir PVB
+    #>  8 NA          NA         NA     NA    NA    NA           Aciclovir PVB
+    #>  9 NA          NA         NA     NA    NA    NA           Aciclovir PVB
+    #> 10 NA          NA         NA     NA    NA    NA           Aciclovir PVB
     #> # ℹ 494 more rows
 
 [ospsuite](https://github.com/open-systems-pharmacology/ospsuite-r) also
@@ -472,7 +472,7 @@ convertUnits(
   xUnit = ospUnits$Time$s,
   yUnit = ospUnits$`Concentration [mass]`$`µg/l`
 )
-#> # A tibble: 504 × 27
+#> # A tibble: 504 × 28
 #>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit
 #>           <int>   <dbl> <fct>            <dbl> <chr>      <chr> <chr>      <chr>
 #>  1            0       0 Aciclovir Pla…      0  Time       s     Concentra… µg/l 
@@ -486,11 +486,11 @@ convertUnits(
 #>  9            0     480 Aciclovir Pla…   9249. Time       s     Concentra… µg/l 
 #> 10            0     540 Aciclovir Pla…  10242. Time       s     Concentra… µg/l 
 #> # ℹ 494 more rows
-#> # ℹ 19 more variables: molWeight <dbl>, dataType <chr>, yErrorValues <dbl>,
-#> #   yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>, Source <chr>, File <chr>,
-#> #   Sheet <chr>, Molecule <chr>, Species <chr>, Organ <chr>, Compartment <chr>,
-#> #   `Study Id` <chr>, Gender <chr>, Dose <chr>, Route <chr>,
-#> #   `Patient Id` <chr>, group <fct>
+#> # ℹ 20 more variables: molWeight <dbl>, dataType <chr>, yErrorValues <dbl>,
+#> #   subjectCount <int>, yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>,
+#> #   Source <chr>, File <chr>, Sheet <chr>, Molecule <chr>, Species <chr>,
+#> #   Organ <chr>, Compartment <chr>, `Study Id` <chr>, Gender <chr>, Dose <chr>,
+#> #   Route <chr>, `Patient Id` <chr>, group <fct>
 ```
 
 ## Further functionalities

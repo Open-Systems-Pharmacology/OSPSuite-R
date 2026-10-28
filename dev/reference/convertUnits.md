@@ -39,7 +39,8 @@ In the returned tibble data frame, the following columns will always be
 present:
 
 name - group - dataType - xValues - xDimension - xUnit - yValues -
-yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit -
+molWeight - subjectCount
 
 Importantly, the `xUnit` and `yUnit` columns will have unique entries.
 
@@ -92,7 +93,7 @@ convertUnits(
   xUnit = ospUnits$Time$s,
   yUnit = ospUnits$`Concentration [mass]`$`µg/l`
 )
-#> # A tibble: 504 × 27
+#> # A tibble: 504 × 28
 #>    IndividualId xValues name           yValues xDimension xUnit yDimension yUnit
 #>           <int>   <dbl> <fct>            <dbl> <chr>      <chr> <chr>      <chr>
 #>  1            0       0 Organism|Peri…      0  Time       s     Concentra… µg/l 
@@ -106,9 +107,9 @@ convertUnits(
 #>  9            0     480 Organism|Peri…   9249. Time       s     Concentra… µg/l 
 #> 10            0     540 Organism|Peri…  10242. Time       s     Concentra… µg/l 
 #> # ℹ 494 more rows
-#> # ℹ 19 more variables: molWeight <dbl>, dataType <chr>, yErrorValues <dbl>,
-#> #   yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>, Source <chr>, File <chr>,
-#> #   Sheet <chr>, Molecule <chr>, Species <chr>, Organ <chr>, Compartment <chr>,
-#> #   `Study Id` <chr>, Gender <chr>, Dose <chr>, Route <chr>,
-#> #   `Patient Id` <chr>, group <fct>
+#> # ℹ 20 more variables: molWeight <dbl>, dataType <chr>, yErrorValues <dbl>,
+#> #   subjectCount <int>, yErrorType <chr>, yErrorUnit <chr>, lloq <dbl>,
+#> #   Source <chr>, File <chr>, Sheet <chr>, Molecule <chr>, Species <chr>,
+#> #   Organ <chr>, Compartment <chr>, `Study Id` <chr>, Gender <chr>, Dose <chr>,
+#> #   Route <chr>, `Patient Id` <chr>, group <fct>
 ```

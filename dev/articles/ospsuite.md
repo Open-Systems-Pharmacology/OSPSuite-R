@@ -318,7 +318,7 @@ myDataCombined$addSimulationResults(
 # Convert to data frame if needed
 df_results <- myDataCombined$toDataFrame()
 head(df_results)
-#> # A tibble: 6 × 12
+#> # A tibble: 6 × 13
 #>   IndividualId xValues name  yValues xDimension xUnit yDimension yUnit molWeight
 #>          <int>   <dbl> <fct>   <dbl> <chr>      <chr> <chr>      <chr>     <dbl>
 #> 1            0       0 Orga…    0    Time       min   Concentra… µmol…      225.
@@ -327,7 +327,8 @@ head(df_results)
 #> 4            0       3 Orga…   15.0  Time       min   Concentra… µmol…      225.
 #> 5            0       4 Orga…   20.7  Time       min   Concentra… µmol…      225.
 #> 6            0       5 Orga…   26.2  Time       min   Concentra… µmol…      225.
-#> # ℹ 3 more variables: dataType <chr>, yErrorValues <dbl>, group <fct>
+#> # ℹ 4 more variables: dataType <chr>, yErrorValues <dbl>, subjectCount <int>,
+#> #   group <fct>
 
 # Create publication-ready plots
 plotTimeProfile(myDataCombined)

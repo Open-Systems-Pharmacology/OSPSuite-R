@@ -100,6 +100,10 @@ calculated residuals. The following columns will be present:
 
   Lower limit of quantification (if available)
 
+- subjectCount:
+
+  Number of subjects of the observed dataset (`NA` if not set)
+
 Returns `NULL` with a warning if no pairable datasets are found.
 
 ## Details
@@ -169,7 +173,7 @@ Other data-combined:
 
 ``` r
 calculateResiduals(dataCombinedAciclovir, scaling = "linear")
-#> # A tibble: 13 × 15
+#> # A tibble: 13 × 16
 #>    group      name  nameSimulated xValues xUnit xDimension yValuesObserved yUnit
 #>    <chr>      <chr> <chr>           <dbl> <chr> <chr>                <dbl> <chr>
 #>  1 Aciclovir… Verg… Organism|Per…   0.224 h     Time                7.89   mg/l 
@@ -185,6 +189,7 @@ calculateResiduals(dataCombinedAciclovir, scaling = "linear")
 #> 11 Aciclovir… Verg… Organism|Per…  12     h     Time                0.123  mg/l 
 #> 12 Aciclovir… Verg… Organism|Per…  15.0   h     Time                0.0980 mg/l 
 #> 13 Aciclovir… Verg… Organism|Per…  24     h     Time                0.0735 mg/l 
-#> # ℹ 7 more variables: yDimension <chr>, yErrorValues <dbl>, yErrorType <chr>,
-#> #   yErrorUnit <chr>, lloq <dbl>, yValuesSimulated <dbl>, residualValues <dbl>
+#> # ℹ 8 more variables: yDimension <chr>, yErrorValues <dbl>, yErrorType <chr>,
+#> #   yErrorUnit <chr>, lloq <dbl>, subjectCount <int>, yValuesSimulated <dbl>,
+#> #   residualValues <dbl>
 ```

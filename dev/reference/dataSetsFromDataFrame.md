@@ -15,8 +15,8 @@ dataSetsFromDataFrame(data)
   A `data.frame` with at minimum the columns `name`, `xValues`, and
   `yValues`. Optional standard columns: `yErrorValues`, `xDimension`,
   `xUnit`, `yDimension`, `yUnit`, `yErrorType`, `yErrorUnit`,
-  `molWeight`, `lloq`. Any additional columns are treated as meta data
-  entries.
+  `molWeight`, `lloq`, `subjectCount`. Any additional columns are
+  treated as meta data entries.
 
 ## Value
 
@@ -30,8 +30,8 @@ returned by
 Each unique value in the `name` column results in one `DataSet` object.
 Any columns beyond the standard columns (`name`, `xValues`, `yValues`,
 `yErrorValues`, `xDimension`, `xUnit`, `yDimension`, `yUnit`,
-`yErrorType`, `yErrorUnit`, `molWeight`, `lloq`) will be added as meta
-data.
+`yErrorType`, `yErrorUnit`, `molWeight`, `lloq`, `subjectCount`) will be
+added as meta data.
 
 ## Examples
 

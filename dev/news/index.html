@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9009</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +63,15 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="ospsuite-development-version">ospsuite (development version)<a class="anchor" aria-label="anchor" href="#ospsuite-development-version"></a></h2>
+<div class="section level3">
+<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<ul><li>
+<code>DataSet</code> has a new field <code>subjectCount</code> for the number of subjects from which aggregated observed data (mean values with a standard deviation or geometric standard deviation) are calculated. It accepts one positive whole number and is <code>NULL</code> when not set. <code><a href="../reference/loadDataSetsFromExcel.html">loadDataSetsFromExcel()</a></code> reads it from a column <code>subjectCount</code> of the Excel file when this column is added as a grouping column of the importer configuration (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/2060" class="external-link">#2060</a>).</li>
+<li>
+<code><a href="../reference/dataSetToDataFrame.html">dataSetToDataFrame()</a></code> and <code><a href="../reference/dataSetToDataFrame.html">dataSetToTibble()</a></code> return a new column <code>subjectCount</code>, and <code><a href="../reference/dataSetsFromDataFrame.html">dataSetsFromDataFrame()</a></code> reads this column back into <code>DataSet$subjectCount</code>. The meta data entry <code>subjectCount</code> does not appear as an additional meta data column. The new column comes after <code>lloq</code>, so the meta data columns move one position to the right. <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code> of these data frames with data frames created by an earlier version fails because of the new column; use <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code> instead (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/2060" class="external-link">#2060</a>).</li>
+<li>
+<code>DataCombined$toDataFrame()</code> and <code><a href="../reference/calculateResiduals.html">calculateResiduals()</a></code> return a new column <code>subjectCount</code> with the number of subjects of each observed data set. It is <code>NA</code> for simulated data and for data sets without a number of subjects, and <code>DataCombined$setDataTransformations()</code> does not change it (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/2060" class="external-link">#2060</a>).</li>
+</ul></div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
 <ul><li>
