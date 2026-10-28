@@ -144,6 +144,7 @@ test_that("data frame column and dataset names are as expected when only `DataSe
       "yErrorUnit",
       "molWeight",
       "lloq",
+      "subjectCount",
       "Sheet",
       "Group Id"
     ))
@@ -231,7 +232,8 @@ test_that("data frame column names and datset names are as expected when only `S
       "yDimension",
       "yErrorValues",
       "IndividualId",
-      "molWeight"
+      "molWeight",
+      "subjectCount"
     ))
   )
   expect_equal(
@@ -638,6 +640,7 @@ test_that("data frame column names are as expected when both `DataSet` and `Simu
       "IndividualId",
       "molWeight",
       "lloq",
+      "subjectCount",
       "Sheet",
       "Group Id"
     ))
@@ -1541,10 +1544,10 @@ test_that("sequential update when first and second datasets have same names but 
 
   # they should be different since the new dataset that replaces the old one has
   # deliberately different values and rows
-  expect_equal(dim(df1), c(77L, 16L))
-  expect_equal(dim(df2), c(76L, 16L))
-  expect_equal(dim(df1Filter), c(25L, 16L))
-  expect_equal(dim(df2Filter), c(24L, 16L))
+  expect_equal(dim(df1), c(77L, 17L))
+  expect_equal(dim(df2), c(76L, 17L))
+  expect_equal(dim(df1Filter), c(25L, 17L))
+  expect_equal(dim(df2Filter), c(24L, 17L))
 
   expect_equal(
     head(df1Filter$xValues),
@@ -1639,6 +1642,7 @@ test_that("data frame column names are as expected when `DataSet` with metadata 
       "yErrorUnit",
       "molWeight",
       "lloq",
+      "subjectCount",
       "Sheet",
       "Group Id",
       "Organ",

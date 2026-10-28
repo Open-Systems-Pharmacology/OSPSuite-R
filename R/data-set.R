@@ -181,6 +181,40 @@ DataSet <- R6::R6Class(
       )
     },
 
+    #' @field subjectCount Number of subjects from which the y values and the
+    #' error values are calculated, e.g. for aggregated data reported as mean
+    #' and standard deviation. One positive whole number, or `NULL` if not
+    #' set. Set it to `NULL` or `NA` to remove it.
+    subjectCount = function(value) {
+      if (missing(value)) {
+        return(.subjectCountFromMetaData(
+          self$metaData[[.subjectCountMetaDataName]],
+          self$name
+        ))
+      }
+
+      # A factor, e.g. from `read.csv(stringsAsFactors = TRUE)`, is used by
+      # its label, not by its internal code
+      if (is.factor(value)) {
+        value <- as.character(value)
+      }
+      # `NaN` is not a missing value here but an invalid count, e.g. from a
+      # failed calculation, so it must not remove an existing count
+      isNaN <- is.numeric(value) && length(value) == 1 && is.nan(value)
+      if (is.null(value) || (length(value) == 1 && is.na(value) && !isNaN)) {
+        self$removeMetaData(.subjectCountMetaDataName)
+        return(invisible(self))
+      }
+      count <- .parseSubjectCount(value)
+      if (is.na(count)) {
+        stop(messages$errorInvalidSubjectCount(value))
+      }
+      private$.dataRepository$addMetaData(
+        .subjectCountMetaDataName,
+        format(count, scientific = FALSE)
+      )
+    },
+
     #' @field metaData Returns a named list of meta data defined for the data set.
     metaData = function(value) {
       if (missing(value)) {
@@ -222,6 +256,16 @@ DataSet <- R6::R6Class(
     #' @param name Name of new meta data list entry
     #' @param value Value of new meta data list entry
     addMetaData = function(name, value) {
+      if (identical(name, .subjectCountMetaDataName)) {
+        # Same rules as for all other entries: the value is text. A missing
+        # value does not remove the entry here, use `removeMetaData()`.
+        validateIsString(value)
+        if (is.na(.parseSubjectCount(value))) {
+          stop(messages$errorInvalidSubjectCount(value))
+        }
+        self$subjectCount <- value
+        return(invisible(self))
+      }
       private$.dataRepository$addMetaData(name, value)
     },
 
@@ -289,11 +333,15 @@ DataSet <- R6::R6Class(
           "Error type" = self$yErrorType,
           "Error unit" = self$yErrorUnit,
           "Molecular weight" = self$molWeight,
-          "LLOQ" = self$LLOQ
+          "LLOQ" = self$LLOQ,
+          "Subject count" = self$subjectCount
         ),
         print_empty = TRUE
       )
-      ospsuite.utils::ospPrintItems(self$metaData, title = "Meta data")
+      # The number of subjects is printed above, not again as meta data
+      metaData <- self$metaData
+      metaData <- metaData[names(metaData) != .subjectCountMetaDataName]
+      ospsuite.utils::ospPrintItems(metaData, title = "Meta data")
     }
   ),
   private = list(

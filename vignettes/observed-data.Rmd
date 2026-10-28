@@ -124,6 +124,25 @@ dataSet$addMetaData(
 # Print meta data of the DataSet
 print(dataSet$metaData)
 ```
+
+Aggregated data, for example mean values with a standard deviation, are
+calculated from a certain number of subjects. This number is stored in the
+`subjectCount` field, so that it is available for later analyses, for example
+to calculate confidence intervals of the mean. It must be one positive whole
+number. The
+value is stored as the meta data entry `subjectCount`, so it is saved with the
+data set in a PKML file. To read it from an Excel file, add a column
+`subjectCount` to the file and add it as a grouping column of the importer
+configuration with `importerConfiguration$addGroupingColumn("subjectCount")`.
+
+```{r subjectCount}
+# The data set contains the mean values of 12 subjects
+dataSet$subjectCount <- 12
+dataSet$subjectCount
+
+# Remove the number of subjects
+dataSet$subjectCount <- NULL
+```
  
 A `DataSet` or multiple `DataSet`s  can be converted to `data.frame` (or `tibble`) 
 to be processed in downstream analysis and visualization workflows:

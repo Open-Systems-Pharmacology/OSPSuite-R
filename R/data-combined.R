@@ -513,7 +513,12 @@ DataCombined <- R6::R6Class(
     #' In the returned tibble data frame, the following columns will always be present:
     #'
     #' name - group - dataType - xValues - xDimension - xUnit - yValues -
-    #' yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+    #' yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight -
+    #' subjectCount
+    #'
+    #' The `subjectCount` column holds the number of subjects of an observed
+    #' data set (`DataSet$subjectCount`). It is `NA` for simulated data and for
+    #' data sets without a number of subjects.
     #'
     #' Each call returns a fresh copy of the data frame. You can change it in
     #' any way you like without affecting the `DataCombined` object or the
@@ -735,6 +740,8 @@ DataCombined <- R6::R6Class(
       simData$dataType <- "simulated"
       # Simulated results do not have error values
       simData$yErrorValues <- NA_real_
+      # Number of subjects is only defined for observed data
+      simData$subjectCount <- NA_integer_
 
       return(simData)
     },

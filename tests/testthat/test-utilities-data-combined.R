@@ -55,6 +55,7 @@ test_that("calculateResiduals returns expected columns", {
     "yErrorType",
     "yErrorUnit",
     "lloq",
+    "subjectCount",
     "yValuesSimulated",
     "residualValues"
   )
@@ -272,4 +273,93 @@ test_that("addResidualColumn respects custom column names", {
   )
   expect_true("res" %in% names(result))
   expect_equal(as.vector(result$res), c(0.1, -0.1), tolerance = 1e-6)
+})
+
+test_that("subjectCount is passed to toDataFrame and calculateResiduals and not transformed", {
+  aggregatedData <- DataSet$new(name = "Aggregated")
+  aggregatedData$setValues(
+    xValues = c(1, 3, 4),
+    yValues = c(1.9, 6.1, 8.2),
+    yErrorValues = c(0.2, 0.6, 0.8)
+  )
+  aggregatedData$xUnit <- "min"
+  aggregatedData$yDimension <- ospDimensions$`Concentration (molar)`
+  aggregatedData$subjectCount <- 12
+
+  dataCombined <- DataCombined$new()
+  dataCombined$addSimulationResults(simData, groups = "myGroup")
+  dataCombined$addDataSets(aggregatedData, groups = "myGroup")
+  dataCombined$setDataTransformations(
+    forNames = "Aggregated",
+    yOffsets = 1,
+    yScaleFactors = 2
+  )
+
+  df <- dataCombined$toDataFrame()
+  expect_identical(
+    df$subjectCount,
+    ifelse(df$dataType == "observed", 12L, NA_integer_)
+  )
+
+  residuals <- calculateResiduals(dataCombined, scaling = "lin")
+  expect_identical(residuals$subjectCount, rep(12L, 3))
+})
+
+test_that("subjectCount is NA for an observed data set without a number of subjects", {
+  aggregatedData <- DataSet$new(name = "Aggregated")
+  aggregatedData$setValues(xValues = c(1, 3), yValues = c(1.9, 6.1))
+  aggregatedData$xUnit <- "min"
+  aggregatedData$yDimension <- ospDimensions$`Concentration (molar)`
+  aggregatedData$subjectCount <- 12
+  individualData <- DataSet$new(name = "Individual")
+  individualData$setValues(xValues = c(2, 4), yValues = c(4.2, 8.1))
+  individualData$xUnit <- "min"
+  individualData$yDimension <- ospDimensions$`Concentration (molar)`
+
+  dataCombined <- DataCombined$new()
+  dataCombined$addSimulationResults(simData, groups = "myGroup")
+  dataCombined$addDataSets(
+    list(aggregatedData, individualData),
+    groups = "myGroup"
+  )
+
+  df <- dataCombined$toDataFrame()
+  observed <- df[df$dataType == "observed", ]
+  expect_identical(
+    observed$subjectCount,
+    ifelse(observed$name == "Aggregated", 12L, NA_integer_)
+  )
+
+  residuals <- calculateResiduals(dataCombined, scaling = "lin")
+  expect_identical(
+    residuals$subjectCount,
+    ifelse(residuals$name == "Aggregated", 12L, NA_integer_)
+  )
+})
+
+test_that("toDataFrame has a subjectCount column with NA when only simulated data are added", {
+  dataCombined <- DataCombined$new()
+  dataCombined$addSimulationResults(simData)
+  expect_identical(
+    dataCombined$toDataFrame()$subjectCount,
+    rep(NA_integer_, 4)
+  )
+})
+
+test_that("calculateResiduals gives NA subjectCount for a DataCombined saved without this column", {
+  dataCombined <- DataCombined$new()
+  dataCombined$addSimulationResults(simData, groups = "myGroup")
+  dataCombined$addDataSets(obsData, groups = "myGroup")
+  # A `DataCombined` saved with an earlier version, e.g. with `saveRDS()`, has
+  # no `subjectCount` column in its stored data
+  private <- dataCombined$.__enclos_env__$private
+  private$.dataCombined$subjectCount <- NULL
+  private$.dataFrameCache <- NULL
+
+  residuals <- calculateResiduals(dataCombined, scaling = "lin")
+
+  expect_identical(
+    residuals$subjectCount,
+    rep(NA_integer_, nrow(residuals))
+  )
 })

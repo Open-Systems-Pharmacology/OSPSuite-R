@@ -42,6 +42,7 @@ test_that("It can convert an empty data set", {
       yErrorUnit = character(0),
       molWeight = numeric(0),
       lloq = numeric(0),
+      subjectCount = integer(0),
       stringsAsFactors = FALSE
     )
   )
@@ -64,6 +65,7 @@ test_that("It can convert a data set with xValues and yValues set by setValues, 
       yErrorUnit = rep(NA_character_, 5),
       molWeight = rep(NA_real_, 5),
       lloq = rep(NA_real_, 5),
+      subjectCount = rep(NA_integer_, 5),
       stringsAsFactors = FALSE
     )
   )
@@ -93,6 +95,7 @@ test_that("It can convert a data set with only non-empty fields, except for meta
       yErrorUnit = rep(dataSet$yErrorUnit, 5),
       molWeight = rep(dataSet$molWeight, 5),
       lloq = rep(dataSet$LLOQ, 5),
+      subjectCount = rep(NA_integer_, 5),
       stringsAsFactors = FALSE
     )
   )
@@ -115,6 +118,7 @@ test_that("It can convert a data set with metaData", {
       yErrorUnit = rep(dataSet$yErrorUnit, 5),
       molWeight = rep(dataSet$molWeight, 5),
       lloq = rep(dataSet$LLOQ, 5),
+      subjectCount = rep(NA_integer_, 5),
       Organ = rep("Blood", 5),
       stringsAsFactors = FALSE
     )
@@ -142,6 +146,7 @@ test_that("It can convert a list of data sets", {
       yErrorUnit = c(rep(dataSet$yErrorUnit, 5), rep(NA_character_, 3)),
       molWeight = c(rep(dataSet$molWeight, 5), rep(dataSet2$molWeight, 3)),
       lloq = c(rep(dataSet$LLOQ, 5), rep(NA, 3)),
+      subjectCount = rep(NA_integer_, 8),
       Organ = c(rep("Blood", 5), rep(NA, 3)),
       Compartment = c(rep(NA, 5), rep("Plasma", 3)),
       stringsAsFactors = FALSE
@@ -271,6 +276,7 @@ test_that("it can convert DataSets loaded from excel to data.frame", {
       "yErrorUnit",
       "molWeight",
       "lloq",
+      "subjectCount",
       "Sheet",
       "Study Id",
       "Organ",
@@ -305,7 +311,8 @@ test_that("It can convert an empty data set", {
       yErrorType = character(0),
       yErrorUnit = character(0),
       molWeight = numeric(0),
-      lloq = numeric(0)
+      lloq = numeric(0),
+      subjectCount = integer(0)
     )
   )
 })
@@ -740,4 +747,109 @@ test_that("Excel cells with high-precision custom number formats load without Ex
 
   # Sanity: the format overlay didn't accidentally invalidate the workbook.
   expect_gt(length(dataSets), 0)
+})
+
+# subjectCount
+
+test_that("dataSetToDataFrame adds the subjectCount column and no duplicate meta data column", {
+  dataSetAggregated <- DataSet$new(name = "Aggregated")
+  dataSetAggregated$setValues(xValues = c(1, 2), yValues = c(10, 20))
+  dataSetAggregated$subjectCount <- 12
+  dataSetAggregated$addMetaData("Organ", "Blood")
+  dataSetIndividual <- DataSet$new(name = "Individual")
+  dataSetIndividual$setValues(xValues = c(1, 2, 3), yValues = c(5, 6, 7))
+
+  df <- dataSetToDataFrame(list(dataSetAggregated, dataSetIndividual))
+
+  expect_identical(df$subjectCount, c(12L, 12L, NA, NA, NA))
+  expect_identical(sum(names(df) == "subjectCount"), 1L)
+  expect_identical(df$Organ, c("Blood", "Blood", NA, NA, NA))
+  expect_identical(
+    dataSetToTibble(list(dataSetAggregated, dataSetIndividual))$subjectCount,
+    c(12L, 12L, NA, NA, NA)
+  )
+})
+
+test_that("dataSetToDataFrame gives NA with a warning for a stored subjectCount that is not a whole number", {
+  dataSet <- DataSet$new(name = "Aggregated")
+  dataSet$setValues(xValues = c(1, 2), yValues = c(10, 20))
+  dataSet$dataRepository$addMetaData("subjectCount", "twelve")
+
+  expect_warning(
+    df <- dataSetToDataFrame(dataSet),
+    regexp = "not a positive whole number"
+  )
+  expect_identical(df$subjectCount, c(NA_integer_, NA_integer_))
+  expect_false("twelve" %in% unlist(df))
+})
+
+test_that("dataSetsFromDataFrame round-trips subjectCount", {
+  ds <- DataSet$new(name = "Aggregated")
+  ds$setValues(
+    xValues = c(1, 2, 3),
+    yValues = c(10, 20, 30),
+    yErrorValues = c(1, 2, 3)
+  )
+  ds$subjectCount <- 12
+
+  restored <- dataSetsFromDataFrame(dataSetToDataFrame(ds))[["Aggregated"]]
+
+  expect_identical(restored$subjectCount, 12L)
+  expect_identical(restored$metaData, ds$metaData)
+})
+
+test_that("dataSetsFromDataFrame reads subjectCount from a plain data.frame", {
+  df <- data.frame(
+    name = c("Study A", "Study A", "Study B", "Study B"),
+    xValues = c(0, 1, 0, 1),
+    yValues = c(0, 10, 0, 5),
+    subjectCount = c(12, 12, NA, NA)
+  )
+  dataSets <- dataSetsFromDataFrame(df)
+  expect_identical(dataSets[["Study A"]]$subjectCount, 12L)
+  expect_null(dataSets[["Study B"]]$subjectCount)
+})
+
+test_that("dataSetsFromDataFrame reads subjectCount stored as text", {
+  df <- data.frame(
+    name = c("Study A", "Study A"),
+    xValues = c(0, 1),
+    yValues = c(0, 10),
+    subjectCount = c("12", "12")
+  )
+  dataSets <- dataSetsFromDataFrame(df)
+  expect_identical(dataSets[["Study A"]]$subjectCount, 12L)
+})
+
+test_that("dataSetsFromDataFrame throws an error for an invalid subjectCount", {
+  df <- data.frame(
+    name = c("Study A", "Study A"),
+    xValues = c(0, 1),
+    yValues = c(0, 10),
+    subjectCount = c(2.5, 2.5)
+  )
+  expect_error(
+    dataSetsFromDataFrame(df),
+    regexp = "must be one positive whole number"
+  )
+})
+
+# The column `subjectCount` of `CompiledDataSet_oneSheet.xlsx` is 12 for study
+# ID01 and 8 for study ID02. It is only read when added as a grouping column.
+
+test_that("loadDataSetsFromExcel reads subjectCount from a grouping column", {
+  importerConfiguration <- loadDataImporterConfiguration(
+    getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+  )
+  importerConfiguration$addGroupingColumn("subjectCount")
+
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = getTestDataFilePath("CompiledDataSet_oneSheet.xlsx"),
+    importerConfigurationOrPath = importerConfiguration
+  )
+
+  studyIds <- vapply(dataSets, \(x) x$metaData[["Study Id"]], character(1))
+  subjectCounts <- vapply(dataSets, \(x) x$subjectCount, integer(1))
+  expect_identical(length(dataSets), 4L)
+  expect_identical(subjectCounts, ifelse(studyIds == "ID01", 12L, 8L))
 })
