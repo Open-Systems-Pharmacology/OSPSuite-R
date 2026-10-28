@@ -193,17 +193,20 @@ DataSet <- R6::R6Class(
         ))
       }
 
-      if (is.null(value) || (length(value) == 1 && is.na(value))) {
+      # A factor, e.g. from `read.csv(stringsAsFactors = TRUE)`, is used by
+      # its label, not by its internal code
+      if (is.factor(value)) {
+        value <- as.character(value)
+      }
+      # `NaN` is not a missing value here but an invalid count, e.g. from a
+      # failed calculation, so it must not remove an existing count
+      isNaN <- is.numeric(value) && length(value) == 1 && is.nan(value)
+      if (is.null(value) || (length(value) == 1 && is.na(value) && !isNaN)) {
         self$removeMetaData(.subjectCountMetaDataName)
         return(invisible(self))
       }
-      # Text is accepted as well, e.g. from a meta data value or from a data
-      # frame column read from cells stored as text
-      count <- NA_real_
-      if (is.numeric(value) || is.character(value)) {
-        count <- suppressWarnings(as.numeric(value))
-      }
-      if (!.isValidSubjectCount(count)) {
+      count <- .parseSubjectCount(value)
+      if (is.na(count)) {
         stop(messages$errorInvalidSubjectCount(value))
       }
       private$.dataRepository$addMetaData(
@@ -254,6 +257,12 @@ DataSet <- R6::R6Class(
     #' @param value Value of new meta data list entry
     addMetaData = function(name, value) {
       if (identical(name, .subjectCountMetaDataName)) {
+        # Same rules as for all other entries: the value is text. A missing
+        # value does not remove the entry here, use `removeMetaData()`.
+        validateIsString(value)
+        if (is.na(.parseSubjectCount(value))) {
+          stop(messages$errorInvalidSubjectCount(value))
+        }
         self$subjectCount <- value
         return(invisible(self))
       }

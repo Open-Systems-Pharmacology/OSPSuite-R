@@ -467,6 +467,44 @@ test_that("it throws an error for a subjectCount that is not one positive whole 
   expect_null(dataSet$subjectCount)
 })
 
+test_that("subjectCount accepts a factor and text with spaces around the digits", {
+  dataSet <- DataSet$new(name = dataSetName)
+  # e.g. from `read.csv(stringsAsFactors = TRUE)`, where the internal code is 1
+  dataSet$subjectCount <- factor("12")
+  expect_identical(dataSet$subjectCount, 12L)
+  # e.g. from an Excel cell
+  dataSet$subjectCount <- " 24 "
+  expect_identical(dataSet$subjectCount, 24L)
+})
+
+test_that("subjectCount does not accept text that is not only digits", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expect_snapshot(error = TRUE, dataSet$subjectCount <- "1e1")
+  expect_snapshot(error = TRUE, dataSet$subjectCount <- "0x0C")
+  expect_snapshot(error = TRUE, dataSet$subjectCount <- factor("twelve"))
+  expect_null(dataSet$subjectCount)
+})
+
+test_that("subjectCount is NULL with a warning for a stored entry in scientific notation", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$dataRepository$addMetaData("subjectCount", "1e1")
+  expect_warning(
+    subjectCount <- dataSet$subjectCount,
+    regexp = "not a positive whole number"
+  )
+  expect_null(subjectCount)
+})
+
+test_that("NaN is an invalid subjectCount and does not remove an existing count", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$subjectCount <- 12
+  expect_error(
+    dataSet$subjectCount <- NaN,
+    regexp = "must be one positive whole number"
+  )
+  expect_identical(dataSet$subjectCount, 12L)
+})
+
 test_that("subjectCount accepts the smallest and the largest whole number", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$subjectCount <- 1
@@ -489,8 +527,15 @@ test_that("addMetaData with the name subjectCount sets subjectCount", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$addMetaData("subjectCount", "24")
   expect_identical(dataSet$subjectCount, 24L)
-  dataSet$addMetaData("subjectCount", 18)
-  expect_identical(dataSet$subjectCount, 18L)
+})
+
+test_that("addMetaData with the name subjectCount needs text, like all other entries", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$subjectCount <- 12
+  expect_snapshot(error = TRUE, dataSet$addMetaData("subjectCount", 18))
+  # A missing value does not remove the entry
+  expect_snapshot(error = TRUE, dataSet$addMetaData("subjectCount", NA_character_))
+  expect_identical(dataSet$subjectCount, 12L)
 })
 
 test_that("addMetaData with the name subjectCount throws an error for an invalid value", {

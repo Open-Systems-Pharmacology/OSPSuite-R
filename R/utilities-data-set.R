@@ -104,12 +104,13 @@ dataSetToDataFrame <- function(dataSets) {
     lapply(
       dataSets,
       function(dataSet) {
-        # check length of entry for a certain property of this data set.
-        if (is.null(metaDataName)) {
-          len <- length(dataSet[[property]])
-        } else {
-          len <- length(dataSet[[property]][[metaDataName]])
+        # Get the property only once, as getting it can be expensive (values
+        # are read from .NET, `subjectCount` is parsed from the meta data)
+        value <- dataSet[[property]]
+        if (!is.null(metaDataName)) {
+          value <- value[[metaDataName]]
         }
+        len <- length(value)
 
         if (len == 0) {
           # If property is empty, return NA vector of xValues length
@@ -122,14 +123,10 @@ dataSetToDataFrame <- function(dataSets) {
           }
         } else if (len == 1) {
           # if property is a single value, return value vector of xValues length
-          if (is.null(metaDataName)) {
-            rep(dataSet[[property]], length(dataSet$xValues))
-          } else {
-            rep(dataSet[[property]][[metaDataName]], length(dataSet$xValues))
-          }
+          rep(value, length(dataSet$xValues))
         } else {
           # if property is a vector, return it directly
-          dataSet[[property]]
+          value
         }
       }
     ),
@@ -531,6 +528,37 @@ dataSetsFromDataFrame <- function(data) {
     value == round(value)
 }
 
+#' Parse a value given for the number of subjects
+#'
+#' @param value A number, or text that contains only digits. Spaces around the
+#'   digits are ignored, e.g. from an Excel cell. Other text, e.g. `"1e1"`,
+#'   `"0x0C"` or `"n=24"`, is not accepted.
+#'
+#' @return The number of subjects as numeric, or `NA_real_` if `value` is not
+#'   one positive whole number.
+#'
+#' @keywords internal
+#' @noRd
+.parseSubjectCount <- function(value) {
+  if (is.factor(value)) {
+    value <- as.character(value)
+  }
+  if (is.character(value)) {
+    if (length(value) != 1 || is.na(value)) {
+      return(NA_real_)
+    }
+    value <- trimws(value)
+    if (!grepl("^[0-9]+$", value)) {
+      return(NA_real_)
+    }
+    value <- as.numeric(value)
+  }
+  if (!.isValidSubjectCount(value)) {
+    return(NA_real_)
+  }
+  as.numeric(value)
+}
+
 #' Convert the stored meta data entry to the number of subjects
 #'
 #' @param value Value of the meta data entry `subjectCount`, or `NULL` if the
@@ -547,8 +575,8 @@ dataSetsFromDataFrame <- function(data) {
   if (is.null(value)) {
     return(NULL)
   }
-  count <- suppressWarnings(as.numeric(value))
-  if (!.isValidSubjectCount(count)) {
+  count <- .parseSubjectCount(value)
+  if (is.na(count)) {
     warning(
       messages$warningInvalidSubjectCount(dataSetName, value),
       call. = FALSE

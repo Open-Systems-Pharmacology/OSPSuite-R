@@ -78,12 +78,52 @@
       Error:
       ! subjectCount must be one positive whole number, not TRUE.
 
+# subjectCount does not accept text that is not only digits
+
+    Code
+      dataSet$subjectCount <- "1e1"
+    Condition
+      Error:
+      ! subjectCount must be one positive whole number, not "1e1".
+
+---
+
+    Code
+      dataSet$subjectCount <- "0x0C"
+    Condition
+      Error:
+      ! subjectCount must be one positive whole number, not "0x0C".
+
+---
+
+    Code
+      dataSet$subjectCount <- factor("twelve")
+    Condition
+      Error:
+      ! subjectCount must be one positive whole number, not "twelve".
+
+# addMetaData with the name subjectCount needs text, like all other entries
+
+    Code
+      dataSet$addMetaData("subjectCount", 18)
+    Condition
+      Error in `validateIsOfType()`:
+      ! `test()`: argument "value" is of type <numeric>, but expected <character>!
+
+---
+
+    Code
+      dataSet$addMetaData("subjectCount", NA_character_)
+    Condition
+      Error in `dataSet$addMetaData()`:
+      ! subjectCount must be one positive whole number, not NA.
+
 # addMetaData with the name subjectCount throws an error for an invalid value
 
     Code
       dataSet$addMetaData("subjectCount", "n=24")
     Condition
-      Error:
+      Error in `dataSet$addMetaData()`:
       ! subjectCount must be one positive whole number, not "n=24".
 
 # subjectCount is NULL with a warning when the stored meta data entry is not a whole number
