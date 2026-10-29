@@ -920,20 +920,10 @@ plotQuantileQuantilePlot <- function(
     choices = ospsuite::getUnitsForDimension('Time'),
     null.ok = TRUE
   )
-  possibleYUnits <- unlist(sapply(
-    unique(plotData$yDimension),
-    ospsuite::getUnitsForDimension
-  ))
-  checkmate::assertChoice(
-    yUnit,
-    choices = possibleYUnits,
-    null.ok = TRUE
-  )
-  checkmate::assertChoice(
-    y2Unit,
-    choices = possibleYUnits,
-    null.ok = TRUE
-  )
+  # `yUnit` and `y2Unit` are not checked against the dimensions of the data:
+  # a target unit can belong to another dimension that the data converts to,
+  # e.g. a mass unit for molar data with a molecular weight. `toUnit()` raises
+  # an error for units that cannot be converted.
 
   xUnitStr <- xUnit %||% .extractMostFrequentUnit(plotData, "xUnit")
 
