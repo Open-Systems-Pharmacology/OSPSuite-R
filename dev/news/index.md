@@ -37,6 +37,16 @@
 
 ### Minor improvements and bug fixes
 
+- [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md)
+  and the other plot functions based on
+  [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)
+  accept a `yUnit` or `y2Unit` from a dimension that the data can be
+  converted to. For example, simulated results in a molar concentration
+  unit can now be plotted in a mass concentration unit such as `ng/l`,
+  using the molecular weight of the molecule. Previously this failed
+  with `Assertion on 'yUnit' failed: Must be element of set`. A unit
+  that cannot be converted still gives an error
+  ([\#2064](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2064)).
 - `StandardOntogeny` now includes `CES1` and `ABCB1` (P-gp), so these
   ontogenies can be selected via `MoleculeOntogeny` in
   [`createIndividual()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createIndividual.md)

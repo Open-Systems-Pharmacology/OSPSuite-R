@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9011</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,6 +75,8 @@
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
 <ul><li>
+<code><a href="../reference/plotTimeProfile.html">plotTimeProfile()</a></code> and the other plot functions based on <a href="https://www.open-systems-pharmacology.org/OSPSuite.Plots/" class="external-link">ospsuite.plots</a> accept a <code>yUnit</code> or <code>y2Unit</code> from a dimension that the data can be converted to. For example, simulated results in a molar concentration unit can now be plotted in a mass concentration unit such as <code>ng/l</code>, using the molecular weight of the molecule. Previously this failed with <code>Assertion on 'yUnit' failed: Must be element of set</code>. A unit that cannot be converted still gives an error (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/2064" class="external-link">#2064</a>).</li>
+<li>
 <code>StandardOntogeny</code> now includes <code>CES1</code> and <code>ABCB1</code> (P-gp), so these ontogenies can be selected via <code>MoleculeOntogeny</code> in <code><a href="../reference/createIndividual.html">createIndividual()</a></code> / <code><a href="../reference/createPopulation.html">createPopulation()</a></code>.</li>
 <li>
 <code>DataCombined$setDataTransformations()</code> no longer multiplies geometric standard deviations (<code>DataErrorType$GeometricStdDev</code>) by the y scale factor. A geometric standard deviation is a dimensionless factor, so geometric error bars in plots and the error weights that <code>{ospsuite.parameteridentification}</code> takes from <code>yErrorValues</code> now stay correct after scaling. When a y offset other than <code>0</code> is applied, each geometric standard deviation (GSD) is adjusted to <code>GSD^(y / (y + yOffset))</code>, where <code>y</code> is the y value before the transformation. This approximates the spread of the shifted values on the log scale. Where the raw or the shifted value is not positive, the GSD is set to <code>NA</code> with a warning. With a negative y scale factor, the sign of the values is reversed, so the GSD is set to <code>NA</code> with a warning as well. See <code><a href="../articles/data-combined.html">vignette("data-combined")</a></code> for the limits of this approximation (<a href="https://github.com/open-systems-pharmacology/ospsuite-r/issues/2046" class="external-link">#2046</a>).</li>
