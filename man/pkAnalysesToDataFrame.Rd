@@ -5,14 +5,52 @@
 \alias{pkAnalysesToTibble}
 \title{Convert the pk-Analysis to data frame}
 \usage{
-pkAnalysesToDataFrame(pkAnalyses)
+pkAnalysesToDataFrame(
+  pkAnalyses,
+  quantitiesOrPaths = NULL,
+  pkParameters = NULL
+)
 
-pkAnalysesToTibble(pkAnalyses)
+pkAnalysesToTibble(pkAnalyses, quantitiesOrPaths = NULL, pkParameters = NULL)
 }
 \arguments{
 \item{pkAnalyses}{pK-Analyses to convert to data frame (typically calculated
 using \code{calculatePKAnalyses} or imported from file).}
+
+\item{quantitiesOrPaths}{Optional. Quantity instances or paths of the
+outputs to include. \code{NULL} (default) includes all outputs. Each path must
+be one of \code{pkAnalyses$allQuantityPaths}, otherwise an error is thrown.
+Wildcards (\code{*}) are not accepted.}
+
+\item{pkParameters}{Optional. Names of the PK parameters to include, e.g.
+\code{c("C_max", "AUC_inf")}. \code{NULL} (default) includes all PK parameters. Each
+name must be one of \code{pkAnalyses$allPKParameterNames}, otherwise an error is
+thrown. Names are case sensitive.}
+}
+\value{
+A tibble with one row per individual, output, and PK parameter, and
+the columns \code{IndividualId}, \code{QuantityPath}, \code{Parameter}, \code{Value}, and
+\code{Unit}. Values that could not be calculated are \code{NA}. The selected rows
+keep the order of the full result. If no row matches the selection, the
+result has zero rows.
 }
 \description{
-Convert the pk-Analysis to data frame
+Optionally, only some outputs and PK parameters are kept.
+}
+\examples{
+simPath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
+sim <- loadSimulation(simPath)
+addOutputs("Organism|VenousBlood|*|Aciclovir", sim)
+results <- runSimulations(sim)[[1]]
+pkAnalyses <- calculatePKAnalyses(results)
+
+# All PK parameters of all outputs
+pkAnalysesToDataFrame(pkAnalyses)
+
+# Only C_max and AUC_inf of the venous plasma concentration
+pkAnalysesToDataFrame(
+  pkAnalyses,
+  quantitiesOrPaths = "Organism|VenousBlood|Plasma|Aciclovir",
+  pkParameters = c("C_max", "AUC_inf")
+)
 }

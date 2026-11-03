@@ -77,6 +77,19 @@ Sometimes it is desirable to have the calculated parameters in a dataframe for w
 pkAnalysesToDataFrame(pkAnalysis)
 ```
 
+To keep only some outputs or PK parameters, pass the output paths to `quantitiesOrPaths` and the PK parameter names to `pkParameters`.
+They must be among `pkAnalysis$allQuantityPaths` and `pkAnalysis$allPKParameterNames`.
+For population simulations, this is faster than selecting the rows of the full data frame afterwards when only a few outputs or PK parameters are kept.
+The example keeps two PK parameters of one of the two outputs.
+
+```{r}
+pkAnalysesToDataFrame(
+  pkAnalysis,
+  quantitiesOrPaths = outputPath,
+  pkParameters = c("C_max", "AUC_inf")
+)
+```
+
 ## Import and export of PK-analyses
 
 Population analysis calculated in R can be exported to a *.csv file and loaded in PK-Sim, and vice versa.

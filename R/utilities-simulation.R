@@ -605,7 +605,12 @@ createSimulationBatch <- function(
   variableParameters <- c(parametersOrPaths)
 
   if (isOfType(variableParameters, "Parameter")) {
-    variableParameters <- vapply(variableParameters, function(x) x$path, character(1), USE.NAMES = FALSE)
+    variableParameters <- vapply(
+      variableParameters,
+      function(x) x$path,
+      character(1),
+      USE.NAMES = FALSE
+    )
   }
 
   variableMolecules <- c(moleculesOrPaths)
@@ -613,7 +618,12 @@ createSimulationBatch <- function(
   # Checking for Quantity instead of Molecule because state variable parameters must
   # be added as molecules
   if (isOfType(variableMolecules, "Quantity")) {
-    variableMolecules <- vapply(variableMolecules, function(x) x$path, character(1), USE.NAMES = FALSE)
+    variableMolecules <- vapply(
+      variableMolecules,
+      function(x) x$path,
+      character(1),
+      USE.NAMES = FALSE
+    )
   }
 
   simulationBatchOptions <- SimulationBatchOptions$new(
