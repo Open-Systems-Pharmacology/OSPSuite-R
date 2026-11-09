@@ -207,15 +207,16 @@ plotTimeProfile(
 
 ### Showing Individual Dataset Names
 
-By default, `showLegendPerDataset = "all"`, which differentiates both observed (via `shape`) and simulated (via `linetype`) datasets in the legend.
+Datasets within a group are always visually differentiated - observed data via different point `shape`, simulated data via different line `linetype`. By default, `showLegendPerDataset = "all"`, so both observed and simulated datasets also get their own legend entries.
 
-You can customize this behavior using the `showLegendPerDataset` parameter:
+You can customize which legend entries are shown using the `showLegendPerDataset` parameter (the visual differentiation stays the same):
 
 ```{r timeprofile-legend-per-dataset, eval=.ospRuntimeAvailable}
 # Show all individual dataset names (both observed and simulated) - default
 plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "all")
 
-# No per-dataset differentiation
+# Hide the per-dataset legend entries (datasets are still drawn
+# with different shapes/line types)
 plotTimeProfile(myDataCombinedMulti, showLegendPerDataset = "none")
 
 # Show only observed dataset names (different shapes)

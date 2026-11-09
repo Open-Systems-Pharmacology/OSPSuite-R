@@ -61,11 +61,13 @@ where each entry represents a fold and its reciprocal. The identity fold
 (1) will be included if specified in \code{getFoldDistanceList}.}
 
 \item{showLegendPerDataset}{Controls display of separate legend entries for
-individual datasets. One of:
+individual datasets. Observed datasets within a group are always visually
+differentiated via different point \code{shape} (using the \code{name} column);
+this argument controls only if these get their own legend entries. One of:
 \itemize{
-\item \code{"none"} : No per-dataset differentiation. Only group-level legend.
-\item \code{"all"} (default) or \code{"observed"}: Differentiate observed datasets via different
-shapes (using the \code{name} column).
+\item \code{"none"} : No per-dataset legend entries. Only group-level legend.
+\item \code{"all"} (default) or \code{"observed"}: Legend entries for observed datasets
+via different shapes.
 }
 
 User-provided \code{mapping} will override internal settings.}

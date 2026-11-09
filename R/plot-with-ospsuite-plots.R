@@ -147,11 +147,15 @@
 #'   y-axis (only applicable when data contains two y-dimensions). If `NULL`
 #'   (default), the most frequent unit in the data is used.
 #' @param showLegendPerDataset Controls display of separate legend entries for
-#'   individual datasets. One of:
-#'   - `"none"`: No per-dataset differentiation. Only group-level legend.
-#'   - `"all"` (default): Differentiate both observed (via `shape`) and simulated (via `linetype`).
-#'   - `"observed"`: Differentiate only observed data via different shapes.
-#'   - `"simulated"`: Differentiate only simulated data via different line types.
+#'   individual datasets. Datasets within a group are always visually
+#'   differentiated - observed data via different point `shape`, simulated data
+#'   via different line `linetype` - regardless of this argument; it controls
+#'   only which of these differentiations get their own legend entries. One of:
+#'   - `"none"`: No per-dataset legend entries. Only group-level legend.
+#'   - `"all"` (default): Legend entries for both observed (via `shape`) and
+#'     simulated (via `linetype`) datasets.
+#'   - `"observed"`: Legend entries only for observed data via different shapes.
+#'   - `"simulated"`: Legend entries only for simulated data via different line types.
 #'
 #'   User-provided `mapping` and `observedMapping` will override internal
 #'   settings. A warning is issued if the override removes per-dataset
@@ -274,6 +278,17 @@ plotTimeProfile <- function(
     )
   )
 
+  # Datasets are always visually differentiated (linetype for simulated, shape
+  # for observed data); `showLegendPerDataset` controls only the legend entries
+  guidesList <- .getGuidesForShowLegendPerDataset(
+    showLegendPerDataset = showLegendPerDataset,
+    aestheticDataType = list(linetype = "simulated", shape = "observed"),
+    mappings = list(linetype = mappingAdjusted, shape = observedMappingAdjusted)
+  )
+  if (length(guidesList) > 0) {
+    plotObject <- plotObject + ggplot2::guides(!!!guidesList)
+  }
+
   return(.applyOspsuitePlotTheme(plotObject))
 }
 
@@ -299,10 +314,12 @@ plotTimeProfile <- function(
 #'   where each entry represents a fold and its reciprocal. The identity fold
 #'   (1) will be included if specified in `getFoldDistanceList`.
 #' @param showLegendPerDataset Controls display of separate legend entries for
-#'   individual datasets. One of:
-#'   - `"none"` : No per-dataset differentiation. Only group-level legend.
-#'   - `"all"` (default) or `"observed"`: Differentiate observed datasets via different
-#'     shapes (using the `name` column).
+#'   individual datasets. Observed datasets within a group are always visually
+#'   differentiated via different point `shape` (using the `name` column);
+#'   this argument controls only if these get their own legend entries. One of:
+#'   - `"none"` : No per-dataset legend entries. Only group-level legend.
+#'   - `"all"` (default) or `"observed"`: Legend entries for observed datasets
+#'     via different shapes.
 #'
 #'   User-provided `mapping` will override internal settings.
 #' @inheritDotParams ospsuite.plots::plotYVsX xScaleArgs yScaleArgs groupAesthetics addRegression geomPointAttributes geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes addGuestLimits deltaGuest labelGuestCriteria geomGuestLineAttributes lloqOnBothAxes
@@ -361,8 +378,7 @@ plotPredictedVsObserved <- function(
   mapping <- .getMappingForPredictedVsObserved(
     plotData = plotData,
     userMapping = mapping,
-    predictedAxis = predictedAxis,
-    showLegendPerDataset = showLegendPerDataset
+    predictedAxis = predictedAxis
   )
 
   if (is.null(metaData)) {
@@ -394,6 +410,17 @@ plotPredictedVsObserved <- function(
     paste(c(commonLabel, "observed"), collapse = "\n")
   plotObject$labels[[predictedAxis]] <-
     paste(c(commonLabel, "predicted"), collapse = "\n")
+
+  # Observed datasets are always visually differentiated by `shape`;
+  # `showLegendPerDataset` controls only the legend entries
+  guidesList <- .getGuidesForShowLegendPerDataset(
+    showLegendPerDataset = showLegendPerDataset,
+    aestheticDataType = list(shape = "observed"),
+    mappings = list(shape = mapping)
+  )
+  if (length(guidesList) > 0) {
+    plotObject <- plotObject + ggplot2::guides(!!!guidesList)
+  }
 
   return(.applyOspsuitePlotTheme(plotObject))
 }
@@ -443,10 +470,12 @@ plotPredictedVsObserved <- function(
 #'   "time"`) displayed on the x-Axis. If `NULL` (default), the most frequent
 #'   unit in the data is used. For available units, see `ospsuite::ospUnits`.
 #' @param showLegendPerDataset Controls display of separate legend entries for
-#'   individual datasets. One of:
-#'   - `"none"`: No per-dataset differentiation. Only group-level legend.
-#'   - `"all"` (default) or `"observed"`: Differentiate observed datasets via different
-#'     shapes (using the `name` column).
+#'   individual datasets. Observed datasets within a group are always visually
+#'   differentiated via different point `shape` (using the `name` column);
+#'   this argument controls only if these get their own legend entries. One of:
+#'   - `"none"`: No per-dataset legend entries. Only group-level legend.
+#'   - `"all"` (default) or `"observed"`: Legend entries for observed datasets
+#'     via different shapes.
 #'
 #'   User-provided `mapping` will override internal settings.
 #' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale yScaleArgs groupAesthetics addRegression geomPointAttributes geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
@@ -524,7 +553,7 @@ plotResidualsVsCovariate <- function(
   mapping <- .getMappingForResiduals(
     xMapping = xMapping,
     userMapping = mapping,
-    showLegendPerDataset = showLegendPerDataset
+    differentiatePerDataset = TRUE
   )
 
   if (is.null(metaData)) {
@@ -544,6 +573,17 @@ plotResidualsVsCovariate <- function(
       additionalArgs
     )
   )
+
+  # Observed datasets are always visually differentiated by `shape`;
+  # `showLegendPerDataset` controls only the legend entries
+  guidesList <- .getGuidesForShowLegendPerDataset(
+    showLegendPerDataset = showLegendPerDataset,
+    aestheticDataType = list(shape = "observed"),
+    mappings = list(shape = mapping)
+  )
+  if (length(guidesList) > 0) {
+    plotObject <- plotObject + ggplot2::guides(!!!guidesList)
+  }
 
   # add observed or predicted to x-Axis label
   if (xAxis != "time") {
@@ -1193,17 +1233,92 @@ plotQuantileQuantilePlot <- function(
   return(pairedData)
 }
 
+#' Check if a mapping aesthetic is mapped to a data column
+#'
+#' @param mapping A ggplot2 aesthetic mapping (class `uneval`).
+#' @param aesthetic Name of the aesthetic, e.g. `"linetype"`.
+#' @param column Name of the data column the aesthetic is expected to be mapped
+#'   to, e.g. `"name"`.
+#'
+#' @return `TRUE` if the aesthetic of the mapping is set to the column as a
+#'   plain symbol, `FALSE` otherwise (including when the aesthetic is not mapped
+#'   at all or mapped to an expression).
+#' @keywords internal
+#' @noRd
+.isAestheticMappedTo <- function(mapping, aesthetic, column) {
+  # `[[` is required here; `$` on class `uneval` does not subset properly
+  if (!aesthetic %in% names(mapping)) {
+    return(FALSE)
+  }
+
+  return(identical(
+    rlang::get_expr(mapping[[aesthetic]]),
+    rlang::sym(column)
+  ))
+}
+
+#' Guides hiding per-dataset legend entries
+#'
+#' Datasets within a group are always visually differentiated (`linetype` for
+#' simulated data, `shape` for observed data). `showLegendPerDataset` controls
+#' only if these differentiations get their own legend entries. This function
+#' returns guide settings (`"none"`) hiding the legend of such aesthetics for
+#' which no per-dataset legend entries are requested. Guides are hidden only
+#' for aesthetics which are still mapped to the dataset `name` column;
+#' user-provided mappings override the internal per-dataset mappings and keep
+#' their guides.
+#'
+#' @param showLegendPerDataset Value of the `showLegendPerDataset` argument of
+#'   the plot function.
+#' @param aestheticDataType Named list defining which data type (`"simulated"`
+#'   or `"observed"`) is differentiated by which aesthetic, e.g.
+#'   `list(linetype = "simulated", shape = "observed")`.
+#' @param mappings Named list of final aesthetic mappings with the same names as
+#'   `aestheticDataType`, e.g. `list(linetype = simMapping, shape = obsMapping)`.
+#'
+#' @return A named list of guide settings (possibly empty) to be applied with
+#'   `ggplot2::guides()`.
+#' @keywords internal
+#' @noRd
+.getGuidesForShowLegendPerDataset <- function(
+  showLegendPerDataset,
+  aestheticDataType,
+  mappings
+) {
+  guidesList <- list()
+  for (aesthetic in names(aestheticDataType)) {
+    if (
+      showLegendPerDataset %in% c("all", aestheticDataType[[aesthetic]]) ||
+        !.isAestheticMappedTo(
+          mapping = mappings[[aesthetic]],
+          aesthetic = aesthetic,
+          column = "name"
+        )
+    ) {
+      next
+    }
+    guidesList[[aesthetic]] <- "none"
+  }
+
+  return(guidesList)
+}
+
 #' Creates mapping for plotData.
 #'
 #' This function generates a mapping for the plotting based on the provided plot
 #' data and metadata.
 #'
+#' Datasets within a group are always mapped to per-dataset aesthetics
+#' (`linetype` for simulated, `shape` for observed data), so they are visually
+#' differentiated. Which of these get their own legend entries is controlled
+#' separately after the plot is built - see `.getGuidesForShowLegendPerDataset()`.
+#'
 #' @param plotData Data to map.
 #' @param metaData A list with metadata for plotData.
 #' @param userMapping Mapping provided by the user; this will update the
 #'   internal mapping.
-#' @param showLegendPerDataset Controls display of separate legend entries for
-#'   individual datasets.
+#' @param showLegendPerDataset Used only to issue a warning if per-dataset
+#'   legend entries are requested for a data type that is not present.
 #' @param dataTypeFilter type of data for which mapping is constructed.
 #' @return A mapping object for ggplot2.
 #' @keywords internal
@@ -1253,29 +1368,19 @@ plotQuantileQuantilePlot <- function(
     }
   }
 
-  if (
-    showLegendPerDataset %in%
-      c("all", "simulated") &
-      dataTypeFilter == "simulated"
-  ) {
-    # For simulated data, add linetype mapping to show individual datasets
-    mapping <- structure(
-      utils::modifyList(mapping, ggplot2::aes(linetype = name)),
-      class = "uneval"
-    )
-  }
-
-  if (
-    showLegendPerDataset %in%
-      c("all", "observed") &
-      dataTypeFilter == "observed"
-  ) {
-    # For observed data, add shape mapping to show individual datasets
-    mapping <- structure(
-      utils::modifyList(mapping, ggplot2::aes(shape = name)),
-      class = "uneval"
-    )
-  }
+  # Map the dataset name so that datasets within a group are always visually
+  # differentiated (linetype for simulated, shape for observed data).
+  # Which of these get their own legend entries is controlled separately by
+  # `showLegendPerDataset` after the plot is built.
+  perDatasetAesthetic <- switch(
+    dataTypeFilter,
+    simulated = ggplot2::aes(linetype = name),
+    observed = ggplot2::aes(shape = name)
+  )
+  mapping <- structure(
+    utils::modifyList(mapping, perDatasetAesthetic),
+    class = "uneval"
+  )
 
   # delete columns not needed
   plotData <- plotData[,
@@ -1367,8 +1472,10 @@ plotQuantileQuantilePlot <- function(
 #' @param xMapping Mapping for x-axis.
 #' @param userMapping Mapping provided by the user; this will update the
 #'   internal mapping.
-#' @param showLegendPerDataset Controls display of separate legend entries for
-#'   individual datasets. See `plotResidualsVsCovariate` for details.
+#' @param differentiatePerDataset If `TRUE`, observed datasets are mapped to
+#'   different point `shape` (using the `name` column) so that datasets within
+#'   a group are always visually differentiated. Display of the corresponding
+#'   legend entries is controlled separately after the plot is built.
 #'
 #' @return A mapping object for ggplot2 that includes aesthetics for the x-axis,
 #'   predicted values, observed values, and grouping.
@@ -1377,7 +1484,7 @@ plotQuantileQuantilePlot <- function(
 .getMappingForResiduals <- function(
   xMapping,
   userMapping,
-  showLegendPerDataset = "none"
+  differentiatePerDataset = FALSE
 ) {
   # initialize variables used for data.table to avoid messages during checks
   predicted <- yValues <- group <- name <- NULL
@@ -1392,8 +1499,9 @@ plotQuantileQuantilePlot <- function(
     class = "uneval"
   )
 
-  # Add shape mapping for observed dataset differentiation
-  if (showLegendPerDataset %in% c("all", "observed")) {
+  # Map the dataset name so that observed datasets within a group are always
+  # visually differentiated by point shape
+  if (differentiatePerDataset) {
     mapping <- structure(
       utils::modifyList(mapping, ggplot2::aes(shape = name)),
       class = "uneval"
@@ -1418,8 +1526,6 @@ plotQuantileQuantilePlot <- function(
 #' @param userMapping Mapping provided by the user; this will update the
 #'   internal mapping.
 #' @param predictedAxis Which axis to use for predicted values ("x" or "y").
-#' @param showLegendPerDataset Controls display of separate legend entries for
-#'   individual datasets. See `plotPredictedVsObserved` for details.
 #'
 #' @return A mapping object for ggplot2.
 #' @keywords internal
@@ -1427,8 +1533,7 @@ plotQuantileQuantilePlot <- function(
 .getMappingForPredictedVsObserved <- function(
   plotData,
   userMapping,
-  predictedAxis = "x",
-  showLegendPerDataset = "none"
+  predictedAxis = "x"
 ) {
   # initialize variables used as quotes
   predicted <- yMin <- yMax <- lloq <- yValues <- group <- yErrorValues <-
@@ -1449,13 +1554,14 @@ plotQuantileQuantilePlot <- function(
     )
   }
 
-  # Add shape mapping for observed dataset differentiation
-  if (showLegendPerDataset %in% c("all", "observed")) {
-    mapping <- structure(
-      utils::modifyList(mapping, ggplot2::aes(shape = name)),
-      class = "uneval"
-    )
-  }
+  # Map the dataset name so that observed datasets within a group are always
+  # visually differentiated by point shape. Display of the corresponding legend
+  # entries is controlled separately by `showLegendPerDataset` after the plot is
+  # built.
+  mapping <- structure(
+    utils::modifyList(mapping, ggplot2::aes(shape = name)),
+    class = "uneval"
+  )
 
   # delete columns not needed
   plotData <- plotData[,
