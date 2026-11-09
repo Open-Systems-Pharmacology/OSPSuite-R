@@ -148,6 +148,17 @@ test_that("It constructs mapping correctly for time profiles", {
   )
   expect_equal(rlang::as_label(mappingObservedObserved$shape), "name")
 
+  # Datasets are visually differentiated independent of showLegendPerDataset,
+  # which controls only the legend entries
+  mappingObservedNone <- .getMappingForTimeprofiles(
+    plotData = mockPlotData,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "observed"
+  )
+  expect_equal(rlang::as_label(mappingObservedNone$shape), "name")
+
   # Test showLegendPerDataset for simulated data
   mockPlotDataSim <- copy(mockPlotData)[, dataType := "simulated"]
 
@@ -168,6 +179,17 @@ test_that("It constructs mapping correctly for time profiles", {
     dataTypeFilter = "simulated"
   )
   expect_equal(rlang::as_label(mappingSimulatedSimulated$linetype), "name")
+
+  # Datasets are visually differentiated independent of showLegendPerDataset,
+  # which controls only the legend entries
+  mappingSimulatedNone <- .getMappingForTimeprofiles(
+    plotData = mockPlotDataSim,
+    metaData = mockMetaData,
+    userMapping = NULL,
+    showLegendPerDataset = "none",
+    dataTypeFilter = "simulated"
+  )
+  expect_equal(rlang::as_label(mappingSimulatedNone$linetype), "name")
 
   # Test warning when showLegendPerDataset doesn't match data
   expect_warning(
@@ -769,6 +791,94 @@ test_that("It allows user mapping to override defaults", {
 
   expect_equal(rlang::as_label(result$groupby), "name")
   expect_equal(rlang::as_label(result$colour), "group")
+})
+
+test_that("It differentiates datasets by shape only if requested", {
+  xMapping <- ggplot2::aes(x = xValues, y = residualValues)
+
+  resultDefault <- .getMappingForResiduals(xMapping, userMapping = ggplot2::aes())
+  expect_false("shape" %in% names(resultDefault))
+
+  resultDifferentiated <- .getMappingForResiduals(
+    xMapping,
+    userMapping = ggplot2::aes(),
+    differentiatePerDataset = TRUE
+  )
+  expect_equal(rlang::as_label(resultDifferentiated$shape), "name")
+
+  # user mapping overrides the per-dataset shape mapping
+  resultUserOverride <- .getMappingForResiduals(
+    xMapping,
+    userMapping = ggplot2::aes(shape = dataType),
+    differentiatePerDataset = TRUE
+  )
+  expect_equal(rlang::as_label(resultUserOverride$shape), "dataType")
+})
+
+# .isAestheticMappedTo --------------
+
+test_that("It detects aesthetics mapped to a column", {
+  mapping <- structure(
+    c(
+      ggplot2::aes(linetype = name),
+      ggplot2::aes(shape = dataType),
+      ggplot2::aes(group = interaction(group, name))
+    ),
+    class = "uneval"
+  )
+
+  expect_true(.isAestheticMappedTo(mapping, "linetype", "name"))
+  expect_false(.isAestheticMappedTo(mapping, "shape", "name"))
+  expect_false(.isAestheticMappedTo(mapping, "group", "name"))
+  expect_false(.isAestheticMappedTo(mapping, "colour", "name"))
+})
+
+# .getGuidesForShowLegendPerDataset --------------
+
+test_that("It hides guides only for per-dataset aesthetics without legend request", {
+  simMapping <- structure(
+    utils::modifyList(ggplot2::aes(x = xValues, y = yValues), ggplot2::aes(linetype = name)),
+    class = "uneval"
+  )
+  obsMapping <- structure(
+    utils::modifyList(ggplot2::aes(x = xValues, y = yValues), ggplot2::aes(shape = name)),
+    class = "uneval"
+  )
+  mappings <- list(linetype = simMapping, shape = obsMapping)
+  aestheticDataType <- list(linetype = "simulated", shape = "observed")
+
+  # "all": no guide is hidden
+  expect_equal(
+    .getGuidesForShowLegendPerDataset("all", aestheticDataType, mappings),
+    list()
+  )
+  # "none": both guides are hidden
+  expect_equal(
+    .getGuidesForShowLegendPerDataset("none", aestheticDataType, mappings),
+    list(linetype = "none", shape = "none")
+  )
+  # only the guide of the requested data type is kept
+  expect_equal(
+    .getGuidesForShowLegendPerDataset("simulated", aestheticDataType, mappings),
+    list(shape = "none")
+  )
+  expect_equal(
+    .getGuidesForShowLegendPerDataset("observed", aestheticDataType, mappings),
+    list(linetype = "none")
+  )
+
+  # aesthetics not mapped to `name` (e.g. overridden by user mappings) keep their guides
+  userMappings <- list(
+    linetype = structure(
+      utils::modifyList(ggplot2::aes(x = xValues, y = yValues), ggplot2::aes(linetype = group)),
+      class = "uneval"
+    ),
+    shape = structure(ggplot2::aes(x = xValues, y = yValues), class = "uneval")
+  )
+  expect_equal(
+    .getGuidesForShowLegendPerDataset("none", aestheticDataType, userMappings),
+    list()
+  )
 })
 
 # .getMappingForPredictedVsObserved
