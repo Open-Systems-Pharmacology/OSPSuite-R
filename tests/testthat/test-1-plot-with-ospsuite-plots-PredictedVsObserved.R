@@ -85,7 +85,13 @@ test_that("It creates default plots as expected", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     title = "defaults",
-    fig = plotPredictedVsObserved(myCombDat, xyScale = "linear")
+    fig = plotPredictedVsObserved(
+      myCombDat,
+      xyScale = "linear",
+      showLLOQ = TRUE,
+      watermark = NULL,
+      watermarkFormat = NULL
+    )
   )
 })
 
@@ -219,6 +225,45 @@ test_that("LLOQ is plotted", {
   vdiffr::expect_doppelganger(
     title = "lloq vertical",
     fig = plotPredictedVsObserved(myDC)
+  )
+})
+
+test_that("LLOQ is suppressed when showLLOQ is FALSE", {
+  obsData <- DataSet$new(name = "Observed")
+  obsData$setValues(
+    xValues = c(1, 3, 3.5, 4, 5),
+    yValues = c(1.9, 6.1, 7, 8.2, 1)
+  )
+  obsData$xUnit <- "min"
+  obsData$yDimension <- ospDimensions$`Concentration (molar)`
+  obsData$LLOQ <- 3
+
+  myDC <- DataCombined$new()
+  myDC$addSimulationResults(aciclovirSimData, groups = "myGroup")
+  myDC$addDataSets(obsData, groups = "myGroup")
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "lloq vertical suppressed",
+    fig = plotPredictedVsObserved(myDC, showLLOQ = FALSE)
+  )
+})
+
+test_that("Global watermark can be suppressed per plot", {
+  withr::local_options(list(
+    ospsuite.plots.watermarkEnabled = TRUE,
+    ospsuite.plots.watermarkLabel = "GLOBAL WATERMARK"
+  ))
+
+  set.seed(123)
+  vdiffr::expect_doppelganger(
+    title = "watermark suppressed pred-vs-obs",
+    fig = plotPredictedVsObserved(
+      myCombDat,
+      xyScale = "linear",
+      watermark = NULL,
+      watermarkFormat = NULL
+    )
   )
 })
 
