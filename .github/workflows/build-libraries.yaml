@@ -6,6 +6,7 @@ name: Build Libraries
 permissions:
   contents: write
   pull-requests: write
+  packages: read # restore the OSP packages from GitHub Packages
 
 jobs:
   build-libraries:
