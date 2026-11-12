@@ -4,7 +4,12 @@ test_that("It creates default plots as expected for single observed dataset", {
 
   vdiffr::expect_doppelganger(
     title = "single obs",
-    fig = plotTimeProfile(oneObsDC())
+    fig = plotTimeProfile(
+      oneObsDC(),
+      showLLOQ = TRUE,
+      watermark = NULL,
+      watermarkFormat = NULL
+    )
   )
 })
 
@@ -227,6 +232,41 @@ test_that("It plots LLOQ correctly on log scale", {
   vdiffr::expect_doppelganger(
     title = "lloq",
     fig = plotTimeProfile(dc, yScale = "log")
+  )
+})
+
+test_that("It suppresses LLOQ when showLLOQ is FALSE", {
+  set.seed(42)
+  dataSet <- DataSet$new("ds with lloq")
+  dataSet$setValues(
+    1:9,
+    c(10 * exp(1:-5) + rnorm(7, 0, .25), rep(0.075, 2)),
+    c(abs(rnorm(7, 0, 0.2)), rep(NA, 2))
+  )
+  dataSet$LLOQ <- 0.15
+
+  dc <- DataCombined$new()
+  dc$addDataSets(dataSet)
+
+  vdiffr::expect_doppelganger(
+    title = "lloq suppressed",
+    fig = plotTimeProfile(dc, yScale = "log", showLLOQ = FALSE)
+  )
+})
+
+test_that("It suppresses global watermark when watermark is NULL", {
+  withr::local_options(list(
+    ospsuite.plots.watermarkEnabled = TRUE,
+    ospsuite.plots.watermarkLabel = "GLOBAL WATERMARK"
+  ))
+
+  vdiffr::expect_doppelganger(
+    title = "watermark suppressed",
+    fig = plotTimeProfile(
+      oneObsDC(),
+      watermark = NULL,
+      watermarkFormat = NULL
+    )
   )
 })
 

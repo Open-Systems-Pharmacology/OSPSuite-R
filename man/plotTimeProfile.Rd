@@ -17,6 +17,9 @@ plotTimeProfile(
     ospsuite.plots::getOspsuite.plots.option(ospsuite.plots::OptionKeys$defaultPercentiles),
   nsd = 1,
   showLegendPerDataset = "all",
+  showLLOQ = TRUE,
+  watermark = NULL,
+  watermarkFormat = NULL,
   ...
 )
 }
@@ -89,6 +92,14 @@ individual datasets. One of:
 User-provided \code{mapping} and \code{observedMapping} will override internal
 settings. A warning is issued if the override removes per-dataset
 differentiation.}
+
+\item{showLLOQ}{A boolean; if \code{TRUE} (default), LLOQ lines and below-LLOQ
+point fading are displayed. If \code{FALSE}, neither the LLOQ line nor
+below-LLOQ fading is applied.}
+
+\item{watermark}{Optional watermark text for this plot.}
+
+\item{watermarkFormat}{Optional list of watermark formatting values.}
 
 \item{...}{
   Arguments passed on to \code{\link[ospsuite.plots:plotTimeProfile]{ospsuite.plots::plotTimeProfile}}
