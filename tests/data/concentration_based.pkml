@@ -1,136 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SimulationTransfer id="Fu20zgH2C0yQbgUyOrJcbw" version="13">
-  <Simulation id="k0npz_brSUmc_2XhodWiMA" name="S" icon="Simulation">
-    <BuildConfiguration>
-      <Molecules id="OfdWdty2pEyA-bcWWM6qPw" name="Molecules" icon="Molecule" bbVersion="4">
-        <Creation createdAt="5248784763415717499" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
-        <Builders>
-          <MoleculeBuilder id="VZQHgGE72Ue2R3F8WMi2NA" name="M" icon="DRUG" mode="Logical" containerType="Other" isFloating="0" quantityType="Drug" isXenobiotic="1" dim="Concentration (molar)" defaultStartFormula="izZxRJnUJ0GV8tmoP9yU1g" displayUnit="µmol/l">
-            <Children>
-              <Parameter id="foVQqBwm6kyccSD9NMF2oA" name="Concentration" icon="Parameter" persistable="0" isFixedValue="0" dim="Concentration (molar)" quantityType="Parameter" negativeValuesAllowed="1" formula="k4PiN91aRU-qRKE8cGZHwA" isDefault="0" displayUnit="µmol/l">
-                <Info flag="14" seq="1" ref="0" bb="2" group="143" />
-              </Parameter>
-            </Children>
-            <UsedCalculationMethods>
-              <UsedCalculationMethod category="DistributionCellular" calculationMethod="No Calculation Method" />
-              <UsedCalculationMethod category="DiffusionIntCell" calculationMethod="No Calculation Method" />
-              <UsedCalculationMethod category="DistributionInterstitial" calculationMethod="No Calculation Method" />
-              <UsedCalculationMethod category="IntestinalPermeability" calculationMethod="No Calculation Method" />
-            </UsedCalculationMethods>
-          </MoleculeBuilder>
-        </Builders>
-        <FormulaCache>
-          <Formulas>
-            <Formula id="k4PiN91aRU-qRKE8cGZHwA" name="ConcFormula" dim="Concentration (molar)" formula="V&gt;0 ? M/V : 0">
-              <Paths>
-                <Path path="0" as="1" dim="2" />
-                <Path path="3" as="4" dim="5" />
-              </Paths>
-            </Formula>
-            <ConstantFormula id="izZxRJnUJ0GV8tmoP9yU1g" dim="Concentration (molar)" value="10" />
-          </Formulas>
-          <StringMap>
-            <Map s=".." id="0" />
-            <Map s="M" id="1" />
-            <Map s="Amount" id="2" />
-            <Map s="..|..|Volume" id="3" />
-            <Map s="V" id="4" />
-            <Map s="Volume" id="5" />
-          </StringMap>
-        </FormulaCache>
-      </Molecules>
-      <Observers id="2aL_4Q_zakuJbbIwzD0FaQ" name="Observer" icon="Observer" bbVersion="0">
+<SimulationTransfer id="LH_n3R9sVkWXiKVdvNvMag" version="19">
+  <Simulation id="OzvPUy8i6k6AFmUzUBn9UA" name="S" icon="Simulation">
+    <SimulationConfiguration createAllProcessRateParameters="0">
+      <SimulationSettings id="jYvHdRE270yhSvoOgMT9zg" name="Simulation Settings" icon="SimulationSettings" bbVersion="0" randomSeed="360395062">
         <Creation createdAt="5248784763415727466" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
-      </Observers>
-      <EventGroups id="sb44iqEg1UGsIOGOidC7sA" name="Events" icon="EventGroup" bbVersion="0">
-        <Creation createdAt="5248784763415727466" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
-      </EventGroups>
-      <PassiveTransports id="g_jJ3bDEQE-ExKtHx8F_JA" name="Passive Transports" icon="PassiveTransport" bbVersion="0">
-        <Creation createdAt="5248784763415717499" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
-      </PassiveTransports>
-      <Reactions id="1OWAid9sEUu9wWWRYTaq2w" name="Reaction" icon="Reaction" bbVersion="0">
-        <Creation createdAt="5248784763415717499" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
-      </Reactions>
-      <SpatialStructure id="RMhvcHM8hESFGyesUz1GKQ" name="Organism" icon="SpatialStructure" bbVersion="0">
-        <Creation createdAt="5248784763415707544" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
-        <GlobalMoleculeDependentProperties id="jn-sYSSCN0WOjT7y-oD0Nw" name="MoleculeProperties" mode="Logical" containerType="Molecule" />
-        <TopContainers>
-          <Container id="XCafJ5s2xUebzqUFVhtpFg" name="Organism" icon="ORGANISM" mode="Physical" containerType="Organism">
-            <Children>
-              <Parameter id="H6QWl4cWPku-G2xDadb7Tg" name="Volume" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" isDefault="0" value="1" displayUnit="l">
-                <Info flag="10" seq="1" ref="0" bb="2" group="65" />
-              </Parameter>
-              <Container id="DxSagzmnhUe22tjukVS6xw" name="MoleculeProperties" icon="OTHER" mode="Logical" containerType="Other" />
-            </Children>
-          </Container>
-        </TopContainers>
-        <NeighborhoodsContainer id="5YKGSivZp0W8nqvle2shrw" name="Neighborhoods" mode="Logical" containerType="Other" />
-      </SpatialStructure>
-      <ParameterStartValues id="7251rvx640W8GK4aa0scQw" name="PSV" icon="ParameterStartValues" bbVersion="0" spatialStructureId="hLBLfTL9j02QGYNc6AoLWg" moleculeBuildingBlockId="wtndeJxHDUSPKhDD6on1ow">
-        <Creation createdAt="5248784763392837223" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
-        <Builders>
-          <ParameterStartValue id="V0nKqmW3vkKlfpEk1TZiUQ" name="Volume" dimension="Volume" startValue="1" isDefault="0" displayUnit="l">
-            <ContainerPath path="0" />
-          </ParameterStartValue>
-        </Builders>
-        <FormulaCache>
-          <StringMap>
-            <Map s="Organism" id="0" />
-          </StringMap>
-        </FormulaCache>
-      </ParameterStartValues>
-      <MoleculeStartValues id="m5sxUE0UMk67M5B78I51Sw" name="MSV" icon="MoleculeStartValues" bbVersion="1" spatialStructureId="hLBLfTL9j02QGYNc6AoLWg" moleculeBuildingBlockId="wtndeJxHDUSPKhDD6on1ow">
-        <Creation createdAt="5248784763406223448" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
-        <Builders>
-          <MoleculeStartValue id="tOt8FlPuZUiBHYc7Awa5uw" name="M" dimension="Concentration (molar)" startValue="10" scaleDivisor="1" isPresent="1" negativeValuesAllowed="0" displayUnit="µmol/l">
-            <ContainerPath path="0" />
-          </MoleculeStartValue>
-        </Builders>
-        <FormulaCache>
-          <StringMap>
-            <Map s="Organism" id="0" />
-          </StringMap>
-        </FormulaCache>
-      </MoleculeStartValues>
-      <SimulationSettings id="usgcw72EhUivypDUZVOlog" name="Simulation Settings" icon="SimulationSettings" bbVersion="0" randomSeed="360395062">
-        <Creation createdAt="5248784763415727466" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
-        <Solver id="0-jRjy9so0yCUDZHduSDcw" name="CVODES" mode="Logical" containerType="Other">
+        <Solver id="vFcyzye840GzXu-4Y4vS7A" name="CVODES" mode="Logical" containerType="Other">
           <Children>
-            <Parameter id="eutx9vr-D0Gf7RWiGcEmJw" name="Absolute tolerance" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1E-09">
-              <Info flag="8" seq="1" ref="0" bb="2" group="100" />
+            <Parameter id="JHQParqlKUixQojTD9DEfA" name="Absolute tolerance" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1E-09">
+              <Info flag="8" seq="1" ref="0" bb="2" group="" />
             </Parameter>
-            <Parameter id="629LnfR5H0myYLh3n1ZUrg" name="Relative tolerance" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.0001">
-              <Info flag="8" seq="1" ref="0" bb="2" group="100" />
+            <Parameter id="cqB7nz_XEUG448rhiCZpUA" name="Relative tolerance" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.0001">
+              <Info flag="8" seq="1" ref="0" bb="2" group="" />
             </Parameter>
-            <Parameter id="s2rs17c6L0etsCwfmoNTYg" name="Use Jacobian" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1">
-              <Info flag="8" seq="1" ref="0" bb="2" group="100" />
+            <Parameter id="68TLP53U9kiu6dfs4a8OFw" name="Use Jacobian" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1">
+              <Info flag="8" seq="1" ref="0" bb="2" group="" />
             </Parameter>
-            <Parameter id="nc7ZdoBZvUaBRhhI2Y2umw" name="H0" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1E-10">
-              <Info flag="8" seq="1" ref="0" bb="2" group="100" />
+            <Parameter id="QW7X6b-beE2IYfg1-F0iiA" name="H0" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1E-10">
+              <Info flag="8" seq="1" ref="0" bb="2" group="" />
             </Parameter>
-            <Parameter id="lunqPnxCO0u3HBOOo3-lMQ" name="HMin" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0">
-              <Info flag="8" seq="1" ref="0" bb="2" group="100" />
+            <Parameter id="na4l58n3YUe7J1UyyRL0ZQ" name="HMin" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0">
+              <Info flag="8" seq="1" ref="0" bb="2" group="" />
             </Parameter>
-            <Parameter id="TvDx333b6Uurxq6az2F_LQ" name="HMax" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="60">
-              <Info flag="8" seq="1" ref="0" bb="2" group="100" />
+            <Parameter id="p7Di9K96q0GKD7h1b8yFCA" name="HMax" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="60">
+              <Info flag="8" seq="1" ref="0" bb="2" group="" />
             </Parameter>
-            <Parameter id="BnxQ5xQjYkqhTsqwpuJnMA" name="MxStep" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="100000">
-              <Info flag="8" seq="1" ref="0" bb="2" group="100" />
+            <Parameter id="YFu9iIcy6UCqXiQJmnFCyw" name="MxStep" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="100000">
+              <Info flag="8" seq="1" ref="0" bb="2" group="" />
+            </Parameter>
+            <Parameter id="rv285LiPJES9IGYosC5pJQ" name="CheckForNegativeValues" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1">
+              <Info flag="8" seq="1" ref="0" bb="2" group="" />
             </Parameter>
           </Children>
         </Solver>
-        <OutputSchema id="HkUDaFjri0SW-1G75m_VUg" name="Output schema" mode="Logical" containerType="Other">
+        <OutputSchema id="d3EWwNkFXUSAVJOSI2ynJQ" name="Output schema" mode="Logical" containerType="Other">
           <Children>
-            <OutputInterval id="W8u3ZJvWYkme_K8Q6sqJRQ" name="Output interval" mode="Logical" containerType="Other">
+            <OutputInterval id="c6fd5vHFgEiaLw0mmFe5zQ" name="Output interval" mode="Logical" containerType="Other">
               <Children>
-                <Parameter id="OtsTonXJrkeWLOv_5bLnvw" name="Start time" icon="Parameter" persistable="0" isFixedValue="0" dim="Time" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0" displayUnit="h">
-                  <Info min="0" flag="24" seq="1" ref="0" bb="2" group="98" />
+                <Parameter id="wP0wWJbZtESCbViEAB4aMg" name="Start time" icon="Parameter" persistable="0" isFixedValue="0" dim="Time" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0" displayUnit="h">
+                  <Info min="0" flag="24" seq="1" ref="0" bb="2" group="" />
                 </Parameter>
-                <Parameter id="44j2BkeXrUqafQTxN5grzQ" name="End time" icon="Parameter" persistable="0" isFixedValue="0" dim="Time" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1440" displayUnit="h">
-                  <Info min="0" flag="24" seq="1" ref="0" bb="2" group="98" />
+                <Parameter id="xjm9uVhWZUO1i3DNCcbd4g" name="End time" icon="Parameter" persistable="0" isFixedValue="0" dim="Time" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1440" displayUnit="h">
+                  <Info min="0" flag="24" seq="1" ref="0" bb="2" group="" />
                 </Parameter>
-                <Parameter id="2U65sEoqukO6dzGcKTubgA" name="Resolution" icon="Parameter" persistable="0" isFixedValue="0" dim="Resolution" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.0666666666666667" displayUnit="pts/h">
-                  <Info min="0" flag="8" seq="1" ref="0" bb="2" group="98" />
+                <Parameter id="0WNT4HA9gUuV-vAbteCSWQ" name="Resolution" icon="Parameter" persistable="0" isFixedValue="0" dim="Resolution" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0.0666666666666667" displayUnit="pts/h">
+                  <Info min="0" flag="8" seq="1" ref="0" bb="2" group="" />
                 </Parameter>
               </Children>
             </OutputInterval>
@@ -138,6 +51,105 @@
         </OutputSchema>
         <OutputSelections />
       </SimulationSettings>
+      <ModuleConfigurations>
+        <ModuleConfiguration selectedInitialConditions="-YGscyhG4EWJpbwmwNjxzg" selectedParameterValues="9B5WQy95NUCCPeCy-73dJA">
+          <Module id="p44X3D_eNkmG38SYoMyXxw" name="S" icon="Module" mergeBehavior="Overwrite" isPKSimModule="0">
+            <BuildingBlocks>
+              <MoleculeBuildingBlock id="eriBkpE-mEiL0s-7-SmLjg" name="Molecules" icon="Molecule" bbVersion="4">
+                <Creation createdAt="5248784763415717499" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
+                <Builders>
+                  <MoleculeBuilder id="PfwsvdHoi0iDWDWXTYzGww" name="M" icon="DRUG" mode="Logical" containerType="Other" isFloating="0" quantityType="Drug" isXenobiotic="1" dim="Concentration (molar)" defaultStartFormula="OmqgY7UJBkObkc5X4lE_yQ" displayUnit="µmol/l">
+                    <Children>
+                      <Parameter id="ZCJqOGCKMUqGKncH8t9rlA" name="Concentration" icon="Parameter" persistable="0" isFixedValue="0" dim="Concentration (molar)" quantityType="Parameter" negativeValuesAllowed="1" formula="VQLrZNH0fEOACN43LU7gYA" isDefault="0" displayUnit="µmol/l">
+                        <Info flag="14" seq="1" ref="0" bb="2" group="" />
+                      </Parameter>
+                    </Children>
+                    <UsedCalculationMethods>
+                      <UsedCalculationMethod category="DistributionCellular" calculationMethod="No Calculation Method" />
+                      <UsedCalculationMethod category="DiffusionIntCell" calculationMethod="No Calculation Method" />
+                      <UsedCalculationMethod category="DistributionInterstitial" calculationMethod="No Calculation Method" />
+                      <UsedCalculationMethod category="IntestinalPermeability" calculationMethod="No Calculation Method" />
+                    </UsedCalculationMethods>
+                  </MoleculeBuilder>
+                </Builders>
+                <FormulaCache>
+                  <Formulas>
+                    <Formula id="VQLrZNH0fEOACN43LU7gYA" name="ConcFormula" dim="Concentration (molar)" formula="V&gt;0 ? M/V : 0">
+                      <Paths>
+                        <Path path="0" as="1" dim="2" />
+                        <Path path="3" as="4" dim="5" />
+                      </Paths>
+                    </Formula>
+                    <ConstantFormula id="OmqgY7UJBkObkc5X4lE_yQ" dim="Concentration (molar)" value="10" />
+                  </Formulas>
+                  <StringMap>
+                    <Map s=".." id="0" />
+                    <Map s="M" id="1" />
+                    <Map s="Amount" id="2" />
+                    <Map s="..|..|Volume" id="3" />
+                    <Map s="V" id="4" />
+                    <Map s="Volume" id="5" />
+                  </StringMap>
+                </FormulaCache>
+              </MoleculeBuildingBlock>
+              <ReactionBuildingBlock id="Lu24o-REVk-_Bjth8JFvbQ" name="Reaction" icon="Reaction" bbVersion="0">
+                <Creation createdAt="5248784763415717499" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
+              </ReactionBuildingBlock>
+              <PassiveTransportBuildingBlock id="ID4uvySmA06bMzau2YmZQw" name="Passive Transports" icon="PassiveTransport" bbVersion="0">
+                <Creation createdAt="5248784763415717499" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
+              </PassiveTransportBuildingBlock>
+              <SpatialStructure id="4kXpfY2vvU6lHqvoKmfHWg" name="Organism" icon="SpatialStructure" bbVersion="0">
+                <Creation createdAt="5248784763415707544" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
+                <GlobalMoleculeDependentProperties id="oOYCnfWG40qgGO24q_RsaQ" name="MoleculeProperties" mode="Logical" containerType="Molecule" />
+                <TopContainers>
+                  <Container id="ieAaqRIutkKGr34X1W8f3g" name="Organism" icon="ORGANISM" mode="Physical" containerType="Organism">
+                    <Children>
+                      <Parameter id="DVd9VO1D-UKLhhhtECEEyA" name="Volume" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" isDefault="0" value="1" displayUnit="l">
+                        <Info flag="10" seq="1" ref="0" bb="2" group="" />
+                      </Parameter>
+                      <Container id="o-I9D-bMLEi7NuXh-8D4SQ" name="MoleculeProperties" icon="OTHER" mode="Logical" containerType="Other" />
+                    </Children>
+                  </Container>
+                </TopContainers>
+                <NeighborhoodsContainer id="n2K9tzM0A0eJNyzzJOe4WA" name="Neighborhoods" mode="Logical" containerType="Other" />
+              </SpatialStructure>
+              <ObserverBuildingBlock id="fyRE5mMz-kOQGxUt_QklWw" name="Observer" icon="Observer" bbVersion="0">
+                <Creation createdAt="5248784763415727466" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
+              </ObserverBuildingBlock>
+              <EventGroupBuildingBlock id="X_ahFmQ8UEmM2AbQEwSXzQ" name="Events" icon="Event" bbVersion="0">
+                <Creation createdAt="5248784763415727466" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
+              </EventGroupBuildingBlock>
+              <ParameterValuesBuildingBlock id="9B5WQy95NUCCPeCy-73dJA" name="PSV" icon="ParameterValues" bbVersion="0">
+                <Creation createdAt="5248784763392837223" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
+                <Builders>
+                  <ParameterValue id="f06f70A5n0C_DoG6-Ht4IQ" name="Volume" dimension="Volume" value="1" isDefault="0" displayUnit="l">
+                    <ContainerPath path="0" />
+                  </ParameterValue>
+                </Builders>
+                <FormulaCache>
+                  <StringMap>
+                    <Map s="Organism" id="0" />
+                  </StringMap>
+                </FormulaCache>
+              </ParameterValuesBuildingBlock>
+              <InitialConditionsBuildingBlock id="-YGscyhG4EWJpbwmwNjxzg" name="MSV" icon="InitialConditions" bbVersion="1">
+                <Creation createdAt="5248784763406223448" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
+                <Builders>
+                  <InitialCondition id="ktar7H4jm0yZ9QYx5nrWFg" name="M" dimension="Concentration (molar)" value="10" scaleDivisor="1" isPresent="1" negativeValuesAllowed="0" displayUnit="µmol/l">
+                    <ContainerPath path="0" />
+                  </InitialCondition>
+                </Builders>
+                <FormulaCache>
+                  <StringMap>
+                    <Map s="Organism" id="0" />
+                  </StringMap>
+                </FormulaCache>
+              </InitialConditionsBuildingBlock>
+            </BuildingBlocks>
+            <Snapshot></Snapshot>
+          </Module>
+        </ModuleConfiguration>
+      </ModuleConfigurations>
       <AllCalculationMethods>
         <CoreCalculationMethod id="PllmUFs0wEmJJi82rrw40w" name="Cellular partition coefficient method - Berezhkovskiy" icon="CoreCalculationMethod" bbVersion="0" category="DistributionCellular">
           <Creation createdAt="5248784763415737428" createdBy="Michael" creationMode="New" origin="Other" />
@@ -154,7 +166,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (blood cells/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="RootContainer" />
                   </DescriptorConditions>
@@ -176,7 +188,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (intracellular/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <NotMatchTagCondition tag="Fat_int_Fat_cell" />
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
@@ -199,7 +211,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (intracellular/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="Fat_int_Fat_cell" />
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
@@ -211,9 +223,9 @@
           <HelpParameters>
             <KeyValue>
               <Parameter id="NgROhzbtQEq-CVBZgRZJAw" name="logP (oil/water,pKa)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="obmVsgsQwUOeKG3EhmnJmw" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -221,9 +233,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="V9D2xCAOpUeQe7DSHZc1Lg" name="logP (veg.oil/water)" icon="Parameter" persistable="0" isFixedValue="0" dim="Log Units" quantityType="Parameter" negativeValuesAllowed="1" formula="yarn54R4MUKAZ8hnmSosow" isDefault="1" displayUnit="Log Units">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -231,9 +243,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Y0ODXMwDO0-ITcQtkX4WZw" name="LogPow_pKa_DiproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="f_VjD1OlCkW2oSmW_SEl7w" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -241,9 +253,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="hf7TsnANbE6U3SXx6h8DTA" name="LogPow_pKa_DiproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="RGc1jUWE3kuc27ETy5YQWA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -251,9 +263,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="nwm76w9EhkKYbDk8S-r2KA" name="LogPow_pKa_DiproticBaseMonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="6gacm6h6u0mq0Vb6IqOEvg" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -261,9 +273,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="yJNdqFtsXEyu16famzeTNQ" name="LogPow_pKa_MonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="br6KUcazxEWFLOymd0fgJA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -271,9 +283,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="St2N1s87dESkMpCQJiEZdA" name="LogPow_pKa_MonoproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="0XpPLgf61USOLjyRdaLhYg" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -281,9 +293,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="H9ILmns08U2IRNQhDIV3Zg" name="LogPow_pKa_MonoproticBaseDiproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="OvfF_dcC_kyWDk-6nrls2g" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -291,9 +303,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="QZG7xLF2EEKIIXNyIG04nA" name="LogPow_pKa_MonoproticBaseMonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="nmfmrxlp4UWYdrRfKafEEw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -301,9 +313,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Dy4rHQGfl0az7jQ-zQPamg" name="LogPow_pKa_Neutral" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -311,9 +323,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="3csuDenZvUmjfxEA2lbfew" name="LogPow_pKa_TriproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="Yulhju-lUkyLs_slENYh9w" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -321,9 +333,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="eJft8YqAnEyIbTER-tDXtQ" name="LogPow_pKa_TriproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="gVYYVGuRBEy8lqWWCrQ0nA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -331,9 +343,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="ZPASQWdRJUiPhrxZI8XEJg" name="Fraction unbound (tissue)" icon="Parameter" persistable="0" isFixedValue="0" dim="Fraction" quantityType="Parameter" negativeValuesAllowed="1" formula="wfXQzlv5wEWJ85EjyF--9Q" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -549,7 +561,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (blood cells/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="RootContainer" />
                   </DescriptorConditions>
@@ -568,7 +580,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (intracellular/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                   </DescriptorConditions>
@@ -617,7 +629,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (blood cells/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="RootContainer" />
                   </DescriptorConditions>
@@ -639,7 +651,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (intracellular/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <NotMatchTagCondition tag="Fat_int_Fat_cell" />
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
@@ -662,7 +674,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (intracellular/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="Fat_int_Fat_cell" />
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
@@ -674,9 +686,9 @@
           <HelpParameters>
             <KeyValue>
               <Parameter id="nDlfCPzyakqpKpLBus0D7g" name="logP (oil/water,pKa)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="wFZ3CvEWNkiuB0Xqz46h7g" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -684,9 +696,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="qH_7jszOD0WqyN0hdJSmTA" name="logP (veg.oil/water)" icon="Parameter" persistable="0" isFixedValue="0" dim="Log Units" quantityType="Parameter" negativeValuesAllowed="1" formula="98O41CSQfEqnrTBDmtql6g" isDefault="1" displayUnit="Log Units">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -694,9 +706,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="m5NWrnyG7UOjs9GgYnRFTw" name="LogPow_pKa_DiproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="kU7Y7iT8Zk6xlG3QHDP-eA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -704,9 +716,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="kfJ1awH3ukCRJNI8IAm6kQ" name="LogPow_pKa_DiproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="gf6eKHOlH0GrIIuBefK5KQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -714,9 +726,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="vrtkHgf05k2VSWsYdHFz1Q" name="LogPow_pKa_DiproticBaseMonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="_vobc2lPdEKR9gSigkLEmQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -724,9 +736,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="YOKimHIKY0OIIjBzY9mP6Q" name="LogPow_pKa_MonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="zVTqzgERJkWGADdnfxi7Eg" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -734,9 +746,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="LdZSFUt_LkG8yx4vpin-Ig" name="LogPow_pKa_MonoproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="NqjdLvuqFE2LMJfFl1PxsA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -744,9 +756,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="fZqkKjxRwkubYLJaD68SGQ" name="LogPow_pKa_MonoproticBaseDiproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="niNPzYLrgkiasnv18yd8MA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -754,9 +766,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="yjvi_dBq5kCH31Qk0exuHA" name="LogPow_pKa_MonoproticBaseMonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="--qyKLuo2U6goEbv2hJnzg" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -764,9 +776,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="1eM14VGNsUKiMAjMQc--Ug" name="LogPow_pKa_Neutral" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -774,9 +786,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="UPMS-jQoGEqqZJzKXDaV5Q" name="LogPow_pKa_TriproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="01JfHwEKNEuPux_LL5leRA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -784,9 +796,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="pQx1MYSA_UCKq16cPYeIjQ" name="LogPow_pKa_TriproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="58RVGyfQOEOdo9HXedvF1g" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -794,9 +806,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="l4R-SJhIO029brQfMnnjXQ" name="Fraction unbound (tissue)" icon="Parameter" persistable="0" isFixedValue="0" dim="Fraction" quantityType="Parameter" negativeValuesAllowed="1" formula="km4ms4r6R0K-bQmsI1kQEw" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -1008,7 +1020,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (blood cells/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="RootContainer" />
                   </DescriptorConditions>
@@ -1036,7 +1048,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (intracellular/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <NotMatchTagCondition tag="Fat_int_Fat_cell" />
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
@@ -1065,7 +1077,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (intracellular/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="Fat_int_Fat_cell" />
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
@@ -1077,9 +1089,9 @@
           <HelpParameters>
             <KeyValue>
               <Parameter id="3zq0hdTeeUWLfh5bQT83eQ" name="Ka (acidic phospholipids)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="goU6civ9hEOJh46b6zcdZA" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1087,9 +1099,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="PBy4J0HF8E2KuLsc1UyVag" name="Ka (proteins)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="IEr3QhqHJUKHeG-08LQsCg" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1097,9 +1109,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="TRH0V2IGskafSq1BoMY_Hw" name="logP (veg.oil/water)" icon="Parameter" persistable="0" isFixedValue="0" dim="Log Units" quantityType="Parameter" negativeValuesAllowed="1" formula="vPWMiv4aK0CYVs5JNagIGA" isDefault="1" displayUnit="Log Units">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1107,9 +1119,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="UhCdErZADUqJTHYnXQ3Q7w" name="Partition coefficient (blood cells/plasma unbound)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="pQZ2MRgXxEeeHr6M6VPA_g" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1117,9 +1129,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="MWEXhbPju0iqr8Eb7HyYyw" name="X" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="U-ugYWaunkaJELIAa9mmVA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1127,9 +1139,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="OJqegvBc3U2k4X7TF9jeZw" name="X_DiproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="KVzmwQTHYESXFnUQZ92ezQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1137,9 +1149,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="gelUpmbibUqz7ILW_XrS5A" name="X_DiproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="g6GNo9S4BkS6L3lws3srpw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1147,9 +1159,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="aYf8FGKU-UaOA2r198Mf5A" name="X_DiproticBaseMonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="n7EefH3wHUGy2fy1DOLZfQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1157,9 +1169,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="ei8FyCll8kqGkJyR_BYyhA" name="X_MonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="aI4vu6FFn0yYi7iurDm_Fw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1167,9 +1179,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="eGazATnJtEe4WimVtF9xWQ" name="X_MonoproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="f_8dD9sHhEODiHvjp5JTdw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1177,9 +1189,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="NwX-hmswaEG5uHu45XNi1w" name="X_MonoproticBaseDiproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="sbPxmV0l8Ue0VPj7WMhUyg" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1187,9 +1199,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="AxOy6JuEHUak2QHtVv-Wzw" name="X_MonoproticBaseMonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="7lyIfrWsiEuX9AB5zINSGg" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1197,9 +1209,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Y_WUOxz4iEeEaxB-wuqbIQ" name="X_Neutral" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1207,9 +1219,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="QRTHNvC8dEOF9CK6fp10yA" name="X_TriproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="kuCJp91jg0-xKqPs6rakNQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1217,9 +1229,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="NF_3oVPY1kqrhr0MXwQ67g" name="X_TriproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="fD303hMc5EG8I8hUid9eDA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1227,9 +1239,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="N-68CIX5p06spWQIzzOmgQ" name="Y" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="84lvAjMYP0elpH-pxrn7ug" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1237,9 +1249,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Qd4atGUgx0CZmSzRKrF2XA" name="Y_DiproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="iD2a8H-1EEiAsUK1xHEhWQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1247,9 +1259,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="2IfsZi-r90OiBUoc7xBlnw" name="Y_DiproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="dWDjIoKdrUuLIhsXqBSe7w" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1257,9 +1269,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="zuJt269yJ0KVLMx3Xnns_w" name="Y_DiproticBaseMonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="VNRmhxzj9k6ygDaZ0iCCaQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1267,9 +1279,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="TO3L447wCkuvBHzD0DaaZQ" name="Y_MonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="MWfQKNZ-GU-4y5w1DKnJ_w" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1277,9 +1289,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="gFDRVKClTkGKGtn8oOs8nw" name="Y_MonoproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="rIMop-cQ20qUdtpu2MG6XQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1287,9 +1299,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="BcbkXkDzI022Y9xGiz3nWg" name="Y_MonoproticBaseDiproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="mpd93X5Fe0yws2faElX1Ww" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1297,9 +1309,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="1H3XdR4zUkadeLqj06J1Tw" name="Y_MonoproticBaseMonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="fDGzoNXuOEiI8VPeX0nkew" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1307,9 +1319,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Q-k3hk3aRkuKFfMhOfR3xg" name="Y_Neutral" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1317,9 +1329,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="guszed-r902pBazuYFQTyA" name="Y_TriproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="1wgubwfNvE-wic03vEi_ZA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1327,9 +1339,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="fyO68esZv063NEYlu0oouw" name="Y_TriproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="hLKZX1KsxkCw7Pb-MmqBPA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1337,9 +1349,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="b6xCu9LeNk-705f7suLGXQ" name="Z" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="IAnuQDtLtUObTPQyZeEh0Q" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1347,9 +1359,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="sat3Krv9yEiYttpmB5TOzw" name="Z_DiproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="lZoPwqkq3E6_CJKk5oKzCA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1357,9 +1369,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="CWJgtP-6cEOFz0hNUsMZ-A" name="Z_DiproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="suB-HZWXX02SvO5PcvYpqw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1367,9 +1379,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="eRq288I0q0y-dnI7-1mI1Q" name="Z_DiproticBaseMonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="G2FvbmTsaUSd7XX74SCh5g" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1377,9 +1389,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Le5rpbmF30KIPC4UyCMSyA" name="Z_MonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="RPPMFtvOZEyrLIlPeRPPGQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1387,9 +1399,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="vXHpU2Z8N023yNFvpuULKw" name="Z_MonoproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="R98RXrh-nEKWyBquWg0lhA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1397,9 +1409,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="8pl9VQFzqEGVWTYEtoHT0A" name="Z_MonoproticBaseDiproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="HGTYd9LkBEaGZy4-A8sccQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1407,9 +1419,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="EJ59DfV-bUi7pnM_mKeehQ" name="Z_MonoproticBaseMonoproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="LIzXXojwfEiqK1IyY2wwsw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1417,9 +1429,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="RnOMEMtW1Uip61quNSd7dA" name="Z_Neutral" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="bYp4ZRg5Z0WwilNGVe8Qjg" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1427,9 +1439,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="gcTObIR_cEC3KXF9rFdBKQ" name="Z_TriproticAcid" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="eUgTy3zt6ked9KRodwdviw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1437,9 +1449,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Wo31E4MMSEWu6WZUZvXbNg" name="Z_TriproticBase" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="7fSHAHOUIEOoZCQDwPTwOw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1920,7 +1932,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (blood cells/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="RootContainer" />
                   </DescriptorConditions>
@@ -1945,7 +1957,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (intracellular/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                   </DescriptorConditions>
@@ -1956,9 +1968,9 @@
           <HelpParameters>
             <KeyValue>
               <Parameter id="Rtv-f1kzzUCLgFTIWcMNaw" name="K_a_PL_pH_Factor" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="TqdexNE72EKmy6oIliP59Q" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1966,9 +1978,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="7tp9wm3n7E2EcV6v0_HGMQ" name="logD at pH (blood cells)" icon="Parameter" persistable="0" isFixedValue="0" dim="Log Units" quantityType="Parameter" negativeValuesAllowed="1" formula="Qntd4p6UsECUVlV2rAj9cw" isDefault="1" displayUnit="Log Units">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1976,9 +1988,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="PFhi_L7Q5UWylitefdc1dw" name="logD factor" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="6Nh1RpF9qEWu4IRe_PTw9g" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1986,9 +1998,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="lSoBQ3hLRU2ByrKfVxFd5Q" name="Partition coefficient (acidic phospholipids/blood cells water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="yP4QdNLgJ0GZM1wMZ0-yCA" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -1996,9 +2008,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="WErZbpAjUUWUNpg85wgsFA" name="Partition coefficient (neutral lipids/blood cells water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="x8gVSdGizE6GtQCwxSMaQw" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2006,9 +2018,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="6pGmHUnQ0Uek-iZk6XIGSg" name="Partition coefficient (neutral phospholipids/blood cells water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="2aPB4lI2Tk-RsrwApkhGaA" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2016,9 +2028,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="wQeUlMAUCUahiehJoE3uOw" name="pKa_pH_WS_bc_F1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="wNpMR9BLCU6PjXovBt32Pw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2026,9 +2038,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="9Ctta8-yZUKaTc66ToI0Tg" name="pKa_pH_WS_bc_F2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="cxLYLoRCXE6c-QAb56GAPw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2036,9 +2048,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="vVblu8-g_EegRvYyPxCl3Q" name="pKa_pH_WS_bc_F3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="JT-tQe-M80uTZz30eF5hQw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2046,9 +2058,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="0zy0AldKvkqdo3LBc19O9A" name="pKa_pH_WS_bc_K1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="oNhsOwUH7U-Rncbz9HfW2Q" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2056,9 +2068,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="CaZuRNbCokKejSSxyOOfQQ" name="pKa_pH_WS_bc_K2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="XdiWmblNn0q03LMpuMFRag" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2066,9 +2078,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="uA__risZkk2kdHuUyU1wcQ" name="pKa_pH_WS_bc_K3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="de4v22gSpU6KTKyUPdLPlg" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2076,9 +2088,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="HdY3k3c55EayKpwlw2Pmmw" name="pKa_pH_WS_bc_K4" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="uGKS802HWEyDs1IEA1I9bQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2086,9 +2098,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="b5b4XXEBN0iHcfrU62_ZLA" name="pKa_pH_WS_bc_K5" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="YsMSuhm4BkaTr79b1sXWPQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2096,9 +2108,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="iHJ171E0gEO94atKCuxRZQ" name="pKa_pH_WS_bc_K6" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="QlErTGCMfESo7-durYv69A" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2106,9 +2118,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="pZsqICssAE6Wd91CRYNbDg" name="pKa_pH_WS_bc_K7" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="w9YqA1xtHEOv3JrJSImoLQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2116,9 +2128,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="4kX_XrhAMECpcIWtbuq5JQ" name="pKa_pH_WS_bc_K8" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="1T8t0VitlU-yYkCm_G0afA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2126,9 +2138,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="mcy9VmypvE-uSZUogDxrDw" name="K_a_PL_pH_Factor" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="mk0eQAhHmES78TEW0uRVAw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2136,9 +2148,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="rMZVWiaEO0O-yyy-ZOvr8g" name="logD at pH (intracellular)" icon="Parameter" persistable="0" isFixedValue="0" dim="Log Units" quantityType="Parameter" negativeValuesAllowed="1" formula="gRWFUIsMlEKKAGbOAA8HoA" isDefault="1" displayUnit="Log Units">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2146,9 +2158,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Jt1mL_sNDkGlOTN26Gu27w" name="logD factor" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="1r7v4grC7Uud-ZA-WcpNFg" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2156,9 +2168,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Lz26GoIT8EmeD6bD50flwQ" name="Partition coefficient (acidic phospholipids/intracellular water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="XTfqkmJWLEyrC2IZaoxv4w" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2166,9 +2178,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="F-mw28JraEOpMrR8tzJRgA" name="Partition coefficient (neutral lipids/intracellular water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="ji4VIY62AUKQqhEKFPZWOA" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2176,9 +2188,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="qGWRxQR2NkSEf1g7Xj4nDA" name="Partition coefficient (neutral phospholipids/intracellular water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="GnM1CzQX00SIRApD4q71xA" isDefault="1">
-                <Info flag="58" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="58" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2186,9 +2198,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="N_TequLuf0WOTHxhT0t0CQ" name="pKa_pH_WS_cell_F1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="jWVzF5M0zUyyzVGh1PAd0w" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2196,9 +2208,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="9Ehif82qx0eRxsMyp-xmLA" name="pKa_pH_WS_cell_F2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="rOY-fRAAgEu9WlAsJ4bZjg" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2206,9 +2218,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="_i9PzjW850qItF2XoqQiNQ" name="pKa_pH_WS_cell_F3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="OpbpBgm_Tkm612i0dqgN9w" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2216,9 +2228,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="poCnur1DaU-XuEJjyfLIxA" name="pKa_pH_WS_cell_K1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="lLQhsxct9Eur8UH754kt1w" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2226,9 +2238,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="1yFO_yTRnE2sN--GkfdyVg" name="pKa_pH_WS_cell_K2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="7QBPpa55OkezCrAl0aimew" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2236,9 +2248,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="JQEDqzR0EU-w6gf-hF_uPQ" name="pKa_pH_WS_cell_K3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="L5t8U5jI-U2po1HSs37HQQ" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2246,9 +2258,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="pDTIm7hQBUSZW5DRG9AbOg" name="pKa_pH_WS_cell_K4" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="yitPfeRfX0ytHBRIqbAfYw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2256,9 +2268,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="NBwgC2Kt6UqPQCAQafyEpQ" name="pKa_pH_WS_cell_K5" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="Aq9sRaVG6kid8RKnzgLj_g" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2266,9 +2278,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="c2uVTNjwA06GmlN9sAXUJw" name="pKa_pH_WS_cell_K6" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="_1TcKZRAd0aoi8Jk7_wxDw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2276,9 +2288,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="BBlDCZHEQU6Mtc-wXsIM8w" name="pKa_pH_WS_cell_K7" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="zTtTmqiiMkee4I2mn99Vuw" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2286,9 +2298,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="a0F8RU4w5EScOzFT9RgceQ" name="pKa_pH_WS_cell_K8" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="4S872unBEU-0wQvIhSPOVA" isDefault="1">
-                <Info flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -2702,7 +2714,7 @@
             <KeyValue>
               <ConstantFormula id="pFJ4svCneEOI51DHaCjKqw" value="1" />
               <ParameterDescriptor parameterName="P_bc_pls_factor">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="RootContainer" />
                   </DescriptorConditions>
@@ -2712,7 +2724,7 @@
             <KeyValue>
               <ConstantFormula id="VpF54gKJa0OufIzv5RDOnA" value="1" />
               <ParameterDescriptor parameterName="P_pls_bc_factor">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="RootContainer" />
                   </DescriptorConditions>
@@ -2722,7 +2734,7 @@
             <KeyValue>
               <ConstantFormula id="4WHzr5SOd0S2leVpEvR5Mw" value="1" />
               <ParameterDescriptor parameterName="P_cell_int_factor">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                   </DescriptorConditions>
@@ -2732,7 +2744,7 @@
             <KeyValue>
               <ConstantFormula id="ngcxQu-9rkKA2GPNNDI3aQ" value="1" />
               <ParameterDescriptor parameterName="P_int_cell_factor">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                   </DescriptorConditions>
@@ -2763,7 +2775,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="P_bc_pls_factor">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="RootContainer" />
                   </DescriptorConditions>
@@ -2788,7 +2800,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="P_pls_bc_factor">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="RootContainer" />
                   </DescriptorConditions>
@@ -2813,7 +2825,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="P_cell_int_factor">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                   </DescriptorConditions>
@@ -2838,7 +2850,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="P_int_cell_factor">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                   </DescriptorConditions>
@@ -2849,9 +2861,9 @@
           <HelpParameters>
             <KeyValue>
               <Parameter id="ZNOWHYixTUS6pIrez8bkIQ" name="pKa_pH_WS_bc_F1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="r39Z5XhnZket8n0DGk-h3Q" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2859,9 +2871,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="D-o2dNM7wUKQFnEVy5bQOA" name="pKa_pH_WS_bc_F2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="0SvvTPvH7USopIvMLk3GYw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2869,9 +2881,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="mztcLApyfkiJm2KfmlNGXw" name="pKa_pH_WS_bc_F3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="ln-X5T2UGE68u9ur0IQ8Dw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2879,9 +2891,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="qE7eekUDz0SSN-ES0xgEYg" name="pKa_pH_WS_bc_K1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="trYUYBQQsUitW_o5FP3eKA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2889,9 +2901,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="roFOfvzG0kSED0tMDWWJTQ" name="pKa_pH_WS_bc_K2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="gPCDS-azTE6pxkrQmiEiCQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2899,9 +2911,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="-ORucy88BEKeByuIcZqU6w" name="pKa_pH_WS_bc_K3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="ZOlROoVwLUG30ReJrnJ6SA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2909,9 +2921,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="gQP6x118lkejRNYSmhcokA" name="pKa_pH_WS_bc_K4" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="i9Y3QoznlkWM5Nji0RDvEQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2919,9 +2931,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="-X-p5xZdd06aMpDwQsVraA" name="pKa_pH_WS_bc_K5" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="yuABBOn41EuNn-3KkHaT1A" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2929,9 +2941,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="L0rkfI_9BESeMZ4nkYF6tg" name="pKa_pH_WS_bc_K6" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="xX4HXFnbT0WMM-ZGDSn3mQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2939,9 +2951,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="hvOw1Dw6aEO1PHdIqQTPcQ" name="pKa_pH_WS_bc_K7" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="_fDckEq-BkiqtoVE3CakFQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2949,9 +2961,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="UMyr2wMoz0Wj-kGy0jAhMQ" name="pKa_pH_WS_bc_K8" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="NvYSwZQAjUCRkVblWxk4uA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2959,9 +2971,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="4AWdo0rt00KEgYz42uYZUQ" name="pKa_pH_WS_pls_F1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="aPDOKoq_gUaQABJtHhst6Q" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2969,9 +2981,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="EuhGQ6FcRU-bom7KJdu-JA" name="pKa_pH_WS_pls_F2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="SpZb0qyMgkasQ6HIqG1d9g" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2979,9 +2991,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="hvsDF9FKbEyBtN5SKiVCjQ" name="pKa_pH_WS_pls_F3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="eGVYpyPvWUmTgr1lcgGlZw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2989,9 +3001,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="7cEHIMFylUy6IB68VDAgow" name="pKa_pH_WS_pls_K1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="P_XSr61DoEO1G0EsvNOG0g" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -2999,9 +3011,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Eaemxl0WBkqKOZHcBi4gjQ" name="pKa_pH_WS_pls_K2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="lA8W0hP4cUmGna29trS1Nw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3009,9 +3021,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="WavdJbBY5kGjus-RD2P2XA" name="pKa_pH_WS_pls_K3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="MNqPG1zTVUqqiBkTaBJzsA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3019,9 +3031,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="8nCxEkL6IUO1CkLDhzJu6g" name="pKa_pH_WS_pls_K4" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="qQJR9X0cXkK5I9OFjm4nzQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3029,9 +3041,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="hJniH10FJEmF60HNXWNMeQ" name="pKa_pH_WS_pls_K5" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="120JyxzrMECUjKMv6bQ5xA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3039,9 +3051,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="ca5OwjSvn0m7QUB9ZDcBMA" name="pKa_pH_WS_pls_K6" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="Uz7UhGqhdEG-FsN7GUQ6dA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3049,9 +3061,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="NhHjMFstu0-0_dIJKzXzpg" name="pKa_pH_WS_pls_K7" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="AphCH_XR40G1dOBSE1aJCQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3059,9 +3071,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="QK7B8htPS0GrpPeqcZiuTA" name="pKa_pH_WS_pls_K8" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="205hH0HaSkeu6X1osEpceg" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3069,9 +3081,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="uv6c_n9QGkOOZYtEMeGJhA" name="pKa_pH_WS_cell_F1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="3287BLVdW0qD-gNCR9t0Sg" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3079,9 +3091,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="vFCQSMgzCU6JdMYyYj2kNw" name="pKa_pH_WS_cell_F2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="U6QBkDnx7E-PCmmJz4v0Dw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3089,9 +3101,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="dfcqVLlD8UuaF9R59WRJEQ" name="pKa_pH_WS_cell_F3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="roNoBtWG50O2rwpjpoAFOQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3099,9 +3111,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="qFCsZc-7jEWN5lwUwYJt5w" name="pKa_pH_WS_cell_K1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="MPyck7MR80i4nIX5l25-uw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3109,9 +3121,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="FnwAjatPV0aP_aNz3FlCmQ" name="pKa_pH_WS_cell_K2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="Wjn1b8erIkyeKglJz6_bSg" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3119,9 +3131,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="-DyoKVDDaUGX9w7n0cD6vg" name="pKa_pH_WS_cell_K3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="nFVHGh_d-ECBWMeJr0xDjw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3129,9 +3141,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="1-c8x4gmJU6IpNfB7VNwZQ" name="pKa_pH_WS_cell_K4" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="3NtNRJkGNUOXcD67Ysh6CA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3139,9 +3151,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="3c_PDuKMnE-Wd6fcJ1sKoA" name="pKa_pH_WS_cell_K5" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="NZ8xtdYi7EyYvcBpp8rFfQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3149,9 +3161,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="-E4j0NjBiUOfeTGe-Tn1Cw" name="pKa_pH_WS_cell_K6" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="87NpP7DEwUyhyCSrI61u8Q" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3159,9 +3171,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="AcgBpxIVl069YbC92zCTRA" name="pKa_pH_WS_cell_K7" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="_QnGO3yLnkWNDrs3audMzw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3169,9 +3181,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="8DDKlUid6kqz5qJvFHofpw" name="pKa_pH_WS_cell_K8" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="tg2fVBKGyE6DVMSkgfjFBg" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3179,9 +3191,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="nr0PZWnoEUq4GDUmOm4ubg" name="pKa_pH_WS_int_F1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="J9QKqF4Uwkih-wYvqZAlWw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3189,9 +3201,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="96hYytu38UGl75w7CYagwg" name="pKa_pH_WS_int_F2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="3KuJCkuXn0q6wdSOS9oKpg" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3199,9 +3211,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="hCiR7w7tuUKnpdWRezSCRQ" name="pKa_pH_WS_int_F3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="ehmvjG8ujk2-yV-B1m6pXw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3209,9 +3221,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="epUNwrQym0qnWN2jQZP6Iw" name="pKa_pH_WS_int_K1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="g2YVC8ljqEqUZw1D5cvOZw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3219,9 +3231,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="pai-QtXTpkiE33sgHtVpKA" name="pKa_pH_WS_int_K2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="5GEBKtXHbEio8LS3RrXk4g" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3229,9 +3241,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="2C4KQhXlDkit_diRxHb_ww" name="pKa_pH_WS_int_K3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="hvdvTTZ7d0OqQPXVYZVEHQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3239,9 +3251,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="spgSGXcgm0m0rMlfeYerbA" name="pKa_pH_WS_int_K4" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="FzwROaznU0CGk1jROmZOBQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3249,9 +3261,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Tvnu9dZju02SRF3wzljLzg" name="pKa_pH_WS_int_K5" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="AW6zCwtRa02XBIYyKGmPIA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3259,9 +3271,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="JzQi9YcLYUCk8r6xc1hO-A" name="pKa_pH_WS_int_K6" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="zzRKJO1A-UuF-vQU8kBG8g" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3269,9 +3281,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="oRHQFidmIE-PMsbMPtm5kg" name="pKa_pH_WS_int_K7" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="_f8x_eH2z02LtFaebtB-pQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3279,9 +3291,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="xkM8KmFev0qlRPa8K2Ej4A" name="pKa_pH_WS_int_K8" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="MAnqEHLqKkuhuey01xiiIA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -3720,7 +3732,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="P_bc_pls_factor">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="RootContainer" />
                   </DescriptorConditions>
@@ -3745,7 +3757,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="P_pls_bc_factor">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="RootContainer" />
                   </DescriptorConditions>
@@ -3770,7 +3782,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="P_cell_int_factor">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                   </DescriptorConditions>
@@ -3795,7 +3807,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="P_int_cell_factor">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                   </DescriptorConditions>
@@ -3806,9 +3818,9 @@
           <HelpParameters>
             <KeyValue>
               <Parameter id="2hlFSf94Ck-RgQu9u2NY0w" name="pKa_pH_WS_bc_F1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="KpMERBxGtUCjU37ML9vrRw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3816,9 +3828,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="fbTYZUXU0kamglbRKo0RLg" name="pKa_pH_WS_bc_F2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="LRRLh1NO50qEVSVl5M5E5w" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3826,9 +3838,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="s5eeaAQ6UUyWnbGxf1HPhQ" name="pKa_pH_WS_bc_F3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="7Jrzvo2LUUi33kTMEsEWnA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3836,9 +3848,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="16p3BltP8kWwLrVlquRHWg" name="pKa_pH_WS_bc_K1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="tXIJARuYlE-kXIE-0X6uVQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3846,9 +3858,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="sfmpHGl1t02nd2TXmmIc2A" name="pKa_pH_WS_bc_K2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="1M--68CcpEqcArHkss-myw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3856,9 +3868,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="dh5JmPCeoUWZdOP_bM5InA" name="pKa_pH_WS_bc_K3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="H9khIl-JgkeG1IV113eh0g" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3866,9 +3878,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="aCYfkMSeWkCg-NTA_TT4Lg" name="pKa_pH_WS_bc_K4" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="sXFPPUwtgka2b4btv8KQ4g" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3876,9 +3888,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="lfS-SNZ0H0ubDfxvuzIRIw" name="pKa_pH_WS_bc_K5" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="lUZat880q0yQz0WzAjTspg" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3886,9 +3898,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="xk_C3JcOcUa1hC32qah0lg" name="pKa_pH_WS_bc_K6" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="cGNJe4xRvUO53GCI0aGUQw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3896,9 +3908,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="D5mnqh1gNUqKJIKabk_3Ug" name="pKa_pH_WS_bc_K7" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="GvWYsYEX1E-D8gobejsliw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3906,9 +3918,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="4sXWXaqTkE-ezfeRXWdxhg" name="pKa_pH_WS_bc_K8" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="5JdUL79eQUCC1WEs39htTQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3916,9 +3928,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="3-K5Nm70TEy7SkARclGA_w" name="pKa_pH_WS_pls_F1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="8PibIrjq00K5InL3LqFiDQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3926,9 +3938,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="gfBxN9xHoE2SONISTbaY9A" name="pKa_pH_WS_pls_F2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="mX-TNlMosUaI6jYbGuMEGg" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3936,9 +3948,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="RGW5cOkv3EuMRRfmidd8Dw" name="pKa_pH_WS_pls_F3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="HGvsxyNZlU2IRRfJ2KWOvA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3946,9 +3958,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="tDuZMmnpZkW5rR20apPWgA" name="pKa_pH_WS_pls_K1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="gUPAfxDJsU2wZypEdm25tA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3956,9 +3968,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="3rf_SMToaUSO6f-4n7x1uA" name="pKa_pH_WS_pls_K2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="DZB5uwqC3k2AtJiPJQwyng" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3966,9 +3978,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="edXhk_rnX0uol0jPlWQTQA" name="pKa_pH_WS_pls_K3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="4byRUsk3fk2wpNLaOmGgYQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3976,9 +3988,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="f5Oh-Mak4Ue6jS4okhpAsw" name="pKa_pH_WS_pls_K4" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="cSV_zvOvzk-VhzBWvWCxbQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3986,9 +3998,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="iblxsCgMuEG1iBa2H3UMZQ" name="pKa_pH_WS_pls_K5" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="0xoG4BTeXkS95CXTYv0etA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -3996,9 +4008,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="-OdC-aA_E0qtoGFKMotAeA" name="pKa_pH_WS_pls_K6" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="49RFLVIuw0-Uo4gOLd9m4A" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -4006,9 +4018,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="aKfUO-Pq00KIhgwItio1ZA" name="pKa_pH_WS_pls_K7" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="3xe5u61LhEewMrHA4DeUwA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -4016,9 +4028,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="IoYKs3V2UE-ondehSToaRg" name="pKa_pH_WS_pls_K8" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="DwUqYwTFM0i0q6oBiLMTDw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -4026,9 +4038,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="ZaYU71Qw2kuQx8TaMr23dA" name="pKa_pH_WS_cell_F1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="cA7GpyxiX0S5e6dJ7M9BqQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4036,9 +4048,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Ripi8y5nv0C__nE9aYPnXg" name="pKa_pH_WS_cell_F2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="_74no-QNh0WhS6mFLMpUeA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4046,9 +4058,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="C5MU-Xjqq0Gz8lgsqUhSXQ" name="pKa_pH_WS_cell_F3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="jfcrtrqkTkOuVlDKxt5hzw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4056,9 +4068,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="rc89YvwjtUWqr3UgjtsAIg" name="pKa_pH_WS_cell_K1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="f2ZjnzC-Vkas5-8SUmm-fw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4066,9 +4078,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="XmuRKXfCDkCTVp1-1MdI4g" name="pKa_pH_WS_cell_K2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="PZBXTQ1_ZEC5WE-EsiAh_A" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4076,9 +4088,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="NtLLSTO3b0Gr4aWYMpPXmg" name="pKa_pH_WS_cell_K3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="BThbQDgIk0izJQpPTMLDmQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4086,9 +4098,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="gUMSwU6we0-DM60r5Bb49Q" name="pKa_pH_WS_cell_K4" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="vgLvcJXza066BIuiYGkaEg" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4096,9 +4108,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="NRicctxExUGr98-TkuOP5Q" name="pKa_pH_WS_cell_K5" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="CPMqVOGaiEOeBVfXZ8RN6g" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4106,9 +4118,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="AYAhwiNKZk6ofu9pqi3_4g" name="pKa_pH_WS_cell_K6" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="iuznBn0i2EeEcEXLPF7cJA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4116,9 +4128,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="g0xJZs3KjE2IQgydCYcXOQ" name="pKa_pH_WS_cell_K7" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="IAak9r7jyUuxkzZw7rDvFQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4126,9 +4138,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="o_WNMetboECPDUBqb4Lj3w" name="pKa_pH_WS_cell_K8" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="L_8AZx56dUORKiT-pJ8Vvw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4136,9 +4148,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="OHeG2AI2qUOHImGHyxZa9w" name="pKa_pH_WS_int_F1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="xRarMGbRTEGwvz9kQ4zNnA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4146,9 +4158,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="XqzZHl6xgEKgvjaiWmMf0w" name="pKa_pH_WS_int_F2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="LMsaovkzk0KkmzXX2x9PgA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4156,9 +4168,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="nqYgpTZS2ECfqQxaUuqSoA" name="pKa_pH_WS_int_F3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="0d_8-ILb00q4qR5hC-Uvqg" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4166,9 +4178,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="AWCCw4JFt0yWXorMfG81-A" name="pKa_pH_WS_int_K1" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="zQ_JKSw5xkazHenWlZ2Qvw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4176,9 +4188,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="pi3Dr7miVUWKaJm5vbPnzg" name="pKa_pH_WS_int_K2" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="IfJ5-PdaRU-CSDuSN1mpjQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4186,9 +4198,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="-XwFmy2jAUKztTpv0IGgyg" name="pKa_pH_WS_int_K3" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="1WHXqSTVC02gDnphv2qV_w" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4196,9 +4208,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Rkt1pqcPKUeot92ytQmnaw" name="pKa_pH_WS_int_K4" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="f3zpUNs-YU-CfPsEBEDARw" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4206,9 +4218,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="arP0b0ssxkuec7grxiVw7w" name="pKa_pH_WS_int_K5" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="XtQt9HyHnkSSuwA6EhMZTQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4216,9 +4228,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="iUwRYWcOAEq4p4YrQ5TqWQ" name="pKa_pH_WS_int_K6" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="H5PyJqYMbUu0wn_C72bGiQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4226,9 +4238,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="gHD5cNXxmUKqRqkLe45zVA" name="pKa_pH_WS_int_K7" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="aVO1T8Me7US4GfusIbSjEQ" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4236,9 +4248,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="KaWevISJlEGkqn6ZB0QupQ" name="pKa_pH_WS_int_K8" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="zhXHSbudxUykYtMwVoR9tA" isDefault="1">
-                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" max="1" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                 </DescriptorConditions>
@@ -4669,7 +4681,7 @@
                 </Paths>
               </Formula>
               <ParameterDescriptor parameterName="Partition coefficient (interstitial/plasma)">
-                <ContainerCriteria>
+                <ContainerCriteria operator="And">
                   <DescriptorConditions>
                     <MatchTagCondition tag="Neighborhood: Plasma / Interstitial" />
                   </DescriptorConditions>
@@ -4680,9 +4692,9 @@
           <HelpParameters>
             <KeyValue>
               <Parameter id="JAhTA0PdB0CemWuyHTiTzQ" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="q74BLLvHQ0quCCp1cC0hRQ" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Bone_int_Bone_cell" />
                 </DescriptorConditions>
@@ -4690,9 +4702,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="gT0_KZ0sRUWDWZfVtCcCmw" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="PNHOI4bTf0aRwqSKAoQamQ" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Brain_int_Brain_cell" />
                 </DescriptorConditions>
@@ -4700,9 +4712,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="5L27lbiibUOY_HPErX2o8Q" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="kcsN1sWVSUmlPVcdfXPmsw" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Fat_int_Fat_cell" />
                 </DescriptorConditions>
@@ -4710,9 +4722,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="QFgWgThH5UGqf0qsK4rCBw" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="oAo2eN_4-UOKCEk-zT65XQ" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Heart_int_Heart_cell" />
                 </DescriptorConditions>
@@ -4720,9 +4732,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="Qmza1SPOXUG48GTevsjYSw" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="CS4FyYd7ekuFRfkNLKoC5Q" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Kidney_int_Kidney_cell" />
                 </DescriptorConditions>
@@ -4730,9 +4742,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="9M895CVzgEy45zz2r4CA0g" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="7v0obiZjI0qKUBnpSPYIxg" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Large intestine  neighborhood" />
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
@@ -4741,9 +4753,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="_uLlnP9JeE6lJjmkmP7Sng" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="uUmDqGMgsEi7YTLU4Iv_4w" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Liver_int_Liver_cell" />
                 </DescriptorConditions>
@@ -4751,9 +4763,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="QJtvEOCi-E2h2h0k-yNOkQ" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="ZECNsZsARkOVnpbf9K7L0Q" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Lung_int_Lung_cell" />
                 </DescriptorConditions>
@@ -4761,9 +4773,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="lSFK6IA61UyE7wdWw7hxAQ" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="F3fgFp4g0UqOLdePH-vU7Q" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Muscle_int_Muscle_cell" />
                 </DescriptorConditions>
@@ -4771,9 +4783,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="QaUQ_xlw80ag9tnPoF6sVA" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="cCNf6aMsWEK0ncETcdkqoA" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Pancreas_int_Pancreas_cell" />
                 </DescriptorConditions>
@@ -4781,9 +4793,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="lYqv-gtGC0yRb7jZJLQ4WA" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="JnnBEBJaEUioJB-0cRRU8A" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Neighborhood: Interstitial / Intracellular" />
                   <MatchTagCondition tag="Small intestine  neighborhood" />
@@ -4792,9 +4804,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="uXz26dOlRUms-ZWb7W2Rog" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="vgtzV9TGV0uAsn8VoWo3OA" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Skin_int_Skin_cell" />
                 </DescriptorConditions>
@@ -4802,9 +4814,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="M1Up0TMpsUiVrx7K4Spiyg" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="Lo6HLvQU0EepyVAQGb6UPg" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Spleen_int_Spleen_cell" />
                 </DescriptorConditions>
@@ -4812,9 +4824,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="K5MnZQ1G7E6IAbBIbb7v7g" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="WuRe_vX_kU-GvOwMRqnouA" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Stomach_int_Stomach_cell" />
                 </DescriptorConditions>
@@ -4822,9 +4834,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="dh4OZvhgG0iRNmbqY8yiMw" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="MofRDkjCxkWifXnBrE-55g" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Gonads_int_Gonads_cell" />
                 </DescriptorConditions>
@@ -4832,9 +4844,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="sX2opU2wF0-ZLdY3Mv7PsQ" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="waoMB84MZ06cSmPP28ZQSg" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Periportal_int_Periportal_cell" />
                 </DescriptorConditions>
@@ -4842,9 +4854,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="6DQi194L1Eqmhf41p0kAag" name="Partition coefficient (interstitial/water)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" formula="Y9ZFz236S0ekAb1WfMdJPw" isDefault="1">
-                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="143" />
+                <Info min="0" flag="52" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="Pericentral_int_Pericentral_cell" />
                 </DescriptorConditions>
@@ -4993,9 +5005,9 @@
           <HelpParameters>
             <KeyValue>
               <Parameter id="HKj0hUBL-kuAiDuiVFS3uQ" name="Parameter m for correlation of intestinal permeability (transcellular)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="1">
-                <Info flag="54" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="54" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -5003,9 +5015,9 @@
             </KeyValue>
             <KeyValue>
               <Parameter id="fc_Pwul2G0OGDDJ-0bDe8Q" name="Parameter b for correlation of intestinal permeability (transcellular)" icon="Parameter" persistable="0" isFixedValue="0" quantityType="Parameter" negativeValuesAllowed="1" isDefault="1" value="0">
-                <Info flag="54" seq="1" ref="0" bb="2" group="143" />
+                <Info flag="54" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <DescriptorCriteria>
+              <DescriptorCriteria operator="And">
                 <DescriptorConditions>
                   <MatchTagCondition tag="RootContainer" />
                 </DescriptorConditions>
@@ -5034,43 +5046,43 @@
           <HelpParameters />
         </CoreCalculationMethod>
       </AllCalculationMethods>
-    </BuildConfiguration>
-    <Model id="DgfVEhuLd0CFWCSWFWoJPw" name="S" neighborhoods="W444dg9piEKJF-TpHYpfpw">
-      <Root id="xlcIX5wg9EeXF62fA_ZS1g" name="S" mode="Logical" containerType="Simulation">
+    </SimulationConfiguration>
+    <Model id="Q3WTDHh22kKXQDqMxENGHg" name="S" neighborhoods="aOWE16cdekSB3bsnnhBXKg">
+      <Root id="okxRUghtHkCMGilCYu71sg" name="S" mode="Logical" containerType="Simulation">
         <Tags>
           <Tag value="RootContainer" />
         </Tags>
         <Children>
-          <Container id="DXqA_Dx1DkKgTGxtaRJS9g" name="Organism" icon="ORGANISM" mode="Physical" containerType="Organism">
+          <Container id="9YZbeUz3iUqFxs8hZzcotA" name="Organism" icon="ORGANISM" mode="Physical" containerType="Organism">
             <Children>
-              <Parameter id="aB-hR4BgJUyniOMDwss0pA" name="Volume" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" isDefault="0" value="1" displayUnit="l">
-                <Info flag="10" seq="1" ref="0" bb="2" group="65" />
+              <Parameter id="WFRwGqklGk-Qc-mk_JFEfw" name="Volume" icon="Parameter" persistable="0" isFixedValue="0" dim="Volume" quantityType="Parameter" negativeValuesAllowed="1" isDefault="0" value="1" displayUnit="l">
+                <Info flag="10" seq="1" ref="0" bb="2" group="" />
               </Parameter>
-              <MoleculeAmount id="Vrle0ZKx50mbuxNqdU_2Sw" name="M" icon="DRUG" persistable="1" isFixedValue="0" dim="Amount" quantityType="Drug" negativeValuesAllowed="0" formula="Sa7LFr6_NUaPXFqCP3ngYA" mode="Logical" scaleDivisor="1" displayUnit="µmol">
+              <MoleculeAmount id="mRXqeAMtcUG9NAT2lJCNYg" name="M" icon="DRUG" persistable="1" isFixedValue="0" dim="Amount" quantityType="Drug" negativeValuesAllowed="0" formula="MtXq8tz2rk2J_7Pbgk7Z-g" mode="Logical" scaleDivisor="1" displayUnit="µmol">
                 <Children>
-                  <Parameter id="vuTenYmhqUqkjNET9YpA1g" name="Start value" icon="Parameter" persistable="0" isFixedValue="0" dim="Concentration (molar)" quantityType="Parameter" negativeValuesAllowed="1" isDefault="0" value="10" displayUnit="µmol/l">
-                    <Info flag="10" seq="1" ref="0" bb="2" group="143" />
+                  <Parameter id="XNjDJ153J0WaZ4POnR2NgQ" name="Start value" icon="Parameter" persistable="0" isFixedValue="0" dim="Concentration (molar)" quantityType="Parameter" negativeValuesAllowed="1" isDefault="0" value="10" displayUnit="µmol/l">
+                    <Info flag="10" seq="1" ref="0" bb="2" group="" />
                   </Parameter>
-                  <Parameter id="pfZMYqjRtEO0Cfvk_ah91A" name="Concentration" icon="Parameter" persistable="0" isFixedValue="0" dim="Concentration (molar)" quantityType="Parameter" negativeValuesAllowed="1" formula="87iOXtx-bEGCn3Qr6jcsjA" isDefault="0" displayUnit="µmol/l">
-                    <Info flag="14" seq="1" ref="0" bb="2" group="143" />
+                  <Parameter id="BjZ3lRHV1UeUAcK9Sebrqw" name="Concentration" icon="Parameter" persistable="0" isFixedValue="0" dim="Concentration (molar)" quantityType="Parameter" negativeValuesAllowed="1" formula="vTPAD7dRZEyskcKUBIFSVg" isDefault="0" displayUnit="µmol/l">
+                    <Info flag="14" seq="1" ref="0" bb="2" group="" />
                   </Parameter>
                 </Children>
               </MoleculeAmount>
             </Children>
           </Container>
-          <Container id="W444dg9piEKJF-TpHYpfpw" name="Neighborhoods" mode="Logical" containerType="Other" />
-          <Container id="m1gqec9WZ0ynZjQxaJLYTA" name="M" icon="DRUG" mode="Logical" containerType="Molecule" />
+          <Container id="aOWE16cdekSB3bsnnhBXKg" name="Neighborhoods" mode="Logical" containerType="Other" />
+          <Container id="Rnq_qbIjlEq79u0bqwp93A" name="M" icon="DRUG" mode="Logical" containerType="Molecule" />
         </Children>
       </Root>
       <FormulaCache>
         <Formulas>
-          <Formula id="87iOXtx-bEGCn3Qr6jcsjA" name="ConcFormula" dim="Concentration (molar)" formula="V&gt;0 ? M/V : 0" origin="0rr8LO24mEykk-UxoJ8-Gw">
+          <Formula id="vTPAD7dRZEyskcKUBIFSVg" name="ConcFormula" dim="Concentration (molar)" formula="V&gt;0 ? M/V : 0" origin="87iOXtx-bEGCn3Qr6jcsjA">
             <Paths>
               <Path path="0" as="1" dim="2" />
               <Path path="3" as="4" dim="5" />
             </Paths>
           </Formula>
-          <Formula id="Sa7LFr6_NUaPXFqCP3ngYA" name="Molecule amount" dim="Amount" formula="StartValue * V" origin="Molecule amount">
+          <Formula id="MtXq8tz2rk2J_7Pbgk7Z-g" name="Molecule amount" dim="Amount" formula="StartValue * V" origin="Sa7LFr6_NUaPXFqCP3ngYA">
             <Paths>
               <Path path="6" as="7" dim="8" />
               <Path path="9" as="4" dim="5" />
@@ -5092,6 +5104,8 @@
       </FormulaCache>
     </Model>
     <Creation createdAt="5248783938885073566" createdBy="Michael" creationMode="New" origin="MoBi" version="9.0" internalVersion="13" />
+    <EntitySources />
   </Simulation>
   <Favorites />
+  <OutputMappings />
 </SimulationTransfer>

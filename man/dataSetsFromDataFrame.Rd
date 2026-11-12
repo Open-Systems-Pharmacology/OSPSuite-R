@@ -10,7 +10,8 @@ dataSetsFromDataFrame(data)
 \item{data}{A \code{data.frame} with at minimum the columns \code{name}, \code{xValues},
 and \code{yValues}. Optional standard columns: \code{yErrorValues}, \code{xDimension},
 \code{xUnit}, \code{yDimension}, \code{yUnit}, \code{yErrorType}, \code{yErrorUnit}, \code{molWeight},
-\code{lloq}. Any additional columns are treated as meta data entries.}
+\code{lloq}, \code{subjectCount}. Any additional columns are treated as meta data
+entries.}
 }
 \value{
 A named list of \code{DataSet} objects, named by the \code{name} column.
@@ -24,7 +25,8 @@ as returned by \code{\link[=dataSetToDataFrame]{dataSetToDataFrame()}}. Each uni
 results in one \code{DataSet} object.
 Any columns beyond the standard columns (\code{name}, \code{xValues}, \code{yValues},
 \code{yErrorValues}, \code{xDimension}, \code{xUnit}, \code{yDimension}, \code{yUnit}, \code{yErrorType},
-\code{yErrorUnit}, \code{molWeight}, \code{lloq}) will be added as meta data.
+\code{yErrorUnit}, \code{molWeight}, \code{lloq}, \code{subjectCount}) will be added as meta
+data.
 }
 \examples{
 dataSet <- DataSet$new(name = "MyData")

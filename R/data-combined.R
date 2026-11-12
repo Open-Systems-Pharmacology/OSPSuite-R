@@ -92,6 +92,9 @@ DataCombined <- R6::R6Class(
       groups = NULL,
       silent = FALSE
     ) {
+      # Changing stored data invalidates the cached `toDataFrame()` result
+      private$.invalidateDataFrameCache()
+
       # Validate vector arguments' type and length
       validateIsOfType(dataSets, "DataSet", FALSE)
       numberOfDatasets <- objectCount(dataSets)
@@ -151,6 +154,9 @@ DataCombined <- R6::R6Class(
       groups = NULL,
       silent = FALSE
     ) {
+      # Changing stored data invalidates the cached `toDataFrame()` result
+      private$.invalidateDataFrameCache()
+
       # Validate vector arguments' type and length
       validateIsOfType(simulationResults, "SimulationResults", FALSE)
 
@@ -232,6 +238,9 @@ DataCombined <- R6::R6Class(
     #'
     #' @return `DataCombined` object with grouped datasets.
     setGroups = function(names, groups) {
+      # Changing stored data invalidates the cached `toDataFrame()` result
+      private$.invalidateDataFrameCache()
+
       # Return early if no datasets are present
       if (is.null(private$.dataCombined)) {
         stop(messages$noDatasetsToGroup())
@@ -268,6 +277,9 @@ DataCombined <- R6::R6Class(
     #'
     #' @return `DataCombined` object with modified dataTypes datasets.
     setDataTypes = function(names, dataTypes) {
+      # Changing stored data invalidates the cached `toDataFrame()` result
+      private$.invalidateDataFrameCache()
+
       # Sanitize vector arguments of `character` type
       names <- .cleanVectorArgs(names, type = "character")
       dataTypes <- .cleanVectorArgs(dataTypes, type = "character")
@@ -304,6 +316,9 @@ DataCombined <- R6::R6Class(
     #'
     #' @return `DataCombined` object with updated group assignments.
     removeGroupAssignment = function(names) {
+      # Changing stored data invalidates the cached `toDataFrame()` result
+      private$.invalidateDataFrameCache()
+
       for (idx in seq_along(names)) {
         private$.groupMap[[names[[idx]]]] <- NULL
       }
@@ -338,8 +353,43 @@ DataCombined <- R6::R6Class(
     #' - For X and Y variables:
     #'   `newValue = (rawValue + offset) * scaleFactor`
     #'
-    #' - For error term:
-    #'   `newErrorValue = rawErrorValue * scaleFactor`
+    #' - For arithmetic error (`DataErrorType$ArithmeticStdDev`):
+    #'   `newErrorValue = rawErrorValue * abs(scaleFactor)`. The offset does
+    #'   not change the error.
+    #'
+    #' - For geometric error (`DataErrorType$GeometricStdDev`): the error is a
+    #'   dimensionless factor and is not changed by the scale factor. A y
+    #'   offset other than `0` changes the spread of the values on the log
+    #'   scale, and the error is adjusted for each value as
+    #'   `newErrorValue = rawErrorValue^(rawValue / (rawValue + offset))`,
+    #'   where `rawValue` is the y value before the transformation. Where the
+    #'   raw value or the shifted value is not positive, the error is set to
+    #'   `NA` with a warning. A negative y scale factor reverses the sign of
+    #'   the values. Positive shifted values become negative, and shifted
+    #'   values that are not positive have no defined geometric error anyway,
+    #'   so the error is set to `NA` with a warning.
+    #'
+    #'   This adjustment is an approximation. Values shifted by an offset are
+    #'   no longer strictly log-normally distributed, so their spread is not
+    #'   symmetric on the log scale, while the adjusted error gives error bars
+    #'   that are. The approximation becomes less accurate for large geometric
+    #'   standard deviations, especially for negative offsets (e.g. baseline
+    #'   subtraction) that bring the values close to zero. If shifted values
+    #'   are often close to or below zero, or the geometric standard deviation
+    #'   is large, consider providing these data with an arithmetic standard
+    #'   deviation instead.
+    #'
+    #' - For the lower limit of quantification (`lloq`):
+    #'   `newLLOQ = (rawLLOQ + offset) * scaleFactor`, so that a value below
+    #'   the LLOQ stays below the LLOQ after the transformation. A negative y
+    #'   scale factor would turn the LLOQ into an upper limit, so it is set to
+    #'   `NA` with a warning. An offset can make the LLOQ zero or negative.
+    #'   The value is kept, with a warning, because it cannot be shown on a
+    #'   log scale.
+    #'
+    #' The transformations are applied when the data are retrieved with
+    #' `toDataFrame()` or plotted, so the warnings appear then and not when
+    #' `setDataTransformations()` is called.
     setDataTransformations = function(
       forNames = NULL,
       xOffsets = 0,
@@ -348,6 +398,9 @@ DataCombined <- R6::R6Class(
       yScaleFactors = 1,
       reset = FALSE
     ) {
+      # Changing stored data invalidates the cached `toDataFrame()` result
+      private$.invalidateDataFrameCache()
+
       missingArgs <- list(
         xOffsets = missing(xOffsets),
         yOffsets = missing(yOffsets),
@@ -441,12 +494,35 @@ DataCombined <- R6::R6Class(
     #' preserve this insertion order, so that downstream plots display legend
     #' entries in the order datasets were added (and not alphabetically).
     #'
+    #' Calling this method repeatedly on an unchanged object is cheap: the
+    #' data frame is computed once and then reused. Adding data, changing
+    #' groups, changing data types, or changing data transformations makes the
+    #' next call compute it again.
+    #'
+    #' The returned values include the data transformations set with
+    #' `$setDataTransformations()`. This applies to the x and y values, the
+    #' error values and the `lloq` column. The LLOQ is transformed like the y
+    #' values, `(lloq + yOffset) * yScaleFactor`, so that it can be compared
+    #' with the transformed y values, and it is `NA` for a negative y scale
+    #' factor. The original values, without any offset or scale factor,
+    #' remain available in the `DataSet` and `SimulationResults` objects, e.g.
+    #' the original LLOQ as `DataSet$LLOQ`.
+    #'
     #' @return
     #'
     #' In the returned tibble data frame, the following columns will always be present:
     #'
     #' name - group - dataType - xValues - xDimension - xUnit - yValues -
-    #' yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+    #' yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight -
+    #' subjectCount
+    #'
+    #' The `subjectCount` column holds the number of subjects of an observed
+    #' data set (`DataSet$subjectCount`). It is `NA` for simulated data and for
+    #' data sets without a number of subjects.
+    #'
+    #' Each call returns a fresh copy of the data frame. You can change it in
+    #' any way you like without affecting the `DataCombined` object or the
+    #' result of any other call.
     #'
     #' @note
     #'
@@ -456,28 +532,16 @@ DataCombined <- R6::R6Class(
       if (is.null(private$.dataCombined)) {
         return(NULL)
       }
-      # Add `group` column. Cannot use `mutate` because it would
-      # require `rowwise` which kills the performance
-      # Fist add empty column
-      private$.dataCombined$group <- NA_character_
-      for (name in self$names) {
-        private$.dataCombined[
-          private$.dataCombined$name == name,
-        ]$group <- private$.groupMap[[name]] %||% NA_character_
+
+      if (is.null(private$.dataFrameCache)) {
+        private$.dataFrameCache <- private$.computeDataFrame()
       }
 
-      # Apply data transformations
-      data <- private$.dataTransform(private$.dataCombined)
-
-      # Use `self$names` to preserve insertion order in ggplot2 legends
-      data$name <- factor(data$name, levels = self$names)
-      # Use same approach for groups to preserve consistent legend order
-      # when `group` is different from `name`
-      groupLevels <- unique(data$group)
-      groupLevels <- groupLevels[!is.na(groupLevels)]
-      data$group <- factor(data$group, levels = groupLevels)
-
-      return(data)
+      # Never hand out the cached data frame itself: callers (e.g. the plotting
+      # code) turn the result into a `data.table` and modify it by reference,
+      # which would corrupt the cache for every later call. `data.table::copy()`
+      # is a deep copy, so the caller and the cache share no column vectors.
+      return(data.table::copy(private$.dataFrameCache))
     },
 
     #' @description
@@ -577,6 +641,46 @@ DataCombined <- R6::R6Class(
   # private methods -----------------------------------
 
   private = list(
+    # Compute the combined data frame from the current state of the object.
+    # Called only by `toDataFrame()`, whose cache holds the result.
+    .computeDataFrame = function() {
+      # The `group` column is derived here and never written back into
+      # `private$.dataCombined`, which holds the raw combined data only.
+      data <- private$.dataCombined
+
+      # A single vectorized lookup keyed by `name`, instead of one filtered
+      # assignment over the whole frame per dataset name. Names without an
+      # entry in the group map (and names mapped to `NULL`) yield `NA`.
+      groupLookup <- vapply(
+        private$.groupMap,
+        function(group) {
+          if (is.null(group)) NA_character_ else as.character(group)[[1]]
+        },
+        FUN.VALUE = character(1)
+      )
+      data$group <- unname(groupLookup[data$name])
+
+      # Apply data transformations
+      data <- private$.dataTransform(data)
+
+      # Use `self$names` to preserve insertion order in ggplot2 legends
+      data$name <- factor(data$name, levels = self$names)
+      # Use same approach for groups to preserve consistent legend order
+      # when `group` is different from `name`
+      groupLevels <- unique(data$group)
+      groupLevels <- groupLevels[!is.na(groupLevels)]
+      data$group <- factor(data$group, levels = groupLevels)
+
+      return(data)
+    },
+
+    # Drop the cached `toDataFrame()` result. Safe to call when nothing is
+    # cached.
+    .invalidateDataFrameCache = function() {
+      private$.dataFrameCache <- NULL
+      invisible(NULL)
+    },
+
     # Extract data frame from `DataSet` object(s)
     .dataSetToDataFrame = function(dataSets, names = NULL) {
       # `dataSetToTibble()` function can extract a tibble data frame from a
@@ -636,6 +740,8 @@ DataCombined <- R6::R6Class(
       simData$dataType <- "simulated"
       # Simulated results do not have error values
       simData$yErrorValues <- NA_real_
+      # Number of subjects is only defined for observed data
+      simData$subjectCount <- NA_integer_
 
       return(simData)
     },
@@ -707,33 +813,112 @@ DataCombined <- R6::R6Class(
         return(NULL)
       }
 
-      # Copy dataTransformations to not alter original object and turn into
-      # data.table object
-      dataTransformations <- data.table::setDT(data.table::copy(
-        self$dataTransformations
-      ))
-      # Copy data to not alter original object (private$.dataCombined) and
-      # transform into a data.table object
-      data <- data.table::setDT(data.table::copy(data))
-      # Update values by joining dataTransformations table (base on name column)
-      # and apply transformations.
-      data <-
-        data[
-          dataTransformations,
-          `:=`(
-            xValues = (xValues + xOffsets) * xScaleFactors,
-            yValues = (yValues + yOffsets) * yScaleFactors,
-            yErrorValues = yErrorValues * abs(yScaleFactors)
+      # Look up the transformations of each row by its data set name
+      dataTransformations <- self$dataTransformations
+      rowTransformations <- dataTransformations[
+        match(data$name, dataTransformations$name),
+      ]
+      yOffsets <- rowTransformations$yOffsets
+      yScaleFactors <- rowTransformations$yScaleFactors
+
+      data <- tibble::as_tibble(data)
+      rawYValues <- data$yValues
+      data$xValues <- (data$xValues + rowTransformations$xOffsets) *
+        rowTransformations$xScaleFactors
+      data$yValues <- (rawYValues + yOffsets) * yScaleFactors
+
+      # Geometric error values are dimensionless factors, so a scale factor
+      # does not change them. An offset changes the spread on the log scale,
+      # approximated to first order by `GSD^(y / (y + offset))`. It is not
+      # defined for values that are not positive before or after the offset.
+      isGeometric <- rep(FALSE, nrow(data))
+      if ("yErrorType" %in% colnames(data)) {
+        isGeometric <- data$yErrorType %in% DataErrorType$GeometricStdDev
+      }
+      data$yErrorValues[!isGeometric] <- data$yErrorValues[!isGeometric] *
+        abs(yScaleFactors[!isGeometric])
+      # A negative scale factor reverses the sign of the values. Positive
+      # shifted values become negative, and shifted values that are not
+      # positive have no defined geometric error anyway
+      isNegativeFactor <- isGeometric & yScaleFactors < 0
+      geometricWithNegativeFactor <- which(
+        isNegativeFactor & !is.na(data$yErrorValues)
+      )
+      if (length(geometricWithNegativeFactor) > 0L) {
+        warning(
+          messages$warningGeometricErrorNegativeScaleFactor(
+            unique(data$name[geometricWithNegativeFactor])
           ),
-          on = .(name)
-        ] |>
-        # convert back to tibble
-        tibble::as_tibble()
+          call. = FALSE
+        )
+      }
+      data$yErrorValues[isNegativeFactor] <- NA_real_
+      geometricWithOffset <- which(
+        isGeometric & yOffsets != 0 & !isNegativeFactor
+      )
+      if (length(geometricWithOffset) > 0L) {
+        y <- rawYValues[geometricWithOffset]
+        shiftedY <- y + yOffsets[geometricWithOffset]
+        errorValues <- data$yErrorValues[geometricWithOffset]
+        isDefined <- y > 0 & shiftedY > 0
+        notPositive <- which(!isDefined & !is.na(errorValues))
+        if (length(notPositive) > 0L) {
+          warning(
+            messages$warningGeometricErrorNotPositive(
+              unique(data$name[geometricWithOffset[notPositive]])
+            ),
+            call. = FALSE
+          )
+        }
+        data$yErrorValues[geometricWithOffset] <- ifelse(
+          isDefined,
+          errorValues^(y / shiftedY),
+          NA_real_
+        )
+      }
+
+      # The LLOQ is transformed like the y values, so that `yValues < lloq`
+      # stays valid. A negative scale factor turns it into an upper limit, so
+      # it is set to `NA`.
+      if ("lloq" %in% colnames(data)) {
+        data$lloq <- (data$lloq + yOffsets) * yScaleFactors
+        lloqWithNegativeFactor <- which(yScaleFactors < 0 & !is.na(data$lloq))
+        if (length(lloqWithNegativeFactor) > 0L) {
+          warning(
+            messages$warningLLOQWithNegativeScaleFactor(
+              unique(data$name[lloqWithNegativeFactor])
+            ),
+            call. = FALSE
+          )
+          data$lloq[lloqWithNegativeFactor] <- NA_real_
+        }
+        # An offset can make the LLOQ zero or negative. The value is kept, as
+        # it still separates the values below the LLOQ, but it cannot be shown
+        # on a log scale and LLOQ-based censoring is not defined for it.
+        lloqNotPositive <- which(
+          yOffsets != 0 & !is.na(data$lloq) & data$lloq <= 0
+        )
+        if (length(lloqNotPositive) > 0L) {
+          warning(
+            messages$warningLLOQNotPositive(
+              unique(data$name[lloqNotPositive])
+            ),
+            call. = FALSE
+          )
+        }
+      }
+
       return(data)
     },
 
     # private fields ----------------------------------------
+    # Raw combined data of all added datasets. It carries no `group` column;
+    # that column is derived in `.computeDataFrame()`.
     .dataCombined = NULL,
+    # Cached result of `toDataFrame()`. `NULL` means "not computed yet"; it is
+    # dropped by every public method that changes the state the data frame is
+    # computed from.
+    .dataFrameCache = NULL,
     # Mapping of data set name to a group
     .groupMap = list(),
     .dataType = list(),

@@ -12,7 +12,9 @@ population <- loadPopulation(system.file(
 ))
 populationResults <- runSimulations(sim, population)[[1]]
 
-NUMBER_OF_COVARIATES_COLUMNS <- 3
+# Gender and Population; the PK-Sim 7.3 pop.csv this fixture replaced also had
+# RaceIndex
+NUMBER_OF_COVARIATES_COLUMNS <- 2
 NUMBER_OF_STATIC_COLUMNS <- 2
 NUMBER_OF_EXTRA_COLUMNS <- NUMBER_OF_STATIC_COLUMNS +
   NUMBER_OF_COVARIATES_COLUMNS

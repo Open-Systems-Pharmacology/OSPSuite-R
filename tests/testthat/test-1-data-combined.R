@@ -144,6 +144,7 @@ test_that("data frame column and dataset names are as expected when only `DataSe
       "yErrorUnit",
       "molWeight",
       "lloq",
+      "subjectCount",
       "Sheet",
       "Group Id"
     ))
@@ -231,7 +232,8 @@ test_that("data frame column names and datset names are as expected when only `S
       "yDimension",
       "yErrorValues",
       "IndividualId",
-      "molWeight"
+      "molWeight",
+      "subjectCount"
     ))
   )
   expect_equal(
@@ -638,6 +640,7 @@ test_that("data frame column names are as expected when both `DataSet` and `Simu
       "IndividualId",
       "molWeight",
       "lloq",
+      "subjectCount",
       "Sheet",
       "Group Id"
     ))
@@ -938,6 +941,175 @@ test_that("correct transformations with negative scale factors", {
   dfTransformed <- myCombDat$toDataFrame()
   expect_equal(dfTransformed$yValues, dfOriginal$yValues * -2.5)
   expect_equal(dfTransformed$yErrorValues, dfOriginal$yErrorValues * 2.5)
+})
+
+# data sets with an LLOQ and an arithmetic or a geometric error
+.makeTransformDataSet <- function(name, errorType, errors) {
+  ds <- DataSet$new(name = name)
+  ds$setValues(xValues = c(1, 8), yValues = c(10, 0.6), yErrorValues = errors)
+  ds$yErrorType <- errorType
+  ds$LLOQ <- 1
+  ds
+}
+
+.makeTransformDataCombined <- function() {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(list(
+    .makeTransformDataSet("geo", DataErrorType$GeometricStdDev, c(1.5, 1.5)),
+    .makeTransformDataSet("arith", DataErrorType$ArithmeticStdDev, c(1, 0.05))
+  ))
+  myCombDat
+}
+
+test_that("y scale factors do not change geometric error values", {
+  myCombDat <- .makeTransformDataCombined()
+  myCombDat$setDataTransformations(yScaleFactors = 2)
+  df <- myCombDat$toDataFrame()
+
+  expect_equal(df$yErrorValues[df$name == "geo"], c(1.5, 1.5))
+  expect_equal(df$yErrorValues[df$name == "arith"], c(2, 0.1))
+})
+
+test_that("y offsets adjust geometric error values", {
+  myCombDat <- .makeTransformDataCombined()
+  myCombDat$setDataTransformations(yOffsets = 1, yScaleFactors = 2)
+
+  expect_no_warning(df <- myCombDat$toDataFrame())
+  # GSD^(y / (y + offset)) with the raw y values 10 and 0.6; the scale factor
+  # does not change the geometric error
+  expect_equal(
+    df$yErrorValues[df$name == "geo"],
+    c(1.5^(10 / 11), 1.5^(0.6 / 1.6))
+  )
+  expect_equal(df$yErrorValues[df$name == "arith"], c(2, 0.1))
+})
+
+test_that("geometric error values are NA with a warning where the y offset makes values not positive", {
+  myCombDat <- .makeTransformDataCombined()
+  # the value that becomes negative has no error, so this data set must not
+  # be named in the warning
+  myCombDat$addDataSets(
+    .makeTransformDataSet(
+      "geoMissing",
+      DataErrorType$GeometricStdDev,
+      c(1.5, NA)
+    )
+  )
+  myCombDat$setDataTransformations(yOffsets = -1)
+
+  # the offset also makes the LLOQ of 1 zero for all data sets
+  expect_warning(
+    expect_warning(
+      df <- myCombDat$toDataFrame(),
+      messages$warningGeometricErrorNotPositive("geo"),
+      fixed = TRUE
+    ),
+    messages$warningLLOQNotPositive(c("geo", "arith", "geoMissing")),
+    fixed = TRUE
+  )
+  # the raw y value 0.6 becomes -0.4
+  expect_equal(df$yErrorValues[df$name == "geo"], c(1.5^(10 / 9), NA_real_))
+  expect_equal(
+    df$yErrorValues[df$name == "geoMissing"],
+    c(1.5^(10 / 9), NA_real_)
+  )
+})
+
+test_that("LLOQ is transformed like the y values", {
+  myCombDat <- .makeTransformDataCombined()
+  myCombDat$setDataTransformations(
+    forNames = "arith",
+    yOffsets = 1,
+    yScaleFactors = 2
+  )
+  df <- myCombDat$toDataFrame()
+
+  expect_equal(df$lloq[df$name == "arith"], c(4, 4))
+  # data sets not listed in `forNames` are not transformed
+  expect_equal(df$lloq[df$name == "geo"], c(1, 1))
+  expect_equal(df$yErrorValues[df$name == "geo"], c(1.5, 1.5))
+})
+
+test_that("an LLOQ that is not positive after a y offset is kept with a warning", {
+  # baseline subtraction above the LLOQ of 1 gives an LLOQ of 0 or below
+  for (yOffset in c(-1, -2)) {
+    myCombDat <- .makeTransformDataCombined()
+    myCombDat$setDataTransformations(forNames = "arith", yOffsets = yOffset)
+
+    expect_warning(
+      df <- myCombDat$toDataFrame(),
+      messages$warningLLOQNotPositive("arith"),
+      fixed = TRUE
+    )
+    expect_equal(df$lloq[df$name == "arith"], rep(1 + yOffset, 2))
+  }
+
+  # an LLOQ that stays positive gives no warning
+  myCombDat <- .makeTransformDataCombined()
+  myCombDat$setDataTransformations(forNames = "arith", yOffsets = -0.5)
+  expect_no_warning(df <- myCombDat$toDataFrame())
+  expect_equal(df$lloq[df$name == "arith"], c(0.5, 0.5))
+})
+
+test_that("negative y scale factors set the LLOQ to NA with a warning", {
+  myCombDat <- .makeTransformDataCombined()
+  # a data set without LLOQ must not be named in the warning
+  noLLOQ <- DataSet$new(name = "noLLOQ")
+  noLLOQ$setValues(xValues = c(1, 8), yValues = c(10, 0.6))
+  myCombDat$addDataSets(noLLOQ)
+  myCombDat$setDataTransformations(
+    forNames = c("arith", "noLLOQ"),
+    yScaleFactors = -2
+  )
+
+  expect_warning(
+    df <- myCombDat$toDataFrame(),
+    messages$warningLLOQWithNegativeScaleFactor("arith"),
+    fixed = TRUE
+  )
+  expect_equal(df$lloq[df$name == "arith"], c(NA_real_, NA_real_))
+  expect_equal(df$lloq[df$name == "geo"], c(1, 1))
+})
+
+test_that("negative y scale factors set geometric error values to NA with a warning", {
+  # without an offset, and with an offset that makes the value 0.6 negative,
+  # which must not add the warning about values that are not positive after
+  # applying `yOffsets`
+  for (yOffset in c(0, -1)) {
+    myCombDat <- .makeTransformDataCombined()
+    myCombDat$setDataTransformations(
+      forNames = "geo",
+      yOffsets = yOffset,
+      yScaleFactors = -1
+    )
+
+    expect_warning(
+      expect_warning(
+        expect_no_warning(
+          df <- myCombDat$toDataFrame(),
+          message = "yOffsets"
+        ),
+        messages$warningGeometricErrorNegativeScaleFactor("geo"),
+        fixed = TRUE
+      ),
+      messages$warningLLOQWithNegativeScaleFactor("geo"),
+      fixed = TRUE
+    )
+    expect_equal(df$yErrorValues[df$name == "geo"], c(NA_real_, NA_real_))
+    # data sets not listed in `forNames` are not transformed
+    expect_equal(df$yErrorValues[df$name == "arith"], c(1, 0.05))
+  }
+})
+
+test_that("transformations work for simulated data without LLOQ and error type", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addSimulationResults(simResults)
+  dfOriginal <- myCombDat$toDataFrame()
+
+  myCombDat$setDataTransformations(yOffsets = 1, yScaleFactors = 2)
+  df <- myCombDat$toDataFrame()
+
+  expect_equal(df$yValues, (dfOriginal$yValues + 1) * 2)
 })
 
 test_that("transformed values are equal to raw values times scale factor plus offsets - different transformations for each dataset", {
@@ -1372,10 +1544,10 @@ test_that("sequential update when first and second datasets have same names but 
 
   # they should be different since the new dataset that replaces the old one has
   # deliberately different values and rows
-  expect_equal(dim(df1), c(77L, 16L))
-  expect_equal(dim(df2), c(76L, 16L))
-  expect_equal(dim(df1Filter), c(25L, 16L))
-  expect_equal(dim(df2Filter), c(24L, 16L))
+  expect_equal(dim(df1), c(77L, 17L))
+  expect_equal(dim(df2), c(76L, 17L))
+  expect_equal(dim(df1Filter), c(25L, 17L))
+  expect_equal(dim(df2Filter), c(24L, 17L))
 
   expect_equal(
     head(df1Filter$xValues),
@@ -1470,6 +1642,7 @@ test_that("data frame column names are as expected when `DataSet` with metadata 
       "yErrorUnit",
       "molWeight",
       "lloq",
+      "subjectCount",
       "Sheet",
       "Group Id",
       "Organ",
@@ -1571,4 +1744,130 @@ test_that("It can print data combined", {
   dataCombined$addDataSets(ds)
 
   expect_snapshot(print(dataCombined))
+})
+
+# caching of the combined data frame ---------------------------------
+
+test_that("repeated calls on an unchanged object return the same data frame", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet, groups = "obs")
+  myCombDat$addSimulationResults(simResults)
+
+  expect_equal(myCombDat$toDataFrame(), myCombDat$toDataFrame())
+})
+
+test_that("the returned data frame can be modified by reference", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+  expected <- myCombDat$toDataFrame()
+
+  # the plotting code turns the returned data frame into a `data.table` and
+  # then writes into it. Assigning to selected rows (as the unit conversion
+  # does group by group) writes into the column vector itself.
+  byReference <- myCombDat$toDataFrame()
+  data.table::setDT(byReference)
+  byReference[, yValues := yValues * 1000]
+  byReference[1L, xValues := -1]
+
+  expect_false(isTRUE(all.equal(byReference$yValues, expected$yValues)))
+  expect_false(isTRUE(all.equal(byReference$xValues, expected$xValues)))
+  expect_equal(myCombDat$toDataFrame(), expected)
+})
+
+test_that("`convertUnits()` does not change what the object returns afterwards", {
+  myCombDat <- oneObsSimDC()
+  expected <- myCombDat$toDataFrame()
+
+  converted <- convertUnits(myCombDat, yUnit = "mg/l", xUnit = "day(s)")
+
+  expect_false(isTRUE(all.equal(converted$xValues, expected$xValues)))
+  expect_equal(myCombDat$toDataFrame(), expected)
+})
+
+test_that("plotting the same object twice plots the same data", {
+  myCombDat <- oneObsSimDC()
+
+  firstPlot <- plotTimeProfile(myCombDat, yUnit = "mg/l", xUnit = "day(s)")
+  secondPlot <- plotTimeProfile(myCombDat, yUnit = "mg/l", xUnit = "day(s)")
+
+  expect_equal(firstPlot$data, secondPlot$data)
+})
+
+test_that("adding data is reflected in the next call", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+  rowsWithOneDataSet <- nrow(myCombDat$toDataFrame())
+
+  myCombDat$addDataSets(dataSet[[2]])
+  rowsWithTwoDataSets <- nrow(myCombDat$toDataFrame())
+  expect_gt(rowsWithTwoDataSets, rowsWithOneDataSet)
+
+  myCombDat$addSimulationResults(simResults)
+  expect_gt(nrow(myCombDat$toDataFrame()), rowsWithTwoDataSets)
+})
+
+test_that("changing group assignments is reflected in the next call", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]], groups = "groupA")
+  expect_equal(levels(myCombDat$toDataFrame()$group), "groupA")
+
+  myCombDat$setGroups(dataSet[[1]]$name, "groupB")
+  expect_equal(levels(myCombDat$toDataFrame()$group), "groupB")
+
+  myCombDat$removeGroupAssignment(dataSet[[1]]$name)
+  expect_true(all(is.na(myCombDat$toDataFrame()$group)))
+})
+
+test_that("changing data types is reflected in the next call", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+  expect_equal(unique(myCombDat$toDataFrame()$dataType), "observed")
+
+  myCombDat$setDataTypes(dataSet[[1]]$name, "simulated")
+  expect_equal(unique(myCombDat$toDataFrame()$dataType), "simulated")
+})
+
+test_that("changing data transformations is reflected in the next call", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]])
+  untransformed <- myCombDat$toDataFrame()
+
+  myCombDat$setDataTransformations(yScaleFactors = 2)
+
+  expect_equal(myCombDat$toDataFrame()$yValues, untransformed$yValues * 2)
+})
+
+test_that("datasets without a group assignment get `NA` in the `group` column", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]], groups = "groupA")
+  myCombDat$addDataSets(dataSet[[2]])
+  df <- myCombDat$toDataFrame()
+
+  expect_equal(
+    unique(as.character(df$group[df$name == dataSet[[1]]$name])),
+    "groupA"
+  )
+  expect_true(all(is.na(df$group[df$name == dataSet[[2]]$name])))
+})
+
+test_that("the internal combined data frame carries no `group` column", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]], groups = "groupA")
+  invisible(myCombDat$toDataFrame())
+
+  expect_false(
+    "group" %in% names(myCombDat$.__enclos_env__$private$.dataCombined)
+  )
+})
+
+test_that("changing a clone does not change the data frame of the original", {
+  myCombDat <- DataCombined$new()
+  myCombDat$addDataSets(dataSet[[1]], groups = "groupA")
+  expected <- myCombDat$toDataFrame()
+
+  myCombDatClone <- myCombDat$clone(deep = TRUE)
+  myCombDatClone$setGroups(dataSet[[1]]$name, "groupB")
+
+  expect_equal(levels(myCombDatClone$toDataFrame()$group), "groupB")
+  expect_equal(myCombDat$toDataFrame(), expected)
 })

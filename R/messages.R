@@ -57,23 +57,11 @@ messages$printMultipleEntries <- function(header, entries) {
   message(cliFormat("{.emph {header}}:", paste("-", entries, collapse = "\n")))
 }
 
-messages$linearScaleWithFoldDistance <- function() {
-  cliFormat(
-    "Linear scale is inappropriate when {.field foldDistance} argument is specified."
-  )
-}
-
 messages$errorLoadingUnitsForDimension <- function(dimensions) {
   header <- cliFormat(
     "Could not load {.field units} for {length(dimensions)} {.field dimension{?s}}"
   )
   messages$printMultipleEntries(header, dimensions)
-}
-
-messages$plottingWithEmptyDataCombined <- function() {
-  cliFormat(
-    "No plot can be created because the entered {.field DataCombined} object does not contain any datasets."
-  )
 }
 
 messages$residualsCanNotBeComputed <- function() {
@@ -119,20 +107,23 @@ messages$lloqOnlyScalar <- function() {
   )
 }
 
+messages$errorInvalidSubjectCount <- function(value) {
+  cliFormat(
+    "{.field subjectCount} must be one positive whole number, not {.val {value}}."
+  )
+}
+
+messages$warningInvalidSubjectCount <- function(dataSetName, value) {
+  cliFormat(
+    "The meta data entry {.field subjectCount} of the data set {.val {dataSetName}} is {.val {value}}, which is not a positive whole number.",
+    "The number of subjects is treated as not set."
+  )
+}
+
 messages$simBatchStartValueNaN <- function(entityPaths) {
   cliFormat(
     "Start values of the entities with paths {.val {entityPaths}} is {.val NaN}!",
     "Cannot add such run values set"
-  )
-}
-
-messages$plotObservedVsSimulatedWrongFoldDistance <- function(
-  parameterName,
-  foldDistances
-) {
-  cliFormat(
-    "Parameter {.val {parameterName}} should be {.strong >1}!",
-    "Following values have been passed: {.val {foldDistances}}."
   )
 }
 
@@ -141,6 +132,34 @@ messages$DataFrameNameAlreadyUsed <- function(DataFrameName) {
     "{length(DataFrameName)} name{?s} already {?exists/exist} in {.field DataCombined}: {.val {DataFrameName}}.",
     "Existing data will be overwritten."
   ))
+}
+
+messages$warningGeometricErrorNotPositive <- function(dataSetNames) {
+  cliFormat(
+    "Geometric error values set to NA for {length(dataSetNames)} data set{?s} with values that are not positive before or after applying {.field yOffsets}: {.val {dataSetNames}}.",
+    "A geometric standard deviation is only defined for positive values."
+  )
+}
+
+messages$warningGeometricErrorNegativeScaleFactor <- function(dataSetNames) {
+  cliFormat(
+    "Geometric error values set to NA for {length(dataSetNames)} data set{?s} with a negative value in {.field yScaleFactors}: {.val {dataSetNames}}.",
+    "A geometric standard deviation is only defined for positive values."
+  )
+}
+
+messages$warningLLOQNotPositive <- function(dataSetNames) {
+  cliFormat(
+    "LLOQ is not positive for {length(dataSetNames)} data set{?s} after applying {.field yOffsets}: {.val {dataSetNames}}.",
+    "The value is kept, but it cannot be shown on a log scale, and LLOQ-based censoring, e.g. in parameter identification, is not defined for it."
+  )
+}
+
+messages$warningLLOQWithNegativeScaleFactor <- function(dataSetNames) {
+  cliFormat(
+    "LLOQ set to NA for {length(dataSetNames)} data set{?s} with a negative value in {.field yScaleFactors}: {.val {dataSetNames}}.",
+    "A negative scale factor turns the lower limit of quantification into an upper limit."
+  )
 }
 
 messages$wrongUnitForQuantity <- function(quantityPath, unit, dimension) {

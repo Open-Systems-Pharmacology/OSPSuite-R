@@ -21,7 +21,8 @@ A data frame with measurement columns transformed to have common units.
 In the returned tibble data frame, the following columns will always be present:
 
 name - group - dataType - xValues - xDimension - xUnit - yValues -
-yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight -
+subjectCount
 
 Importantly, the \code{xUnit} and \code{yUnit} columns will have unique entries.
 }

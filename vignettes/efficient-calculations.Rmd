@@ -13,9 +13,7 @@ source("_setup.R")
 knitr::opts_chunk$set(
   eval = .ospRuntimeAvailable,
   collapse = TRUE,
-  comment = "#>",
-  error = TRUE,
-  fig.showtext = TRUE
+  comment = "#>"
 )
 ```
 
@@ -60,7 +58,7 @@ library(ospsuite)
 simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 sim <- loadSimulation(simFilePath)
 doseParameter <- getAllParametersMatching(
-  toPathString("Applications", "**", "Dose"),
+  toPathString("Events", "**", "Dose"),
   sim
 )[[1]]
 
@@ -96,7 +94,7 @@ simFilePath <- system.file("extdata", "Aciclovir.pkml", package = "ospsuite")
 loadSimulationWithDose <- function(doseInMg) {
   sim <- loadSimulation(simFilePath, loadFromCache = FALSE)
   doseParameter <- getAllParametersMatching(
-    toPathString("Applications", "**", "Dose"),
+    toPathString("Events", "**", "Dose"),
     sim
   )[[1]]
   doseParameter$value <- toBaseUnit(doseParameter, doseInMg, "mg")

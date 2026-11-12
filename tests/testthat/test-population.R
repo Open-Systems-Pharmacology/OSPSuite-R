@@ -51,13 +51,14 @@ test_that("It throws an exception when retrieving all parameter values for an in
 })
 
 test_that("It can retrieve the covariates names defined in a population", {
-  allCovariateNames <- population$allCovariateNames
-  expect_equal(length(allCovariateNames), 3)
+  # Gender and Population. The PK-Sim 7.3 file this fixture replaced also had
+  # RaceIndex, which the current population export no longer writes.
+  expect_equal(population$allCovariateNames, c("Gender", "Population"))
 })
 
 test_that("It can retrieve the covariate values for given individual", {
   gender <- population$getCovariateValues("Gender")[7]
-  expect_equal(gender, "2")
+  expect_equal(gender, "FEMALE")
 })
 
 test_that("It can retrieve an empty string for an non existent covariate", {

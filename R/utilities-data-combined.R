@@ -31,7 +31,8 @@
 #' In the returned tibble data frame, the following columns will always be present:
 #'
 #' name - group - dataType - xValues - xDimension - xUnit - yValues -
-#' yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight
+#' yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight -
+#' subjectCount
 #'
 #' Importantly, the `xUnit` and `yUnit` columns will have unique entries.
 #'
@@ -165,7 +166,8 @@ addResidualColumn <- function(
   obsVals <- pairedData[[observed]]
   predVals <- pairedData[[predicted]]
 
-  # identity is needed as long as tlf based plot functions are part of the package
+  # `identity` is kept as an alias of `linear` for backward compatibility with
+  # scripts written for the removed tlf-based plot functions
   if (scaling %in% c("linear", "lin", "identity")) {
     residualVals <- predVals - obsVals
     label <- "residuals\npredicted - observed"
@@ -280,6 +282,8 @@ addResidualColumn <- function(
 #'   \item{yErrorType}{Type of error (e.g., "SD", "SE")}
 #'   \item{yErrorUnit}{Unit of error values}
 #'   \item{lloq}{Lower limit of quantification (if available)}
+#'   \item{subjectCount}{Number of subjects of the observed dataset (`NA` if
+#'   not set)}
 #' }
 #'
 #' Returns `NULL` with a warning if no pairable datasets are found.
@@ -335,6 +339,12 @@ calculateResiduals <- function(
 #'
 #' @keywords internal
 .extractResidualsToTibble <- function(data, scaling) {
+  # The number of subjects is missing in plot data not created by
+  # `DataCombined` and in `DataCombined` objects saved with an earlier version
+  if (!"subjectCount" %in% colnames(data)) {
+    data$subjectCount <- NA_integer_
+  }
+
   observedList <- split(dplyr::filter(data, dataType == "observed"), ~name)
   simulatedList <- split(dplyr::filter(data, dataType == "simulated"), ~name)
 
@@ -377,7 +387,9 @@ calculateResiduals <- function(
       "yDimension",
       dplyr::matches("^y"),
       # lower limit of quantification
-      "lloq"
+      "lloq",
+      # number of subjects
+      "subjectCount"
     )
 
     pairedData$nameSimulated <- simulatedName

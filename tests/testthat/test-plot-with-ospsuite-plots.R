@@ -653,15 +653,56 @@ test_that("It throws error for unkown units", {
   )
   expect_error(
     .convertUnitsForPlot(validData, 2, yUnit = "day(s)"),
-    'Must be element of set'
+    "Unit 'day(s)' is not defined in dimension 'Concentration (mass)'",
+    fixed = TRUE
   )
+})
+
+test_that("It converts molar data to a mass yUnit using the molecular weight", {
+  # Simulated results only have a molar dimension (#2064)
+  validData <- data.frame(
+    yDimension = rep("Concentration (molar)", 2),
+    xUnit = rep("h", 2),
+    xDimension = rep("Time", 2),
+    yUnit = rep("µmol/l", 2),
+    group = rep("group", 2),
+    name = rep("A", 2),
+    dataType = rep("simulated", 2),
+    xValues = c(1, 2),
+    yValues = c(1, 2),
+    molWeight = rep(250, 2)
+  )
+
+  result <- .convertUnitsForPlot(validData, 1, yUnit = "ng/l")
+  # 1 µmol/l * 250 g/mol = 250 µg/l = 250000 ng/l
+  expect_equal(
+    as.data.frame(result[, c("yDimension", "yUnit", "yValues")]),
+    data.frame(
+      yDimension = rep("Concentration (mass)", 2),
+      yUnit = rep("ng/l", 2),
+      yValues = c(250000, 500000)
+    )
+  )
+})
+
+test_that("It throws error for a mass yUnit when molar data has no molecular weight", {
+  validData <- data.frame(
+    yDimension = rep("Concentration (molar)", 2),
+    xUnit = rep("h", 2),
+    xDimension = rep("Time", 2),
+    yUnit = rep("µmol/l", 2),
+    group = rep("group", 2),
+    name = rep("A", 2),
+    dataType = rep("observed", 2),
+    xValues = c(1, 2),
+    yValues = c(1, 2),
+    molWeight = rep(NA_real_, 2)
+  )
+
   expect_error(
-    .convertUnitsForPlot(
-      validData[validData$yDimension != "Fraction", ],
-      2,
-      y2Unit = "%"
-    ),
-    'Must be element of set'
+    .convertUnitsForPlot(validData, 1, yUnit = "ng/l"),
+    "Molecular Weight not available",
+    fixed = TRUE
   )
 })
 

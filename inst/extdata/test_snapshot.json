@@ -1,5 +1,7 @@
 {
-  "Version": 80,
+  "Name": "test_snapshot",
+  "Version": 81,
+  "ApplicationName": "PK-Sim",
   "Individuals": [
     {
       "Name": "Mouse",
@@ -25,7 +27,8 @@
             {
               "Name": "Lipophilicity",
               "Value": 4.0,
-              "Unit": "Log Units"
+              "Unit": "Log Units",
+              "ValueOrigin": {}
             }
           ]
         }
@@ -37,7 +40,8 @@
           "Parameters": [
             {
               "Name": "Fraction unbound (plasma, reference value)",
-              "Value": 0.05
+              "Value": 0.05,
+              "ValueOrigin": {}
             }
           ]
         }
@@ -49,11 +53,13 @@
             {
               "Name": "Solubility at reference pH",
               "Value": 0.01,
-              "Unit": "mg/ml"
+              "Unit": "mg/ml",
+              "ValueOrigin": {}
             },
             {
               "Name": "Reference pH",
-              "Value": 7.0
+              "Value": 7.0,
+              "ValueOrigin": {}
             }
           ]
         }
@@ -65,7 +71,8 @@
             {
               "Name": "Specific intestinal permeability (transcellular)",
               "Value": 0.0004,
-              "Unit": "cm/s"
+              "Unit": "cm/s",
+              "ValueOrigin": {}
             }
           ]
         }
@@ -77,7 +84,8 @@
             {
               "Name": "Permeability",
               "Value": 2E-05,
-              "Unit": "cm/s"
+              "Unit": "cm/s",
+              "ValueOrigin": {}
             }
           ]
         }
@@ -99,17 +107,20 @@
           "Parameters": [
             {
               "Name": "Fraction unbound (experiment)",
-              "Value": 0.05
+              "Value": 0.05,
+              "ValueOrigin": {}
             },
             {
               "Name": "Lipophilicity (experiment)",
               "Value": 4.0,
-              "Unit": "Log Units"
+              "Unit": "Log Units",
+              "ValueOrigin": {}
             },
             {
               "Name": "Plasma clearance",
               "Value": 0.0,
-              "Unit": "ml/min/kg"
+              "Unit": "ml/min/kg",
+              "ValueOrigin": {}
             },
             {
               "Name": "Specific clearance",
@@ -129,12 +140,14 @@
       "Parameters": [
         {
           "Name": "Cl",
-          "Value": 1.0
+          "Value": 1.0,
+          "ValueOrigin": {}
         },
         {
           "Name": "Molecular weight",
           "Value": 500.0,
-          "Unit": "g/mol"
+          "Unit": "g/mol",
+          "ValueOrigin": {}
         }
       ]
     }
@@ -147,20 +160,24 @@
         {
           "Name": "Dissolution time (50% dissolved)",
           "Value": 240.0,
-          "Unit": "min"
+          "Unit": "min",
+          "ValueOrigin": {}
         },
         {
           "Name": "Lag time",
           "Value": 0.0,
-          "Unit": "min"
+          "Unit": "min",
+          "ValueOrigin": {}
         },
         {
           "Name": "Dissolution shape",
-          "Value": 0.92
+          "Value": 0.92,
+          "ValueOrigin": {}
         },
         {
           "Name": "Use as suspension",
-          "Value": 1.0
+          "Value": 1.0,
+          "ValueOrigin": {}
         }
       ]
     }
@@ -174,12 +191,14 @@
         {
           "Name": "Start time",
           "Value": 0.0,
-          "Unit": "h"
+          "Unit": "h",
+          "ValueOrigin": {}
         },
         {
           "Name": "InputDose",
           "Value": 1.0,
-          "Unit": "mg/kg"
+          "Unit": "mg/kg",
+          "ValueOrigin": {}
         }
       ]
     },
@@ -197,12 +216,14 @@
                 {
                   "Name": "Start time",
                   "Value": 0.0,
-                  "Unit": "h"
+                  "Unit": "h",
+                  "ValueOrigin": {}
                 },
                 {
                   "Name": "InputDose",
                   "Value": 1.0,
-                  "Unit": "mg/kg"
+                  "Unit": "mg/kg",
+                  "ValueOrigin": {}
                 }
               ]
             }
@@ -211,16 +232,19 @@
             {
               "Name": "Start time",
               "Value": 0.0,
-              "Unit": "h"
+              "Unit": "h",
+              "ValueOrigin": {}
             },
             {
               "Name": "NumberOfRepetitions",
-              "Value": 1.0
+              "Value": 1.0,
+              "ValueOrigin": {}
             },
             {
               "Name": "TimeBetweenRepetitions",
               "Value": 0.0,
-              "Unit": "h"
+              "Unit": "h",
+              "ValueOrigin": {}
             }
           ]
         },
@@ -235,17 +259,20 @@
                 {
                   "Name": "Start time",
                   "Value": 0.0,
-                  "Unit": "h"
+                  "Unit": "h",
+                  "ValueOrigin": {}
                 },
                 {
                   "Name": "InputDose",
                   "Value": 0.0,
-                  "Unit": "mg/kg"
+                  "Unit": "mg/kg",
+                  "ValueOrigin": {}
                 },
                 {
                   "Name": "Volume of water/body weight",
                   "Value": 0.0,
-                  "Unit": "ml/kg"
+                  "Unit": "ml/kg",
+                  "ValueOrigin": {}
                 }
               ]
             }
@@ -254,16 +281,19 @@
             {
               "Name": "Start time",
               "Value": 0.0,
-              "Unit": "h"
+              "Unit": "h",
+              "ValueOrigin": {}
             },
             {
               "Name": "NumberOfRepetitions",
-              "Value": 1.0
+              "Value": 1.0,
+              "ValueOrigin": {}
             },
             {
               "Name": "TimeBetweenRepetitions",
               "Value": 0.0,
-              "Unit": "h"
+              "Unit": "h",
+              "ValueOrigin": {}
             }
           ]
         }
@@ -282,7 +312,8 @@
             {
               "Name": "Start time",
               "Value": 0.0,
-              "Unit": "h"
+              "Unit": "h",
+              "ValueOrigin": {}
             },
             {
               "Name": "End time",
@@ -295,7 +326,8 @@
             {
               "Name": "Resolution",
               "Value": 20.0,
-              "Unit": "pts/h"
+              "Unit": "pts/h",
+              "ValueOrigin": {}
             }
           ]
         }
@@ -304,22 +336,26 @@
         {
           "Path": "Events|IV + Weibull|Default Weibull|Application_2|ProtocolSchemaItem|Volume of water/body weight",
           "Value": 0.0,
-          "Unit": "ml/kg"
+          "Unit": "ml/kg",
+          "ValueOrigin": {}
         },
         {
           "Path": "Undefined Liver|Reference concentration",
           "Value": 1.0,
-          "Unit": "µmol/l"
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
         },
         {
           "Path": "Undefined Liver|t1/2 (intestine)",
           "Value": 1380.0,
-          "Unit": "min"
+          "Unit": "min",
+          "ValueOrigin": {}
         },
         {
           "Path": "Undefined Liver|t1/2 (liver)",
           "Value": 2160.0,
-          "Unit": "min"
+          "Unit": "min",
+          "ValueOrigin": {}
         }
       ],
       "OutputSelections": [
@@ -373,7 +409,8 @@
             {
               "Name": "Start time",
               "Value": 0.0,
-              "Unit": "h"
+              "Unit": "h",
+              "ValueOrigin": {}
             },
             {
               "Name": "End time",
@@ -386,7 +423,8 @@
             {
               "Name": "Resolution",
               "Value": 20.0,
-              "Unit": "pts/h"
+              "Unit": "pts/h",
+              "ValueOrigin": {}
             }
           ]
         }
@@ -395,17 +433,20 @@
         {
           "Path": "Undefined Liver|Reference concentration",
           "Value": 1.0,
-          "Unit": "µmol/l"
+          "Unit": "µmol/l",
+          "ValueOrigin": {}
         },
         {
           "Path": "Undefined Liver|t1/2 (intestine)",
           "Value": 1380.0,
-          "Unit": "min"
+          "Unit": "min",
+          "ValueOrigin": {}
         },
         {
           "Path": "Undefined Liver|t1/2 (liver)",
           "Value": 2160.0,
-          "Unit": "min"
+          "Unit": "min",
+          "ValueOrigin": {}
         }
       ],
       "OutputSelections": [

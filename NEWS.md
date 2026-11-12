@@ -1,25 +1,54 @@
 # ospsuite (development version)
 
-## Major changes
+## New features
 
-- Added MoBi project support: load `.mbp3` projects, query modules, individuals, expression profiles, and simulations, and assemble simulations from project building blocks. New classes `MoBiProject`, `MoBiModule`, `SimulationConfiguration`, `MoleculesBuildingBlock`, and `IndividualBuildingBlock`, plus helpers for creating and saving Initial Conditions, Parameter Values, Individual, and Expression Profile building blocks. The main entry points are `loadMoBiProject()` to load a project, `loadModuleFromPKML()` and `loadBuildingBlockFromPKML()` to load modules and building blocks from `.pkml` files, and `createSimulationConfiguration()` followed by `createSimulation()` to assemble a simulation from building blocks. New enums `BuildingBlockTypes`, `MoleculeType`, `IndividualDiseaseStates`, `MergeBehavior`, `PartitionCoefficientMethods`, `CellularPermeabilityMethods`, `ExpressionProfileCategories`, and `CalculationMethodCategories` support working with these objects. See `vignette("mobi-projects")` for an end-to-end walkthrough.
+- `DataSet` has a new field `subjectCount` for the number of subjects from which aggregated observed data (mean values with a standard deviation or geometric standard deviation) are calculated. It accepts one positive whole number and is `NULL` when not set. `loadDataSetsFromExcel()` reads it from a column `subjectCount` of the Excel file when this column is added as a grouping column of the importer configuration (#2060).
+- `dataSetToDataFrame()` and `dataSetToTibble()` return a new column `subjectCount`, and `dataSetsFromDataFrame()` reads this column back into `DataSet$subjectCount`. The meta data entry `subjectCount` does not appear as an additional meta data column. The new column comes after `lloq`, so the meta data columns move one position to the right. `rbind()` of these data frames with data frames created by an earlier version fails because of the new column; use `dplyr::bind_rows()` instead (#2060).
+- `DataCombined$toDataFrame()` and `calculateResiduals()` return a new column `subjectCount` with the number of subjects of each observed data set. It is `NA` for simulated data and for data sets without a number of subjects, and `DataCombined$setDataTransformations()` does not change it (#2060).
+
+## Minor improvements and bug fixes
+
+- `plotTimeProfile()` and the other plot functions based on `{ospsuite.plots}` accept a `yUnit` or `y2Unit` from a dimension that the data can be converted to. For example, simulated results in a molar concentration unit can now be plotted in a mass concentration unit such as `ng/l`, using the molecular weight of the molecule. Previously this failed with `Assertion on 'yUnit' failed: Must be element of set`. A unit that cannot be converted still gives an error (#2064).
+- `StandardOntogeny` now includes `CES1` and `ABCB1` (P-gp), so these ontogenies can be selected via `MoleculeOntogeny` in `createIndividual()` / `createPopulation()`.
+- `DataCombined$setDataTransformations()` no longer multiplies geometric standard deviations (`DataErrorType$GeometricStdDev`) by the y scale factor. A geometric standard deviation is a dimensionless factor, so geometric error bars in plots and the error weights that `{ospsuite.parameteridentification}` takes from `yErrorValues` now stay correct after scaling. When a y offset other than `0` is applied, each geometric standard deviation (GSD) is adjusted to `GSD^(y / (y + yOffset))`, where `y` is the y value before the transformation. This approximates the spread of the shifted values on the log scale. Where the raw or the shifted value is not positive, the GSD is set to `NA` with a warning. With a negative y scale factor, the sign of the values is reversed, so the GSD is set to `NA` with a warning as well. See `vignette("data-combined")` for the limits of this approximation (#2046).
+- `DataCombined$setDataTransformations()` now transforms the LLOQ like the y values, `(lloq + yOffset) * yScaleFactor`. Previously the `lloq` column kept its raw value, so after a y offset or scale factor, LLOQ lines in plots were drawn at the wrong level and the `lloq` column in `toDataFrame()` and `calculateResiduals()` no longer matched the y values. With a negative y scale factor, the LLOQ is set to `NA` with a warning. An offset can make the LLOQ zero or negative. The value is kept, so values below the LLOQ stay below it, but a warning says that it cannot be shown on a log scale and that LLOQ-based censoring, e.g. in `{ospsuite.parameteridentification}`, is not defined for it. `toDataFrame()` returns the transformed LLOQ; the original LLOQ remains available as `DataSet$LLOQ` (#2046).
+
+# ospsuite 13.0.1
 
 ## Breaking changes
 
 - **.NET 10 runtime is now required** (previously .NET 8). The bundled assemblies in `inst/lib` target `net10.0`; on older runtimes the package fails to load with `System.Reflection.ReflectionTypeLoadException`. See the rSharp prerequisites links in the README for installation instructions on Windows and Linux.
+- **rSharp 2.0.0 or later is now required.** Update it before installing ospsuite, for example with `pak::pak("Open-Systems-Pharmacology/rSharp")`.
 - `createIndividual()` and `createPopulation()` will not work with models developed prior to version 13.
 The reason is that in v13, the absorption model has been refined, adding new parameters.
 To be able to use creation of individuals or populations with earlier models, the user has to re-create the models from snapshot with the latest PK-Sim version.
 If no original PK-Sim project or snapshot are available, the user should use the latest version 12 of the R package.
 - `SimulationRunOptions$checkForNegativeValues` field has been removed, as well as the `checkForNegativeValues` argument of `SimulationRunOptions$new()`. The property is now on `SolverSettings` and accessible via `simulation$solver$checkForNegativeValues`. Passing `checkForNegativeValues` to `SimulationRunOptions$new()` now fails with an `unused argument` error (#2010).
+- The `{tlf}` package is no longer a dependency of `ospsuite` and has been removed entirely. All `{tlf}`-based plotting functions have been removed: `plotIndividualTimeProfile()`, `plotPopulationTimeProfile()`, `plotObservedVsSimulated()`, `plotResidualsVsTime()`, and `plotResidualsVsSimulated()`, along with the `DefaultPlotConfiguration` class and the re-exported `plotGrid()` and `PlotGridConfiguration`. Use the `{ospsuite.plots}`-based equivalents instead: `plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()` — see `vignette("plotting-with-ospsuite-plots")`, which is now the primary plotting guide. The `scaling = "identity"` alias of `addResidualColumn()` and `calculateResiduals()` is kept for backward compatibility with scripts that passed `tlf::Scaling$identity` (#1739).
+
+
+## Major changes
+
+- Added MoBi project support: load `.mbp3` projects, query modules, individuals, expression profiles, and simulations, and assemble simulations from project building blocks. New classes `MoBiProject`, `MoBiModule`, `SimulationConfiguration`, `MoleculesBuildingBlock`, and `IndividualBuildingBlock`, plus helpers for creating and saving Initial Conditions, Parameter Values, Individual, and Expression Profile building blocks. The main entry points are `loadMoBiProject()` to load a project, `loadModuleFromPKML()` and `loadBuildingBlockFromPKML()` to load modules and building blocks from `.pkml` files, and `createSimulationConfiguration()` followed by `createSimulations()` to assemble simulations from building blocks. New enums `BuildingBlockTypes`, `MoleculeType`, `IndividualDiseaseStates`, `MergeBehavior`, `PartitionCoefficientMethods`, `CellularPermeabilityMethods`, `ExpressionProfileCategories`, and `CalculationMethodCategories` support working with these objects. See `vignette("mobi-projects")` for an end-to-end walkthrough.
 
 ## Minor improvements and bug fixes
 
 - A `Simulation` object now has a `population` field: assign a `Population` with `simulation$population <- myPopulation` to make it a population simulation, and read it back with `simulation$population`. Assigning `NULL` switches the simulation back to an individual simulation. The read-only `simulation$isPopulation` field reports whether a simulation will be run for a population. This is an alternative to passing `population` to `runSimulations()` (which continues to work unchanged) and makes it possible to run several population simulations in a single `runSimulations()` call. See `vignette("create-run-population")` (#1987).
+- Added `createSimulations()` to create one or several simulations from a named list of `SimulationConfiguration` objects in a single call, which builds them in parallel. A configuration that cannot be created is reported as a warning and its entry in the returned list is `NULL`; pass `stopIfFails = TRUE` to raise an error instead (#2024).
 - Added `loadSimulationsFromSnapshot()` to load simulations stored in a PK-Sim snapshot file as `Simulation` objects, optionally filtering by simulation name (#1929). Requesting a name that is not in the snapshot raises an error; pass `ignoreIfNotFound = TRUE` to return `NULL` for missing names instead. See `vignette("snapshots")` for an overview of the snapshot helpers. Note: MoBi snapshots are not yet supported.
-- `DataCombined$toDataFrame()` now returns the `name` and `group` columns as factors whose levels follow the order in which datasets (and groups) were added. As a result, plots built from `DataCombined` objects (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, etc.) now display legend entries in the order `DataSet` and `SimulationResults` objects were added, rather than in alphabetical order. This also keeps `name`- and `group`-based legends consistent in observed-vs-predicted plots, where the two variables may otherwise diverge (#1241).
+- New functions `projectToSnapshot()` and `snapshotToProject()` convert between OSP project files and snapshots. `projectToSnapshot()` takes PK-Sim (`.pksim5`) and MoBi (`.mbp3`) project files and writes snapshot files (`.json`); `snapshotToProject()` takes PK-Sim and MoBi snapshot files (`.json`) and writes the matching project file (`.pksim5` or `.mbp3`). The application is detected from the file extension when converting a project and from the snapshot itself when converting a snapshot; the `application` argument overrides the detection, and a single call may mix files from both applications. Inputs that would be converted to the same output file, such as `model.pksim5` and `model.mbp3`, are rejected, as are inputs that share a file name, such as `snapshots/a/model.json` and `snapshots/b/model.json` (#1973, #1974).
+- `runSimulationsFromSnapshot()` now raises an error when two input files share a name, for example `snapshots/a/model.json` and `snapshots/b/model.json`. All inputs are gathered into a single folder first, so previously the second file replaced the first and was silently processed in its place.
 - `runSimulationsFromSnapshot()` now validates the `exportJSON` argument like the other export flags. Previously a non-logical value (e.g. `exportJSON = "TRUE"`) was silently treated as `FALSE` and no JSON was exported.
 - Plotting wrappers based on `{ospsuite.plots}` now expose `watermark` and `watermarkFormat` as explicit function arguments (instead of only via `...`) in `plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()`. `plotTimeProfile()`, `plotPredictedVsObserved()` and `plotResidualsVsCovariate()` also expose `showLLOQ` (#2069).
+- Simulations returned by `loadSimulationsFromSnapshot()` now carry their individual and module snapshots, so `saveSimulation()` writes a `.pkml` that can be converted back into a MoBi module. Previously these snapshots were empty because only PK-Sim's desktop export filled them (#2029).
+
+# ospsuite 12.4.5
+
+## Minor improvements and bug fixes
+
+- `{ospsuite}` 12.4.x now requires `{rSharp}` 1.2.3 or older, which runs on .NET 8. Newer `{rSharp}` versions use .NET 10, with which `loadSimulation()` and the other functions that read or write observed data in `.pkml` files fail. If `library(ospsuite)` reports that a newer `{rSharp}` is installed, run `pak::pak("Open-Systems-Pharmacology/rSharp@v1.2.3")` or upgrade to `{ospsuite}` 13.
+
+- `DataCombined$toDataFrame()` now returns the `name` and `group` columns as factors whose levels follow the order in which datasets (and groups) were added. As a result, plots built from `DataCombined` objects (`plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, etc.) now display legend entries in the order `DataSet` and `SimulationResults` objects were added, rather than in alphabetical order. This also keeps `name`- and `group`-based legends consistent in observed-vs-predicted plots, where the two variables may otherwise diverge (#1241).
 
 # ospsuite 12.4.4
 
@@ -37,7 +66,7 @@ If no original PK-Sim project or snapshot are available, the user should use the
 - `loadDataSetsFromExcel()` now treats an empty `sheets` vector (`character(0)`) the same as `sheets = NULL`, falling back to the configuration/all-sheets logic instead of overriding with no sheets.
 - `plotIndividualTimeProfile()` and `plotPopulationTimeProfile()` now produce a stable legend entry order when `showLegendPerDataset = TRUE`; previously the order of the dataset-name legend entries could vary between sessions.
 
-- `convertSnapshot()` is soft-deprecated in favor of two dedicated functions: `loadProjectFromSnapshot()` (snapshot `.json` -> project) and `exportProjectToSnapshot()` (project -> snapshot `.json`). `convertSnapshot()` still works but issues a deprecation warning and will be removed in a future release. Only PK-Sim projects (`.pksim5`) are supported for now; MoBi support is planned.
+- `convertSnapshot()` is soft-deprecated in favor of two dedicated functions: `snapshotToProject()` (snapshot `.json` -> project) and `projectToSnapshot()` (project -> snapshot `.json`). `convertSnapshot()` still works but issues a deprecation warning and will be removed in a future release.
 
 # ospsuite 12.4.3
 
@@ -389,3 +418,14 @@ Version compatible with the OSPSuite V10.
 
 - Version compatible with the OSPSuite V9.
 - Initial Release
+
+
+<!-- Section Template
+
+## Breaking changes
+
+## Major changes
+
+## Minor improvements and bug fixes
+
+-->

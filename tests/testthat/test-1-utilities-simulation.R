@@ -769,7 +769,7 @@ test_that("It throws an error when trying to run multiple simulations", {
   suppressWarnings(expect_error(results <- runSimulation(c(sim, sim2))))
 })
 
-#### Creating simulation ####
+#### Creating simulations ####
 test_that("It can create a simulation from a project configuration retrieved from a simulation with no expression profiles", {
   simulation <- loadSimulation(
     system.file(
@@ -780,10 +780,9 @@ test_that("It can create a simulation from a project configuration retrieved fro
     loadFromCache = TRUE
   )
   simConfig <- simulation$configuration
-  newSimulation <- createSimulation(
-    simulationConfiguration = simConfig,
-    simulationName = "MySim"
-  )
+  newSimulation <- createSimulations(
+    list(MySim = simConfig)
+  )$MySim
 
   # Check simulation configuration
   expect_equal(newSimulation$name, "MySim")
@@ -825,7 +824,7 @@ test_that("It can create a simulation from a project configuration retrieved fro
 })
 
 # show warnings true
-test_that("createSimulation shows warnings when showWarnings is TRUE", {
+test_that("createSimulations shows warnings when showWarnings is TRUE", {
   simulation <- loadSimulation(
     system.file(
       "extdata",
@@ -837,16 +836,15 @@ test_that("createSimulation shows warnings when showWarnings is TRUE", {
   simConfig <- simulation$configuration
 
   expect_snapshot(
-    newSimulation <- createSimulation(
-      simulationConfiguration = simConfig,
-      simulationName = "MySim",
+    newSimulation <- createSimulations(
+      list(MySim = simConfig),
       showWarnings = TRUE
     )
   )
 })
 
 # errors
-test_that("createSimulation throws an error when simulation cannot be created", {
+test_that("createSimulations reports the errors generated during simulation creation", {
   simulation <- loadSimulation(
     system.file(
       "extdata",
@@ -861,15 +859,15 @@ test_that("createSimulation throws an error when simulation cannot be created", 
   simConfig$selectedInitialConditions <- list("Vergin 1995 IV" = NULL)
 
   expect_snapshot(
-    newSimulation <- createSimulation(
-      simulationConfiguration = simConfig,
-      simulationName = "MySim"
+    newSimulation <- createSimulations(
+      list(MySim = simConfig),
+      stopIfFails = TRUE
     ),
     error = TRUE
   )
 })
 
-test_that("createSimulation shows warnings when simulation creation issues warnings", {
+test_that("createSimulations does not show creation warnings by default", {
   simulation <- loadSimulation(
     system.file(
       "extdata",
@@ -881,15 +879,14 @@ test_that("createSimulation shows warnings when simulation creation issues warni
   simConfig <- simulation$configuration
 
   expect_snapshot(
-    newSimulation <- createSimulation(
-      simulationConfiguration = simConfig,
-      simulationName = "MySim"
+    newSimulation <- createSimulations(
+      list(MySim = simConfig)
     )
   )
 })
 
 # Test for process rate parameters
-test_that("createSimulation can create process rate parameters when requested", {
+test_that("createSimulations can create process rate parameters when requested", {
   simulation <- loadSimulation(
     system.file(
       "extdata",
@@ -900,11 +897,10 @@ test_that("createSimulation can create process rate parameters when requested", 
   )
   simConfig <- simulation$configuration
 
-  newSimulation <- createSimulation(
-    simulationConfiguration = simConfig,
-    simulationName = "MySim",
+  newSimulation <- createSimulations(
+    list(MySim = simConfig),
     createAllProcessRateParameters = TRUE
-  )
+  )$MySim
 
   # Check that process rate parameters were created
   paramPath <- "Neighborhoods|ArterialBlood_bc_Bone_bc|Aciclovir|MassTransferBloodPool2OrgRBC|ProcessRate"
@@ -929,10 +925,9 @@ test_that("It creates a simulation with overridden PC and CP methods", {
     PartitionCoefficientMethods$`Rodgers and Rowland`
   )
 
-  newSim <- createSimulation(
-    simulationConfiguration = config,
-    simulationName = "MySim"
-  )
+  newSim <- createSimulations(
+    list(MySim = config)
+  )$MySim
 
   newConfig <- newSim$configuration
   expect_identical(
@@ -965,10 +960,9 @@ test_that("It ignores molecules that are not present in the simulation when over
     PartitionCoefficientMethods$`Rodgers and Rowland`
   )
 
-  newSim <- createSimulation(
-    simulationConfiguration = config,
-    simulationName = "MySim"
-  )
+  newSim <- createSimulations(
+    list(MySim = config)
+  )$MySim
 
   newConfig <- newSim$configuration
   expect_false("foo" %in% names(newConfig$partitionCoefficientOverrides))
@@ -981,4 +975,77 @@ test_that("It ignores molecules that are not present in the simulation when over
     newConfig$cellularPermeabilityOverrides[["B"]],
     CellularPermeabilityMethods$`Charge dependent Schmitt`
   )
+})
+
+#### Creating multiple simulations ####
+# A configuration whose simulation cannot be created: the Aciclovir configuration
+# with its initial conditions selection dropped, as in the error test above.
+failingSimulationConfiguration <- function() {
+  simulation <- loadSimulation(
+    system.file(
+      "extdata",
+      "Aciclovir.pkml",
+      package = "ospsuite"
+    ),
+    loadFromCache = TRUE
+  )
+  simConfig <- simulation$configuration
+  simConfig$selectedInitialConditions <- list("Vergin 1995 IV" = NULL)
+
+  return(simConfig)
+}
+
+test_that("createSimulations creates one simulation per configuration and keeps names and order", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  config <- sim$configuration
+
+  newSims <- createSimulations(list(
+    SimA = config,
+    SimB = config,
+    SimC = config
+  ))
+
+  expect_named(newSims, c("SimA", "SimB", "SimC"))
+  expect_equal(
+    vapply(newSims, function(newSim) newSim$name, FUN.VALUE = character(1)),
+    c(SimA = "SimA", SimB = "SimB", SimC = "SimC")
+  )
+})
+
+test_that("createSimulations reports a configuration that cannot be created and creates the others", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  config <- sim$configuration
+  failingConfig <- failingSimulationConfiguration()
+
+  expect_warning(
+    newSims <- createSimulations(list(Good = config, Bad = failingConfig)),
+    "Cannot create the simulation 'Bad'"
+  )
+
+  expect_named(newSims, c("Good", "Bad"))
+  expect_equal(newSims$Good$name, "Good")
+  expect_null(newSims$Bad)
+})
+
+test_that("createSimulations throws when a configuration cannot be created and stopIfFails is TRUE", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  config <- sim$configuration
+  failingConfig <- failingSimulationConfiguration()
+
+  expect_error(
+    createSimulations(
+      list(Good = config, Bad = failingConfig),
+      stopIfFails = TRUE
+    ),
+    "Cannot create the simulation 'Bad'"
+  )
+})
+
+test_that("createSimulations requires a named list of simulation configurations with unique names", {
+  sim <- loadTestSimulation("simple", loadFromCache = FALSE, addToCache = FALSE)
+  config <- sim$configuration
+
+  expect_error(createSimulations(list(config)), "must be a named list")
+  expect_error(createSimulations(list(SimA = config, SimA = config)))
+  expect_error(createSimulations(list(SimA = sim)))
 })

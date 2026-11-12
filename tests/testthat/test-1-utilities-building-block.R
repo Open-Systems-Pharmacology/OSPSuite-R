@@ -1129,16 +1129,6 @@ test_that("saveParameterValuesToPKML errors when file extension is not pkml", {
 
 # Tests for loadBuildingBlockFromPKML
 
-# Helper: dump a building block to a temp pkml file using the matching MoBi
-# task. Mirrors `.saveBuildingBlockToPKML` but accepts the task name directly so
-# we can save BB types that do not yet have an exported `save*ToPKML` wrapper.
-.tempBBFile <- function(bb, taskName) {
-  tmp <- tempfile(fileext = ".pkml")
-  netTask <- ospsuite:::.getMoBiTaskFromCache(taskName)
-  netTask$call("ExportToPKML", bb, tmp)
-  tmp
-}
-
 # Type → task mapping must cover every BuildingBlockTypes value
 test_that(".bbTypeToTaskName covers every BuildingBlockTypes value", {
   for (typeKey in names(BuildingBlockTypes)) {
@@ -1243,26 +1233,24 @@ test_that("loadBuildingBlockFromPKML auto-detects a Parameter Values BB", {
 # --- Wrappers: Molecules BB returns the MoleculesBuildingBlock subclass ---
 
 test_that("loadBuildingBlockFromPKML wraps a Molecules BB in MoleculesBuildingBlock", {
-  module <- globalTestMoBiProject$getModules("TestModule")[[1]]
-  moleculesBB <- module$getMoleculesBB()
-  tmp <- tryCatch(
-    .tempBBFile(moleculesBB, "MoleculesTask"),
-    error = function(e) {
-      skip(paste0(
-        "Molecules BB pkml export not available: ",
-        conditionMessage(e)
-      ))
-    }
-  )
-
+  # MoBi has no ExportToPKML for Molecules BBs, so load from a simulation pkml
+  # that contains exactly one Molecules BB.
   loaded <- loadBuildingBlockFromPKML(
-    filePath = tmp,
+    filePath = aciclovirSimulationPath,
     type = BuildingBlockTypes$Molecules
   )
 
   expect_true(isOfType(loaded, "MoleculesBuildingBlock"))
   expect_equal(loaded$type, BuildingBlockTypes$Molecules)
-  expect_setequal(loaded$allMoleculeNames(), moleculesBB$allMoleculeNames())
+  expect_setequal(
+    loaded$allMoleculeNames(),
+    c(
+      "Aciclovir",
+      "Aciclovir-Undefined Liver Metabolite",
+      "CYP3A4",
+      "Undefined Liver"
+    )
+  )
 })
 
 # --- Errors: invalid input ---
