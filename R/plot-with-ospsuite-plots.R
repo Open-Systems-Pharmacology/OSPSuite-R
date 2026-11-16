@@ -860,7 +860,6 @@ plotQuantileQuantilePlot <- function(
   return(plotData)
 }
 
-#' Get Most Frequent Unit
 #' Convert Units for Plotting
 #'
 #' This function automatically converts mixed units in the provided plot data to
@@ -871,6 +870,11 @@ plotQuantileQuantilePlot <- function(
 #'   frequently occurring unit in the data, prioritizing observed data over
 #'   simulated data. This ensures that observed data (typically the reference)
 #'   dictates the display unit.
+#'
+#'   ## Shared Unit Handling Unit selection and unit conversion are performed
+#'   by the internal function `.unitConverter()`, which is also used by
+#'   `convertUnits()` and `calculateResiduals()`. This way, all of them produce
+#'   the same units, dimensions and residuals for the same data.
 #'
 #'   ## Concentration Dimension Handling `Concentration (mass)` and
 #'   `Concentration (molar)` dimensions are treated as compatible and merged for
@@ -906,8 +910,6 @@ plotQuantileQuantilePlot <- function(
   yUnit = NULL,
   y2Unit = NULL
 ) {
-  yDimension <- NULL
-
   validateIsOfType(plotData, "data.frame", FALSE)
   if (nrow(plotData) == 0) {
     return(plotData)
@@ -925,72 +927,15 @@ plotQuantileQuantilePlot <- function(
   # e.g. a mass unit for molar data with a molecular weight. `toUnit()` raises
   # an error for units that cannot be converted.
 
-  xUnitStr <- xUnit %||% .extractMostFrequentUnit(plotData, "xUnit")
-
-  plotDataByDimensions <- split(plotData, by = "yDimension")
-  dimensionsToMerge <- c("Concentration (mass)", "Concentration (molar)")
-
-  # Merge Concentration dimensions if they exist
-  if (all(dimensionsToMerge %in% names(plotDataByDimensions))) {
-    plotDataByDimensions[[dimensionsToMerge[
-      1
-    ]]] <- rbindlist(plotDataByDimensions[dimensionsToMerge])
-    plotDataByDimensions[[dimensionsToMerge[2]]] <- NULL
-  }
-
-  # Check for maximum allowed Y dimensions
-  if (length(plotDataByDimensions) > maxAllowedYDimensions) {
-    stop(messages$plotTooManyYDimension(unique(plotData$yDimension)))
-  }
-
-  # Determine ordered dimension names (concentration first) to map user units.
-  # `yUnit` maps to index 1 (primary axis) and `y2Unit` to index 2 (secondary
-  # axis). `dimIdx` will always be non-NA since `orderedDimNames` is derived
-  # from `names(plotDataByDimensions)`, i.e. the same set of names iterated
-  # below.
-  orderedDimNames <- c(
-    names(plotDataByDimensions)[
-      names(plotDataByDimensions) %in% dimensionsToMerge
-    ],
-    names(plotDataByDimensions)[
-      !names(plotDataByDimensions) %in% dimensionsToMerge
-    ]
-  )
-  userYUnits <- list(yUnit, y2Unit)
-
-  # Convert units for each dimension
-  convertedData <- lapply(names(plotDataByDimensions), function(dimName) {
-    dt <- plotDataByDimensions[[dimName]]
-    dimIdx <- match(dimName, orderedDimNames)
-    override <- userYUnits[[dimIdx]]
-    yUnitStr <- override %||% .extractMostFrequentUnit(dt, "yUnit")
-    if ('yErrorType' %in% names(dt) && uniqueN(dt$yErrorType) > 1) {
-      dt <- rbindlist(lapply(split(dt, by = 'yErrorType'), function(dtSplit) {
-        .unitConverter(data = dtSplit, xUnit = xUnitStr, yUnit = yUnitStr)
-      }))
-    } else {
-      dt <- .unitConverter(data = dt, xUnit = xUnitStr, yUnit = yUnitStr)
-    }
-    data.table::setDT(dt)
-    dt[, yUnit := yUnitStr]
-    dt[, yDimension := ospsuite::getDimensionForUnit(yUnitStr)]
-    return(dt)
-  })
-  names(convertedData) <- names(plotDataByDimensions)
-
-  # Order the list to have Concentration at the top,
-  # that ensures it will be displayed on the primary axis in timeprofile plots
-  orderedData <- c(
-    convertedData[dimensionsToMerge],
-    convertedData[!names(convertedData) %in% dimensionsToMerge]
+  convertedData <- .unitConverter(
+    data = plotData,
+    xUnit = xUnit,
+    yUnits = list(yUnit, y2Unit),
+    maxAllowedYDimensions = maxAllowedYDimensions
   )
 
-  result <- rbindlist(orderedData)
-  result[, xUnit := xUnitStr][]
-
-  return(result)
+  return(data.table::setDT(convertedData))
 }
-
 #' Convert Mixed Error Types to yMin/yMax Bounds
 #'
 #' This function handles datasets containing multiple error type specifications

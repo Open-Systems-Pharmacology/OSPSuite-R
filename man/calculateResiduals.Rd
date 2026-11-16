@@ -17,8 +17,9 @@ calculation.  Accepted values are \code{"lin"} / \code{"linear"} for linear resi
 to simulated (observed / simulated).}
 
 \item{xUnit, yUnit}{Target units for \code{xValues} and \code{yValues}, respectively. If
-not specified (\code{NULL}), the first existing unit in the respective
-columns will be selected as the common unit. For available dimensions
+not specified (\code{NULL}), the most frequent unit in the respective column is
+selected, preferring observed data over simulated data, and \code{yUnit}
+replaces the unit of the (single) y dimension. For available dimensions
 and units, see \code{ospsuite::ospDimensions} and \code{ospsuite::ospUnits}.}
 }
 \value{
@@ -57,12 +58,16 @@ according to the specified scaling method.
 
 The function performs the following steps to calculate residuals:
 \enumerate{
+\item \strong{Unit Harmonization}: All datasets are converted to common units
+(specified by \code{xUnit} and \code{yUnit} parameters) to ensure consistent
+calculations. The units are selected from all datasets with the same
+internal unit selection that the residual plot functions use, so both
+produce residuals in the same units for the same data. Residuals are only
+meaningful for a single y dimension; if the data contains more than one y
+dimension (after merging the concentration dimensions \code{Concentration (mass)} and \code{Concentration (molar)}), an error is raised.
 \item \strong{Data Validation and Pairing}: For each group in the data, the function
 pairs observed datasets with simulated datasets. Any unpaired datasets
 (observed without corresponding simulated or vice versa) are removed.
-\item \strong{Unit Harmonization}: All datasets are converted to common units
-(specified by \code{xUnit} and \code{yUnit} parameters) to ensure consistent
-calculations.
 \item \strong{Interpolation}: For each observed-simulated pair, the function uses
 linear interpolation to estimate simulated values at the exact time points
 where observations exist:

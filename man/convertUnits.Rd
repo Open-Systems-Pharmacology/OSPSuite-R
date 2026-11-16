@@ -10,8 +10,10 @@ convertUnits(dataCombined, xUnit = NULL, yUnit = NULL)
 \item{dataCombined}{A single instance of \code{DataCombined} class.}
 
 \item{xUnit, yUnit}{Target units for \code{xValues} and \code{yValues}, respectively. If
-not specified (\code{NULL}), first of the existing units in the respective
-columns (\code{xUnit} and \code{yUnit}) will be selected as the common unit. For
+not specified (\code{NULL}), the most frequent unit in the respective column is
+selected, preferring observed data over simulated data. \code{yUnit} applies to
+the first y dimension of the data (concentration dimensions first, see details);
+the remaining y dimensions keep their most frequent unit. For
 available dimensions and units, see \code{ospsuite::ospDimensions} and
 \code{ospsuite::ospUnits}, respectively.}
 }
@@ -24,7 +26,16 @@ name - group - dataType - xValues - xDimension - xUnit - yValues -
 yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight -
 subjectCount
 
-Importantly, the \code{xUnit} and \code{yUnit} columns will have unique entries.
+All datasets of a y dimension share one unit. If the data contains several
+y dimensions that cannot be converted into each other (\code{Concentration (mass)} and \code{Concentration (molar)} are merged into one dimension), the
+\code{yUnit} and \code{yDimension} columns contain one entry per dimension.
+}
+\details{
+The unit selection and conversion are carried out by the same internal
+functions that the plot functions use, so \code{convertUnits()} returns the data
+in the units the plots display. A conversion between mass-based and molar
+concentration units requires the molecular weight and also updates the
+\code{yDimension} column.
 }
 \description{
 When multiple (observed and/or simulated) datasets are present in a data

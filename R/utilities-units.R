@@ -508,68 +508,20 @@ ospUnits <- NULL
   utils::assignInMyNamespace("ospUnits", .getOspUnits(xmlData))
 }
 
-#' Convert a data frame to common units
+#' Convert the value columns of a data frame to given target units
 #'
-#' @param data A data frame (or a tibble) from `DataCombined$toDataFrame()`.
-#' @inheritParams convertUnits
+#' @param data A data frame (or a tibble) from `DataCombined$toDataFrame()`,
+#'   containing only one y dimension, so that the target units fit all of its
+#'   source units.
+#' @param xTargetUnit Character string, the target unit for `xValues`.
+#' @param yTargetUnit Character string, the target unit for `yValues`.
 #'
 #' @seealso toUnit
-#'
-#' @examples
-#'
-#' # small dataframe to illustrate the conversion
-#' (df <- dplyr::tibble(
-#'   dataType = c(rep("simulated", 3), rep("observed", 3)),
-#'   xValues = c(0, 14.482, 28.965, 0, 1, 2),
-#'   xUnit = "min",
-#'   xDimension = "Time",
-#'   yValues = c(1, 1, 1, 1, 1, 1),
-#'   yUnit = c("mol", "mol", "mol", "g", "g", "g"),
-#'   yDimension = c("Amount", "Amount", "Amount", "Mass", "Mass", "Mass"),
-#'   yErrorValues = c(2.747, 2.918, 2.746, NA, NA, NA),
-#'   yErrorUnit = c("mol", "mol", "mol", "g", "g", "g"),
-#'   molWeight = c(10, 10, 20, 20, 20, 10)
-#' ))
-#'
-#' # default conversion
-#' ospsuite:::.unitConverter(df)
-#'
-#' # customizing conversion with specified unit(s)
-#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
-#' ospsuite:::.unitConverter(df, yUnit = ospUnits$Mass$kg)
-#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
 #' @keywords internal
-.unitConverter <- function(data, xUnit = NULL, yUnit = NULL) {
+#' @noRd
+.convertDataToUnits <- function(data, xTargetUnit, yTargetUnit) {
   # No validation of inputs for this non-exported function.
-  # All validation will take place in the `DataCombined` class itself.
-
-  # early return --------------------------
-
-  # Return early if there are only unique units present in the provided data and
-  # `xUnit` and `yUnit` arguments are `NULL`. This helps avoid expensive and
-  # redundant computations.
-  #
-  # *DO NOT* use short-circuiting `&&` logical operator here.
-  if (
-    length(unique(data$xUnit)) == 1L &
-      is.null(xUnit) &
-      length(unique(data$yUnit)) == 1L &
-      is.null(yUnit)
-  ) {
-    return(data)
-  }
-
-  # target units --------------------------
-
-  # The observed and simulated data should have the same units for
-  # visual/graphical comparison.
-  #
-  # Therefore, if target units are not specified by the user, we need to choose
-  # one ourselves. The most frequent units will be selected: one for X-axis, and
-  # one for Y-axis. If multiple units are tied in terms of their frequency, the
-  # first will be selected.
-  xTargetUnit <- xUnit %||% .extractMostFrequentUnit(data, unitColumn = "xUnit")
-  yTargetUnit <- yUnit %||% .extractMostFrequentUnit(data, unitColumn = "yUnit")
+  # All validation takes place in `.selectUnitsForConversion()`.
 
   # Strategy --------------------------
 
@@ -700,6 +652,253 @@ ospUnits <- NULL
 
   # Convert back to tibble.
   return(dplyr::as_tibble(data))
+}
+
+#' Convert a data frame to common units
+#'
+#' @description
+#'
+#' Selects the target units with `.selectUnitsForConversion()` (one per y
+#' dimension) and converts the data to them with `.convertUnitsToSelection()`.
+#' This is the single entry point of the unit conversion used by
+#' `convertUnits()`, `calculateResiduals()` and the plot functions, so that all
+#' of them produce the same units for the same data.
+#'
+#' The dimensions `Concentration (mass)` and `Concentration (molar)` are merged
+#' and converted to a single target unit (converting between them requires the
+#' molecular weight). After a conversion between mass-based and molar
+#' concentration units, the `yDimension` column is updated to the dimension of
+#' the target unit.
+#'
+#' @param data A data frame (or a tibble) from `DataCombined$toDataFrame()`.
+#' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively.
+#'   If not specified (`NULL`), the most frequent unit in the respective column
+#'   is selected, preferring observed data over simulated data. `yUnit` applies
+#'   to the first y dimension of the data (concentration dimensions first); the
+#'   remaining y dimensions keep their most frequent unit.
+#' @param yUnits A list of target units per y dimension, overriding `yUnit`.
+#'   Entry `i` applies to the `i`-th y dimension in display order
+#'   (concentration dimensions first). Used by the plot functions to map
+#'   `yUnit` to the primary and `y2Unit` to the secondary y axis.
+#' @param maxAllowedYDimensions An integer, the maximum number of y dimensions
+#'   allowed after merging the concentration dimensions, or `NULL` for no
+#'   limit.
+#'
+#' @return A tibble with the data converted to common units.
+#'
+#' @seealso toUnit
+#'
+#' @examples
+#'
+#' # small dataframe to illustrate the conversion
+#' (df <- dplyr::tibble(
+#'   dataType = c(rep("simulated", 3), rep("observed", 3)),
+#'   xValues = c(0, 14.482, 28.965, 0, 1, 2),
+#'   xUnit = "min",
+#'   xDimension = "Time",
+#'   yValues = c(1, 1, 1, 1, 1, 1),
+#'   yUnit = c("mol", "mol", "mol", "g", "g", "g"),
+#'   yDimension = c("Amount", "Amount", "Amount", "Mass", "Mass", "Mass"),
+#'   yErrorValues = c(2.747, 2.918, 2.746, NA, NA, NA),
+#'   yErrorUnit = c("mol", "mol", "mol", "g", "g", "g"),
+#'   molWeight = c(10, 10, 20, 20, 20, 10)
+#' ))
+#'
+#' # default conversion: one target unit per y dimension
+#' ospsuite:::.unitConverter(df)
+#'
+#' # customizing conversion with specified unit(s)
+#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$h)
+#' ospsuite:::.unitConverter(df, yUnit = ospUnits$Mass$kg)
+#' ospsuite:::.unitConverter(df, xUnit = ospUnits$Time$s, yUnit = ospUnits$Amount$mmol)
+#' @keywords internal
+.unitConverter <- function(
+  data,
+  xUnit = NULL,
+  yUnit = NULL,
+  yUnits = NULL,
+  maxAllowedYDimensions = NULL
+) {
+  validateIsOfType(data, "data.frame", FALSE)
+
+  # Return early if there is no data to convert
+  if (nrow(data) == 0L) {
+    return(dplyr::as_tibble(data))
+  }
+
+  unitSelection <- .selectUnitsForConversion(
+    data = data,
+    xUnit = xUnit,
+    yUnits = yUnits %||% list(yUnit),
+    maxAllowedYDimensions = maxAllowedYDimensions
+  )
+
+  return(dplyr::as_tibble(.convertUnitsToSelection(unitSelection)))
+}
+
+#' Select target units for the x and y values
+#'
+#' @description
+#'
+#' Determines a target unit for `xValues` and one target unit per y dimension,
+#' and splits the data by y dimension. This is the single place where target
+#' units are selected for the plot functions, `convertUnits()` and
+#' `calculateResiduals()`, so that all of them produce the same units for the
+#' same data.
+#'
+#' The dimensions `Concentration (mass)` and `Concentration (molar)` are
+#' treated as one convertible group and merged (converting between them
+#' requires the molecular weight).
+#'
+#' User-specified units take precedence. Otherwise, the most frequent unit is
+#' selected, preferring observed over simulated data (see
+#' `.extractMostFrequentUnit()`).
+#'
+#' @param data A data frame (or a tibble) from `DataCombined$toDataFrame()`.
+#' @param xUnit Character string, target unit for `xValues`. If `NULL`, the
+#'   most frequent `xUnit` in the data is selected.
+#' @param yUnits A list of character strings, target units for `yValues`.
+#'   Entry `i` applies to the `i`-th y dimension in display order (concentration
+#'   dimensions first, see `dataByDimension`). Entries that are `NULL` fall
+#'   back to the most frequent unit of the dimension.
+#' @param maxAllowedYDimensions An integer, the maximum number of y dimensions
+#'   allowed after merging the concentration dimensions, or `NULL` for no
+#'   limit.
+#'
+#' @return A list with three entries:
+#'
+#' - `xUnit`: the selected target unit for `xValues`,
+#' - `dataByDimension`: the data split by (merged) y dimension, ordered with
+#'   the concentration dimensions first,
+#' - `yUnits`: a named character vector of the target unit per (merged) y
+#'   dimension.
+#'
+#' @keywords internal
+#' @noRd
+.selectUnitsForConversion <- function(
+  data,
+  xUnit = NULL,
+  yUnits = NULL,
+  maxAllowedYDimensions = NULL
+) {
+  validateIsOfType(data, "data.frame", FALSE)
+  if (!is.null(maxAllowedYDimensions)) {
+    validateIsInteger(maxAllowedYDimensions, FALSE)
+  }
+
+  xTargetUnit <- xUnit %||% .extractMostFrequentUnit(data, "xUnit")
+
+  # `as.data.table()` copies a data frame or tibble, so the object of the
+  # caller is not modified by the conversions applied later on. A data.table
+  # is returned as is.
+  dataByDimension <- split(as.data.table(data), by = "yDimension")
+  dimensionsToMerge <- c("Concentration (mass)", "Concentration (molar)")
+
+  # Merge the concentration dimensions if they both exist: their units can be
+  # converted into each other via the molecular weight, so they share one
+  # target unit.
+  if (all(dimensionsToMerge %in% names(dataByDimension))) {
+    dataByDimension[[dimensionsToMerge[1]]] <- rbindlist(
+      dataByDimension[dimensionsToMerge]
+    )
+    dataByDimension[[dimensionsToMerge[2]]] <- NULL
+  }
+
+  # Raise an error when there are more y dimensions left than allowed
+  if (
+    !is.null(maxAllowedYDimensions) &&
+      length(dataByDimension) > maxAllowedYDimensions
+  ) {
+    stop(messages$plotTooManyYDimension(unique(data$yDimension)))
+  }
+
+  # Order the dimensions with the concentration dimensions first: the first
+  # entries receive the user-specified y units and are displayed on the
+  # primary y axis of a plot.
+  orderedDimNames <- c(
+    names(dataByDimension)[names(dataByDimension) %in% dimensionsToMerge],
+    names(dataByDimension)[!names(dataByDimension) %in% dimensionsToMerge]
+  )
+  dataByDimension <- dataByDimension[orderedDimNames]
+
+  yTargetUnits <- vapply(seq_along(dataByDimension), function(dimIdx) {
+    userYUnit <- if (dimIdx <= length(yUnits)) {
+      yUnits[[dimIdx]]
+    } else {
+      NULL
+    }
+    userYUnit %||% .extractMostFrequentUnit(dataByDimension[[dimIdx]], "yUnit")
+  }, character(1))
+  names(yTargetUnits) <- orderedDimNames
+
+  return(list(
+    xUnit = xTargetUnit,
+    dataByDimension = dataByDimension,
+    yUnits = yTargetUnits
+  ))
+}
+
+#' Convert data to the units selected by `.selectUnitsForConversion()`
+#'
+#' @description
+#'
+#' Converts the data of each dimension to the selected target unit via
+#' `.convertDataToUnits()` (split by `yErrorType` where a dimension mixes error
+#' types) and updates the `yUnit` and `yDimension` columns accordingly — a
+#' conversion between `Concentration (mass)` and `Concentration (molar)` also
+#' changes the dimension.
+#'
+#' @param unitSelection The list returned by `.selectUnitsForConversion()`.
+#'
+#' @return A data.table with all dimensions converted to their target units,
+#'   ordered with the concentration dimensions first, so that they end up on
+#'   the primary y axis of a plot.
+#'
+#' @keywords internal
+#' @noRd
+.convertUnitsToSelection <- function(unitSelection) {
+  convertedData <- lapply(
+    names(unitSelection$dataByDimension),
+    function(dimName) {
+      dt <- unitSelection$dataByDimension[[dimName]]
+      yTargetUnit <- unitSelection$yUnits[[dimName]]
+
+      # A dimension with mixed error types is split because geometric standard
+      # deviations must not be converted like arithmetic errors.
+      if ("yErrorType" %in% names(dt) && uniqueN(dt$yErrorType) > 1) {
+        dt <- rbindlist(
+          lapply(split(dt, by = "yErrorType"), function(dtSplit) {
+            .convertDataToUnits(
+              data = dtSplit,
+              xTargetUnit = unitSelection$xUnit,
+              yTargetUnit = yTargetUnit
+            )
+          })
+        )
+      } else {
+        dt <- .convertDataToUnits(
+          data = dt,
+          xTargetUnit = unitSelection$xUnit,
+          yTargetUnit = yTargetUnit
+        )
+      }
+      data.table::setDT(dt)
+
+      # Set unit and dimension explicitly: this also covers the case that
+      # `.convertDataToUnits()` returned the data unchanged (only one unit
+      # present), and updates the dimension after a conversion between mass and
+      # molar concentration units.
+      dt[, yUnit := yTargetUnit]
+      dt[, yDimension := getDimensionForUnit(yTargetUnit)]
+      return(dt)
+    }
+  )
+  names(convertedData) <- names(unitSelection$dataByDimension)
+
+  result <- rbindlist(convertedData)
+  result[, xUnit := unitSelection$xUnit][]
+
+  return(result)
 }
 
 #' Remove empty data frames from a list of data frames

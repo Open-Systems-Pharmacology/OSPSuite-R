@@ -363,3 +363,59 @@ test_that("calculateResiduals gives NA subjectCount for a DataCombined saved wit
     rep(NA_integer_, nrow(residuals))
   )
 })
+
+test_that("calculateResiduals selects the units from all datasets, like the residual plots", {
+  # paired observed dataset in mg/l
+  obsPaired <- DataSet$new(name = "ObsPaired")
+  obsPaired$setValues(xValues = c(2, 4), yValues = c(10, 20))
+  obsPaired$xUnit <- "min"
+  obsPaired$yDimension <- ospDimensions$`Concentration (mass)`
+  obsPaired$yUnit <- "mg/l"
+
+  # two unpaired observed datasets in µg/l, which outvote the paired dataset
+  # in the unit selection but are dropped before the residuals are computed
+  makeUnpaired <- function(name) {
+    dataSet <- DataSet$new(name = name)
+    dataSet$setValues(xValues = c(0, 1), yValues = c(100, 200))
+    dataSet$xUnit <- "min"
+    dataSet$yDimension <- ospDimensions$`Concentration (mass)`
+    dataSet$yUnit <- "µg/l"
+    dataSet
+  }
+
+  myDC2 <- DataCombined$new()
+  myDC2$addSimulationResults(simData, groups = "myGroup")
+  myDC2$addDataSets(
+    list(obsPaired, makeUnpaired("ObsUnpaired1"), makeUnpaired("ObsUnpaired2")),
+    groups = list("myGroup", NA, NA)
+  )
+
+  residuals <- suppressMessages(calculateResiduals(myDC2, scaling = "lin"))
+
+  expect_identical(unique(residuals$yUnit), "µg/l")
+  expect_identical(unique(residuals$yDimension), "Concentration (mass)")
+
+  # the residual plot functions must select the units the same way and
+  # therefore compute the same residuals
+  plotData <- suppressMessages(ospsuite:::.validateAndConvertData(
+    plotData = myDC2,
+    predictedIsNeeded = TRUE,
+    scaling = "lin"
+  ))
+  expect_identical(unique(plotData$yUnit), "µg/l")
+  expect_equal(
+    sort(plotData$residualValues),
+    sort(residuals$residualValues),
+    tolerance = tolerance
+  )
+})
+
+test_that("calculateResiduals errors when the data contains more than one y dimension", {
+  # the concentration dimensions are merged, but the fraction dimension
+  # cannot be converted to a concentration unit
+  expect_error(
+    suppressMessages(calculateResiduals(manyObsSimDCWithFraction(), scaling = "lin")),
+    "too many yDimensions"
+  )
+})
+

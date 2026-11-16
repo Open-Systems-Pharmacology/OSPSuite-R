@@ -4,19 +4,38 @@
 \alias{.unitConverter}
 \title{Convert a data frame to common units}
 \usage{
-.unitConverter(data, xUnit = NULL, yUnit = NULL)
+.unitConverter(data, xUnit = NULL, yUnit = NULL, yUnits = NULL, maxAllowedYDimensions = NULL)
 }
 \arguments{
 \item{data}{A data frame (or a tibble) from \code{DataCombined$toDataFrame()}.}
 
-\item{xUnit, yUnit}{Target units for \code{xValues} and \code{yValues}, respectively. If
-not specified (\code{NULL}), first of the existing units in the respective
-columns (\code{xUnit} and \code{yUnit}) will be selected as the common unit. For
-available dimensions and units, see \code{ospsuite::ospDimensions} and
-\code{ospsuite::ospUnits}, respectively.}
+\item{xUnit, yUnit}{Target units for \code{xValues} and \code{yValues}, respectively.
+If not specified (\code{NULL}), the most frequent unit in the respective column
+is selected, preferring observed data over simulated data. \code{yUnit} applies
+to the first y dimension of the data (concentration dimensions first); the
+remaining y dimensions keep their most frequent unit.}
+
+\item{yUnits}{A list of target units per y dimension, overriding \code{yUnit}.
+Entry \code{i} applies to the \code{i}-th y dimension in display order
+(concentration dimensions first). Used by the plot functions to map
+\code{yUnit} to the primary and \code{y2Unit} to the secondary y axis.}
+
+\item{maxAllowedYDimensions}{An integer, the maximum number of y dimensions
+allowed after merging the concentration dimensions, or \code{NULL} for no
+limit.}
 }
 \description{
-Convert a data frame to common units
+Selects the target units with \code{.selectUnitsForConversion()} (one per y
+dimension) and converts the data to them with \code{.convertUnitsToSelection()}.
+This is the single entry point of the unit conversion used by
+\code{convertUnits()}, \code{calculateResiduals()} and the plot functions, so that all
+of them produce the same units for the same data.
+
+The dimensions \code{Concentration (mass)} and \code{Concentration (molar)} are merged
+and converted to a single target unit (converting between them requires the
+molecular weight). After a conversion between mass-based and molar
+concentration units, the \code{yDimension} column is updated to the dimension of
+the target unit.
 }
 \examples{
 
@@ -34,7 +53,7 @@ Convert a data frame to common units
   molWeight = c(10, 10, 20, 20, 20, 10)
 ))
 
-# default conversion
+# default conversion: one target unit per y dimension
 ospsuite:::.unitConverter(df)
 
 # customizing conversion with specified unit(s)

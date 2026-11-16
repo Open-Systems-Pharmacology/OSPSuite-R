@@ -21,8 +21,10 @@
 #'
 #' @param dataCombined A single instance of `DataCombined` class.
 #' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
-#'   not specified (`NULL`), first of the existing units in the respective
-#'   columns (`xUnit` and `yUnit`) will be selected as the common unit. For
+#'   not specified (`NULL`), the most frequent unit in the respective column is
+#'   selected, preferring observed data over simulated data. `yUnit` applies to
+#'   the first y dimension of the data (concentration dimensions first, see
+#'   details); the remaining y dimensions keep their most frequent unit. For
 #'   available dimensions and units, see `ospsuite::ospDimensions` and
 #'   `ospsuite::ospUnits`, respectively.
 #'
@@ -34,7 +36,18 @@
 #' yErrorValues - yDimension - yUnit - yErrorType - yErrorUnit - molWeight -
 #' subjectCount
 #'
-#' Importantly, the `xUnit` and `yUnit` columns will have unique entries.
+#' All datasets of a y dimension share one unit. If the data contains several
+#' y dimensions that cannot be converted into each other (`Concentration
+#' (mass)` and `Concentration (molar)` are merged into one dimension), the
+#' `yUnit` and `yDimension` columns contain one entry per dimension.
+#'
+#' @details
+#'
+#' The unit selection and conversion are carried out by the same internal
+#' functions that the plot functions use, so `convertUnits()` returns the data
+#' in the units the plots display. A conversion between mass-based and molar
+#' concentration units requires the molecular weight and also updates the
+#' `yDimension` column.
 #'
 #' @family data-combined
 #'
@@ -79,10 +92,15 @@ convertUnits <- function(dataCombined, xUnit = NULL, yUnit = NULL) {
   # Extract combined data frame
   combinedData <- dataCombined$toDataFrame()
 
-  # Getting all units on the same scale
-  combinedData <- .unitConverter(combinedData, xUnit, yUnit)
+  # Return early if there is no data to convert
+  if (is.null(combinedData) || nrow(combinedData) == 0L) {
+    return(combinedData)
+  }
 
-  return(combinedData)
+  # Getting all datasets to have the same units with the same unit conversion
+  # that the plotting functions use, so that the result matches what they
+  # display
+  return(.unitConverter(data = combinedData, xUnit = xUnit, yUnit = yUnit))
 }
 
 #' Add a residual column to paired observed/predicted data
@@ -213,13 +231,18 @@ addResidualColumn <- function(
 #'
 #' The function performs the following steps to calculate residuals:
 #'
-#' 1. **Data Validation and Pairing**: For each group in the data, the function
+#' 1. **Unit Harmonization**: All datasets are converted to common units
+#'    (specified by `xUnit` and `yUnit` parameters) to ensure consistent
+#'    calculations. The units are selected from all datasets with the same
+#'    internal unit selection that the residual plot functions use, so both
+#'    produce residuals in the same units for the same data. Residuals are only
+#'    meaningful for a single y dimension; if the data contains more than one y
+#'    dimension (after merging the concentration dimensions `Concentration
+#'    (mass)` and `Concentration (molar)`), an error is raised.
+#'
+#' 2. **Data Validation and Pairing**: For each group in the data, the function
 #'    pairs observed datasets with simulated datasets. Any unpaired datasets
 #'    (observed without corresponding simulated or vice versa) are removed.
-#'
-#' 2. **Unit Harmonization**: All datasets are converted to common units
-#'    (specified by `xUnit` and `yUnit` parameters) to ensure consistent
-#'    calculations.
 #'
 #' 3. **Interpolation**: For each observed-simulated pair, the function uses
 #'    linear interpolation to estimate simulated values at the exact time points
@@ -258,8 +281,9 @@ addResidualColumn <- function(
 #'   (log(simulated) - log(observed)), or `"ratio"` for the ratio of observed
 #'   to simulated (observed / simulated).
 #' @param xUnit,yUnit Target units for `xValues` and `yValues`, respectively. If
-#'   not specified (`NULL`), the first existing unit in the respective
-#'   columns will be selected as the common unit. For available dimensions
+#'   not specified (`NULL`), the most frequent unit in the respective column is
+#'   selected, preferring observed data over simulated data, and `yUnit`
+#'   replaces the unit of the (single) y dimension. For available dimensions
 #'   and units, see `ospsuite::ospDimensions` and `ospsuite::ospUnits`.
 #'
 #' @return
@@ -303,8 +327,19 @@ calculateResiduals <- function(
 
   .validateScalarDataCombined(dataCombined)
 
-  # Validation has already taken place in the calling plotting function
   combinedData <- dataCombined$toDataFrame()
+
+  # Getting all datasets to have the same units with the same unit conversion
+  # that the residual plot functions use. The units are selected from *all*
+  # datasets, before the unpairable ones are removed, so that the residuals
+  # are computed in the same units as in the plots. Residuals are only
+  # meaningful for a single y dimension.
+  combinedData <- .unitConverter(
+    data = combinedData,
+    xUnit = xUnit,
+    yUnit = yUnit,
+    maxAllowedYDimensions = 1L
+  )
 
   # Remove the observed and simulated datasets which can't be paired.
   combinedData <- .removeUnpairableDatasets(combinedData)
@@ -314,9 +349,6 @@ calculateResiduals <- function(
     warning(messages$residualsCanNotBeComputed())
     return(NULL)
   }
-
-  # Getting all datasets to have the same units.
-  combinedData <- .unitConverter(combinedData, xUnit, yUnit)
 
   # Create observed versus simulated paired data using interpolation for each
   # grouping level and combine the resulting data frames in a row-wise manner.
@@ -334,8 +366,8 @@ calculateResiduals <- function(
 #' Created observed versus simulated paired data
 #'
 #' @param data A data frame from `DataCombined$toDataFrame()`, which has been
-#'   further tidied using `.removeUnpairableDatasets()` and then
-#'   `.unitConverter()` functions.
+#'   further tidied using `.unitConverter()` and then
+#'   `.removeUnpairableDatasets()` functions.
 #'
 #' @keywords internal
 .extractResidualsToTibble <- function(data, scaling) {
