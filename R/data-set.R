@@ -232,7 +232,7 @@ DataSet <- R6::R6Class(
         path <- as.character(path)
         # PK-Sim and MoBi treat an empty entry or an entry of only spaces as
         # not set
-        if (!nzchar(trimws(path))) {
+        if (.isBlankOutputPath(path)) {
           return(NULL)
         }
         return(path)
@@ -245,7 +245,7 @@ DataSet <- R6::R6Class(
       if (!is.character(value) || length(value) != 1) {
         stop(messages$errorInvalidOutputPath(value))
       }
-      if (!nzchar(trimws(value))) {
+      if (.isBlankOutputPath(value)) {
         self$removeMetaData(.outputPathMetaDataName)
         return(invisible(self))
       }

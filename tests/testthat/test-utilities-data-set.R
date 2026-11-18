@@ -880,13 +880,59 @@ test_that("dataSetsFromDataFrame reads outputPath from a column outputPath", {
   expect_null(dataSets[["B"]]$outputPath)
 })
 
-test_that("dataSetsFromDataFrame uses the column OutputPath if both are present", {
+test_that("dataSetsFromDataFrame uses the column OutputPath if both hold a path", {
   df <- data.frame(
-    name = "A",
+    name = c("A", "B", "C"),
     xValues = 1,
     yValues = 10,
-    outputPath = "X|Y",
-    OutputPath = "X|Z"
+    outputPath = "Organism|Liver|Plasma",
+    OutputPath = c("Organism|Kidney|Plasma", NA, " ")
   )
-  expect_identical(dataSetsFromDataFrame(df)[["A"]]$outputPath, "X|Z")
+  dataSets <- dataSetsFromDataFrame(df)
+  outputPaths <- lapply(dataSets, \(x) x$outputPath)
+  # A missing or blank `OutputPath` does not hide the path in `outputPath`
+  expect_identical(
+    outputPaths,
+    list(
+      A = "Organism|Kidney|Plasma",
+      B = "Organism|Liver|Plasma",
+      C = "Organism|Liver|Plasma"
+    )
+  )
+})
+
+test_that("dataSetsFromDataFrame ignores conflicting outputPath values if OutputPath is used", {
+  df <- data.frame(
+    name = "A",
+    xValues = c(1, 2),
+    yValues = c(10, 20),
+    outputPath = c("Organism|Liver|Plasma", "Organism|Lung|Plasma"),
+    OutputPath = "Organism|Kidney|Plasma"
+  )
+  expect_identical(
+    dataSetsFromDataFrame(df)[["A"]]$outputPath,
+    "Organism|Kidney|Plasma"
+  )
+})
+
+test_that("dataSetsFromDataFrame throws an error for conflicting values in the column it uses", {
+  df <- data.frame(
+    name = "A",
+    xValues = c(1, 2),
+    yValues = c(10, 20),
+    OutputPath = c("Organism|Kidney|Plasma", "Organism|Lung|Plasma")
+  )
+  expect_snapshot(error = TRUE, dataSetsFromDataFrame(df))
+})
+
+test_that("dataSetsFromDataFrame converts numbers in both output path columns to text", {
+  base <- data.frame(name = "A", xValues = 1, yValues = 10)
+  expect_identical(
+    dataSetsFromDataFrame(cbind(base, outputPath = 12))[["A"]]$outputPath,
+    "12"
+  )
+  expect_identical(
+    dataSetsFromDataFrame(cbind(base, OutputPath = 12))[["A"]]$outputPath,
+    "12"
+  )
 })

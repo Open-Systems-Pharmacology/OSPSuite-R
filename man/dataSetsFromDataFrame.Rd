@@ -26,8 +26,10 @@ results in one \code{DataSet} object.
 Any columns beyond the standard columns (\code{name}, \code{xValues}, \code{yValues},
 \code{yErrorValues}, \code{xDimension}, \code{xUnit}, \code{yDimension}, \code{yUnit}, \code{yErrorType},
 \code{yErrorUnit}, \code{molWeight}, \code{lloq}, \code{subjectCount}) will be added as meta
-data. A column \code{outputPath} or \code{OutputPath} fills \code{DataSet$outputPath}. If
-both columns are present, \code{OutputPath} is used.
+data. A column \code{OutputPath} (as returned by \code{\link[=dataSetToDataFrame]{dataSetToDataFrame()}}) or
+\code{outputPath} fills \code{DataSet$outputPath}. Numbers in these columns are
+converted to text. If both columns hold a path for a data set, \code{OutputPath}
+is used. Because of this, a column \code{outputPath} is never added as meta data.
 }
 \examples{
 dataSet <- DataSet$new(name = "MyData")

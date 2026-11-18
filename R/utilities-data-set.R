@@ -355,8 +355,10 @@ loadDataSetsFromExcel <- function(
 #' Any columns beyond the standard columns (`name`, `xValues`, `yValues`,
 #' `yErrorValues`, `xDimension`, `xUnit`, `yDimension`, `yUnit`, `yErrorType`,
 #' `yErrorUnit`, `molWeight`, `lloq`, `subjectCount`) will be added as meta
-#' data. A column `outputPath` or `OutputPath` fills `DataSet$outputPath`. If
-#' both columns are present, `OutputPath` is used.
+#' data. A column `OutputPath` (as returned by [dataSetToDataFrame()]) or
+#' `outputPath` fills `DataSet$outputPath`. Numbers in these columns are
+#' converted to text. If both columns hold a path for a data set, `OutputPath`
+#' is used. Because of this, a column `outputPath` is never added as meta data.
 #'
 #' @param data A `data.frame` with at minimum the columns `name`, `xValues`,
 #'   and `yValues`. Optional standard columns: `yErrorValues`, `xDimension`,
@@ -397,7 +399,7 @@ dataSetsFromDataFrame <- function(data) {
     "molWeight",
     "lloq",
     "subjectCount",
-    "outputPath"
+    .outputPathColumns
   )
 
   # Columns that are treated as meta data
@@ -413,8 +415,15 @@ dataSetsFromDataFrame <- function(data) {
 
   dataSets <- lapply(dataSetNames, function(dsName) {
     subset <- data[data$name == dsName, ]
-    .getSingleNonNaValue <- function(columnName) {
-      vals <- unique(subset[[columnName]])
+    # With `outputPath = TRUE`, the values are converted to text and blank
+    # paths are ignored like missing values
+    .getSingleNonNaValue <- function(columnName, outputPath = FALSE) {
+      vals <- subset[[columnName]]
+      if (outputPath) {
+        vals <- as.character(vals)
+        vals <- vals[!is.na(vals) & !.isBlankOutputPath(vals)]
+      }
+      vals <- unique(vals)
       vals <- vals[!is.na(vals)]
       if (length(vals) > 1) {
         stop(
@@ -499,11 +508,16 @@ dataSetsFromDataFrame <- function(data) {
       if (!is.null(val)) ds$subjectCount <- val
     }
 
-    # Set output path. A meta data column `OutputPath`, as returned by
-    # `dataSetToDataFrame()`, is added below and takes precedence.
-    if ("outputPath" %in% names(data)) {
-      val <- .getSingleNonNaValue("outputPath")
-      if (!is.null(val)) ds$outputPath <- as.character(val)
+    # Set output path. The column `OutputPath`, as returned by
+    # `dataSetToDataFrame()`, is used first. The column `outputPath` is read
+    # only if `OutputPath` holds no path for this data set, so conflicting
+    # values in a column that is not used do not cause an error.
+    for (col in intersect(.outputPathColumns, names(data))) {
+      val <- .getSingleNonNaValue(col, outputPath = TRUE)
+      if (!is.null(val)) {
+        ds$outputPath <- val
+        break
+      }
     }
 
     # Add meta data from extra columns
@@ -525,6 +539,24 @@ dataSetsFromDataFrame <- function(data) {
 # Name of the meta data entry that stores `DataSet$outputPath`. PK-Sim and
 # MoBi use this entry to map observed data to a simulation output.
 .outputPathMetaDataName <- "OutputPath"
+
+# Columns of `dataSetsFromDataFrame()` that fill `DataSet$outputPath`, in the
+# order in which they are used
+.outputPathColumns <- c(.outputPathMetaDataName, "outputPath")
+
+#' Check if an output path is blank
+#'
+#' PK-Sim and MoBi treat an `OutputPath` entry that is empty or contains only
+#' white space as not set (`string.IsNullOrWhiteSpace()` in .NET). Unicode
+#' white space such as a non-breaking space counts as white space, too.
+#'
+#' @param value Character vector of output paths.
+#' @return A logical vector, `TRUE` where the path is blank.
+#' @keywords internal
+#' @noRd
+.isBlankOutputPath <- function(value) {
+  !nzchar(trimws(value, whitespace = "[\\h\\v]"))
+}
 
 #' Check if a value is a valid number of subjects
 #'

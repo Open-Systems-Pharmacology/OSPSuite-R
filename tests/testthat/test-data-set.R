@@ -608,7 +608,8 @@ test_that("outputPath returns the value of an OutputPath meta data entry", {
 
 test_that("it removes outputPath when set to NULL, NA, or an empty string", {
   dataSet <- DataSet$new(name = dataSetName)
-  for (value in list(NULL, NA, NA_character_, "", "   ")) {
+  # "\u00a0" is a non-breaking space, which PK-Sim and MoBi treat as blank
+  for (value in list(NULL, NA, NA_character_, "", "   ", "\u00a0", "\t")) {
     dataSet$outputPath <- outputPath
     dataSet$outputPath <- value
     expect_null(dataSet$outputPath)
