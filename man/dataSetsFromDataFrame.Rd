@@ -26,7 +26,8 @@ results in one \code{DataSet} object.
 Any columns beyond the standard columns (\code{name}, \code{xValues}, \code{yValues},
 \code{yErrorValues}, \code{xDimension}, \code{xUnit}, \code{yDimension}, \code{yUnit}, \code{yErrorType},
 \code{yErrorUnit}, \code{molWeight}, \code{lloq}, \code{subjectCount}) will be added as meta
-data.
+data. A column \code{outputPath} or \code{OutputPath} fills \code{DataSet$outputPath}. If
+both columns are present, \code{OutputPath} is used.
 }
 \examples{
 dataSet <- DataSet$new(name = "MyData")

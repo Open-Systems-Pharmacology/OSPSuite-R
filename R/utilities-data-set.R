@@ -208,6 +208,8 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 #' with one positive whole number per data set to the Excel file and add it as
 #' a grouping column, e.g. with
 #' `importerConfiguration$addGroupingColumn("subjectCount")`.
+#' Likewise, a grouping column `OutputPath` fills `DataSet$outputPath`, the
+#' path of the simulation output that each data set belongs to.
 #'
 #' @param xlsFilePath Path to the excel file with the data
 #' @param importerConfigurationOrPath An object of type `DataImporterConfiguration` that is valid
@@ -353,7 +355,8 @@ loadDataSetsFromExcel <- function(
 #' Any columns beyond the standard columns (`name`, `xValues`, `yValues`,
 #' `yErrorValues`, `xDimension`, `xUnit`, `yDimension`, `yUnit`, `yErrorType`,
 #' `yErrorUnit`, `molWeight`, `lloq`, `subjectCount`) will be added as meta
-#' data.
+#' data. A column `outputPath` or `OutputPath` fills `DataSet$outputPath`. If
+#' both columns are present, `OutputPath` is used.
 #'
 #' @param data A `data.frame` with at minimum the columns `name`, `xValues`,
 #'   and `yValues`. Optional standard columns: `yErrorValues`, `xDimension`,
@@ -393,7 +396,8 @@ dataSetsFromDataFrame <- function(data) {
     "yErrorUnit",
     "molWeight",
     "lloq",
-    "subjectCount"
+    "subjectCount",
+    "outputPath"
   )
 
   # Columns that are treated as meta data
@@ -493,6 +497,13 @@ dataSetsFromDataFrame <- function(data) {
     if ("subjectCount" %in% names(data)) {
       val <- .getSingleNonNaValue("subjectCount")
       if (!is.null(val)) ds$subjectCount <- val
+    }
+
+    # Set output path. A meta data column `OutputPath`, as returned by
+    # `dataSetToDataFrame()`, is added below and takes precedence.
+    if ("outputPath" %in% names(data)) {
+      val <- .getSingleNonNaValue("outputPath")
+      if (!is.null(val)) ds$outputPath <- as.character(val)
     }
 
     # Add meta data from extra columns

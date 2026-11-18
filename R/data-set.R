@@ -219,8 +219,10 @@ DataSet <- R6::R6Class(
     #' belongs to, e.g. `"Organism|PeripheralVenousBlood|Aciclovir|Plasma
     #' (Peripheral Venous Blood)"`, or `NULL` if not set. It is stored as the
     #' meta data entry `OutputPath`. When the data set is used in PK-Sim or
-    #' MoBi, it is mapped to the output with exactly this path. Set it to
-    #' `NULL`, `NA`, or `""` to remove it.
+    #' MoBi version 13 or later, it is mapped automatically to the output with
+    #' exactly this path. The path must match exactly, including upper and
+    #' lower case. Set it to `NULL`, `NA`, or `""` to remove it. A path of
+    #' only spaces is treated as not set.
     outputPath = function(value) {
       if (missing(value)) {
         path <- self$metaData[[.outputPathMetaDataName]]
@@ -228,8 +230,9 @@ DataSet <- R6::R6Class(
           return(NULL)
         }
         path <- as.character(path)
-        # PK-Sim and MoBi treat an empty entry as not set
-        if (!nzchar(path)) {
+        # PK-Sim and MoBi treat an empty entry or an entry of only spaces as
+        # not set
+        if (!nzchar(trimws(path))) {
           return(NULL)
         }
         return(path)
@@ -239,9 +242,10 @@ DataSet <- R6::R6Class(
         self$removeMetaData(.outputPathMetaDataName)
         return(invisible(self))
       }
-      validateIsString(value)
-      validateIsOfLength(value, 1)
-      if (!nzchar(value)) {
+      if (!is.character(value) || length(value) != 1) {
+        stop(messages$errorInvalidOutputPath(value))
+      }
+      if (!nzchar(trimws(value))) {
         self$removeMetaData(.outputPathMetaDataName)
         return(invisible(self))
       }
@@ -297,6 +301,11 @@ DataSet <- R6::R6Class(
           stop(messages$errorInvalidSubjectCount(value))
         }
         self$subjectCount <- value
+        return(invisible(self))
+      }
+      if (identical(name, .outputPathMetaDataName)) {
+        # Same rules as for `outputPath`, e.g. an empty value removes the entry
+        self$outputPath <- value
         return(invisible(self))
       }
       private$.dataRepository$addMetaData(name, value)
@@ -374,12 +383,14 @@ DataSet <- R6::R6Class(
       }
       ospsuite.utils::ospPrintItems(items, print_empty = TRUE)
       # The number of subjects and the output path are printed above, not
-      # again as meta data
+      # again as meta data. An output path entry that is not set, e.g. one of
+      # only spaces, stays in the meta data list.
+      printedAbove <- .subjectCountMetaDataName
+      if (!is.null(self$outputPath)) {
+        printedAbove <- c(printedAbove, .outputPathMetaDataName)
+      }
       metaData <- self$metaData
-      metaData <- metaData[
-        !names(metaData) %in%
-          c(.subjectCountMetaDataName, .outputPathMetaDataName)
-      ]
+      metaData <- metaData[!names(metaData) %in% printedAbove]
       ospsuite.utils::ospPrintItems(metaData, title = "Meta data")
     }
   ),

@@ -150,6 +150,30 @@
         * StringValues: hello
         * IntegerValue: 4
 
+# it throws an error for an outputPath that is not one string
+
+    Code
+      dataSet$outputPath <- 1
+    Condition
+      Error:
+      ! outputPath must be one text value, not 1.
+
+---
+
+    Code
+      dataSet$outputPath <- c("A|B", "C|D")
+    Condition
+      Error:
+      ! outputPath must be one text value, not "A|B" and "C|D".
+
+---
+
+    Code
+      dataSet$addMetaData("OutputPath", 1)
+    Condition
+      Error:
+      ! outputPath must be one text value, not 1.
+
 # print shows outputPath once if set, not again as meta data
 
     Code
@@ -174,4 +198,28 @@
         * DoubleValue: 5
         * StringValues: hello
         * IntegerValue: 4
+
+# print shows an OutputPath entry that is not set as meta data
+
+    Code
+      print(dataSet)
+    Output
+      <DataSet>
+        * Name: ObservedData
+        * X dimension: Time
+        * X unit: min
+        * Y dimension: Concentration (mass)
+        * Y unit: mg/l
+        * Error type: ArithmeticStdDev
+        * Error unit: mg/l
+        * Molecular weight: NULL
+        * LLOQ: NULL
+        * Subject count: NULL
+      Meta data:
+        * Source: C:\temp\RanorexTestData\ObservedData.xlsx
+        * Sheet: Tabelle1
+        * DoubleValue: 5
+        * StringValues: hello
+        * IntegerValue: 4
+        * OutputPath:
 

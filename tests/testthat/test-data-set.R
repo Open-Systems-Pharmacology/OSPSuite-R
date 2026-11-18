@@ -608,7 +608,7 @@ test_that("outputPath returns the value of an OutputPath meta data entry", {
 
 test_that("it removes outputPath when set to NULL, NA, or an empty string", {
   dataSet <- DataSet$new(name = dataSetName)
-  for (value in list(NULL, NA, NA_character_, "")) {
+  for (value in list(NULL, NA, NA_character_, "", "   ")) {
     dataSet$outputPath <- outputPath
     dataSet$outputPath <- value
     expect_null(dataSet$outputPath)
@@ -616,16 +616,32 @@ test_that("it removes outputPath when set to NULL, NA, or an empty string", {
   }
 })
 
-test_that("outputPath is NULL for an empty OutputPath meta data entry", {
+test_that("addMetaData with the name OutputPath follows the rules of outputPath", {
   dataSet <- DataSet$new(name = dataSetName)
+  dataSet$addMetaData("OutputPath", outputPath)
   dataSet$addMetaData("OutputPath", "")
+  expect_null(dataSet$outputPath)
+  expect_null(dataSet$metaData[["OutputPath"]])
+
+  dataSet$addMetaData("OutputPath", outputPath)
+  dataSet$addMetaData("OutputPath", "   ")
+  expect_null(dataSet$metaData[["OutputPath"]])
+})
+
+test_that("outputPath is NULL for a stored OutputPath entry that is empty or only spaces", {
+  dataSet <- DataSet$new(name = dataSetName)
+  # Entries like these can come from a PKML file or from PK-Sim or MoBi
+  dataSet$dataRepository$addMetaData("OutputPath", "")
+  expect_null(dataSet$outputPath)
+  dataSet$dataRepository$addMetaData("OutputPath", "  ")
   expect_null(dataSet$outputPath)
 })
 
 test_that("it throws an error for an outputPath that is not one string", {
   dataSet <- DataSet$new(name = dataSetName)
-  expect_error(dataSet$outputPath <- 1)
-  expect_error(dataSet$outputPath <- c("A|B", "C|D"))
+  expect_snapshot(error = TRUE, dataSet$outputPath <- 1)
+  expect_snapshot(error = TRUE, dataSet$outputPath <- c("A|B", "C|D"))
+  expect_snapshot(error = TRUE, dataSet$addMetaData("OutputPath", 1))
   expect_null(dataSet$outputPath)
 })
 
@@ -647,5 +663,14 @@ test_that("print shows outputPath once if set, not again as meta data", {
     dataRepository = .loadDataRepositoryFromPKML(obsDataFile)
   )
   dataSet$outputPath <- outputPath
+  expect_snapshot(print(dataSet))
+})
+
+test_that("print shows an OutputPath entry that is not set as meta data", {
+  dataSet <- DataSet$new(
+    dataRepository = .loadDataRepositoryFromPKML(obsDataFile)
+  )
+  # An entry of only spaces is not an output path, but it is not hidden
+  dataSet$dataRepository$addMetaData("OutputPath", "  ")
   expect_snapshot(print(dataSet))
 })

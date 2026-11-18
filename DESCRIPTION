@@ -153,4 +153,4 @@ Collate:
 Remotes:
     Open-Systems-Pharmacology/rSharp@v2.0.0
 Additional_repositories: https://open-systems-pharmacology.r-universe.dev
-Config/roxygen2/version: 8.1.0
+Config/roxygen2/version: 8.1.1

@@ -853,3 +853,40 @@ test_that("loadDataSetsFromExcel reads subjectCount from a grouping column", {
   expect_identical(length(dataSets), 4L)
   expect_identical(subjectCounts, ifelse(studyIds == "ID01", 12L, 8L))
 })
+
+test_that("dataSetsFromDataFrame round-trips outputPath of dataSetToDataFrame", {
+  outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  ds <- DataSet$new(name = "RoundTrip")
+  ds$setValues(xValues = c(1, 2, 3), yValues = c(10, 20, 30))
+  ds$outputPath <- outputPath
+
+  df <- dataSetToDataFrame(ds)
+  expect_identical(unique(df$OutputPath), outputPath)
+
+  restored <- dataSetsFromDataFrame(df)[["RoundTrip"]]
+  expect_identical(restored$outputPath, outputPath)
+})
+
+test_that("dataSetsFromDataFrame reads outputPath from a column outputPath", {
+  df <- data.frame(
+    name = c("A", "A", "B"),
+    xValues = c(1, 2, 1),
+    yValues = c(10, 20, 30),
+    outputPath = c("X|Y", "X|Y", NA)
+  )
+  dataSets <- dataSetsFromDataFrame(df)
+  expect_identical(dataSets[["A"]]$outputPath, "X|Y")
+  expect_null(dataSets[["A"]]$metaData[["outputPath"]])
+  expect_null(dataSets[["B"]]$outputPath)
+})
+
+test_that("dataSetsFromDataFrame uses the column OutputPath if both are present", {
+  df <- data.frame(
+    name = "A",
+    xValues = 1,
+    yValues = 10,
+    outputPath = "X|Y",
+    OutputPath = "X|Z"
+  )
+  expect_identical(dataSetsFromDataFrame(df)[["A"]]$outputPath, "X|Z")
+})
