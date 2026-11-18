@@ -583,3 +583,69 @@ test_that("print shows subjectCount once, not again as meta data", {
   dataSet$subjectCount <- 15
   expect_snapshot(print(dataSet))
 })
+
+# outputPath
+
+outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+
+test_that("outputPath is NULL when not set", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expect_null(dataSet$outputPath)
+})
+
+test_that("it can set outputPath and stores it as meta data OutputPath", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$outputPath <- outputPath
+  expect_identical(dataSet$outputPath, outputPath)
+  expect_identical(dataSet$metaData[["OutputPath"]], outputPath)
+})
+
+test_that("outputPath returns the value of an OutputPath meta data entry", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$addMetaData("OutputPath", outputPath)
+  expect_identical(dataSet$outputPath, outputPath)
+})
+
+test_that("it removes outputPath when set to NULL, NA, or an empty string", {
+  dataSet <- DataSet$new(name = dataSetName)
+  for (value in list(NULL, NA, NA_character_, "")) {
+    dataSet$outputPath <- outputPath
+    dataSet$outputPath <- value
+    expect_null(dataSet$outputPath)
+    expect_null(dataSet$metaData[["OutputPath"]])
+  }
+})
+
+test_that("outputPath is NULL for an empty OutputPath meta data entry", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$addMetaData("OutputPath", "")
+  expect_null(dataSet$outputPath)
+})
+
+test_that("it throws an error for an outputPath that is not one string", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expect_error(dataSet$outputPath <- 1)
+  expect_error(dataSet$outputPath <- c("A|B", "C|D"))
+  expect_null(dataSet$outputPath)
+})
+
+test_that("outputPath is kept when saving the data set to PKML and loading it", {
+  dataSet <- DataSet$new(
+    dataRepository = .loadDataRepositoryFromPKML(obsDataFile)
+  )
+  dataSet$outputPath <- outputPath
+  filePath <- withr::local_tempfile(fileext = ".pkml")
+
+  saveDataSetToPKML(dataSet = dataSet, filePath = filePath)
+  loadedDataSet <- loadDataSetFromPKML(filePath)
+
+  expect_identical(loadedDataSet$outputPath, outputPath)
+})
+
+test_that("print shows outputPath once if set, not again as meta data", {
+  dataSet <- DataSet$new(
+    dataRepository = .loadDataRepositoryFromPKML(obsDataFile)
+  )
+  dataSet$outputPath <- outputPath
+  expect_snapshot(print(dataSet))
+})

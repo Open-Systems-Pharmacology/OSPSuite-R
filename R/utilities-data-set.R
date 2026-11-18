@@ -511,6 +511,10 @@ dataSetsFromDataFrame <- function(data) {
 # Name of the meta data entry that stores `DataSet$subjectCount`
 .subjectCountMetaDataName <- "subjectCount"
 
+# Name of the meta data entry that stores `DataSet$outputPath`. PK-Sim and
+# MoBi use this entry to map observed data to a simulation output.
+.outputPathMetaDataName <- "OutputPath"
+
 #' Check if a value is a valid number of subjects
 #'
 #' @param value Value to check.

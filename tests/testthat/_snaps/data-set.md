@@ -150,3 +150,28 @@
         * StringValues: hello
         * IntegerValue: 4
 
+# print shows outputPath once if set, not again as meta data
+
+    Code
+      print(dataSet)
+    Output
+      <DataSet>
+        * Name: ObservedData
+        * X dimension: Time
+        * X unit: min
+        * Y dimension: Concentration (mass)
+        * Y unit: mg/l
+        * Error type: ArithmeticStdDev
+        * Error unit: mg/l
+        * Molecular weight: NULL
+        * LLOQ: NULL
+        * Subject count: NULL
+        * Output path: Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral
+        Venous Blood)
+      Meta data:
+        * Source: C:\temp\RanorexTestData\ObservedData.xlsx
+        * Sheet: Tabelle1
+        * DoubleValue: 5
+        * StringValues: hello
+        * IntegerValue: 4
+

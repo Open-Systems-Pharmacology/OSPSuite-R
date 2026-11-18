@@ -59,6 +59,12 @@ error values are calculated, e.g. for aggregated data reported as mean
 and standard deviation. One positive whole number, or \code{NULL} if not
 set. Set it to \code{NULL} or \code{NA} to remove it.}
 
+    \item{\code{outputPath}}{Path of the simulation output that the observed data
+belongs to, e.g. \code{"Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"}, or \code{NULL} if not set. It is stored as the
+meta data entry \code{OutputPath}. When the data set is used in PK-Sim or
+MoBi, it is mapped to the output with exactly this path. Set it to
+\code{NULL}, \code{NA}, or \code{""} to remove it.}
+
     \item{\code{metaData}}{Returns a named list of meta data defined for the data set.}
   }
   \if{html}{\out{</div>}}

@@ -215,6 +215,39 @@ DataSet <- R6::R6Class(
       )
     },
 
+    #' @field outputPath Path of the simulation output that the observed data
+    #' belongs to, e.g. `"Organism|PeripheralVenousBlood|Aciclovir|Plasma
+    #' (Peripheral Venous Blood)"`, or `NULL` if not set. It is stored as the
+    #' meta data entry `OutputPath`. When the data set is used in PK-Sim or
+    #' MoBi, it is mapped to the output with exactly this path. Set it to
+    #' `NULL`, `NA`, or `""` to remove it.
+    outputPath = function(value) {
+      if (missing(value)) {
+        path <- self$metaData[[.outputPathMetaDataName]]
+        if (is.null(path) || length(path) != 1 || is.na(path)) {
+          return(NULL)
+        }
+        path <- as.character(path)
+        # PK-Sim and MoBi treat an empty entry as not set
+        if (!nzchar(path)) {
+          return(NULL)
+        }
+        return(path)
+      }
+
+      if (is.null(value) || (length(value) == 1 && is.na(value))) {
+        self$removeMetaData(.outputPathMetaDataName)
+        return(invisible(self))
+      }
+      validateIsString(value)
+      validateIsOfLength(value, 1)
+      if (!nzchar(value)) {
+        self$removeMetaData(.outputPathMetaDataName)
+        return(invisible(self))
+      }
+      private$.dataRepository$addMetaData(.outputPathMetaDataName, value)
+    },
+
     #' @field metaData Returns a named list of meta data defined for the data set.
     metaData = function(value) {
       if (missing(value)) {
@@ -323,24 +356,30 @@ DataSet <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
-      ospsuite.utils::ospPrintItems(
-        list(
-          "Name" = self$name,
-          "X dimension" = self$xDimension,
-          "X unit" = self$xUnit,
-          "Y dimension" = self$yDimension,
-          "Y unit" = self$yUnit,
-          "Error type" = self$yErrorType,
-          "Error unit" = self$yErrorUnit,
-          "Molecular weight" = self$molWeight,
-          "LLOQ" = self$LLOQ,
-          "Subject count" = self$subjectCount
-        ),
-        print_empty = TRUE
+      items <- list(
+        "Name" = self$name,
+        "X dimension" = self$xDimension,
+        "X unit" = self$xUnit,
+        "Y dimension" = self$yDimension,
+        "Y unit" = self$yUnit,
+        "Error type" = self$yErrorType,
+        "Error unit" = self$yErrorUnit,
+        "Molecular weight" = self$molWeight,
+        "LLOQ" = self$LLOQ,
+        "Subject count" = self$subjectCount
       )
-      # The number of subjects is printed above, not again as meta data
+      # The output path is printed only if set
+      if (!is.null(self$outputPath)) {
+        items[["Output path"]] <- self$outputPath
+      }
+      ospsuite.utils::ospPrintItems(items, print_empty = TRUE)
+      # The number of subjects and the output path are printed above, not
+      # again as meta data
       metaData <- self$metaData
-      metaData <- metaData[names(metaData) != .subjectCountMetaDataName]
+      metaData <- metaData[
+        !names(metaData) %in%
+          c(.subjectCountMetaDataName, .outputPathMetaDataName)
+      ]
       ospsuite.utils::ospPrintItems(metaData, title = "Meta data")
     }
   ),
