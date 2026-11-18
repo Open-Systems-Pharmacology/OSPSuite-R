@@ -63,3 +63,47 @@ executeWithTestFile <- function(actionWithFile) {
   actionWithFile(newFile)
   file.remove(newFile)
 }
+
+extractPlotTextLabels <- function(plotObject) {
+  grobTable <- ggplot2::ggplotGrob(plotObject)
+  labelRows <- list()
+
+  collectLabels <- function(node) {
+    if (!is.null(node$label) && is.character(node$label)) {
+      labelColor <- NA_character_
+      if (!is.null(node$gp) && !is.null(node$gp$col)) {
+        labelColor <- as.character(node$gp$col)
+      }
+
+      labelRows[[length(labelRows) + 1]] <<- data.frame(
+        label = node$label,
+        color = labelColor,
+        stringsAsFactors = FALSE
+      )
+    }
+
+    if (!is.null(node$children)) {
+      for (child in node$children) {
+        collectLabels(child)
+      }
+    }
+
+    if (!is.null(node$grobs)) {
+      for (child in node$grobs) {
+        collectLabels(child)
+      }
+    }
+  }
+
+  collectLabels(grobTable)
+
+  if (length(labelRows) == 0) {
+    return(data.frame(
+      label = character(),
+      color = character(),
+      stringsAsFactors = FALSE
+    ))
+  }
+
+  unique(do.call(rbind, labelRows))
+}

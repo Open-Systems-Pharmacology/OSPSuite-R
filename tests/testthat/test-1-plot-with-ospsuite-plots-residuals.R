@@ -190,21 +190,65 @@ test_that("Different symbols for data sets within one group", {
   )
 })
 
-test_that("Global watermark can be suppressed in residuals plots", {
+test_that("Residual wrappers pass watermark and watermarkFormat through", {
   withr::local_options(list(
     ospsuite.plots.watermarkEnabled = TRUE,
     ospsuite.plots.watermarkLabel = "GLOBAL WATERMARK"
   ))
 
-  vdiffr::expect_doppelganger(
-    title = "residuals watermark suppressed",
-    fig = plotResidualsVsCovariate(
+  assertWatermarkPassthrough <- function(plotObject) {
+    customWatermarkPlot <- plotObject(
+      watermark = "DRAFT"
+    )
+    customWatermarkLabels <- extractPlotTextLabels(customWatermarkPlot)
+    expect_true(any(customWatermarkLabels$label == "DRAFT"))
+    expect_false(any(customWatermarkLabels$label == "GLOBAL WATERMARK"))
+
+    noWatermarkPlot <- plotObject(
+      watermark = FALSE
+    )
+    noWatermarkLabels <- extractPlotTextLabels(noWatermarkPlot)
+    expect_false(any(noWatermarkLabels$label == "GLOBAL WATERMARK"))
+
+    defaultWatermarkPlot <- plotObject()
+    defaultWatermarkLabels <- extractPlotTextLabels(defaultWatermarkPlot)
+    expect_true(any(defaultWatermarkLabels$label == "GLOBAL WATERMARK"))
+
+    redWatermarkPlot <- plotObject(
+      watermark = "DRAFT",
+      watermarkFormat = list(color = "red")
+    )
+    redWatermarkLabels <- extractPlotTextLabels(redWatermarkPlot)
+    draftColors <- tolower(redWatermarkLabels$color[
+      redWatermarkLabels$label == "DRAFT"
+    ])
+    expect_true(any(draftColors %in% c("red", "#ff0000", "#ff0000ff")))
+  }
+
+  assertWatermarkPassthrough(function(...) {
+    plotResidualsVsCovariate(
       myCombDat,
       residualScale = "linear",
-      watermark = NULL,
-      watermarkFormat = NULL
+      ...
     )
-  )
+  })
+
+  assertWatermarkPassthrough(function(...) {
+    plotResidualsAsHistogram(
+      myCombDat,
+      residualScale = "linear",
+      distribution = "none",
+      ...
+    )
+  })
+
+  assertWatermarkPassthrough(function(...) {
+    plotQuantileQuantilePlot(
+      myCombDat,
+      residualScale = "linear",
+      ...
+    )
+  })
 })
 
 test_that("works with data.frame input", {

@@ -249,22 +249,51 @@ test_that("LLOQ is suppressed when showLLOQ is FALSE", {
   )
 })
 
-test_that("Global watermark can be suppressed per plot", {
+test_that("plotPredictedVsObserved passes watermark and watermarkFormat through", {
   withr::local_options(list(
     ospsuite.plots.watermarkEnabled = TRUE,
     ospsuite.plots.watermarkLabel = "GLOBAL WATERMARK"
   ))
 
-  set.seed(123)
-  vdiffr::expect_doppelganger(
-    title = "watermark suppressed pred-vs-obs",
-    fig = plotPredictedVsObserved(
-      myCombDat,
-      xyScale = "linear",
-      watermark = NULL,
-      watermarkFormat = NULL
-    )
+  customWatermarkPlot <- plotPredictedVsObserved(
+    myCombDat,
+    xyScale = "linear",
+    watermark = "DRAFT"
   )
+  customWatermarkLabels <- extractPlotTextLabels(customWatermarkPlot)
+
+  expect_true(any(customWatermarkLabels$label == "DRAFT"))
+  expect_false(any(customWatermarkLabels$label == "GLOBAL WATERMARK"))
+
+  noWatermarkPlot <- plotPredictedVsObserved(
+    myCombDat,
+    xyScale = "linear",
+    watermark = FALSE
+  )
+  noWatermarkLabels <- extractPlotTextLabels(noWatermarkPlot)
+
+  expect_false(any(noWatermarkLabels$label == "GLOBAL WATERMARK"))
+
+  defaultWatermarkPlot <- plotPredictedVsObserved(
+    myCombDat,
+    xyScale = "linear"
+  )
+  defaultWatermarkLabels <- extractPlotTextLabels(defaultWatermarkPlot)
+
+  expect_true(any(defaultWatermarkLabels$label == "GLOBAL WATERMARK"))
+
+  redWatermarkPlot <- plotPredictedVsObserved(
+    myCombDat,
+    xyScale = "linear",
+    watermark = "DRAFT",
+    watermarkFormat = list(color = "red")
+  )
+  redWatermarkLabels <- extractPlotTextLabels(redWatermarkPlot)
+  draftColors <- tolower(redWatermarkLabels$color[
+    redWatermarkLabels$label == "DRAFT"
+  ])
+
+  expect_true(any(draftColors %in% c("red", "#ff0000", "#ff0000ff")))
 })
 
 # Test predictedAxis parameter ----
