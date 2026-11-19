@@ -193,7 +193,8 @@ DataImporterConfiguration <- R6::R6Class(
     },
 
     #' @field errorType Type of the measurement error values. See enum `DataErrorType`
-    #' for possible values
+    #' for possible values.
+    #' If `errorTypeColumn` is set, this value is only applied to data sets without a value in that column.
     #' If no error column is present, the value is `NULL`
     errorType = function(value) {
       column <- private$.errorColumn()
@@ -216,6 +217,55 @@ DataImporterConfiguration <- R6::R6Class(
         "ErrorStdDev",
         getEnumKey(enum = .ImporterErrorTypeToDataSetErrorType, value)
       )
+    },
+
+    #' @field errorTypeColumn Name of the column that defines the error type of each data set.
+    #' Accepted values in this column are `ASD`, `ArithmeticStdDev` and
+    #' `Arithmetic Standard Deviation` for an arithmetic standard deviation, and
+    #' `GSD`, `GeometricStdDev` and `Geometric Standard Deviation` for a
+    #' geometric standard deviation. Values are not case-sensitive.
+    #' Empty cells are ignored: a data set without any value in this column
+    #' gets the error type defined in the property `errorType` of the `DataImporterConfiguration`. All other rows of one data set must
+    #' have the same error type. Other values, or more than one error type in one
+    #' data set, make the import fail.
+    #' A geometric standard deviation is imported as a dimensionless value,
+    #' as written in the file. An arithmetic standard deviation is imported
+    #' in the unit given by `errorUnit`.
+    #' If the value is `NULL` (default), the error type of all data sets is
+    #' `errorType`. Set the value to `NULL` or to an empty string to stop
+    #' reading the error type from a column.
+    errorTypeColumn = function(value) {
+      column <- private$.errorColumn()
+
+      if (is.null(column)) {
+        if (missing(value)) {
+          return(NULL)
+        }
+        return(invisible(self))
+      }
+
+      mappedColumn <- column$get("MappedColumn")
+      if (missing(value)) {
+        errorTypeColumn <- mappedColumn$get("ErrorStdDevColumn")
+        if (is.null(errorTypeColumn) || !nzchar(errorTypeColumn)) {
+          return(NULL)
+        }
+        return(errorTypeColumn)
+      }
+      validateIsString(value, nullAllowed = TRUE)
+      if (!is.null(value)) {
+        validateIsOfLength(value, 1)
+        if (is.na(value)) {
+          stop("`errorTypeColumn` must be a column name or `NULL`, not `NA`.")
+        }
+        # An empty string means that the error type is not read from a column.
+        # Store NULL so that no empty attribute is written to the configuration
+        # file.
+        if (!nzchar(value)) {
+          value <- NULL
+        }
+      }
+      mappedColumn$set("ErrorStdDevColumn", value)
     },
 
     #' @field groupingColumns Column names by which the data will be grouped
@@ -331,6 +381,7 @@ DataImporterConfiguration <- R6::R6Class(
           "LLOQ column" = self$lloqColumn,
           "Error column" = self$errorColumn,
           "Error type" = self$errorType,
+          "Error type column" = self$errorTypeColumn,
           "Error unit" = self$errorUnit,
           "Grouping columns" = self$groupingColumns,
           "Sheets" = self$sheets,
@@ -372,6 +423,19 @@ DataImporterConfiguration <- R6::R6Class(
           value
         )
       } else {
+        # A configuration created by `createImporterConfigurationForFile()`
+        # can have no dimension for the error column, e.g., when the error
+        # type is geometric. Use the dimension of the measurement column, or
+        # the dimension of the unit if the measurement has no dimension either.
+        if (is.null(dimension)) {
+          dimension <- private$.measurementColumn()$get("MappedColumn")$get(
+            "Dimension"
+          )
+          if (is.null(dimension)) {
+            dimension <- getDimensionByName(getDimensionForUnit(value))
+          }
+          mappedColumn$set("Dimension", dimension)
+        }
         validateUnit(value, dimension$get("Name"))
         unitDescription <- rSharp::newObjectFromName(
           "OSPSuite.Core.Import.UnitDescription",

@@ -223,3 +223,223 @@ test_that("it can get and set the lloq column", {
   importerConfiguration$lloqColumn <- NULL
   expect_equal(importerConfiguration$lloqColumn, NULL)
 })
+
+# Error type from a column ---------------------------------------------------
+
+test_that("it can get and set the error type column", {
+  importerConfiguration <- DataImporterConfiguration$new()
+  importerConfiguration$errorColumn <- "Error"
+  expect_null(importerConfiguration$errorTypeColumn)
+  importerConfiguration$errorTypeColumn <- "Error type"
+  expect_equal(importerConfiguration$errorTypeColumn, "Error type")
+  importerConfiguration$errorTypeColumn <- NULL
+  expect_null(importerConfiguration$errorTypeColumn)
+})
+
+test_that("setting the error type column to an empty string removes it", {
+  importerConfiguration <- DataImporterConfiguration$new()
+  importerConfiguration$errorColumn <- "Error"
+  importerConfiguration$errorTypeColumn <- "Error type"
+  importerConfiguration$errorTypeColumn <- ""
+  expect_null(importerConfiguration$errorTypeColumn)
+})
+
+test_that("it throws an error when the error type column is not a single string", {
+  importerConfiguration <- DataImporterConfiguration$new()
+  importerConfiguration$errorColumn <- "Error"
+  expect_error(importerConfiguration$errorTypeColumn <- 1)
+  expect_error(importerConfiguration$errorTypeColumn <- c("a", "b"))
+  expect_error(importerConfiguration$errorTypeColumn <- NA_character_, "NA")
+})
+
+test_that("the error type column is NULL and setting it has no effect without an error column", {
+  importerConfiguration <- DataImporterConfiguration$new()
+  expect_null(importerConfiguration$errorTypeColumn)
+  importerConfiguration$errorTypeColumn <- "Error type"
+  expect_null(importerConfiguration$errorTypeColumn)
+})
+
+test_that("removing the error column removes the error type column", {
+  importerConfiguration <- DataImporterConfiguration$new()
+  importerConfiguration$errorColumn <- "Error"
+  importerConfiguration$errorTypeColumn <- "Error type"
+  importerConfiguration$errorColumn <- NULL
+  expect_null(importerConfiguration$errorTypeColumn)
+})
+
+test_that("It can print the configuration with an error type column", {
+  importerConfiguration <- DataImporterConfiguration$new()
+  importerConfiguration$errorColumn <- "Error"
+  importerConfiguration$errorTypeColumn <- "Error type"
+
+  expect_snapshot(print(importerConfiguration))
+})
+
+# `ErrorTypeFromColumn.xlsx` has the columns `Id`, `Time [h]`,
+# `Concentration [mg/l]`, `Error` and `Error type`, and the sheets:
+# - `Mixed`: data set A is geometric (`GSD`, `gsd ` with a trailing space), B has no error type, and
+#   C is arithmetic (`Arithmetic Standard Deviation`, `asd`);
+# - `Conflict`: data set A has `GSD` and `ASD`;
+# - `Unknown`: data set A has the unknown value `SD`.
+errorTypeFilePath <- getTestDataFilePath("ErrorTypeFromColumn.xlsx")
+
+errorTypeConfiguration <- function(errorType = DataErrorType$ArithmeticStdDev) {
+  importerConfiguration <- DataImporterConfiguration$new()
+  importerConfiguration$timeColumn <- "Time [h]"
+  importerConfiguration$measurementColumn <- "Concentration [mg/l]"
+  importerConfiguration$measurementDimension <- ospDimensions$`Concentration (mass)`
+  importerConfiguration$measurementUnit <- "mg/l"
+  importerConfiguration$errorColumn <- "Error"
+  importerConfiguration$errorUnit <- "mg/l"
+  importerConfiguration$errorType <- errorType
+  importerConfiguration$errorTypeColumn <- "Error type"
+  importerConfiguration$addGroupingColumn("Id")
+  importerConfiguration$namingPattern <- "{Id}"
+  importerConfiguration
+}
+
+test_that("loadDataSetsFromExcel reads the error type of each data set from a column", {
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = errorTypeFilePath,
+    importerConfigurationOrPath = errorTypeConfiguration(),
+    sheets = "Mixed"
+  )
+
+  expect_equal(sort(names(dataSets)), c("A", "B", "C"))
+  expect_equal(dataSets$A$yErrorType, DataErrorType$GeometricStdDev)
+  # A geometric error is imported as written, without unit conversion
+  expect_equal(dataSets$A$yErrorValues, c(2, 3))
+  expect_equal(dataSets$A$yErrorUnit, "")
+  # No value in the column: the default error type is used
+  expect_equal(dataSets$B$yErrorType, DataErrorType$ArithmeticStdDev)
+  expect_equal(dataSets$B$yErrorValues, c(1, 2))
+  expect_equal(dataSets$B$yErrorUnit, "mg/l")
+  expect_equal(dataSets$C$yErrorType, DataErrorType$ArithmeticStdDev)
+  expect_equal(dataSets$C$yErrorValues, c(1, 2))
+  expect_equal(dataSets$C$yErrorUnit, "mg/l")
+})
+
+test_that("loadDataSetsFromExcel applies errorType GeometricStdDev to data sets without a value in the error type column", {
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = errorTypeFilePath,
+    importerConfigurationOrPath = errorTypeConfiguration(
+      DataErrorType$GeometricStdDev
+    ),
+    sheets = "Mixed"
+  )
+
+  expect_equal(dataSets$A$yErrorType, DataErrorType$GeometricStdDev)
+  expect_equal(dataSets$B$yErrorType, DataErrorType$GeometricStdDev)
+  expect_equal(dataSets$B$yErrorValues, c(1, 2))
+  # An arithmetic data set keeps the error unit, even with a geometric default
+  expect_equal(dataSets$C$yErrorType, DataErrorType$ArithmeticStdDev)
+  expect_equal(dataSets$C$yErrorValues, c(1, 2))
+  expect_equal(dataSets$C$yErrorUnit, "mg/l")
+})
+
+test_that("the error unit can be set in a configuration created for a file with a geometric error", {
+  # The created configuration has a geometric error type and no dimension for
+  # the error column. Setting the error unit failed with "attempt to apply
+  # non-function".
+  importerConfiguration <- createImporterConfigurationForFile(
+    errorTypeFilePath,
+    sheet = "Mixed"
+  )
+  expect_equal(importerConfiguration$errorType, DataErrorType$GeometricStdDev)
+  expect_error(importerConfiguration$errorUnit <- "foo")
+  importerConfiguration$errorUnit <- "mg/l"
+  expect_equal(importerConfiguration$errorUnit, "mg/l")
+
+  importerConfiguration$errorTypeColumn <- "Error type"
+  importerConfiguration$addGroupingColumn("Id")
+  importerConfiguration$namingPattern <- "{Id}"
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = errorTypeFilePath,
+    importerConfigurationOrPath = importerConfiguration
+  )
+  expect_equal(dataSets$A$yErrorType, DataErrorType$GeometricStdDev)
+  expect_equal(dataSets$B$yErrorType, DataErrorType$GeometricStdDev)
+  expect_equal(dataSets$C$yErrorType, DataErrorType$ArithmeticStdDev)
+  expect_equal(dataSets$C$yErrorValues, c(1, 2))
+  expect_equal(dataSets$C$yErrorUnit, "mg/l")
+})
+
+test_that("loadDataSetsFromExcel fails for more than one error type in one data set", {
+  expect_error(
+    loadDataSetsFromExcel(
+      xlsFilePath = errorTypeFilePath,
+      importerConfigurationOrPath = errorTypeConfiguration(),
+      sheets = "Conflict"
+    ),
+    "errors while parsing",
+    fixed = TRUE
+  )
+})
+
+test_that("loadDataSetsFromExcel fails for an unknown error type", {
+  expect_error(
+    loadDataSetsFromExcel(
+      xlsFilePath = errorTypeFilePath,
+      importerConfigurationOrPath = errorTypeConfiguration(),
+      sheets = "Unknown"
+    ),
+    "errors while parsing",
+    fixed = TRUE
+  )
+})
+
+test_that("a configuration without error type column loads and imports as before", {
+  importerConfiguration <- loadDataImporterConfiguration(
+    getTestDataFilePath("ImporterConfiguration.xml")
+  )
+  expect_equal(importerConfiguration$errorColumn, "Error [%]")
+  expect_null(importerConfiguration$errorTypeColumn)
+
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = getTestDataFilePath("CompiledDataSetStevens2012.xlsx"),
+    importerConfigurationOrPath = importerConfiguration
+  )
+  expect_gt(length(dataSets), 0)
+  expect_equal(
+    unique(vapply(dataSets, function(x) x$yErrorType, character(1))),
+    DataErrorType$ArithmeticStdDev
+  )
+})
+
+test_that("the error type column is kept when saving and loading a configuration", {
+  filePath <- withr::local_tempfile(fileext = ".xml")
+  errorTypeConfiguration(DataErrorType$GeometricStdDev)$saveConfiguration(
+    filePath
+  )
+
+  expect_true(any(grepl(
+    'errorStdDevColumn="Error type"',
+    readLines(filePath, warn = FALSE),
+    fixed = TRUE
+  )))
+
+  importerConfiguration <- loadDataImporterConfiguration(filePath)
+  expect_equal(importerConfiguration$errorTypeColumn, "Error type")
+  expect_equal(importerConfiguration$errorType, DataErrorType$GeometricStdDev)
+
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = errorTypeFilePath,
+    importerConfigurationOrPath = importerConfiguration,
+    sheets = "Mixed"
+  )
+  expect_equal(dataSets$A$yErrorType, DataErrorType$GeometricStdDev)
+  expect_equal(dataSets$C$yErrorType, DataErrorType$ArithmeticStdDev)
+})
+
+test_that("a configuration without error type column does not write the attribute", {
+  filePath <- withr::local_tempfile(fileext = ".xml")
+  importerConfiguration <- errorTypeConfiguration()
+  importerConfiguration$errorTypeColumn <- ""
+  importerConfiguration$saveConfiguration(filePath)
+
+  expect_false(any(grepl(
+    "errorStdDevColumn",
+    readLines(filePath, warn = FALSE),
+    fixed = TRUE
+  )))
+})
