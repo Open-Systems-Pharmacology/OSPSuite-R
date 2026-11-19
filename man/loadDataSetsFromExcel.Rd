@@ -47,6 +47,9 @@ meta data of the loaded data sets.
 
 To read the number of subjects of aggregated data, the excel sheet must have a column
 \verb{Subject count}.
+
+A grouping column \code{OutputPath} fills \code{DataSet$outputPath}, the path of the
+simulation output that each data set belongs to.
 }
 \examples{
 

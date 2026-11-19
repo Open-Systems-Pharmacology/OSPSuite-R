@@ -1,10 +1,16 @@
 # ospsuite (development version)
 
+## Breaking changes
+
+- In `dataSetsFromDataFrame()`, a column `outputPath` now fills `DataSet$outputPath`, which is stored as the meta data entry `OutputPath`. Previously, it was added as a meta data entry `outputPath`, so `ds$metaData$outputPath` now returns `NULL`; use `ds$outputPath` instead. Blank values in this column are ignored, and numbers are converted to text (#1821).
+
 ## New features
 
 - `DataSet` has a new field `subjectCount` for the number of subjects from which aggregated observed data (mean values with a standard deviation or geometric standard deviation) are calculated. `loadDataSetsFromExcel()` reads it from a column `Subject count` of the Excel file when this column is mapped in the importer configuration (#2060, #2063).
 - `dataSetToDataFrame()` and `dataSetToTibble()` return a new column `subjectCount`, and `dataSetsFromDataFrame()` reads this column back into `DataSet$subjectCount`. The meta data entry "Subject count" does not appear as an additional meta data column. The new column comes after `lloq`, so the meta data columns move one position to the right. `rbind()` of these data frames with data frames created by an earlier version fails because of the new column; use `dplyr::bind_rows()` instead (#2060).
 - `DataCombined$toDataFrame()` and `calculateResiduals()` return a new column `subjectCount` with the number of subjects of each observed data set. It is `NA` for simulated data and for data sets without a number of subjects, and `DataCombined$setDataTransformations()` does not change it (#2060).
+- `DataSet` has a new field `outputPath` for the path of the simulation output that the observed data belongs to. It is stored as the meta data entry `OutputPath`, which PK-Sim and MoBi version 13 or later use to map observed data automatically to the output with exactly this path. It is `NULL` when not set, and `print()` shows it when it is set. `loadDataSetsFromExcel()` reads it from a grouping column `OutputPath` (#1821).
+- `dataSetsFromDataFrame()` reads `DataSet$outputPath` from the meta data column `OutputPath` returned by `dataSetToDataFrame()` or from a column `outputPath`. If both columns hold a path for a data set, `OutputPath` is used (#1821).
 
 ## Minor improvements and bug fixes
 
@@ -41,6 +47,7 @@ If no original PK-Sim project or snapshot are available, the user should use the
 - New functions `projectToSnapshot()` and `snapshotToProject()` convert between OSP project files and snapshots. `projectToSnapshot()` takes PK-Sim (`.pksim5`) and MoBi (`.mbp3`) project files and writes snapshot files (`.json`); `snapshotToProject()` takes PK-Sim and MoBi snapshot files (`.json`) and writes the matching project file (`.pksim5` or `.mbp3`). The application is detected from the file extension when converting a project and from the snapshot itself when converting a snapshot; the `application` argument overrides the detection, and a single call may mix files from both applications. Inputs that would be converted to the same output file, such as `model.pksim5` and `model.mbp3`, are rejected, as are inputs that share a file name, such as `snapshots/a/model.json` and `snapshots/b/model.json` (#1973, #1974).
 - `runSimulationsFromSnapshot()` now raises an error when two input files share a name, for example `snapshots/a/model.json` and `snapshots/b/model.json`. All inputs are gathered into a single folder first, so previously the second file replaced the first and was silently processed in its place.
 - `runSimulationsFromSnapshot()` now validates the `exportJSON` argument like the other export flags. Previously a non-logical value (e.g. `exportJSON = "TRUE"`) was silently treated as `FALSE` and no JSON was exported.
+- Plotting wrappers based on `{ospsuite.plots}` now expose `watermark` and `watermarkFormat` as explicit function arguments (instead of only via `...`) in `plotTimeProfile()`, `plotPredictedVsObserved()`, `plotResidualsVsCovariate()`, `plotResidualsAsHistogram()`, and `plotQuantileQuantilePlot()`. `plotTimeProfile()`, `plotPredictedVsObserved()` and `plotResidualsVsCovariate()` also expose `showLLOQ` (#2069).
 - Simulations returned by `loadSimulationsFromSnapshot()` now carry their individual and module snapshots, so `saveSimulation()` writes a `.pkml` that can be converted back into a MoBi module. Previously these snapshots were empty because only PK-Sim's desktop export filled them (#2029).
 
 # ospsuite 12.4.5

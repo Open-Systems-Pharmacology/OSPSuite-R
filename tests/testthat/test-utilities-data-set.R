@@ -884,3 +884,118 @@ test_that("loadDataSetsFromExcel fails for a subject count that is not a positiv
     )
   )
 })
+
+test_that("dataSetsFromDataFrame round-trips outputPath of dataSetToDataFrame", {
+  outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+  ds <- DataSet$new(name = "RoundTrip")
+  ds$setValues(xValues = c(1, 2, 3), yValues = c(10, 20, 30))
+  ds$outputPath <- outputPath
+
+  df <- dataSetToDataFrame(ds)
+  expect_identical(unique(df$OutputPath), outputPath)
+
+  restored <- dataSetsFromDataFrame(df)[["RoundTrip"]]
+  expect_identical(restored$outputPath, outputPath)
+})
+
+test_that("dataSetsFromDataFrame reads outputPath from a column outputPath", {
+  df <- data.frame(
+    name = c("A", "A", "B"),
+    xValues = c(1, 2, 1),
+    yValues = c(10, 20, 30),
+    outputPath = c("X|Y", "X|Y", NA)
+  )
+  dataSets <- dataSetsFromDataFrame(df)
+  expect_identical(dataSets[["A"]]$outputPath, "X|Y")
+  expect_null(dataSets[["A"]]$metaData[["outputPath"]])
+  expect_null(dataSets[["B"]]$outputPath)
+})
+
+test_that("dataSetsFromDataFrame uses the column OutputPath if both hold a path", {
+  df <- data.frame(
+    name = c("A", "B", "C"),
+    xValues = 1,
+    yValues = 10,
+    outputPath = "Organism|Liver|Plasma",
+    OutputPath = c("Organism|Kidney|Plasma", NA, " ")
+  )
+  dataSets <- dataSetsFromDataFrame(df)
+  outputPaths <- lapply(dataSets, \(x) x$outputPath)
+  # A missing or blank `OutputPath` does not hide the path in `outputPath`
+  expect_identical(
+    outputPaths,
+    list(
+      A = "Organism|Kidney|Plasma",
+      B = "Organism|Liver|Plasma",
+      C = "Organism|Liver|Plasma"
+    )
+  )
+})
+
+test_that("dataSetsFromDataFrame ignores conflicting outputPath values if OutputPath is used", {
+  df <- data.frame(
+    name = "A",
+    xValues = c(1, 2),
+    yValues = c(10, 20),
+    outputPath = c("Organism|Liver|Plasma", "Organism|Lung|Plasma"),
+    OutputPath = "Organism|Kidney|Plasma"
+  )
+  expect_identical(
+    dataSetsFromDataFrame(df)[["A"]]$outputPath,
+    "Organism|Kidney|Plasma"
+  )
+})
+
+test_that("dataSetsFromDataFrame throws an error for conflicting values in the column it uses", {
+  df <- data.frame(
+    name = "A",
+    xValues = c(1, 2),
+    yValues = c(10, 20),
+    OutputPath = c("Organism|Kidney|Plasma", "Organism|Lung|Plasma")
+  )
+  expect_snapshot(error = TRUE, dataSetsFromDataFrame(df))
+})
+
+test_that("dataSetsFromDataFrame converts numbers in both output path columns to text", {
+  base <- data.frame(name = "A", xValues = 1, yValues = 10)
+  # Without scientific notation, which would be "1e+05"
+  expect_identical(
+    dataSetsFromDataFrame(cbind(base, outputPath = 100000))[["A"]]$outputPath,
+    "100000"
+  )
+  expect_identical(
+    dataSetsFromDataFrame(cbind(base, OutputPath = 100000))[["A"]]$outputPath,
+    "100000"
+  )
+})
+
+test_that(".outputPathAsText writes numbers in full and keeps missing values", {
+  expect_identical(
+    .outputPathAsText(c(100000, 1.5, 0.123456789, NA)),
+    c("100000", "1.5", "0.123456789", NA)
+  )
+  expect_identical(.outputPathAsText(factor("A|B")), "A|B")
+})
+
+test_that("loadDataSetsFromExcel reads outputPath from a grouping column OutputPath", {
+  importerConfiguration <- loadDataImporterConfiguration(
+    getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+  )
+  importerConfiguration$addGroupingColumn("OutputPath")
+
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = getTestDataFilePath("CompiledDataSet_oneSheet.xlsx"),
+    importerConfigurationOrPath = importerConfiguration
+  )
+
+  # The file has an output path for study ID01 and empty cells for ID02
+  studyIds <- vapply(dataSets, \(x) x$metaData[["Study Id"]], character(1))
+  outputPaths <- lapply(dataSets, \(x) x$outputPath)
+  expected <- lapply(studyIds, \(id) {
+    if (id == "ID01") {
+      "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+    }
+  })
+  expect_identical(length(dataSets), 4L)
+  expect_identical(outputPaths, expected)
+})

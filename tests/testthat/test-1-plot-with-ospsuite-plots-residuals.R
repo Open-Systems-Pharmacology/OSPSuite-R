@@ -72,7 +72,10 @@ test_that("It creates default plots as expected", {
     fig = plotResidualsVsCovariate(
       myCombDat,
       residualScale = "linear",
-      xAxis = "time"
+      xAxis = "time",
+      showLLOQ = TRUE,
+      watermark = NULL,
+      watermarkFormat = NULL
     )
   )
   vdiffr::expect_doppelganger(
@@ -95,7 +98,9 @@ test_that("It creates default plots as expected", {
     fig = plotResidualsAsHistogram(
       myCombDat,
       residualScale = "linear",
-      distribution = 'none'
+      distribution = 'none',
+      watermark = NULL,
+      watermarkFormat = NULL
     )
   )
   vdiffr::expect_doppelganger(
@@ -110,7 +115,12 @@ test_that("It creates default plots as expected", {
   )
   vdiffr::expect_doppelganger(
     title = "defaults as QQ-Plot",
-    fig = plotQuantileQuantilePlot(myCombDat, residualScale = "linear") +
+    fig = plotQuantileQuantilePlot(
+      myCombDat,
+      residualScale = "linear",
+      watermark = NULL,
+      watermarkFormat = NULL
+    ) +
       ggplot2::labs(y = 'residuals\npredicted - observed')
   )
 })
@@ -178,6 +188,29 @@ test_that("Different symbols for data sets within one group", {
       mapping = ggplot2::aes(groupby = name)
     )
   )
+})
+
+test_that("plotResidualsVsCovariate passes watermark and watermarkFormat through", {
+  expectWatermarkPassthrough(function(...) {
+    plotResidualsVsCovariate(myCombDat, residualScale = "linear", ...)
+  })
+})
+
+test_that("plotResidualsAsHistogram passes watermark and watermarkFormat through", {
+  expectWatermarkPassthrough(function(...) {
+    plotResidualsAsHistogram(
+      myCombDat,
+      residualScale = "linear",
+      distribution = "none",
+      ...
+    )
+  })
+})
+
+test_that("plotQuantileQuantilePlot passes watermark and watermarkFormat through", {
+  expectWatermarkPassthrough(function(...) {
+    plotQuantileQuantilePlot(myCombDat, residualScale = "linear", ...)
+  })
 })
 
 test_that("works with data.frame input", {

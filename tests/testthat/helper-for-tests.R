@@ -63,3 +63,82 @@ executeWithTestFile <- function(actionWithFile) {
   actionWithFile(newFile)
   file.remove(newFile)
 }
+
+extractPlotTextLabels <- function(plotObject) {
+  grobTable <- ggplot2::ggplotGrob(plotObject)
+  labelRows <- list()
+
+  collectLabels <- function(node) {
+    if (!is.null(node$label) && is.character(node$label)) {
+      labelColor <- NA_character_
+      if (!is.null(node$gp) && !is.null(node$gp$col)) {
+        labelColor <- as.character(node$gp$col)
+      }
+
+      labelRows[[length(labelRows) + 1]] <<- data.frame(
+        label = node$label,
+        color = labelColor,
+        stringsAsFactors = FALSE
+      )
+    }
+
+    if (!is.null(node$children)) {
+      for (child in node$children) {
+        collectLabels(child)
+      }
+    }
+
+    if (!is.null(node$grobs)) {
+      for (child in node$grobs) {
+        collectLabels(child)
+      }
+    }
+  }
+
+  collectLabels(grobTable)
+
+  if (length(labelRows) == 0) {
+    return(data.frame(
+      label = character(),
+      color = character(),
+      stringsAsFactors = FALSE
+    ))
+  }
+
+  unique(do.call(rbind, labelRows))
+}
+
+# Checks that a plotting wrapper passes `watermark` and `watermarkFormat` on to
+# `{ospsuite.plots}`. `plotFunction` must forward `...` to the wrapper.
+expectWatermarkPassthrough <- function(plotFunction) {
+  withr::local_options(list(
+    ospsuite.plots.watermarkEnabled = TRUE,
+    ospsuite.plots.watermarkLabel = "GLOBAL WATERMARK"
+  ))
+
+  customWatermarkLabels <- extractPlotTextLabels(
+    plotFunction(watermark = "DRAFT")
+  )
+  expect_true(any(customWatermarkLabels$label == "DRAFT"))
+  expect_false(any(customWatermarkLabels$label == "GLOBAL WATERMARK"))
+
+  # `watermark = FALSE` must give the same text as a plot with no watermark
+  noWatermarkLabels <- extractPlotTextLabels(plotFunction(watermark = FALSE))
+  controlLabels <- withr::with_options(
+    list(ospsuite.plots.watermarkEnabled = FALSE),
+    extractPlotTextLabels(plotFunction())
+  )
+  expect_setequal(noWatermarkLabels$label, controlLabels$label)
+  expect_false(any(noWatermarkLabels$label == "GLOBAL WATERMARK"))
+
+  defaultWatermarkLabels <- extractPlotTextLabels(plotFunction())
+  expect_true(any(defaultWatermarkLabels$label == "GLOBAL WATERMARK"))
+
+  redWatermarkLabels <- extractPlotTextLabels(
+    plotFunction(watermark = "DRAFT", watermarkFormat = list(color = "red"))
+  )
+  draftColors <- tolower(redWatermarkLabels$color[
+    redWatermarkLabels$label == "DRAFT"
+  ])
+  expect_true(any(draftColors %in% c("red", "#ff0000", "#ff0000ff")))
+}
