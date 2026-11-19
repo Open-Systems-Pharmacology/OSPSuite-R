@@ -43,13 +43,13 @@ Load data sets from excel
 Load observed data from an excel file using an importer configuration
 
 The values of all grouping columns of the configuration are added to the
-meta data of the loaded data sets. To read the number of subjects of
-aggregated data into \code{DataSet$subjectCount}, add a column \code{subjectCount}
-with one positive whole number per data set to the Excel file and add it as
-a grouping column, e.g. with
-\code{importerConfiguration$addGroupingColumn("subjectCount")}.
-Likewise, a grouping column \code{OutputPath} fills \code{DataSet$outputPath}, the
-path of the simulation output that each data set belongs to.
+meta data of the loaded data sets.
+
+To read the number of subjects of aggregated data, the excel sheet must have a column
+\verb{Subject count}.
+
+A grouping column \code{OutputPath} fills \code{DataSet$outputPath}, the path of the
+simulation output that each data set belongs to.
 }
 \examples{
 

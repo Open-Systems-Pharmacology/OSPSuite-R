@@ -182,12 +182,11 @@ DataSet <- R6::R6Class(
 
     #' @field subjectCount Number of subjects from which the y values and the
     #' error values are calculated, e.g. for aggregated data reported as mean
-    #' and standard deviation. One positive whole number, or `NULL` if not
-    #' set. Set it to `NULL` or `NA` to remove it.
+    #' and standard deviation. `NULL` if not, set it to `NULL` or `NA` to remove it.
     subjectCount = function(value) {
       if (missing(value)) {
-        return(.subjectCountFromMetaData(
-          self$metaData[[.subjectCountMetaDataName]],
+        return(.subjectCountFromDataRepository(
+          private$.dataRepository,
           self$name
         ))
       }
@@ -204,14 +203,14 @@ DataSet <- R6::R6Class(
         self$removeMetaData(.subjectCountMetaDataName)
         return(invisible(self))
       }
+      # R numbers are doubles and text is accepted, but .NET needs an integer,
+      # so the value is checked and converted here
       count <- .parseSubjectCount(value)
       if (is.na(count)) {
         stop(messages$errorInvalidSubjectCount(value))
       }
-      private$.dataRepository$addMetaData(
-        .subjectCountMetaDataName,
-        format(count, scientific = FALSE)
-      )
+      private$.dataRepository$setSubjectCount(count)
+      invisible(self)
     },
 
     #' @field outputPath Path of the simulation output that the observed data

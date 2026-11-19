@@ -53,8 +53,7 @@ Value in yUnit associated with the yValues}
 
     \item{\code{subjectCount}}{Number of subjects from which the y values and the
 error values are calculated, e.g. for aggregated data reported as mean
-and standard deviation. One positive whole number, or \code{NULL} if not
-set. Set it to \code{NULL} or \code{NA} to remove it.}
+and standard deviation. \code{NULL} if not, set it to \code{NULL} or \code{NA} to remove it.}
 
     \item{\code{outputPath}}{Path of the simulation output that the observed data
 belongs to, e.g. \code{"Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"}, or \code{NULL} if not set. It is stored as the

@@ -20,6 +20,15 @@ test_that("it can create a new data importer configuration", {
   expect_equal(importerConfiguration$namingPattern, "{Source}.{Sheet}")
 })
 
+test_that("a new configuration has a naming pattern before it is read", {
+  importerConfiguration <- DataImporterConfiguration$new()
+  # Read from .NET directly: the import fails if no pattern is defined there
+  expect_equal(
+    importerConfiguration$get("NamingConventions"),
+    "{Source}.{Sheet}"
+  )
+})
+
 test_that("It can print the configuration", {
   importerConfiguration <- DataImporterConfiguration$new()
   importerConfiguration$addGroupingColumn("foo")

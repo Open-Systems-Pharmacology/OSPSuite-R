@@ -34,6 +34,7 @@ where the name is the name of the metaData and the value is the meta data value.
     \item \href{#method-DataRepository-print}{\code{DataRepository$print()}}
     \item \href{#method-DataRepository-addMetaData}{\code{DataRepository$addMetaData()}}
     \item \href{#method-DataRepository-removeMetaData}{\code{DataRepository$removeMetaData()}}
+    \item \href{#method-DataRepository-setSubjectCount}{\code{DataRepository$setSubjectCount()}}
   }
 }
 \if{html}{\out{<details><summary>Inherited methods</summary>
@@ -147,6 +148,27 @@ If it is not provided, a new instance will be created}
     \if{html}{\out{<div class="arguments">}}
     \describe{
       \item{\code{name}}{Name of meta data entry to delete}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-DataRepository-setSubjectCount"></a>}}
+\if{latex}{\out{\hypertarget{method-DataRepository-setSubjectCount}{}}}
+\subsection{\code{DataRepository$setSubjectCount()}}{
+  Sets the number of subjects from which the values are calculated. It is
+stored as the meta data entry "Subject count", which PK-Sim and MoBi
+show for observed data. Use \code{DataSet$subjectCount} to read it.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{DataRepository$setSubjectCount(subjectCount)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{subjectCount}}{One positive whole number.}
     }
     \if{html}{\out{</div>}}
   }

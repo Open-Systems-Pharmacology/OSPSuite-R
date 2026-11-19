@@ -105,7 +105,7 @@ dataSetToDataFrame <- function(dataSets) {
       dataSets,
       function(dataSet) {
         # Get the property only once, as getting it can be expensive (values
-        # are read from .NET, `subjectCount` is parsed from the meta data)
+        # and `subjectCount` are read from .NET)
         value <- dataSet[[property]]
         if (!is.null(metaDataName)) {
           value <- value[[metaDataName]]
@@ -203,13 +203,13 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 #' @details Load observed data from an excel file using an importer configuration
 #'
 #' The values of all grouping columns of the configuration are added to the
-#' meta data of the loaded data sets. To read the number of subjects of
-#' aggregated data into `DataSet$subjectCount`, add a column `subjectCount`
-#' with one positive whole number per data set to the Excel file and add it as
-#' a grouping column, e.g. with
-#' `importerConfiguration$addGroupingColumn("subjectCount")`.
-#' Likewise, a grouping column `OutputPath` fills `DataSet$outputPath`, the
-#' path of the simulation output that each data set belongs to.
+#' meta data of the loaded data sets.
+#'
+#' To read the number of subjects of aggregated data, the excel sheet must have a column
+#' `Subject count`.
+#'
+#' A grouping column `OutputPath` fills `DataSet$outputPath`, the path of the
+#' simulation output that each data set belongs to.
 #'
 #' @param xlsFilePath Path to the excel file with the data
 #' @param importerConfigurationOrPath An object of type `DataImporterConfiguration` that is valid
@@ -533,8 +533,10 @@ dataSetsFromDataFrame <- function(data) {
   return(dataSets)
 }
 
-# Name of the meta data entry that stores `DataSet$subjectCount`
-.subjectCountMetaDataName <- "subjectCount"
+# Name of the meta data entry that stores `DataSet$subjectCount`. This is the
+# standard meta data entry of observed data in OSPSuite.Core
+# (`Constants.ObservedData.SUBJECT_COUNT`), shown in PK-Sim and MoBi.
+.subjectCountMetaDataName <- "Subject count"
 
 # Name of the meta data entry that stores `DataSet$outputPath`. PK-Sim and
 # MoBi use this entry to map observed data to a simulation output.
@@ -629,29 +631,37 @@ dataSetsFromDataFrame <- function(data) {
   as.numeric(value)
 }
 
-#' Convert the stored meta data entry to the number of subjects
+#' Read the number of subjects of a data repository through .NET
 #'
-#' @param value Value of the meta data entry `subjectCount`, or `NULL` if the
-#'   data set has no such entry. Usually a string, but can be numeric for data
-#'   sets loaded from PKML.
+#' @param dataRepository The `DataRepository` of a `DataSet`.
 #' @param dataSetName Name of the data set, used in the warning.
 #'
-#' @return The number of subjects as integer, or `NULL` if `value` is `NULL`
-#'   or not a positive whole number. A warning is shown in the latter case.
+#' @return The number of subjects as integer, or `NULL` if the data set has no
+#'   or an empty meta data entry "Subject count". If the stored entry is not a
+#'   positive whole number, e.g. because it was added with
+#'   `DataRepository$addMetaData()`, a warning is shown and `NULL` is returned.
 #'
 #' @keywords internal
 #' @noRd
-.subjectCountFromMetaData <- function(value, dataSetName) {
-  if (is.null(value)) {
-    return(NULL)
-  }
-  count <- .parseSubjectCount(value)
-  if (is.na(count)) {
-    warning(
-      messages$warningInvalidSubjectCount(dataSetName, value),
-      call. = FALSE
-    )
-    return(NULL)
-  }
-  as.integer(count)
+.subjectCountFromDataRepository <- function(dataRepository, dataSetName) {
+  # .NET returns `NULL` for a missing or empty entry, so the meta data is only
+  # read for the warning
+  dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
+  tryCatch(
+    dataRepositoryTask$call("GetSubjectCount", dataRepository),
+    error = function(e) {
+      # .NET throws an `OSPSuiteException` only for an invalid stored value
+      if (!grepl("OSPSuiteException", conditionMessage(e), fixed = TRUE)) {
+        stop(e)
+      }
+      warning(
+        messages$warningInvalidSubjectCount(
+          dataSetName,
+          dataRepository$metaData[[.subjectCountMetaDataName]]
+        ),
+        call. = FALSE
+      )
+      NULL
+    }
+  )
 }
