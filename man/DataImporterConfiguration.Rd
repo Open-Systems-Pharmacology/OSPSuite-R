@@ -53,8 +53,25 @@ If \code{isMeasurementUnitFromColumn} is \code{TRUE}, name of the column with un
 If no error column is present, the value is \code{NULL}}
 
     \item{\code{errorType}}{Type of the measurement error values. See enum \code{DataErrorType}
-for possible values
+for possible values.
+If \code{errorTypeColumn} is set, this value is only applied to data sets without a value in that column.
 If no error column is present, the value is \code{NULL}}
+
+    \item{\code{errorTypeColumn}}{Name of the column that defines the error type of each data set.
+Accepted values in this column are \code{ASD}, \code{ArithmeticStdDev} and
+\verb{Arithmetic Standard Deviation} for an arithmetic standard deviation, and
+\code{GSD}, \code{GeometricStdDev} and \verb{Geometric Standard Deviation} for a
+geometric standard deviation. Values are not case-sensitive.
+Empty cells are ignored: a data set without any value in this column
+gets the error type defined in the property \code{errorType} of the \code{DataImporterConfiguration}. All other rows of one data set must
+have the same error type. Other values, or more than one error type in one
+data set, make the import fail.
+A geometric standard deviation is imported as a dimensionless value,
+as written in the file. An arithmetic standard deviation is imported
+in the unit given by \code{errorUnit}.
+If the value is \code{NULL} (default), the error type of all data sets is
+\code{errorType}. Set the value to \code{NULL} or to an empty string to stop
+reading the error type from a column.}
 
     \item{\code{groupingColumns}}{Column names by which the data will be grouped}
 

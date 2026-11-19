@@ -306,14 +306,15 @@ loadDataSetsFromExcel <- function(
 
   # Determine which sheets to use and whether to import all
   # Priority: importAllSheets > sheets parameter > configuration sheets
-  originalSheets <- NULL
   if (importAllSheets) {
     # If importAllSheets is TRUE, import all sheets
     shouldImportAll <- TRUE
   } else if (!is.null(sheets)) {
     # If sheets parameter is provided, use it and override configuration
-    # Store original sheets from configuration to restore later
+    # Store original sheets from configuration and restore them on exit, also
+    # when the import fails
     originalSheets <- importerConfiguration$sheets
+    on.exit(importerConfiguration$sheets <- originalSheets, add = TRUE)
     importerConfiguration$sheets <- sheets
     shouldImportAll <- FALSE
   } else {
@@ -330,11 +331,6 @@ loadDataSetsFromExcel <- function(
     importerConfiguration,
     xlsFilePath
   )
-
-  # Restore original sheets if they were overridden
-  if (!is.null(originalSheets)) {
-    importerConfiguration$sheets <- originalSheets
-  }
 
   dataSets <- lapply(dataRepositories, function(x) {
     repository <- DataRepository$new(x)
