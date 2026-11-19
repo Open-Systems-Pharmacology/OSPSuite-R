@@ -255,44 +255,7 @@ test_that("It suppresses LLOQ when showLLOQ is FALSE", {
 })
 
 test_that("plotTimeProfile passes watermark and watermarkFormat through", {
-  withr::local_options(list(
-    ospsuite.plots.watermarkEnabled = TRUE,
-    ospsuite.plots.watermarkLabel = "GLOBAL WATERMARK"
-  ))
-
-  customWatermarkPlot <- plotTimeProfile(
-    oneObsDC(),
-    watermark = "DRAFT"
-  )
-  customWatermarkLabels <- extractPlotTextLabels(customWatermarkPlot)
-
-  expect_true(any(customWatermarkLabels$label == "DRAFT"))
-  expect_false(any(customWatermarkLabels$label == "GLOBAL WATERMARK"))
-
-  noWatermarkPlot <- plotTimeProfile(
-    oneObsDC(),
-    watermark = FALSE
-  )
-  noWatermarkLabels <- extractPlotTextLabels(noWatermarkPlot)
-
-  expect_false(any(noWatermarkLabels$label == "GLOBAL WATERMARK"))
-
-  defaultWatermarkPlot <- plotTimeProfile(oneObsDC())
-  defaultWatermarkLabels <- extractPlotTextLabels(defaultWatermarkPlot)
-
-  expect_true(any(defaultWatermarkLabels$label == "GLOBAL WATERMARK"))
-
-  redWatermarkPlot <- plotTimeProfile(
-    oneObsDC(),
-    watermark = "DRAFT",
-    watermarkFormat = list(color = "red")
-  )
-  redWatermarkLabels <- extractPlotTextLabels(redWatermarkPlot)
-  draftColors <- tolower(redWatermarkLabels$color[
-    redWatermarkLabels$label == "DRAFT"
-  ])
-
-  expect_true(any(draftColors %in% c("red", "#ff0000", "#ff0000ff")))
+  expectWatermarkPassthrough(function(...) plotTimeProfile(oneObsDC(), ...))
 })
 
 # 2 y-axis dimensions ----

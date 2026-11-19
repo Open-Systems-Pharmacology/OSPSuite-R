@@ -107,3 +107,32 @@ extractPlotTextLabels <- function(plotObject) {
 
   unique(do.call(rbind, labelRows))
 }
+
+# Checks that a plotting wrapper passes `watermark` and `watermarkFormat` on to
+# `{ospsuite.plots}`. `plotFunction` must forward `...` to the wrapper.
+expectWatermarkPassthrough <- function(plotFunction) {
+  withr::local_options(list(
+    ospsuite.plots.watermarkEnabled = TRUE,
+    ospsuite.plots.watermarkLabel = "GLOBAL WATERMARK"
+  ))
+
+  customWatermarkLabels <- extractPlotTextLabels(
+    plotFunction(watermark = "DRAFT")
+  )
+  expect_true(any(customWatermarkLabels$label == "DRAFT"))
+  expect_false(any(customWatermarkLabels$label == "GLOBAL WATERMARK"))
+
+  noWatermarkLabels <- extractPlotTextLabels(plotFunction(watermark = FALSE))
+  expect_false(any(noWatermarkLabels$label == "GLOBAL WATERMARK"))
+
+  defaultWatermarkLabels <- extractPlotTextLabels(plotFunction())
+  expect_true(any(defaultWatermarkLabels$label == "GLOBAL WATERMARK"))
+
+  redWatermarkLabels <- extractPlotTextLabels(
+    plotFunction(watermark = "DRAFT", watermarkFormat = list(color = "red"))
+  )
+  draftColors <- tolower(redWatermarkLabels$color[
+    redWatermarkLabels$label == "DRAFT"
+  ])
+  expect_true(any(draftColors %in% c("red", "#ff0000", "#ff0000ff")))
+}
