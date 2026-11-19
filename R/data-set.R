@@ -214,6 +214,48 @@ DataSet <- R6::R6Class(
       )
     },
 
+    #' @field outputPath Path of the simulation output that the observed data
+    #' belongs to, e.g. `"Organism|PeripheralVenousBlood|Aciclovir|Plasma
+    #' (Peripheral Venous Blood)"`, or `NULL` if not set. It is stored as the
+    #' meta data entry `OutputPath`. When the data set is used in PK-Sim or
+    #' MoBi version 13 or later, it is mapped automatically to the output with
+    #' exactly this path. The path must match exactly, including upper and
+    #' lower case. Set it to `NULL`, `NA`, or `""` to remove it. A path of
+    #' only spaces is treated as not set.
+    outputPath = function(value) {
+      if (missing(value)) {
+        path <- self$metaData[[.outputPathMetaDataName]]
+        if (is.null(path) || length(path) != 1 || is.na(path)) {
+          return(NULL)
+        }
+        path <- .outputPathAsText(path)
+        # PK-Sim and MoBi treat an empty entry or an entry of only spaces as
+        # not set
+        if (.isBlankOutputPath(path)) {
+          return(NULL)
+        }
+        return(path)
+      }
+
+      # A factor, e.g. from `read.csv(stringsAsFactors = TRUE)`, is used by
+      # its label, not by its internal code
+      if (is.factor(value)) {
+        value <- as.character(value)
+      }
+      if (is.null(value) || (length(value) == 1 && is.na(value))) {
+        self$removeMetaData(.outputPathMetaDataName)
+        return(invisible(self))
+      }
+      if (!is.character(value) || length(value) != 1) {
+        stop(messages$errorInvalidOutputPath(value))
+      }
+      if (.isBlankOutputPath(value)) {
+        self$removeMetaData(.outputPathMetaDataName)
+        return(invisible(self))
+      }
+      private$.dataRepository$addMetaData(.outputPathMetaDataName, value)
+    },
+
     #' @field metaData Returns a named list of meta data defined for the data set.
     metaData = function(value) {
       if (missing(value)) {
@@ -264,6 +306,15 @@ DataSet <- R6::R6Class(
         }
         self$subjectCount <- value
         return(invisible(self))
+      }
+      if (identical(name, .outputPathMetaDataName)) {
+        # Like all other entries, the value must be one text value. A missing
+        # value does not remove the entry here, use `removeMetaData()` or
+        # `outputPath <- NULL`. A blank value is stored as given, and
+        # `outputPath` treats it as not set.
+        if (!is.character(value) || length(value) != 1 || is.na(value)) {
+          stop(messages$errorInvalidOutputPath(value))
+        }
       }
       private$.dataRepository$addMetaData(name, value)
     },
@@ -322,24 +373,33 @@ DataSet <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
-      ospsuite.utils::ospPrintItems(
-        list(
-          "Name" = self$name,
-          "X dimension" = self$xDimension,
-          "X unit" = self$xUnit,
-          "Y dimension" = self$yDimension,
-          "Y unit" = self$yUnit,
-          "Error type" = self$yErrorType,
-          "Error unit" = self$yErrorUnit,
-          "Molecular weight" = self$molWeight,
-          "LLOQ" = self$LLOQ,
-          "Subject count" = self$subjectCount
-        ),
-        print_empty = TRUE
+      outputPath <- self$outputPath
+      items <- list(
+        "Name" = self$name,
+        "X dimension" = self$xDimension,
+        "X unit" = self$xUnit,
+        "Y dimension" = self$yDimension,
+        "Y unit" = self$yUnit,
+        "Error type" = self$yErrorType,
+        "Error unit" = self$yErrorUnit,
+        "Molecular weight" = self$molWeight,
+        "LLOQ" = self$LLOQ,
+        "Subject count" = self$subjectCount
       )
-      # The number of subjects is printed above, not again as meta data
+      # The output path is printed only if set
+      if (!is.null(outputPath)) {
+        items[["Output path"]] <- outputPath
+      }
+      ospsuite.utils::ospPrintItems(items, print_empty = TRUE)
+      # The number of subjects and the output path are printed above, not
+      # again as meta data. An output path entry that is not set, e.g. one of
+      # only spaces, stays in the meta data list.
+      printedAbove <- .subjectCountMetaDataName
+      if (!is.null(outputPath)) {
+        printedAbove <- c(printedAbove, .outputPathMetaDataName)
+      }
       metaData <- self$metaData
-      metaData <- metaData[names(metaData) != .subjectCountMetaDataName]
+      metaData <- metaData[!names(metaData) %in% printedAbove]
       ospsuite.utils::ospPrintItems(metaData, title = "Meta data")
     }
   ),

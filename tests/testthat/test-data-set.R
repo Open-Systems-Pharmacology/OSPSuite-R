@@ -598,3 +598,105 @@ test_that("print shows subjectCount once, not again as meta data", {
   dataSet$subjectCount <- 15
   expect_snapshot(print(dataSet))
 })
+
+# outputPath
+
+outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+
+test_that("outputPath is NULL when not set", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expect_null(dataSet$outputPath)
+})
+
+test_that("it can set outputPath and stores it as meta data OutputPath", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$outputPath <- outputPath
+  expect_identical(dataSet$outputPath, outputPath)
+  expect_identical(dataSet$metaData[["OutputPath"]], outputPath)
+})
+
+test_that("outputPath returns the value of an OutputPath meta data entry", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$addMetaData("OutputPath", outputPath)
+  expect_identical(dataSet$outputPath, outputPath)
+})
+
+test_that("it removes outputPath when set to NULL, NA, or an empty string", {
+  dataSet <- DataSet$new(name = dataSetName)
+  # "\u00a0" is a non-breaking space, which PK-Sim and MoBi treat as blank
+  for (value in list(NULL, NA, NA_character_, "", "   ", "\u00a0", "\t")) {
+    dataSet$outputPath <- outputPath
+    dataSet$outputPath <- value
+    expect_null(dataSet$outputPath)
+    expect_null(dataSet$metaData[["OutputPath"]])
+  }
+})
+
+test_that("addMetaData with the name OutputPath stores a blank value as given", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$addMetaData("OutputPath", outputPath)
+  dataSet$addMetaData("OutputPath", "   ")
+  expect_identical(dataSet$metaData[["OutputPath"]], "   ")
+  expect_null(dataSet$outputPath)
+})
+
+test_that("addMetaData with the name OutputPath does not remove the entry for a missing value", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$addMetaData("OutputPath", outputPath)
+  expect_snapshot(error = TRUE, dataSet$addMetaData("OutputPath", NA))
+  expect_snapshot(error = TRUE, dataSet$addMetaData("OutputPath", NULL))
+  expect_identical(dataSet$outputPath, outputPath)
+})
+
+test_that("outputPath accepts a factor and uses its label", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$outputPath <- factor(outputPath)
+  expect_identical(dataSet$outputPath, outputPath)
+})
+
+test_that("outputPath is NULL for a stored OutputPath entry that is empty or only spaces", {
+  dataSet <- DataSet$new(name = dataSetName)
+  # Entries like these can come from a PKML file or from PK-Sim or MoBi
+  dataSet$dataRepository$addMetaData("OutputPath", "")
+  expect_null(dataSet$outputPath)
+  dataSet$dataRepository$addMetaData("OutputPath", "  ")
+  expect_null(dataSet$outputPath)
+})
+
+test_that("it throws an error for an outputPath that is not one string", {
+  dataSet <- DataSet$new(name = dataSetName)
+  expect_snapshot(error = TRUE, dataSet$outputPath <- 1)
+  expect_snapshot(error = TRUE, dataSet$outputPath <- c("A|B", "C|D"))
+  expect_snapshot(error = TRUE, dataSet$addMetaData("OutputPath", 1))
+  expect_null(dataSet$outputPath)
+})
+
+test_that("outputPath is kept when saving the data set to PKML and loading it", {
+  dataSet <- DataSet$new(
+    dataRepository = .loadDataRepositoryFromPKML(obsDataFile)
+  )
+  dataSet$outputPath <- outputPath
+  filePath <- withr::local_tempfile(fileext = ".pkml")
+
+  saveDataSetToPKML(dataSet = dataSet, filePath = filePath)
+  loadedDataSet <- loadDataSetFromPKML(filePath)
+
+  expect_identical(loadedDataSet$outputPath, outputPath)
+})
+
+test_that("print shows outputPath once if set, not again as meta data", {
+  dataSet <- DataSet$new(
+    dataRepository = .loadDataRepositoryFromPKML(obsDataFile)
+  )
+  dataSet$outputPath <- outputPath
+  expect_snapshot(print(dataSet))
+})
+
+test_that("print shows an OutputPath entry that is not set as meta data", {
+  dataSet <- DataSet$new(
+    dataRepository = .loadDataRepositoryFromPKML(obsDataFile)
+  )
+  # An entry of only spaces is not an output path, but it is not hidden
+  dataSet$dataRepository$addMetaData("OutputPath", "  ")
+  expect_snapshot(print(dataSet))
+})

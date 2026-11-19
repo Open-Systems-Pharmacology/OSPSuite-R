@@ -48,6 +48,8 @@ aggregated data into \code{DataSet$subjectCount}, add a column \code{subjectCoun
 with one positive whole number per data set to the Excel file and add it as
 a grouping column, e.g. with
 \code{importerConfiguration$addGroupingColumn("subjectCount")}.
+Likewise, a grouping column \code{OutputPath} fills \code{DataSet$outputPath}, the
+path of the simulation output that each data set belongs to.
 }
 \examples{
 
