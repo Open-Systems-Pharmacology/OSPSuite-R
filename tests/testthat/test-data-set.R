@@ -36,6 +36,21 @@ test_that("it can create a new data set from scratch", {
   expect_identical(dataSet$yValues, numeric())
 })
 
+test_that("a data set does not inherit the methods of a .NET object", {
+  dataSet <- DataSet$new(name = "Data")
+  expect_false(inherits(dataSet, "NetObject"))
+  expect_null(dataSet$getStaticMethods)
+})
+
+test_that("it cannot change the data repository of a data set", {
+  dataSet <- DataSet$new(name = "Data")
+  expect_error(
+    dataSet$dataRepository <- DataRepository$new(),
+    messages$errorPropertyReadOnly("dataRepository"),
+    fixed = TRUE
+  )
+})
+
 test_that("it can set the name of the data set", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$name <- "TOTO"
