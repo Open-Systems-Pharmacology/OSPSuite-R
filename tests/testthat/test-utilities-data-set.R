@@ -927,12 +927,44 @@ test_that("dataSetsFromDataFrame throws an error for conflicting values in the c
 
 test_that("dataSetsFromDataFrame converts numbers in both output path columns to text", {
   base <- data.frame(name = "A", xValues = 1, yValues = 10)
+  # Without scientific notation, which would be "1e+05"
   expect_identical(
-    dataSetsFromDataFrame(cbind(base, outputPath = 12))[["A"]]$outputPath,
-    "12"
+    dataSetsFromDataFrame(cbind(base, outputPath = 100000))[["A"]]$outputPath,
+    "100000"
   )
   expect_identical(
-    dataSetsFromDataFrame(cbind(base, OutputPath = 12))[["A"]]$outputPath,
-    "12"
+    dataSetsFromDataFrame(cbind(base, OutputPath = 100000))[["A"]]$outputPath,
+    "100000"
   )
+})
+
+test_that(".outputPathAsText writes numbers in full and keeps missing values", {
+  expect_identical(
+    .outputPathAsText(c(100000, 1.5, 0.123456789, NA)),
+    c("100000", "1.5", "0.123456789", NA)
+  )
+  expect_identical(.outputPathAsText(factor("A|B")), "A|B")
+})
+
+test_that("loadDataSetsFromExcel reads outputPath from a grouping column OutputPath", {
+  importerConfiguration <- loadDataImporterConfiguration(
+    getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+  )
+  importerConfiguration$addGroupingColumn("OutputPath")
+
+  dataSets <- loadDataSetsFromExcel(
+    xlsFilePath = getTestDataFilePath("CompiledDataSet_oneSheet.xlsx"),
+    importerConfigurationOrPath = importerConfiguration
+  )
+
+  # The file has an output path for study ID01 and empty cells for ID02
+  studyIds <- vapply(dataSets, \(x) x$metaData[["Study Id"]], character(1))
+  outputPaths <- lapply(dataSets, \(x) x$outputPath)
+  expected <- lapply(studyIds, \(id) {
+    if (id == "ID01") {
+      "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+    }
+  })
+  expect_identical(length(dataSets), 4L)
+  expect_identical(outputPaths, expected)
 })

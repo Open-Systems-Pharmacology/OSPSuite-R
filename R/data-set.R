@@ -229,7 +229,7 @@ DataSet <- R6::R6Class(
         if (is.null(path) || length(path) != 1 || is.na(path)) {
           return(NULL)
         }
-        path <- as.character(path)
+        path <- .outputPathAsText(path)
         # PK-Sim and MoBi treat an empty entry or an entry of only spaces as
         # not set
         if (.isBlankOutputPath(path)) {
@@ -238,6 +238,11 @@ DataSet <- R6::R6Class(
         return(path)
       }
 
+      # A factor, e.g. from `read.csv(stringsAsFactors = TRUE)`, is used by
+      # its label, not by its internal code
+      if (is.factor(value)) {
+        value <- as.character(value)
+      }
       if (is.null(value) || (length(value) == 1 && is.na(value))) {
         self$removeMetaData(.outputPathMetaDataName)
         return(invisible(self))
@@ -304,9 +309,13 @@ DataSet <- R6::R6Class(
         return(invisible(self))
       }
       if (identical(name, .outputPathMetaDataName)) {
-        # Same rules as for `outputPath`, e.g. an empty value removes the entry
-        self$outputPath <- value
-        return(invisible(self))
+        # Like all other entries, the value must be one text value. A missing
+        # value does not remove the entry here, use `removeMetaData()` or
+        # `outputPath <- NULL`. A blank value is stored as given, and
+        # `outputPath` treats it as not set.
+        if (!is.character(value) || length(value) != 1 || is.na(value)) {
+          stop(messages$errorInvalidOutputPath(value))
+        }
       }
       private$.dataRepository$addMetaData(name, value)
     },
@@ -365,6 +374,7 @@ DataSet <- R6::R6Class(
     #' @param ... Rest arguments.
     print = function(...) {
       ospsuite.utils::ospPrintClass(self)
+      outputPath <- self$outputPath
       items <- list(
         "Name" = self$name,
         "X dimension" = self$xDimension,
@@ -378,15 +388,15 @@ DataSet <- R6::R6Class(
         "Subject count" = self$subjectCount
       )
       # The output path is printed only if set
-      if (!is.null(self$outputPath)) {
-        items[["Output path"]] <- self$outputPath
+      if (!is.null(outputPath)) {
+        items[["Output path"]] <- outputPath
       }
       ospsuite.utils::ospPrintItems(items, print_empty = TRUE)
       # The number of subjects and the output path are printed above, not
       # again as meta data. An output path entry that is not set, e.g. one of
       # only spaces, stays in the meta data list.
       printedAbove <- .subjectCountMetaDataName
-      if (!is.null(self$outputPath)) {
+      if (!is.null(outputPath)) {
         printedAbove <- c(printedAbove, .outputPathMetaDataName)
       }
       metaData <- self$metaData

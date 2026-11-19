@@ -420,7 +420,7 @@ dataSetsFromDataFrame <- function(data) {
     .getSingleNonNaValue <- function(columnName, outputPath = FALSE) {
       vals <- subset[[columnName]]
       if (outputPath) {
-        vals <- as.character(vals)
+        vals <- .outputPathAsText(vals)
         vals <- vals[!is.na(vals) & !.isBlankOutputPath(vals)]
       }
       vals <- unique(vals)
@@ -543,6 +543,29 @@ dataSetsFromDataFrame <- function(data) {
 # Columns of `dataSetsFromDataFrame()` that fill `DataSet$outputPath`, in the
 # order in which they are used
 .outputPathColumns <- c(.outputPathMetaDataName, "outputPath")
+
+#' Convert output paths to text
+#'
+#' Factors are used by their labels. Numbers are written without scientific
+#' notation, e.g. `100000` as `"100000"` and not as `"1e+05"`, so that they can
+#' match an output path. Missing values stay missing.
+#'
+#' @param value Vector of output paths.
+#' @return A character vector of the same length.
+#' @keywords internal
+#' @noRd
+.outputPathAsText <- function(value) {
+  if (is.numeric(value)) {
+    text <- vapply(
+      value,
+      \(x) format(x, scientific = FALSE, trim = TRUE, digits = 15),
+      character(1)
+    )
+    text[is.na(value)] <- NA_character_
+    return(unname(text))
+  }
+  as.character(value)
+}
 
 #' Check if an output path is blank
 #'

@@ -617,16 +617,26 @@ test_that("it removes outputPath when set to NULL, NA, or an empty string", {
   }
 })
 
-test_that("addMetaData with the name OutputPath follows the rules of outputPath", {
+test_that("addMetaData with the name OutputPath stores a blank value as given", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$addMetaData("OutputPath", outputPath)
-  dataSet$addMetaData("OutputPath", "")
-  expect_null(dataSet$outputPath)
-  expect_null(dataSet$metaData[["OutputPath"]])
-
-  dataSet$addMetaData("OutputPath", outputPath)
   dataSet$addMetaData("OutputPath", "   ")
-  expect_null(dataSet$metaData[["OutputPath"]])
+  expect_identical(dataSet$metaData[["OutputPath"]], "   ")
+  expect_null(dataSet$outputPath)
+})
+
+test_that("addMetaData with the name OutputPath does not remove the entry for a missing value", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$addMetaData("OutputPath", outputPath)
+  expect_snapshot(error = TRUE, dataSet$addMetaData("OutputPath", NA))
+  expect_snapshot(error = TRUE, dataSet$addMetaData("OutputPath", NULL))
+  expect_identical(dataSet$outputPath, outputPath)
+})
+
+test_that("outputPath accepts a factor and uses its label", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$outputPath <- factor(outputPath)
+  expect_identical(dataSet$outputPath, outputPath)
 })
 
 test_that("outputPath is NULL for a stored OutputPath entry that is empty or only spaces", {

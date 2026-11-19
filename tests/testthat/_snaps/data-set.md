@@ -150,6 +150,22 @@
         * StringValues: hello
         * IntegerValue: 4
 
+# addMetaData with the name OutputPath does not remove the entry for a missing value
+
+    Code
+      dataSet$addMetaData("OutputPath", NA)
+    Condition
+      Error in `dataSet$addMetaData()`:
+      ! outputPath must be one text value, not NA.
+
+---
+
+    Code
+      dataSet$addMetaData("OutputPath", NULL)
+    Condition
+      Error in `dataSet$addMetaData()`:
+      ! outputPath must be one text value, not `NULL`.
+
 # it throws an error for an outputPath that is not one string
 
     Code
@@ -171,7 +187,7 @@
     Code
       dataSet$addMetaData("OutputPath", 1)
     Condition
-      Error:
+      Error in `dataSet$addMetaData()`:
       ! outputPath must be one text value, not 1.
 
 # print shows outputPath once if set, not again as meta data
