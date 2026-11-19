@@ -453,7 +453,7 @@ test_that("it can set subjectCount and stores it as meta data", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$subjectCount <- 12
   expect_identical(dataSet$subjectCount, 12L)
-  expect_identical(dataSet$metaData[["subjectCount"]], "12")
+  expect_identical(dataSet$metaData[["Subject count"]], "12")
 })
 
 test_that("it removes subjectCount when set to NULL or NA", {
@@ -461,12 +461,12 @@ test_that("it removes subjectCount when set to NULL or NA", {
   dataSet$subjectCount <- 12
   dataSet$subjectCount <- NULL
   expect_null(dataSet$subjectCount)
-  expect_null(dataSet$metaData[["subjectCount"]])
+  expect_null(dataSet$metaData[["Subject count"]])
 
   dataSet$subjectCount <- 12
   dataSet$subjectCount <- NA
   expect_null(dataSet$subjectCount)
-  expect_null(dataSet$metaData[["subjectCount"]])
+  expect_null(dataSet$metaData[["Subject count"]])
 })
 
 test_that("it throws an error for a subjectCount that is not one positive whole number", {
@@ -502,7 +502,7 @@ test_that("subjectCount does not accept text that is not only digits", {
 
 test_that("subjectCount is NULL with a warning for a stored entry in scientific notation", {
   dataSet <- DataSet$new(name = dataSetName)
-  dataSet$dataRepository$addMetaData("subjectCount", "1e1")
+  dataSet$dataRepository$addMetaData("Subject count", "1e1")
   expect_warning(
     subjectCount <- dataSet$subjectCount,
     regexp = "not a positive whole number"
@@ -538,44 +538,64 @@ test_that("subjectCount accepts a whole number given as text", {
   expect_identical(dataSet$subjectCount, 12L)
 })
 
-test_that("addMetaData with the name subjectCount sets subjectCount", {
+test_that("addMetaData with the name Subject count sets subjectCount", {
   dataSet <- DataSet$new(name = dataSetName)
-  dataSet$addMetaData("subjectCount", "24")
+  dataSet$addMetaData("Subject count", "24")
   expect_identical(dataSet$subjectCount, 24L)
 })
 
-test_that("addMetaData with the name subjectCount needs text, like all other entries", {
+test_that("addMetaData with the name Subject count needs text, like all other entries", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$subjectCount <- 12
   expect_error(
-    dataSet$addMetaData("subjectCount", 18),
+    dataSet$addMetaData("Subject count", 18),
     regexp = "is of type <numeric>, but expected <character>"
   )
   # A missing value does not remove the entry
   expect_snapshot(
     error = TRUE,
-    dataSet$addMetaData("subjectCount", NA_character_)
+    dataSet$addMetaData("Subject count", NA_character_)
   )
   expect_identical(dataSet$subjectCount, 12L)
 })
 
-test_that("addMetaData with the name subjectCount throws an error for an invalid value", {
+test_that("addMetaData with the name Subject count throws an error for an invalid value", {
   dataSet <- DataSet$new(name = dataSetName)
-  expect_snapshot(error = TRUE, dataSet$addMetaData("subjectCount", "n=24"))
-  expect_null(dataSet$metaData[["subjectCount"]])
+  expect_snapshot(error = TRUE, dataSet$addMetaData("Subject count", "n=24"))
+  expect_null(dataSet$metaData[["Subject count"]])
 })
 
 test_that("subjectCount is NULL with a warning when the stored meta data entry is not a whole number", {
   dataSet <- DataSet$new(name = dataSetName)
   # Entry written without validation, e.g. by PK-Sim or by the Excel import
-  dataSet$dataRepository$addMetaData("subjectCount", "n=24")
+  dataSet$dataRepository$addMetaData("Subject count", "n=24")
   expect_snapshot(subjectCount <- dataSet$subjectCount)
   expect_null(subjectCount)
 })
 
-test_that("subjectCount is read from a numeric meta data entry", {
-  # Meta data loaded from a PKML file can be numeric instead of text
-  expect_identical(.subjectCountFromMetaData(6, dataSetName), 6L)
+test_that("subjectCount is NULL without a warning for an empty stored entry", {
+  dataSet <- DataSet$new(name = dataSetName)
+  # PK-Sim and MoBi store an empty value when the subject count is cleared
+  dataSet$dataRepository$addMetaData("Subject count", "")
+  expect_no_warning(subjectCount <- dataSet$subjectCount)
+  expect_null(subjectCount)
+})
+
+test_that("subjectCount set in R is the subject count of the .NET data repository", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$subjectCount <- 12
+  dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
+  expect_identical(
+    dataRepositoryTask$call("GetSubjectCount", dataSet$dataRepository),
+    12L
+  )
+})
+
+test_that("a meta data entry named subjectCount is ordinary meta data", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$addMetaData("subjectCount", "n=24")
+  expect_identical(dataSet$metaData[["subjectCount"]], "n=24")
+  expect_null(dataSet$subjectCount)
 })
 
 test_that("subjectCount is kept when saving the data set to PKML and loading it", {

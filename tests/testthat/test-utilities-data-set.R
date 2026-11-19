@@ -763,6 +763,7 @@ test_that("dataSetToDataFrame adds the subjectCount column and no duplicate meta
 
   expect_identical(df$subjectCount, c(12L, 12L, NA, NA, NA))
   expect_identical(sum(names(df) == "subjectCount"), 1L)
+  expect_false("Subject count" %in% names(df))
   expect_identical(df$Organ, c("Blood", "Blood", NA, NA, NA))
   expect_identical(
     dataSetToTibble(list(dataSetAggregated, dataSetIndividual))$subjectCount,
@@ -773,7 +774,7 @@ test_that("dataSetToDataFrame adds the subjectCount column and no duplicate meta
 test_that("dataSetToDataFrame gives NA with a warning for a stored subjectCount that is not a whole number", {
   dataSet <- DataSet$new(name = "Aggregated")
   dataSet$setValues(xValues = c(1, 2), yValues = c(10, 20))
-  dataSet$dataRepository$addMetaData("subjectCount", "twelve")
+  dataSet$dataRepository$addMetaData("Subject count", "twelve")
 
   expect_warning(
     df <- dataSetToDataFrame(dataSet),
@@ -834,14 +835,16 @@ test_that("dataSetsFromDataFrame throws an error for an invalid subjectCount", {
   )
 })
 
-# The column `subjectCount` of `CompiledDataSet_oneSheet.xlsx` is 12 for study
+# The column `Subject count` of `CompiledDataSet_oneSheet.xlsx` is 12 for study
 # ID01 and 8 for study ID02. It is only read when added as a grouping column.
+# `CompiledDataSet_invalidSubjectCount.xlsx` is a copy in which it is 0 for
+# study ID02.
 
 test_that("loadDataSetsFromExcel reads subjectCount from a grouping column", {
   importerConfiguration <- loadDataImporterConfiguration(
     getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
   )
-  importerConfiguration$addGroupingColumn("subjectCount")
+  importerConfiguration$addGroupingColumn("Subject count")
 
   dataSets <- loadDataSetsFromExcel(
     xlsFilePath = getTestDataFilePath("CompiledDataSet_oneSheet.xlsx"),
@@ -852,4 +855,32 @@ test_that("loadDataSetsFromExcel reads subjectCount from a grouping column", {
   subjectCounts <- vapply(dataSets, \(x) x$subjectCount, integer(1))
   expect_identical(length(dataSets), 4L)
   expect_identical(subjectCounts, ifelse(studyIds == "ID01", 12L, 8L))
+})
+
+test_that("loadDataSetsFromExcel fails for a subject count that is not a positive whole number", {
+  importerConfiguration <- loadDataImporterConfiguration(
+    getTestDataFilePath("dataImporterConfiguration_noSheets.xml")
+  )
+  importerConfiguration$addGroupingColumn("Subject count")
+
+  expect_error(
+    loadDataSetsFromExcel(
+      xlsFilePath = getTestDataFilePath(
+        "CompiledDataSet_invalidSubjectCount.xlsx"
+      ),
+      importerConfigurationOrPath = importerConfiguration
+    ),
+    regexp = "ImporterParsingException"
+  )
+
+  # The same values in a column with another name are not checked
+  importerConfiguration$removeGroupingColumn("Subject count")
+  expect_no_error(
+    loadDataSetsFromExcel(
+      xlsFilePath = getTestDataFilePath(
+        "CompiledDataSet_invalidSubjectCount.xlsx"
+      ),
+      importerConfigurationOrPath = importerConfiguration
+    )
+  )
 })

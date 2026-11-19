@@ -245,13 +245,7 @@ DataImporterConfiguration <- R6::R6Class(
     #' and `{Sheet}` for sheet name.
     namingPattern = function(value) {
       if (missing(value)) {
-        pattern <- self$get("NamingConventions")
-        # Create a default pattern if no is defined
-        if (is.null(pattern)) {
-          pattern <- "{Source}.{Sheet}"
-          self$set("NamingConventions", pattern)
-        }
-        return(pattern)
+        return(self$get("NamingConventions"))
       }
       validateIsString(value)
       self$set("NamingConventions", value)
@@ -282,6 +276,12 @@ DataImporterConfiguration <- R6::R6Class(
         mappedColumn <- column$get("MappedColumn")
         mappedColumn$set("Dimension", getDimensionByName(ospDimensions$Time))
         self$timeUnit <- ospUnits$Time$h
+      }
+
+      # The import fails if no naming pattern is defined, so set the default
+      # pattern here and not only when `namingPattern` is read
+      if (is.null(self$get("NamingConventions"))) {
+        self$set("NamingConventions", .defaultImporterNamingPattern)
       }
     },
 
@@ -397,3 +397,7 @@ DataImporterConfiguration <- R6::R6Class(
   "Arithmetic Standard Deviation" = "ArithmeticStdDev",
   "Geometric Standard Deviation" = "GeometricStdDev"
 ))
+
+# Naming pattern of a `DataImporterConfiguration` that has none: the file name
+# and the sheet name
+.defaultImporterNamingPattern <- "{Source}.{Sheet}"

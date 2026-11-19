@@ -102,18 +102,18 @@
       Error:
       ! subjectCount must be one positive whole number, not "twelve".
 
-# addMetaData with the name subjectCount needs text, like all other entries
+# addMetaData with the name Subject count needs text, like all other entries
 
     Code
-      dataSet$addMetaData("subjectCount", NA_character_)
+      dataSet$addMetaData("Subject count", NA_character_)
     Condition
       Error in `dataSet$addMetaData()`:
       ! subjectCount must be one positive whole number, not NA.
 
-# addMetaData with the name subjectCount throws an error for an invalid value
+# addMetaData with the name Subject count throws an error for an invalid value
 
     Code
-      dataSet$addMetaData("subjectCount", "n=24")
+      dataSet$addMetaData("Subject count", "n=24")
     Condition
       Error in `dataSet$addMetaData()`:
       ! subjectCount must be one positive whole number, not "n=24".
@@ -124,7 +124,7 @@
       subjectCount <- dataSet$subjectCount
     Condition
       Warning:
-      The meta data entry subjectCount of the data set "MyDataSet" is "n=24", which is not a positive whole number.
+      The meta data entry Subject count of the data set "MyDataSet" is "n=24", which is not a positive whole number.
       The number of subjects is treated as not set.
 
 # print shows subjectCount once, not again as meta data

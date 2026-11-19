@@ -115,7 +115,7 @@ messages$errorInvalidSubjectCount <- function(value) {
 
 messages$warningInvalidSubjectCount <- function(dataSetName, value) {
   cliFormat(
-    "The meta data entry {.field subjectCount} of the data set {.val {dataSetName}} is {.val {value}}, which is not a positive whole number.",
+    "The meta data entry {.field Subject count} of the data set {.val {dataSetName}} is {.val {value}}, which is not a positive whole number.",
     "The number of subjects is treated as not set."
   )
 }
