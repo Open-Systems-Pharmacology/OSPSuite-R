@@ -182,10 +182,7 @@ DataSet <- R6::R6Class(
 
     #' @field subjectCount Number of subjects from which the y values and the
     #' error values are calculated, e.g. for aggregated data reported as mean
-    #' and standard deviation. One positive whole number, or `NULL` if not
-    #' set. Set it to `NULL` or `NA` to remove it. It is stored as the meta
-    #' data entry "Subject count", which PK-Sim and MoBi show for observed
-    #' data.
+    #' and standard deviation. `NULL` if not, set it to `NULL` or `NA` to remove it.
     subjectCount = function(value) {
       if (missing(value)) {
         return(.subjectCountFromDataRepository(

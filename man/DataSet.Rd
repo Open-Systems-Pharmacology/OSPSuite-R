@@ -53,8 +53,7 @@ Value in yUnit associated with the yValues}
 
     \item{\code{subjectCount}}{Number of subjects from which the y values and the
 error values are calculated, e.g. for aggregated data reported as mean
-and standard deviation. One positive whole number, or \code{NULL} if not
-set. Set it to \code{NULL} or \code{NA} to remove it.}
+and standard deviation. \code{NULL} if not, set it to \code{NULL} or \code{NA} to remove it.}
 
     \item{\code{metaData}}{Returns a named list of meta data defined for the data set.}
   }
