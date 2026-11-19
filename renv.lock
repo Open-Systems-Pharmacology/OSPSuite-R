@@ -2021,7 +2021,7 @@
     },
     "ospsuite.plots": {
       "Package": "ospsuite.plots",
-      "Version": "1.3.0.9006",
+      "Version": "1.3.0.9009",
       "Source": "git",
       "Type": "Package",
       "Title": "Library for standardized graphs",
@@ -2049,6 +2049,7 @@
         "R6",
         "rlang",
         "scales",
+        "stringr",
         "tidyr"
       ],
       "Suggests": [
@@ -2071,11 +2072,11 @@
       "VignetteBuilder": "knitr",
       "Vignette": "inst/doc/ospsuite-plots.Rmd inst/doc/plot-time-profile.Rmd inst/doc/histogram.Rmd inst/doc/box-whisker-plots.Rmd inst/doc/goodness-of-fit.Rmd inst/doc/forest-plots.Rmd inst/doc/range-plot-visualization.Rmd",
       "Config/testthat/edition": "3",
-      "Collate": "'messages.R' 'utilities-defaults.R' 'utilities_enum.R' 'add_Layer.R' 'ggplotWithWatermark.R' 'geom-errorbar-osp.R' 'CombinedPlot.R' 'data.R' 'MappedData.R' 'MappedDataBoxplot.R' 'MappedDataTimeProfile.R' 'MappedDataRangePlot.R' 'ospsuite.plots-package.R' 'plotBoxWhisker.R' 'plotHistogram.R' 'plotQQ.R' 'plotTimeProfile.R' 'plotYVsX.R' 'plotForest.R' 'plotRangeDistribution.R' 'utilities.R' 'utilities_export.R' 'utilities_shapes.R'",
+      "Collate": "'messages.R' 'utilities-defaults.R' 'utilities_enum.R' 'add_Layer.R' 'ggplotWithWatermark.R' 'geom-errorbar-osp.R' 'CombinedPlot.R' 'data.R' 'MappedData.R' 'MappedDataBoxplot.R' 'MappedDataTimeProfile.R' 'MappedDataRangePlot.R' 'ospsuite.plots-package.R' 'plotBoxWhisker.R' 'plotHistogram.R' 'plotQQ.R' 'plotTimeProfile.R' 'plotYVsX.R' 'plotForest.R' 'plotRangeDistribution.R' 'utilities.R' 'utilities_export.R' 'utilities_shapes.R' 'legend-wrapping.R'",
       "LazyData": "true",
       "Additional_repositories": "https://open-systems-pharmacology.r-universe.dev",
-      "Config/roxygen2/version": "8.0.0",
-      "RoxygenNote": "8.0.0",
+      "Config/roxygen2/version": "8.1.0",
+      "RoxygenNote": "8.1.0",
       "Author": "Open-Systems-Pharmacology Community [cph], Katrin Coboeken [aut, cre]",
       "Maintainer": "Katrin Coboeken <katrin.coboeken@bayer.com>",
       "RemoteType": "git",
@@ -2084,7 +2085,7 @@
       "RemoteUsername": "Open-Systems-Pharmacology",
       "RemoteRepo": "OSPSuite.Plots",
       "RemoteRef": "main",
-      "RemoteSha": "373dfee10d547dfd40fd6ed2c483ad7971391929"
+      "RemoteSha": "2011d9fd16cecccdbc318278ecaca917bd2fb021"
     },
     "ospsuite.utils": {
       "Package": "ospsuite.utils",
