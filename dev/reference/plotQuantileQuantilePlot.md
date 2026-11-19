@@ -15,6 +15,8 @@ plotQuantileQuantilePlot(
   xUnit = NULL,
   yUnit = NULL,
   residualScale = "log",
+  watermark = NULL,
+  watermarkFormat = NULL,
   ...
 )
 ```
@@ -81,6 +83,14 @@ plotQuantileQuantilePlot(
 
   Either "linear", "log", or "ratio" method for computing residuals.
   Default is `log`.
+
+- watermark:
+
+  Optional watermark text for this plot.
+
+- watermarkFormat:
+
+  Optional list of watermark formatting values.
 
 - ...:
 

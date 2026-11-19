@@ -2,6 +2,17 @@
 
 ## ospsuite (development version)
 
+### Breaking changes
+
+- In
+  [`dataSetsFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetsFromDataFrame.md),
+  a column `outputPath` now fills `DataSet$outputPath`, which is stored
+  as the meta data entry `OutputPath`. Previously, it was added as a
+  meta data entry `outputPath`, so `ds$metaData$outputPath` now returns
+  `NULL`; use `ds$outputPath` instead. Blank values in this column are
+  ignored, and numbers are converted to text
+  ([\#1821](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1821)).
+
 ### New features
 
 - `DataSet` has a new field `subjectCount` for the number of subjects
@@ -34,6 +45,23 @@
   without a number of subjects, and
   `DataCombined$setDataTransformations()` does not change it
   ([\#2060](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2060)).
+- `DataSet` has a new field `outputPath` for the path of the simulation
+  output that the observed data belongs to. It is stored as the meta
+  data entry `OutputPath`, which PK-Sim and MoBi version 13 or later use
+  to map observed data automatically to the output with exactly this
+  path. It is `NULL` when not set, and
+  [`print()`](https://rdrr.io/r/base/print.html) shows it when it is
+  set.
+  [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
+  reads it from a grouping column `OutputPath`
+  ([\#1821](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1821)).
+- [`dataSetsFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetsFromDataFrame.md)
+  reads `DataSet$outputPath` from the meta data column `OutputPath`
+  returned by
+  [`dataSetToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md)
+  or from a column `outputPath`. If both columns hold a path for a data
+  set, `OutputPath` is used
+  ([\#1821](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1821)).
 
 ### Minor improvements and bug fixes
 
@@ -239,6 +267,22 @@
   now validates the `exportJSON` argument like the other export flags.
   Previously a non-logical value (e.g. `exportJSON = "TRUE"`) was
   silently treated as `FALSE` and no JSON was exported.
+- Plotting wrappers based on
+  [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)
+  now expose `watermark` and `watermarkFormat` as explicit function
+  arguments (instead of only via `...`) in
+  [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md),
+  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md),
+  [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md),
+  [`plotResidualsAsHistogram()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsAsHistogram.md),
+  and
+  [`plotQuantileQuantilePlot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotQuantileQuantilePlot.md).
+  [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md),
+  [`plotPredictedVsObserved()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotPredictedVsObserved.md)
+  and
+  [`plotResidualsVsCovariate()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotResidualsVsCovariate.md)
+  also expose `showLLOQ`
+  ([\#2069](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2069)).
 - Simulations returned by
   [`loadSimulationsFromSnapshot()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadSimulationsFromSnapshot.md)
   now carry their individual and module snapshots, so

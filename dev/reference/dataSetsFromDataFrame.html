@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9015</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9016</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,10 @@ results in one <code>DataSet</code> object.
 Any columns beyond the standard columns (<code>name</code>, <code>xValues</code>, <code>yValues</code>,
 <code>yErrorValues</code>, <code>xDimension</code>, <code>xUnit</code>, <code>yDimension</code>, <code>yUnit</code>, <code>yErrorType</code>,
 <code>yErrorUnit</code>, <code>molWeight</code>, <code>lloq</code>, <code>subjectCount</code>) will be added as meta
-data.</p>
+data. A column <code>OutputPath</code> (as returned by <code><a href="dataSetToDataFrame.html">dataSetToDataFrame()</a></code>) or
+<code>outputPath</code> fills <code>DataSet$outputPath</code>. Numbers in these columns are
+converted to text. If both columns hold a path for a data set, <code>OutputPath</code>
+is used. Because of this, a column <code>outputPath</code> is never added as meta data.</p>
     </div>
 
     <div class="section level2">

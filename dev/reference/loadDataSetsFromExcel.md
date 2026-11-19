@@ -62,7 +62,9 @@ meta data of the loaded data sets. To read the number of subjects of
 aggregated data into `DataSet$subjectCount`, add a column `subjectCount`
 with one positive whole number per data set to the Excel file and add it
 as a grouping column, e.g. with
-`importerConfiguration$addGroupingColumn("subjectCount")`.
+`importerConfiguration$addGroupingColumn("subjectCount")`. Likewise, a
+grouping column `OutputPath` fills `DataSet$outputPath`, the path of the
+simulation output that each data set belongs to.
 
 ## Examples
 

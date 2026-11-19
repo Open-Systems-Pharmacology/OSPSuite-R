@@ -77,6 +77,17 @@ for y-values.
   deviation. One positive whole number, or `NULL` if not set. Set it to
   `NULL` or `NA` to remove it.
 
+- `outputPath`:
+
+  Path of the simulation output that the observed data belongs to, e.g.
+  `"Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"`,
+  or `NULL` if not set. It is stored as the meta data entry
+  `OutputPath`. When the data set is used in PK-Sim or MoBi version 13
+  or later, it is mapped automatically to the output with exactly this
+  path. The path must match exactly, including upper and lower case. Set
+  it to `NULL`, `NA`, or `""` to remove it. A path of only spaces is
+  treated as not set.
+
 - `metaData`:
 
   Returns a named list of meta data defined for the data set.

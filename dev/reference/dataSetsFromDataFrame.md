@@ -31,6 +31,11 @@ Each unique value in the `name` column results in one `DataSet` object.
 Any columns beyond the standard columns (`name`, `xValues`, `yValues`,
 `yErrorValues`, `xDimension`, `xUnit`, `yDimension`, `yUnit`,
 `yErrorType`, `yErrorUnit`, `molWeight`, `lloq`, `subjectCount`) will be
+added as meta data. A column `OutputPath` (as returned by
+[`dataSetToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md))
+or `outputPath` fills `DataSet$outputPath`. Numbers in these columns are
+converted to text. If both columns hold a path for a data set,
+`OutputPath` is used. Because of this, a column `outputPath` is never
 added as meta data.
 
 ## Examples

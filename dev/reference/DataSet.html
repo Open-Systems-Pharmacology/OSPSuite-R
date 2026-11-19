@@ -9,7 +9,7 @@ optional error for y-values."><meta name="robots" content="noindex"></head><body
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9015</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9016</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,6 +143,16 @@ Value in yUnit associated with the yValues</p></dd>
 error values are calculated, e.g. for aggregated data reported as mean
 and standard deviation. One positive whole number, or <code>NULL</code> if not
 set. Set it to <code>NULL</code> or <code>NA</code> to remove it.</p></dd>
+
+
+    <dt><code>outputPath</code></dt>
+<dd><p>Path of the simulation output that the observed data
+belongs to, e.g. <code>"Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</code>, or <code>NULL</code> if not set. It is stored as the
+meta data entry <code>OutputPath</code>. When the data set is used in PK-Sim or
+MoBi version 13 or later, it is mapped automatically to the output with
+exactly this path. The path must match exactly, including upper and
+lower case. Set it to <code>NULL</code>, <code>NA</code>, or <code>""</code> to remove it. A path of
+only spaces is treated as not set.</p></dd>
 
 
     <dt><code>metaData</code></dt>

@@ -18,6 +18,9 @@ plotResidualsVsCovariate(
   residualScale = "log",
   xAxis = "observed",
   showLegendPerDataset = "all",
+  showLLOQ = TRUE,
+  watermark = NULL,
+  watermarkFormat = NULL,
   ...
 )
 ```
@@ -103,6 +106,20 @@ plotResidualsVsCovariate(
     via different shapes (using the `name` column).
 
   User-provided `mapping` will override internal settings.
+
+- showLLOQ:
+
+  A boolean; if `TRUE` (default), LLOQ lines and below-LLOQ point fading
+  are displayed. If `FALSE`, neither the LLOQ line nor below-LLOQ fading
+  is applied.
+
+- watermark:
+
+  Optional watermark text for this plot.
+
+- watermarkFormat:
+
+  Optional list of watermark formatting values.
 
 - ...:
 

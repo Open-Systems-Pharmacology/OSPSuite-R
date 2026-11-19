@@ -11,7 +11,7 @@ representation of their distribution.'><meta name="robots" content="noindex"></h
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9015</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9016</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,6 +81,8 @@ representation of their distribution.</p>
 <span>  yUnit <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  distribution <span class="op">=</span> <span class="st">"normal"</span>,</span>
 <span>  residualScale <span class="op">=</span> <span class="st">"log"</span>,</span>
+<span>  watermark <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  watermarkFormat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -132,6 +134,14 @@ the most frequent unit in the data is used. For available units, see
 <dt id="arg-residualscale">residualScale<a class="anchor" aria-label="anchor" href="#arg-residualscale"></a></dt>
 <dd><p>Either "linear", "log", or "ratio" method for computing
 residuals. Default is <code>log</code>.</p></dd>
+
+
+<dt id="arg-watermark">watermark<a class="anchor" aria-label="anchor" href="#arg-watermark"></a></dt>
+<dd><p>Optional watermark text for this plot.</p></dd>
+
+
+<dt id="arg-watermarkformat">watermarkFormat<a class="anchor" aria-label="anchor" href="#arg-watermarkformat"></a></dt>
+<dd><p>Optional list of watermark formatting values.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

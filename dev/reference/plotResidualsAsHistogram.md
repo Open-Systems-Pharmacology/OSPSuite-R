@@ -15,6 +15,8 @@ plotResidualsAsHistogram(
   yUnit = NULL,
   distribution = "normal",
   residualScale = "log",
+  watermark = NULL,
+  watermarkFormat = NULL,
   ...
 )
 ```
@@ -79,6 +81,14 @@ plotResidualsAsHistogram(
 
   Either "linear", "log", or "ratio" method for computing residuals.
   Default is `log`.
+
+- watermark:
+
+  Optional watermark text for this plot.
+
+- watermarkFormat:
+
+  Optional list of watermark formatting values.
 
 - ...:
 

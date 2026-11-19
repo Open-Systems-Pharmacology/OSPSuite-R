@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9015</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9016</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,7 +120,9 @@ meta data of the loaded data sets. To read the number of subjects of
 aggregated data into <code>DataSet$subjectCount</code>, add a column <code>subjectCount</code>
 with one positive whole number per data set to the Excel file and add it as
 a grouping column, e.g. with
-<code>importerConfiguration$addGroupingColumn("subjectCount")</code>.</p>
+<code>importerConfiguration$addGroupingColumn("subjectCount")</code>.
+Likewise, a grouping column <code>OutputPath</code> fills <code>DataSet$outputPath</code>, the
+path of the simulation output that each data set belongs to.</p>
     </div>
 
     <div class="section level2">

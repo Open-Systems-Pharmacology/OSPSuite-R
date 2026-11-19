@@ -13,7 +13,7 @@ This function visualizes the residuals against time, observed, or predicted
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9015</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9016</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,6 +86,9 @@ values), grouped by "group".</p>
 <span>  residualScale <span class="op">=</span> <span class="st">"log"</span>,</span>
 <span>  xAxis <span class="op">=</span> <span class="st">"observed"</span>,</span>
 <span>  showLegendPerDataset <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  showLLOQ <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  watermark <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  watermarkFormat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -153,6 +156,20 @@ individual datasets. One of:</p><ul><li><p><code>"none"</code>: No per-dataset d
 <li><p><code>"all"</code> (default) or <code>"observed"</code>: Differentiate observed datasets via different
 shapes (using the <code>name</code> column).</p></li>
 </ul><p>User-provided <code>mapping</code> will override internal settings.</p></dd>
+
+
+<dt id="arg-showlloq">showLLOQ<a class="anchor" aria-label="anchor" href="#arg-showlloq"></a></dt>
+<dd><p>A boolean; if <code>TRUE</code> (default), LLOQ lines and below-LLOQ
+point fading are displayed. If <code>FALSE</code>, neither the LLOQ line nor
+below-LLOQ fading is applied.</p></dd>
+
+
+<dt id="arg-watermark">watermark<a class="anchor" aria-label="anchor" href="#arg-watermark"></a></dt>
+<dd><p>Optional watermark text for this plot.</p></dd>
+
+
+<dt id="arg-watermarkformat">watermarkFormat<a class="anchor" aria-label="anchor" href="#arg-watermarkformat"></a></dt>
+<dd><p>Optional list of watermark formatting values.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

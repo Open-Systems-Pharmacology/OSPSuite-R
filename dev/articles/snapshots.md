@@ -208,7 +208,7 @@ projectFile <- list.files(projectDir, pattern = "\\.pksim5$", full.names = TRUE)
 projectFile
 ```
 
-    ## [1] "/tmp/RtmpbBXe6b/project/test_snapshot.pksim5"
+    ## [1] "/tmp/RtmpiV7xZZ/project/test_snapshot.pksim5"
 
 Set `runSimulations = TRUE` to also run the simulations during this
 conversion.

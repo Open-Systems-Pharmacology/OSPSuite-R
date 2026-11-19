@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9015</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9016</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -266,10 +266,27 @@ the importer configuration with
 <span></span>
 <span><span class="co"># Remove the number of subjects</span></span>
 <span><span class="va">dataSet</span><span class="op">$</span><span class="va">subjectCount</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
+<p>In PK-Sim and MoBi version 13 or later, observed data can name the
+simulation output it belongs to. This path is stored in the
+<code>outputPath</code> field (meta data entry <code>OutputPath</code>).
+When the data set is added to a simulation in PK-Sim or MoBi, it is
+mapped automatically to the output with exactly this path, instead of
+using the <code>Organ</code>, <code>Compartment</code>, and
+<code>Molecule</code> meta data. To read it from an Excel file, add a
+column <code>OutputPath</code> to the file and add it as a grouping
+column with
+<code>importerConfiguration$addGroupingColumn("OutputPath")</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dataSet</span><span class="op">$</span><span class="va">outputPath</span> <span class="op">&lt;-</span> <span class="st">"Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span></span>
+<span><span class="va">dataSet</span><span class="op">$</span><span class="va">outputPath</span></span>
+<span><span class="co">#&gt; [1] "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"</span></span>
+<span></span>
+<span><span class="co"># Remove the output path</span></span>
+<span><span class="va">dataSet</span><span class="op">$</span><span class="va">outputPath</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
 <p>A <code>DataSet</code> or multiple <code>DataSet</code>s can be
 converted to <code>data.frame</code> (or <code>tibble</code>) to be
 processed in downstream analysis and visualization workflows:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create a second data set</span></span>
 <span><span class="va">dataSet2</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/DataSet.html">DataSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Second data set"</span><span class="op">)</span></span>
 <span><span class="va">dataSet2</span><span class="op">$</span><span class="fu">setValues</span><span class="op">(</span></span>
@@ -303,7 +320,7 @@ processed in downstream analysis and visualization workflows:</p>
 <code>DataSet</code> objects. This is useful for constructing
 <code>DataSet</code> objects programmatically or after manipulating data
 in a <code>data.frame</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create a data set and convert to data.frame</span></span>
 <span><span class="va">dsOriginal</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/DataSet.html">DataSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Aciclovir"</span><span class="op">)</span></span>
 <span><span class="va">dsOriginal</span><span class="op">$</span><span class="fu">setValues</span><span class="op">(</span></span>
@@ -350,7 +367,7 @@ data is provided as a plain table. The required columns are
 <code>name</code>, <code>xValues</code>, and <code>yValues</code>. All
 other standard columns are optional, and any additional columns are
 interpreted as meta data.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Construct a data.frame manually and create DataSet objects from it</span></span>
 <span><span class="va">observedDf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Study A"</span>, <span class="st">"Study A"</span>, <span class="st">"Study B"</span>, <span class="st">"Study B"</span><span class="op">)</span>,</span>
@@ -388,7 +405,7 @@ from the <code>*.pkml</code> file. Complementary to this function is the
 function <code><a href="../reference/saveDataSetToPKML.html">saveDataSetToPKML()</a></code> that allows to export any
 <code>DataSet</code> to a <code>*.pkml</code> that can be loaded e.g. in
 MoBi.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load a data set from PKML</span></span>
 <span><span class="va">filePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ObsDataAciclovir_1.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span></span>
@@ -435,7 +452,7 @@ the x values) or meta data (e.g., description of the applied dose). One
 way to obtain such configuration is to create it in PK-Sim or MoBi, save
 it (as an <code>*.xml</code>) file, and load it in R with the
 <code><a href="../reference/loadDataImporterConfiguration.html">loadDataImporterConfiguration()</a></code> function:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load a configuration from xml file</span></span>
 <span><span class="va">filePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"dataImporterConfiguration.xml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">importerConfiguration</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadDataImporterConfiguration.html">loadDataImporterConfiguration</a></span><span class="op">(</span>configurationFilePath <span class="op">=</span> <span class="va">filePath</span><span class="op">)</span></span>
@@ -461,7 +478,7 @@ it (as an <code>*.xml</code>) file, and load it in R with the
 <p>A data importer configuration can also be created from scratch and
 has to be manually populated by the user. Alternatively, the user can
 let the software “guess” the configuration for a given excel sheet:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Excel file</span></span>
 <span><span class="va">excelFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CompiledDataSet.xlsx"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">sheetName</span> <span class="op">&lt;-</span> <span class="st">"TestSheet_1"</span></span>
@@ -497,7 +514,7 @@ automated configuration recognition cannot cover all possible cases.</p>
 can be specified in the <code>ImporterConfiguration</code>. The
 following example loads the sheets <code>TestSheet_1</code> and
 <code>TestSheet_1_withMW</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Excel file</span></span>
 <span><span class="va">excelFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CompiledDataSet.xlsx"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
 <span><span class="va">sheetName</span> <span class="op">&lt;-</span> <span class="st">"TestSheet_1"</span></span>
