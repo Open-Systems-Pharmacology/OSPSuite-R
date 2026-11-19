@@ -545,7 +545,7 @@ dfMolWeightNA <- dplyr::tibble(
 
 test_that("if molWeight is missing, an error is signaled if dimensions require them", {
   expect_error(
-    .unitConverter(dfMolWeightNA, yUnit = "mol"),
+    .unitConverter(dfMolWeightNA, yUnits = list("g", "mol")),
     "Molecular Weight not available."
   )
 })
@@ -746,8 +746,13 @@ dfConc <- dplyr::tibble(
 
 dfConcConvert <- .unitConverter(dfConc)
 
-test_that("it retains multiple concentration dimensions", {
-  expect_equal(unique(dfConcConvert$yDimension), concDims)
+test_that("it merges the concentration dimensions into the dimension of the target unit", {
+  # the concentration dimensions are merged and converted to a single target
+  # unit; `yDimension` follows the target unit
+  expect_equal(unique(dfConcConvert$yDimension), concDims[[1]])
+  expect_equal(unique(dfConcConvert$yUnit), "mg/l")
+  # 45 mol/l with a molecular weight of 10 g/mol are 450000 mg/l
+  expect_equal(dfConcConvert$yValues, c(0.25, 450000))
 })
 
 # Unitless unit tests -------------------

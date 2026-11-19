@@ -1784,6 +1784,35 @@ test_that("`convertUnits()` does not change what the object returns afterwards",
   expect_equal(myCombDat$toDataFrame(), expected)
 })
 
+test_that("`convertUnits()` converts each y dimension to its own unit", {
+  converted <- convertUnits(manyObsSimDCWithFraction())
+
+  concentrationRows <- converted[converted$yDimension == "Concentration (mass)", ]
+  fractionRows <- converted[converted$yDimension == "Fraction", ]
+
+  # the concentration dimensions are merged and displayed in the unit of the
+  # observed dataset
+  expect_identical(unique(concentrationRows$yUnit), "mg/l")
+  # the fraction dimension cannot be converted to a concentration unit and
+  # keeps its own (dimensionless) unit
+  expect_identical(unique(fractionRows$yUnit), "")
+  # x values are shared across all dimensions
+  expect_identical(unique(converted$xUnit), "h")
+})
+
+test_that("`convertUnits()` updates `yDimension` after converting between mass and molar concentration units", {
+  # simulated results are in a molar unit
+  expect_identical(
+    unique(oneSimDC()$toDataFrame()$yDimension),
+    "Concentration (molar)"
+  )
+
+  converted <- convertUnits(oneSimDC(), yUnit = "mg/l")
+
+  expect_identical(unique(converted$yUnit), "mg/l")
+  expect_identical(unique(converted$yDimension), "Concentration (mass)")
+})
+
 test_that("plotting the same object twice plots the same data", {
   myCombDat <- oneObsSimDC()
 
