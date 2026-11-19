@@ -37,6 +37,16 @@
 
 ### Minor improvements and bug fixes
 
+- `DataSet` no longer offers the methods
+  [`get()`](https://rdrr.io/r/base/get.html), `set()`,
+  [`call()`](https://rdrr.io/r/base/call.html), `getStaticMethods()`,
+  `getProperties()` and the other methods of
+  [`rSharp::NetObject`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.md).
+  These methods always failed with `System.NullReferenceException`,
+  because a `DataSet` is not itself a .NET object. Use them on the
+  underlying object instead,
+  e.g. `dataSet$dataRepository$getProperties()`
+  ([\#2076](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2076)).
 - [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md)
   and the other plot functions based on
   [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)
