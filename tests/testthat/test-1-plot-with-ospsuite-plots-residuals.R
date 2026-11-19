@@ -284,6 +284,61 @@ test_that("showLegendPerDataset simulated throws error for residuals", {
   )
 })
 
+test_that("It differentiates observed datasets by shape independently of showLegendPerDataset", {
+  myCombDat$setGroups(
+    names = c(
+      "Organism|Lumen|Stomach|Metformin|Gastric retention",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention distal",
+      "Organism|Lumen|Stomach|Metformin|Gastric retention proximal",
+      "Stevens_2012_placebo.Placebo_total",
+      "Stevens_2012_placebo.Placebo_distal",
+      "Stevens_2012_placebo.Placebo_proximal"
+    ),
+    groups = c(
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012",
+      "Stevens_2012_total",
+      "Stevens_2012",
+      "Stevens_2012"
+    )
+  )
+
+  drawnShapes <- function(plot) {
+    layerValues <- lapply(ggplot2::ggplot_build(plot)$data, function(layerData) {
+      if ("shape" %in% names(layerData)) {
+        unique(stats::na.omit(layerData[['shape']]))
+      }
+    })
+    sort(unique(unlist(layerValues)))
+  }
+  hiddenGuides <- function(plot) {
+    guidesSettings <- plot$guides$guides
+    names(guidesSettings)[vapply(
+      guidesSettings,
+      function(guideSetting) identical(guideSetting, "none"),
+      logical(1)
+    )]
+  }
+
+  # datasets are always visually differentiated, also without legend entries
+  plotAll <- plotResidualsVsCovariate(
+    myCombDat,
+    residualScale = "linear",
+    showLegendPerDataset = "all"
+  )
+  plotNone <- plotResidualsVsCovariate(
+    myCombDat,
+    residualScale = "linear",
+    showLegendPerDataset = "none"
+  )
+
+  expect_equal(drawnShapes(plotNone), drawnShapes(plotAll))
+  # with per-dataset legend entries hidden, the shape guide is switched off
+  expect_false("shape" %in% hiddenGuides(plotAll))
+  expect_contains(hiddenGuides(plotNone), "shape")
+})
+
 test_that("User mapping overrides showLegendPerDataset in residuals", {
   myCombDat$setGroups(
     names = c(

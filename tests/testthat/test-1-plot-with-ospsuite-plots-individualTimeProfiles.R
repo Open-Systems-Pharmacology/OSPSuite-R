@@ -108,6 +108,52 @@ test_that("It maps multiple observed and simulated datasets to different visual 
   )
 })
 
+test_that("It differentiates datasets within a group independently of showLegendPerDataset", {
+  # local helpers to inspect the aesthetics actually drawn and hidden guides
+  drawnAesthetics <- function(plot, aesthetic) {
+    layerValues <- lapply(ggplot2::ggplot_build(plot)$data, function(layerData) {
+      if (aesthetic %in% names(layerData)) {
+        unique(stats::na.omit(layerData[[aesthetic]]))
+      }
+    })
+    sort(unique(unlist(layerValues)))
+  }
+  hiddenGuides <- function(plot) {
+    guidesSettings <- plot$guides$guides
+    names(guidesSettings)[vapply(
+      guidesSettings,
+      function(guideSetting) identical(guideSetting, "none"),
+      logical(1)
+    )]
+  }
+
+  for (option in c("all", "simulated", "observed", "none")) {
+    # two simulated datasets in one group are always drawn with different linetypes
+    simPlot <- suppressWarnings(
+      plotTimeProfile(manySimDC(), showLegendPerDataset = option)
+    )
+    expect_length(drawnAesthetics(simPlot, "linetype"), 2)
+
+    # two observed datasets in one group are always drawn with different shapes
+    obsPlot <- suppressWarnings(
+      plotTimeProfile(manyObsDC(), showLegendPerDataset = option)
+    )
+    expect_length(drawnAesthetics(obsPlot, "shape"), 2)
+  }
+
+  # per-dataset legend entries are controlled by showLegendPerDataset
+  expect_false("linetype" %in% hiddenGuides(plotTimeProfile(manySimDC())))
+  expect_contains(
+    hiddenGuides(plotTimeProfile(manySimDC(), showLegendPerDataset = "none")),
+    "linetype"
+  )
+  expect_false("shape" %in% hiddenGuides(plotTimeProfile(manyObsDC())))
+  expect_contains(
+    hiddenGuides(plotTimeProfile(manyObsDC(), showLegendPerDataset = "none")),
+    "shape"
+  )
+})
+
 test_that("It applies yScale and yScaleArgs to multiple obs and sim datasets", {
   set.seed(123)
   vdiffr::expect_doppelganger(

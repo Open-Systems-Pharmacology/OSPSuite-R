@@ -78,12 +78,16 @@ plot above and below the mean (used for error bars when aggregation is
 "arithmetic" or "geometric"). Ignored if \code{aggregation} is  \code{quantiles}.}
 
 \item{showLegendPerDataset}{Controls display of separate legend entries for
-individual datasets. One of:
+individual datasets. Datasets within a group are always visually
+differentiated - observed data via different point \code{shape}, simulated data
+via different line \code{linetype} - regardless of this argument; it controls
+only which of these differentiations get their own legend entries. One of:
 \itemize{
-\item \code{"none"}: No per-dataset differentiation. Only group-level legend.
-\item \code{"all"} (default): Differentiate both observed (via \code{shape}) and simulated (via \code{linetype}).
-\item \code{"observed"}: Differentiate only observed data via different shapes.
-\item \code{"simulated"}: Differentiate only simulated data via different line types.
+\item \code{"none"}: No per-dataset legend entries. Only group-level legend.
+\item \code{"all"} (default): Legend entries for both observed (via \code{shape}) and
+simulated (via \code{linetype}) datasets.
+\item \code{"observed"}: Legend entries only for observed data via different shapes.
+\item \code{"simulated"}: Legend entries only for simulated data via different line types.
 }
 
 User-provided \code{mapping} and \code{observedMapping} will override internal
