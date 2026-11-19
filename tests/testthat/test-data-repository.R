@@ -35,3 +35,20 @@ test_that("it retrives the meta data associated with the data repository", {
 test_that("it can print a data repository", {
   expect_snapshot(print(obsData))
 })
+
+test_that("setSubjectCount stores the subject count, also after the meta data was read", {
+  dataRepository <- DataRepository$new()
+  dataRepository$addMetaData("Study", "Study 1")
+  dataRepository$metaData
+  dataRepository$setSubjectCount(12)
+  expect_identical(
+    dataRepository$metaData,
+    list(Study = "Study 1", `Subject count` = "12")
+  )
+})
+
+test_that("setSubjectCount throws an error for a value that is not a positive whole number", {
+  dataRepository <- DataRepository$new()
+  expect_snapshot(error = TRUE, dataRepository$setSubjectCount(2.5))
+  expect_null(dataRepository$metaData[["Subject count"]])
+})

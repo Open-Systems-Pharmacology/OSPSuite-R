@@ -591,6 +591,19 @@ test_that("subjectCount set in R is the subject count of the .NET data repositor
   )
 })
 
+test_that("subjectCount set after reading the meta data is shown in subjectCount and metaData", {
+  dataSet <- DataSet$new(name = dataSetName)
+  dataSet$addMetaData("Study", "Study 1")
+  # Reading the meta data, e.g. by printing the data set, keeps a copy in R
+  dataSet$metaData
+  dataSet$subjectCount <- 12
+  expect_identical(dataSet$subjectCount, 12L)
+  expect_identical(
+    dataSet$metaData,
+    list(Study = "Study 1", `Subject count` = "12")
+  )
+})
+
 test_that("a meta data entry named subjectCount is ordinary meta data", {
   dataSet <- DataSet$new(name = dataSetName)
   dataSet$addMetaData("subjectCount", "n=24")

@@ -128,6 +128,26 @@ DataRepository <- R6::R6Class(
       dataRepositoryTask$call("RemoveMetaData", self, name)
       # we need to reset the cache when adding a new meta data
       private$.metaData <- NULL
+    },
+    #' @description
+    #' Sets the number of subjects from which the values are calculated. It is
+    #' stored as the meta data entry "Subject count", which PK-Sim and MoBi
+    #' show for observed data. Use `DataSet$subjectCount` to read it.
+    #'
+    #' @param subjectCount One positive whole number.
+    setSubjectCount = function(subjectCount) {
+      if (!.isValidSubjectCount(subjectCount)) {
+        stop(messages$errorInvalidSubjectCount(subjectCount))
+      }
+      dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
+      dataRepositoryTask$call(
+        "SetSubjectCount",
+        self,
+        as.integer(subjectCount)
+      )
+      # .NET changed the meta data, so the copy in R is outdated
+      private$.metaData <- NULL
+      invisible(self)
     }
   ),
   private = list(

@@ -212,12 +212,7 @@ DataSet <- R6::R6Class(
       if (is.na(count)) {
         stop(messages$errorInvalidSubjectCount(value))
       }
-      dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
-      dataRepositoryTask$call(
-        "SetSubjectCount",
-        private$.dataRepository,
-        as.integer(count)
-      )
+      private$.dataRepository$setSubjectCount(count)
       invisible(self)
     },
 

@@ -203,12 +203,10 @@ dataSetToTibble <- function(dataSets, names = NULL) {
 #' @details Load observed data from an excel file using an importer configuration
 #'
 #' The values of all grouping columns of the configuration are added to the
-#' meta data of the loaded data sets. To read the number of subjects of
-#' aggregated data into `DataSet$subjectCount`, add a column named exactly
-#' `Subject count` with one positive whole number per data set to the Excel
-#' file and add it as a grouping column, e.g. with
-#' `importerConfiguration$addGroupingColumn("Subject count")`. The import
-#' fails if a value in this column is not a positive whole number.
+#' meta data of the loaded data sets.
+#'
+#' To read the number of subjects of aggregated data, the excel sheet must have a column
+#' `Subject count`.
 #'
 #' @param xlsFilePath Path to the excel file with the data
 #' @param importerConfigurationOrPath An object of type `DataImporterConfiguration` that is valid
@@ -575,10 +573,8 @@ dataSetsFromDataFrame <- function(data) {
 #' @keywords internal
 #' @noRd
 .subjectCountFromDataRepository <- function(dataRepository, dataSetName) {
-  storedValue <- dataRepository$metaData[[.subjectCountMetaDataName]]
-  if (is.null(storedValue) || identical(storedValue, "")) {
-    return(NULL)
-  }
+  # .NET returns `NULL` for a missing or empty entry, so the meta data is only
+  # read for the warning
   dataRepositoryTask <- .getCoreTaskFromCache("DataRepositoryTask")
   tryCatch(
     dataRepositoryTask$call("GetSubjectCount", dataRepository),
@@ -588,7 +584,10 @@ dataSetsFromDataFrame <- function(data) {
         stop(e)
       }
       warning(
-        messages$warningInvalidSubjectCount(dataSetName, storedValue),
+        messages$warningInvalidSubjectCount(
+          dataSetName,
+          dataRepository$metaData[[.subjectCountMetaDataName]]
+        ),
         call. = FALSE
       )
       NULL
