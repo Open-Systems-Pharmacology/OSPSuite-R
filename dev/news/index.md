@@ -62,6 +62,19 @@
   or from a column `outputPath`. If both columns hold a path for a data
   set, `OutputPath` is used
   ([\#1821](https://github.com/open-systems-pharmacology/ospsuite-r/issues/1821)).
+- `DataImporterConfiguration` has a new field `errorTypeColumn`, the
+  name of a column of the Excel file that defines the error type
+  (arithmetic or geometric standard deviation) of each data set.
+  [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
+  accepts the values `ASD`, `ArithmeticStdDev` and
+  `Arithmetic Standard Deviation` for an arithmetic standard deviation,
+  and `GSD`, `GeometricStdDev` and `Geometric Standard Deviation` for a
+  geometric standard deviation (not case-sensitive, spaces before and
+  after a value are ignored). Data sets without a value in this column
+  get the error type that is defined in the `$errorType` property of the
+  `DataImporterConfiguration`. Unknown values, or more than one error
+  type in one data set, make the import fail
+  ([\#2066](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2066)).
 
 ### Minor improvements and bug fixes
 
@@ -81,6 +94,27 @@
   underlying object instead,
   e.g. `dataSet$dataRepository$getProperties()`
   ([\#2076](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2076)).
+- Setting `errorUnit` of a `DataImporterConfiguration` created by
+  [`createImporterConfigurationForFile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/createImporterConfigurationForFile.md)
+  no longer fails with `attempt to apply non-function` when the error
+  column has no dimension, for example when the error type was detected
+  as geometric. The error column then gets the dimension of the
+  measurement column
+  ([\#2066](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2066)).
+- When
+  [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
+  is called with the `sheets` argument and the import fails, for example
+  because of an unknown error type, the sheets of the importer
+  configuration are now restored. Previously the configuration kept the
+  sheets from the `sheets` argument, so a later call without `sheets`
+  loaded the wrong sheets
+  ([\#2066](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2066)).
+- [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
+  now imports a geometric standard deviation whose unit is read from a
+  column (`isMeasurementUnitFromColumn = TRUE`) as dimensionless values,
+  as written in the file. Previously the import failed with
+  `Wrong Dimension for GeometricStdDev`
+  ([\#2075](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2075)).
 - [`plotTimeProfile()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/plotTimeProfile.md)
   and the other plot functions based on
   [ospsuite.plots](https://www.open-systems-pharmacology.org/OSPSuite.Plots/)

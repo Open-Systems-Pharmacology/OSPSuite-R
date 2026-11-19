@@ -432,6 +432,7 @@ print(importerConfiguration)
 #>   • LLOQ column: NULL
 #>   • Error column: Error [ng/ml]
 #>   • Error type: ArithmeticStdDev
+#>   • Error type column: NULL
 #>   • Error unit: ng/ml
 #>   • Grouping columns: Study Id, Organ, Compartment, Species, Gender, Molecule,
 #>   Route, MW, Patient Id, Dose [unit]
@@ -473,6 +474,7 @@ print(importerConfiguration)
 #>   • LLOQ column: NULL
 #>   • Error column: Error [ng/ml]
 #>   • Error type: ArithmeticStdDev
+#>   • Error type column: NULL
 #>   • Error unit: ng/ml
 #>   • Grouping columns: Study Id, Organ, Compartment, Species, Gender, Molecule,
 #>   Route, MW, Patient Id, Dose [unit]
@@ -484,6 +486,46 @@ print(importerConfiguration)
 
 It is important to manually check the created configuration, as the
 automated configuration recognition cannot cover all possible cases.
+
+The error values of a data set can be arithmetic or geometric standard
+deviations. By default, all data sets get the error type set in
+`importerConfiguration$errorType`. If the error type differs between
+data sets, set `errorTypeColumn` to the name of a column that holds the
+error type of each row, for example `ASD` or `GSD`. All rows of one data
+set must have the same error type. Data sets without a value in this
+column get the error type set in `errorType`. Geometric standard
+deviations are imported without a unit, as written in the file:
+
+``` r
+
+# Read the error type of each data set from the column "Error type"
+importerConfiguration$errorTypeColumn <- "Error type"
+# Data sets without a value in this column get an arithmetic standard deviation
+importerConfiguration$errorType <- DataErrorType$ArithmeticStdDev
+
+print(importerConfiguration)
+#> <DataImporterConfiguration>
+#>   • Time column: Time [h]
+#>   • Time unit: h
+#>   • Time unit from column: FALSE
+#>   • Measurement column: Concentration (mass)[ng/ml]
+#>   • Measurement unit: ng/ml
+#>   • Measurement unit from column: FALSE
+#>   • LLOQ column: NULL
+#>   • Error column: Error [ng/ml]
+#>   • Error type: ArithmeticStdDev
+#>   • Error type column: Error type
+#>   • Error unit: ng/ml
+#>   • Grouping columns: Study Id, Organ, Compartment, Species, Gender, Molecule,
+#>   Route, MW, Patient Id, Dose [unit]
+#>   • Sheets: <empty vector>
+#>   • Naming pattern: {Source}.{Sheet}.{Study
+#>   Id}.{Organ}.{Compartment}.{Species}.{Gender}.{Molecule}.{Route}.{Molecular
+#>   Weight}.{Subject Id}.{Dose}
+
+# Stop reading the error type from a column
+importerConfiguration$errorTypeColumn <- NULL
+```
 
 If only specific sheets from the excel file should be imported, they can
 be specified in the `ImporterConfiguration`. The following example loads

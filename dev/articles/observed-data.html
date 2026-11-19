@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9017</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9018</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -476,6 +476,7 @@ it (as an <code>*.xml</code>) file, and load it in R with the
 <span><span class="co">#&gt;   • LLOQ column: NULL</span></span>
 <span><span class="co">#&gt;   • Error column: Error [ng/ml]</span></span>
 <span><span class="co">#&gt;   • Error type: ArithmeticStdDev</span></span>
+<span><span class="co">#&gt;   • Error type column: NULL</span></span>
 <span><span class="co">#&gt;   • Error unit: ng/ml</span></span>
 <span><span class="co">#&gt;   • Grouping columns: Study Id, Organ, Compartment, Species, Gender, Molecule,</span></span>
 <span><span class="co">#&gt;   Route, MW, Patient Id, Dose [unit]</span></span>
@@ -513,6 +514,7 @@ let the software “guess” the configuration for a given excel sheet:</p>
 <span><span class="co">#&gt;   • LLOQ column: NULL</span></span>
 <span><span class="co">#&gt;   • Error column: Error [ng/ml]</span></span>
 <span><span class="co">#&gt;   • Error type: ArithmeticStdDev</span></span>
+<span><span class="co">#&gt;   • Error type column: NULL</span></span>
 <span><span class="co">#&gt;   • Error unit: ng/ml</span></span>
 <span><span class="co">#&gt;   • Grouping columns: Study Id, Organ, Compartment, Species, Gender, Molecule,</span></span>
 <span><span class="co">#&gt;   Route, MW, Patient Id, Dose [unit]</span></span>
@@ -522,11 +524,48 @@ let the software “guess” the configuration for a given excel sheet:</p>
 <span><span class="co">#&gt;   Weight}.{Subject Id}.{Dose}</span></span></code></pre></div>
 <p>It is important to manually check the created configuration, as the
 automated configuration recognition cannot cover all possible cases.</p>
+<p>The error values of a data set can be arithmetic or geometric
+standard deviations. By default, all data sets get the error type set in
+<code>importerConfiguration$errorType</code>. If the error type differs
+between data sets, set <code>errorTypeColumn</code> to the name of a
+column that holds the error type of each row, for example
+<code>ASD</code> or <code>GSD</code>. All rows of one data set must have
+the same error type. Data sets without a value in this column get the
+error type set in <code>errorType</code>. Geometric standard deviations
+are imported without a unit, as written in the file:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Read the error type of each data set from the column "Error type"</span></span>
+<span><span class="va">importerConfiguration</span><span class="op">$</span><span class="va">errorTypeColumn</span> <span class="op">&lt;-</span> <span class="st">"Error type"</span></span>
+<span><span class="co"># Data sets without a value in this column get an arithmetic standard deviation</span></span>
+<span><span class="va">importerConfiguration</span><span class="op">$</span><span class="va">errorType</span> <span class="op">&lt;-</span> <span class="va">DataErrorType</span><span class="op">$</span><span class="va">ArithmeticStdDev</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">importerConfiguration</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">&lt;DataImporterConfiguration&gt;</span></span></span>
+<span><span class="co">#&gt;   • Time column: Time [h]</span></span>
+<span><span class="co">#&gt;   • Time unit: h</span></span>
+<span><span class="co">#&gt;   • Time unit from column: FALSE</span></span>
+<span><span class="co">#&gt;   • Measurement column: Concentration (mass)[ng/ml]</span></span>
+<span><span class="co">#&gt;   • Measurement unit: ng/ml</span></span>
+<span><span class="co">#&gt;   • Measurement unit from column: FALSE</span></span>
+<span><span class="co">#&gt;   • LLOQ column: NULL</span></span>
+<span><span class="co">#&gt;   • Error column: Error [ng/ml]</span></span>
+<span><span class="co">#&gt;   • Error type: ArithmeticStdDev</span></span>
+<span><span class="co">#&gt;   • Error type column: Error type</span></span>
+<span><span class="co">#&gt;   • Error unit: ng/ml</span></span>
+<span><span class="co">#&gt;   • Grouping columns: Study Id, Organ, Compartment, Species, Gender, Molecule,</span></span>
+<span><span class="co">#&gt;   Route, MW, Patient Id, Dose [unit]</span></span>
+<span><span class="co">#&gt;   • Sheets: &lt;empty vector&gt;</span></span>
+<span><span class="co">#&gt;   • Naming pattern: {Source}.{Sheet}.{Study</span></span>
+<span><span class="co">#&gt;   Id}.{Organ}.{Compartment}.{Species}.{Gender}.{Molecule}.{Route}.{Molecular</span></span>
+<span><span class="co">#&gt;   Weight}.{Subject Id}.{Dose}</span></span>
+<span></span>
+<span><span class="co"># Stop reading the error type from a column</span></span>
+<span><span class="va">importerConfiguration</span><span class="op">$</span><span class="va">errorTypeColumn</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
 <p>If only specific sheets from the excel file should be imported, they
 can be specified in the <code>ImporterConfiguration</code>. The
 following example loads the sheets <code>TestSheet_1</code> and
 <code>TestSheet_1_withMW</code>:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Excel file</span></span>
 <span><span class="va">excelFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
 <span>  <span class="st">"extdata"</span>,</span>

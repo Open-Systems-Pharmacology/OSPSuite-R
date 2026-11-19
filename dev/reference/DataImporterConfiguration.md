@@ -76,7 +76,27 @@ Configuration of data import from excel or csv files. To be used with
 - `errorType`:
 
   Type of the measurement error values. See enum `DataErrorType` for
-  possible values If no error column is present, the value is `NULL`
+  possible values. If `errorTypeColumn` is set, this value is only
+  applied to data sets without a value in that column. If no error
+  column is present, the value is `NULL`
+
+- `errorTypeColumn`:
+
+  Name of the column that defines the error type of each data set.
+  Accepted values in this column are `ASD`, `ArithmeticStdDev` and
+  `Arithmetic Standard Deviation` for an arithmetic standard deviation,
+  and `GSD`, `GeometricStdDev` and `Geometric Standard Deviation` for a
+  geometric standard deviation. Values are not case-sensitive. Empty
+  cells are ignored: a data set without any value in this column gets
+  the error type defined in the property `errorType` of the
+  `DataImporterConfiguration`. All other rows of one data set must have
+  the same error type. Other values, or more than one error type in one
+  data set, make the import fail. A geometric standard deviation is
+  imported as a dimensionless value, as written in the file. An
+  arithmetic standard deviation is imported in the unit given by
+  `errorUnit`. If the value is `NULL` (default), the error type of all
+  data sets is `errorType`. Set the value to `NULL` or to an empty
+  string to stop reading the error type from a column.
 
 - `groupingColumns`:
 

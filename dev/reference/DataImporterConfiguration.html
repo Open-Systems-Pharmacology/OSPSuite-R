@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ospsuite</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9017</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">13.0.1.9018</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,8 +134,27 @@ If no error column is present, the value is <code>NULL</code></p></dd>
 
     <dt><code>errorType</code></dt>
 <dd><p>Type of the measurement error values. See enum <code>DataErrorType</code>
-for possible values
+for possible values.
+If <code>errorTypeColumn</code> is set, this value is only applied to data sets without a value in that column.
 If no error column is present, the value is <code>NULL</code></p></dd>
+
+
+    <dt><code>errorTypeColumn</code></dt>
+<dd><p>Name of the column that defines the error type of each data set.
+Accepted values in this column are <code>ASD</code>, <code>ArithmeticStdDev</code> and
+<code>Arithmetic Standard Deviation</code> for an arithmetic standard deviation, and
+<code>GSD</code>, <code>GeometricStdDev</code> and <code>Geometric Standard Deviation</code> for a
+geometric standard deviation. Values are not case-sensitive.
+Empty cells are ignored: a data set without any value in this column
+gets the error type defined in the property <code>errorType</code> of the <code>DataImporterConfiguration</code>. All other rows of one data set must
+have the same error type. Other values, or more than one error type in one
+data set, make the import fail.
+A geometric standard deviation is imported as a dimensionless value,
+as written in the file. An arithmetic standard deviation is imported
+in the unit given by <code>errorUnit</code>.
+If the value is <code>NULL</code> (default), the error type of all data sets is
+<code>errorType</code>. Set the value to <code>NULL</code> or to an empty string to stop
+reading the error type from a column.</p></dd>
 
 
     <dt><code>groupingColumns</code></dt>
