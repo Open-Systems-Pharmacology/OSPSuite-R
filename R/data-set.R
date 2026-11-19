@@ -6,7 +6,6 @@
 #' @format NULL
 DataSet <- R6::R6Class(
   "DataSet",
-  inherit = DotNetWrapper,
   cloneable = FALSE,
   active = list(
     #' @field name The name of the DataSet
@@ -349,6 +348,9 @@ DataSet <- R6::R6Class(
     .xColumn = NULL,
     .yColumn = NULL,
     .yErrorColumn = NULL,
+    .throwPropertyIsReadonly = function(propertyName) {
+      stop(messages$errorPropertyReadOnly(propertyName))
+    },
     .setColumnValues = function(column, values) {
       # values are set in the display unit. We need to make sure we convert them
       # to the base unit
