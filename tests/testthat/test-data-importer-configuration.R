@@ -298,28 +298,39 @@ errorTypeConfiguration <- function(errorType = DataErrorType$ArithmeticStdDev) {
   importerConfiguration
 }
 
+# One row per data set with its error type, error unit and error values, sorted
+# by data set name. The import stores values in single precision, so they are
+# rounded to keep the snapshots readable.
+errorSummary <- function(dataSets) {
+  dataSets <- dataSets[order(names(dataSets))]
+  data.frame(
+    name = names(dataSets),
+    yErrorType = vapply(dataSets, function(x) x$yErrorType, character(1)),
+    yErrorUnit = vapply(dataSets, function(x) x$yErrorUnit, character(1)),
+    yErrorValues = vapply(
+      dataSets,
+      function(x) paste(signif(x$yErrorValues, 6), collapse = ", "),
+      character(1)
+    ),
+    row.names = NULL
+  )
+}
+
 test_that("loadDataSetsFromExcel reads the error type of each data set from a column", {
+  # A is geometric and imported as written, without a unit. B has no value in
+  # the column and gets `errorType` (arithmetic). C is arithmetic.
   dataSets <- loadDataSetsFromExcel(
     xlsFilePath = errorTypeFilePath,
     importerConfigurationOrPath = errorTypeConfiguration(),
     sheets = "Mixed"
   )
 
-  expect_equal(sort(names(dataSets)), c("A", "B", "C"))
-  expect_equal(dataSets$A$yErrorType, DataErrorType$GeometricStdDev)
-  # A geometric error is imported as written, without unit conversion
-  expect_equal(dataSets$A$yErrorValues, c(2, 3))
-  expect_equal(dataSets$A$yErrorUnit, "")
-  # No value in the column: the default error type is used
-  expect_equal(dataSets$B$yErrorType, DataErrorType$ArithmeticStdDev)
-  expect_equal(dataSets$B$yErrorValues, c(1, 2))
-  expect_equal(dataSets$B$yErrorUnit, "mg/l")
-  expect_equal(dataSets$C$yErrorType, DataErrorType$ArithmeticStdDev)
-  expect_equal(dataSets$C$yErrorValues, c(1, 2))
-  expect_equal(dataSets$C$yErrorUnit, "mg/l")
+  expect_snapshot(errorSummary(dataSets))
 })
 
 test_that("loadDataSetsFromExcel applies errorType GeometricStdDev to data sets without a value in the error type column", {
+  # B has no value in the column and gets `errorType` (geometric). C is
+  # arithmetic and keeps the error unit, even with a geometric `errorType`.
   dataSets <- loadDataSetsFromExcel(
     xlsFilePath = errorTypeFilePath,
     importerConfigurationOrPath = errorTypeConfiguration(
@@ -328,13 +339,7 @@ test_that("loadDataSetsFromExcel applies errorType GeometricStdDev to data sets 
     sheets = "Mixed"
   )
 
-  expect_equal(dataSets$A$yErrorType, DataErrorType$GeometricStdDev)
-  expect_equal(dataSets$B$yErrorType, DataErrorType$GeometricStdDev)
-  expect_equal(dataSets$B$yErrorValues, c(1, 2))
-  # An arithmetic data set keeps the error unit, even with a geometric default
-  expect_equal(dataSets$C$yErrorType, DataErrorType$ArithmeticStdDev)
-  expect_equal(dataSets$C$yErrorValues, c(1, 2))
-  expect_equal(dataSets$C$yErrorUnit, "mg/l")
+  expect_snapshot(errorSummary(dataSets))
 })
 
 test_that("the error unit can be set in a configuration created for a file with a geometric error", {
@@ -357,11 +362,7 @@ test_that("the error unit can be set in a configuration created for a file with 
     xlsFilePath = errorTypeFilePath,
     importerConfigurationOrPath = importerConfiguration
   )
-  expect_equal(dataSets$A$yErrorType, DataErrorType$GeometricStdDev)
-  expect_equal(dataSets$B$yErrorType, DataErrorType$GeometricStdDev)
-  expect_equal(dataSets$C$yErrorType, DataErrorType$ArithmeticStdDev)
-  expect_equal(dataSets$C$yErrorValues, c(1, 2))
-  expect_equal(dataSets$C$yErrorUnit, "mg/l")
+  expect_snapshot(errorSummary(dataSets))
 })
 
 test_that("loadDataSetsFromExcel fails for more than one error type in one data set", {
@@ -374,6 +375,21 @@ test_that("loadDataSetsFromExcel fails for more than one error type in one data 
     "errors while parsing",
     fixed = TRUE
   )
+})
+
+test_that("loadDataSetsFromExcel restores the sheets of the configuration when the import fails", {
+  importerConfiguration <- errorTypeConfiguration()
+  importerConfiguration$sheets <- "Mixed"
+  expect_error(
+    loadDataSetsFromExcel(
+      xlsFilePath = errorTypeFilePath,
+      importerConfigurationOrPath = importerConfiguration,
+      sheets = "Conflict"
+    ),
+    "errors while parsing",
+    fixed = TRUE
+  )
+  expect_equal(importerConfiguration$sheets, "Mixed")
 })
 
 test_that("loadDataSetsFromExcel fails for an unknown error type", {
@@ -427,8 +443,7 @@ test_that("the error type column is kept when saving and loading a configuration
     importerConfigurationOrPath = importerConfiguration,
     sheets = "Mixed"
   )
-  expect_equal(dataSets$A$yErrorType, DataErrorType$GeometricStdDev)
-  expect_equal(dataSets$C$yErrorType, DataErrorType$ArithmeticStdDev)
+  expect_snapshot(errorSummary(dataSets))
 })
 
 test_that("a configuration without error type column does not write the attribute", {

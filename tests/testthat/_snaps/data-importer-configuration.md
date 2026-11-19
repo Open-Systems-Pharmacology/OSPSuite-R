@@ -40,3 +40,43 @@
         * Sheets: <empty vector>
         * Naming pattern: {Source}.{Sheet}
 
+# loadDataSetsFromExcel reads the error type of each data set from a column
+
+    Code
+      errorSummary(dataSets)
+    Output
+        name       yErrorType yErrorUnit yErrorValues
+      1    A  GeometricStdDev                    2, 3
+      2    B ArithmeticStdDev       mg/l         1, 2
+      3    C ArithmeticStdDev       mg/l         1, 2
+
+# loadDataSetsFromExcel applies errorType GeometricStdDev to data sets without a value in the error type column
+
+    Code
+      errorSummary(dataSets)
+    Output
+        name       yErrorType yErrorUnit yErrorValues
+      1    A  GeometricStdDev                    2, 3
+      2    B  GeometricStdDev                    1, 2
+      3    C ArithmeticStdDev       mg/l         1, 2
+
+# the error unit can be set in a configuration created for a file with a geometric error
+
+    Code
+      errorSummary(dataSets)
+    Output
+        name       yErrorType yErrorUnit yErrorValues
+      1    A  GeometricStdDev                    2, 3
+      2    B  GeometricStdDev                    1, 2
+      3    C ArithmeticStdDev       mg/l         1, 2
+
+# the error type column is kept when saving and loading a configuration
+
+    Code
+      errorSummary(dataSets)
+    Output
+        name       yErrorType yErrorUnit yErrorValues
+      1    A  GeometricStdDev                    2, 3
+      2    B  GeometricStdDev                    1, 2
+      3    C ArithmeticStdDev       mg/l         1, 2
+
