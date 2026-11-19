@@ -122,7 +122,13 @@ expectWatermarkPassthrough <- function(plotFunction) {
   expect_true(any(customWatermarkLabels$label == "DRAFT"))
   expect_false(any(customWatermarkLabels$label == "GLOBAL WATERMARK"))
 
+  # `watermark = FALSE` must give the same text as a plot with no watermark
   noWatermarkLabels <- extractPlotTextLabels(plotFunction(watermark = FALSE))
+  controlLabels <- withr::with_options(
+    list(ospsuite.plots.watermarkEnabled = FALSE),
+    extractPlotTextLabels(plotFunction())
+  )
+  expect_setequal(noWatermarkLabels$label, controlLabels$label)
   expect_false(any(noWatermarkLabels$label == "GLOBAL WATERMARK"))
 
   defaultWatermarkLabels <- extractPlotTextLabels(plotFunction())
