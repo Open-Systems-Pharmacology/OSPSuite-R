@@ -143,6 +143,22 @@ dataSet$subjectCount
 # Remove the number of subjects
 dataSet$subjectCount <- NULL
 ```
+
+In PK-Sim and MoBi version 13 or later, observed data can name the simulation
+output it belongs to. This path is stored in the `outputPath` field (meta data
+entry `OutputPath`). When the data set is added to a simulation in PK-Sim or
+MoBi, it is mapped automatically to the output with exactly this path, instead
+of using the `Organ`, `Compartment`, and `Molecule` meta data. To read it from
+an Excel file, add a column `OutputPath` to the file and add it as a grouping
+column with `importerConfiguration$addGroupingColumn("OutputPath")`.
+
+```{r outputPath}
+dataSet$outputPath <- "Organism|PeripheralVenousBlood|Aciclovir|Plasma (Peripheral Venous Blood)"
+dataSet$outputPath
+
+# Remove the output path
+dataSet$outputPath <- NULL
+```
  
 A `DataSet` or multiple `DataSet`s  can be converted to `data.frame` (or `tibble`) 
 to be processed in downstream analysis and visualization workflows:

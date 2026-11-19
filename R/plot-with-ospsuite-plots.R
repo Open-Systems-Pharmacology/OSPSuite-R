@@ -156,6 +156,11 @@
 #'   User-provided `mapping` and `observedMapping` will override internal
 #'   settings. A warning is issued if the override removes per-dataset
 #'   differentiation.
+#' @param showLLOQ A boolean; if `TRUE` (default), LLOQ lines and below-LLOQ
+#'   point fading are displayed. If `FALSE`, neither the LLOQ line nor
+#'   below-LLOQ fading is applied.
+#' @param watermark Optional watermark text for this plot.
+#' @param watermarkFormat Optional list of watermark formatting values.
 #' @inheritDotParams ospsuite.plots::plotTimeProfile xScale xScaleArgs yScale yScaleArgs y2Scale y2ScaleArgs groupAesthetics plotObject geomLineAttributes geomRibbonAttributes geomPointAttributes geomErrorbarAttributes geomLLOQAttributes
 #'
 #' @return A `ggplot2` plot object representing the time profile, or `NULL`
@@ -192,6 +197,9 @@ plotTimeProfile <- function(
   ),
   nsd = 1,
   showLegendPerDataset = "all",
+  showLLOQ = TRUE,
+  watermark = NULL,
+  watermarkFormat = NULL,
   ...
 ) {
   # initialize variables used for data.table to avoid messages during checks
@@ -268,7 +276,10 @@ plotTimeProfile <- function(
         mapping = mappingAdjusted,
         observedMapping = observedMappingAdjusted,
         metaData = metaData,
-        observedData = plotData[dataType == "observed"]
+        observedData = plotData[dataType == "observed"],
+        showLLOQ = showLLOQ,
+        watermark = watermark,
+        watermarkFormat = watermarkFormat
       ),
       additionalArgs
     )
@@ -305,6 +316,11 @@ plotTimeProfile <- function(
 #'     shapes (using the `name` column).
 #'
 #'   User-provided `mapping` will override internal settings.
+#' @param showLLOQ A boolean; if `TRUE` (default), LLOQ lines and below-LLOQ
+#'   point fading are displayed. If `FALSE`, neither the LLOQ line nor
+#'   below-LLOQ fading is applied.
+#' @param watermark Optional watermark text for this plot.
+#' @param watermarkFormat Optional list of watermark formatting values.
 #' @inheritDotParams ospsuite.plots::plotYVsX xScaleArgs yScaleArgs groupAesthetics addRegression geomPointAttributes geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes addGuestLimits deltaGuest labelGuestCriteria geomGuestLineAttributes lloqOnBothAxes
 #'
 #'
@@ -334,6 +350,9 @@ plotPredictedVsObserved <- function(
   predictedAxis = "y",
   comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
   showLegendPerDataset = "all",
+  showLLOQ = TRUE,
+  watermark = NULL,
+  watermarkFormat = NULL,
   ...
 ) {
   checkmate::assertChoice(
@@ -382,6 +401,9 @@ plotPredictedVsObserved <- function(
         yScale = xyScale,
         comparisonLineVector = comparisonLineVector,
         observedDataDirection = observedAxis,
+        showLLOQ = showLLOQ,
+        watermark = watermark,
+        watermarkFormat = watermarkFormat,
         yDisplayAsAbsolute = TRUE,
         asSquarePlot = TRUE
       ),
@@ -449,6 +471,11 @@ plotPredictedVsObserved <- function(
 #'     shapes (using the `name` column).
 #'
 #'   User-provided `mapping` will override internal settings.
+#' @param showLLOQ A boolean; if `TRUE` (default), LLOQ lines and below-LLOQ
+#'   point fading are displayed. If `FALSE`, neither the LLOQ line nor
+#'   below-LLOQ fading is applied.
+#' @param watermark Optional watermark text for this plot.
+#' @param watermarkFormat Optional list of watermark formatting values.
 #' @inheritDotParams ospsuite.plots::plotYVsX xScale xScaleArgs yScale yScaleArgs groupAesthetics addRegression geomPointAttributes geomErrorbarAttributes geomComparisonLineAttributes geomLLOQAttributes
 #' @inheritDotParams ospsuite.plots::plotResVsCov comparisonLineVector
 #'
@@ -486,6 +513,9 @@ plotResidualsVsCovariate <- function(
   residualScale = "log",
   xAxis = "observed",
   showLegendPerDataset = "all",
+  showLLOQ = TRUE,
+  watermark = NULL,
+  watermarkFormat = NULL,
   ...
 ) {
   predicted <- NULL
@@ -539,7 +569,10 @@ plotResidualsVsCovariate <- function(
       list(
         data = plotData,
         mapping = mapping,
-        metaData = metaData
+        metaData = metaData,
+        showLLOQ = showLLOQ,
+        watermark = watermark,
+        watermarkFormat = watermarkFormat
       ),
       additionalArgs
     )
@@ -569,6 +602,8 @@ plotResidualsVsCovariate <- function(
 #'   the most frequent unit in the data is used. For available units, see
 #'   `ospsuite::ospUnits`.
 #' @param distribution parameter passed to `ospsuite.plots::plotHistogram`.
+#' @param watermark Optional watermark text for this plot.
+#' @param watermarkFormat Optional list of watermark formatting values.
 #' @inheritDotParams ospsuite.plots::plotHistogram xScale xScaleArgs yScale yScaleArgs plotAsFrequency meanFunction geomHistAttributes asBarPlot
 #'
 #' @return A `ggplot2` plot object representing the histogram of residuals,
@@ -591,6 +626,8 @@ plotResidualsAsHistogram <- function(
   yUnit = NULL,
   distribution = "normal",
   residualScale = "log",
+  watermark = NULL,
+  watermarkFormat = NULL,
   ...
 ) {
   plotData <- .validateAndConvertData(
@@ -623,7 +660,9 @@ plotResidualsAsHistogram <- function(
         data = plotData,
         mapping = mapping,
         metaData = metaData,
-        distribution = distribution
+        distribution = distribution,
+        watermark = watermark,
+        watermarkFormat = watermarkFormat
       ),
       additionalArgs
     )
@@ -647,6 +686,8 @@ plotResidualsAsHistogram <- function(
 #'   and observed y-values used for residual calculation. If `NULL` (default),
 #'   the most frequent unit in the data is used. For available units, see
 #'   `ospsuite::ospUnits`.
+#' @param watermark Optional watermark text for this plot.
+#' @param watermarkFormat Optional list of watermark formatting values.
 #' @inheritDotParams ospsuite.plots::plotQQ xScaleArgs yScaleArgs groupAesthetics geomQQAttributes geomQQLineAttributes
 #'
 #' @return A `ggplot2` plot object representing the Q-Q plot, or `NULL` if
@@ -669,6 +710,8 @@ plotQuantileQuantilePlot <- function(
   xUnit = NULL,
   yUnit = NULL,
   residualScale = "log",
+  watermark = NULL,
+  watermarkFormat = NULL,
   ...
 ) {
   plotData <- .validateAndConvertData(
@@ -702,7 +745,9 @@ plotQuantileQuantilePlot <- function(
       list(
         data = plotData,
         mapping = mapping,
-        metaData = metaData
+        metaData = metaData,
+        watermark = watermark,
+        watermarkFormat = watermarkFormat
       ),
       additionalArgs
     )

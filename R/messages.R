@@ -113,6 +113,17 @@ messages$errorInvalidSubjectCount <- function(value) {
   )
 }
 
+messages$errorInvalidOutputPath <- function(value) {
+  if (is.null(value)) {
+    return(cliFormat(
+      "{.field outputPath} must be one text value, not {.code NULL}."
+    ))
+  }
+  cliFormat(
+    "{.field outputPath} must be one text value, not {.val {value}}."
+  )
+}
+
 messages$warningInvalidSubjectCount <- function(dataSetName, value) {
   cliFormat(
     "The meta data entry {.field subjectCount} of the data set {.val {dataSetName}} is {.val {value}}, which is not a positive whole number.",

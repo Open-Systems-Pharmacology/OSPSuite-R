@@ -11,6 +11,8 @@ plotQuantileQuantilePlot(
   xUnit = NULL,
   yUnit = NULL,
   residualScale = "log",
+  watermark = NULL,
+  watermarkFormat = NULL,
   ...
 )
 }
@@ -53,6 +55,10 @@ the most frequent unit in the data is used. For available units, see
 
 \item{residualScale}{Either "linear", "log", or "ratio" method for computing
 residuals. Default is \code{log}.}
+
+\item{watermark}{Optional watermark text for this plot.}
+
+\item{watermarkFormat}{Optional list of watermark formatting values.}
 
 \item{...}{
   Arguments passed on to \code{\link[ospsuite.plots:plotQQ]{ospsuite.plots::plotQQ}}

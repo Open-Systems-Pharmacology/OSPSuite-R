@@ -13,6 +13,9 @@ plotPredictedVsObserved(
   predictedAxis = "y",
   comparisonLineVector = ospsuite.plots::getFoldDistanceList(folds = c(2)),
   showLegendPerDataset = "all",
+  showLLOQ = TRUE,
+  watermark = NULL,
+  watermarkFormat = NULL,
   ...
 )
 }
@@ -69,6 +72,14 @@ shapes (using the \code{name} column).
 }
 
 User-provided \code{mapping} will override internal settings.}
+
+\item{showLLOQ}{A boolean; if \code{TRUE} (default), LLOQ lines and below-LLOQ
+point fading are displayed. If \code{FALSE}, neither the LLOQ line nor
+below-LLOQ fading is applied.}
+
+\item{watermark}{Optional watermark text for this plot.}
+
+\item{watermarkFormat}{Optional list of watermark formatting values.}
 
 \item{...}{
   Arguments passed on to \code{\link[ospsuite.plots:plotYVsX]{ospsuite.plots::plotYVsX}}
