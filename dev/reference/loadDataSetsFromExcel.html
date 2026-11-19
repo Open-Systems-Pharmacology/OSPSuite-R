@@ -116,13 +116,11 @@ will be loaded, overriding any sheets defined in the <code>importerConfiguration
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Load observed data from an excel file using an importer configuration</p>
 <p>The values of all grouping columns of the configuration are added to the
-meta data of the loaded data sets. To read the number of subjects of
-aggregated data into <code>DataSet$subjectCount</code>, add a column <code>subjectCount</code>
-with one positive whole number per data set to the Excel file and add it as
-a grouping column, e.g. with
-<code>importerConfiguration$addGroupingColumn("subjectCount")</code>.
-Likewise, a grouping column <code>OutputPath</code> fills <code>DataSet$outputPath</code>, the
-path of the simulation output that each data set belongs to.</p>
+meta data of the loaded data sets.</p>
+<p>To read the number of subjects of aggregated data, the excel sheet must have a column
+<code>Subject count</code>.</p>
+<p>A grouping column <code>OutputPath</code> fills <code>DataSet$outputPath</code>, the path of the
+simulation output that each data set belongs to.</p>
     </div>
 
     <div class="section level2">

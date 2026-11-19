@@ -182,11 +182,9 @@ Aggregated data, for example mean values with a standard deviation, are
 calculated from a certain number of subjects. This number is stored in
 the `subjectCount` field, so that it is available for later analyses,
 for example to calculate confidence intervals of the mean. It must be
-one positive whole number. The value is stored as the meta data entry
-`subjectCount`, so it is saved with the data set in a PKML file. To read
-it from an Excel file, add a column `subjectCount` to the file and add
-it as a grouping column of the importer configuration with
-`importerConfiguration$addGroupingColumn("subjectCount")`.
+one positive whole number. To read it from an Excel file, add a column
+`Subject count` to the file and use an importer configuration that maps
+this column to the `Subject count` property (e.g., created in PK-Sim).
 
 ``` r
 
@@ -357,7 +355,11 @@ e.g. in MoBi.
 ``` r
 
 # Load a data set from PKML
-filePath <- system.file("extdata", "ObsDataAciclovir_1.pkml", package = "ospsuite")
+filePath <- system.file(
+  "extdata",
+  "ObsDataAciclovir_1.pkml",
+  package = "ospsuite"
+)
 
 dataSet <- loadDataSetFromPKML(filePath = filePath)
 
@@ -410,8 +412,14 @@ function:
 ``` r
 
 # Load a configuration from xml file
-filePath <- system.file("extdata", "dataImporterConfiguration.xml", package = "ospsuite")
-importerConfiguration <- loadDataImporterConfiguration(configurationFilePath = filePath)
+filePath <- system.file(
+  "extdata",
+  "dataImporterConfiguration.xml",
+  package = "ospsuite"
+)
+importerConfiguration <- loadDataImporterConfiguration(
+  configurationFilePath = filePath
+)
 
 print(importerConfiguration)
 #> <DataImporterConfiguration>
@@ -440,7 +448,11 @@ the software “guess” the configuration for a given excel sheet:
 ``` r
 
 # Excel file
-excelFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
+excelFilePath <- system.file(
+  "extdata",
+  "CompiledDataSet.xlsx",
+  package = "ospsuite"
+)
 sheetName <- "TestSheet_1"
 
 # Create importer configuration for the excel sheet
@@ -480,7 +492,11 @@ the sheets `TestSheet_1` and `TestSheet_1_withMW`:
 ``` r
 
 # Excel file
-excelFilePath <- system.file("extdata", "CompiledDataSet.xlsx", package = "ospsuite")
+excelFilePath <- system.file(
+  "extdata",
+  "CompiledDataSet.xlsx",
+  package = "ospsuite"
+)
 sheetName <- "TestSheet_1"
 
 # Create importer configuration for the excel sheet

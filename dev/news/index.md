@@ -17,19 +17,19 @@
 
 - `DataSet` has a new field `subjectCount` for the number of subjects
   from which aggregated observed data (mean values with a standard
-  deviation or geometric standard deviation) are calculated. It accepts
-  one positive whole number and is `NULL` when not set.
+  deviation or geometric standard deviation) are calculated.
   [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
-  reads it from a column `subjectCount` of the Excel file when this
-  column is added as a grouping column of the importer configuration
-  ([\#2060](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2060)).
+  reads it from a column `Subject count` of the Excel file when this
+  column is mapped in the importer configuration
+  ([\#2060](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2060),
+  [\#2063](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2063)).
 - [`dataSetToDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md)
   and
   [`dataSetToTibble()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetToDataFrame.md)
   return a new column `subjectCount`, and
   [`dataSetsFromDataFrame()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/dataSetsFromDataFrame.md)
   reads this column back into `DataSet$subjectCount`. The meta data
-  entry `subjectCount` does not appear as an additional meta data
+  entry “Subject count” does not appear as an additional meta data
   column. The new column comes after `lloq`, so the meta data columns
   move one position to the right.
   [`rbind()`](https://rdrr.io/r/base/cbind.html) of these data frames
@@ -65,6 +65,12 @@
 
 ### Minor improvements and bug fixes
 
+- [`loadDataSetsFromExcel()`](https://www.open-systems-pharmacology.org/OSPSuite-R/dev/reference/loadDataSetsFromExcel.md)
+  no longer fails with `System.NullReferenceException` for an importer
+  configuration created with `DataImporterConfiguration$new()` whose
+  naming pattern was never read or set. A new configuration now has the
+  naming pattern `{Source}.{Sheet}` from the start
+  ([\#2063](https://github.com/open-systems-pharmacology/ospsuite-r/issues/2063)).
 - `DataSet` no longer offers the methods
   [`get()`](https://rdrr.io/r/base/get.html), `set()`,
   [`call()`](https://rdrr.io/r/base/call.html), `getStaticMethods()`,

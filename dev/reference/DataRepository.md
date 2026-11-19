@@ -49,6 +49,8 @@ An object typically holding observed data
 
 - [`DataRepository$removeMetaData()`](#method-DataRepository-removeMetaData)
 
+- [`DataRepository$setSubjectCount()`](#method-DataRepository-setSubjectCount)
+
 Inherited methods
 
 - [`rSharp::NetObject$.printClass()`](http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printClass)
@@ -154,3 +156,21 @@ Removes the meta data entry in the list if one is defined with this name
 - `name`:
 
   Name of meta data entry to delete
+
+------------------------------------------------------------------------
+
+### `DataRepository$setSubjectCount()`
+
+Sets the number of subjects from which the values are calculated. It is
+stored as the meta data entry "Subject count", which PK-Sim and MoBi
+show for observed data. Use `DataSet$subjectCount` to read it.
+
+#### Usage
+
+    DataRepository$setSubjectCount(subjectCount)
+
+#### Arguments
+
+- `subjectCount`:
+
+  One positive whole number.

@@ -106,6 +106,7 @@ where the name is the name of the metaData and the value is the meta data value.
 <li><p><a href="#method-DataRepository-print"><code>DataRepository$print()</code></a></p></li>
 <li><p><a href="#method-DataRepository-addMetaData"><code>DataRepository$addMetaData()</code></a></p></li>
 <li><p><a href="#method-DataRepository-removeMetaData"><code>DataRepository$removeMetaData()</code></a></p></li>
+<li><p><a href="#method-DataRepository-setSubjectCount"><code>DataRepository$setSubjectCount()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printClass"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printClass"><code>rSharp::NetObject$.printClass()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id=".printLine"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-.printLine"><code>rSharp::NetObject$.printLine()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="rSharp" data-topic="NetObject" data-id="call"><a href="http://www.open-systems-pharmacology.org/rSharp/reference/NetObject.html#method-call"><code>rSharp::NetObject$call()</code></a></span></li>
@@ -198,6 +199,24 @@ If it is not provided, a new instance will be created</p></dd>
 <h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>name</code></dt>
 <dd><p>Name of meta data entry to delete</p></dd>
+
+
+</dl><p></p></div>
+</div>
+
+</div>
+
+<p></p><hr><a id="method-DataRepository-setSubjectCount"></a><div class="section">
+<h3 id="datarepository-setsubjectcount-"><code>DataRepository$setSubjectCount()</code><a class="anchor" aria-label="anchor" href="#datarepository-setsubjectcount-"></a></h3>
+<p>Sets the number of subjects from which the values are calculated. It is
+stored as the meta data entry "Subject count", which PK-Sim and MoBi
+show for observed data. Use <code>DataSet$subjectCount</code> to read it.</p><div class="section">
+<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">DataRepository</span><span class="op">$</span><span class="fu">setSubjectCount</span><span class="op">(</span><span class="va">subjectCount</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div><p></p><div class="section">
+<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>subjectCount</code></dt>
+<dd><p>One positive whole number.</p></dd>
 
 
 </dl><p></p></div>

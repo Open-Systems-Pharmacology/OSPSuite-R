@@ -252,12 +252,10 @@ method:</p>
 are calculated from a certain number of subjects. This number is stored
 in the <code>subjectCount</code> field, so that it is available for
 later analyses, for example to calculate confidence intervals of the
-mean. It must be one positive whole number. The value is stored as the
-meta data entry <code>subjectCount</code>, so it is saved with the data
-set in a PKML file. To read it from an Excel file, add a column
-<code>subjectCount</code> to the file and add it as a grouping column of
-the importer configuration with
-<code>importerConfiguration$addGroupingColumn("subjectCount")</code>.</p>
+mean. It must be one positive whole number. To read it from an Excel
+file, add a column <code>Subject count</code> to the file and use an
+importer configuration that maps this column to the
+<code>Subject count</code> property (e.g., created in PK-Sim).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># The data set contains the mean values of 12 subjects</span></span>
 <span><span class="va">dataSet</span><span class="op">$</span><span class="va">subjectCount</span> <span class="op">&lt;-</span> <span class="fl">12</span></span>
@@ -407,7 +405,11 @@ function <code><a href="../reference/saveDataSetToPKML.html">saveDataSetToPKML()
 MoBi.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load a data set from PKML</span></span>
-<span><span class="va">filePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ObsDataAciclovir_1.pkml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
+<span><span class="va">filePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>  <span class="st">"extdata"</span>,</span>
+<span>  <span class="st">"ObsDataAciclovir_1.pkml"</span>,</span>
+<span>  package <span class="op">=</span> <span class="st">"ospsuite"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">dataSet</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadDataSetFromPKML.html">loadDataSetFromPKML</a></span><span class="op">(</span>filePath <span class="op">=</span> <span class="va">filePath</span><span class="op">)</span></span>
 <span></span>
@@ -454,8 +456,14 @@ it (as an <code>*.xml</code>) file, and load it in R with the
 <code><a href="../reference/loadDataImporterConfiguration.html">loadDataImporterConfiguration()</a></code> function:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load a configuration from xml file</span></span>
-<span><span class="va">filePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"dataImporterConfiguration.xml"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
-<span><span class="va">importerConfiguration</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadDataImporterConfiguration.html">loadDataImporterConfiguration</a></span><span class="op">(</span>configurationFilePath <span class="op">=</span> <span class="va">filePath</span><span class="op">)</span></span>
+<span><span class="va">filePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>  <span class="st">"extdata"</span>,</span>
+<span>  <span class="st">"dataImporterConfiguration.xml"</span>,</span>
+<span>  package <span class="op">=</span> <span class="st">"ospsuite"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">importerConfiguration</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadDataImporterConfiguration.html">loadDataImporterConfiguration</a></span><span class="op">(</span></span>
+<span>  configurationFilePath <span class="op">=</span> <span class="va">filePath</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">importerConfiguration</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;DataImporterConfiguration&gt;</span></span></span>
@@ -480,7 +488,11 @@ has to be manually populated by the user. Alternatively, the user can
 let the software “guess” the configuration for a given excel sheet:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Excel file</span></span>
-<span><span class="va">excelFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CompiledDataSet.xlsx"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
+<span><span class="va">excelFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>  <span class="st">"extdata"</span>,</span>
+<span>  <span class="st">"CompiledDataSet.xlsx"</span>,</span>
+<span>  package <span class="op">=</span> <span class="st">"ospsuite"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">sheetName</span> <span class="op">&lt;-</span> <span class="st">"TestSheet_1"</span></span>
 <span></span>
 <span><span class="co"># Create importer configuration for the excel sheet</span></span>
@@ -516,7 +528,11 @@ following example loads the sheets <code>TestSheet_1</code> and
 <code>TestSheet_1_withMW</code>:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Excel file</span></span>
-<span><span class="va">excelFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CompiledDataSet.xlsx"</span>, package <span class="op">=</span> <span class="st">"ospsuite"</span><span class="op">)</span></span>
+<span><span class="va">excelFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>  <span class="st">"extdata"</span>,</span>
+<span>  <span class="st">"CompiledDataSet.xlsx"</span>,</span>
+<span>  package <span class="op">=</span> <span class="st">"ospsuite"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">sheetName</span> <span class="op">&lt;-</span> <span class="st">"TestSheet_1"</span></span>
 <span></span>
 <span><span class="co"># Create importer configuration for the excel sheet</span></span>
