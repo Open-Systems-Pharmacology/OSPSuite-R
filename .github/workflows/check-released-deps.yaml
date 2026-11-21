@@ -2,9 +2,9 @@ name: Check against released dependencies
 
 # Nightly R-CMD-check against the latest *released* OSP dependencies. This job
 # runs with `ignore-renv`, so pak resolves the dependencies rather than renv
-# restoring the pinned lockfile, and with no `Remotes:` field the released
-# siblings come from the OSP R-universe. The reusable workflow's Remotes-pinning
-# step is a documented no-op in that case.
+# restoring the pinned lockfile. The reusable workflow pins `Remotes:` to
+# @*release for this run only, and OSP packages not listed in `Remotes:` come
+# from the OSP R-universe, which builds the latest release of each package.
 
 on:
   schedule:
