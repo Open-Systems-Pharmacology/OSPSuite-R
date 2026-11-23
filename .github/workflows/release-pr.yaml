@@ -1,8 +1,9 @@
 name: Release PR
 
 # Manually open a release pull request: runs usethis::use_version(<which>) to
-# set the release Version and rename the NEWS.md development heading, pins
-# Remotes to @*release, then opens a `release-pr-<version>` PR. The PR is
+# set the release Version and rename the NEWS.md development heading, moves
+# the OSP dependencies from `Remotes` to the OSP R-universe, then opens a
+# `release-pr-<version>` PR. The PR is
 # validated by the normal pull request pipeline before merge; tagging and the
 # GitHub Release happen afterwards via a manual dispatch of publish.yaml.
 

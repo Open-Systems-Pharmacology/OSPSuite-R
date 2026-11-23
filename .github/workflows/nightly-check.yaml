@@ -1,0 +1,21 @@
+name: Nightly check
+
+# Nightly R CMD check on main with the current dependencies. A development
+# version installs its OSP dependencies from their GitHub `Remotes`, so this
+# catches an upstream change that breaks the package even when this repository
+# gets no push.
+# The check restores renv.lock, which the renv nightly updates at 2 AM.
+#
+# There is no nightly check against the released dependencies: a release PR
+# switches DESCRIPTION to the R-universe, so its own checks cover them.
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # Run at 3 AM UTC daily
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  R-CMD-Check:
+    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main

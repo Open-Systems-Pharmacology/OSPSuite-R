@@ -1,14 +1,12 @@
 name: Pull Request Workflow
 
-# Runs on every pull request. sync-remotes pins/unpins `Remotes:` in DESCRIPTION
-# to match the package Version (plain Remotes for a development version,
-# `@*release` for a release version) and commits the fix to the PR branch; the
-# checks then run on that synced tree so what gets validated is what will be
-# merged.
-#
-# Every check also passes the OSP R-universe as an extra repository. pak does
-# not read Additional_repositories, so an OSP package that is not listed in
-# `Remotes:` would otherwise fail to resolve.
+# Runs on every pull request. sync-remotes sets the OSP dependency fields in
+# DESCRIPTION to match the package Version, re-snapshots renv.lock when they
+# switch, and commits the result to the PR branch. A development version
+# installs its OSP dependencies from their GitHub `Remotes`; a release version
+# has no `Remotes` and installs them from the OSP R-universe listed in
+# `Additional_repositories`. The checks then run on that synced tree, so what
+# gets validated is what will be merged.
 
 on:
   pull_request:
@@ -26,15 +24,11 @@ jobs:
     needs: [sync-remotes]
     if: ${{ !cancelled() && needs.sync-remotes.result != 'failure' }} # a skipped fork-PR sync must not block the check, but a failure should
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
-    with:
-      extra-repositories: https://open-systems-pharmacology.r-universe.dev
 
   test-coverage:
     needs: [sync-remotes]
     if: ${{ !cancelled() && needs.sync-remotes.result != 'failure' }}
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
-    with:
-      extra-repositories: https://open-systems-pharmacology.r-universe.dev
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
@@ -45,5 +39,3 @@ jobs:
       contents: write # required by the pkgdown reusable workflow (no deploy on PRs)
       pull-requests: read # the workflow's check-changes job reads PR file changes
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/pkgdown.yaml@main
-    with:
-      extra-repositories: https://open-systems-pharmacology.r-universe.dev
