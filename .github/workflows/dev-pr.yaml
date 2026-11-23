@@ -2,7 +2,7 @@ name: Dev PR
 
 # Manually open a "restore development mode" pull request: runs
 # usethis::use_dev_version() (Version x.y.z -> x.y.z.9000 and a new NEWS.md
-# development heading), unpins Remotes (strips @*release), then opens a
+# development heading), restores the development `Remotes`, then opens a
 # `dev-pr-<version>` PR. Run after a release, or on demand.
 
 on:
