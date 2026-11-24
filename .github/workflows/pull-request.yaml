@@ -1,12 +1,10 @@
 name: Pull Request Workflow
 
-# Runs on every pull request. sync-remotes sets the OSP dependency fields in
-# DESCRIPTION to match the package Version, re-snapshots renv.lock when they
-# switch, and commits the result to the PR branch. A development version
-# installs its OSP dependencies from their GitHub `Remotes`; a release version
-# has no `Remotes` and installs them from the OSP R-universe listed in
-# `Additional_repositories`. The checks then run on that synced tree, so what
-# gets validated is what will be merged.
+# Runs on every pull request. A development version installs its OSP
+# dependencies from their GitHub `Remotes`; a release version has no `Remotes`
+# and installs them from the OSP R-universe listed in `Additional_repositories`.
+# The release-pr and dev-pr workflows switch these fields. setup-r-env, used by
+# every check, fails when they do not match the Version and explains the fix.
 
 on:
   pull_request:
@@ -14,27 +12,15 @@ on:
 permissions: read-all
 
 jobs:
-  sync-remotes:
-    permissions:
-      contents: write # commits the synced Remotes back to the PR branch
-    uses: Open-Systems-Pharmacology/Workflows/.github/workflows/sync-remotes.yaml@main
-    secrets: inherit
-
   R-CMD-Check:
-    needs: [sync-remotes]
-    if: ${{ !cancelled() && needs.sync-remotes.result != 'failure' }} # a skipped fork-PR sync must not block the check, but a failure should
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/R-CMD-check-build.yaml@main
 
   test-coverage:
-    needs: [sync-remotes]
-    if: ${{ !cancelled() && needs.sync-remotes.result != 'failure' }}
     uses: Open-Systems-Pharmacology/Workflows/.github/workflows/test-coverage.yaml@main
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   pkgdown:
-    needs: [sync-remotes]
-    if: ${{ !cancelled() && needs.sync-remotes.result != 'failure' }}
     permissions:
       contents: write # required by the pkgdown reusable workflow (no deploy on PRs)
       pull-requests: read # the workflow's check-changes job reads PR file changes
