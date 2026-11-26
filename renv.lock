@@ -3389,7 +3389,7 @@
     },
     "tinytex": {
       "Package": "tinytex",
-      "Version": "0.61",
+      "Version": "0.62",
       "Source": "Repository",
       "Type": "Package",
       "Title": "Helper Functions to Install and Maintain TeX Live, and Compile LaTeX Documents",
